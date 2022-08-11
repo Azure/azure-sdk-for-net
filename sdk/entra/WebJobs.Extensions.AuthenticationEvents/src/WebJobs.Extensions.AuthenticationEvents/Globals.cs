@@ -3,9 +3,10 @@
 
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using tisEvents = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 
-//[assembly: InternalsVisibleTo("WebJobs.Extensions.AuthenticationEvents.Tests")]
+[assembly: InternalsVisibleTo("WebJobs.Extensions.AuthenticationEvents.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001002d42386f563151ae0e97bb24b0d8eb0c7af24a93308969defd0913380e1f99aacb8a58a6edd0fc77e516a1f4b263899b019424fc80c396d16f8617262df874488db44851595fd85fbc55cafc4fffc8bfb6bed5f8ebdbab514e8b657fc8c03cfcbaf033a4064fe9d1dc716e4b98531054a85f9151a9c5a4fab132124cdb1035ca")]
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     }
 
     /// <summary>Document Types.</summary>
-    internal enum OpenAPIDocumentTypes
+    internal enum OpenAPIDocumentType
     {
         /// <summary>The open API document.</summary>
         OpenApiDocument,

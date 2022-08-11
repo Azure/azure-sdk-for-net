@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>Initializes the specified configuration.
         /// This is where we create the main HTTP Listener endpoint and bind the trigger. (For all intents and purposes this is not obsolete).</summary>
         /// <param name="context">The context we get from the Webjobs framework.</param>
-        [Obsolete]
+        [Obsolete("Is not obsolete marked by webjobs team, but chatted and this is correct. It is not being deprecated")]
         public void Initialize(ExtensionConfigContext context)
         {
             context.AddBindingRule<AuthenticationEventsTriggerAttribute>()

@@ -1,4 +1,4 @@
-﻿namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021
+﻿namespace WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021
 {
     /// <summary>Test data for the Token Issuance Start Request version: preview_10_10_2021</summary>
     public static class TokenIssuanceStartPreview10012021

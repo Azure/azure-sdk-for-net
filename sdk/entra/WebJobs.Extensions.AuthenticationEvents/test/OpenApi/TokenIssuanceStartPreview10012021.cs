@@ -1,11 +1,11 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension;
-using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.Framework;
+﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
-using payloads = WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads;
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi
+using payloads = WebJobs.Extensions.AuthenticationEvents.Tests.Payloads;
+namespace WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi
 {
     /// <summary>Class to house open api tests for the OnTokenIssuanceStart event version preview_10_01_2021</summary>
     public class OpenApi
@@ -18,11 +18,11 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi
             Directory.CreateDirectory(testDir);
             try
             {
-                OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStart_V2021_10_01_Preview);
-                Dictionary<OpenAPIDocumentTypes, string> paths = openApiDocument.SaveAsync(testDir).Result;
-                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.OpenApi.OpenApi.OpenApiDocument, paths[OpenAPIDocumentTypes.OpenApiDocument]));
-                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.RequestSchema, paths[OpenAPIDocumentTypes.RequestSchema]));
-                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ResponseSchema, paths[OpenAPIDocumentTypes.ResponseSchema]));
+                OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStartV20211001Preview);
+                Dictionary<OpenAPIDocumentType, string> paths = openApiDocument.Save(testDir);
+                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.OpenApi.OpenApi.OpenApiDocument, paths[OpenAPIDocumentType.OpenApiDocument]));
+                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.RequestSchema, paths[OpenAPIDocumentType.RequestSchema]));
+                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ResponseSchema, paths[OpenAPIDocumentType.ResponseSchema]));
             }
             finally
             {
@@ -34,7 +34,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi
         [Fact]
         public void OpenApiDocumentMergeTest()
         {
-            OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStart_V2021_10_01_Preview);
+            OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStartV20211001Preview);
             AuthEventJsonElement result = openApiDocument.EmbedReferences();
 
             Assert.True(TestHelper.DoesPayloadMatch(payloads.OpenApi.OpenApi.OpenApiDocumentMerge, result.ToString()));
@@ -49,8 +49,8 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi
             string testFile = Path.Combine(testDir, $"{Guid.NewGuid()}.json");
             try
             {
-                OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStart_V2021_10_01_Preview);
-                openApiDocument.EmbedReferencesAndSaveAsync(testFile).Wait();
+                OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStartV20211001Preview);
+                openApiDocument.EmbedReferencesAndSave(testFile);
                 string actual = File.ReadAllText(testFile);
                 Assert.True(TestHelper.DoesPayloadMatch(payloads.OpenApi.OpenApi.OpenApiDocumentMerge, actual));
             }

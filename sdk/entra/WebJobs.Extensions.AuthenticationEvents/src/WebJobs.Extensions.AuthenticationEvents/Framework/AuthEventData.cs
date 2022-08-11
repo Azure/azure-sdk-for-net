@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         /// <summary>Gets or sets the custom extension identifier.</summary>
         /// <value>The custom extension identifier.</value>
-        [JsonPropertyName("customAuthenticationExtensionId")]
+        [JsonPropertyName("AuthenticationEventsId")]
         public Guid AuthenticationEventsId { get; set; }
 
         /// <summary>Gets the Json settings.

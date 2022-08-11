@@ -5,17 +5,8 @@
       {
         "type": "ProvideClaimsForToken",
         "claims": [
-          {
-            "id": "DateOfBirth",
-            "value": "01/01/2000"
-          },
-          {
-            "id": "CustomRoles",
-            "value": [
-              "Writer",
-              "Editor"
-            ]
-          }
+          { "DateOfBirth": "01/01/2000" },
+          { "CustomRoles": [ "Writer", "Editor" ] }
         ]
       }
     ]

@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,7 +36,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
-        {}
+        {
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>Starts the asynchronous listener, we do not do anything here as all we need is the reference to the executor.</summary>
         /// <param name="cancellationToken">The cancellation token.</param>

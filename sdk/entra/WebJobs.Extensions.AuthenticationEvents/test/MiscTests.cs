@@ -1,13 +1,13 @@
 ﻿
-using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.TokenIssuanceStart;
-using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.TokenIssuanceStart.Actions;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using System.Net.Http;
 using System.Threading;
-using WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart;
-using WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021;
+using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
+using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021;
 using Xunit;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
+namespace WebJobs.Extensions.AuthenticationEvents.Tests
 {
 
     /// <summary>Tests the OnTokenIssuanceStart request and response for the csharp object model for version preview_10_01_2021</summary>

@@ -19,15 +19,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         /// <summary>Gets the Json schema for the event response.</summary>
         /// <value>The schema.</value>
-        //  [JsonPropertyName("schema")]
-        //  [Required]
         internal string Schema { get; set; }
 
         /// <summary>Gets or sets the body of the event response.</summary>
-        /// <value>The Json payload for the body.</value>
-       // [JsonPropertyName("body")]
         [Required]
-
         public string Body
         {
             get { return Content == null ? string.Empty : Content.ReadAsStringAsync()?.Result; }

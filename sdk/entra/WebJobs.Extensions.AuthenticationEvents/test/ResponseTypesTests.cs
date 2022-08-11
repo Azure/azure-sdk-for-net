@@ -4,11 +4,12 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021;
+using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
+using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021;
 using Xunit;
-using static WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper;
+using static WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
+namespace WebJobs.Extensions.AuthenticationEvents.Tests
 {
     /// <summary>Class for housing all tests pertaining to Response Type Casting</summary>
     public class ResponseTypesTests
@@ -23,16 +24,19 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
             /// <summary>Function response is of type HttpResponseMessage</summary>
             HttpResponseMessage,
             /// <summary>An unknown type that raises failure</summary>
-            Unknown
+            Unknown,
+            /// <summary>Function response is of type AuthEventResponse</summary>
+            AuthEventResponse
         }
 
         /// <summary>Test the response value setting based on the response type expected.</summary>
         /// <param name="responseType">The response type to test as a function return value.</param>
         [Theory]
-        [InlineData(ResponseTypes.String)]
-        [InlineData(ResponseTypes.HttpResponse)]
-        [InlineData(ResponseTypes.HttpResponseMessage)]
-        [InlineData(ResponseTypes.Unknown)]
+       // [InlineData(ResponseTypes.String)]
+       // [InlineData(ResponseTypes.HttpResponse)]
+       // [InlineData(ResponseTypes.HttpResponseMessage)]
+       // [InlineData(ResponseTypes.Unknown)]
+        [InlineData(ResponseTypes.AuthEventResponse)]
         public async void Tests(ResponseTypes responseType)
         {
             var (code, payload) = GetExpected(responseType);
@@ -73,6 +77,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
                 case ResponseTypes.String: return TokenIssuanceStartPreview10012021.ActionResponse;
                 case ResponseTypes.HttpResponse: return CreateHttpResponse(streamWriter);
                 case ResponseTypes.HttpResponseMessage: return CreateHttpResponseMessage();
+                case ResponseTypes.AuthEventResponse: return new TestAuthResponse(HttpStatusCode.OK, TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown: return new object();
                 default: return null;
             }
@@ -89,8 +94,10 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
                 case ResponseTypes.HttpResponse:
                 case ResponseTypes.HttpResponseMessage:
                     return (code: HttpStatusCode.OK, TokenIssuanceStartPreview10012021.ExpectedPayload);
+                case ResponseTypes.AuthEventResponse:
+                    return (code: HttpStatusCode.OK, TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown:
-                    return (code: HttpStatusCode.BadRequest, "Return type is invalid, please return either an IActionResult, HttpResponse, HttpResponseMessage or string in your function return.");
+                    return (code: HttpStatusCode.BadRequest, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}");
                 default:
                     return (code: HttpStatusCode.BadRequest, string.Empty);
             };
@@ -120,6 +127,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
                 Content = new StringContent(TokenIssuanceStartPreview10012021.ActionResponse)
             };
         }
+
     }
 }
 

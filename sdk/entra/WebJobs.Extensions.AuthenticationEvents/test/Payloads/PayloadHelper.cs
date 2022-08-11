@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads
+namespace WebJobs.Extensions.AuthenticationEvents.Tests.Payloads
 {
     internal class PayloadHelper
     {

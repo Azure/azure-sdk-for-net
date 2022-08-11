@@ -108,7 +108,7 @@ To Test Token Augmentation, please do the following.
 - Once the Azure functions developer's application has started, copy the listening url that is displayed with the application starts up.
 ![url.png](markdown/url.png)
 - Note: All Authentication functions are listed, in the case we have one function listener registered called "**OnTokenIssuanceStart**"
-- Your function endpoint will then be a combination of the listening url and function, for example: http://localhost:7071/runtime/webhooks/customauthenticationextension?code=[YOUR_CODE]&function=OnTokenIssuanceStart
+- Your function endpoint will then be a combination of the listening url and function, for example: http://localhost:7071/runtime/webhooks/AuthenticationEvents?code=[YOUR_CODE]&function=OnTokenIssuanceStart
 - Post the following payload using something like Postman or Fiddler.
 - Steps for using Postman can be found [here](https://github.com/Azure/microsoft-azure-webJobs-extensions-authentication-events/wiki/Using-Postman)
 ```
@@ -119,7 +119,7 @@ To Test Token Augmentation, please do the following.
     "@odata.type": "microsoft.graph.onTokenIssuanceStartCalloutData",
     "tenantId": "30000000-0000-0000-0000-000000000003",
     "authenticationEventListenerId": "10000000-0000-0000-0000-000000000001",
-    "customAuthenticationExtensionId": "10000000-0000-0000-0000-000000000002",
+    "AuthenticationEventsId": "10000000-0000-0000-0000-000000000002",
     "authenticationContext":{
       "correlationId": "20000000-0000-0000-0000-000000000002",
       "client": {
@@ -190,9 +190,9 @@ To Test Token Augmentation, please do the following.
 ## Publish
 
 - Follow the instruction here to create and publish your Azure Application. https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs?tabs=in-process#publish-to-azure
-- To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of customauthenticationextension_extension.
+- To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
 ![Portal.png](markdown/Portal.png)
-- For example: https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/customauthenticationextension?code=[customauthenticationextension_extension_key]&function=OnTokenIssuanceStart
+- For example: https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=[AuthenticationEvents_extension_key]&function=OnTokenIssuanceStart
 - Make sure your production environment has the correct application settings for token authentication.
 - Once again you can test the published function by posting the above payload to the new endpoint.
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema
+namespace WebJobs.Extensions.AuthenticationEvents.Tests.Schema
 {
     /// <summary>Describes the test scenario.</summary>
     public class TestScenario

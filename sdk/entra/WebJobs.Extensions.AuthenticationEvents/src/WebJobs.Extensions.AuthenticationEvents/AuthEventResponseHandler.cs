@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Gets or sets the action result.</summary>
         /// <value>The action result.</value>
-        public AuthEventResponse Response { get; internal set; }
+        public AuthEventResponse Response { get;  internal set; }
 
         /// <summary>Gets the type.</summary>
         /// <value>The type.</value>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Gets or sets the request.</summary>
         /// <value>The associated request.</value>
-        public AuthEventRequestBase Request { get; internal set; }
+        public AuthEventRequestBase Request { get;  internal set; }
 
         /// <summary>Gets the value asynchronous.</summary>
         /// <returns>
@@ -136,6 +136,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>If the EventResponse is generated then the Typed EventResponse else null.</returns>
         internal static AuthEventResponse ConvertToEventResponse(AuthEventJsonElement response, Type responseType)
         {
+            if (response.Properties.ContainsKey("data") && response.Properties["data"] is AuthEventJsonElement jsonElement)
+                response = jsonElement;
+
             return responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableResponse<>) ||
                    responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableCloudEventResponse<>) ?
                      (AuthEventResponse)JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :

@@ -1,6 +1,6 @@
 ﻿using NJsonSchema.Validation;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema
+namespace WebJobs.Extensions.AuthenticationEvents.Tests.Schema
 {
     /// <summary>Test Data for Validation Error.</summary>
     public class ValidationErrorTestData

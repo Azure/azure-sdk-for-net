@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension;
+﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using NJsonSchema;
 using NJsonSchema.Validation;
 using System;
@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
-using static WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper;
+using static WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema
+namespace WebJobs.Extensions.AuthenticationEvents.Tests.Schema
 {
     /// <summary>The abstract base class that sets up a framework for schema validation.</summary>
     public abstract class BaseJsonSchemaValidationTest<T> : IAsyncLifetime

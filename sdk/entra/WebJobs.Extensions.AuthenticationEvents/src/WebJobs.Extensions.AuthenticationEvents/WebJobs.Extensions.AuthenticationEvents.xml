@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <doc>
     <assembly>
         <name>Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents</name>
@@ -40,11 +40,6 @@
             <param name="configProvider">The configuration provider.</param>
             <param name="parameterInfo">Initial parameter details.</param>
         </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.GetBindingDataContract(System.Reflection.ParameterInfo)">
-            <summary>Gets the binding data contract.</summary>
-            <param name="parameterInfo">The parameter information.</param>
-            <returns>A contract with the return type and Instance Id in the dictionary.</returns>
-        </member>
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.BindAsync(System.Object,Microsoft.Azure.WebJobs.Host.Bindings.ValueBindingContext)">
             <summary>Binds the asynchronous.</summary>
             <param name="value">The value.</param>
@@ -55,47 +50,6 @@
             <exception cref="T:System.IO.InvalidDataException">blah</exception>
             <seealso cref="T:Microsoft.Azure.WebJobs.Host.Triggers.ITriggerData" />
         </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.GetFaultyRequest(Microsoft.Azure.WebJobs.Host.Bindings.ValueBindingContext,System.Object,System.Net.Http.HttpRequestMessage,Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResponseHandler,System.Exception)">
-            <summary>Gets the faulty request.</summary>
-            <param name="context">Current binding context</param>
-            <param name="value">Incoming value.</param>
-            <param name="request">The incoming HTTP request message.</param>
-            <param name="eventResponseHandler">The event response handler.</param>
-            <param name="ex">The exception that caused the fault.</param>
-            <returns>A TiggerData Object with the failed event request based on the event. With the related request status set.</returns>
-            <seealso cref="T:Microsoft.Azure.WebJobs.Host.Triggers.TriggerData" />
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResponseHandler" />
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.GetRequestForEvent(System.Net.Http.HttpRequestMessage,System.String,Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadata,System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>Gets the request for the event.</summary>
-            <param name="request">The HTTP request message.</param>
-            <param name="payload">The incoming payload.</param>
-            <param name="eventMetadata">The event metadata.</param>
-            <param name="tokenClaims">The token claims.</param>
-            <returns>The related EventRequest based on the event requested.<br /></returns>
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadata" />
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventRequestBase" />
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.GetRequestForEvent(System.Net.Http.HttpRequestMessage,System.String,Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadata,System.Collections.Generic.Dictionary{System.String,System.String},System.Exception)">
-            <summary>Gets the request for event.
-            And sets the status message and state based on the exception.</summary>
-            <param name="request">The HTTP request message.</param>
-            <param name="payload">The body of the request (Json).</param>
-            <param name="eventMetaData">The event metadata.</param>
-            <param name="tokenClaims">The token claims.</param>
-            <param name="ex">An exception if any occurred along the way.</param>
-            <returns>The related EventRequest based on the event requested.</returns>
-            <exception cref="T:System.Exception">An exception is thrown if the IRequestEvent could not be determined from the incoming HTTP request message.</exception>
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadata" />
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventRequestBase" />
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.GetEventAndValidateSchema(System.String)">
-            <summary>Gets the event and validates the income Json against schema provided on the Event Metadata Attribute.</summary>
-            <param name="body">The body of the incoming request.</param>
-            <returns>The Event Metadata object.</returns>
-            <exception cref="T:System.AggregateException">Aggregates all the schema validation exceptions.</exception>
-            <exception cref="T:System.Exception">IF the event cannot be determined or if the object model event differs from the requested event on the incoming payload.</exception>
-        </member>
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.CreateListenerAsync(Microsoft.Azure.WebJobs.Host.Listeners.ListenerFactoryContext)">
             <summary>Creates the listener asynchronous.</summary>
             <param name="context">The context.</param>
@@ -105,25 +59,6 @@
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.ToParameterDescriptor">
             <summary>Converts to parameter-descriptor.</summary>
             <returns>The parameter description for the trigger and binding.</returns>
-        </member>
-        <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.NullListener">
-            <summary>This is a null listener that does nothing. But is requested for the WebJobs Framework, our isolated hosting is handled by the configuration.</summary>
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.NullListener.Cancel">
-            <summary>Cancels this instance.</summary>
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.NullListener.Dispose">
-            <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.NullListener.StartAsync(System.Threading.CancellationToken)">
-            <summary>Starts the asynchronous listener.</summary>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>A task that is flagged as completed.</returns>
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBinding.NullListener.StopAsync(System.Threading.CancellationToken)">
-            <summary>Stops the asynchronous listener.</summary>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>A task that is flagged as completed.</returns>
         </member>
         <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventBindingProvider">
             <summary>The main trigger binding provider class.<br /></summary>
@@ -269,12 +204,12 @@
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Ex_Action_Invalid">
             <summary>
-              Looks up a localized string similar to The action &apos;{0}&apos; is invalid, please use one of the following actions: &apos;{1}&apos;.
+              Looks up a localized string similar to The action '{0}' is invalid, please use one of the following actions: '{1}'.
             </summary>
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Ex_Comparable_Not_Found">
             <summary>
-              Looks up a localized string similar to Comparable &apos;{0}&apos; cannot be match..
+              Looks up a localized string similar to Comparable '{0}' cannot be match..
             </summary>
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Ex_Context_Null">
@@ -289,7 +224,7 @@
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Ex_File_Exists">
             <summary>
-              Looks up a localized string similar to File &apos;{0}&apos; could not be written. Already exists..
+              Looks up a localized string similar to File '{0}' could not be written. Already exists..
             </summary>
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Ex_Gen_Failure">
@@ -384,7 +319,7 @@
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Ex_Parm_Mismatch">
             <summary>
-              Looks up a localized string similar to The parameter on the function signature does not match the expected parameter type of &apos;{0}&apos;. Got: &apos;{1}&apos;.
+              Looks up a localized string similar to The parameter on the function signature does not match the expected parameter type of '{0}'. Got: '{1}'.
             </summary>
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Ex_Response_Mismatch">
@@ -429,12 +364,12 @@
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Val_Non_Default">
             <summary>
-              Looks up a localized string similar to The &apos;{0}&apos; field is missing..
+              Looks up a localized string similar to The '{0}' field is missing..
             </summary>
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResource.Val_One_Of">
             <summary>
-              Looks up a localized string similar to The &apos;{0}&apos; fields needs to contain one of the following values: .
+              Looks up a localized string similar to The '{0}' fields needs to contain one of the following values: .
             </summary>
         </member>
         <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResponseHandler">
@@ -612,11 +547,6 @@
             <summary>Gets or sets the custom extension identifier.</summary>
             <value>The custom extension identifier.</value>
         </member>
-        <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventData.JsonSettings">
-            <summary>Gets the Json settings.
-            Which is over-ridable for sub class.</summary>
-            <value>The json settings.</value>
-        </member>
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventData.FromJson(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventJsonElement)">
             <summary>De-serializes the json the its associated typed object.</summary>
             <param name="json">The json containing the typed structure.</param>
@@ -627,7 +557,7 @@
             <param name="type">The type to create.</param>
             <param name="json">The json payload.</param>
             <returns>A created instance of EventData based on the Type.</returns>
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventData"/>
+            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventData" />
         </member>
         <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventJsonElement">
             <summary>Class to wrap System.Json.Text.JsonElement.</summary>
@@ -805,9 +735,6 @@
         <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadataLoader">
             <summary>Lazy loader and caching for events and the event's related event.</summary>
         </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadataLoader.#ctor">
-            <summary>Prevents a default instance of the <see cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadataLoader" /> class from being created.</summary>
-        </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadataLoader.Instance">
             <summary>Gets the instance.</summary>
             <value>The instance.</value>
@@ -819,20 +746,6 @@
             <exception cref="T:System.MissingFieldException">Is thrown when the event metadata attribute is not found on the event definition enum.</exception>
             <exception cref="T:System.Exception">If not lock is achieved on the thread.</exception>
             <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadata" />
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadataLoader.LoadFromResource(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventMetadataAttribute)">
-            <summary>Loads from schema and payload resource files that are stored as an embedded resource.</summary>
-            <param name="eventMetadataAttr">The event metadata attribute with reference the schema files and template payloads.</param>
-            <returns>EventMetadata with the contents of the embedded resources.</returns>
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadata" />
-        </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadataLoader.ReadResource(System.Reflection.Assembly,System.String,System.String)">
-            <summary>Reads the embedded resource.</summary>
-            <param name="assembly">The assembly.</param>
-            <param name="resource">The resource.</param>
-            <param name="defaultBody">If no resource is found, what default value should be used, if null an error is thrown.</param>
-            <returns>The content of the embedded resource.</returns>
-            <exception cref="T:System.Exception"></exception>
         </member>
         <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventRequest`2">
             <summary>The base class for all typed event requests and its related response and data model.</summary>
@@ -916,7 +829,6 @@
         </member>
         <member name="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse.Body">
             <summary>Gets or sets the body of the event response.</summary>
-            <value>The Json payload for the body.</value>
         </member>
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse.CreateInstance(System.Type,System.String,System.String)">
             <summary>Creates an instance of a sub class of EventResponse based on type and assigns the json schema and payload to the newly created instance.</summary>
@@ -924,7 +836,7 @@
             <param name="schema">The Json schema.</param>
             <param name="body">The Json payload for the body.</param>
             <returns>A created instance of EventResponse based on the Type.</returns>
-            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse"/>
+            <seealso cref="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse" />
         </member>
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse.SetJsonValue``1(``0,System.String[])">
             <summary>Sets the json value in the current payload if path exists.</summary>
@@ -936,7 +848,7 @@
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse.Validate">
             <summary>Validates the current Json body payload against it's associated Json schema.</summary>
             <exception cref="T:System.AggregateException">An aggregation of the errors within the Json if the payload fails the validation.</exception>
-            <seealso cref="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse.Schema"/>
+            <seealso cref="P:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse.Schema" />
         </member>
         <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.CloudEventData">
             <summary>Abstract class that handles payload strongly typed payloads conversions.</summary>
@@ -1001,7 +913,7 @@
             <returns>EventJsonElement representing the Json of the OpenApiDocument.</returns>
             <exception cref="T:System.Exception">No API Document body found.</exception>
         </member>
-        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.OpenApiDocument.EmbedReferencesAndSaveAsync(System.String)">
+        <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.OpenApiDocument.EmbedReferencesAndSave(System.String)">
             <summary>Merges the schemas and document to one single OpenApiDocument and write it to the file system.</summary>
             <param name="path">The path and filename to output to.</param>
         </member>
@@ -1089,16 +1001,16 @@
         <member name="F:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.SupportedTokenSchemaVersions.V2_0">
             <summary>Version 2.</summary>
         </member>
-        <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentTypes">
+        <member name="T:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentType">
             <summary>Document Types.</summary>
         </member>
-        <member name="F:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentTypes.OpenApiDocument">
+        <member name="F:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentType.OpenApiDocument">
             <summary>The open API document.</summary>
         </member>
-        <member name="F:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentTypes.RequestSchema">
+        <member name="F:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentType.RequestSchema">
             <summary>The request schema.</summary>
         </member>
-        <member name="F:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentTypes.ResponseSchema">
+        <member name="F:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.OpenAPIDocumentType.ResponseSchema">
             <summary>The response schema.</summary>
         </member>
         <member name="M:Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Helpers.IsJson(System.String)">

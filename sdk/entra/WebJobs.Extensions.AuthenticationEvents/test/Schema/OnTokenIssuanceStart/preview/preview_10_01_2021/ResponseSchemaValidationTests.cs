@@ -1,11 +1,11 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension;
+﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using NJsonSchema.Validation;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
-using static WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper;
+using static WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema
+namespace WebJobs.Extensions.AuthenticationEvents.Tests.Schema
 {
     /// <summary>
     /// Test class for covering Response Schema Validation for OnTokenIssuanceStart custom extension.
@@ -157,7 +157,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema
         /// <summary>Initializes a new instance of the <see cref="ResponseSchemaValidationTests" /> class.</summary>
         /// <param name="testOutputHelper">The test output helper.</param>
         public ResponseSchemaValidationTests(ITestOutputHelper testOutputHelper)
-            : base(EventDefinition.TokenIssuanceStart_V2021_10_01_Preview, TestSchemaType.Response, testOutputHelper)
+            : base(EventDefinition.TokenIssuanceStartV20211001Preview, TestSchemaType.Response, testOutputHelper)
         {
         }
 

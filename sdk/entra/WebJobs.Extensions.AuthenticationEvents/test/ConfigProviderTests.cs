@@ -1,10 +1,11 @@
-using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using System.Net;
 using System.Net.Http;
 using Xunit;
-using static WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper;
+using static WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
+namespace WebJobs.Extensions.AuthenticationEvents.Tests
 {
     /// <summary>
     /// this class will test EventsTriggerConfigProvider
@@ -30,8 +31,9 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
+
                     AuthEventResponseHandler eventsResponseHandler = (AuthEventResponseHandler)mockedRequest.Properties[AuthEventResponseHandler.EventResponseProperty];
-                    eventsResponseHandler.ActionResult = GetActionResultForHttpStatus(httpStatusCode);
+                    eventsResponseHandler.Response = GetContentForHttpStatus(httpStatusCode);
                 }
             });
 

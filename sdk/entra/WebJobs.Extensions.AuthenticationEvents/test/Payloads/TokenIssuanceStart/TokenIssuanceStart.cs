@@ -1,4 +1,4 @@
-﻿namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart
+﻿namespace WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart
 {
     /// <summary>Test data for the Token Issuance Start</summary>
     public static class TokenIssuanceStart

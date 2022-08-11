@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.WebJobs.Host.Executors;
 using System.Net.Http;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
+namespace WebJobs.Extensions.AuthenticationEvents.Tests
 {
 
     /// <summary>Parameter class for action parameters passed from BaseTest</summary>

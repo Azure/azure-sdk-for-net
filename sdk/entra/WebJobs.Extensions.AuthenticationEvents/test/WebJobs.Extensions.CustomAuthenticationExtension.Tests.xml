@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>WebJobs.Extensions.CustomAuthenticationExtension.Tests</name>
+        <name>WebJobs.Extensions.AuthenticationEvents.Tests</name>
     </assembly>
     <members>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ActionParameters">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.ActionParameters">
             <summary>Parameter class for action parameters passed from BaseTest</summary>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ActionParameters.RequestMessage">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.ActionParameters.RequestMessage">
             <summary>Gets or sets the request message.</summary>
             <value>The request message.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ActionParameters.FunctionData">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.ActionParameters.FunctionData">
             <summary>Gets or sets the function data.</summary>
             <value>The function data.</value>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ConfigProviderTests">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.ConfigProviderTests">
             <summary>
             this class will test EventsTriggerConfigProvider
             </summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ConfigProviderTests.PostConfigProviderTests(System.String,System.Net.HttpStatusCode,WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.HttpMethods,System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.ConfigProviderTests.PostConfigProviderTests(System.String,System.Net.HttpStatusCode,WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.HttpMethods,System.String)">
             <summary>
             This functions runs the test case defined by params and in-line data
             </summary>
@@ -29,195 +29,198 @@
             <param name="method"></param>
             <param name="expectedMessage"></param>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.MiscTests">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.MiscTests">
             <summary>Tests the OnTokenIssuanceStart request and response for the csharp object model for version preview_10_01_2021</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.MiscTests.ConcurrencyTest">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.MiscTests.ConcurrencyTest">
             <summary>Runs 10000 calls to the library concurrently with success payload and response</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.MiscTests.QueryParameterTest">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.MiscTests.QueryParameterTest">
             <summary>Tests query string parameter conversions.</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.MiscTests.TokenIssuanceStartObjectModelTest">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.MiscTests.TokenIssuanceStartObjectModelTest">
             <summary>Tests the OnTokenIssuanceStart request and response object model for CSharp for version: 10_01_2021</summary>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi.OpenApi">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi.OpenApi">
             <summary>Class to house open api tests for the OnTokenIssuanceStart event version preview_10_01_2021</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi.OpenApi.OpenApiDocumentExportTest">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi.OpenApi.OpenApiDocumentExportTest">
             <summary>Tests the the open api document and related schemas can be exported successfully.</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi.OpenApi.OpenApiDocumentMergeTest">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi.OpenApi.OpenApiDocumentMergeTest">
             <summary>Tests the the open api document and related schemas can be merged successfully.</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi.OpenApi.OpenApiDocumentMergeAndSaveTest">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi.OpenApi.OpenApiDocumentMergeAndSaveTest">
             <summary>Tests the the open api document and related schemas can be merged successfully.</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.OpenApi.OpenApi.OpenApiDocument_NameSpace_load">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi.OpenApi.OpenApiDocument_NameSpace_load">
             <summary>Tests the the open api document can be loaded from a namespace successfully.</summary>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.OpenApi.OpenApi">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.OpenApi.OpenApi">
             <summary>Test data for OpenApi</summary>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.OpenApi.OpenApi.OpenApiDocument">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.OpenApi.OpenApi.OpenApiDocument">
             <summary>Gets the open API document body.</summary>
             <value>The open API document.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.OpenApi.OpenApi.OpenApiDocumentMerge">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.OpenApi.OpenApi.OpenApiDocumentMerge">
             <summary>Gets the open API document merged sample payload.</summary>
             <value>The open API document merged.</value>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021">
             <summary>Test data for the Token Issuance Start Request version: preview_10_10_2021</summary>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ExpectedPayload">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ExpectedPayload">
             <summary>The expected response payload.</summary>
             <value>The expected payload.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ActionResponse">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ActionResponse">
             <summary>Mocks the data expected from the function execution.</summary>
             <value>The function response.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.RequestSchema">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.RequestSchema">
             <summary>Gets the request schema body.</summary>
             <value>The request schema.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ResponseSchema">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ResponseSchema">
             <summary>Gets the response schema body.</summary>
             <value>The response schema.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.VersionNameSpace">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.VersionNameSpace">
             <summary>Gets the version name space.</summary>
             <value>The version name space.</value>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart">
             <summary>Test data for the Token Issuance Start</summary>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.NoActionResponse">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.NoActionResponse">
             <summary>Gets the no action response.</summary>
             <value>The no action response.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.InvalidActionResponse">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.InvalidActionResponse">
             <summary>Gets the invalid action response.</summary>
             <value>The invalid action response.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse">
             <summary>Mocks the data expected from the function execution.</summary>
             <value>The function response.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload">
             <summary>Gets the expected payload.</summary>
             <value>The expected payload.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.ConversionPayload">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.ConversionPayload">
             <summary>Mocks the data expected from the function execution that will be converted by yhe EvenrResponseHandler to an IActionResult.</summary>
             <value>The function response.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.TokenInssuanceStartQueryParameter">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.TokenIssuanceStart.TokenInssuanceStartQueryParameter">
             <summary>Gets the token inssuance start query parameter expected payload</summary>
             <value>The token inssuance start query parameter.</value>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes">
             <summary>Payload test types</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes.Valid">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes.Valid">
             <summary>A valid payload</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes.InvalidAction">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes.InvalidAction">
             <summary>A payload with an invalid action</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes.NoAction">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes.NoAction">
             <summary>No actions supplied payload</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes.Empty">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes.Empty">
             <summary>An empty return payload</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes.Conversion">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes.Conversion">
             <summary> A string response that wll be converted to an IActionResult </summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes.ValidCloudEvent">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes.ValidCloudEvent">
             <summary>A valid payload for supported cloud event envolope</summary>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.PayloadTests">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.PayloadTests">
             <summary>Class to house all payload tests</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.PayloadTests.Tests(WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.PayloadTests.Tests(WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes)">
             <summary>Tests the specified payload based on TestType</summary>
             <param name="testType">Type of the test.</param>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests">
             <summary>Class for housing all tests pertaining to Response Type Casting</summary>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.ResponseTypes">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes">
             <summary>Available Types to test</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.ResponseTypes.String">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes.String">
             <summary>Function response is of type string</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.ResponseTypes.HttpResponse">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes.HttpResponse">
             <summary>Function response is of type HttpResponse</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.ResponseTypes.HttpResponseMessage">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes.HttpResponseMessage">
             <summary>Function response is of type HttpResponseMessage</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.ResponseTypes.Unknown">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes.Unknown">
             <summary>An unknown type that raises failure</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.Tests(WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.ResponseTypes)">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes.AuthEventResponse">
+            <summary>Function response is of type AuthEventResponse</summary>
+        </member>
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.Tests(WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes)">
             <summary>Test the response value setting based on the response type expected.</summary>
             <param name="responseType">The response type to test as a function return value.</param>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.GetExpected(WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.ResponseTypes)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.GetExpected(WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.ResponseTypes)">
             <summary>Get the expected HTTP status and payload.</summary>
             <param name="responseType">Expected results for comparison based on Response Type</param>
             <returns>Returns the HttpStatusCode, if the expected HTTP response is json and if what the expected body of the response is.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.CreateHttpResponse(System.IO.StreamWriter)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.CreateHttpResponse(System.IO.StreamWriter)">
             <summary>Creates a HttpResponse object based on default HTTP context.</summary>
             <param name="sw">The stream writer to use to right the HTTP response body.</param>
             <returns>A newly created HttpResponse with the a payload set.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.ResponseTypesTests.CreateHttpResponseMessage">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.ResponseTypesTests.CreateHttpResponseMessage">
             <summary>Creates the HTTP response message.</summary>
             <returns>A newly created HttpResponseMessage with the payload set.</returns>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1">
             <summary>The abstract base class that sets up a framework for schema validation.</summary>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.JsonSchema">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.JsonSchema">
             <summary>Gets the JSON schema.</summary>
             <value>The JSON schema.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.TestOutputHelper">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.TestOutputHelper">
             <summary>Gets the test output helper for logging.</summary>
             <value>The test output helper.</value>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.RegisterTestScenarios(Xunit.TheoryData)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.RegisterTestScenarios(Xunit.TheoryData)">
             <summary>Registers the test data.</summary>
             <param name="testData">The test data.</param>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.GetTestData(System.Nullable{System.Int32})">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.GetTestData(System.Nullable{System.Int32})">
             <summary>Gets the test data.</summary>
             <param name="testIndex">The optional index of the test scenario.</param>
             <returns>Test theory data</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.#ctor(Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.EventDefinition,WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.TestSchemaType,Xunit.Abstractions.ITestOutputHelper)">
-            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1" /> class.</summary>
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.#ctor(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EventDefinition,WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.TestSchemaType,Xunit.Abstractions.ITestOutputHelper)">
+            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1" /> class.</summary>
             <param name="eventSchema">The schema version.</param>
             <param name="schemaType">Type of the schema.</param>
             <param name="testOutputHelper">The test output helper.</param>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.InitializeAsync">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.InitializeAsync">
             <summary>
             Called immediately after the class has been created, before it is used.
             This method loads the JSON Schema from specified schema location. 
             </summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.ValidateTestData(WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.ValidateTestData(WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario)">
             <summary>Helper method that validates the test data.</summary>
             <param name="scenario">The test scenario data.</param>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.TryMatchValidationError(System.Collections.Generic.IEnumerable{NJsonSchema.Validation.ValidationError},System.String,System.Nullable{NJsonSchema.Validation.ValidationErrorKind},System.Boolean)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.TryMatchValidationError(System.Collections.Generic.IEnumerable{NJsonSchema.Validation.ValidationError},System.String,System.Nullable{NJsonSchema.Validation.ValidationErrorKind},System.Boolean)">
             <summary>Tries to recursively find a validation error match in the error tree.</summary>
             <param name="schemaErrors">The actual schema errors.</param>
             <param name="path">The path of expected error.</param>
@@ -229,110 +232,110 @@
             </param>
             <returns>True, if there was a match given the parameters.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.BaseJsonSchemaValidationTest`1.DisposeAsync">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.BaseJsonSchemaValidationTest`1.DisposeAsync">
             <summary>
             Called when an object is no longer needed. Called just before <see cref="M:System.IDisposable.Dispose">Dispose</see>
             if the class also implements that.
             Note: There is no tear down needed.
             </summary>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests">
             <summary>
             Test class for covering Request Schema Validation for OnTokenIssuanceStart custom extension.
             This is for API schema version: Preview_10_01_2021
             </summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.#cctor">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.#cctor">
             <summary>
             Static constructor to register the test scenarios.
             </summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.TestScenarioData">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.TestScenarioData">
             <summary>The test scenario data,</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.#ctor(Xunit.Abstractions.ITestOutputHelper)">
-            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests" /> class.</summary>
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.#ctor(Xunit.Abstractions.ITestOutputHelper)">
+            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests" /> class.</summary>
             <param name="testOutputHelper">The test output helper.</param>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.GetSpecificTestData(System.Int32)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.GetSpecificTestData(System.Int32)">
             <summary>Gets the specific test scenario data by test index.</summary>
             <param name="testScenarioIndex">Index of the test scenario.</param>
             <returns>A list with a single element of specific test scenario data.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.GetAllTestData">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.GetAllTestData">
             <summary>Gets all test data.</summary>
             <returns>List of all test scenario data</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.TestResponseSchema(WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.OnTokenIssuanceStart.preview.preview_10_01_2021.RequestSchemaValidationTests.TestResponseSchema(WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario)">
             <summary>Tests the response schema.</summary>
             <param name="scenario">The test scenario data.</param>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests">
             <summary>
             Test class for covering Response Schema Validation for OnTokenIssuanceStart custom extension.
             This is for API schema version: Preview_10_01_2021
             </summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests.#cctor">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests.#cctor">
             <summary>
             Static constructor to register the test scenarios.
             </summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests.TestScenarioData">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests.TestScenarioData">
             <summary>The test scenario data,</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests.#ctor(Xunit.Abstractions.ITestOutputHelper)">
-            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests" /> class.</summary>
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests.#ctor(Xunit.Abstractions.ITestOutputHelper)">
+            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests" /> class.</summary>
             <param name="testOutputHelper">The test output helper.</param>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests.GetSpecificTestData(System.Int32)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests.GetSpecificTestData(System.Int32)">
             <summary>Gets the specific test scenario data by test index.</summary>
             <param name="testScenarioIndex">Index of the test scenario.</param>
             <returns>A list with a single element of specific test scenario data.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests.GetAllTestData">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests.GetAllTestData">
             <summary>Gets all test data.</summary>
             <returns>List of all test scenario data</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ResponseSchemaValidationTests.TestResponseSchema(WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ResponseSchemaValidationTests.TestResponseSchema(WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario)">
             <summary>Tests the response schema.</summary>
             <param name="scenario">The test scenario data.</param>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario">
             <summary>Describes the test scenario.</summary>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario.TestName">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario.TestName">
             <summary>Gets or sets the name of the test.</summary>
             <value>The name of the test.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario.JsonPayload">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario.JsonPayload">
             <summary>Gets or sets the stringified JSON payload.</summary>
             <value>The stringified JSON payload.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario.ExpectedErrors">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario.ExpectedErrors">
             <summary>Gets or sets the expected errors.</summary>
             <value>The expected errors.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.TestScenario.ValidateNumberOfErrors">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.TestScenario.ValidateNumberOfErrors">
             <summary>Gets or sets a value indicating whether to validate number of errors.</summary>
             <value> If true, validate the number of expected errors to the actual number of validation errors</value>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ValidationErrorTestData">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ValidationErrorTestData">
             <summary>Test Data for Validation Error.</summary>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ValidationErrorTestData.Path">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ValidationErrorTestData.Path">
             <summary>Gets the error path.</summary>
             <value>The error path.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ValidationErrorTestData.Kind">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ValidationErrorTestData.Kind">
             <summary>Gets the optional error kind.</summary>
             <value>The error kind.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ValidationErrorTestData.AllowPartialPathMatch">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ValidationErrorTestData.AllowPartialPathMatch">
             <summary>Gets a value indicating whether to allow partial matching for validation error path.</summary>
             <value>True, if allowed to do partial path matching.</value>
         </member>
-        <member name="P:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ValidationErrorTestData.IsExcludeMode">
+        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ValidationErrorTestData.IsExcludeMode">
             <summary>
             Gets a value indicating whether we want to treat the error as exclude.
             If this value is true, the user is indicating that an actual error with given parameters
@@ -340,46 +343,46 @@
             </summary>
             <value>True if exclude mode is on.</value>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ValidationErrorTestData.#ctor(System.String,System.Nullable{NJsonSchema.Validation.ValidationErrorKind},System.Boolean,System.Boolean)">
-            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.Schema.ValidationErrorTestData" /> class.</summary>
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ValidationErrorTestData.#ctor(System.String,System.Nullable{NJsonSchema.Validation.ValidationErrorKind},System.Boolean,System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:WebJobs.Extensions.AuthenticationEvents.Tests.Schema.ValidationErrorTestData" /> class.</summary>
             <param name="path">The validation error path.</param>
             <param name="kind">The optional validation error kind.</param>
             <param name="allowPathPartialMatch">if set to true, allow path partial match.</param>
             <param name="isExcludeMode">if set to true, exclude mode is on.</param>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper">
             <summary>Static Helper Methods for running tests.</summary>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.HttpMethods">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.HttpMethods">
             <summary>Enum for HTTP methods</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.HttpMethods.Post">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.HttpMethods.Post">
             <summary>
             The post
             </summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.HttpMethods.Get">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.HttpMethods.Get">
             <summary>
             The get
             </summary>
         </member>
-        <member name="T:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.TestSchemaType">
+        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.TestSchemaType">
             <summary>The validating JSON schema type.</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.TestSchemaType.Request">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.TestSchemaType.Request">
             <summary>Request Schema</summary>
         </member>
-        <member name="F:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.TestSchemaType.Response">
+        <member name="F:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.TestSchemaType.Response">
             <summary>Response Schema</summary>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.GetActionResultForHttpStatus(System.Net.HttpStatusCode)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.GetContentForHttpStatus(System.Net.HttpStatusCode)">
             <summary>
             This function will create action results based on incoming httpStatusCode
             </summary>
             <param name="httpStatusCode"></param>
             <returns></returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.CreateHttpRequestMessage(System.Net.Http.HttpMethod,System.String,System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.CreateHttpRequestMessage(System.Net.Http.HttpMethod,System.String,System.String)">
             <summary>
             This function creates HttpRequestMessage  using the incoming params
             </summary>
@@ -388,12 +391,12 @@
             <param name="body"></param>
             <returns></returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.BaseTest(System.Action{WebJobs.Extensions.CustomAuthenticationExtension.Tests.ActionParameters})">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.BaseTest(System.Action{WebJobs.Extensions.AuthenticationEvents.Tests.ActionParameters})">
             <summary>Sets up the boilerplate code for running end to end system tests.<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart</summary>
             <param name="action">Action to emulate the external function call.</param>
             <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.EventResponseBaseTest(System.Action{Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.AuthEventResponseHandler},WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.EventResponseBaseTest(System.Action{Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResponseHandler},WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes)">
             <summary>
             Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
             </summary>
@@ -401,14 +404,14 @@
             <param name="testTypes">Defines the type of test</param>
             <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.EventResponseBaseTest(System.Action{Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.AuthEventResponseHandler})">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.EventResponseBaseTest(System.Action{Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResponseHandler})">
             <summary>
             Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
             </summary>
             <param name="action">Action to emulate the external function call.</param>
             <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.EventResponseBaseTest(WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.HttpMethods,System.String,System.Action{Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.AuthEventResponseHandler},WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestTypes)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.EventResponseBaseTest(WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.HttpMethods,System.String,System.Action{Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResponseHandler},WebJobs.Extensions.AuthenticationEvents.Tests.TestTypes)">
             <summary>
             Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
             </summary>
@@ -418,7 +421,7 @@
             <param name="testTypes">defines the type of test</param>
             <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.EventResponseBaseTest(WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.HttpMethods,System.String,System.Action{Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.AuthEventResponseHandler})">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.EventResponseBaseTest(WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.HttpMethods,System.String,System.Action{Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventResponseHandler})">
             <summary>
             Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
             </summary>
@@ -427,14 +430,14 @@
             <param name="action">Action to emulate the external function call.</param>
             <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.BaseTest(WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.HttpMethods,System.String,System.Action{WebJobs.Extensions.CustomAuthenticationExtension.Tests.ActionParameters})">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.BaseTest(WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.HttpMethods,System.String,System.Action{WebJobs.Extensions.AuthenticationEvents.Tests.ActionParameters})">
             <summary>Sets up the boilerplate code for running end to end system tests.</summary>
             <param name="httpMethods">Type of methods. i.e. Post/Get</param>
             <param name="url">The URL to use to create an inactive mock end point</param>
             <param name="action">Action to emulate the external function call.</param>
             <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.CreateHttpRequestMessage(System.Net.Http.HttpMethod,System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.CreateHttpRequestMessage(System.Net.Http.HttpMethod,System.String)">
             <summary>
             This function creates HttpRequestMessage  using the incoming params
             </summary>
@@ -442,7 +445,7 @@
             <param name="url"></param>
             <returns>A newly created HttpRequestMessage</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.CreateAuthenticationEventTriggerAttribute(Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.EventDefinition,Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.EventTypes)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.CreateAuthenticationEventTriggerAttribute(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EventDefinition,Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EventType)">
             <summary>
             This function creates AuthenticationEventTriggerAttribute using the incoming params
             </summary>
@@ -450,7 +453,7 @@
             <param name="eventTypes">Available Event type</param>
             <returns>A newly create AuthenticationEventTriggerAttribute</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.CreateAuthenticationEventTriggerAttribute(System.String,System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.CreateAuthenticationEventTriggerAttribute(System.String,System.String)">
             <summary>
             This function creates AuthenticationEventTriggerAttribute using the incoming params
             </summary>
@@ -458,103 +461,52 @@
             <param name="audienceAppId"></param>
             <returns>A newly create AuthenticationEventTriggerAttribute</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.ReadResource(System.Reflection.Assembly,System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.ReadResource(System.Reflection.Assembly,System.String)">
             <summary>Reads the content of an embedded resource.</summary>
             <param name="assembly">The assembly where the resource is embedded.</param>
             <param name="resource">The resource Identifier</param>
             <returns>The content of the resource as a string.</returns>
             <exception cref="T:System.MissingFieldException"></exception>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.GetAttribute``1(System.Enum)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.GetAttribute``1(System.Enum)">
             <summary>Gets an attribute from an enumerator field</summary>
             <typeparam name="TAttribute">The Type of the attribute on the enumerator field.</typeparam>
             <param name="value">The enum that the field is on</param>
             <returns>The Attribute if found.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.CreateIssuanceStartPreview10012021Response">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.CreateIssuanceStartPreview10012021Response">
             <summary>Creates the issuance start preview10012021 response.</summary>
             <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.CreateTokenIssuanceStartResponse">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.CreateTokenIssuanceStartResponse">
             <summary>Creates the issuance start preview10012021 response.</summary>
             <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.GetJsonValidationSchema(WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.TestSchemaType,Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.EventDefinition)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.GetJsonValidationSchema(WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.TestSchemaType,Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EventDefinition)">
             <summary>Helper method to load the json validation schema based on schema full name.</summary>
             <returns>Requested json validation schema.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.GetJsonValidationSchemaPaths(WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.TestSchemaType,Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.EventDefinition)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.GetJsonValidationSchemaPaths(WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.TestSchemaType,Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EventDefinition)">
             <summary>Gets the JSON schema name based on schema type and version.</summary>
             <returns>The JSON validation schema name.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.DoesPayloadMatch(System.String,System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.DoesPayloadMatch(System.String,System.String)">
             <summary>Deep probes json to confirm if two pieces of Json are identical if not Json then normal Ordinal String comparison.</summary>
             <param name="actual">The actual.</param>
             <param name="expected">The expected.</param>
             <returns>True if the actual and expected are identical.</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.DoesFilePayloadMatch(System.String,System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.DoesFilePayloadMatch(System.String,System.String)">
             <summary>Doeses the file payload match.</summary>
             <param name="expected">The expected payload.</param>
             <param name="path">The path to the file containing the payload</param>
             <returns>True if payloads match</returns>
         </member>
-        <member name="M:WebJobs.Extensions.CustomAuthenticationExtension.Tests.TestHelper.IsJson(System.String)">
+        <member name="M:WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper.IsJson(System.String)">
             <summary>Determines whether the specified input is json.</summary>
             <param name="input">The input.</param>
             <returns>
               <c>true</c> if the specified input is json; otherwise, <c>false</c>.</returns>
-        </member>
-        <member name="T:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021">
-            <summary>Test data for the Token Issuance Start Request version: preview_10_10_2021</summary>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.FunctionResponse">
-            <summary>Mocks the data expected from the function execution.</summary>
-            <value>The function response.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.InvalidActionResponse">
-            <summary>Gets the invalid action response.</summary>
-            <value>The invalid action response.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.NoActionResponse">
-            <summary>Gets the no action response.</summary>
-            <value>The no action response.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.ConversionPayload">
-            <summary>Mocks the data expected from the function execution that will be converted by yhe EvenrResponseHandler to an IActionResult.</summary>
-            <value>The function response.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.ExpectedPayload">
-            <summary>The expected response payload.</summary>
-            <value>The expected payload.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.ExpectedPayloadCloudEvent">
-            <summary>Gets the expected payload cloud events.</summary>
-            <value>The expected payload cloud events.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.OpenApiDocument">
-            <summary>Gets the open API document body.</summary>
-            <value>The open API document.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.OpenApiDocumentMerge">
-            <summary>Gets the open API document merged sample payload.</summary>
-            <value>The open API document merged.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.RequestSchema">
-            <summary>Gets the request schema body.</summary>
-            <value>The request schema.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.ResponseSchema">
-            <summary>Gets the response schema body.</summary>
-            <value>The response schema.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.VersionNameSpace">
-            <summary>Gets the version name space.</summary>
-            <value>The version name space.</value>
-        </member>
-        <member name="P:WebJobs.Extensions.AuthenticationEvents.Tests.TokenIssuanceStartPreview10012021.TokenInssuanceStartQueryParameter">
-            <summary>Gets the token inssuance start query parameter expected payload</summary>
-            <value>The token inssuance start query parameter.</value>
         </member>
     </members>
 </doc>

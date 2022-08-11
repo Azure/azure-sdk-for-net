@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension;
-using Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension.TokenIssuanceStart;
+﻿//using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -14,12 +14,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
+namespace WebJobs.Extensions.AuthenticationEvents.Tests
 {
     /// <summary>Static Helper Methods for running tests.</summary>
     public static partial class TestHelper
     {
-        private const string DefaultNamespace = "Microsoft.Azure.WebJobs.Extensions.CustomAuthenticationExtension";
+        private const string DefaultNamespace = "Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents";
         private static readonly Assembly MainAssembly = Assembly.Load(DefaultNamespace);
 
         /// <summary>Enum for HTTP methods</summary>
@@ -50,13 +50,14 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
         /// </summary>
         /// <param name="httpStatusCode"></param>
         /// <returns></returns>
-        public static IActionResult GetActionResultForHttpStatus(HttpStatusCode httpStatusCode)
+        internal static TestAuthResponse GetContentForHttpStatus(HttpStatusCode httpStatusCode)
         {
+
             switch (httpStatusCode)
             {
-                case HttpStatusCode.OK: return new JsonResult("{'hi':'bye'}");
-                case HttpStatusCode.Unauthorized: return new UnauthorizedResult();
-                default: return new BadRequestResult();
+                case HttpStatusCode.OK: return new TestAuthResponse(HttpStatusCode.OK, "{'hi':'bye'}");
+                case HttpStatusCode.Unauthorized: return new TestAuthResponse(HttpStatusCode.Unauthorized);
+                default: return new TestAuthResponse(HttpStatusCode.BadRequest);
             }
         }
 
@@ -94,6 +95,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
         /// <param name="action">Action to emulate the external function call.</param>
         /// <param name="testTypes">Defines the type of test</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
+
         public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthEventResponseHandler> action, TestTypes testTypes)
         {
             return await EventResponseBaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action, testTypes);
@@ -104,6 +106,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
         /// </summary>
         /// <param name="action">Action to emulate the external function call.</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
+
         public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthEventResponseHandler> action)
         {
             return await EventResponseBaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action);
@@ -127,7 +130,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
                         Response = testTypes == TestTypes.ValidCloudEvent ? CreateTokenIssuanceStartResponse() : CreateIssuanceStartPreview10012021Response(),
-                        RequestStatus = AuthEventConvertStatusTypes.Successful
+                        RequestStatus = AuthEventConvertStatusType.Successful
                     };
 
                     action(eventsResponseHandler);
@@ -142,6 +145,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
         /// <param name="url">The URL to use to create an inactive mock end point</param>
         /// <param name="action">Action to emulate the external function call.</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
+
         public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthEventResponseHandler> action)
         {
             return await (BaseTest(httpMethods, url, t =>
@@ -153,7 +157,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
                     {
 
                         Response = CreateIssuanceStartPreview10012021Response(),
-                        RequestStatus = AuthEventConvertStatusTypes.Successful
+                        RequestStatus = AuthEventConvertStatusType.Successful
                     };
 
                     action(eventsResponseHandler);
@@ -171,13 +175,13 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
         {
             HttpRequestMessage requestMessage = CreateHttpRequestMessage(httpMethods == HttpMethods.Post ? HttpMethod.Post : HttpMethod.Get, url);
 
-            CustomAuthenticationTriggerAttribute attr = CreateAuthenticationEventTriggerAttribute("Tenant", "App");
+            AuthenticationEventsTriggerAttribute attr = CreateAuthenticationEventTriggerAttribute("Tenant", "App");
 
             Mock<ITriggeredFunctionExecutor> mockObject = new Mock<ITriggeredFunctionExecutor>();
 
-            AuthEventTriggerConfigProvider eventsTriggerConfigProvider = new AuthEventTriggerConfigProvider(new LoggerFactory());
+            AuthEventConfigProvider eventsTriggerConfigProvider = new AuthEventConfigProvider(new LoggerFactory());
 
-            eventsTriggerConfigProvider.Listeners.Add("onTokenIssuanceStart", new AuthEventTriggerListener(mockObject.Object, attr));
+            eventsTriggerConfigProvider.Listeners.Add("onTokenIssuanceStart", new AuthEventListener(mockObject.Object, attr));
 
             mockObject.Setup(m => m.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).Callback<TriggeredFunctionData, CancellationToken>(
                 (t, x) =>
@@ -209,7 +213,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
         /// <param name="versions">Available version</param>
         /// <param name="eventTypes">Available Event type</param>
         /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
-        internal static CustomAuthenticationTriggerAttribute CreateAuthenticationEventTriggerAttribute(EventDefinition versions, EventTypes eventTypes)
+        internal static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(EventDefinition versions, EventType eventTypes)
         {
             return CreateAuthenticationEventTriggerAttribute(string.Empty, string.Empty);
         }
@@ -220,10 +224,10 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
         /// <param name="tenantId"></param>
         /// <param name="audienceAppId"></param>
         /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
-        public static CustomAuthenticationTriggerAttribute CreateAuthenticationEventTriggerAttribute(string tenantId, string audienceAppId)
+        public static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(string tenantId, string audienceAppId)
         {
 
-            return new CustomAuthenticationTriggerAttribute()
+            return new AuthenticationEventsTriggerAttribute()
             {
                 TenantId = tenantId,
                 AudienceAppId = audienceAppId
@@ -289,7 +293,7 @@ namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests
 
             return new TokenIssuanceStartResponse()
             {
-                Schema = GetJsonValidationSchema(TestSchemaType.Response, EventDefinition.TokenIssuanceStart_V2021_10_01_Preview),
+                Schema = GetJsonValidationSchema(TestSchemaType.Response, EventDefinition.TokenIssuanceStartV20211001Preview),
                 Body = jBody.ToString()
             };
         }

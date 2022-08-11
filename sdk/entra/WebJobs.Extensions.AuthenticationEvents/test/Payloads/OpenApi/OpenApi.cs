@@ -1,4 +1,4 @@
-﻿namespace WebJobs.Extensions.CustomAuthenticationExtension.Tests.Payloads.OpenApi
+﻿namespace WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.OpenApi
 {
     /// <summary>Test data for OpenApi</summary>
     public static class OpenApi

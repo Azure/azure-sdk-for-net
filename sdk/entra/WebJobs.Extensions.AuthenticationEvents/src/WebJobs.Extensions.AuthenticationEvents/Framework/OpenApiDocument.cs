@@ -107,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         /// <summary>Merges the schemas and document to one single OpenApiDocument and write it to the file system.</summary>
         /// <param name="path">The path and filename to output to.</param>
-        public void EmbedReferencesAndSaveAsync(string path)
+        public void EmbedReferencesAndSave(string path)
         {
             WriteFile(path, EmbedReferences()?.ToString());
         }
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>A dictionary with the document to path/filename relation.</returns>
         /// <exception cref="Exception">No API Document body found.</exception>
         /// <exception cref="DirectoryNotFoundException">If the output directory is not found.</exception>
-        public Dictionary<OpenAPIDocumentTypes, string> Save(string path)
+        public Dictionary<OpenAPIDocumentType, string> Save(string path)
         {
             if (Document == null)
                 throw new Exception(AuthEventResource.Ex_OpenApi_Missing);
@@ -149,16 +149,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 Directory.CreateDirectory(path);
             }
 
-            Dictionary<OpenAPIDocumentTypes, string> result = new()
+            Dictionary<OpenAPIDocumentType, string> result = new()
             {
-                {OpenAPIDocumentTypes.OpenApiDocument, Path.Combine(path,EventMetadata.OpenApiDocument) },
-                {OpenAPIDocumentTypes.RequestSchema, Path.Combine(path,EventMetadata.RequestSchema) },
-                {OpenAPIDocumentTypes.ResponseSchema, Path.Combine(path,EventMetadata.ResponseSchema) }
+                {OpenAPIDocumentType.OpenApiDocument, Path.Combine(path,EventMetadata.OpenApiDocument) },
+                {OpenAPIDocumentType.RequestSchema, Path.Combine(path,EventMetadata.RequestSchema) },
+                {OpenAPIDocumentType.ResponseSchema, Path.Combine(path,EventMetadata.ResponseSchema) }
             };
 
-            WriteFile(result[OpenAPIDocumentTypes.OpenApiDocument], Document.ToString());
-            WriteFile(result[OpenAPIDocumentTypes.RequestSchema], RequestSchema.ToString());
-            WriteFile(result[OpenAPIDocumentTypes.ResponseSchema], ResponseSchema.ToString());
+            WriteFile(result[OpenAPIDocumentType.OpenApiDocument], Document.ToString());
+            WriteFile(result[OpenAPIDocumentType.RequestSchema], RequestSchema.ToString());
+            WriteFile(result[OpenAPIDocumentType.ResponseSchema], ResponseSchema.ToString());
 
             return result;
         }

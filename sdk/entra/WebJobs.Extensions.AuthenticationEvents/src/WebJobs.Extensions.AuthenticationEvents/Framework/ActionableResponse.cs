@@ -17,8 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the actions.</summary>
         /// <value>The actions.</value>
         [JsonPropertyName("actions")]
-        [JsonConverter(typeof(ActionConverterFactoryOfT))]
-        public List<T> Actions { get; } = new List<T>();
+        public List<T> Actions { get;  set; } = new List<T>();
 
         /// <summary>Invalidates this instance.
         /// Subsequently invalidates the actions.</summary>
