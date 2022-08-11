@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class RecordingStatusResult
+    public partial class RecordingStateResponse
     {
-        internal static RecordingStatusResult DeserializeRecordingStatusResult(JsonElement element)
+        internal static RecordingStateResponse DeserializeRecordingStateResponse(JsonElement element)
         {
             Optional<string> recordingId = default;
-            Optional<RecordingStatus> recordingStatus = default;
+            Optional<RecordingState> recordingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"))
@@ -23,18 +23,18 @@ namespace Azure.Communication.CallingServer
                     recordingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordingStatus"))
+                if (property.NameEquals("recordingState"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recordingStatus = new RecordingStatus(property.Value.GetString());
+                    recordingState = new RecordingState(property.Value.GetString());
                     continue;
                 }
             }
-            return new RecordingStatusResult(recordingId.Value, Optional.ToNullable(recordingStatus));
+            return new RecordingStateResponse(recordingId.Value, Optional.ToNullable(recordingState));
         }
     }
 }

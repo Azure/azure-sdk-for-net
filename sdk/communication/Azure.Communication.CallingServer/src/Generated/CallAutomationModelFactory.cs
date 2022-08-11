@@ -26,13 +26,13 @@ namespace Azure.Communication.CallingServer
             return new RemoveParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of RecordingStatusResult. </summary>
+        /// <summary> Initializes a new instance of RecordingStateResponse. </summary>
         /// <param name="recordingId"></param>
-        /// <param name="recordingStatus"></param>
-        /// <returns> A new <see cref="CallingServer.RecordingStatusResult"/> instance for mocking. </returns>
-        public static RecordingStatusResult RecordingStatusResult(string recordingId = null, RecordingStatus? recordingStatus = null)
+        /// <param name="recordingState"></param>
+        /// <returns> A new <see cref="CallingServer.RecordingStateResponse"/> instance for mocking. </returns>
+        public static RecordingStateResponse RecordingStateResponse(string recordingId = null, RecordingState? recordingState = null)
         {
-            return new RecordingStatusResult(recordingId, recordingStatus);
+            return new RecordingStateResponse(recordingId, recordingState);
         }
 
         /// <summary> Initializes a new instance of ResultInformation. </summary>

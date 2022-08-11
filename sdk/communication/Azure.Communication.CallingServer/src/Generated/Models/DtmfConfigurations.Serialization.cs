@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CollectTones : IUtf8JsonSerializable
+    public partial class DtmfConfigurations : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallingServer
                 writer.WriteStartArray();
                 foreach (var item in StopTones)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

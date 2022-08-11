@@ -7,11 +7,11 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The PlayResultEvent. </summary>
-    internal partial class PlayResultEvent
+    /// <summary> The PlayCompleted. </summary>
+    internal partial class PlayCompleted
     {
-        /// <summary> Initializes a new instance of PlayResultEvent. </summary>
-        internal PlayResultEvent()
+        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        internal PlayCompleted()
         {
         }
 
