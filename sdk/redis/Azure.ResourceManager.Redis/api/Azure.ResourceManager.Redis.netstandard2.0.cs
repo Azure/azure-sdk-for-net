@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string PreferredDataArchiveAuthMethod { get { throw null; } }
         public string PreferredDataPersistenceAuthMethod { get { throw null; } }
         public string RdbBackupFrequency { get { throw null; } set { } }
-        public string RdbBackupMaxSnapshotCount { get { throw null; } set { } }
+        public int? RdbBackupMaxSnapshotCount { get { throw null; } set { } }
         public string RdbStorageConnectionString { get { throw null; } set { } }
         public string ZonalConfiguration { get { throw null; } }
     }

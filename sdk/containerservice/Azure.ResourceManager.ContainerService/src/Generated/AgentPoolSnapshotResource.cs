@@ -194,18 +194,18 @@ namespace Azure.ResourceManager.ContainerService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}
         /// Operation Id: Snapshots_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
+        /// <param name="containerServiceTagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<AgentPoolSnapshotResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerServiceTagsObject"/> is null. </exception>
+        public virtual async Task<Response<AgentPoolSnapshotResource>> UpdateAsync(ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = await _agentPoolSnapshotSnapshotsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _agentPoolSnapshotSnapshotsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.ContainerService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}
         /// Operation Id: Snapshots_UpdateTags
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
+        /// <param name="containerServiceTagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<AgentPoolSnapshotResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerServiceTagsObject"/> is null. </exception>
+        public virtual Response<AgentPoolSnapshotResource> Update(ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = _agentPoolSnapshotSnapshotsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                var response = _agentPoolSnapshotSnapshotsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject, cancellationToken);
                 return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

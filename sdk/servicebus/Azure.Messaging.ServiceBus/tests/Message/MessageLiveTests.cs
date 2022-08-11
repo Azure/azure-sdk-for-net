@@ -574,6 +574,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 // delivery annotations
                 Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey1"], "deliveryAnnotationVal1");
                 Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey2"], "deliveryAnnotationVal2");
+
+                // footer
+                Assert.AreEqual("footerVal1", received.Footer["footerKey1"]);
+                Assert.AreEqual("footerVal2", received.Footer["footerKey2"]);
             }
         }
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The AcsEventType. </summary>
-    public readonly partial struct AcsEventType : IEquatable<AcsEventType>
+    internal readonly partial struct AcsEventType : IEquatable<AcsEventType>
     {
         private readonly string _value;
 
@@ -30,6 +30,7 @@ namespace Azure.Communication.CallingServer
         private const string AddParticipantsSucceededValue = "addParticipantsSucceeded";
         private const string AddParticipantsFailedValue = "addParticipantsFailed";
         private const string ParticipantsUpdatedValue = "participantsUpdated";
+        private const string PlayResultValue = "playResult";
 
         /// <summary> unknown. </summary>
         public static AcsEventType Unknown { get; } = new AcsEventType(UnknownValue);
@@ -47,6 +48,8 @@ namespace Azure.Communication.CallingServer
         public static AcsEventType AddParticipantsFailed { get; } = new AcsEventType(AddParticipantsFailedValue);
         /// <summary> participantsUpdated. </summary>
         public static AcsEventType ParticipantsUpdated { get; } = new AcsEventType(ParticipantsUpdatedValue);
+        /// <summary> playResult. </summary>
+        public static AcsEventType PlayResult { get; } = new AcsEventType(PlayResultValue);
         /// <summary> Determines if two <see cref="AcsEventType"/> values are the same. </summary>
         public static bool operator ==(AcsEventType left, AcsEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsEventType"/> values are not the same. </summary>

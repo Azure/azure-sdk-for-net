@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in Parquet format. </summary>
-    public partial class ParquetFormatSerialization : DataSerialization
+    public partial class ParquetFormatSerialization : StreamAnalyticsDataSerialization
     {
         /// <summary> Initializes a new instance of ParquetFormatSerialization. </summary>
         public ParquetFormatSerialization()
