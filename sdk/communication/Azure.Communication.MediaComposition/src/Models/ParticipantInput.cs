@@ -53,7 +53,7 @@ namespace Azure.Communication.MediaComposition.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="call"/> is null. </exception>
         public ParticipantInput(CommunicationIdentifier id, string call)
         {
-            if (id is null)
+            if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
