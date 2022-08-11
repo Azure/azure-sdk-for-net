@@ -27,6 +27,8 @@ namespace Azure.Search.Documents
         protected SearchClient() { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchClient(System.Uri endpoint, string indexName, Azure.Core.TokenCredential tokenCredential) { }
+        public SearchClient(System.Uri endpoint, string indexName, Azure.Core.TokenCredential tokenCredential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
@@ -179,6 +181,8 @@ namespace Azure.Search.Documents.Indexes
         protected SearchIndexClient() { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchIndexClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
+        public SearchIndexClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo>> AnalyzeText(string indexName, Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -222,6 +226,8 @@ namespace Azure.Search.Documents.Indexes
         protected SearchIndexerClient() { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchIndexerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
+        public SearchIndexerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateDataSourceConnection(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

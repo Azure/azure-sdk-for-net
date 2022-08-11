@@ -107,6 +107,23 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
+        /// Create an <see cref="HttpPipeline"/> to send requests to the Search service.
+        /// </summary>
+        /// <param name="credential">
+        /// The <see cref="TokenCredential"/> to authenticate requests.
+        /// </param>
+        /// <returns>An <see cref="HttpPipeline"/> to send requests.</returns>
+        internal HttpPipeline Build(TokenCredential credential)
+        {
+            Debug.Assert(credential != null);
+            return HttpPipelineBuilder.Build(
+                options: this,
+                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, Constants.CredentialScopeName) },
+                perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
+                responseClassifier: null);
+        }
+
+        /// <summary>
         /// Add the allow list headers to the <see cref="DiagnosticsOptions"/>
         /// that are considered safe for logging/exceptions by default.
         /// </summary>
