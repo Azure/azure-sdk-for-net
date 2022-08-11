@@ -18,6 +18,7 @@ See [Azure SDK diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main
 See [this page](https://docs.microsoft.com/rest/api/searchservice/http-status-codes) for the common response status codes sent by the Azure Cognitive Search service.
 
 ## 207 Multi-Status
+
 This response status indicates a partial success for an indexing operation. Some documents were successfully processed, but at least one failed. Details of the failed documents are present in the individual `IndexingResult` objects within the `IndexDocumentsResult` of the `Azure.Response`. If you want the [`IndexDocumentsAsync()`](https://docs.microsoft.com/dotnet/api/azure.search.documents.searchclient.indexdocumentsasync) method call to throw an exception on any failure, set [`IndexDocumentsOptions.ThrowOnAnyError`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexdocumentsoptions.throwonanyerror) to `true`. Each failure is then recorded in a separate `RequestFailedException` and a single `AggregateException` is thrown by the method.
 
 ## 403 Forbidden
