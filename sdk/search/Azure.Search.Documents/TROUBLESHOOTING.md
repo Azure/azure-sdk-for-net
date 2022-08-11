@@ -14,6 +14,7 @@ See [Azure SDK diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main
 * [Limits imposed by the Search service](#limits-imposed-by-the-service)
 
 # Troubleshooting Issues By Response Code
+
 See [this page](https://docs.microsoft.com/rest/api/searchservice/http-status-codes) for the common response status codes sent by the Azure Cognitive Search service.
 
 ## 207 Multi-Status
