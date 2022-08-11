@@ -31,20 +31,6 @@ namespace Azure.Communication.MediaComposition
         public bool? HighlightDominantSpeaker { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> InputIds { get { throw null; } }
     }
-    public partial class CommunicationError
-    {
-        public CommunicationError(string code, string message) { }
-        public string Code { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.MediaComposition.CommunicationError> Details { get { throw null; } }
-        public Azure.Communication.MediaComposition.CommunicationError InnerError { get { throw null; } }
-        public string Message { get { throw null; } set { } }
-        public string Target { get { throw null; } }
-    }
-    public partial class CommunicationErrorResponse
-    {
-        public CommunicationErrorResponse(Azure.Communication.MediaComposition.CommunicationError error) { }
-        public Azure.Communication.MediaComposition.CommunicationError Error { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.MediaComposition.CommunicationIdentifierModelKind>
     {
@@ -192,10 +178,6 @@ namespace Azure.Communication.MediaComposition
         {
             V2022_07_16_Preview1 = 1,
         }
-    }
-    public static partial class MediaCompositionModelFactory
-    {
-        public static Azure.Communication.MediaComposition.CommunicationError CommunicationError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.MediaComposition.CommunicationError> details = null, Azure.Communication.MediaComposition.CommunicationError innerError = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaInputType : System.IEquatable<Azure.Communication.MediaComposition.MediaInputType>
