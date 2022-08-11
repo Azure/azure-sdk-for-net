@@ -32,13 +32,14 @@ namespace Azure.Monitor.Ingestion.Tests
             return new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential);
         }
 
+        [LiveOnly]
         [Test]
         public void NullInput()
         {
             LogsIngestionClient client = CreateClient();
             Assert.Throws<ArgumentNullException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null));
         }
-
+        [LiveOnly]
         [Test]
         public void EmptyData()
         {
@@ -49,7 +50,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var exception = Assert.Throws<ArgumentException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries));
             StringAssert.StartsWith("Value cannot be an empty collection.", exception.Message);
         }
-
+        [LiveOnly]
         [Test]
         public void NullStream()
         {
@@ -58,7 +59,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Stream stream = null;
             var exception = Assert.Throws<NullReferenceException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(stream)));
         }
-
+        [LiveOnly]
         [Test]
         public async Task UploadOneLogGreaterThan1Mb()
         {
@@ -79,7 +80,7 @@ namespace Azure.Monitor.Ingestion.Tests
             // Check the response
             Assert.AreEqual(204, response.Status);
         }
-
+        [LiveOnly]
         [Test]
         public void ValidateBatchingOneChunkNoGzip()
         {
@@ -97,7 +98,7 @@ namespace Azure.Monitor.Ingestion.Tests
             IEnumerable<BinaryData> x = LogsIngestionClient.Batch(entries);
             Assert.AreEqual(1, x.Count());
         }
-
+        [LiveOnly]
         [Test]
         public void ValidateBatchingMultiChunkNoGzip()
         {
@@ -115,7 +116,7 @@ namespace Azure.Monitor.Ingestion.Tests
             IEnumerable<BinaryData> x = LogsIngestionClient.Batch(entries);
             Assert.Greater(x.Count(), 1);
         }
-
+        [LiveOnly]
         [Test]
         public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
         {
@@ -141,7 +142,7 @@ namespace Azure.Monitor.Ingestion.Tests
             // Check the response
             Assert.AreEqual(204, response.Status);
         }
-
+        [LiveOnly]
         [Test]
         public void ValidInputFromObjectAsJsonNoBatching()
         {
@@ -168,7 +169,7 @@ namespace Azure.Monitor.Ingestion.Tests
             // Check the response
             Assert.AreEqual(204, response.Status);
         }
-
+        [LiveOnly]
         [Test]
         public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
         {
