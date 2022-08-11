@@ -36,7 +36,11 @@ namespace Azure.Communication.CallingServer
                 string callId = "serverCallId";
                 callConnectionId = callResponse.Value.CallConnection.CallConnectionId;
                 CallRecording callRecording = client.GetCallRecording();
-                var recordingResponse = await callRecording.StartRecordingAsync(new ServerCallLocator(callId), new Uri(ngrok)).ConfigureAwait(false);
+                StartRecordingOptions recordingOptions = new StartRecordingOptions(new ServerCallLocator(callId))
+                {
+                    RecordingStateCallbackEndpoint = new Uri(ngrok)
+                };
+                var recordingResponse = await callRecording.StartRecordingAsync(recordingOptions).ConfigureAwait(false);
                 Assert.NotNull(recordingResponse.Value);
 
                 var recordingId = recordingResponse.Value.RecordingId;
