@@ -91,7 +91,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
-        /// The URI must use HTTPS.
+        /// The endpoint must use HTTPS.
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
-        /// The URI must use HTTPS.
+        /// The endpoint must use HTTPS.
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
@@ -161,7 +161,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
-        /// The URI must use HTTPS.
+        /// The endpoint must use HTTPS.
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
@@ -221,7 +221,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
-        /// The URI must use HTTPS.
+        /// The endpoint must use HTTPS.
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
@@ -280,7 +280,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
-        /// The URI must use HTTPS.
+        /// The endpoint must use HTTPS.
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
