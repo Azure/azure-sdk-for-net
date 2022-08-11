@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="recognizeConfiguration"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeConfiguration"/> is null. </exception>
-        public RecognizeRequestInternal(RecognizeInputType recognizeInputType, RecognizeConfigurations recognizeConfiguration)
+        public RecognizeRequestInternal(RecognizeInputType recognizeInputType, RecognizeConfigurationsInternal recognizeConfiguration)
         {
             if (recognizeConfiguration == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> If set recognize can barge into other existing queued-up/currently-processing requests. </summary>
         public bool? StopCurrentOperations { get; set; }
         /// <summary> Defines options for recognition. </summary>
-        public RecognizeConfigurations RecognizeConfiguration { get; }
+        public RecognizeConfigurationsInternal RecognizeConfiguration { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

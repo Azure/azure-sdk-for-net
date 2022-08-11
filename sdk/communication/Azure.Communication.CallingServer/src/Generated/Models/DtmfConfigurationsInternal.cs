@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Options for DTMF recognition. </summary>
-    public partial class DtmfConfigurations
+    internal partial class DtmfConfigurationsInternal
     {
-        /// <summary> Initializes a new instance of DtmfConfigurations. </summary>
-        public DtmfConfigurations()
+        /// <summary> Initializes a new instance of DtmfConfigurationsInternal. </summary>
+        public DtmfConfigurationsInternal()
         {
             StopTones = new ChangeTrackingList<StopTones>();
         }

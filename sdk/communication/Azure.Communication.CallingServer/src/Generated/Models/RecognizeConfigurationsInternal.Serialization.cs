@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class RecognizeConfigurations : IUtf8JsonSerializable
+    internal partial class RecognizeConfigurationsInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

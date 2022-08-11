@@ -10,10 +10,10 @@ using Azure.Communication;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecognizeConfigurations. </summary>
-    public partial class RecognizeConfigurations
+    internal partial class RecognizeConfigurationsInternal
     {
-        /// <summary> Initializes a new instance of RecognizeConfigurations. </summary>
-        public RecognizeConfigurations()
+        /// <summary> Initializes a new instance of RecognizeConfigurationsInternal. </summary>
+        public RecognizeConfigurationsInternal()
         {
         }
 
@@ -24,6 +24,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Target participant of DTFM tone recognition. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; set; }
         /// <summary> Defines configurations for DTMF. </summary>
-        public DtmfConfigurations DtmfConfigurations { get; set; }
+        public DtmfConfigurationsInternal DtmfConfigurations { get; set; }
     }
 }

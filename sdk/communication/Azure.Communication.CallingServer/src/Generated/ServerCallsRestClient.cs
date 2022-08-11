@@ -57,7 +57,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public async Task<Response<RecordingStateResponse>> GetRecordingPropertiesAsync(string recordingId, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordingStateResult>> GetRecordingPropertiesAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
             {
@@ -70,9 +70,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        RecordingStateResponse value = default;
+                        RecordingStateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecordingStateResponse.DeserializeRecordingStateResponse(document.RootElement);
+                        value = RecordingStateResult.DeserializeRecordingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public Response<RecordingStateResponse> GetRecordingProperties(string recordingId, CancellationToken cancellationToken = default)
+        public Response<RecordingStateResult> GetRecordingProperties(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
             {
@@ -97,9 +97,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        RecordingStateResponse value = default;
+                        RecordingStateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecordingStateResponse.DeserializeRecordingStateResponse(document.RootElement);
+                        value = RecordingStateResult.DeserializeRecordingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

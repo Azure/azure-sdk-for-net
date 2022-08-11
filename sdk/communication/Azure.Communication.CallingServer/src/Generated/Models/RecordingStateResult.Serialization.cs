@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class RecordingStateResponse
+    public partial class RecordingStateResult
     {
-        internal static RecordingStateResponse DeserializeRecordingStateResponse(JsonElement element)
+        internal static RecordingStateResult DeserializeRecordingStateResult(JsonElement element)
         {
             Optional<string> recordingId = default;
             Optional<RecordingState> recordingState = default;
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new RecordingStateResponse(recordingId.Value, Optional.ToNullable(recordingState));
+            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState));
         }
     }
 }

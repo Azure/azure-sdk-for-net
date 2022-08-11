@@ -8,17 +8,17 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecordingStateResponse. </summary>
-    public partial class RecordingStateResponse
+    public partial class RecordingStateResult
     {
-        /// <summary> Initializes a new instance of RecordingStateResponse. </summary>
-        internal RecordingStateResponse()
+        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        internal RecordingStateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RecordingStateResponse. </summary>
+        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
-        internal RecordingStateResponse(string recordingId, RecordingState? recordingState)
+        internal RecordingStateResult(string recordingId, RecordingState? recordingState)
         {
             RecordingId = recordingId;
             RecordingState = recordingState;
