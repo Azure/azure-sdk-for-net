@@ -49,22 +49,22 @@ namespace Azure.Communication.CallingServer
 
                 recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
                 Assert.NotNull(recordingResponse.Value);
-                Assert.NotNull(recordingResponse.Value.RecordingStatus);
-                Assert.AreEqual(recordingResponse.Value.RecordingStatus, RecordingStatus.Active);
+                Assert.NotNull(recordingResponse.Value.RecordingState);
+                Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
 
                 await callRecording.PauseRecordingAsync(recordingId);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
                 Assert.NotNull(recordingResponse.Value);
-                Assert.NotNull(recordingResponse.Value.RecordingStatus);
-                Assert.AreEqual(recordingResponse.Value.RecordingStatus, RecordingStatus.Inactive);
+                Assert.NotNull(recordingResponse.Value.RecordingState);
+                Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Inactive);
 
                 await callRecording.ResumeRecordingAsync(recordingId);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 recordingResponse = await callRecording.GetRecordingStateAsync(recordingId).ConfigureAwait(false);
                 Assert.NotNull(recordingResponse.Value);
-                Assert.NotNull(recordingResponse.Value.RecordingStatus);
-                Assert.AreEqual(recordingResponse.Value.RecordingStatus, RecordingStatus.Active);
+                Assert.NotNull(recordingResponse.Value.RecordingState);
+                Assert.AreEqual(recordingResponse.Value.RecordingState, RecordingState.Active);
 
                 await callRecording.StopRecordingAsync(recordingId);
                 await WaitForOperationCompletion().ConfigureAwait(false);
