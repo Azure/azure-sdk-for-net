@@ -21,7 +21,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class IngestionClientLiveTest : RecordedTestBase<IngestionClientTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public IngestionClientLiveTest(bool isAsync) : base(isAsync)
+        public IngestionClientLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
