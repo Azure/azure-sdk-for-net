@@ -265,7 +265,7 @@ namespace Azure.AI.TextAnalytics
 
             Response rawResponse = response.GetRawResponse();
 
-            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded || response.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted)
             {
                 string nextLink = response.Value.NextLink;
                 _firstPage = Page.FromValues(new List<ClassifyDocumentResultCollection>() { Transforms.ConvertClassifyDocumentResultCollection(response.Value, _idToIndexMap) }, nextLink, rawResponse);
