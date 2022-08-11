@@ -121,6 +121,12 @@ namespace Azure.Communication.CallingServer
                         return CallTransferFailed.Deserialize(cloudEvent.Data.ToString());
                     case nameof(ParticipantsUpdated):
                         return ParticipantsUpdated.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(RecordingStateChanged):
+                        return RecordingStateChanged.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(PlayCompleted):
+                        return PlayCompleted.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(PlayFailed):
+                        return PlayFailed.Deserialize(cloudEvent.Data.ToString());
                     default:
                         return null;
                 }
