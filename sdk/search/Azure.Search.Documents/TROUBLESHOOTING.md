@@ -42,4 +42,5 @@ A common class of issues when using the Search SDK is that the result set of a s
 Once the result looks good in the portal, use that as the template to populate the objects and parameters in the search request APIs. You should also verify that the correct set of documents have been indexed and are being searched on the service side. One tip would be to start with a 'broad' query (one that returns a superset of desired results, possibly by giving a large value for or entirely removing, some [query parameters](https://docs.microsoft.com/rest/api/searchservice/search-documents#query-parameters)) and then progressively refining the query till it expresses the desired intent.
 
 # Limits imposed by the service
+
 The service imposes limits on storage, workloads, and quantities of indexes and other objects depending on whether you provision Azure Cognitive Search at Free, Basic, Standard, or Storage Optimized pricing tiers. See [this page](https://docs.microsoft.com/azure/search/search-limits-quotas-capacity) for details.
