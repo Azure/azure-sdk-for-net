@@ -15,7 +15,6 @@
 - Fixed issue where the client timeout was not respected when establishing the AMQP connection and the AMQP session.
 - Fixed issue where closing the rule manager link could result in the AMQP session being closed even when `EnableCrossEntityTransactions` is set to `true` in the `ServiceBusClientOptions`.
 
-
 ### Other Changes
 
 - Reduced memory allocations when converting messages into the underlying AMQP primitives. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
