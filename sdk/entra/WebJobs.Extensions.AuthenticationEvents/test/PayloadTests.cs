@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
-using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021;
+using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Legacy;
 using Xunit;
 using static WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
@@ -57,8 +57,8 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
         {
             switch (testTypes)
             {
-                case TestTypes.Valid: return (TokenIssuanceStartPreview10012021.ActionResponse, TokenIssuanceStartPreview10012021.ExpectedPayload, HttpStatusCode.OK);
-                case TestTypes.Conversion: return (TokenIssuanceStart.ConversionPayload, TokenIssuanceStartPreview10012021.ExpectedPayload, HttpStatusCode.OK);
+                case TestTypes.Valid: return (TokenIssuanceStartLegacy.ActionResponse, TokenIssuanceStartLegacy.ExpectedPayload, HttpStatusCode.OK);
+                case TestTypes.Conversion: return (TokenIssuanceStart.ConversionPayload, TokenIssuanceStartLegacy.ExpectedPayload, HttpStatusCode.OK);
                 case TestTypes.InvalidAction: return (TokenIssuanceStart.InvalidActionResponse, @"{'errors':['The action \'ProvideClaims\' is invalid, please use one of the following actions: \'ProvideClaimsForToken\'']}", HttpStatusCode.BadRequest);
                 case TestTypes.NoAction: return (TokenIssuanceStart.NoActionResponse, @"{'errors':['No Actions Found. Please supply atleast one action.']}", HttpStatusCode.BadRequest);
                 case TestTypes.Empty: return (string.Empty, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}", HttpStatusCode.BadRequest);

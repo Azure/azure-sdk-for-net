@@ -2,6 +2,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+		<GenerateDocumentationFile>False</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

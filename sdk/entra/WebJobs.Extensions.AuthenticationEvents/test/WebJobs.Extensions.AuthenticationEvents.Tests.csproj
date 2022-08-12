@@ -5,6 +5,7 @@
 		<IsTestProject>true</IsTestProject>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>FriendAssemblies.snk</AssemblyOriginatorKeyFile>
+		<GenerateDocumentationFile>False</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,12 +23,12 @@
 		<None Remove="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<None Remove="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\NoActionResponse.json" />
-		<None Remove="Payloads\TokenIssuanceStart\Preview10012021\ActionResponse.json" />
-		<None Remove="Payloads\TokenIssuanceStart\Preview10012021\Cloud.json" />
-		<None Remove="Payloads\TokenIssuanceStart\Preview10012021\ExpectedCloudPayload.json" />
-		<None Remove="Payloads\TokenIssuanceStart\Preview10012021\ExpectedPayload.json" />
-		<None Remove="Payloads\TokenIssuanceStart\Preview10012021\RequestSchema.json" />
-		<None Remove="Payloads\TokenIssuanceStart\Preview10012021\ResponseSchema.json" />
+		<None Remove="Payloads\TokenIssuanceStart\Legacy\ActionResponse.json" />
+		<None Remove="Payloads\TokenIssuanceStart\Legacy\Cloud.json" />
+		<None Remove="Payloads\TokenIssuanceStart\Legacy\ExpectedCloudPayload.json" />
+		<None Remove="Payloads\TokenIssuanceStart\Legacy\ExpectedPayload.json" />
+		<None Remove="Payloads\TokenIssuanceStart\Legacy\RequestSchema.json" />
+		<None Remove="Payloads\TokenIssuanceStart\Legacy\ResponseSchema.json" />
 		<None Remove="Payloads\TokenIssuanceStart\QueryParameters.json" />
 	</ItemGroup>
 
@@ -38,12 +39,12 @@
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NoActionResponse.json" />
-		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Preview10012021\ActionResponse.json" />
-		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Preview10012021\Cloud.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Legacy\ActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Legacy\Cloud.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ExpectedPayload.json" />
-		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Preview10012021\ExpectedPayload.json" />
-		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Preview10012021\RequestSchema.json" />
-		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Preview10012021\ResponseSchema.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Legacy\ExpectedPayload.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Legacy\RequestSchema.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\Legacy\ResponseSchema.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\QueryParameters.json" />
 	</ItemGroup>
 

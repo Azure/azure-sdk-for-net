@@ -4,7 +4,7 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 using System.Net.Http;
 using System.Threading;
 using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
-using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021;
+using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Legacy;
 using Xunit;
 
 namespace WebJobs.Extensions.AuthenticationEvents.Tests
@@ -26,7 +26,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
                     });
 
                     Assert.Equal(System.Net.HttpStatusCode.OK, httpResponseMessage.StatusCode);
-                    Assert.True(TestHelper.DoesPayloadMatch(TokenIssuanceStartPreview10012021.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+                    Assert.True(TestHelper.DoesPayloadMatch(TokenIssuanceStartLegacy.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
                 });
         }
 
@@ -56,7 +56,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.Equal(System.Net.HttpStatusCode.OK, httpResponseMessage.StatusCode);
-            Assert.True(TestHelper.DoesPayloadMatch(TokenIssuanceStartPreview10012021.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(TestHelper.DoesPayloadMatch(TokenIssuanceStartLegacy.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
     }
 }

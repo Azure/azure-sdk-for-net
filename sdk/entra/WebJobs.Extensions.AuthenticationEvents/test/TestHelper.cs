@@ -129,7 +129,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
                     AuthEventResponseHandler eventsResponseHandler = (AuthEventResponseHandler)mockedRequest.Properties[AuthEventResponseHandler.EventResponseProperty];
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
-                        Response = testTypes == TestTypes.ValidCloudEvent ? CreateTokenIssuanceStartResponse() : CreateIssuanceStartPreview10012021Response(),
+                        Response = testTypes == TestTypes.ValidCloudEvent ? CreateTokenIssuanceStartResponse() : CreateIssuanceStartLegacyResponse(),
                         RequestStatus = AuthEventConvertStatusType.Successful
                     };
 
@@ -156,7 +156,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
 
-                        Response = CreateIssuanceStartPreview10012021Response(),
+                        Response = CreateIssuanceStartLegacyResponse(),
                         RequestStatus = AuthEventConvertStatusType.Successful
                     };
 
@@ -282,9 +282,9 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
                 .SingleOrDefault();
         }
 
-        /// <summary>Creates the issuance start preview10012021 response.</summary>
+        /// <summary>Creates the issuance start Legacy response.</summary>
         /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
-        public static TokenIssuanceStartResponse CreateIssuanceStartPreview10012021Response()
+        public static TokenIssuanceStartResponse CreateIssuanceStartLegacyResponse()
         {
             JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join('.', DefaultNamespace, "Templates", "ActionableTemplate.json")));
             (jBody["type"] as JValue).Value = "onTokenIssuanceStartCustomExtension";
@@ -298,7 +298,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
             };
         }
 
-        /// <summary>Creates the issuance start preview10012021 response.</summary>
+        /// <summary>Creates the issuance start Legacy response.</summary>
         /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
         public static TokenIssuanceStartResponse CreateTokenIssuanceStartResponse()
         {

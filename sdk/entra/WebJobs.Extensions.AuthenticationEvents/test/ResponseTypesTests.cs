@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
-using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Preview10012021;
+using WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Legacy;
 using Xunit;
 using static WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
@@ -74,7 +74,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
         {
             switch (responseType)
             {
-                case ResponseTypes.String: return TokenIssuanceStartPreview10012021.ActionResponse;
+                case ResponseTypes.String: return TokenIssuanceStartLegacy.ActionResponse;
                 case ResponseTypes.HttpResponse: return CreateHttpResponse(streamWriter);
                 case ResponseTypes.HttpResponseMessage: return CreateHttpResponseMessage();
                 case ResponseTypes.AuthEventResponse: return new TestAuthResponse(HttpStatusCode.OK, TokenIssuanceStart.ActionResponse);
@@ -93,7 +93,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
                 case ResponseTypes.String:
                 case ResponseTypes.HttpResponse:
                 case ResponseTypes.HttpResponseMessage:
-                    return (code: HttpStatusCode.OK, TokenIssuanceStartPreview10012021.ExpectedPayload);
+                    return (code: HttpStatusCode.OK, TokenIssuanceStartLegacy.ExpectedPayload);
                 case ResponseTypes.AuthEventResponse:
                     return (code: HttpStatusCode.OK, TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown:
@@ -110,7 +110,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var response = new DefaultHttpContext().Response;
 
-            sw.Write(TokenIssuanceStartPreview10012021.ActionResponse);
+            sw.Write(TokenIssuanceStartLegacy.ActionResponse);
             sw.Flush();
 
             response.Body = sw.BaseStream;
@@ -124,7 +124,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests
         {
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(TokenIssuanceStartPreview10012021.ActionResponse)
+                Content = new StringContent(TokenIssuanceStartLegacy.ActionResponse)
             };
         }
 

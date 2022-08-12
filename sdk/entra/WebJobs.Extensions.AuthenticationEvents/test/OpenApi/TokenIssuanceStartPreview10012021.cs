@@ -20,9 +20,9 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi
             {
                 OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStartV20211001Preview);
                 Dictionary<OpenAPIDocumentType, string> paths = openApiDocument.Save(testDir);
-                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.OpenApi.OpenApi.OpenApiDocument, paths[OpenAPIDocumentType.OpenApiDocument]));
-                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.RequestSchema, paths[OpenAPIDocumentType.RequestSchema]));
-                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.ResponseSchema, paths[OpenAPIDocumentType.ResponseSchema]));
+                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.OpenApi.OpenApiPayloads.OpenApiDocument, paths[OpenAPIDocumentType.OpenApiDocument]));
+                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Legacy.TokenIssuanceStartLegacy.RequestSchema, paths[OpenAPIDocumentType.RequestSchema]));
+                Assert.True(TestHelper.DoesFilePayloadMatch(payloads.TokenIssuanceStart.Legacy.TokenIssuanceStartLegacy.ResponseSchema, paths[OpenAPIDocumentType.ResponseSchema]));
             }
             finally
             {
@@ -37,7 +37,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi
             OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStartV20211001Preview);
             AuthEventJsonElement result = openApiDocument.EmbedReferences();
 
-            Assert.True(TestHelper.DoesPayloadMatch(payloads.OpenApi.OpenApi.OpenApiDocumentMerge, result.ToString()));
+            Assert.True(TestHelper.DoesPayloadMatch(payloads.OpenApi.OpenApiPayloads.OpenApiDocumentMerge, result.ToString()));
         }
 
         /// <summary>Tests the the open api document and related schemas can be merged successfully.</summary>
@@ -52,7 +52,7 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi
                 OpenApiDocument openApiDocument = OpenApiDocument.Load(EventDefinition.TokenIssuanceStartV20211001Preview);
                 openApiDocument.EmbedReferencesAndSave(testFile);
                 string actual = File.ReadAllText(testFile);
-                Assert.True(TestHelper.DoesPayloadMatch(payloads.OpenApi.OpenApi.OpenApiDocumentMerge, actual));
+                Assert.True(TestHelper.DoesPayloadMatch(payloads.OpenApi.OpenApiPayloads.OpenApiDocumentMerge, actual));
             }
             finally
             {
@@ -64,8 +64,8 @@ namespace WebJobs.Extensions.AuthenticationEvents.Tests.OpenApi
         [Fact]
         public void OpenApiDocument_NameSpace_load()
         {
-            OpenApiDocument openApiDocument = OpenApiDocument.Load(payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.VersionNameSpace);
-            Assert.True(openApiDocument.EventNameSpace == payloads.TokenIssuanceStart.Preview10012021.TokenIssuanceStartPreview10012021.VersionNameSpace);
+            OpenApiDocument openApiDocument = OpenApiDocument.Load(payloads.TokenIssuanceStart.Legacy.TokenIssuanceStartLegacy.VersionNameSpace);
+            Assert.True(openApiDocument.EventNameSpace == payloads.TokenIssuanceStart.Legacy.TokenIssuanceStartLegacy.VersionNameSpace);
         }
     }
 }

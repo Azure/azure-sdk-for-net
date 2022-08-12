@@ -1,7 +1,7 @@
 ﻿namespace WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.OpenApi
 {
     /// <summary>Test data for OpenApi</summary>
-    public static class OpenApi
+    public static class OpenApiPayloads
     {
         /// <summary>Gets the open API document body.</summary>
         /// <value>The open API document.</value>
