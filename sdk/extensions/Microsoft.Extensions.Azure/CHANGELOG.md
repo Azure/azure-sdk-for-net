@@ -5,13 +5,7 @@
 ### Features Added
 
 - Added the `AddAzureClientsCore` method overload that has a parameter to allow enabling log 
-  forwaring. 
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+  forwarding to `ILogger`.
 
 ## 1.3.0 (2022-07-12)
 
