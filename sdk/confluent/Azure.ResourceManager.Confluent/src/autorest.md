@@ -46,4 +46,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - remove-operation: OrganizationOperations_List
+
 ```

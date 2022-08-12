@@ -160,6 +160,17 @@
       ]
     },
     {
+      "filename": "**/sdk/confluent/**/*.cs",
+      "words": [
+        "dhcps",
+        "mirrorings",
+        "nsxt",
+        "vcenter",
+        "vcsa",
+        "vmotion"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
