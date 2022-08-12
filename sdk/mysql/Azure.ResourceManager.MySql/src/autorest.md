@@ -175,13 +175,6 @@ directive:
     transform: >
       $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
-  - from: mysql.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations'].get
-    transform: >
-      $['x-ms-pageable'] = {
-        'itemName': 'Values',
-        'nextLinkName': null
-      };
 
 ```
 
@@ -301,7 +294,6 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations'].get
     transform: >
       $['x-ms-pageable'] = {
-        'itemName': 'Values',
         'nextLinkName': null
       };
 
