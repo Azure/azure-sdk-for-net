@@ -25,14 +25,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             exporterOptions.DisableOfflineStorage = true;
             exporterOptions.ConnectionString = StatsBeat_ConnectionString;
 
-            Sdk.CreateMeterProviderBuilder()
-                .AddMeter("AttachStatsBeatMeter")
+            AttachStatsBeatMeterProvider = Sdk.CreateMeterProviderBuilder()
+            .AddMeter("AttachStatsBeatMeter")
             .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsBeatInterval)
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
             .Build();
         }
 
         internal static string Customer_Ikey { get; set; }
+
+        internal static MeterProvider AttachStatsBeatMeterProvider { get; private set; }
 
         private static Measurement<int> GetAttachStatsBeat()
         {

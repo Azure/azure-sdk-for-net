@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -19,6 +20,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 // TODO: set statsbeat connectionstring based on customer's connectionstring endpoint.
             }
+
+            // Forceflush, so that the metric is exported atleast once
+            // if app shuts down before 24hrs.
+            Statsbeat.AttachStatsBeatMeterProvider.ForceFlush();
         }
     }
 }
