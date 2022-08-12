@@ -10,7 +10,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
-    public class AutomationTest
+    public class AutomationTest 
     {
         private const string ResourceGroupName = "GuestConfigurationSDKTestRecord";
         private const string AzureVMName = "SDKTestRecordVM002";
@@ -158,7 +158,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                     Assert.NotNull(gcAssignmentReportsRetrieved);
                     Assert.True(gcAssignmentReportsRetrieved.Value.Count >= 0);
                 }
-            }
+            } 
         }
 
         [Fact]
