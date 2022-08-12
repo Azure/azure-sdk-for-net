@@ -68,6 +68,12 @@ namespace Azure.Communication.CallingServer
         public string CorrelationId { get { throw null; } }
         public string ServerCallId { get { throw null; } }
     }
+    public static partial class CallAutomationEventParser
+    {
+        public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(Azure.Messaging.CloudEvent cloudEvent) { throw null; }
+        public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(string eventData, string eventType) { throw null; }
+        public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(Azure.Messaging.CloudEvent[] cloudEvents) { throw null; }
+    }
     public static partial class CallAutomationModelFactory
     {
         public static Azure.Communication.CallingServer.AddParticipantsFailed AddParticipantsFailed(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participants = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
@@ -272,15 +278,6 @@ namespace Azure.Communication.CallingServer
         internal CreateCallResult() { }
         public Azure.Communication.CallingServer.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallingServer.CallConnectionProperties CallProperties { get { throw null; } }
-    }
-    public static partial class EventParser
-    {
-        public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(Azure.Messaging.CloudEvent cloudEvent) { throw null; }
-        public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(System.BinaryData content) { throw null; }
-        public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(string content) { throw null; }
-        public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(Azure.Messaging.CloudEvent[] cloudEvents) { throw null; }
-        public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(System.BinaryData content) { throw null; }
-        public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(string content) { throw null; }
     }
     public partial class FileSource : Azure.Communication.CallingServer.PlaySource
     {
