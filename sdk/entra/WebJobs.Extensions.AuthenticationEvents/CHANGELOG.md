@@ -1,6 +1,7 @@
-## Webjobs.Extensions.Authentication Events Changelog
+# Release History
 
-# 0.1.0 (2021-11-15) Private Preview Release.
+## 1.1.0 (2022-08-12)
 
-*Features*
-* Initial release
+### New Features
+
+- Initial release. (Documentation link TBD)
