@@ -78,7 +78,7 @@ This project framework provides the following features:
 
 ### Authentication
 
-When Azure AD authentication events service calls your custom extension, it will send an `Authorization` header with a `Bearer {token}`. This token will represent a [service to service authentication](/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) in which:
+When Azure AD authentication events service calls your custom extension, it will send an `Authorization` header with a `Bearer {token}`. This token will represent a [service to service authentication](https://review.docs.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) in which:
 
 * The '**resource**', also known as the **audience**, is the application that you register to represent your API. This is represented by the `aud` claim in the token.
 * The '**client**' is a Microsoft application that represents the Azure AD authentication events service. It has an `appId` value of `99045fe1-7639-4a75-9d4a-577b6ca3810f`. This is represented by:
@@ -97,7 +97,7 @@ When running your function in production, it is **highly recommended** to use th
 2. Click on "Add identity provider"
 3. Select "Microsoft" as the identity provider
 4. Select "Provide the details of an existing app registration"
-5. Enter the `Application ID` of the app that represents your API in Azuure AD
+5. Enter the `Application ID` of the app that represents your API in Azure AD
 
 The issuer and allowed audience depends on the [`accessTokenAcceptedVersion`](https://review.docs.microsoft.com/azure/active-directory/develop/access-tokens) property of your application (can be found in the "Manifest" of the application).
 
@@ -159,7 +159,7 @@ To Test Token Augmentation, please do the following.
 * Once the Azure functions developer's application has started, copy the listening url that is displayed with the application starts up.
 ![url.png](markdown/url.png)
 * Note: All Authentication functions are listed, in the case we have one function listener registered called "**OnTokenIssuanceStart**"
-* Your function endpoint will then be a combination of the listening url and function, for example: <http://localhost:7071/runtime/webhooks/AuthenticationEvents?code=[YOUR_CODE>]&function=OnTokenIssuanceStart
+* Your function endpoint will then be a combination of the listening url and function, for example: "http://localhost:7071/runtime/webhooks/AuthenticationEvents?code=(YOUR_CODE)&function=OnTokenIssuanceStart"
 * Post the following payload using something like Postman or Fiddler.
 * Steps for using Postman can be found (Link TBD)
 
