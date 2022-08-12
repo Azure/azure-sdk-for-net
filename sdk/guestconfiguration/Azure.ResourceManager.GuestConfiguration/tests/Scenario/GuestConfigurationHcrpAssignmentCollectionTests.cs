@@ -9,10 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
 {
-    [TestFixture]
     public class GuestConfigurationHcrpAssignmentCollectionTests : GuestConfigurationManagementTestBase
     {
-        public GuestConfigurationHcrpAssignmentCollectionTests() : base(true)
+        public GuestConfigurationHcrpAssignmentCollectionTests(bool isAsync) : base(isAsync)
         {
         }
 

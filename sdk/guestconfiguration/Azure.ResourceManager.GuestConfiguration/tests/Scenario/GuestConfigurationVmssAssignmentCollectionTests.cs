@@ -8,10 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
 {
-    [TestFixture]
     public class GuestConfigurationVmssAssignmentCollectionTests : GuestConfigurationManagementTestBase
     {
-        public GuestConfigurationVmssAssignmentCollectionTests() : base(true)
+        public GuestConfigurationVmssAssignmentCollectionTests(bool isAsync) : base(isAsync)
         {
         }
 

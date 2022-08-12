@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Utilities
         public const string DefaultResourceGroupName = "GuestConfigurationSDKTestRecord";
         public static AzureLocation DefaultResourceLocation = new AzureLocation("westcentralus");
         public static string DefaultResourceType = "ApplyAndAutoCorrect";
-        public const string DefaultAzureVMName = "SDKTestRecordVM002";
+        public const string DefaultAzureVMName = "SDKTestVM";
         public static AssignmentType DefaultAssignmentType = new AssignmentType("ApplyAndAutoCorrect");
         public static ConfigurationMode DefaultConfigurationMode= new ConfigurationMode("ApplyAndAutoCorrect");
         public static GuestConfigurationKind DefaultKind = new GuestConfigurationKind("DSC");
