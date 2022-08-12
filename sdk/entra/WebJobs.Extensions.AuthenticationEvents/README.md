@@ -245,7 +245,7 @@ To Test Token Augmentation, please do the following.
 * Follow the instruction here to create and publish your Azure Application. <https://docs.microsoft.com/azure/azure-functions/functions-develop-vs?tabs=in-process#publish-to-azure>
 * To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
 ![Portal.png](markdown/Portal.png)
-* For example: <https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=[AuthenticationEvents_extension_key>]&function=OnTokenIssuanceStart
+* For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
 * Make sure your production environment has the correct application settings for token authentication.
 * Once again you can test the published function by posting the above payload to the new endpoint.
 
