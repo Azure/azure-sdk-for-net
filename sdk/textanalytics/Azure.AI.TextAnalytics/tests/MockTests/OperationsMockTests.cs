@@ -195,7 +195,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
-                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""inProgress"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Post, Uri = cancelUri },
@@ -399,7 +399,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
-                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""inProgress"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Post, Uri = cancelUri },
@@ -477,7 +477,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
-                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""inProgress"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Post, Uri = cancelUri },
@@ -555,7 +555,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
-                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""inProgress"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Post, Uri = cancelUri },
@@ -633,7 +633,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
-                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""inProgress"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Post, Uri = cancelUri },

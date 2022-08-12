@@ -265,20 +265,16 @@ namespace Azure.AI.TextAnalytics
 
             Response rawResponse = response.GetRawResponse();
 
-            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded || response.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted)
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 string nextLink = response.Value.NextLink;
                 _firstPage = Page.FromValues(new List<ClassifyDocumentResultCollection>() { Transforms.ConvertClassifyDocumentResultCollection(response.Value, _idToIndexMap) }, nextLink, rawResponse);
 
                 return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                    .ConfigureAwait(false);
-
-                return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, requestFailedException);
+                return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Pending(rawResponse);
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
@@ -286,7 +282,11 @@ namespace Azure.AI.TextAnalytics
                     new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Pending(rawResponse);
+            RequestFailedException requestFailedException = await ClientCommon
+                .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
+                .ConfigureAwait(false);
+
+            return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, requestFailedException);
         }
     }
 }

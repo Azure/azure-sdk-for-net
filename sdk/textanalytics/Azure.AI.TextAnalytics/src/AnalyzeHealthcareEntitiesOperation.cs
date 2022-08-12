@@ -265,20 +265,16 @@ namespace Azure.AI.TextAnalytics
 
             Response rawResponse = response.GetRawResponse();
 
-            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded || response.Value.Status == TextAnalyticsOperationStatus.PartiallyCompleted)
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 string nextLink = response.Value.NextLink;
                 _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { response.Value.Result }, nextLink, rawResponse);
 
                 return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                    .ConfigureAwait(false);
-
-                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, requestFailedException);
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
@@ -286,7 +282,11 @@ namespace Azure.AI.TextAnalytics
                     new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
+            RequestFailedException requestFailedException = await ClientCommon
+                .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
+                .ConfigureAwait(false);
+
+            return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, requestFailedException);
         }
     }
 }
