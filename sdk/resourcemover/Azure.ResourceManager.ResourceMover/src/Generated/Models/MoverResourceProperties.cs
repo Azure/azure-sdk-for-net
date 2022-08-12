@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the move resource properties. </summary>
-    public partial class MoveResourceProperties
+    public partial class MoverResourceProperties
     {
-        /// <summary> Initializes a new instance of MoveResourceProperties. </summary>
+        /// <summary> Initializes a new instance of MoverResourceProperties. </summary>
         /// <param name="sourceId"> Gets or sets the Source ARM Id of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public MoveResourceProperties(ResourceIdentifier sourceId)
+        public MoverResourceProperties(ResourceIdentifier sourceId)
         {
             if (sourceId == null)
             {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             SourceId = sourceId;
-            DependsOn = new ChangeTrackingList<MoveResourceDependency>();
+            DependsOn = new ChangeTrackingList<MoverResourceDependency>();
             DependsOnOverrides = new ChangeTrackingList<MoveResourceDependencyOverride>();
         }
 
-        /// <summary> Initializes a new instance of MoveResourceProperties. </summary>
+        /// <summary> Initializes a new instance of MoverResourceProperties. </summary>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="sourceId"> Gets or sets the Source ARM Id of the resource. </param>
         /// <param name="targetId"> Gets or sets the Target ARM Id of the resource. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependsOnOverrides"> Gets or sets the move resource dependencies overrides. </param>
         /// <param name="isResolveRequired"> Gets a value indicating whether the resolve action is required over the move collection. </param>
         /// <param name="errors"> Defines the move resource errors. </param>
-        internal MoveResourceProperties(MoverProvisioningState? provisioningState, ResourceIdentifier sourceId, ResourceIdentifier targetId, ResourceIdentifier existingTargetId, MoverResourceSettings resourceSettings, MoverResourceSettings sourceResourceSettings, MoveResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoveResourceDependency> dependsOn, IList<MoveResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors)
+        internal MoverResourceProperties(MoverProvisioningState? provisioningState, ResourceIdentifier sourceId, ResourceIdentifier targetId, ResourceIdentifier existingTargetId, MoverResourceSettings resourceSettings, MoverResourceSettings sourceResourceSettings, MoveResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoverResourceDependency> dependsOn, IList<MoveResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors)
         {
             ProvisioningState = provisioningState;
             SourceId = sourceId;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Defines the move resource status. </summary>
         public MoveResourcePropertiesMoveStatus MoveStatus { get; }
         /// <summary> Gets or sets the move resource dependencies. </summary>
-        public IReadOnlyList<MoveResourceDependency> DependsOn { get; }
+        public IReadOnlyList<MoverResourceDependency> DependsOn { get; }
         /// <summary> Gets or sets the move resource dependencies overrides. </summary>
         public IList<MoveResourceDependencyOverride> DependsOnOverrides { get; }
         /// <summary> Gets a value indicating whether the resolve action is required over the move collection. </summary>

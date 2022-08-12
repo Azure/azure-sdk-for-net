@@ -11,26 +11,26 @@ using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    /// <summary> A class representing the MoveResource data model. </summary>
-    public partial class MoveResourceData : ResourceData
+    /// <summary> A class representing the MoverResource data model. </summary>
+    public partial class MoverResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MoveResourceData. </summary>
-        public MoveResourceData()
+        /// <summary> Initializes a new instance of MoverResourceData. </summary>
+        public MoverResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MoveResourceData. </summary>
+        /// <summary> Initializes a new instance of MoverResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Defines the move resource properties. </param>
-        internal MoveResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MoveResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal MoverResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MoverResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Defines the move resource properties. </summary>
-        public MoveResourceProperties Properties { get; set; }
+        public MoverResourceProperties Properties { get; set; }
     }
 }

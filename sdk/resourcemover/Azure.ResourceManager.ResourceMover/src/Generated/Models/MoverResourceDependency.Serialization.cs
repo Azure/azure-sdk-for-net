@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoveResourceDependency
+    public partial class MoverResourceDependency
     {
-        internal static MoveResourceDependency DeserializeMoveResourceDependency(JsonElement element)
+        internal static MoverResourceDependency DeserializeMoverResourceDependency(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<string> resolutionStatus = default;
-            Optional<MoveResourceResolutionType> resolutionType = default;
+            Optional<MoverResourceResolutionType> resolutionType = default;
             Optional<MoverDependencyType> dependencyType = default;
             Optional<ManualResolutionProperties> manualResolution = default;
             Optional<AutomaticResolutionProperties> automaticResolution = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resolutionType = new MoveResourceResolutionType(property.Value.GetString());
+                    resolutionType = new MoverResourceResolutionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependencyType"))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional));
+            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional));
         }
     }
 }

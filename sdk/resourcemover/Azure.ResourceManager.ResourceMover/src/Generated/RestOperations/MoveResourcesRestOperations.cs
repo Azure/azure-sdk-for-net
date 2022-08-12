@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveResourceList value = default;
+                        MoverResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MoveResourceList.DeserializeMoveResourceList(document.RootElement);
+                        value = MoverResourceList.DeserializeMoverResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveResourceList> List(string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<MoverResourceList> List(string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveResourceList value = default;
+                        MoverResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MoveResourceList.DeserializeMoveResourceList(document.RootElement);
+                        value = MoverResourceList.DeserializeMoverResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, MoveResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, MoverResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
         /// <param name="moveResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoveResource to use. </param>
+        /// <param name="data"> The MoverResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/>, <paramref name="moveResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, MoveResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
         /// <param name="moveResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoveResource to use. </param>
+        /// <param name="data"> The MoverResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/>, <paramref name="moveResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, MoveResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="moveResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -327,13 +327,13 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveResourceData value = default;
+                        MoverResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MoveResourceData.DeserializeMoveResourceData(document.RootElement);
+                        value = MoverResourceData.DeserializeMoverResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MoveResourceData)null, message.Response);
+                    return Response.FromValue((MoverResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="moveResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveResourceData> Get(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, CancellationToken cancellationToken = default)
+        public Response<MoverResourceData> Get(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -360,13 +360,13 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveResourceData value = default;
+                        MoverResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MoveResourceData.DeserializeMoveResourceData(document.RootElement);
+                        value = MoverResourceData.DeserializeMoverResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MoveResourceData)null, message.Response);
+                    return Response.FromValue((MoverResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveResourceList value = default;
+                        MoverResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MoveResourceList.DeserializeMoveResourceList(document.RootElement);
+                        value = MoverResourceList.DeserializeMoverResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<MoverResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -440,9 +440,9 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveResourceList value = default;
+                        MoverResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MoveResourceList.DeserializeMoveResourceList(document.RootElement);
+                        value = MoverResourceList.DeserializeMoverResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

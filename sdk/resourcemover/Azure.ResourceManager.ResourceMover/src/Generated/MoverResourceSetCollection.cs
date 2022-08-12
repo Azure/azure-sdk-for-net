@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MoveCollectionResource" /> and their operations.
-    /// Each <see cref="MoveCollectionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="MoveCollectionCollection" /> instance call the GetMoveCollections method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="MoverResourceSetResource" /> and their operations.
+    /// Each <see cref="MoverResourceSetResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="MoverResourceSetCollection" /> instance call the GetMoverResourceSets method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class MoveCollectionCollection : ArmCollection, IEnumerable<MoveCollectionResource>, IAsyncEnumerable<MoveCollectionResource>
+    public partial class MoverResourceSetCollection : ArmCollection, IEnumerable<MoverResourceSetResource>, IAsyncEnumerable<MoverResourceSetResource>
     {
-        private readonly ClientDiagnostics _moveCollectionClientDiagnostics;
-        private readonly MoveCollectionsRestOperations _moveCollectionRestClient;
+        private readonly ClientDiagnostics _moverResourceSetMoveCollectionsClientDiagnostics;
+        private readonly MoveCollectionsRestOperations _moverResourceSetMoveCollectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MoveCollectionCollection"/> class for mocking. </summary>
-        protected MoveCollectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="MoverResourceSetCollection"/> class for mocking. </summary>
+        protected MoverResourceSetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MoveCollectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MoverResourceSetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MoveCollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MoverResourceSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _moveCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceMover", MoveCollectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MoveCollectionResource.ResourceType, out string moveCollectionApiVersion);
-            _moveCollectionRestClient = new MoveCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, moveCollectionApiVersion);
+            _moverResourceSetMoveCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceMover", MoverResourceSetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MoverResourceSetResource.ResourceType, out string moverResourceSetMoveCollectionsApiVersion);
+            _moverResourceSetMoveCollectionsRestClient = new MoveCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, moverResourceSetMoveCollectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="data"> The MoveCollection to use. </param>
+        /// <param name="data"> The MoverResourceSet to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MoveCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverResourceSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moveCollectionName, MoverResourceSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.CreateOrUpdate");
+            using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _moveCollectionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoveCollectionResource>(Response.FromValue(new MoveCollectionResource(Client, response), response.GetRawResponse()));
+                var response = await _moverResourceSetMoveCollectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceMoverArmOperation<MoverResourceSetResource>(Response.FromValue(new MoverResourceSetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="data"> The MoveCollection to use. </param>
+        /// <param name="data"> The MoverResourceSet to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MoveCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverResourceSetResource> CreateOrUpdate(WaitUntil waitUntil, string moveCollectionName, MoverResourceSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.CreateOrUpdate");
+            using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _moveCollectionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, data, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoveCollectionResource>(Response.FromValue(new MoveCollectionResource(Client, response), response.GetRawResponse()));
+                var response = _moverResourceSetMoveCollectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, data, cancellationToken);
+                var operation = new ResourceMoverArmOperation<MoverResourceSetResource>(Response.FromValue(new MoverResourceSetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
-        public virtual async Task<Response<MoveCollectionResource>> GetAsync(string moveCollectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MoverResourceSetResource>> GetAsync(string moveCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.Get");
+            using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _moveCollectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceSetMoveCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MoveCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MoverResourceSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
-        public virtual Response<MoveCollectionResource> Get(string moveCollectionName, CancellationToken cancellationToken = default)
+        public virtual Response<MoverResourceSetResource> Get(string moveCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.Get");
+            using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.Get");
             scope.Start();
             try
             {
-                var response = _moveCollectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken);
+                var response = _moverResourceSetMoveCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MoveCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MoverResourceSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_ListMoveCollectionsByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MoveCollectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MoverResourceSetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MoveCollectionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MoverResourceSetResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.GetAll");
+                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _moveCollectionRestClient.ListMoveCollectionsByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.ResourceMover
                     throw;
                 }
             }
-            async Task<Page<MoveCollectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MoverResourceSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.GetAll");
+                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _moveCollectionRestClient.ListMoveCollectionsByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_ListMoveCollectionsByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoveCollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MoveCollectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MoverResourceSetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MoveCollectionResource> FirstPageFunc(int? pageSizeHint)
+            Page<MoverResourceSetResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.GetAll");
+                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _moveCollectionRestClient.ListMoveCollectionsByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.ResourceMover
                     throw;
                 }
             }
-            Page<MoveCollectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MoverResourceSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.GetAll");
+                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _moveCollectionRestClient.ListMoveCollectionsByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoveCollectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.ResourceMover
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.Exists");
+            using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _moveCollectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceSetMoveCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.ResourceMover
         {
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionCollection.Exists");
+            using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _moveCollectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken: cancellationToken);
+                var response = _moverResourceSetMoveCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, moveCollectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        IEnumerator<MoveCollectionResource> IEnumerable<MoveCollectionResource>.GetEnumerator()
+        IEnumerator<MoverResourceSetResource> IEnumerable<MoverResourceSetResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ResourceMover
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MoveCollectionResource> IAsyncEnumerable<MoveCollectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MoverResourceSetResource> IAsyncEnumerable<MoverResourceSetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

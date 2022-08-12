@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverAzureResourceReferenceInfo : IUtf8JsonSerializable
+    public partial class MoverResourceReferenceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteEndObject();
         }
 
-        internal static MoverAzureResourceReferenceInfo DeserializeMoverAzureResourceReferenceInfo(JsonElement element)
+        internal static MoverResourceReferenceInfo DeserializeMoverResourceReferenceInfo(JsonElement element)
         {
             ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverAzureResourceReferenceInfo(sourceArmResourceId);
+            return new MoverResourceReferenceInfo(sourceArmResourceId);
         }
     }
 }

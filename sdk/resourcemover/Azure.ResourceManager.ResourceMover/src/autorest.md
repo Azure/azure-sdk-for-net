@@ -18,7 +18,7 @@ modelerfour:
 
 rename-mapping:
   AffectedMoveResource.id: -|arm-id
-  AutomaticResolutionProperties.moveResourceId: -|arm-id
+  AutomaticResolutionProperties.moveResourceId: ResourceId|arm-id
   AzureResourceReference.sourceArmResourceId: -|arm-id
   LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
   ManualResolutionProperties.targetId: -|arm-id
@@ -41,23 +41,28 @@ rename-mapping:
   UnresolvedDependency.id: -|arm-id
   #ResourceSettings.resourceType: -|resource-type, One value is here https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/resourcemovercollection.json#L2418 is not a valid ResourceType, so can't change this property's format to ResourceType
   VirtualMachineResourceSettings.targetAvailabilitySetId: -|arm-id
-  AffectedMoveResource: MoverAffectedMoveResourceInfo
+  AffectedMoveResource: AffectedMoverResourceInfo
   AvailabilitySetResourceSettings: MoverAvailabilitySetResourceSettings
-  AzureResourceReference: MoverAzureResourceReferenceInfo
+  AzureResourceReference: MoverResourceReferenceInfo
   BulkRemoveRequest: MoverBulkRemoveContent
   CommitRequest: MoverCommitContent
   DependencyLevel: MoverDependencyLevel
   DependencyType: MoverDependencyType
   DiscardRequest: MoverDiscardContent
   Display: MoverDisplayInfo
-  JobName: MoveResourceJobName
-  JobStatus: MoveResourceJobStatus
+  JobName: MoverResourceJobName
+  JobStatus: MoverResourceJobStatus
   LBBackendAddressPoolResourceSettings: LoadBalancerBackendAddressPoolResourceSettings
   LBFrontendIPConfigurationResourceSettings: LoadBalancerFrontendIPConfigurationResourceSettings
   LoadBalancerBackendAddressPoolReference: LoadBalancerBackendAddressPoolReferenceInfo
   LoadBalancerNatRuleReference: LoadBalancerNatRuleReferenceInfo
-  MoveResourceCollection: MoveResourceList
-  MoveState: MoveResourceState
+  MoveCollection: MoverResourceSet
+  MoveCollectionProperties: MoverResourceSetProperties
+  MoveResource: MoverResource
+  MoveResourceCollection: MoverResourceList
+  MoveResourceProperties: MoverResourceProperties
+  MoveResourceDependency: MoverResourceDependency
+  MoveState: MoverResourceMoveState
   NsgReference: NetworkSecurityGroupResourceReferenceInfo
   NsgSecurityRule: NetworkSecurityGroupSecurityRule
   OperationErrorAdditionalInfo: MoverOperationErrorAdditionalInfo
@@ -70,7 +75,7 @@ rename-mapping:
   ProxyResourceReference: ProxyResourceReferenceInfo
   PublicIpReference: PublicIpReferenceInfo
   RequiredForResourcesCollection: RequiredForResourcesList
-  ResolutionType: MoveResourceResolutionType
+  ResolutionType: MoverResourceResolutionType
   ResourceMoveRequest: MoverResourceMoveRequest
   ResourceSettings: MoverResourceSettings
   SubnetReference: SubnetReferenceInfo

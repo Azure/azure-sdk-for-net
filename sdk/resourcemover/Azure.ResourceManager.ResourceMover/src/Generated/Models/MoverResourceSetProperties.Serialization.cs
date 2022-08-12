@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoveCollectionProperties : IUtf8JsonSerializable
+    public partial class MoverResourceSetProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteEndObject();
         }
 
-        internal static MoveCollectionProperties DeserializeMoveCollectionProperties(JsonElement element)
+        internal static MoverResourceSetProperties DeserializeMoverResourceSetProperties(JsonElement element)
         {
             string sourceRegion = default;
             string targetRegion = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveCollectionProperties(sourceRegion, targetRegion, Optional.ToNullable(provisioningState), errors.Value);
+            return new MoverResourceSetProperties(sourceRegion, targetRegion, Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

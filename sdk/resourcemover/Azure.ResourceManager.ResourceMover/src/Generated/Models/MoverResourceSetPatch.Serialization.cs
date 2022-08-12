@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoveCollectionPatch : IUtf8JsonSerializable
+    public partial class MoverResourceSetPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

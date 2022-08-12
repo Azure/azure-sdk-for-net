@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceSetData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="data"> The MoveCollection to use. </param>
+        /// <param name="data"> The MoverResourceSet to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveCollectionData>> CreateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverResourceSetData>> CreateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                 case 201:
                     {
-                        MoveCollectionData value = default;
+                        MoverResourceSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MoveCollectionData.DeserializeMoveCollectionData(document.RootElement);
+                        value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="data"> The MoveCollection to use. </param>
+        /// <param name="data"> The MoverResourceSet to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveCollectionData> Create(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
+        public Response<MoverResourceSetData> Create(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                 case 201:
                     {
-                        MoveCollectionData value = default;
+                        MoverResourceSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MoveCollectionData.DeserializeMoveCollectionData(document.RootElement);
+                        value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceSetPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="patch"> The MoveCollectionPatch to use. </param>
+        /// <param name="patch"> The MoverResourceSetPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveCollectionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverResourceSetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveCollectionData value = default;
+                        MoverResourceSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MoveCollectionData.DeserializeMoveCollectionData(document.RootElement);
+                        value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="patch"> The MoveCollectionPatch to use. </param>
+        /// <param name="patch"> The MoverResourceSetPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveCollectionData> Update(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionPatch patch, CancellationToken cancellationToken = default)
+        public Response<MoverResourceSetData> Update(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveCollectionData value = default;
+                        MoverResourceSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MoveCollectionData.DeserializeMoveCollectionData(document.RootElement);
+                        value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveCollectionData>> GetAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverResourceSetData>> GetAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveCollectionData value = default;
+                        MoverResourceSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MoveCollectionData.DeserializeMoveCollectionData(document.RootElement);
+                        value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MoveCollectionData)null, message.Response);
+                    return Response.FromValue((MoverResourceSetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveCollectionData> Get(string subscriptionId, string resourceGroupName, string moveCollectionName, CancellationToken cancellationToken = default)
+        public Response<MoverResourceSetData> Get(string subscriptionId, string resourceGroupName, string moveCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -353,13 +353,13 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case 200:
                     {
-                        MoveCollectionData value = default;
+                        MoverResourceSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MoveCollectionData.DeserializeMoveCollectionData(document.RootElement);
+                        value = MoverResourceSetData.DeserializeMoverResourceSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MoveCollectionData)null, message.Response);
+                    return Response.FromValue((MoverResourceSetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

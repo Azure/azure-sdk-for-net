@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoveResourcePropertiesMoveStatus DeserializeMoveResourcePropertiesMoveStatus(JsonElement element)
         {
-            Optional<MoveResourceState> moveState = default;
-            Optional<MoveResourceJobStatus> jobStatus = default;
+            Optional<MoverResourceMoveState> moveState = default;
+            Optional<MoverResourceJobStatus> jobStatus = default;
             Optional<MoveResourceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    moveState = new MoveResourceState(property.Value.GetString());
+                    moveState = new MoverResourceMoveState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobStatus"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobStatus = MoveResourceJobStatus.DeserializeMoveResourceJobStatus(property.Value);
+                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"))

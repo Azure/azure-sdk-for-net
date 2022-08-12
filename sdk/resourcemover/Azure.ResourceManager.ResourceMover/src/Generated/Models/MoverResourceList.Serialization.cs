@@ -12,11 +12,11 @@ using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class MoveResourceList
+    internal partial class MoverResourceList
     {
-        internal static MoveResourceList DeserializeMoveResourceList(JsonElement element)
+        internal static MoverResourceList DeserializeMoverResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<MoveResourceData>> value = default;
+            Optional<IReadOnlyList<MoverResourceData>> value = default;
             Optional<string> nextLink = default;
             Optional<MoverSummaryList> summaryCollection = default;
             Optional<long> totalCount = default;
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MoveResourceData> array = new List<MoveResourceData>();
+                    List<MoverResourceData> array = new List<MoverResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoveResourceData.DeserializeMoveResourceData(item));
+                        array.Add(MoverResourceData.DeserializeMoverResourceData(item));
                     }
                     value = array;
                     continue;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount));
+            return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount));
         }
     }
 }

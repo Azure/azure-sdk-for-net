@@ -10,14 +10,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the dependency of the move resource. </summary>
-    public partial class MoveResourceDependency
+    public partial class MoverResourceDependency
     {
-        /// <summary> Initializes a new instance of MoveResourceDependency. </summary>
-        internal MoveResourceDependency()
+        /// <summary> Initializes a new instance of MoverResourceDependency. </summary>
+        internal MoverResourceDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of MoveResourceDependency. </summary>
+        /// <summary> Initializes a new instance of MoverResourceDependency. </summary>
         /// <param name="id"> Gets the source ARM ID of the dependent resource. </param>
         /// <param name="resolutionStatus"> Gets the dependency resolution status. </param>
         /// <param name="resolutionType"> Defines the resolution type. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="manualResolution"> Defines the properties for manual resolution. </param>
         /// <param name="automaticResolution"> Defines the properties for automatic resolution. </param>
         /// <param name="isOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
-        internal MoveResourceDependency(ResourceIdentifier id, string resolutionStatus, MoveResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, bool? isOptional)
+        internal MoverResourceDependency(ResourceIdentifier id, string resolutionStatus, MoverResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, bool? isOptional)
         {
             Id = id;
             ResolutionStatus = resolutionStatus;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Gets the dependency resolution status. </summary>
         public string ResolutionStatus { get; }
         /// <summary> Defines the resolution type. </summary>
-        public MoveResourceResolutionType? ResolutionType { get; }
+        public MoverResourceResolutionType? ResolutionType { get; }
         /// <summary> Defines the dependency type. </summary>
         public MoverDependencyType? DependencyType { get; }
         /// <summary> Defines the properties for manual resolution. </summary>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </summary>
-        public ResourceIdentifier AutomaticResolutionMoveResourceId
+        public ResourceIdentifier AutomaticResolutionResourceId
         {
-            get => AutomaticResolution?.MoveResourceId;
+            get => AutomaticResolution?.ResourceId;
         }
 
         /// <summary> Gets or sets a value indicating whether the dependency is optional. </summary>

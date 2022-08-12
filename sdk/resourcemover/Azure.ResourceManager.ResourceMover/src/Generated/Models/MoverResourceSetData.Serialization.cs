@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    public partial class MoveCollectionData : IUtf8JsonSerializable
+    public partial class MoverResourceSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.ResourceMover
             writer.WriteEndObject();
         }
 
-        internal static MoveCollectionData DeserializeMoveCollectionData(JsonElement element)
+        internal static MoverResourceSetData DeserializeMoverResourceSetData(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<MoveCollectionProperties> properties = default;
+            Optional<MoverResourceSetProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceMover
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = MoveCollectionProperties.DeserializeMoveCollectionProperties(property.Value);
+                    properties = MoverResourceSetProperties.DeserializeMoverResourceSetProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceMover
                     continue;
                 }
             }
-            return new MoveCollectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, properties.Value);
+            return new MoverResourceSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, properties.Value);
         }
     }
 }

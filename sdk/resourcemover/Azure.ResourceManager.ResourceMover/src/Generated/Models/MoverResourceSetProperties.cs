@@ -11,13 +11,13 @@ using Azure;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the move collection properties. </summary>
-    public partial class MoveCollectionProperties
+    public partial class MoverResourceSetProperties
     {
-        /// <summary> Initializes a new instance of MoveCollectionProperties. </summary>
+        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
         /// <param name="sourceRegion"> Gets or sets the source region. </param>
         /// <param name="targetRegion"> Gets or sets the target region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is null. </exception>
-        public MoveCollectionProperties(string sourceRegion, string targetRegion)
+        public MoverResourceSetProperties(string sourceRegion, string targetRegion)
         {
             if (sourceRegion == null)
             {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             TargetRegion = targetRegion;
         }
 
-        /// <summary> Initializes a new instance of MoveCollectionProperties. </summary>
+        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
         /// <param name="sourceRegion"> Gets or sets the source region. </param>
         /// <param name="targetRegion"> Gets or sets the target region. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the move collection errors. </param>
-        internal MoveCollectionProperties(string sourceRegion, string targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
+        internal MoverResourceSetProperties(string sourceRegion, string targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
         {
             SourceRegion = sourceRegion;
             TargetRegion = targetRegion;

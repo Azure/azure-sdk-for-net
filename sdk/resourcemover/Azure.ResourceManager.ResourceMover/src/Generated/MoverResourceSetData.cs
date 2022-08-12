@@ -13,16 +13,16 @@ using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    /// <summary> A class representing the MoveCollection data model. </summary>
-    public partial class MoveCollectionData : TrackedResourceData
+    /// <summary> A class representing the MoverResourceSet data model. </summary>
+    public partial class MoverResourceSetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MoveCollectionData. </summary>
+        /// <summary> Initializes a new instance of MoverResourceSetData. </summary>
         /// <param name="location"> The location. </param>
-        public MoveCollectionData(AzureLocation location) : base(location)
+        public MoverResourceSetData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MoveCollectionData. </summary>
+        /// <summary> Initializes a new instance of MoverResourceSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="etag"> The etag of the resource. </param>
         /// <param name="identity"> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="properties"> Defines the move collection properties. </param>
-        internal MoveCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, MoveCollectionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal MoverResourceSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, MoverResourceSetProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Identity = identity;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.ResourceMover
         /// <summary> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Defines the move collection properties. </summary>
-        public MoveCollectionProperties Properties { get; set; }
+        public MoverResourceSetProperties Properties { get; set; }
     }
 }

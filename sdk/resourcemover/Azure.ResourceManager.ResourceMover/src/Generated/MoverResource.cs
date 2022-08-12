@@ -18,46 +18,46 @@ using Azure.ResourceManager.ResourceMover.Models;
 namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
-    /// A Class representing a MoveResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MoveResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMoveResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MoveCollectionResource" /> using the GetMoveResource method.
+    /// A Class representing a MoverResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MoverResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetMoverResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MoverResourceSetResource" /> using the GetMoverResource method.
     /// </summary>
-    public partial class MoveResource : ArmResource
+    public partial class MoverResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MoveResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MoverResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _moveResourceClientDiagnostics;
-        private readonly MoveResourcesRestOperations _moveResourceRestClient;
-        private readonly MoveResourceData _data;
+        private readonly ClientDiagnostics _moverResourceMoveResourcesClientDiagnostics;
+        private readonly MoveResourcesRestOperations _moverResourceMoveResourcesRestClient;
+        private readonly MoverResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="MoveResource"/> class for mocking. </summary>
-        protected MoveResource()
+        /// <summary> Initializes a new instance of the <see cref="MoverResource"/> class for mocking. </summary>
+        protected MoverResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MoveResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "MoverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MoveResource(ArmClient client, MoveResourceData data) : this(client, data.Id)
+        internal MoverResource(ArmClient client, MoverResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MoveResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MoverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MoveResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MoverResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _moveResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceMover", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string moveResourceApiVersion);
-            _moveResourceRestClient = new MoveResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, moveResourceApiVersion);
+            _moverResourceMoveResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceMover", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string moverResourceMoveResourcesApiVersion);
+            _moverResourceMoveResourcesRestClient = new MoveResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, moverResourceMoveResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MoveResourceData Data
+        public virtual MoverResourceData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MoveResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MoverResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _moveResourceClientDiagnostics.CreateScope("MoveResource.Get");
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Get");
             scope.Start();
             try
             {
-                var response = await _moveResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MoveResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MoveResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MoverResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _moveResourceClientDiagnostics.CreateScope("MoveResource.Get");
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Get");
             scope.Start();
             try
             {
-                var response = _moveResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _moverResourceMoveResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MoveResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<MoverOperationStatus>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _moveResourceClientDiagnostics.CreateScope("MoveResource.Delete");
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Delete");
             scope.Start();
             try
             {
-                var response = await _moveResourceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveResourceClientDiagnostics, Pipeline, _moveResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _moverResourceMoveResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MoverOperationStatus> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _moveResourceClientDiagnostics.CreateScope("MoveResource.Delete");
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Delete");
             scope.Start();
             try
             {
-                var response = _moveResourceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveResourceClientDiagnostics, Pipeline, _moveResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _moverResourceMoveResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -193,19 +193,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveResources_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MoveResource to use. </param>
+        /// <param name="data"> The MoverResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MoveResource>> UpdateAsync(WaitUntil waitUntil, MoveResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverResource>> UpdateAsync(WaitUntil waitUntil, MoverResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _moveResourceClientDiagnostics.CreateScope("MoveResource.Update");
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Update");
             scope.Start();
             try
             {
-                var response = await _moveResourceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoveResource>(new MoveResourceOperationSource(Client), _moveResourceClientDiagnostics, Pipeline, _moveResourceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _moverResourceMoveResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,19 +223,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveResources_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MoveResource to use. </param>
+        /// <param name="data"> The MoverResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MoveResource> Update(WaitUntil waitUntil, MoveResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverResource> Update(WaitUntil waitUntil, MoverResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _moveResourceClientDiagnostics.CreateScope("MoveResource.Update");
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Update");
             scope.Start();
             try
             {
-                var response = _moveResourceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoveResource>(new MoveResourceOperationSource(Client), _moveResourceClientDiagnostics, Pipeline, _moveResourceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _moverResourceMoveResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the request body for updating move collection. </summary>
-    public partial class MoveCollectionPatch
+    public partial class MoverResourceSetPatch
     {
-        /// <summary> Initializes a new instance of MoveCollectionPatch. </summary>
-        public MoveCollectionPatch()
+        /// <summary> Initializes a new instance of MoverResourceSetPatch. </summary>
+        public MoverResourceSetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

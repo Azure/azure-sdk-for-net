@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines reference to a proxy resource. </summary>
-    public partial class ProxyResourceReferenceInfo : MoverAzureResourceReferenceInfo
+    public partial class ProxyResourceReferenceInfo : MoverResourceReferenceInfo
     {
         /// <summary> Initializes a new instance of ProxyResourceReferenceInfo. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>

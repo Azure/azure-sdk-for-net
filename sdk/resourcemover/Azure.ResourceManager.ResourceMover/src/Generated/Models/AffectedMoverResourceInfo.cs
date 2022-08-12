@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> The RP custom operation error info. </summary>
-    public partial class MoverAffectedMoveResourceInfo
+    public partial class AffectedMoverResourceInfo
     {
-        /// <summary> Initializes a new instance of MoverAffectedMoveResourceInfo. </summary>
-        internal MoverAffectedMoveResourceInfo()
+        /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
+        internal AffectedMoverResourceInfo()
         {
-            MoveResources = new ChangeTrackingList<MoverAffectedMoveResourceInfo>();
+            MoveResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of MoverAffectedMoveResourceInfo. </summary>
+        /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
         /// <param name="id"> The affected move resource id. </param>
         /// <param name="sourceId"> The affected move resource source id. </param>
         /// <param name="moveResources"> The affected move resources. </param>
-        internal MoverAffectedMoveResourceInfo(ResourceIdentifier id, ResourceIdentifier sourceId, IReadOnlyList<MoverAffectedMoveResourceInfo> moveResources)
+        internal AffectedMoverResourceInfo(ResourceIdentifier id, ResourceIdentifier sourceId, IReadOnlyList<AffectedMoverResourceInfo> moveResources)
         {
             Id = id;
             SourceId = sourceId;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> The affected move resource source id. </summary>
         public ResourceIdentifier SourceId { get; }
         /// <summary> The affected move resources. </summary>
-        public IReadOnlyList<MoverAffectedMoveResourceInfo> MoveResources { get; }
+        public IReadOnlyList<AffectedMoverResourceInfo> MoveResources { get; }
     }
 }

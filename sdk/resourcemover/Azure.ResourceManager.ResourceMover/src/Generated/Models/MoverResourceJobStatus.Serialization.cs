@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoveResourceJobStatus
+    public partial class MoverResourceJobStatus
     {
-        internal static MoveResourceJobStatus DeserializeMoveResourceJobStatus(JsonElement element)
+        internal static MoverResourceJobStatus DeserializeMoverResourceJobStatus(JsonElement element)
         {
-            Optional<MoveResourceJobName> jobName = default;
+            Optional<MoverResourceJobName> jobName = default;
             Optional<string> jobProgress = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobName = new MoveResourceJobName(property.Value.GetString());
+                    jobName = new MoverResourceJobName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobProgress"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveResourceJobStatus(Optional.ToNullable(jobName), jobProgress.Value);
+            return new MoverResourceJobStatus(Optional.ToNullable(jobName), jobProgress.Value);
         }
     }
 }

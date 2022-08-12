@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="moveState"> Defines the MoveResource states. </param>
         /// <param name="jobStatus"> Defines the job status. </param>
         /// <param name="errors"> An error response from the azure resource mover service. </param>
-        internal MoveResourceStatus(MoveResourceState? moveState, MoveResourceJobStatus jobStatus, MoveResourceError errors)
+        internal MoveResourceStatus(MoverResourceMoveState? moveState, MoverResourceJobStatus jobStatus, MoveResourceError errors)
         {
             MoveState = moveState;
             JobStatus = jobStatus;
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Defines the MoveResource states. </summary>
-        public MoveResourceState? MoveState { get; }
+        public MoverResourceMoveState? MoveState { get; }
         /// <summary> Defines the job status. </summary>
-        public MoveResourceJobStatus JobStatus { get; }
+        public MoverResourceJobStatus JobStatus { get; }
         /// <summary> An error response from the azure resource mover service. </summary>
         internal MoveResourceError Errors { get; }
         /// <summary> The move resource error body. </summary>

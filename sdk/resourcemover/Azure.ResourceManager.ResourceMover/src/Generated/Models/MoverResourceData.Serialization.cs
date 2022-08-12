@@ -12,7 +12,7 @@ using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    public partial class MoveResourceData : IUtf8JsonSerializable
+    public partial class MoverResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ResourceMover
             writer.WriteEndObject();
         }
 
-        internal static MoveResourceData DeserializeMoveResourceData(JsonElement element)
+        internal static MoverResourceData DeserializeMoverResourceData(JsonElement element)
         {
-            Optional<MoveResourceProperties> properties = default;
+            Optional<MoverResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceMover
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = MoveResourceProperties.DeserializeMoveResourceProperties(property.Value);
+                    properties = MoverResourceProperties.DeserializeMoverResourceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceMover
                     continue;
                 }
             }
-            return new MoveResourceData(id, name, type, systemData.Value, properties.Value);
+            return new MoverResourceData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

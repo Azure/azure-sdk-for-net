@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoveResourceProperties : IUtf8JsonSerializable
+    public partial class MoverResourceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteEndObject();
         }
 
-        internal static MoveResourceProperties DeserializeMoveResourceProperties(JsonElement element)
+        internal static MoverResourceProperties DeserializeMoverResourceProperties(JsonElement element)
         {
             Optional<MoverProvisioningState> provisioningState = default;
             ResourceIdentifier sourceId = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoverResourceSettings> resourceSettings = default;
             Optional<MoverResourceSettings> sourceResourceSettings = default;
             Optional<MoveResourcePropertiesMoveStatus> moveStatus = default;
-            Optional<IReadOnlyList<MoveResourceDependency>> dependsOn = default;
+            Optional<IReadOnlyList<MoverResourceDependency>> dependsOn = default;
             Optional<IList<MoveResourceDependencyOverride>> dependsOnOverrides = default;
             Optional<bool> isResolveRequired = default;
             Optional<MoveResourcePropertiesErrors> errors = default;
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MoveResourceDependency> array = new List<MoveResourceDependency>();
+                    List<MoverResourceDependency> array = new List<MoverResourceDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoveResourceDependency.DeserializeMoveResourceDependency(item));
+                        array.Add(MoverResourceDependency.DeserializeMoverResourceDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveResourceProperties(Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, Optional.ToList(dependsOn), Optional.ToList(dependsOnOverrides), Optional.ToNullable(isResolveRequired), errors.Value);
+            return new MoverResourceProperties(Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, Optional.ToList(dependsOn), Optional.ToList(dependsOnOverrides), Optional.ToNullable(isResolveRequired), errors.Value);
         }
     }
 }

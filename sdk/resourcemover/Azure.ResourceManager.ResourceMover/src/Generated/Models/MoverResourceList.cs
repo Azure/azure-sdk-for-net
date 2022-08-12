@@ -12,20 +12,20 @@ using Azure.ResourceManager.ResourceMover;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the collection of move resources. </summary>
-    internal partial class MoveResourceList
+    internal partial class MoverResourceList
     {
-        /// <summary> Initializes a new instance of MoveResourceList. </summary>
-        internal MoveResourceList()
+        /// <summary> Initializes a new instance of MoverResourceList. </summary>
+        internal MoverResourceList()
         {
-            Value = new ChangeTrackingList<MoveResourceData>();
+            Value = new ChangeTrackingList<MoverResourceData>();
         }
 
-        /// <summary> Initializes a new instance of MoveResourceList. </summary>
+        /// <summary> Initializes a new instance of MoverResourceList. </summary>
         /// <param name="value"> Gets the list of move resources. </param>
         /// <param name="nextLink"> Gets the value of  next link. </param>
         /// <param name="summaryCollection"> Gets or sets the list of summary items and the field on which summary is done. </param>
         /// <param name="totalCount"> Gets the total count. </param>
-        internal MoveResourceList(IReadOnlyList<MoveResourceData> value, string nextLink, MoverSummaryList summaryCollection, long? totalCount)
+        internal MoverResourceList(IReadOnlyList<MoverResourceData> value, string nextLink, MoverSummaryList summaryCollection, long? totalCount)
         {
             Value = value;
             NextLink = nextLink;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Gets the list of move resources. </summary>
-        public IReadOnlyList<MoveResourceData> Value { get; }
+        public IReadOnlyList<MoverResourceData> Value { get; }
         /// <summary> Gets the value of  next link. </summary>
         public string NextLink { get; }
         /// <summary> Gets or sets the list of summary items and the field on which summary is done. </summary>
