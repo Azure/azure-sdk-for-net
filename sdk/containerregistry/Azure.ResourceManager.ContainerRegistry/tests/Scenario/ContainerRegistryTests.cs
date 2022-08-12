@@ -408,12 +408,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             string taskString =
 @"
 steps:
-  - build: . -t acb:linux-{{.Run.ID}}";
+  - build: . -t acb:linux-{{.Run.ID}}".Replace("\r\n", "\n");
             string valuesString =
 @"
 key1: value1
 key2: value2
-";
+".Replace("\r\n", "\n");
             runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 IsArchiveEnabled = false,
@@ -478,7 +478,7 @@ key2: value2
 @"
 version: v1.1.0
 steps:
-  - cmd: docker images";
+  - cmd: docker images".Replace("\r\n", "\n");
             var runLro = await registry.ScheduleRunAsync(WaitUntil.Completed, new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
             {
                 AgentPoolName = agentPoolName,
@@ -516,7 +516,7 @@ steps:
 @"
 version: v1.1.0
 steps:
-  - cmd: docker images";
+  - cmd: docker images".Replace("\r\n", "\n");
             var lro = await taskRunCollection.CreateOrUpdateAsync(WaitUntil.Completed, taskRunName, new ContainerRegistryTaskRunData()
             {
                 Location = registry.Data.Location,
