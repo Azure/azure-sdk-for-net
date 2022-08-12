@@ -20,10 +20,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 // TODO: set statsbeat connectionstring based on customer's connectionstring endpoint.
             }
-
-            // Forceflush, so that the metric is exported atleast once
-            // if app shuts down before 24hrs.
-            Statsbeat.AttachStatsBeatMeterProvider.ForceFlush();
         }
     }
 }
