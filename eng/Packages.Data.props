@@ -106,13 +106,13 @@
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.1.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.46.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.23.0" />
-    <!-- 
-      TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library. 
+    <!--
+      TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
       Currently, it is referencd by Azure.Identity.BrokeredAuthentication which is still in beta
     -->
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.46.0-preview" />
 
-    <!-- TODO: Make sure this package is arch-board approved -->
+    <!-- TODO: Make sure this package is arch-board approved (These can be updated to latest version) -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
     <PackageReference Update="Microsoft.IdentityModel.Protocols" Version="6.5.0" />
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.5.0" />
@@ -140,8 +140,6 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Update="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Update="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
