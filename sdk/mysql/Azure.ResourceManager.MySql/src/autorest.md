@@ -148,11 +148,10 @@ rename-mapping:
   PerformanceTierProperties: MySqlPerformanceTier
   ConfigurationListResult: MySqlConfigurationList
   LogFile.properties.type: LogFileType
+  ConfigurationListResult.value: Values
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
-#   LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
-#   LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
   MySqlServers_Start: Start
   MySqlServers_Stop: Stop
   MySqlServers_Upgrade: Upgrade
@@ -176,6 +175,14 @@ directive:
     transform: >
       $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
+  - from: mysql.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations'].get
+    transform: >
+      $['x-ms-pageable'] = {
+        'itemName': 'Values',
+        'nextLinkName': null
+      };
+
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2021-05-01'
@@ -275,6 +282,8 @@ rename-mapping:
   NameAvailability.nameAvailable: IsNameAvailable
   Storage.storageSizeGB: StorageSizeInGB
   SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+  ConfigurationListResult.value: Values
+
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   Configurations_BatchUpdate: UpdateConfigurations
@@ -286,5 +295,14 @@ directive:
       $.Identity['x-ms-client-flatten'] = false;
       $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = "#/definitions/UserAssignedIdentity";
       delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
+      delete $.ConfigurationListResult.properties.nextLink;
+
+  - from: mysql.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations'].get
+    transform: >
+      $['x-ms-pageable'] = {
+        'itemName': 'Values',
+        'nextLinkName': null
+      };
 
 ```

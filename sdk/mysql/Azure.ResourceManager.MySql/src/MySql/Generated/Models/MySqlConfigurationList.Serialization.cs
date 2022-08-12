@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MySql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStartArray();
-                foreach (var item in Value)
+                foreach (var item in Values)
                 {
                     writer.WriteObjectValue(item);
                 }

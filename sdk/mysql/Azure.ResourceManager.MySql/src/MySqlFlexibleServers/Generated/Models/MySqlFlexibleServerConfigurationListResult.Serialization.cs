@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         internal static MySqlFlexibleServerConfigurationListResult DeserializeMySqlFlexibleServerConfigurationListResult(JsonElement element)
         {
             Optional<IReadOnlyList<MySqlFlexibleServerConfigurationData>> value = default;
-            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -35,13 +34,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new MySqlFlexibleServerConfigurationListResult(Optional.ToList(value), nextLink.Value);
+            return new MySqlFlexibleServerConfigurationListResult(Optional.ToList(value));
         }
     }
 }
