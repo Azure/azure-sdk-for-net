@@ -14,72 +14,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> Pageable operation class for analyzing multiple actions using long running operation. </summary>
-    public class AnalyzeActionsOperation : PageableOperation<AnalyzeActionsResult>, IOperation<AsyncPageable<AnalyzeActionsResult>>
+    /// <summary> Pageable operation class for classifying single and multiple labels from multiple documents using long running operation. </summary>
+    public class ClassifyDocumentOperation : PageableOperation<ClassifyDocumentResultCollection>, IOperation<AsyncPageable<ClassifyDocumentResultCollection>>
     {
         internal readonly IDictionary<string, int> _idToIndexMap;
 
-        private readonly string _jobId;
         private readonly bool? _showStats;
+        private readonly string _jobId;
         private readonly ServiceClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
-        private readonly OperationInternal<AsyncPageable<AnalyzeActionsResult>> _operationInternal;
+        private readonly OperationInternal<AsyncPageable<ClassifyDocumentResultCollection>> _operationInternal;
 
-        private int _actionsTotal;
-        private int _actionsFailed;
-        private int _actionSucceeded;
-        private int _actionsInProgress;
-        private DateTimeOffset _createdOn;
+        private TextAnalyticsOperationStatus _status;
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
-        private string _displayName;
-        private TextAnalyticsOperationStatus _status;
-        private Page<AnalyzeActionsResult> _firstPage;
-
-        /// <summary>
-        /// Total actions failed in the operation
-        /// </summary>
-        public virtual int ActionsFailed => _actionsFailed;
-
-        /// <summary>
-        /// Total actions in progress in the operation
-        /// </summary>
-        public virtual int ActionsInProgress => _actionsInProgress;
-
-        /// <summary>
-        /// Total actions succeeded in the operation
-        /// </summary>
-        public virtual int ActionsSucceeded => _actionSucceeded;
-
-        /// <summary>
-        /// Total actions executed in the operation.
-        /// </summary>
-        public virtual int ActionsTotal => _actionsTotal;
-
-        /// <summary>
-        /// Time when the operation was created on.
-        /// </summary>
-        public virtual DateTimeOffset CreatedOn => _createdOn;
-
-        /// <summary>
-        /// Display Name of the operation
-        /// </summary>
-        public virtual string DisplayName => _displayName;
-
-        /// <summary>
-        /// Time when the operation will expire.
-        /// </summary>
-        public virtual DateTimeOffset? ExpiresOn => _expiresOn;
-
-        /// <summary>
-        /// Time when the operation was last modified on.
-        /// </summary>
-        public virtual DateTimeOffset LastModified => _lastModified;
-
-        /// <summary>
-        /// The current status of the operation.
-        /// </summary>
-        public virtual TextAnalyticsOperationStatus Status => _status;
+        private DateTimeOffset _createdOn;
+        private Page<ClassifyDocumentResultCollection> _firstPage;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -88,16 +38,36 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
-        /// Final result of the long-running operation.
+        /// Time when the operation was created on.
+        /// </summary>
+        public virtual DateTimeOffset CreatedOn => _createdOn;
+
+        /// <summary>
+        /// Time when the operation will expire.
+        /// </summary>
+        public virtual DateTimeOffset? ExpiresOn => _expiresOn;
+
+        /// <summary>
+        /// Time when the operation was last modified on
+        /// </summary>
+        public virtual DateTimeOffset LastModified => _lastModified;
+
+        /// <summary>
+        /// Gets the status of the operation.
+        /// </summary>
+        public virtual TextAnalyticsOperationStatus Status => _status;
+
+        /// <summary>
+        /// Gets the final result of the long-running operation asynchronously.
         /// </summary>
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override AsyncPageable<AnalyzeActionsResult> Value => _operationInternal.Value;
+        public override AsyncPageable<ClassifyDocumentResultCollection> Value => _operationInternal.Value;
 
         /// <summary>
-        /// Returns true if the long-running operation has completed.
+        /// Returns true if the long-running operation completed.
         /// </summary>
         public override bool HasCompleted => _operationInternal.HasCompleted;
 
@@ -107,11 +77,11 @@ namespace Azure.AI.TextAnalytics
         public override bool HasValue => _operationInternal.HasValue;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeActionsOperation"/> class.
+        /// Initializes a new instance of the <see cref="ClassifyDocumentOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public AnalyzeActionsOperation(string operationId, TextAnalyticsClient client)
+        public ClassifyDocumentOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(client, nameof(client));
@@ -126,30 +96,30 @@ namespace Azure.AI.TextAnalytics
             }
             catch (Exception e)
             {
-                throw new ArgumentException($"Invalid value. Please use the {nameof(AnalyzeActionsOperation)}.{nameof(Id)} property value.", nameof(operationId), e);
+                throw new ArgumentException($"Invalid value. Please use the {nameof(ClassifyDocumentOperation)}.{nameof(Id)} property value.", nameof(operationId), e);
             }
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
             _diagnostics = _serviceClient.Diagnostics;
-            _operationInternal = new OperationInternal<AsyncPageable<AnalyzeActionsResult>>(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(_diagnostics, this, rawResponse: null);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeActionsOperation"/> class.
+        /// Initializes a new instance of the <see cref="ClassifyDocumentOperation"/> class.
         /// </summary>
-        /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeActionsOperation(ServiceClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal ClassifyDocumentOperation(ServiceClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
-            _operationInternal = new OperationInternal<AsyncPageable<AnalyzeActionsResult>>(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(_diagnostics, this, rawResponse: null);
 
             _jobId = operationLocation.Split('/').Last().Split('?')[0];
 
@@ -157,10 +127,10 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeActionsOperation"/> class. This constructor
+        /// Initializes a new instance of the <see cref="ClassifyDocumentOperation"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
-        protected AnalyzeActionsOperation()
+        protected ClassifyDocumentOperation()
         {
         }
 
@@ -169,7 +139,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="AnalyzeActionsOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="ClassifyDocumentOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
@@ -204,7 +174,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override async ValueTask<Response<AsyncPageable<AnalyzeActionsResult>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<AsyncPageable<ClassifyDocumentResultCollection>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -220,23 +190,21 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override async ValueTask<Response<AsyncPageable<AnalyzeActionsResult>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<AsyncPageable<ClassifyDocumentResultCollection>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Cancels a pending or running <see cref="AnalyzeActionsOperation"/>.
+        /// Cancels a pending or running <see cref="ClassifyDocumentOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="NotSupportedException">Cancellation not supported by API versions v3.0, v3.1.</exception>
         public virtual void Cancel(CancellationToken cancellationToken = default) =>
             _serviceClient.CancelAnalyzeActionsJob(_jobId, cancellationToken);
 
         /// <summary>
-        /// Cancels a pending or running <see cref="AnalyzeActionsOperation"/>.
+        /// Cancels a pending or running <see cref="ClassifyDocumentOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task"/> to track the service request.</returns>
-        /// <exception cref="NotSupportedException">Cancellation not supported by API versions v3.0, v3.1.</exception>
         public virtual async Task CancelAsync(CancellationToken cancellationToken = default) =>
             await _serviceClient.CancelAnalyzeActionsJobAsync(_jobId, cancellationToken).ConfigureAwait(false);
 
@@ -246,7 +214,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<AnalyzeActionsResult> GetValuesAsync(CancellationToken cancellationToken = default)
+        public override AsyncPageable<ClassifyDocumentResultCollection> GetValuesAsync(CancellationToken cancellationToken = default)
         {
             // Validates that the operation has completed successfully.
             _ = _operationInternal.Value;
@@ -254,64 +222,63 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the final result of the long-running operation synchronously.
+        /// Gets the final result of the long-running operation in synchronously.
         /// </summary>
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override Pageable<AnalyzeActionsResult> GetValues(CancellationToken cancellationToken = default)
+        public override Pageable<ClassifyDocumentResultCollection> GetValues(CancellationToken cancellationToken = default)
         {
             // Validates that the operation has completed successfully.
             _ = _operationInternal.Value;
 
-            Page<AnalyzeActionsResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ClassifyDocumentResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                try
-                {
-                    Response<AnalyzeTextJobStatusResult> response = _serviceClient.AnalyzeStatusNextPage(nextLink, pageSizeHint, _idToIndexMap, cancellationToken);
-                    return Page.FromValues(new List<AnalyzeActionsResult>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                var response = _serviceClient.AnalyzeTextJobStatusNextPage(nextLink, pageSizeHint, _idToIndexMap, cancellationToken);
+                return Page.FromValues(new List<ClassifyDocumentResultCollection>() { Transforms.ConvertClassifyDocumentResultCollection(response.Value, _idToIndexMap) }, response.Value.NextLink, response.GetRawResponse());
             }
 
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
         }
 
-        async ValueTask<OperationState<AsyncPageable<AnalyzeActionsResult>>> IOperation<AsyncPageable<AnalyzeActionsResult>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        private AsyncPageable<ClassifyDocumentResultCollection> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
-            Response<AnalyzeTextJobStatusResult> response = async
-                ? await _serviceClient.AnalyzeStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.AnalyzeStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
+            async Task<Page<ClassifyDocumentResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                var response = await _serviceClient.AnalyzeTextJobStatusNextPageAsync(nextLink, pageSizeHint, _idToIndexMap, cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(new List<ClassifyDocumentResultCollection>() { Transforms.ConvertClassifyDocumentResultCollection(response.Value, _idToIndexMap) }, response.Value.NextLink, response.GetRawResponse());
+            }
 
-            _displayName = response.Value.DisplayName;
-            _createdOn = response.Value.CreatedOn;
-            _expiresOn = response.Value.ExpiresOn;
-            _lastModified = response.Value.LastModifiedOn;
+            return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
+        }
+
+        async ValueTask<OperationState<AsyncPageable<ClassifyDocumentResultCollection>>> IOperation<AsyncPageable<ClassifyDocumentResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        {
+            Response<AnalyzeTextJobState> response = async
+                ? await _serviceClient.AnalyzeTextJobStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.AnalyzeTextJobStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
+
+            _createdOn = response.Value.CreatedDateTime;
+            _expiresOn = response.Value.ExpirationDateTime;
+            _lastModified = response.Value.LastUpdatedDateTime;
             _status = response.Value.Status;
-            _actionsFailed = response.Value.ActionsFailed;
-            _actionsInProgress = response.Value.AcionsInProgress;
-            _actionSucceeded = response.Value.AcionsSucceeded;
-            _actionsTotal = response.Value.ActionsTotal;
 
             Response rawResponse = response.GetRawResponse();
 
             if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 string nextLink = response.Value.NextLink;
-                _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { response.Value.Result }, nextLink, rawResponse);
+                _firstPage = Page.FromValues(new List<ClassifyDocumentResultCollection>() { Transforms.ConvertClassifyDocumentResultCollection(response.Value, _idToIndexMap) }, nextLink, rawResponse);
 
-                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
+                return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
-                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
+                return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Pending(rawResponse);
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
-                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse,
+                return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse,
                     new RequestFailedException("The operation was canceled so no value is available."));
             }
 
@@ -319,25 +286,7 @@ namespace Azure.AI.TextAnalytics
                 .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
                 .ConfigureAwait(false);
 
-            return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
-        }
-
-        private AsyncPageable<AnalyzeActionsResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AnalyzeActionsResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                try
-                {
-                    Response<AnalyzeTextJobStatusResult> response = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink, pageSizeHint, _idToIndexMap, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(new List<AnalyzeActionsResult>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
+            return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, requestFailedException);
         }
     }
 }
