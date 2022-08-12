@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>A task flagged as completed with the value as true.</returns>
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
         /// <summary>Stops the asynchronous listener, we do not do anything here as all we need is the reference to the executor.</summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>A task flagged as completed with the value true.</returns>
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
     }
 }

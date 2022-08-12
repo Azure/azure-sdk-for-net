@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             _logger.LogInformation(message);
         }
 
-        internal void LogFunction(string functionName)
+        internal void DisplayAzureFunctionInfoToConsole(string functionName)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             if (Listeners.Count == 1)

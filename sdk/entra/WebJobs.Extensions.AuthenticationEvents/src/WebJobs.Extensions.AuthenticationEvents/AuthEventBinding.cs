@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (Exception ex)
             {
-                return await GetFaultyRequest(context, value, request, eventResponseHandler, ex).ConfigureAwait(false);
+                return GetFaultyRequest(context, value, request, eventResponseHandler, ex);
             }
         }
 
@@ -116,9 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>A TiggerData Object with the failed event request based on the event. With the related request status set.</returns>
         /// <seealso cref="TriggerData" />
         /// <seealso cref="AuthEventResponseHandler" />
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task<TriggerData> GetFaultyRequest(ValueBindingContext context, object value, HttpRequestMessage request, AuthEventResponseHandler eventResponseHandler, Exception ex)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        private TriggerData GetFaultyRequest(ValueBindingContext context, object value, HttpRequestMessage request, AuthEventResponseHandler eventResponseHandler, Exception ex)
         {
             eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
             eventResponseHandler.Request.StatusMessage = ex.Message;
@@ -239,7 +237,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             var function = context.Descriptor.ShortName.Split('.').Last();
             _configuration.Listeners.Add(function, new AuthEventListener(context.Executor, _authEventTriggerAttr));
             //_configuration.LogInformation($"Added function listener: {function}");
-            _configuration.LogFunction(function);
+            _configuration.DisplayAzureFunctionInfoToConsole(function);
 
             return Task.FromResult<IListener>(new NullListener());
         }
