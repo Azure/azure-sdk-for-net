@@ -125,7 +125,10 @@
           "serverCallId": "serverCallId",
           "kind": "serverCallLocator"
         },
-        "recordingStateCallbackUri": "https://localhost/"
+        "recordingStateCallbackUri": "https://localhost/",
+        "recordingContentType": null,
+        "recordingChannelType": null,
+        "recordingFormatType": null
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -139,7 +142,7 @@
       },
       "ResponseBody": {
         "recordingId": "eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MjFmMGIwMC00Y2FkLTRkZWUtYmVhYS01OGVhMTJjOWVkMzkiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiIzMTI2ZDU0NC05NDVkLTQxNDUtOGVmNy0xODMwODA2ZWFiOTAifQ",
-        "recordingStatus": "inactive"
+        "recordingState": "inactive"
       }
     },
     {
@@ -167,7 +170,7 @@
       },
       "ResponseBody": {
         "recordingId": "eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MjFmMGIwMC00Y2FkLTRkZWUtYmVhYS01OGVhMTJjOWVkMzkiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiIzMTI2ZDU0NC05NDVkLTQxNDUtOGVmNy0xODMwODA2ZWFiOTAifQ",
-        "recordingStatus": "active"
+        "recordingState": "active"
       }
     },
     {
@@ -219,7 +222,7 @@
       },
       "ResponseBody": {
         "recordingId": "eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MjFmMGIwMC00Y2FkLTRkZWUtYmVhYS01OGVhMTJjOWVkMzkiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiIzMTI2ZDU0NC05NDVkLTQxNDUtOGVmNy0xODMwODA2ZWFiOTAifQ",
-        "recordingStatus": "inactive"
+        "recordingState": "inactive"
       }
     },
     {
@@ -271,7 +274,7 @@
       },
       "ResponseBody": {
         "recordingId": "eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MjFmMGIwMC00Y2FkLTRkZWUtYmVhYS01OGVhMTJjOWVkMzkiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiIzMTI2ZDU0NC05NDVkLTQxNDUtOGVmNy0xODMwODA2ZWFiOTAifQ",
-        "recordingStatus": "active"
+        "recordingState": "active"
       }
     },
     {
