@@ -7,14 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>3.2.0-preview</Version>
+		<Version>3.2.1-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Add ManagedInstanceAdvancedThreatProtectionSettings API (2022-02-01-preview version)
-- Add ManagedDatabaseAdvancedThreatProtectionSettings API (2022-02-01-preview version)
-- Add ManagedInstanceDtcs API (2022-02-01-preview version)
+- Add Databases API (2022-02-01-preview version)
+- Add ReplicationLinks API (2022-02-01-preview version)
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
