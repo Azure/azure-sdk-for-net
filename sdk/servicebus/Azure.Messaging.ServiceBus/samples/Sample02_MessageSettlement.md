@@ -1,4 +1,4 @@
-# Settling Messages
+# Settling messages
 
 This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) 
 received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock)

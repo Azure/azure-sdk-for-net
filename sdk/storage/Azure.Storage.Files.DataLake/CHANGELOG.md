@@ -7,6 +7,7 @@
 - Added support for encryption scopes.
 - Added support for encryption scope SAS.
 - Fixed bug where DataLakeFileSystemClient.GetParentServiceClient() persisted the filesystem name in the URL of the returned DataLakeServiceClient
+- Fixed bug where PathItem.ETag was not being deserialized correctly.
 
 ## 12.11.0 (2022-07-07)
 - Includes all features from 12.11.0-beta.1.
