@@ -137,6 +137,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(412, isError: false);
+
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
@@ -184,6 +186,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(412, isError: false);
+
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
@@ -255,6 +259,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(409, isError: false);
+
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
@@ -296,6 +302,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(409, isError: false);
+
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
@@ -387,6 +395,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(409, isError: false);
+
                 using Response response = await DeleteKeyValueAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
 
                 return response.Status switch
@@ -415,6 +425,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(409, isError: false);
+
                 using Response response = DeleteKeyValue(key, label, requestOptions?.IfMatch, context);
 
                 return response.Status switch
@@ -537,8 +549,9 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-               RequestContext context = CreateContext(cancellationToken);
-               context.AddClassifier(304, isError: false);
+                RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(304, isError: false);
+
                 var dateTime = acceptDateTime.HasValue? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture): null;
                 using Response response = await GetKeyValueAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
 
@@ -575,6 +588,7 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateContext(cancellationToken);
                 context.AddClassifier(304, isError: false);
+
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
                 using Response response = GetKeyValue(key, label, dateTime, null, conditions, context);
 
