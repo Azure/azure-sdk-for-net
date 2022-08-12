@@ -807,6 +807,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("bar", paths[0].Name);
             Assert.AreEqual("baz", paths[1].Name);
             Assert.AreEqual("foo", paths[2].Name);
+            Assert.IsNotNull(paths[0].ETag);
         }
 
         [RecordedTest]

@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters that describes a set of credentials that will be used when a run is invoked. </summary>
-    public partial class ContainerRegistryRunCredentials
+    public partial class ContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunCredentials. </summary>
-        public ContainerRegistryRunCredentials()
+        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        public ContainerRegistryCredentials()
         {
             CustomRegistries = new ChangeTrackingDictionary<string, CustomRegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunCredentials. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
         /// <param name="sourceRegistry"> Describes the credential parameters for accessing the source registry. </param>
         /// <param name="customRegistries">
         /// Describes the credential parameters for accessing other custom registries. The key
         /// for the dictionary item will be the registry login server (myregistry.azurecr.io) and
         /// the value of the item will be the registry credentials for accessing the registry.
         /// </param>
-        internal ContainerRegistryRunCredentials(SourceRegistryCredentials sourceRegistry, IDictionary<string, CustomRegistryCredentials> customRegistries)
+        internal ContainerRegistryCredentials(SourceRegistryCredentials sourceRegistry, IDictionary<string, CustomRegistryCredentials> customRegistries)
         {
             SourceRegistry = sourceRegistry;
             CustomRegistries = customRegistries;

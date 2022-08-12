@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
-        internal ContainerRegistryTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerRegistryProvisioningState? provisioningState, DateTimeOffset? createdOn, ContainerRegistryTaskStatus? status, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, ContainerRegistryTaskStepProperties step, ContainerRegistryTriggerProperties trigger, ContainerRegistryRunCredentials credentials, string logTemplate, bool? isSystemTask) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerRegistryTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerRegistryProvisioningState? provisioningState, DateTimeOffset? createdOn, ContainerRegistryTaskStatus? status, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, ContainerRegistryTaskStepProperties step, ContainerRegistryTriggerProperties trigger, ContainerRegistryCredentials credentials, string logTemplate, bool? isSystemTask) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The properties that describe all triggers for the task. </summary>
         public ContainerRegistryTriggerProperties Trigger { get; set; }
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
-        public ContainerRegistryRunCredentials Credentials { get; set; }
+        public ContainerRegistryCredentials Credentials { get; set; }
         /// <summary> The template that describes the repository and tag information for run log artifact. </summary>
         public string LogTemplate { get; set; }
         /// <summary> The value of this property indicates whether the task resource is system task or not. </summary>
