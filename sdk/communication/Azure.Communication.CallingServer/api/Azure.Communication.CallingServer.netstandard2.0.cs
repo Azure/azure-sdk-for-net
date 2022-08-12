@@ -71,8 +71,10 @@ namespace Azure.Communication.CallingServer
     public static partial class CallAutomationEventParser
     {
         public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(Azure.Messaging.CloudEvent cloudEvent) { throw null; }
+        public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(System.BinaryData json) { throw null; }
         public static Azure.Communication.CallingServer.CallAutomationEventBase Parse(string eventData, string eventType) { throw null; }
         public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(Azure.Messaging.CloudEvent[] cloudEvents) { throw null; }
+        public static Azure.Communication.CallingServer.CallAutomationEventBase[] ParseMany(System.BinaryData json) { throw null; }
     }
     public static partial class CallAutomationModelFactory
     {

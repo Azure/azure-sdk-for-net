@@ -24,6 +24,28 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
+        /// Parsing a CallAutomation event from BinaryData.
+        /// </summary>
+        /// <param name="json">event json in BinaryData format.</param>
+        /// <returns>A <see cref="CallAutomationEventBase"/> object.</returns>
+        public static CallAutomationEventBase Parse(BinaryData json)
+        {
+            CloudEvent cloudEvent = CloudEvent.Parse(json);
+            return Deserialize(cloudEvent.Data.ToString(), cloudEvent.Type);
+        }
+
+        /// <summary>
+        /// Parsing a CallAutomation event given the data and event type of the payload.
+        /// </summary>
+        /// <param name="eventData">the event data of a <see cref="CloudEvent"/> in string.</param>
+        /// <param name="eventType">the event type of a <see cref="CloudEvent"/> in string.</param>
+        /// <returns>An array of <see cref="CallAutomationEventBase"/> object.</returns>
+        public static CallAutomationEventBase Parse(string eventData, string eventType)
+        {
+            return Deserialize(eventData, eventType);
+        }
+
+        /// <summary>
         /// Parsing CallAutomation events from an array of CloudEvent.
         /// </summary>
         /// <param name="cloudEvents"><see cref="CloudEvent"/>.</param>
@@ -40,14 +62,20 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Parsing a CallAutomation event given the data and event type of the payload.
+        /// Parsing CallAutomation events from BinaryData.
         /// </summary>
-        /// <param name="eventData">the event data of a <see cref="CloudEvent"/> in string.</param>
-        /// <param name="eventType">the event type of a <see cref="CloudEvent"/> in string.</param>
+        /// <param name="json"> events json in BinaryData format.</param>
         /// <returns>An array of <see cref="CallAutomationEventBase"/> object.</returns>
-        public static CallAutomationEventBase Parse(string eventData, string eventType)
+        public static CallAutomationEventBase[] ParseMany(BinaryData json)
         {
-            return Deserialize(eventData, eventType);
+            CloudEvent[] cloudEvents = CloudEvent.ParseMany(json);
+            var callAutomationEvents = new CallAutomationEventBase[cloudEvents.Length];
+            for (int i = 0; i < cloudEvents.Length; i++)
+            {
+                var cloudEvent = cloudEvents[i];
+                callAutomationEvents[i] = Deserialize(cloudEvent.Data.ToString(), cloudEvent.Type);
+            }
+            return callAutomationEvents;
         }
 
         /// <summary>
