@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.4 (Unreleased)
+## 5.2.0 (2022-08-12)
 
 ### Features Added
 
@@ -26,8 +26,6 @@
 - Renamed `SingleCategoryClassifyActionResult` to `SingleLabelClassifyActionResult`.
 - Renamed `SingleCategoryClassifyResult` to `ClassifyDocumentResult`.
 - Renamed `SingleCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
-
-### Bugs Fixed
 
 ### Other Changes
 
