@@ -63,6 +63,12 @@ namespace Azure.Search.Documents
         public ObjectSerializer Serializer { get; set; }
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="SearchAudience.AzurePublicCloud" /> will be assumed.</value>
+        public SearchAudience? Audience { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
         /// class.
         /// </summary>
@@ -102,6 +108,25 @@ namespace Azure.Search.Documents
             return HttpPipelineBuilder.Build(
                 options: this,
                 perCallPolicies: new[] { new AzureKeyCredentialPolicy(credential, Constants.ApiKeyHeaderName) },
+                perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
+                responseClassifier: null);
+        }
+
+        /// <summary>
+        /// Create an <see cref="HttpPipeline"/> to send requests to the Search service.
+        /// </summary>
+        /// <param name="credential">
+        /// The <see cref="TokenCredential"/> to authenticate requests.
+        /// </param>
+        /// <returns>An <see cref="HttpPipeline"/> to send requests.</returns>
+        internal HttpPipeline Build(TokenCredential credential)
+        {
+            Debug.Assert(credential != null);
+            var authorizationScope = $"{(string.IsNullOrEmpty(Audience?.ToString()) ? SearchAudience.AzurePublicCloud : Audience)}/.default";
+
+            return HttpPipelineBuilder.Build(
+                options: this,
+                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) },
                 perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
                 responseClassifier: null);
         }

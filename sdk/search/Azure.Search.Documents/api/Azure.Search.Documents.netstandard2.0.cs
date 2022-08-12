@@ -22,11 +22,32 @@ namespace Azure.Search.Documents
         public IndexDocumentsOptions() { }
         public bool ThrowOnAnyError { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SearchAudience : System.IEquatable<Azure.Search.Documents.SearchAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SearchAudience(string value) { throw null; }
+        public static Azure.Search.Documents.SearchAudience AzureChina { get { throw null; } }
+        public static Azure.Search.Documents.SearchAudience AzureGovernment { get { throw null; } }
+        public static Azure.Search.Documents.SearchAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.SearchAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.SearchAudience left, Azure.Search.Documents.SearchAudience right) { throw null; }
+        public static implicit operator Azure.Search.Documents.SearchAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.SearchAudience left, Azure.Search.Documents.SearchAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SearchClient
     {
         protected SearchClient() { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchClient(System.Uri endpoint, string indexName, Azure.Core.TokenCredential tokenCredential) { }
+        public SearchClient(System.Uri endpoint, string indexName, Azure.Core.TokenCredential tokenCredential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
@@ -56,6 +77,7 @@ namespace Azure.Search.Documents
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
         public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2020_06_30) { }
+        public Azure.Search.Documents.SearchAudience? Audience { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -179,6 +201,8 @@ namespace Azure.Search.Documents.Indexes
         protected SearchIndexClient() { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchIndexClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
+        public SearchIndexClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo>> AnalyzeText(string indexName, Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -222,6 +246,8 @@ namespace Azure.Search.Documents.Indexes
         protected SearchIndexerClient() { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchIndexerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
+        public SearchIndexerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateDataSourceConnection(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
