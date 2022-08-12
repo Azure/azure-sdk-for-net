@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfluentAgreementResourceListResponse>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfluentAgreementListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        ConfluentAgreementResourceListResponse value = default;
+                        ConfluentAgreementListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfluentAgreementResourceListResponse.DeserializeConfluentAgreementResourceListResponse(document.RootElement);
+                        value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfluentAgreementResourceListResponse> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ConfluentAgreementListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        ConfluentAgreementResourceListResponse value = default;
+                        ConfluentAgreementListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfluentAgreementResourceListResponse.DeserializeConfluentAgreementResourceListResponse(document.RootElement);
+                        value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, ConfluentAgreementResource body)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, ConfluentAgreement body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfluentAgreementResource>> CreateAsync(string subscriptionId, ConfluentAgreementResource body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfluentAgreement>> CreateAsync(string subscriptionId, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        ConfluentAgreementResource value = default;
+                        ConfluentAgreement value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfluentAgreementResource.DeserializeConfluentAgreementResource(document.RootElement);
+                        value = ConfluentAgreement.DeserializeConfluentAgreement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfluentAgreementResource> Create(string subscriptionId, ConfluentAgreementResource body = null, CancellationToken cancellationToken = default)
+        public Response<ConfluentAgreement> Create(string subscriptionId, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        ConfluentAgreementResource value = default;
+                        ConfluentAgreement value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfluentAgreementResource.DeserializeConfluentAgreementResource(document.RootElement);
+                        value = ConfluentAgreement.DeserializeConfluentAgreement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfluentAgreementResourceListResponse>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfluentAgreementListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        ConfluentAgreementResourceListResponse value = default;
+                        ConfluentAgreementListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfluentAgreementResourceListResponse.DeserializeConfluentAgreementResourceListResponse(document.RootElement);
+                        value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfluentAgreementResourceListResponse> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ConfluentAgreementListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -238,9 +238,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        ConfluentAgreementResourceListResponse value = default;
+                        ConfluentAgreementListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfluentAgreementResourceListResponse.DeserializeConfluentAgreementResourceListResponse(document.RootElement);
+                        value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -10,16 +10,16 @@ using System;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Confluent Offer detail. </summary>
-    public partial class OfferDetail
+    public partial class ConfluentOfferDetail
     {
-        /// <summary> Initializes a new instance of OfferDetail. </summary>
+        /// <summary> Initializes a new instance of ConfluentOfferDetail. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
         /// <param name="planId"> Offer Plan Id. </param>
         /// <param name="planName"> Offer Plan Name. </param>
         /// <param name="termUnit"> Offer Plan Term unit. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="id"/>, <paramref name="planId"/>, <paramref name="planName"/> or <paramref name="termUnit"/> is null. </exception>
-        public OfferDetail(string publisherId, string id, string planId, string planName, string termUnit)
+        public ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit)
         {
             if (publisherId == null)
             {
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Confluent.Models
             TermUnit = termUnit;
         }
 
-        /// <summary> Initializes a new instance of OfferDetail. </summary>
+        /// <summary> Initializes a new instance of ConfluentOfferDetail. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
         /// <param name="planId"> Offer Plan Id. </param>
         /// <param name="planName"> Offer Plan Name. </param>
         /// <param name="termUnit"> Offer Plan Term unit. </param>
         /// <param name="status"> SaaS Offer Status. </param>
-        internal OfferDetail(string publisherId, string id, string planId, string planName, string termUnit, SaaSOfferStatus? status)
+        internal ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, ConfluentSaaSOfferStatus? status)
         {
             PublisherId = publisherId;
             Id = id;
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Offer Plan Term unit. </summary>
         public string TermUnit { get; set; }
         /// <summary> SaaS Offer Status. </summary>
-        public SaaSOfferStatus? Status { get; }
+        public ConfluentSaaSOfferStatus? Status { get; }
     }
 }

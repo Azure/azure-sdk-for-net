@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Confluent
     {
         private ClientDiagnostics _marketplaceAgreementsClientDiagnostics;
         private MarketplaceAgreementsRestOperations _marketplaceAgreementsRestClient;
-        private ClientDiagnostics _organizationResourceOrganizationClientDiagnostics;
-        private OrganizationRestOperations _organizationResourceOrganizationRestClient;
+        private ClientDiagnostics _confluentOrganizationOrganizationClientDiagnostics;
+        private OrganizationRestOperations _confluentOrganizationOrganizationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Confluent
 
         private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MarketplaceAgreementsRestOperations MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics OrganizationResourceOrganizationClientDiagnostics => _organizationResourceOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", OrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationRestOperations OrganizationResourceOrganizationRestClient => _organizationResourceOrganizationRestClient ??= new OrganizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OrganizationResource.ResourceType));
+        private ClientDiagnostics ConfluentOrganizationOrganizationClientDiagnostics => _confluentOrganizationOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
+        private OrganizationRestOperations ConfluentOrganizationOrganizationRestClient => _confluentOrganizationOrganizationRestClient ??= new OrganizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfluentOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Confluent
         /// Operation Id: MarketplaceAgreements_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfluentAgreementResource> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfluentAgreementResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConfluentAgreement>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
                 scope.Start();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Confluent
                     throw;
                 }
             }
-            async Task<Page<ConfluentAgreementResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConfluentAgreement>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
                 scope.Start();
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Confluent
         /// Operation Id: MarketplaceAgreements_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfluentAgreementResource> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfluentAgreement> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
         {
-            Page<ConfluentAgreementResource> FirstPageFunc(int? pageSizeHint)
+            Page<ConfluentAgreement> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
                 scope.Start();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Confluent
                     throw;
                 }
             }
-            Page<ConfluentAgreementResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConfluentAgreement> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
                 scope.Start();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfluentAgreementResource>> CreateMarketplaceAgreementAsync(ConfluentAgreementResource body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
             using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateMarketplaceAgreement");
             scope.Start();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfluentAgreementResource> CreateMarketplaceAgreement(ConfluentAgreementResource body = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
             using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateMarketplaceAgreement");
             scope.Start();
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.Confluent
         /// Operation Id: Organization_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OrganizationResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConfluentOrganizationResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = OrganizationResourceOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrganizationResources");
+                using var scope = ConfluentOrganizationOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfluentOrganizations");
                 scope.Start();
                 try
                 {
-                    var response = await OrganizationResourceOrganizationRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ConfluentOrganizationOrganizationRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.Confluent
                     throw;
                 }
             }
-            async Task<Page<OrganizationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConfluentOrganizationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = OrganizationResourceOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrganizationResources");
+                using var scope = ConfluentOrganizationOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfluentOrganizations");
                 scope.Start();
                 try
                 {
-                    var response = await OrganizationResourceOrganizationRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ConfluentOrganizationOrganizationRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.Confluent
         /// Operation Id: Organization_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResource> GetOrganizationResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(CancellationToken cancellationToken = default)
         {
-            Page<OrganizationResource> FirstPageFunc(int? pageSizeHint)
+            Page<ConfluentOrganizationResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = OrganizationResourceOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrganizationResources");
+                using var scope = ConfluentOrganizationOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfluentOrganizations");
                 scope.Start();
                 try
                 {
-                    var response = OrganizationResourceOrganizationRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ConfluentOrganizationOrganizationRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.Confluent
                     throw;
                 }
             }
-            Page<OrganizationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConfluentOrganizationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = OrganizationResourceOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrganizationResources");
+                using var scope = ConfluentOrganizationOrganizationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfluentOrganizations");
                 scope.Start();
                 try
                 {
-                    var response = OrganizationResourceOrganizationRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ConfluentOrganizationOrganizationRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

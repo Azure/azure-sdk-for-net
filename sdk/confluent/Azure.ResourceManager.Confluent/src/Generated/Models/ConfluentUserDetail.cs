@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Subscriber detail. </summary>
-    public partial class UserDetail
+    public partial class ConfluentUserDetail
     {
-        /// <summary> Initializes a new instance of UserDetail. </summary>
+        /// <summary> Initializes a new instance of ConfluentUserDetail. </summary>
         /// <param name="emailAddress"> Email address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="emailAddress"/> is null. </exception>
-        public UserDetail(string emailAddress)
+        public ConfluentUserDetail(string emailAddress)
         {
             if (emailAddress == null)
             {
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Confluent.Models
             EmailAddress = emailAddress;
         }
 
-        /// <summary> Initializes a new instance of UserDetail. </summary>
+        /// <summary> Initializes a new instance of ConfluentUserDetail. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="emailAddress"> Email address. </param>
-        internal UserDetail(string firstName, string lastName, string emailAddress)
+        internal ConfluentUserDetail(string firstName, string lastName, string emailAddress)
         {
             FirstName = firstName;
             LastName = lastName;

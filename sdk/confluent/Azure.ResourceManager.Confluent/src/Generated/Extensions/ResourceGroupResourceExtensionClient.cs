@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Confluent
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public virtual OrganizationResourceCollection GetOrganizationResources()
+        /// <summary> Gets a collection of ConfluentOrganizationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ConfluentOrganizationResources and their operations over a ConfluentOrganizationResource. </returns>
+        public virtual ConfluentOrganizationCollection GetConfluentOrganizations()
         {
-            return GetCachedClient(Client => new OrganizationResourceCollection(Client, Id));
+            return GetCachedClient(Client => new ConfluentOrganizationCollection(Client, Id));
         }
 
         /// <summary>
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OrganizationResource>> ValidateOrganizationValidationAsync(string organizationName, OrganizationResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationValidationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganizationValidation");
             scope.Start();
             try
             {
                 var response = await ValidationsRestClient.ValidateOrganizationAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new OrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OrganizationResource> ValidateOrganizationValidation(string organizationName, OrganizationResourceData data, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentOrganizationResource> ValidateOrganizationValidation(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganizationValidation");
             scope.Start();
             try
             {
                 var response = ValidationsRestClient.ValidateOrganization(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
-                return Response.FromValue(new OrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

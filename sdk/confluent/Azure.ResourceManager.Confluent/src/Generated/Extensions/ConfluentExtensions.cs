@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfluentAgreementResource> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
         }
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfluentAgreementResource> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConfluentAgreement> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ConfluentAgreementResource>> CreateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, ConfluentAgreementResource body = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).CreateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ConfluentAgreementResource> CreateMarketplaceAgreement(this SubscriptionResource subscriptionResource, ConfluentAgreementResource body = null, CancellationToken cancellationToken = default)
+        public static Response<ConfluentAgreement> CreateMarketplaceAgreement(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).CreateMarketplaceAgreement(body, cancellationToken);
         }
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetOrganizationResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfluentOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrganizationResource> GetOrganizationResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetOrganizationResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfluentOrganizations(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.Confluent
             );
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ConfluentOrganizationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public static OrganizationResourceCollection GetOrganizationResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ConfluentOrganizationResources and their operations over a ConfluentOrganizationResource. </returns>
+        public static ConfluentOrganizationCollection GetConfluentOrganizations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetOrganizationResources();
+            return GetExtensionClient(resourceGroupResource).GetConfluentOrganizations();
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfluentOrganizationResource>> GetConfluentOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetOrganizationResources().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetConfluentOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<OrganizationResource> GetOrganizationResource(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static Response<ConfluentOrganizationResource> GetConfluentOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetOrganizationResources().Get(organizationName, cancellationToken);
+            return resourceGroupResource.GetConfluentOrganizations().Get(organizationName, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<OrganizationResource>> ValidateOrganizationValidationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, OrganizationResourceData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationValidationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public static Response<OrganizationResource> ValidateOrganizationValidation(this ResourceGroupResource resourceGroupResource, string organizationName, OrganizationResourceData data, CancellationToken cancellationToken = default)
+        public static Response<ConfluentOrganizationResource> ValidateOrganizationValidation(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
@@ -193,20 +193,20 @@ namespace Azure.ResourceManager.Confluent
             return GetExtensionClient(resourceGroupResource).ValidateOrganizationValidation(organizationName, data, cancellationToken);
         }
 
-        #region OrganizationResource
+        #region ConfluentOrganizationResource
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConfluentOrganizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfluentOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="ConfluentOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OrganizationResource" /> object. </returns>
-        public static OrganizationResource GetOrganizationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentOrganizationResource" /> object. </returns>
+        public static ConfluentOrganizationResource GetConfluentOrganizationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OrganizationResource.ValidateResourceId(id);
-                return new OrganizationResource(client, id);
+                ConfluentOrganizationResource.ValidateResourceId(id);
+                return new ConfluentOrganizationResource(client, id);
             }
             );
         }

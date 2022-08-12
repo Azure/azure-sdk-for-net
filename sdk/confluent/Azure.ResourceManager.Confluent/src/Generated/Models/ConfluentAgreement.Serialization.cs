@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentAgreementResource : IUtf8JsonSerializable
+    public partial class ConfluentAgreement : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteEndObject();
         }
 
-        internal static ConfluentAgreementResource DeserializeConfluentAgreementResource(JsonElement element)
+        internal static ConfluentAgreement DeserializeConfluentAgreement(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     continue;
                 }
             }
-            return new ConfluentAgreementResource(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
+            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
         }
     }
 }

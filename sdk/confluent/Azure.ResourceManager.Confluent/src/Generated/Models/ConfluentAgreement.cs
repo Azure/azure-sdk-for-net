@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Agreement Terms definition. </summary>
-    public partial class ConfluentAgreementResource : ResourceData
+    public partial class ConfluentAgreement : ResourceData
     {
-        /// <summary> Initializes a new instance of ConfluentAgreementResource. </summary>
-        public ConfluentAgreementResource()
+        /// <summary> Initializes a new instance of ConfluentAgreement. </summary>
+        public ConfluentAgreement()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfluentAgreementResource. </summary>
+        /// <summary> Initializes a new instance of ConfluentAgreement. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="retrieveDatetime"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
         /// <param name="signature"> Terms signature. </param>
         /// <param name="accepted"> If any version of the terms have been accepted, otherwise false. </param>
-        internal ConfluentAgreementResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveDatetime, string signature, bool? accepted) : base(id, name, resourceType, systemData)
+        internal ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveDatetime, string signature, bool? accepted) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             Product = product;

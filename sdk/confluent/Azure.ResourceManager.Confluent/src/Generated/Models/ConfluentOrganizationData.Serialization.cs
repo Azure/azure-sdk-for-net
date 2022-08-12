@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    public partial class OrganizationResourceData : IUtf8JsonSerializable
+    public partial class ConfluentOrganizationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Confluent
             writer.WriteEndObject();
         }
 
-        internal static OrganizationResourceData DeserializeOrganizationResourceData(JsonElement element)
+        internal static ConfluentOrganizationData DeserializeConfluentOrganizationData(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Confluent
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
-            Optional<ProvisionState> provisioningState = default;
+            Optional<ConfluentProvisionState> provisioningState = default;
             Optional<string> organizationId = default;
             Optional<Uri> ssoUrl = default;
-            OfferDetail offerDetail = default;
-            UserDetail userDetail = default;
+            ConfluentOfferDetail offerDetail = default;
+            ConfluentUserDetail userDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Confluent
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisionState(property0.Value.GetString());
+                            provisioningState = new ConfluentProvisionState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("organizationId"))
@@ -149,19 +149,19 @@ namespace Azure.ResourceManager.Confluent
                         }
                         if (property0.NameEquals("offerDetail"))
                         {
-                            offerDetail = OfferDetail.DeserializeOfferDetail(property0.Value);
+                            offerDetail = ConfluentOfferDetail.DeserializeConfluentOfferDetail(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userDetail"))
                         {
-                            userDetail = UserDetail.DeserializeUserDetail(property0.Value);
+                            userDetail = ConfluentUserDetail.DeserializeConfluentUserDetail(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new OrganizationResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), organizationId.Value, ssoUrl.Value, offerDetail, userDetail);
+            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), organizationId.Value, ssoUrl.Value, offerDetail, userDetail);
         }
     }
 }

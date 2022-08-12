@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    internal partial class ConfluentAgreementResourceListResponse
+    internal partial class ConfluentOrganizationListResult
     {
-        internal static ConfluentAgreementResourceListResponse DeserializeConfluentAgreementResourceListResponse(JsonElement element)
+        internal static ConfluentOrganizationListResult DeserializeConfluentOrganizationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ConfluentAgreementResource>> value = default;
+            Optional<IReadOnlyList<ConfluentOrganizationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Confluent.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfluentAgreementResource> array = new List<ConfluentAgreementResource>();
+                    List<ConfluentOrganizationData> array = new List<ConfluentOrganizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentAgreementResource.DeserializeConfluentAgreementResource(item));
+                        array.Add(ConfluentOrganizationData.DeserializeConfluentOrganizationData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     continue;
                 }
             }
-            return new ConfluentAgreementResourceListResponse(Optional.ToList(value), nextLink.Value);
+            return new ConfluentOrganizationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

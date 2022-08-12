@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class UserDetail : IUtf8JsonSerializable
+    public partial class ConfluentUserDetail : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteEndObject();
         }
 
-        internal static UserDetail DeserializeUserDetail(JsonElement element)
+        internal static ConfluentUserDetail DeserializeConfluentUserDetail(JsonElement element)
         {
             Optional<string> firstName = default;
             Optional<string> lastName = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     continue;
                 }
             }
-            return new UserDetail(firstName.Value, lastName.Value, emailAddress);
+            return new ConfluentUserDetail(firstName.Value, lastName.Value, emailAddress);
         }
     }
 }

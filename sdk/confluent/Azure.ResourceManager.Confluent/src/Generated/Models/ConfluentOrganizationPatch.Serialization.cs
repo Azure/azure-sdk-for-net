@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class OrganizationResourcePatch : IUtf8JsonSerializable
+    public partial class ConfluentOrganizationPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

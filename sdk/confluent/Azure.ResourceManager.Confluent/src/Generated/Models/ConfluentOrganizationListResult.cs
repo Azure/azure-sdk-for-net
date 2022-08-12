@@ -12,25 +12,25 @@ using Azure.ResourceManager.Confluent;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> The response of a list operation. </summary>
-    internal partial class OrganizationResourceListResult
+    internal partial class ConfluentOrganizationListResult
     {
-        /// <summary> Initializes a new instance of OrganizationResourceListResult. </summary>
-        internal OrganizationResourceListResult()
+        /// <summary> Initializes a new instance of ConfluentOrganizationListResult. </summary>
+        internal ConfluentOrganizationListResult()
         {
-            Value = new ChangeTrackingList<OrganizationResourceData>();
+            Value = new ChangeTrackingList<ConfluentOrganizationData>();
         }
 
-        /// <summary> Initializes a new instance of OrganizationResourceListResult. </summary>
+        /// <summary> Initializes a new instance of ConfluentOrganizationListResult. </summary>
         /// <param name="value"> Result of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal OrganizationResourceListResult(IReadOnlyList<OrganizationResourceData> value, string nextLink)
+        internal ConfluentOrganizationListResult(IReadOnlyList<ConfluentOrganizationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of a list operation. </summary>
-        public IReadOnlyList<OrganizationResourceData> Value { get; }
+        public IReadOnlyList<ConfluentOrganizationData> Value { get; }
         /// <summary> Link to the next set of results, if any. </summary>
         public string NextLink { get; }
     }

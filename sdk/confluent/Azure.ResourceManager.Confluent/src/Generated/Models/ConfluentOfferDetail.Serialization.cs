@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class OfferDetail : IUtf8JsonSerializable
+    public partial class ConfluentOfferDetail : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteEndObject();
         }
 
-        internal static OfferDetail DeserializeOfferDetail(JsonElement element)
+        internal static ConfluentOfferDetail DeserializeConfluentOfferDetail(JsonElement element)
         {
             string publisherId = default;
             string id = default;
             string planId = default;
             string planName = default;
             string termUnit = default;
-            Optional<SaaSOfferStatus> status = default;
+            Optional<ConfluentSaaSOfferStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherId"))
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Confluent.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new SaaSOfferStatus(property.Value.GetString());
+                    status = new ConfluentSaaSOfferStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new OfferDetail(publisherId, id, planId, planName, termUnit, Optional.ToNullable(status));
+            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, Optional.ToNullable(status));
         }
     }
 }

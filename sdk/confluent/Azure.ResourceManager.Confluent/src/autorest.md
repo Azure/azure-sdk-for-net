@@ -46,7 +46,19 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - ProvisionState
+  - UserDetail
+  - OfferDetail
+  - SaaSOfferStatus
+
+rename-mapping:
+  OrganizationResource: ConfluentOrganization
+  OrganizationResourceListResult: ConfluentOrganizationListResult
+  ConfluentAgreementResource: ConfluentAgreement
+  OrganizationResourceUpdate: ConfluentOrganizationPatch
+  ConfluentAgreementResourceListResponse: ConfluentAgreementListResult
+
 directive:
   - remove-operation: OrganizationOperations_List
-
 ```

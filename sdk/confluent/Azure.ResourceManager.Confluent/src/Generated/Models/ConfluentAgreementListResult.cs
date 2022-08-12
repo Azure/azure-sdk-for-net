@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class ConfluentAgreementResourceListResponse
+    internal partial class ConfluentAgreementListResult
     {
-        /// <summary> Initializes a new instance of ConfluentAgreementResourceListResponse. </summary>
-        internal ConfluentAgreementResourceListResponse()
+        /// <summary> Initializes a new instance of ConfluentAgreementListResult. </summary>
+        internal ConfluentAgreementListResult()
         {
-            Value = new ChangeTrackingList<ConfluentAgreementResource>();
+            Value = new ChangeTrackingList<ConfluentAgreement>();
         }
 
-        /// <summary> Initializes a new instance of ConfluentAgreementResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of ConfluentAgreementListResult. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal ConfluentAgreementResourceListResponse(IReadOnlyList<ConfluentAgreementResource> value, string nextLink)
+        internal ConfluentAgreementListResult(IReadOnlyList<ConfluentAgreement> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of a list operation. </summary>
-        public IReadOnlyList<ConfluentAgreementResource> Value { get; }
+        public IReadOnlyList<ConfluentAgreement> Value { get; }
         /// <summary> Link to the next set of results, if any. </summary>
         public string NextLink { get; }
     }

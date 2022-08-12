@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Confluent
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateValidateOrganizationRequest(string subscriptionId, string resourceGroupName, string organizationName, OrganizationResourceData data)
+        internal HttpMessage CreateValidateOrganizationRequest(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OrganizationResourceData>> ValidateOrganizationAsync(string subscriptionId, string resourceGroupName, string organizationName, OrganizationResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfluentOrganizationData>> ValidateOrganizationAsync(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        OrganizationResourceData value = default;
+                        ConfluentOrganizationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OrganizationResourceData.DeserializeOrganizationResourceData(document.RootElement);
+                        value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OrganizationResourceData> ValidateOrganization(string subscriptionId, string resourceGroupName, string organizationName, OrganizationResourceData data, CancellationToken cancellationToken = default)
+        public Response<ConfluentOrganizationData> ValidateOrganization(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Confluent
             {
                 case 200:
                     {
-                        OrganizationResourceData value = default;
+                        ConfluentOrganizationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OrganizationResourceData.DeserializeOrganizationResourceData(document.RootElement);
+                        value = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

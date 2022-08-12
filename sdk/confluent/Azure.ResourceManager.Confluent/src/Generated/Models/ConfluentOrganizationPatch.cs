@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Organization Resource update. </summary>
-    public partial class OrganizationResourcePatch
+    public partial class ConfluentOrganizationPatch
     {
-        /// <summary> Initializes a new instance of OrganizationResourcePatch. </summary>
-        public OrganizationResourcePatch()
+        /// <summary> Initializes a new instance of ConfluentOrganizationPatch. </summary>
+        public ConfluentOrganizationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
