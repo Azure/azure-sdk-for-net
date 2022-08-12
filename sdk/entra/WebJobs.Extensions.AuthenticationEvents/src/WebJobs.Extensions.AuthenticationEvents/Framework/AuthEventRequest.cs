@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             try
             {
                 if (RequestStatus == AuthEventConvertStatusType.Failed)
-                    Response.MarkAsFailed(new Exception(AuthEventResource.Ex_Gen_Failure));
+                    Response.MarkAsFailed(new Exception(String.IsNullOrEmpty(StatusMessage) ? AuthEventResource.Ex_Gen_Failure : StatusMessage));
 
                 if (RequestStatus == AuthEventConvertStatusType.TokenInvalid)
                     Response.MarkAsUnauthorised();

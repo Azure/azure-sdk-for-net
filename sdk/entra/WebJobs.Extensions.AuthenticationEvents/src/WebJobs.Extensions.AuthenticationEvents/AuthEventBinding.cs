@@ -123,15 +123,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
             eventResponseHandler.Request.StatusMessage = ex.Message;
             eventResponseHandler.Request.RequestStatus = ex is UnauthorizedAccessException ? AuthEventConvertStatusType.TokenInvalid : AuthEventConvertStatusType.Failed;
-            if (ex is UnauthorizedAccessException)
-            {
-                eventResponseHandler.Response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
-            }
-            else
-            {
-                eventResponseHandler.Response.StatusCode = System.Net.HttpStatusCode.BadRequest;
-                eventResponseHandler.Response.ReasonPhrase = ex.Message;
-            }
+            if (eventResponseHandler.Response != null)
+                if (ex is UnauthorizedAccessException)
+                {
+                    eventResponseHandler.Response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                }
+                else
+                {
+                    eventResponseHandler.Response.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                    eventResponseHandler.Response.ReasonPhrase = ex.Message;
+                }
 
             return new TriggerData(new AuthEventValueBinder(eventResponseHandler.Request, _authEventTriggerAttr), GetBindingData(context, value, eventResponseHandler))
             {
