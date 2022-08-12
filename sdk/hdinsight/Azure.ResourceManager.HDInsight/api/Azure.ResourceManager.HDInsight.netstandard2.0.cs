@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HDInsightPrivateLinkConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState>
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightSecurityProfile
     {
         public HDInsightSecurityProfile() { }
-        public string AaddsResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AaddsResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ClusterUsersGroupDNs { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType? DirectoryType { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }

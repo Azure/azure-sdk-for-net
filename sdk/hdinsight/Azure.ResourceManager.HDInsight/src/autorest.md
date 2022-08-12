@@ -151,6 +151,8 @@ rename-mapping:
   ConnectivityEndpoint.location: EndpointLocation
   ApplicationGetEndpoint.location: EndpointLocation
   ApplicationGetHttpsEndpoint.location: EndpointLocation
+  SecurityProfile.aaddsResourceId: -|arm-id
+  PrivateLinkConfiguration.type: ResourceType|resource-type
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
