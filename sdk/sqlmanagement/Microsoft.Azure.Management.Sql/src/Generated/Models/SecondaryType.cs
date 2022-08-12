@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Sql.Models
     {
         public const string Geo = "Geo";
         public const string Named = "Named";
+        public const string Standby = "Standby";
     }
 }

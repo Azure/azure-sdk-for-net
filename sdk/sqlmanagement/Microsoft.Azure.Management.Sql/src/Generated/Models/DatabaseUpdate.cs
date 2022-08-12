@@ -151,8 +151,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// availability. Not applicable to a Hyperscale database within an
         /// elastic pool.</param>
         /// <param name="secondaryType">The secondary type of the database if
-        /// it is a secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'</param>
+        /// it is a secondary.  Valid values are Geo, Named and Standby.
+        /// Possible values include: 'Geo', 'Named', 'Standby'</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
         /// <param name="autoPauseDelay">Time in minutes after which database
         /// is automatically paused. A value of -1 means that automatic pause
@@ -473,8 +473,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the secondary type of the database if it is a
-        /// secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'
+        /// secondary.  Valid values are Geo, Named and Standby. Possible
+        /// values include: 'Geo', 'Named', 'Standby'
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryType")]
         public string SecondaryType { get; set; }
