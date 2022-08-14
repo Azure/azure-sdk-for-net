@@ -6,10 +6,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 csharp: true
-library-name: DataBox
-namespace: Azure.ResourceManager.DataBox
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/databox/resource-manager/readme.md
-tag: package-2022-02
+library-name: DataShare
+namespace: Azure.ResourceManager.DataShare
+require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/datashare/resource-manager/readme.md
+tag: package-2021-08-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -47,5 +47,14 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+list-exception:
+  - /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
+
+directive:
+  - from: DataShare.json
+    where: $.definitions
+    transform: >
+      $.Identity.properties.type['x-ms-enum']['name'] = 'ServiceIdentityType';
 
 ```

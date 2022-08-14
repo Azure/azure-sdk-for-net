@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    internal partial class DataBoxEdgeSkuList
+    internal partial class AvailableDataBoxEdgeSkuList
     {
-        internal static DataBoxEdgeSkuList DeserializeDataBoxEdgeSkuList(JsonElement element)
+        internal static AvailableDataBoxEdgeSkuList DeserializeAvailableDataBoxEdgeSkuList(JsonElement element)
         {
             Optional<IReadOnlyList<AvailableDataBoxEdgeSku>> value = default;
             Optional<string> nextLink = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeSkuList(Optional.ToList(value), nextLink.Value);
+            return new AvailableDataBoxEdgeSkuList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

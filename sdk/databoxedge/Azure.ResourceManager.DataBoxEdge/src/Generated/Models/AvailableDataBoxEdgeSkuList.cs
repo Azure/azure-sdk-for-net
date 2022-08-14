@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> List of SKU Information objects. </summary>
-    internal partial class DataBoxEdgeSkuList
+    internal partial class AvailableDataBoxEdgeSkuList
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuList. </summary>
-        internal DataBoxEdgeSkuList()
+        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSkuList. </summary>
+        internal AvailableDataBoxEdgeSkuList()
         {
             Value = new ChangeTrackingList<AvailableDataBoxEdgeSku>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuList. </summary>
+        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSkuList. </summary>
         /// <param name="value"> List of ResourceType Sku. </param>
         /// <param name="nextLink"> Links to the next set of results. </param>
-        internal DataBoxEdgeSkuList(IReadOnlyList<AvailableDataBoxEdgeSku> value, string nextLink)
+        internal AvailableDataBoxEdgeSkuList(IReadOnlyList<AvailableDataBoxEdgeSku> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
