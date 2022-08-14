@@ -1,6 +1,8 @@
 # Release History
 
-## 4.0.0
+## 4.0.0 (2022-08-18)
+
+### Breaking Changes
 
 The changes incorporated in this version are the product of migrating from the deprecated WindowsAzure .NET Storage SDK to the current Azure.Storage SDK. As a result, all the changes included in this version are **Breaking**. More information about migrating to Azure.Storage can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/AzureStorageNetMigrationV12.md).
 
@@ -47,9 +49,3 @@ The changes incorporated in this version are the product of migrating from the d
 
 - TrackedFile
   - Modified constructor to accept an **AppendBlobClient** parameter instead of `CloudAppendBlob`
-  
-## 3.6.0-preview.1 (Unreleased)
-
-### Bug fixes
-
-- Updated dependency versions.

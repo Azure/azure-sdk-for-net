@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This library simplifies uploading resource files for use by tasks in the Microsoft Azure Batch service.
       Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
