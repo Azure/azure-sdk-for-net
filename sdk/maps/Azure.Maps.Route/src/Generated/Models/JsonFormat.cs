@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Maps.Route.Models
 {
     /// <summary> The JsonFormat. </summary>
-    public readonly partial struct JsonFormat : IEquatable<JsonFormat>
+    internal readonly partial struct JsonFormat : IEquatable<JsonFormat>
     {
         private readonly string _value;
 

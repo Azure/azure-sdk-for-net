@@ -730,7 +730,7 @@ namespace Azure.Maps.Route
                 var response = await RestClient.RequestRouteMatrixAsync(
                     options.Query,
                     JsonFormat.Json,
-                    waitUntil == WaitUntil.Completed,
+                    false,
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
@@ -788,7 +788,7 @@ namespace Azure.Maps.Route
                 var response = RestClient.RequestRouteMatrix(
                     options.Query,
                     JsonFormat.Json,
-                    waitUntil == WaitUntil.Completed,
+                    false,
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,

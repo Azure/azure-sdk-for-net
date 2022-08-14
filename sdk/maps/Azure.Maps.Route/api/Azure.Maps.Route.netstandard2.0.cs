@@ -211,23 +211,6 @@ namespace Azure.Maps.Route.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonFormat : System.IEquatable<Azure.Maps.Route.Models.JsonFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JsonFormat(string value) { throw null; }
-        public static Azure.Maps.Route.Models.JsonFormat Json { get { throw null; } }
-        public bool Equals(Azure.Maps.Route.Models.JsonFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Route.Models.JsonFormat left, Azure.Maps.Route.Models.JsonFormat right) { throw null; }
-        public static implicit operator Azure.Maps.Route.Models.JsonFormat (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Route.Models.JsonFormat left, Azure.Maps.Route.Models.JsonFormat right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JunctionType : System.IEquatable<Azure.Maps.Route.Models.JunctionType>
     {
         private readonly object _dummy;
@@ -537,8 +520,8 @@ namespace Azure.Maps.Route.Models
     public partial class RouteMatrix
     {
         internal RouteMatrix() { }
-        public Azure.Maps.Route.Models.RouteMatrixResultResponse Response { get { throw null; } }
         public int? StatusCode { get { throw null; } }
+        public Azure.Maps.Route.Models.RouteLegSummary Summary { get { throw null; } }
     }
     public partial class RouteMatrixOptions
     {
@@ -576,11 +559,6 @@ namespace Azure.Maps.Route.Models
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<Azure.Maps.Route.Models.RouteMatrix>> Matrix { get { throw null; } }
         public Azure.Maps.Route.Models.RouteMatrixSummary Summary { get { throw null; } }
     }
-    public partial class RouteMatrixResultResponse
-    {
-        internal RouteMatrixResultResponse() { }
-        public Azure.Maps.Route.Models.RouteLegSummary Summary { get { throw null; } }
-    }
     public partial class RouteMatrixSummary
     {
         internal RouteMatrixSummary() { }
@@ -595,9 +573,7 @@ namespace Azure.Maps.Route.Models
         public static Azure.Maps.Route.Models.RouteGuidance RouteGuidance(System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteInstruction> instructions = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteInstructionGroup> instructionGroups = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteInstructionGroup RouteInstructionGroup(int? firstInstructionIndex = default(int?), int? lastInstructionIndex = default(int?), int? groupLengthInMeters = default(int?), string groupMessage = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteLegSummary RouteLegSummary(int? lengthInMeters = default(int?), int? travelTimeInSeconds = default(int?), int? trafficDelayInSeconds = default(int?), System.DateTimeOffset? departureTime = default(System.DateTimeOffset?), System.DateTimeOffset? arrivalTime = default(System.DateTimeOffset?), int? noTrafficTravelTimeInSeconds = default(int?), int? historicTrafficTravelTimeInSeconds = default(int?), int? liveTrafficIncidentsTravelTimeInSeconds = default(int?), double? fuelConsumptionInLiters = default(double?), double? batteryConsumptionInKwH = default(double?)) { throw null; }
-        public static Azure.Maps.Route.Models.RouteMatrix RouteMatrix(int? statusCode = default(int?), Azure.Maps.Route.Models.RouteMatrixResultResponse response = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteMatrixResult RouteMatrixResult(string formatVersion = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<Azure.Maps.Route.Models.RouteMatrix>> matrix = null, Azure.Maps.Route.Models.RouteMatrixSummary summary = null) { throw null; }
-        public static Azure.Maps.Route.Models.RouteMatrixResultResponse RouteMatrixResultResponse(Azure.Maps.Route.Models.RouteLegSummary summary = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteMatrixSummary RouteMatrixSummary(int? successfulRoutes = default(int?), int? totalRoutes = default(int?)) { throw null; }
         public static Azure.Maps.Route.Models.RouteOptimizedWaypoint RouteOptimizedWaypoint(int? providedIndex = default(int?), int? optimizedIndex = default(int?)) { throw null; }
         public static Azure.Maps.Route.Models.RouteRangeResult RouteRangeResult(string formatVersion = null, Azure.Maps.Route.Models.RouteRange reachableRange = null, Azure.Maps.Route.Models.RouteReport report = null) { throw null; }

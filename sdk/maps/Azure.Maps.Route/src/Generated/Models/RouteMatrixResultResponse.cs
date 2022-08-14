@@ -8,7 +8,7 @@
 namespace Azure.Maps.Route.Models
 {
     /// <summary> Response object of the current cell in the input matrix. </summary>
-    public partial class RouteMatrixResultResponse
+    internal partial class RouteMatrixResultResponse
     {
         /// <summary> Initializes a new instance of RouteMatrixResultResponse. </summary>
         internal RouteMatrixResultResponse()

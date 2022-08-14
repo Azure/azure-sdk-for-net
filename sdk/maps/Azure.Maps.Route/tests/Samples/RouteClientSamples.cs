@@ -423,7 +423,7 @@ namespace Azure.Maps.Route.Tests
                 Console.WriteLine("Route result:");
                 foreach (var route in routeResult)
                 {
-                    var summary = route.Response.Summary;
+                    var summary = route.Summary;
                     Console.WriteLine($"Travel time: {summary.TravelTimeInSeconds} seconds");
                     Console.WriteLine($"Travel length: {summary.LengthInMeters} meters");
                     Console.WriteLine($"Departure at: {summary.DepartureTime.ToString()} meters");

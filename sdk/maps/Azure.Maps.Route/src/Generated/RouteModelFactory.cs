@@ -26,23 +26,6 @@ namespace Azure.Maps.Route.Models
             return new RouteMatrixResult(formatVersion, matrix?.ToList(), summary);
         }
 
-        /// <summary> Initializes a new instance of RouteMatrix. </summary>
-        /// <param name="statusCode"> StatusCode property for the current cell in the input matrix. </param>
-        /// <param name="response"> Response object of the current cell in the input matrix. </param>
-        /// <returns> A new <see cref="Models.RouteMatrix"/> instance for mocking. </returns>
-        public static RouteMatrix RouteMatrix(int? statusCode = null, RouteMatrixResultResponse response = null)
-        {
-            return new RouteMatrix(statusCode, response);
-        }
-
-        /// <summary> Initializes a new instance of RouteMatrixResultResponse. </summary>
-        /// <param name="summary"> Summary object for route section. </param>
-        /// <returns> A new <see cref="Models.RouteMatrixResultResponse"/> instance for mocking. </returns>
-        public static RouteMatrixResultResponse RouteMatrixResultResponse(RouteLegSummary summary = null)
-        {
-            return new RouteMatrixResultResponse(summary);
-        }
-
         /// <summary> Initializes a new instance of RouteLegSummary. </summary>
         /// <param name="lengthInMeters"> Length In Meters property. </param>
         /// <param name="travelTimeInSeconds"> Estimated travel time in seconds property that includes the delay due to real-time traffic. Note that even when traffic=false travelTimeInSeconds still includes the delay due to traffic. If DepartAt is in the future, travel time is calculated using time-dependent historic traffic data. </param>

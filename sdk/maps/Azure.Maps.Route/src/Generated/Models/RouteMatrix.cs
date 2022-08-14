@@ -15,18 +15,7 @@ namespace Azure.Maps.Route.Models
         {
         }
 
-        /// <summary> Initializes a new instance of RouteMatrix. </summary>
-        /// <param name="statusCode"> StatusCode property for the current cell in the input matrix. </param>
-        /// <param name="response"> Response object of the current cell in the input matrix. </param>
-        internal RouteMatrix(int? statusCode, RouteMatrixResultResponse response)
-        {
-            StatusCode = statusCode;
-            Response = response;
-        }
-
         /// <summary> StatusCode property for the current cell in the input matrix. </summary>
         public int? StatusCode { get; }
-        /// <summary> Response object of the current cell in the input matrix. </summary>
-        public RouteMatrixResultResponse Response { get; }
     }
 }

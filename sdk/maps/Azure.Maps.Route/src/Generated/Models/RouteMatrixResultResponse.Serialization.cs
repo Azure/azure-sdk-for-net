@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Route.Models
 {
-    public partial class RouteMatrixResultResponse
+    internal partial class RouteMatrixResultResponse
     {
         internal static RouteMatrixResultResponse DeserializeRouteMatrixResultResponse(JsonElement element)
         {
