@@ -18,8 +18,6 @@ namespace Azure.AI.Language.Conversations
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
