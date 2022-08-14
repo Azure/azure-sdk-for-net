@@ -32,9 +32,6 @@ namespace Azure.Maps.Route.Models
         /// <summary> An object with a matrix of coordinates. </summary>
         public RouteMatrixQuery Query { get; private set; }
 
-        /// <summary> Boolean to indicate whether to execute the request synchronously. If set to true, user will get a 200 response if the request is finished under 120 seconds. Otherwise, user will get a 202 response right away. Please refer to the API description for more details on 202 response. **Supported only for async request**. </summary>
-        public bool? WaitForResults { get; set; }
-
         /// <summary> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. Allowed values: <c>TravelTimeType.None</c> or <c>TravelTimeType.All</c>. </summary>
         public TravelTimeType? TravelTimeType { get; set; }
 

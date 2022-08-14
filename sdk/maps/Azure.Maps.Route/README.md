@@ -204,11 +204,8 @@ var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
     TravelTimeType = TravelTimeType.All,
 };
 
-// Invoke an async route matrix request
-var operation = client.StartRequestRouteMatrix(routeMatrixOptions);
-
-// A moment later, get the result from the operation
-var result = operation.WaitForCompletion();
+// Invoke an async route matrix request and directly wait for completion
+var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 
 For more detailed examples, please [route matrix samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteMatrixSamples.md) page.

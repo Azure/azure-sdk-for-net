@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Maps.Route.Models
 {
     /// <summary>
-    /// An <see cref="Operation{RouteDirectionsBatchResult}"/> for tracking the status of a StartRequestRouteDirectionsBatch
+    /// An <see cref="Operation{RouteDirectionsBatchResult}"/> for tracking the status of a RequestRouteDirectionsBatch
     /// request.  Its <see cref="Operation{RouteDirectionsBatchResult}.Value"/> upon successful
     /// completion will be the route directions batch result.
     /// </summary>

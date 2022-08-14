@@ -122,8 +122,8 @@ queries.Add(new RouteDirectionQuery(
 );
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
-// Invoke asynchronous route direction batch request
-var operation = await client.StartRequestRouteDirectionsBatchAsync(queries);
+// Invoke asynchronous route direction batch request, we can get the result later via assigning `WaitUntil.Started`
+var operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
 
 // After a while, get the result back
 var result = operation.WaitForCompletion();
@@ -151,7 +151,7 @@ queries.Add(new RouteDirectionQuery(
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
 // Invoke asynchronous route direction batch request
-var operation = client.StartRequestRouteDirectionsBatch(queries);
+var operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
 
 // Get the operation ID and store somewhere
 var operationId = operation.Id;

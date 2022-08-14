@@ -71,18 +71,15 @@ var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
     TravelTimeType = TravelTimeType.All,
 };
 
-// Invoke an async route matrix request
-var operation = client.StartRequestRouteMatrix(routeMatrixOptions);
-
-// A moment later, get the result from the operation
-var result = operation.WaitForCompletion();
+// Invoke an async route matrix request and directly wait for completion
+var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 
 The asynchronous route matrix result will be cached for 14 days. User can fetch the result from server via a `RouteMatrixOperation` with the same `Id`:
 
 ```C# Snippet:AsyncRouteMatrixRequestWithOperationId
-// Invoke an async route matrix request
-var operation = client.StartRequestRouteMatrix(routeMatrixOptions);
+// Invoke an async route matrix request and get the result later via assigning `WaitUntil.Started`
+var operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions);
 
 // Get the operation ID and store somewhere
 var operationId = operation.Id;

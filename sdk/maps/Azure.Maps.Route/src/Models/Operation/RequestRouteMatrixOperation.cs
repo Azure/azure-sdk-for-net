@@ -12,7 +12,7 @@ namespace Azure.Maps.Route.Models
 {
     /// <summary>
     /// An <see cref="Operation{RouteMatrixResult}"/> for tracking the status of a
-    /// <see cref="MapsRouteClient.StartRequestRouteMatrix(RouteMatrixOptions, CancellationToken)"/>
+    /// <see cref="MapsRouteClient.RequestRouteMatrix(WaitUntil, RouteMatrixOptions, CancellationToken)"/>
     /// request.  Its <see cref="Operation{RouteMatrixResult}.Value"/> upon successful
     /// completion will be the route matrix result.
     /// </summary>

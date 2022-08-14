@@ -52,7 +52,6 @@ namespace Azure.Maps.Route.Tests
             };
             var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
             {
-                WaitForResults = true,
                 TravelTimeType = TravelTimeType.All,
             };
 
@@ -83,7 +82,7 @@ namespace Azure.Maps.Route.Tests
         }
 
         [RecordedTest]
-        public async Task CanStartRequestRouteMatrix()
+        public async Task CanRequestRouteMatrix()
         {
             var client = CreateClient();
             var routeMatrixQuery = new RouteMatrixQuery
@@ -98,7 +97,7 @@ namespace Azure.Maps.Route.Tests
             {
                 TravelTimeType = TravelTimeType.All,
             };
-            var operation = await client.StartRequestRouteMatrixAsync(routeMatrixOptions);
+            var operation = await client.RequestRouteMatrixAsync(WaitUntil.Started, routeMatrixOptions);
             // Sleep 400ms to wait for batch request to propagate
             Thread.Sleep(400);
             var result = operation.WaitForCompletion();
@@ -111,7 +110,7 @@ namespace Azure.Maps.Route.Tests
         }
 
         [RecordedTest]
-        public void StartRequestRouteMatrixError()
+        public void RequestRouteMatrixError()
         {
             var client = CreateClient();
             var routeMatrixQuery = new RouteMatrixQuery
@@ -127,7 +126,7 @@ namespace Azure.Maps.Route.Tests
                 TravelTimeType = TravelTimeType.All,
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRequestRouteMatrixAsync(routeMatrixOptions));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.RequestRouteMatrixAsync(WaitUntil.Started, routeMatrixOptions));
             Assert.AreEqual(400, ex.Status);
         }
     }

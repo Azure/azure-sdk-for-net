@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/route/matrix/sync/json?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/route/matrix/sync/json?api-version=1.0\u0026waitForResults=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "158",
         "Content-Type": "application/json",
-        "traceparent": "00-52c208ee7d3529ed772cc07f459965e8-865d8ed65a41e34a-00",
-        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220705.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "traceparent": "00-ef023fd09d8c4046bc73591973fd8b88-f42918296601174d-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220814.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "0281bb5780eb9dbb0bd08d257de89ea8",
+        "x-ms-client-request-id": "06cb0e53243af1253d87239650b0238e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -42,7 +42,7 @@
       "ResponseHeaders": {
         "Content-Length": "559",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 05 Jul 2022 05:01:16 GMT",
+        "Date": "Sun, 14 Aug 2022 14:11:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -51,7 +51,7 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: EA3D56BEBEF2419A9ED99A0966158D47 Ref B: TPE30EDGE0713 Ref C: 2022-07-05T05:01:16Z"
+        "X-MSEdge-Ref": "Ref A: 07D7503A15E14291B5533F8D623CB356 Ref B: TPE30EDGE0721 Ref C: 2022-08-14T14:11:03Z"
       },
       "ResponseBody": {
         "formatVersion": "0.0.1",
@@ -65,8 +65,8 @@
                   "travelTimeInSeconds": 443,
                   "trafficDelayInSeconds": 0,
                   "trafficLengthInMeters": 0,
-                  "departureTime": "2022-07-05T13:01:17\u002B08:00",
-                  "arrivalTime": "2022-07-05T13:08:39\u002B08:00"
+                  "departureTime": "2022-08-14T22:11:04\u002B08:00",
+                  "arrivalTime": "2022-08-14T22:18:26\u002B08:00"
                 }
               }
             }
@@ -80,8 +80,8 @@
                   "travelTimeInSeconds": 863,
                   "trafficDelayInSeconds": 0,
                   "trafficLengthInMeters": 0,
-                  "departureTime": "2022-07-05T13:01:17\u002B08:00",
-                  "arrivalTime": "2022-07-05T13:15:40\u002B08:00"
+                  "departureTime": "2022-08-14T22:11:04\u002B08:00",
+                  "arrivalTime": "2022-08-14T22:25:27\u002B08:00"
                 }
               }
             }
@@ -97,7 +97,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "508275817"
+    "RandomSeed": "978686378"
   }
 }

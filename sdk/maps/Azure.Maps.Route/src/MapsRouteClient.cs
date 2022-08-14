@@ -116,7 +116,7 @@ namespace Azure.Maps.Route
                 return await RestClient.RequestRouteMatrixSyncAsync(
                     options.Query,
                     JsonFormat.Json,
-                    options?.WaitForResults,
+                    true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
@@ -163,7 +163,7 @@ namespace Azure.Maps.Route
                 return await RestClient.RequestRouteMatrixSyncAsync(
                     options.Query,
                     JsonFormat.Json,
-                    options?.WaitForResults,
+                    true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
@@ -209,7 +209,7 @@ namespace Azure.Maps.Route
                 return RestClient.RequestRouteMatrixSync(
                     options.Query,
                     JsonFormat.Json,
-                    options?.WaitForResults,
+                    true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
@@ -256,7 +256,7 @@ namespace Azure.Maps.Route
                 return RestClient.RequestRouteMatrixSync(
                     options.Query,
                     JsonFormat.Json,
-                    options?.WaitForResults,
+                    true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
@@ -284,7 +284,7 @@ namespace Azure.Maps.Route
         }
 
         /// <summary>
-        /// Returns  a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
+        /// Returns a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
         ///
         /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
         ///
@@ -714,22 +714,23 @@ namespace Azure.Maps.Route
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// The maximum size of a matrix for async request is **700** (the number of origins multiplied by the number of destinations).
         /// </summary>
+        /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="options"> The route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<RequestRouteMatrixOperation> StartRequestRouteMatrixAsync(RouteMatrixOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<RequestRouteMatrixOperation> RequestRouteMatrixAsync(WaitUntil waitUntil, RouteMatrixOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.StartRequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.RequestRouteMatrix");
             scope.Start();
             try
             {
                 var response = await RestClient.RequestRouteMatrixAsync(
                     options.Query,
                     JsonFormat.Json,
-                    options?.WaitForResults,
+                    waitUntil == WaitUntil.Completed,
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
@@ -749,9 +750,15 @@ namespace Azure.Maps.Route
                     options?.VehicleLoadType,
                     cancellationToken
                 ).ConfigureAwait(false);
-                return new RequestRouteMatrixOperation(
-                    this, new Uri(response.Headers.Location)
-                );
+
+                // Create operation for route direction
+                var operation = new RequestRouteMatrixOperation(this, new Uri(response.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -765,22 +772,23 @@ namespace Azure.Maps.Route
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// The maximum size of a matrix for async request is **700** (the number of origins multiplied by the number of destinations).
         /// </summary>
+        /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="options"> The route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual RequestRouteMatrixOperation StartRequestRouteMatrix(RouteMatrixOptions options, CancellationToken cancellationToken = default)
+        public virtual RequestRouteMatrixOperation RequestRouteMatrix(WaitUntil waitUntil, RouteMatrixOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.StartRequestRouteMatrix");
+            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.RequestRouteMatrix");
             scope.Start();
             try
             {
                 var response = RestClient.RequestRouteMatrix(
                     options.Query,
                     JsonFormat.Json,
-                    options?.WaitForResults,
+                    waitUntil == WaitUntil.Completed,
                     options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
@@ -800,9 +808,15 @@ namespace Azure.Maps.Route
                     options?.VehicleLoadType,
                     cancellationToken
                 );
-                return new RequestRouteMatrixOperation(
-                    this, new Uri(response.Headers.Location)
-                );
+
+                // Create operation for route direction
+                var operation = new RequestRouteMatrixOperation(this, new Uri(response.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -815,14 +829,15 @@ namespace Azure.Maps.Route
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
         /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to **700** queries.
         /// </summary>
+        /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeDirectionsQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsQueries"/> is null. </exception>
-        public virtual async Task<RequestRouteDirectionsOperation> StartRequestRouteDirectionsBatchAsync(IList<RouteDirectionQuery> routeDirectionsQueries, CancellationToken cancellationToken = default)
+        public virtual async Task<RequestRouteDirectionsOperation> RequestRouteDirectionsBatchAsync(WaitUntil waitUntil, IList<RouteDirectionQuery> routeDirectionsQueries, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(routeDirectionsQueries, nameof(routeDirectionsQueries));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.StartRequestRouteDirectionsBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.RequestRouteDirectionsBatch");
             scope.Start();
             try
             {
@@ -830,9 +845,14 @@ namespace Azure.Maps.Route
                 var response = await RestClient.RequestRouteDirectionsBatchAsync(
                     batchItems, null, cancellationToken).ConfigureAwait(false);
 
-                return new RequestRouteDirectionsOperation(
-                    this, new Uri(response.Headers.Location)
-                );
+                // Create operation for route direction
+                var operation = new RequestRouteDirectionsOperation(this, new Uri(response.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -845,14 +865,15 @@ namespace Azure.Maps.Route
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
         /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to **700** queries.
         /// </summary>
+        /// <param name="waitUntil"> Whether to return once method is invoked or wait for the server operation to fully complete before returning. Possible value: <c>WaitUntil.Completed</c> and <c>WaitUntil.Started</c> </param>
         /// <param name="routeDirectionsQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsQueries"/> is null. </exception>
-        public virtual RequestRouteDirectionsOperation StartRequestRouteDirectionsBatch(IList<RouteDirectionQuery> routeDirectionsQueries, CancellationToken cancellationToken = default)
+        public virtual RequestRouteDirectionsOperation RequestRouteDirectionsBatch(WaitUntil waitUntil, IList<RouteDirectionQuery> routeDirectionsQueries, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(routeDirectionsQueries, nameof(routeDirectionsQueries));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.StartRequestRouteDirectionsBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsRouteClient.RequestRouteDirectionsBatch");
             scope.Start();
             try
             {
@@ -860,9 +881,14 @@ namespace Azure.Maps.Route
                 var response = RestClient.RequestRouteDirectionsBatch(
                     batchItems, null, cancellationToken);
 
-                return new RequestRouteDirectionsOperation(
-                    this, new Uri(response.Headers.Location)
-                );
+                // Create operation for route direction
+                var operation = new RequestRouteDirectionsOperation(this, new Uri(response.Headers.Location));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {

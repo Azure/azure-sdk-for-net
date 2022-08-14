@@ -198,7 +198,7 @@ namespace Azure.Maps.Route.Tests
             #endregion
         }
 
-        public async void StartRequestRouteDirectionsBatch()
+        public async void RequestRouteDirectionsBatch()
         {
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
@@ -223,8 +223,8 @@ namespace Azure.Maps.Route.Tests
             );
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
-            // Invoke asynchronous route direction batch request
-            var operation = await client.StartRequestRouteDirectionsBatchAsync(queries);
+            // Invoke asynchronous route direction batch request, we can get the result later via assigning `WaitUntil.Started`
+            var operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
 
             // After a while, get the result back
             var result = operation.WaitForCompletion();
@@ -232,7 +232,7 @@ namespace Azure.Maps.Route.Tests
         }
 
         [Test]
-        public void StartRequestRouteDirectionsBatchWithOperationId()
+        public void RequestRouteDirectionsBatchWithOperationId()
         {
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
@@ -258,7 +258,7 @@ namespace Azure.Maps.Route.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             // Invoke asynchronous route direction batch request
-            var operation = client.StartRequestRouteDirectionsBatch(queries);
+            var operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
 
             // Get the operation ID and store somewhere
             var operationId = operation.Id;
@@ -337,7 +337,7 @@ namespace Azure.Maps.Route.Tests
         }
 
         [Test]
-        public void StartRequestRouteMatrix()
+        public void RequestRouteMatrix()
         {
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
@@ -362,11 +362,8 @@ namespace Azure.Maps.Route.Tests
                 TravelTimeType = TravelTimeType.All,
             };
 
-            // Invoke an async route matrix request
-            var operation = client.StartRequestRouteMatrix(routeMatrixOptions);
-
-            // A moment later, get the result from the operation
-            var result = operation.WaitForCompletion();
+            // Invoke an async route matrix request and directly wait for completion
+            var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
             #endregion
 
             Assert.AreEqual(2, result.Value.Matrix.Count);
@@ -376,7 +373,7 @@ namespace Azure.Maps.Route.Tests
         }
 
         [Test]
-        public void StartRequestRouteMatrixWithOperationId()
+        public void RequestRouteMatrixWithOperationId()
         {
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
@@ -397,8 +394,8 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery);
 
             #region Snippet:AsyncRouteMatrixRequestWithOperationId
-            // Invoke an async route matrix request
-            var operation = client.StartRequestRouteMatrix(routeMatrixOptions);
+            // Invoke an async route matrix request and get the result later via assigning `WaitUntil.Started`
+            var operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions);
 
             // Get the operation ID and store somewhere
             var operationId = operation.Id;
