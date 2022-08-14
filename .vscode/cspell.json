@@ -123,6 +123,17 @@
       ]
     },
     {
+      "filename": "**/sdk/avs/**/*.cs",
+      "words": [
+        "dhcps",
+        "mirrorings",
+        "nsxt",
+        "vcenter",
+        "vcsa",
+        "vmotion"
+      ]
+    },
+    {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
         "cref",
@@ -157,17 +168,6 @@
         "ssdzrs",
         "dscp",
         "vmguest"
-      ]
-    },
-    {
-      "filename": "**/sdk/confluent/**/*.cs",
-      "words": [
-        "dhcps",
-        "mirrorings",
-        "nsxt",
-        "vcenter",
-        "vcsa",
-        "vmotion"
       ]
     },
     {
