@@ -61,12 +61,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 SetResourceProviderDetails();
             }
-            else if (s_resourceProviderId == "vm")
-            {
-                // Query again as Id might have been updated.
-                VmMetadataResponse vmMetadata = GetVmMetadataResponse();
-                s_resourceProviderId = vmMetadata.vmId + "/"  + vmMetadata.subscriptionId;
-            }
 
             // TODO: Add os to the list
             return
