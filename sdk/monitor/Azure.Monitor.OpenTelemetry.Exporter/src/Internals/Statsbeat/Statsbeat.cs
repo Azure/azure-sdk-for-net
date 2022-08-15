@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.Metrics;
+using System.Net.Http;
+using System.Text.Json;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -14,6 +17,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string StatsBeat_ConnectionString = "<StatsBeat_ConnectionString>";
 
         internal const int AttachStatsBeatInterval = 86400000;
+
+        internal static string s_resourceProviderId;
+
+        internal static string s_resourceProvider;
+
+        internal static string s_operatingSystem;
+
+        internal static string s_runtimeVersion = SdkVersionUtils.GetVersion(typeof(object));
+
+        internal static string s_sdkVersion = SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
 
         static Statsbeat()
         {
@@ -38,8 +51,86 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static Measurement<int> GetAttachStatsBeat()
         {
-            // TODO: Add additional properties required for statbeat
-            return new(1, new("cikey", Customer_Ikey), new("language", "dotnet"));
+            if (s_resourceProvider == null)
+            {
+                SetResourceProviderDetails();
+            }
+            else if (s_resourceProviderId == "vm")
+            {
+                // Query again as Id might have been updated.
+                VmMetadataResponse vmMetadata = GetVmMetadataResponse();
+                s_resourceProviderId = vmMetadata.vmId + "/"  + vmMetadata.subscriptionId;
+            }
+
+            // TODO: Add os to the list
+            return
+                new(1,
+                new("rp", s_resourceProvider),
+                new("rpId", s_resourceProviderId),
+                new("attach", "sdk"),
+                new("cikey", Customer_Ikey),
+                new("runtimeVersion", s_runtimeVersion),
+                new("language", "dotnet"),
+                new("version", s_sdkVersion));
+        }
+
+        private static VmMetadataResponse GetVmMetadataResponse()
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("Metadata", "True");
+                    var responseString = httpClient.GetStringAsync("http://169.254.169.254/metadata/instance/compute?api-version=2017-08-01&format=json");
+
+                    var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
+
+                    return vmMetadata;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private static void SetResourceProviderDetails()
+        {
+            var appSvcWebsiteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
+            if (appSvcWebsiteName != null)
+            {
+                s_resourceProvider = "appsvc";
+                s_resourceProviderId = appSvcWebsiteName;
+                var appSvcWebsiteHostName = Environment.GetEnvironmentVariable("WEBSITE_HOME_STAMPNAME");
+                if (!string.IsNullOrEmpty(appSvcWebsiteHostName))
+                {
+                    s_resourceProviderId += "/" + appSvcWebsiteHostName;
+                }
+
+                return;
+            }
+
+            var functionsWorkerRuntime = Environment.GetEnvironmentVariable("FUNCTIONS_WORKER_RUNTIME");
+            if (functionsWorkerRuntime != null)
+            {
+                s_resourceProvider = "functions";
+                s_resourceProviderId = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
+
+                return;
+            }
+
+            var vmMetadata = GetVmMetadataResponse();
+
+            if (vmMetadata != null)
+            {
+                s_resourceProvider = "vm";
+                s_resourceProviderId = s_resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
+
+                return;
+            }
+
+            s_resourceProvider = "unknown";
+            s_resourceProviderId = "unknown";
         }
     }
 }
