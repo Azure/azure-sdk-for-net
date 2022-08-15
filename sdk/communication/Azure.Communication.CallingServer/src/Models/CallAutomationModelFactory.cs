@@ -24,11 +24,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of AnswerCallResult. </summary>
         /// <param name="callConnection"> CallConnection Client. </param>
-        /// <param name="callProperties"> Properties of the call. </param>
+        /// <param name="callConnectionProperties"> Properties of the call. </param>
         /// <returns> A new <see cref="CallingServer.AnswerCallResult"/> instance for mocking. </returns>
-        public static AnswerCallResult AnswerCallResult(CallConnection callConnection = default, CallConnectionProperties callProperties = default)
+        public static AnswerCallResult AnswerCallResult(CallConnection callConnection = default, CallConnectionProperties callConnectionProperties = default)
         {
-            return new AnswerCallResult(callConnection, callProperties);
+            return new AnswerCallResult(callConnection, callConnectionProperties);
         }
 
         /// <summary> Initializes a new instance of CallConnectionProperties. </summary>
@@ -56,11 +56,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="callConnection">The instance of callConnection.</param>
-        /// <param name="callProperties">The properties of the call.</param>
+        /// <param name="callConnectionProperties">The properties of the call.</param>
         /// <returns> A new <see cref="CallingServer.CreateCallResult"/> instance for mocking. </returns>
-        public static CreateCallResult CreateCallResult(CallConnection callConnection = default, CallConnectionProperties callProperties = default)
+        public static CreateCallResult CreateCallResult(CallConnection callConnection = default, CallConnectionProperties callConnectionProperties = default)
         {
-            return new CreateCallResult(callConnection, callProperties);
+            return new CreateCallResult(callConnection, callConnectionProperties);
         }
 
         /// <summary>
