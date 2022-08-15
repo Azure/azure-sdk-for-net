@@ -23,7 +23,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
     ///   class.
     /// </summary>
     ///
-    [TestFixture]
     public class AmqpSenderTests
     {
         /// <summary>

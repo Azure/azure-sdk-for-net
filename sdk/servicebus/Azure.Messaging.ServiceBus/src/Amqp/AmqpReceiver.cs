@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
         /// </summary>
-        private readonly AmqpMessageConverter MessageConverter;
+        private readonly AmqpMessageConverter _messageConverter;
 
         /// <summary>
         /// A map of locked messages received using the management client.
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
                 link => _connectionScope.CloseLink(link));
-            MessageConverter = messageConverter;
+            _messageConverter = messageConverter;
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
@@ -352,7 +352,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
 
-                    receivedMessages.Add(MessageConverter.AmqpMessageToSBMessage(message));
+                    receivedMessages.Add(_messageConverter.AmqpMessageToSBMessage(message));
                     message.Dispose();
                 }
 
@@ -966,7 +966,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                    message = MessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    message = _messageConverter.AmqpMessageToSBMessage(amqpMessage, true);
                     messages.Add(message);
                 }
 
@@ -1276,7 +1276,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage =
                             AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = MessageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = _messageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;

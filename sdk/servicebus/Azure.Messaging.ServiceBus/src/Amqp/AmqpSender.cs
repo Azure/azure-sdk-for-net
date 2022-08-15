@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
         /// </summary>
-        private readonly AmqpMessageConverter MessageConverter;
+        private readonly AmqpMessageConverter _messageConverter;
 
         /// <summary>
         ///   The AMQP connection scope responsible for managing transport constructs for this instance.
@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
                 link => _connectionScope.CloseLink(link));
-            MessageConverter = messageConverter;
+            _messageConverter = messageConverter;
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            using (AmqpMessage batchMessage = MessageConverter.BuildAmqpBatchFromMessages(messages, false))
+            using (AmqpMessage batchMessage = _messageConverter.BuildAmqpBatchFromMessages(messages, false))
             {
                 await SendBatchInternalAsync(batchMessage, timeout, cancellationToken).ConfigureAwait(false);
             }
@@ -323,7 +323,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     var (sender, messages) = value;
                     await sender.SendBatchInternalAsync(
-                        sender.MessageConverter.BuildAmqpBatchFromMessage(messages, false),
+                        sender._messageConverter.BuildAmqpBatchFromMessage(messages, false),
                         timeout,
                         token).ConfigureAwait(false);
                 },
@@ -435,7 +435,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 List<AmqpMap> entries = new List<AmqpMap>(messages.Count);
                 foreach (ServiceBusMessage message in messages)
                 {
-                    using AmqpMessage amqpMessage = MessageConverter.SBMessageToAmqpMessage(message);
+                    using AmqpMessage amqpMessage = _messageConverter.SBMessageToAmqpMessage(message);
                     var entry = new AmqpMap();
                     ArraySegment<byte>[] payload = amqpMessage.GetPayload();
                     var buffer = new BufferListStream(payload);

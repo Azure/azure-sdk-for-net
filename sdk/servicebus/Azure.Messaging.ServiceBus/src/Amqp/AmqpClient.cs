@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
         /// </summary>
-        private readonly AmqpMessageConverter MessageConverter;
+        private readonly AmqpMessageConverter _messageConverter;
 
         public override ServiceBusTransportMetrics TransportMetrics { get; }
 
@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            MessageConverter = new AmqpMessageConverter();
+            _messageConverter = new AmqpMessageConverter();
 
             ServiceEndpoint = new UriBuilder
             {
@@ -153,7 +153,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ConnectionScope,
                 retryPolicy,
                 identifier,
-                MessageConverter
+                _messageConverter
             );
         }
 
@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 sessionId,
                 isSessionReceiver,
                 isProcessor,
-                MessageConverter,
+                _messageConverter,
                 cancellationToken
             );
         }
@@ -224,7 +224,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ConnectionScope,
                 retryPolicy,
                 identifier,
-                MessageConverter
+                _messageConverter
             );
         }
 
