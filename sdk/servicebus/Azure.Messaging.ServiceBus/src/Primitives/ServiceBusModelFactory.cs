@@ -455,7 +455,7 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>The backing store for storing events in the batch.</summary>
             private readonly IList<ServiceBusMessage> _backingStore;
 
-            /// <summary>The set of events that have been added to the batch, in their <see cref="AmqpMessage" /> serialized format.</summary>
+            /// <summary>The set of messages that have been added to the batch, in their <see cref="AmqpMessage" /> serialized format.</summary>
             private List<AmqpMessage> _batchMessages;
 
             /// <summary>A callback to be invoked when an adding an event via <see cref="TryAddMessage"/></summary>
