@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Hci.Tests
 {
-    public class AzureStackHciManagementTestEnvironment : TestEnvironment
+    public class HciManagementTestEnvironment : TestEnvironment
     {
     }
 }
