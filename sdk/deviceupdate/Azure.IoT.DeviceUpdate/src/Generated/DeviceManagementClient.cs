@@ -103,7 +103,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClass</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
         ///   deviceClassProperties: {
         ///     contractModel: {
@@ -179,7 +179,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClass</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
         ///   deviceClassProperties: {
         ///     contractModel: {
@@ -268,7 +268,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClass</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
         ///   deviceClassProperties: {
         ///     contractModel: {
@@ -358,7 +358,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClass</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
         ///   deviceClassProperties: {
         ///     contractModel: {
@@ -2155,7 +2155,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets device class subgroup details. </summary>
+        /// <summary> Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2187,7 +2187,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClassSubgroup</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. Device class subgroup identity.
+        ///   deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   groupId: string, # Required. Group identity.
         ///   createdDateTime: string, # Required. Date and time when the device class subgroup was created.
         ///   deviceCount: number, # Optional. The number of devices in the device class subgroup.
@@ -2215,7 +2215,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets device class subgroup details. </summary>
+        /// <summary> Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2247,7 +2247,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClassSubgroup</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. Device class subgroup identity.
+        ///   deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   groupId: string, # Required. Group identity.
         ///   createdDateTime: string, # Required. Date and time when the device class subgroup was created.
         ///   deviceCount: number, # Optional. The number of devices in the device class subgroup.
@@ -2275,7 +2275,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Deletes a device class subgroup. </summary>
+        /// <summary> Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2313,7 +2313,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Deletes a device class subgroup. </summary>
+        /// <summary> Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -4129,7 +4129,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
+        /// <summary> Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -4177,7 +4177,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClassesListValue</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
         ///   deviceClassProperties: {
         ///     contractModel: {
@@ -4221,7 +4221,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
+        /// <summary> Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -4269,7 +4269,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClassesListValue</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   deviceClassId: string, # Required. The device class identifier. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
         ///   deviceClassProperties: {
         ///     contractModel: {
@@ -5239,7 +5239,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Get the device class subgroups for the group. </summary>
+        /// <summary> Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq &apos;value1&apos; and compatProperties/propertyName2 eq &apos;value2&apos;). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -5286,7 +5286,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClassSubgroupsListValue</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. Device class subgroup identity.
+        ///   deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   groupId: string, # Required. Group identity.
         ///   createdDateTime: string, # Required. Date and time when the device class subgroup was created.
         ///   deviceCount: number, # Optional. The number of devices in the device class subgroup.
@@ -5319,7 +5319,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Get the device class subgroups for the group. </summary>
+        /// <summary> Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq &apos;value1&apos; and compatProperties/propertyName2 eq &apos;value2&apos;). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -5366,7 +5366,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeviceClassSubgroupsListValue</c>:
         /// <code>{
-        ///   deviceClassId: string, # Required. Device class subgroup identity.
+        ///   deviceClassId: string, # Required. Device class subgroup identity. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
         ///   groupId: string, # Required. Group identity.
         ///   createdDateTime: string, # Required. Date and time when the device class subgroup was created.
         ///   deviceCount: number, # Optional. The number of devices in the device class subgroup.
