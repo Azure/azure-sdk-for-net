@@ -90,6 +90,9 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.CallTransferFailed CallTransferFailed(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.CreateCallResult CreateCallResult(Azure.Communication.CallingServer.CallConnection callConnection = null, Azure.Communication.CallingServer.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallingServer.ParticipantsUpdated ParticipantsUpdated(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participants = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallingServer.PlayCompleted PlayCompleted(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallingServer.PlayFailed PlayFailed(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallingServer.CallRecordingStateChanged RecordingStateChanged(string recordingId = null, Azure.Communication.CallingServer.RecordingState state = default(Azure.Communication.CallingServer.RecordingState), System.DateTimeOffset startDateTime = default(System.DateTimeOffset), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.RecordingStateResult RecordingStateResult(string recordingId = null, Azure.Communication.CallingServer.RecordingState? recordingState = default(Azure.Communication.CallingServer.RecordingState?)) { throw null; }
         public static Azure.Communication.CallingServer.RemoveParticipantsResult RemoveParticipantsResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallingServer.ResultInformation ResultInformation(int? code = default(int?), int? subCode = default(int?), string message = null) { throw null; }
@@ -205,6 +208,14 @@ namespace Azure.Communication.CallingServer
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.RecordingStateResult>> StartRecordingAsync(Azure.Communication.CallingServer.StartRecordingOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopRecording(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopRecordingAsync(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CallRecordingStateChanged : Azure.Communication.CallingServer.CallAutomationEventBase
+    {
+        internal CallRecordingStateChanged() { }
+        public string RecordingId { get { throw null; } }
+        public System.DateTimeOffset? StartDateTime { get { throw null; } }
+        public Azure.Communication.CallingServer.RecordingState State { get { throw null; } set { } }
+        public static Azure.Communication.CallingServer.CallRecordingStateChanged Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CallRejectReason : System.IEquatable<Azure.Communication.CallingServer.CallRejectReason>
@@ -466,14 +477,6 @@ namespace Azure.Communication.CallingServer
         public static implicit operator Azure.Communication.CallingServer.RecordingState (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallingServer.RecordingState left, Azure.Communication.CallingServer.RecordingState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RecordingStateChanged : Azure.Communication.CallingServer.CallAutomationEventBase
-    {
-        internal RecordingStateChanged() { }
-        public string RecordingId { get { throw null; } }
-        public System.DateTimeOffset? StartDateTime { get { throw null; } }
-        public Azure.Communication.CallingServer.RecordingState? State { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingStateChanged Deserialize(string content) { throw null; }
     }
     public partial class RecordingStateResult
     {

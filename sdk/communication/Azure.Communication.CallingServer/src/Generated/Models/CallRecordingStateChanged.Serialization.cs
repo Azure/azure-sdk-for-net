@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class RecordingStateChanged
+    public partial class CallRecordingStateChanged
     {
-        internal static RecordingStateChanged DeserializeRecordingStateChanged(JsonElement element)
+        internal static CallRecordingStateChanged DeserializeCallRecordingStateChanged(JsonElement element)
         {
             Optional<AcsEventType> type = default;
             Optional<string> recordingId = default;
@@ -75,7 +75,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new RecordingStateChanged(type, recordingId.Value, Optional.ToNullable(state), Optional.ToNullable(startDateTime), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallRecordingStateChanged(type, recordingId.Value, state, Optional.ToNullable(startDateTime), callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }
