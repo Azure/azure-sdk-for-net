@@ -16,11 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private const string StatsBeat_ConnectionString = "<StatsBeat_ConnectionString>";
 
-        private const string AMS_Uri = "http://169.254.169.254/metadata/instance/compute";
-
-        private const string AMS_Version = "api-version=2017-08-01";
-
-        private const string AMS_Format = "format=json";
+        private const string AMS_Url = "http://169.254.169.254/metadata/instance/compute?api-version=2017-08-01&format=json";
 
         internal const int AttachStatsBeatInterval = 86400000;
 
@@ -65,13 +61,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // TODO: Add os to the list
             return
                 new Measurement<int>(1,
-                new("rp", s_resourceProvider),
-                new("rpId", s_resourceProviderId),
-                new("attach", "sdk"),
-                new("cikey", Customer_Ikey),
-                new("runtimeVersion", s_runtimeVersion),
-                new("language", "dotnet"),
-                new("version", s_sdkVersion));
+                    new("rp", s_resourceProvider),
+                    new("rpId", s_resourceProviderId),
+                    new("attach", "sdk"),
+                    new("cikey", Customer_Ikey),
+                    new("runtimeVersion", s_runtimeVersion),
+                    new("language", "dotnet"),
+                    new("version", s_sdkVersion));
         }
 
         private static VmMetadataResponse GetVmMetadataResponse()
@@ -81,8 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Metadata", "True");
-                    var requestUri = AMS_Uri + "?" + AMS_Version + "&" + AMS_Format;
-                    var responseString = httpClient.GetStringAsync(requestUri);
+                    var responseString = httpClient.GetStringAsync(AMS_Url);
                     var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
 
                     return vmMetadata;
