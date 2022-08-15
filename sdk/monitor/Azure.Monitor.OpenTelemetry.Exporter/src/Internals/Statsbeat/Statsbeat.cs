@@ -88,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return vmMetadata;
                 }
             }
-            catch (Exception)
+            catch
             {
                 return null;
             }
