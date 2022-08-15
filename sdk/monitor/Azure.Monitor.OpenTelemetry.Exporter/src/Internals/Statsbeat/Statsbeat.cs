@@ -16,6 +16,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private const string StatsBeat_ConnectionString = "<StatsBeat_ConnectionString>";
 
+        private const string AMS_Uri = "http://169.254.169.254/metadata/instance/compute";
+
+        private const string AMS_Version = "api-version=2017-08-01";
+
+        private const string AMS_Format = "format=json";
+
         internal const int AttachStatsBeatInterval = 86400000;
 
         internal static string s_resourceProviderId;
@@ -81,8 +87,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Metadata", "True");
-                    var responseString = httpClient.GetStringAsync("http://169.254.169.254/metadata/instance/compute?api-version=2017-08-01&format=json");
-
+                    var requestUri = AMS_Uri + "?" + AMS_Version + "&" + AMS_Format;
+                    var responseString = httpClient.GetStringAsync(requestUri);
                     var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
 
                     return vmMetadata;
