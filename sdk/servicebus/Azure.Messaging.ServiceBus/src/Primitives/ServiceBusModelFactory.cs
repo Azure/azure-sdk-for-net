@@ -458,7 +458,7 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>The set of messages that have been added to the batch, in their <see cref="AmqpMessage" /> serialized format.</summary>
             private List<AmqpMessage> _batchMessages;
 
-            /// <summary>A callback to be invoked when an adding an event via <see cref="TryAddMessage"/></summary>
+            /// <summary>A callback to be invoked when an adding a message via <see cref="TryAddMessage"/></summary>
             private readonly Func<ServiceBusMessage, bool> _tryAddCallback;
 
             /// <summary>The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</summary>
