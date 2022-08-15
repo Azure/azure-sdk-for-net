@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteConfigWebAppsRestClient;
         private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteConfigSnapshotWebAppsRestClient;
-        private readonly SiteConfigData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteConfigResource"/> class for mocking. </summary>
         protected WebSiteConfigResource()
