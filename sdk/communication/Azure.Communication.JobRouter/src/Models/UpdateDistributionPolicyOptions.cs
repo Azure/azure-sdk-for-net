@@ -28,14 +28,16 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The Id of this policy.
         /// </summary>
-        public string DistributionPolicyId { get; set; }
+        public string DistributionPolicyId { get; }
 
         /// <summary> The human readable name of the policy. </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// The amount of time before an offer expires.
         /// </summary>
         public TimeSpan OfferTtl { get; set; }
+
         /// <summary> Abstract base class for defining a distribution mode. </summary>
         public DistributionMode Mode { get; set; }
     }
