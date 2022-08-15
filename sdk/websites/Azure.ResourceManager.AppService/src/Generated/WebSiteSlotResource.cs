@@ -335,10 +335,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicy()
+        /// <returns> Returns a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> object. </returns>
+        public virtual WebSiteSlotScmPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicy()
         {
-            return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotConfigAppSettingResources in the WebSiteSlot. </summary>

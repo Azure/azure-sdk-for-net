@@ -2637,18 +2637,18 @@ namespace Azure.ResourceManager.AppService
 
         #region ScmSiteSlotBasicPublishingCredentialsPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public static ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> object. </returns>
+        public static WebSiteSlotScmPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScmSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
-                return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(client, id);
+                WebSiteSlotScmPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new WebSiteSlotScmPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
