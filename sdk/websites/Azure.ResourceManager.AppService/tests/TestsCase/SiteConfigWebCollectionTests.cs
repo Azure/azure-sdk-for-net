@@ -36,22 +36,16 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task Demo()
         {
-            try
+            // we just pretend that we have one
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            var rgName = Recording.GenerateAssetName("testRg");
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
+            var siteId = WebSiteSlotResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.ResourceGroupName, "site", "slot");
+            var site = Client.GetWebSiteSlotResource(siteId);
+            await foreach (var configResource in site.GetConfigurationsSlotAsync())
             {
-                // we just pretend that we have one
-                SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-                var rgName = Recording.GenerateAssetName("testRg");
-                var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                ResourceGroupResource rg = rgLro.Value;
-                var siteId = WebSiteSlotResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.ResourceGroupName, "site", "slot");
-                var site = Client.GetWebSiteSlotResource(siteId);
-                await foreach (var configResource in site.GetConfigurationsSlotAsync())
-                {
-                    Assert.IsTrue(configResource is WebSiteSlotConfigResource);
-                }
-            }
-            catch
-            {
+                Assert.IsTrue(configResource is WebSiteSlotConfigResource);
             }
         }
 

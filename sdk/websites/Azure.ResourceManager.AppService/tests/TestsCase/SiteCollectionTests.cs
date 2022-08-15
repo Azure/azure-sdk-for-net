@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
     public class SiteCollectionTests : AppServiceTestBase
     {
         public SiteCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -21,6 +21,37 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup.GetWebSites();
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Demo()
+        {
+            var container = await GetSiteCollectionAsync();
+            var name = Recording.GenerateAssetName("testSite");
+            var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            var site = lro.Value;
+
+            int ftp = 0;
+            int scm = 0;
+            await foreach (var policy in site.GetBasicPublishingCredentialsPoliciesAsync())
+            {
+                // unfortunately all the element here is of type of BaseWebSitePublishingCredentialsPolicyResourceProxy
+                // therefore the following switch statement does not work
+                switch (policy)
+                {
+                    case WebSiteFtpPublishingCredentialsPolicyResource:
+                        ftp++;
+                        break;
+                    case WebSiteScmPublishingCredentialsPolicyResource:
+                        scm++;
+                        break;
+                }
+            }
+
+            Assert.AreEqual(1, ftp);
+            Assert.AreEqual(1, scm);
         }
 
         [TestCase]
