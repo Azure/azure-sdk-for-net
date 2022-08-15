@@ -38,8 +38,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
@@ -47,8 +47,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
@@ -757,7 +757,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -881,7 +881,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
         /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1176,7 +1176,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1236,7 +1236,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Filter updates by its properties. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1392,7 +1392,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
-        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
+        /// <param name="filter"> Optional to filter operations by status property. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -1507,7 +1507,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
-        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
+        /// <param name="filter"> Optional to filter operations by status property. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>

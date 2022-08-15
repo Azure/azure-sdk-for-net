@@ -20,8 +20,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteGroupAsync(string groupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetBestUpdatesForDeviceClassSubgroup(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetBestUpdatesForDeviceClassSubgroupAsync(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetBestUpdatesForGroups(string groupId, string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetBestUpdatesForGroupsAsync(string groupId, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetBestUpdatesForGroups(string groupId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetBestUpdatesForGroupsAsync(string groupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeployment(string groupId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeploymentAsync(string groupId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, Azure.RequestContext context = null) { throw null; }
@@ -36,8 +36,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceAsync(string deviceId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceClass(string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceClassAsync(string deviceClassId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDeviceClasses(Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceClassesAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDeviceClasses(string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceClassesAsync(string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceClassSubgroup(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceClassSubgroupAsync(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceClassSubgroupDeploymentStatus(string groupId, string deviceClassId, string deploymentId, Azure.RequestContext context = null) { throw null; }
@@ -116,10 +116,10 @@ namespace Azure.IoT.DeviceUpdate
     }
     public partial class DeviceUpdateClientOptions : Azure.Core.ClientOptions
     {
-        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2022_07_01_Preview) { }
+        public DeviceUpdateClientOptions(Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion version = Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions.ServiceVersion.V2022_10_01) { }
         public enum ServiceVersion
         {
-            V2022_07_01_Preview = 1,
+            V2022_10_01 = 1,
         }
     }
 }

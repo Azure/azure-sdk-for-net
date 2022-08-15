@@ -19,11 +19,11 @@ var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 
 First, let's try to retrieve update metadata.
 
-```C# Snippet:AzDeviceUpdateSample2_GetUpdate
+```C# Snippet:AzDeviceUpdateSample2_GetUpdateAsync
 string provider = "<update-provider>";
 string name = "<update-name>";
 string version = "<update-version>";
-var response = client.GetUpdate(provider, name, version);
+var response = await client.GetUpdateAsync(provider, name, version);
 Console.WriteLine(response.Content.ToString());
 ```
 
@@ -31,9 +31,9 @@ Console.WriteLine(response.Content.ToString());
 
 Now that we have update metadata, let's try to retrieve payload file identities that correspond to this update.
 
-```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentities
-var fileIds = client.GetFiles(provider, name, version);
-foreach (var fileId in fileIds)
+```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentitiesAsync
+var fileIds = client.GetFilesAsync(provider, name, version);
+await foreach (var fileId in fileIds)
 {
     var doc = JsonDocument.Parse(fileId.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());
@@ -44,9 +44,9 @@ foreach (var fileId in fileIds)
 
 In this step, we will retrieve full file metadata for each file associated with the update.
 
-```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFiles
-var files = client.GetFiles(provider, name, version);
-foreach (var file in files)
+```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFilesAsync
+var files = client.GetFilesAsync(provider, name, version);
+await foreach (var file in files)
 {
     var doc = JsonDocument.Parse(file.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());

@@ -9,7 +9,7 @@ Run `generate.ps1` or `dotnet msbuild /t:GenerateCode` to generate code.
 public-clients: true
 title: DeviceUpdate
 
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b9b91929c304f8fb44002267b6c98d9fb9dde014/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2022-07-01-preview/deviceupdate.json
+input-file: E:\Sdk\azure-rest-api-specs\specification\deviceupdate\data-plane\Microsoft.DeviceUpdate\stable\2022-10-01\deviceupdate.json
 
 namespace: Azure.IoT.DeviceUpdate
 security: AADToken

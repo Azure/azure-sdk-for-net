@@ -8,7 +8,7 @@ Let's assume you have device update (provided by device builder) and you want to
 For device update to be importable you need not only the actual payload file but also the corresponding import manifest document. 
 See [Import-Concepts](https://docs.microsoft.com/azure/iot-hub-device-update/import-concepts) for details about import manifest.
  
-For the sample below, use proper `account-id` and `instance-id`. You can find the right value in Azure Portal.
+For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 
 ```C# Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
@@ -63,7 +63,7 @@ var requestBody = JsonSerializer.Serialize(content);
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-var response = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(requestBody));
+var response = await client.ImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(requestBody));
 var doc = JsonDocument.Parse(response.Value.ToMemory());
 Console.WriteLine(doc.RootElement.GetProperty("status").ToString());
 ```

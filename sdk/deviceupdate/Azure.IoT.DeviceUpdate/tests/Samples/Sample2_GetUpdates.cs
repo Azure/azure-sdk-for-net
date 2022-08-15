@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -52,6 +53,47 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
             #region Snippet:AzDeviceUpdateSample2_EnumerateUpdateFiles
             var files = client.GetFiles(provider, name, version);
             foreach (var file in files)
+            {
+                var doc = JsonDocument.Parse(file.ToMemory());
+                Console.WriteLine(doc.RootElement.GetString());
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task GetUpdatesAsync()
+        {
+            Uri endpoint = TestEnvironment.AccountEndPoint;
+            string instanceId = TestEnvironment.InstanceId;
+            var credentials = TestEnvironment.Credential;
+            var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+
+            #region Snippet:AzDeviceUpdateSample2_GetUpdateAsync
+#if SNIPPET
+            string provider = "<update-provider>";
+            string name = "<update-name>";
+            string version = "<update-version>";
+#else
+            string provider = TestEnvironment.UpdateProvider;
+            string name = TestEnvironment.UpdateName;
+            string version = TestEnvironment.UpdateVersion;
+#endif
+            var response = await client.GetUpdateAsync(provider, name, version);
+            Console.WriteLine(response.Content.ToString());
+            #endregion
+
+            #region Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentitiesAsync
+            var fileIds = client.GetFilesAsync(provider, name, version);
+            await foreach (var fileId in fileIds)
+            {
+                var doc = JsonDocument.Parse(fileId.ToMemory());
+                Console.WriteLine(doc.RootElement.GetString());
+            }
+            #endregion
+
+            #region Snippet:AzDeviceUpdateSample2_EnumerateUpdateFilesAsync
+            var files = client.GetFilesAsync(provider, name, version);
+            await foreach (var file in files)
             {
                 var doc = JsonDocument.Parse(file.ToMemory());
                 Console.WriteLine(doc.RootElement.GetString());

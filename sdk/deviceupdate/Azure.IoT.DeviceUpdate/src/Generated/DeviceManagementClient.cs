@@ -38,8 +38,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceManagementClient(Uri endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
@@ -47,8 +47,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
@@ -120,7 +120,7 @@ namespace Azure.IoT.DeviceUpdate
         ///     }, # Required. Update identifier.
         ///     description: string, # Optional. Update description.
         ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. Update that is best compatible with this device class.
+        ///   }, # Optional. Update that is the highest version compatible with this device class.
         /// }
         /// </code>
         /// 
@@ -196,7 +196,7 @@ namespace Azure.IoT.DeviceUpdate
         ///     }, # Required. Update identifier.
         ///     description: string, # Optional. Update description.
         ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. Update that is best compatible with this device class.
+        ///   }, # Optional. Update that is the highest version compatible with this device class.
         /// }
         /// </code>
         /// 
@@ -260,7 +260,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>PatchBody</c>:
         /// <code>{
-        ///   friendlyName: string, # Required. The device class friendly name.
+        ///   friendlyName: string, # Required. The device class friendly name. Friendly name can be 1-100 characters, alphanumeric, dot, and dash.
         /// }
         /// </code>
         /// 
@@ -285,7 +285,7 @@ namespace Azure.IoT.DeviceUpdate
         ///     }, # Required. Update identifier.
         ///     description: string, # Optional. Update description.
         ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. Update that is best compatible with this device class.
+        ///   }, # Optional. Update that is the highest version compatible with this device class.
         /// }
         /// </code>
         /// 
@@ -350,7 +350,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>PatchBody</c>:
         /// <code>{
-        ///   friendlyName: string, # Required. The device class friendly name.
+        ///   friendlyName: string, # Required. The device class friendly name. Friendly name can be 1-100 characters, alphanumeric, dot, and dash.
         /// }
         /// </code>
         /// 
@@ -375,7 +375,7 @@ namespace Azure.IoT.DeviceUpdate
         ///     }, # Required. Update identifier.
         ///     description: string, # Optional. Update description.
         ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. Update that is best compatible with this device class.
+        ///   }, # Optional. Update that is the highest version compatible with this device class.
         /// }
         /// </code>
         /// 
@@ -541,7 +541,7 @@ namespace Azure.IoT.DeviceUpdate
         ///   }, # Optional. The update that device last attempted to install.
         ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
         ///   installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
         ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
         ///     resultCode: number, # Required. Install result code.
@@ -649,7 +649,7 @@ namespace Azure.IoT.DeviceUpdate
         ///   }, # Optional. The update that device last attempted to install.
         ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
         ///   installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
         ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
         ///     resultCode: number, # Required. Install result code.
@@ -758,7 +758,7 @@ namespace Azure.IoT.DeviceUpdate
         ///   }, # Optional. The update that device last attempted to install.
         ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
         ///   installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
         ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
         ///     resultCode: number, # Required. Install result code.
@@ -868,7 +868,7 @@ namespace Azure.IoT.DeviceUpdate
         ///   }, # Optional. The update that device last attempted to install.
         ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
         ///   installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
         ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
         ///     resultCode: number, # Required. Install result code.
@@ -1010,7 +1010,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the device group properties. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1043,7 +1043,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string, # Required. Group identity.
+        ///   groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
         ///   groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
         ///   createdDateTime: string, # Required. Date and time when the update was created.
         ///   deviceCount: number, # Optional. The number of devices in the group.
@@ -1074,7 +1074,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the device group properties. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1107,7 +1107,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string, # Required. Group identity.
+        ///   groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
         ///   groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
         ///   createdDateTime: string, # Required. Date and time when the update was created.
         ///   deviceCount: number, # Optional. The number of devices in the group.
@@ -1138,7 +1138,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1174,7 +1174,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1210,7 +1210,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get device group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1266,7 +1266,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get device group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1322,7 +1322,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -1367,7 +1367,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -1414,7 +1414,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -1459,7 +1459,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -1506,7 +1506,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Creates or updates a deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1613,7 +1613,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -1643,7 +1643,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -1691,7 +1691,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Creates or updates a deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1798,7 +1798,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -1828,7 +1828,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -1876,7 +1876,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -1914,7 +1914,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -1952,7 +1952,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -2054,7 +2054,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -2156,7 +2156,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets device class subgroup details. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2216,7 +2216,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets device class subgroup details. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2276,7 +2276,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a device class subgroup. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2314,7 +2314,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a device class subgroup. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2352,7 +2352,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get device class subgroup update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2410,7 +2410,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get device class subgroup update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2468,7 +2468,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get the best available update for a device class subgroup and a count of how many devices need this update. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2538,7 +2538,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get the best available update for a device class subgroup and a count of how many devices need this update. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -2608,7 +2608,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2654,7 +2654,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -2702,7 +2702,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2748,7 +2748,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -2796,7 +2796,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a device class subgroup deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2836,7 +2836,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Deletes a device class subgroup deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2876,7 +2876,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Stops a deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2922,7 +2922,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -2970,7 +2970,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Stops a deployment. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -3016,7 +3016,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -3064,7 +3064,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Retries a deployment with failed devices. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -3110,7 +3110,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -3158,7 +3158,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Retries a deployment with failed devices. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -3204,7 +3204,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -3252,7 +3252,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -3340,7 +3340,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -4130,6 +4130,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -4144,81 +4145,16 @@ namespace Azure.IoT.DeviceUpdate
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-        ///     Console.WriteLine(result.GetProperty("friendlyName").ToString());
-        ///     Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("provider").ToString());
-        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
         /// }
         /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>DeviceClassesListValue</c>:
-        /// <code>{
-        ///   deviceClassId: string, # Required. The device class identifier.
-        ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
-        ///   deviceClassProperties: {
-        ///     contractModel: {
-        ///       id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
-        ///       name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
-        ///     }, # Optional. The Device Update agent contract model.
-        ///     compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
-        ///   }, # Required. The device class properties that are used to calculate the device class Id
-        ///   bestCompatibleUpdate: {
-        ///     updateId: {
-        ///       provider: string, # Required. Update provider.
-        ///       name: string, # Required. Update name.
-        ///       version: string, # Required. Update version.
-        ///     }, # Required. Update identifier.
-        ///     description: string, # Optional. Update description.
-        ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. Update that is best compatible with this device class.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(RequestContext context = null)
-        {
-            return GetDeviceClassesImplementationAsync("DeviceManagementClient.GetDeviceClasses", context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeviceClassesImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceClassesRequest(context)
-                        : CreateGetDeviceClassesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeviceClasses and parse the result.
+        /// This sample shows how to call GetDeviceClassesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
-        /// foreach (var data in client.GetDeviceClasses())
+        /// await foreach (var data in client.GetDeviceClassesAsync("<filter>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -4258,17 +4194,109 @@ namespace Azure.IoT.DeviceUpdate
         ///     }, # Required. Update identifier.
         ///     description: string, # Optional. Update description.
         ///     friendlyName: string, # Optional. Friendly update name.
-        ///   }, # Optional. Update that is best compatible with this device class.
+        ///   }, # Optional. Update that is the highest version compatible with this device class.
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetDeviceClasses(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(string filter = null, RequestContext context = null)
         {
-            return GetDeviceClassesImplementation("DeviceManagementClient.GetDeviceClasses", context);
+            return GetDeviceClassesImplementationAsync("DeviceManagementClient.GetDeviceClasses", filter, context);
         }
 
-        private Pageable<BinaryData> GetDeviceClassesImplementation(string diagnosticsScopeName, RequestContext context)
+        private AsyncPageable<BinaryData> GetDeviceClassesImplementationAsync(string diagnosticsScopeName, string filter, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetDeviceClassesRequest(filter, context)
+                        : CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
+        /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDeviceClasses and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
+        /// 
+        /// foreach (var data in client.GetDeviceClasses())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetDeviceClasses with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
+        /// 
+        /// foreach (var data in client.GetDeviceClasses("<filter>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        ///     Console.WriteLine(result.GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceClassesListValue</c>:
+        /// <code>{
+        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   friendlyName: string, # Optional. The device class friendly name. This can be updated by callers after the device class has been automatically created.
+        ///   deviceClassProperties: {
+        ///     contractModel: {
+        ///       id: string, # Required. The Device Update agent contract model Id of the device class. This is also used to calculate the device class Id.
+        ///       name: string, # Required. The Device Update agent contract model name of the device class. Intended to be a more readable form of the contract model Id.
+        ///     }, # Optional. The Device Update agent contract model.
+        ///     compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
+        ///   }, # Required. The device class properties that are used to calculate the device class Id
+        ///   bestCompatibleUpdate: {
+        ///     updateId: {
+        ///       provider: string, # Required. Update provider.
+        ///       name: string, # Required. Update name.
+        ///       version: string, # Required. Update version.
+        ///     }, # Required. Update identifier.
+        ///     description: string, # Optional. Update description.
+        ///     friendlyName: string, # Optional. Friendly update name.
+        ///   }, # Optional. Update that is the highest version compatible with this device class.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Pageable<BinaryData> GetDeviceClasses(string filter = null, RequestContext context = null)
+        {
+            return GetDeviceClassesImplementation("DeviceManagementClient.GetDeviceClasses", filter, context);
+        }
+
+        private Pageable<BinaryData> GetDeviceClassesImplementation(string diagnosticsScopeName, string filter, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -4276,8 +4304,8 @@ namespace Azure.IoT.DeviceUpdate
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceClassesRequest(context)
-                        : CreateGetDeviceClassesNextPageRequest(nextLink, context);
+                        ? CreateGetDeviceClassesRequest(filter, context)
+                        : CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -4420,7 +4448,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. </param>
+        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to query for devices with no deployment status (that have never been deployed to). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -4502,7 +4530,7 @@ namespace Azure.IoT.DeviceUpdate
         ///   }, # Optional. The update that device last attempted to install.
         ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
         ///   installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
         ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
         ///     resultCode: number, # Required. Install result code.
@@ -4545,7 +4573,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. </param>
+        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to query for devices with no deployment status (that have never been deployed to). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -4627,7 +4655,7 @@ namespace Azure.IoT.DeviceUpdate
         ///   }, # Optional. The update that device last attempted to install.
         ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Canceled&quot; | &quot;Failed&quot;, # Optional. State of the device in its last deployment.
         ///   installedUpdate: UpdateInfo, # Optional. Currently installed update on device.
-        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update (the best compatible update for the device&apos;s device class and group) is installed on the device
         ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
         ///     resultCode: number, # Required. Install result code.
@@ -4670,7 +4698,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of all device groups.  The $default group will always be returned first. </summary>
-        /// <param name="orderBy"> Orders the set of groups returned. You can order by any combination of groupId, device count, created date, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
+        /// <param name="orderBy"> Orders the set of groups returned. You can order by groupId, deviceCount, createdDate, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -4716,7 +4744,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>GroupsListValue</c>:
         /// <code>{
-        ///   groupId: string, # Required. Group identity.
+        ///   groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
         ///   groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
         ///   createdDateTime: string, # Required. Date and time when the update was created.
         ///   deviceCount: number, # Optional. The number of devices in the group.
@@ -4751,7 +4779,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of all device groups.  The $default group will always be returned first. </summary>
-        /// <param name="orderBy"> Orders the set of groups returned. You can order by any combination of groupId, device count, created date, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
+        /// <param name="orderBy"> Orders the set of groups returned. You can order by groupId, deviceCount, createdDate, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -4797,7 +4825,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>GroupsListValue</c>:
         /// <code>{
-        ///   groupId: string, # Required. Group identity.
+        ///   groupId: string, # Required. Group identity. This is created from the value of the ADUGroup tag in the Iot Hub&apos;s device/module twin or $default for devices with no tag.
         ///   groupType: &quot;IoTHubTag&quot; | &quot;DefaultNoTag&quot;, # Required. Group type.
         ///   createdDateTime: string, # Required. Date and time when the update was created.
         ///   deviceCount: number, # Optional. The number of devices in the group.
@@ -4832,8 +4860,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get the best available updates for a device group and a count of how many devices need each update. </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. This filter is deprecated and should not be used. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4854,23 +4881,6 @@ namespace Azure.IoT.DeviceUpdate
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("deviceCount").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetBestUpdatesForGroupsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-        /// 
-        /// await foreach (var data in client.GetBestUpdatesForGroupsAsync("<groupId>", "<filter>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("groupId").ToString());
-        ///     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-        ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-        ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
         ///     Console.WriteLine(result.GetProperty("deviceCount").ToString());
@@ -4900,14 +4910,14 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupsAsync(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetBestUpdatesForGroupsImplementationAsync("DeviceManagementClient.GetBestUpdatesForGroups", groupId, filter, context);
+            return GetBestUpdatesForGroupsImplementationAsync("DeviceManagementClient.GetBestUpdatesForGroups", groupId, context);
         }
 
-        private AsyncPageable<BinaryData> GetBestUpdatesForGroupsImplementationAsync(string diagnosticsScopeName, string groupId, string filter, RequestContext context)
+        private AsyncPageable<BinaryData> GetBestUpdatesForGroupsImplementationAsync(string diagnosticsScopeName, string groupId, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -4915,8 +4925,8 @@ namespace Azure.IoT.DeviceUpdate
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBestUpdatesForGroupsRequest(groupId, filter, context)
-                        : CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, filter, context);
+                        ? CreateGetBestUpdatesForGroupsRequest(groupId, context)
+                        : CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -4925,8 +4935,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get the best available updates for a device group and a count of how many devices need each update. </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. This filter is deprecated and should not be used. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4947,23 +4956,6 @@ namespace Azure.IoT.DeviceUpdate
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("deviceCount").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetBestUpdatesForGroups with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-        /// 
-        /// foreach (var data in client.GetBestUpdatesForGroups("<groupId>", "<filter>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("groupId").ToString());
-        ///     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-        ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-        ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
         ///     Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
         ///     Console.WriteLine(result.GetProperty("deviceCount").ToString());
@@ -4993,14 +4985,14 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetBestUpdatesForGroups(string groupId, string filter = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetBestUpdatesForGroups(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetBestUpdatesForGroupsImplementation("DeviceManagementClient.GetBestUpdatesForGroups", groupId, filter, context);
+            return GetBestUpdatesForGroupsImplementation("DeviceManagementClient.GetBestUpdatesForGroups", groupId, context);
         }
 
-        private Pageable<BinaryData> GetBestUpdatesForGroupsImplementation(string diagnosticsScopeName, string groupId, string filter, RequestContext context)
+        private Pageable<BinaryData> GetBestUpdatesForGroupsImplementation(string diagnosticsScopeName, string groupId, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -5008,8 +5000,8 @@ namespace Azure.IoT.DeviceUpdate
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBestUpdatesForGroupsRequest(groupId, filter, context)
-                        : CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, filter, context);
+                        ? CreateGetBestUpdatesForGroupsRequest(groupId, context)
+                        : CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -5018,7 +5010,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of deployments for a device group. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -5081,7 +5073,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeploymentsListValue</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -5133,7 +5125,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of deployments for a device group. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -5196,7 +5188,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeploymentsListValue</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -5248,8 +5240,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get the device class subgroups for the group. </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. </param>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq &apos;value1&apos; and compatProperties/propertyName2 eq &apos;value2&apos;). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -5328,8 +5320,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get the device class subgroups for the group. </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. </param>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq &apos;value1&apos; and compatProperties/propertyName2 eq &apos;value2&apos;). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -5408,7 +5400,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of deployments for a device class subgroup. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -5472,7 +5464,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeploymentsListValue</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -5525,7 +5517,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of deployments for a device class subgroup. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -5589,7 +5581,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>DeploymentsListValue</c>:
         /// <code>{
-        ///   deploymentId: string, # Required. The caller-provided deployment identifier.
+        ///   deploymentId: string, # Required. The caller-provided deployment identifier. This cannot be longer than 73 characters, must be all lower-case, and cannot contain &apos;&amp;&apos;, &apos;^&apos;, &apos;[&apos;, &apos;]&apos;, &apos;{&apos;, &apos;}&apos;, &apos;|&apos;, &apos;&lt;&apos;, &apos;&gt;&apos;, forward slash, backslash, or double quote. The Updates view in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you create a deployment.
         ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   update: {
         ///     updateId: {
@@ -5642,7 +5634,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
@@ -5727,7 +5719,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
@@ -6146,7 +6138,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get list of device health. </summary>
-        /// <param name="filter"> Filter list by specified properties. </param>
+        /// <param name="filter"> Restricts the set of devices for which device health is returned. You can filter on status, device id and module id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -6216,7 +6208,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get list of device health. </summary>
-        /// <param name="filter"> Filter list by specified properties. </param>
+        /// <param name="filter"> Restricts the set of devices for which device health is returned. You can filter on status, device id and module id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -6365,7 +6357,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateGetDeviceClassesRequest(RequestContext context)
+        internal HttpMessage CreateGetDeviceClassesRequest(string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -6377,6 +6369,10 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/deviceClasses", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -6628,7 +6624,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetBestUpdatesForGroupsRequest(string groupId, string filter, RequestContext context)
+        internal HttpMessage CreateGetBestUpdatesForGroupsRequest(string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -6641,10 +6637,6 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/management/groups/", false);
             uri.AppendPath(groupId, true);
             uri.AppendPath("/bestUpdates", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -7166,7 +7158,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeviceClassesNextPageRequest(string nextLink, RequestContext context)
+        internal HttpMessage CreateGetDeviceClassesNextPageRequest(string nextLink, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -7222,7 +7214,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetBestUpdatesForGroupsNextPageRequest(string nextLink, string groupId, string filter, RequestContext context)
+        internal HttpMessage CreateGetBestUpdatesForGroupsNextPageRequest(string nextLink, string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

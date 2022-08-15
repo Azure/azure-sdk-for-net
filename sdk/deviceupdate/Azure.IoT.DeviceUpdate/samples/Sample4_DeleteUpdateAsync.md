@@ -20,7 +20,7 @@ var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-var response = client.DeleteUpdate(WaitUntil.Completed, provider, name, version);
+var response = await client.DeleteUpdateAsync(WaitUntil.Completed, provider, name, version);
 var doc = JsonDocument.Parse(response.Value.ToMemory());
 Console.WriteLine(doc.RootElement.GetProperty("status").ToString());
 ```

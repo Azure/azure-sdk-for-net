@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -57,6 +58,52 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 #endif
             var versions = client.GetVersions(updateProvider, updateName);
             foreach (var version in versions)
+            {
+                var doc = JsonDocument.Parse(version.ToMemory());
+                Console.WriteLine(doc.RootElement.GetString());
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task HelloWorldAsync()
+        {
+            Uri endpoint = TestEnvironment.AccountEndPoint;
+            string instanceId = TestEnvironment.InstanceId;
+            var credentials = TestEnvironment.Credential;
+            var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+
+            #region Snippet:AzDeviceUpdateSample1_EnumerateProvidersAsync
+            var providers = client.GetProvidersAsync();
+            await foreach (var provider in providers)
+            {
+                var doc = JsonDocument.Parse(provider.ToMemory());
+                Console.WriteLine(doc.RootElement.GetString());
+            }
+            #endregion
+
+            #region Snippet:AzDeviceUpdateSample1_EnumerateNamesAsync
+#if SNIPPET
+            string updateProvider = "<update-provider>";
+#else
+            string updateProvider = TestEnvironment.UpdateProvider;
+#endif
+            var names = client.GetNamesAsync(updateProvider);
+            await foreach (var name in names)
+            {
+                var doc = JsonDocument.Parse(name.ToMemory());
+                Console.WriteLine(doc.RootElement.GetString());
+            }
+            #endregion
+
+            #region Snippet:AzDeviceUpdateSample1_EnumerateVersionsAsync
+#if SNIPPET
+            string updateName = "<update-name>";
+#else
+            string updateName = TestEnvironment.UpdateName;
+#endif
+            var versions = client.GetVersionsAsync(updateProvider, updateName);
+            await foreach (var version in versions)
             {
                 var doc = JsonDocument.Parse(version.ToMemory());
                 Console.WriteLine(doc.RootElement.GetString());
