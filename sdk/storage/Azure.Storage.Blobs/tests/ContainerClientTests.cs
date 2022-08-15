@@ -2914,6 +2914,41 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task ListBlobsHierarchySegmentAsync_VersionPrefixDelimiter()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            await SetUpContainerForListing(test.Container);
+
+            var blobs = new List<BlobItem>();
+            var prefixes = new List<string>();
+
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(
+                states: BlobStates.Version,
+                delimiter: "/",
+                prefix: "baz"))
+            {
+                if (blobItem.IsBlob)
+                {
+                    blobs.Add(blobItem.Blob);
+                }
+                else
+                {
+                    prefixes.Add(blobItem.Prefix);
+                }
+            }
+
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(1, prefixes.Count);
+
+            Assert.AreEqual("baz", blobs[0].Name);
+            Assert.IsNotNull(blobs[0].VersionId);
+
+            Assert.AreEqual("baz/", prefixes[0]);
+        }
+
+        [RecordedTest]
         public async Task UploadBlobAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
