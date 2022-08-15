@@ -264,5 +264,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [docs]: https://docs.microsoft.com/dotnet/api/azure.core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-
-

@@ -56,4 +56,3 @@ extends:
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     TestTimeoutInMinutes: 100
-    TestDependsOnDependency: Azure.Core
