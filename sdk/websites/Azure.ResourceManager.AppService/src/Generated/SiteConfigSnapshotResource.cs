@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteConfigSnapshotResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteConfigResource" /> using the GetSiteConfigSnapshot method.
     /// </summary>
-    public partial class SiteConfigSnapshotResource : ArmResource
+    public partial class SiteConfigSnapshotResource : BaseSiteConfigResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteConfigSnapshotResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string snapshotId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteConfigSnapshotWebAppsRestClient;
-        private readonly SiteConfigData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotResource"/> class for mocking. </summary>
         protected SiteConfigSnapshotResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteConfigSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteConfigSnapshotResource(ArmClient client, SiteConfigData data) : this(client, data.Id)
+        internal SiteConfigSnapshotResource(ArmClient client, SiteConfigData data) : base(client, data.Id)
         {
-            HasData = true;
-            _data = data;
+            _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
+            _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteConfigSnapshotWebAppsApiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotResource"/> class. </summary>
@@ -65,34 +68,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config/snapshots";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SiteConfigData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
-        /// Operation Id: WebApps_GetConfigurationSnapshot
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteConfigSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<T>> GetCoreAsync<T>(CancellationToken cancellationToken = default)
         {
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
             scope.Start();
@@ -101,7 +83,25 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value) as T, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        protected override Response<T> GetCore<T>(CancellationToken cancellationToken = default)
+        {
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value) as T, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,23 +116,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteConfigSnapshotResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public new virtual async Task<Response<SiteConfigSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
+            => await GetCoreAsync<SiteConfigSnapshotResource>(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
+        /// Operation Id: WebApps_GetConfigurationSnapshot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public new virtual Response<SiteConfigSnapshotResource> Get(CancellationToken cancellationToken = default)
+            => GetCore<SiteConfigSnapshotResource>(cancellationToken);
 
         /// <summary>
         /// Description for Reverts the configuration of an app to a previous snapshot.

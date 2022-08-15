@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotConfigResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotConfig method.
     /// </summary>
-    public partial class WebSiteSlotConfigResource : ArmResource
+    public partial class WebSiteSlotConfigResource : BaseSiteConfigResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotConfigResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
@@ -46,10 +46,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteSlotConfigResource(ArmClient client, SiteConfigData data) : this(client, data.Id)
+        internal WebSiteSlotConfigResource(ArmClient client, SiteConfigData data) : base(client, data.Id)
         {
-            HasData = true;
-            _data = data;
+            _webSiteSlotConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webSiteSlotConfigWebAppsApiVersion);
+            _webSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigWebAppsApiVersion);
+            _siteSlotConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotConfigSnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotConfigSnapshotResource.ResourceType, out string siteSlotConfigSnapshotWebAppsApiVersion);
+            _siteSlotConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotConfigSnapshotWebAppsApiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigResource"/> class. </summary>
@@ -70,21 +77,6 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/config";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SiteConfigData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -129,13 +121,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotConfigSnapshots().Get(snapshotId, cancellationToken);
         }
 
-        /// <summary>
-        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// Operation Id: WebApps_GetConfigurationSlot
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteSlotConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<T>> GetCoreAsync<T>(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.Get");
             scope.Start();
@@ -144,7 +130,25 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSlotConfigWebAppsRestClient.GetConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotConfigResource(Client, response.Value) as T, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        protected override Response<T> GetCore<T>(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotConfigWebAppsRestClient.GetConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotConfigResource(Client, response.Value) as T, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,23 +163,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteSlotConfigResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _webSiteSlotConfigWebAppsRestClient.GetConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public new virtual async Task<Response<WebSiteSlotConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+            => await GetCoreAsync<WebSiteSlotConfigResource>(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
+        /// Operation Id: WebApps_GetConfigurationSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public new virtual Response<WebSiteSlotConfigResource> Get(CancellationToken cancellationToken = default)
+            => GetCore<WebSiteSlotConfigResource>(cancellationToken);
 
         /// <summary>
         /// Description for Updates the configuration of an app.

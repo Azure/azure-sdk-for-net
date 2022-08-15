@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -1293,17 +1294,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListConfigurationsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteConfigData> GetConfigurationsSlotAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BaseSiteConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BaseSiteConfigResource> GetConfigurationsSlotAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteConfigData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BaseSiteConfigResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = await _webSiteSlotWebAppsRestClient.ListConfigurationsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSiteConfigResource.GetSiteConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1311,14 +1312,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteConfigData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BaseSiteConfigResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = await _webSiteSlotWebAppsRestClient.ListConfigurationsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSiteConfigResource.GetSiteConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1335,17 +1336,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListConfigurationsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteConfigData> GetConfigurationsSlot(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BaseSiteConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BaseSiteConfigResource> GetConfigurationsSlot(CancellationToken cancellationToken = default)
         {
-            Page<SiteConfigData> FirstPageFunc(int? pageSizeHint)
+            Page<BaseSiteConfigResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = _webSiteSlotWebAppsRestClient.ListConfigurationsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSiteConfigResource.GetSiteConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1353,14 +1354,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteConfigData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BaseSiteConfigResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetConfigurationsSlot");
                 scope.Start();
                 try
                 {
                     var response = _webSiteSlotWebAppsRestClient.ListConfigurationsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSiteConfigResource.GetSiteConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

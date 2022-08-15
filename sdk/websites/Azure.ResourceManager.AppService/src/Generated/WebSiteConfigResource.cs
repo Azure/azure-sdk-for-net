@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteConfigResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteConfig method.
     /// </summary>
-    public partial class WebSiteConfigResource : ArmResource
+    public partial class WebSiteConfigResource : BaseSiteConfigResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteConfigResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
@@ -46,10 +46,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteConfigResource(ArmClient client, SiteConfigData data) : this(client, data.Id)
+        internal WebSiteConfigResource(ArmClient client, SiteConfigData data) : base(client, data.Id)
         {
-            HasData = true;
-            _data = data;
+            _webSiteConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webSiteConfigWebAppsApiVersion);
+            _webSiteConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteConfigWebAppsApiVersion);
+            _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigSnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteConfigSnapshotResource.ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
+            _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteConfigSnapshotWebAppsApiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteConfigResource"/> class. </summary>
@@ -70,21 +77,6 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SiteConfigData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -129,13 +121,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteConfigSnapshots().Get(snapshotId, cancellationToken);
         }
 
-        /// <summary>
-        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
-        /// Operation Id: WebApps_GetConfiguration
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<T>> GetCoreAsync<T>(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Get");
             scope.Start();
@@ -144,7 +130,25 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteConfigWebAppsRestClient.GetConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteConfigResource(Client, response.Value) as T, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        protected override Response<T> GetCore<T>(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _webSiteConfigWebAppsRestClient.GetConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebSiteConfigResource(Client, response.Value) as T, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,23 +163,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteConfigResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _webSiteConfigWebAppsRestClient.GetConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteConfigResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public new virtual async Task<Response<WebSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+            => await GetCoreAsync<WebSiteConfigResource>(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
+        /// Operation Id: WebApps_GetConfiguration
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public new virtual Response<WebSiteConfigResource> Get(CancellationToken cancellationToken = default)
+            => GetCore<WebSiteConfigResource>(cancellationToken);
 
         /// <summary>
         /// Description for Updates the configuration of an app.
