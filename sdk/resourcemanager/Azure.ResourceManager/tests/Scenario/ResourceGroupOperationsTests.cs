@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Tests
             });
         }
 
-        [RecordedTest]
+        [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        public async Task AddTag(bool useTagResource)
+        public async Task AddTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(400, ex.Status);
         }
 
-        [RecordedTest]
+        [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        public async Task SetTags(bool useTagResource)
+        public async Task SetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.SetTagsAsync(null));
         }
 
-        [RecordedTest]
+        [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        public async Task RemoveTag(bool useTagResource)
+        public async Task RemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
