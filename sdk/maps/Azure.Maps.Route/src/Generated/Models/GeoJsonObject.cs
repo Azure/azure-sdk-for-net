@@ -8,7 +8,7 @@
 namespace Azure.Maps.Route.Models
 {
     /// <summary> A valid `GeoJSON` object. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3) for details. </summary>
-    public partial class GeoJsonObject
+    internal partial class GeoJsonObject
     {
         /// <summary> Initializes a new instance of GeoJsonObject. </summary>
         public GeoJsonObject()

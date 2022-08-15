@@ -70,26 +70,26 @@ namespace Azure.Maps.Route.Models
         /// </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>
         /// <returns> A new <see cref="Models.RouteDirections"/> instance for mocking. </returns>
-        public static RouteDirections RouteDirections(string formatVersion = null, IEnumerable<Route> routes = null, IEnumerable<RouteOptimizedWaypoint> optimizedWaypoints = null, RouteReport report = null)
+        public static RouteDirections RouteDirections(string formatVersion = null, IEnumerable<RouteData> routes = null, IEnumerable<RouteOptimizedWaypoint> optimizedWaypoints = null, RouteReport report = null)
         {
-            routes ??= new List<Route>();
+            routes ??= new List<RouteData>();
             optimizedWaypoints ??= new List<RouteOptimizedWaypoint>();
 
             return new RouteDirections(formatVersion, routes?.ToList(), optimizedWaypoints?.ToList(), report);
         }
 
-        /// <summary> Initializes a new instance of Route. </summary>
+        /// <summary> Initializes a new instance of RouteData. </summary>
         /// <param name="summary"> Summary object. </param>
         /// <param name="legs"> Legs array. </param>
         /// <param name="sections"> Sections array. </param>
         /// <param name="guidance"> Contains guidance related elements. This field is present only when guidance was requested and is available. </param>
-        /// <returns> A new <see cref="Models.Route"/> instance for mocking. </returns>
-        public static Route Route(RouteSummary summary = null, IEnumerable<RouteLeg> legs = null, IEnumerable<RouteSection> sections = null, RouteGuidance guidance = null)
+        /// <returns> A new <see cref="Models.RouteData"/> instance for mocking. </returns>
+        public static RouteData RouteData(RouteSummary summary = null, IEnumerable<RouteLeg> legs = null, IEnumerable<RouteSection> sections = null, RouteGuidance guidance = null)
         {
             legs ??= new List<RouteLeg>();
             sections ??= new List<RouteSection>();
 
-            return new Route(summary, legs?.ToList(), sections?.ToList(), guidance);
+            return new RouteData(summary, legs?.ToList(), sections?.ToList(), guidance);
         }
 
         /// <summary> Initializes a new instance of RouteSummary. </summary>

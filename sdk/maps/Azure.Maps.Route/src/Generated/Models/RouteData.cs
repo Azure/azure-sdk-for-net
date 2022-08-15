@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.Maps.Route.Models
 {
     /// <summary> The Route. </summary>
-    public partial class Route
+    public partial class RouteData
     {
-        /// <summary> Initializes a new instance of Route. </summary>
-        internal Route()
+        /// <summary> Initializes a new instance of RouteData. </summary>
+        internal RouteData()
         {
             Legs = new ChangeTrackingList<RouteLeg>();
             Sections = new ChangeTrackingList<RouteSection>();
         }
 
-        /// <summary> Initializes a new instance of Route. </summary>
+        /// <summary> Initializes a new instance of RouteData. </summary>
         /// <param name="summary"> Summary object. </param>
         /// <param name="legs"> Legs array. </param>
         /// <param name="sections"> Sections array. </param>
         /// <param name="guidance"> Contains guidance related elements. This field is present only when guidance was requested and is available. </param>
-        internal Route(RouteSummary summary, IReadOnlyList<RouteLeg> legs, IReadOnlyList<RouteSection> sections, RouteGuidance guidance)
+        internal RouteData(RouteSummary summary, IReadOnlyList<RouteLeg> legs, IReadOnlyList<RouteSection> sections, RouteGuidance guidance)
         {
             Summary = summary;
             Legs = legs;

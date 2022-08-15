@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Route.Models
 {
-    public partial class Route
+    public partial class RouteData
     {
-        internal static Route DeserializeRoute(JsonElement element)
+        internal static RouteData DeserializeRouteData(JsonElement element)
         {
             Optional<RouteSummary> summary = default;
             Optional<IReadOnlyList<RouteLeg>> legs = default;
@@ -72,7 +72,7 @@ namespace Azure.Maps.Route.Models
                     continue;
                 }
             }
-            return new Route(summary.Value, Optional.ToList(legs), Optional.ToList(sections), guidance.Value);
+            return new RouteData(summary.Value, Optional.ToList(legs), Optional.ToList(sections), guidance.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Maps.Route.Models
         /// <summary> Initializes a new instance of RouteDirections. </summary>
         internal RouteDirections()
         {
-            Routes = new ChangeTrackingList<Route>();
+            Routes = new ChangeTrackingList<RouteData>();
             OptimizedWaypoints = new ChangeTrackingList<RouteOptimizedWaypoint>();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.Maps.Route.Models
         /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is &quot;first, second, third&quot; while the optimized is &quot;second, third, first&quot;.
         /// </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>
-        internal RouteDirections(string formatVersion, IReadOnlyList<Route> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report)
+        internal RouteDirections(string formatVersion, IReadOnlyList<RouteData> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report)
         {
             FormatVersion = formatVersion;
             Routes = routes;
@@ -48,7 +48,7 @@ namespace Azure.Maps.Route.Models
         /// <summary> Format Version property. </summary>
         public string FormatVersion { get; }
         /// <summary> Routes array. </summary>
-        public IReadOnlyList<Route> Routes { get; }
+        public IReadOnlyList<RouteData> Routes { get; }
         /// <summary>
         /// Optimized sequence of waypoints. It shows the index from the user provided waypoint sequence for the original and optimized list. For instance, a response: 
         /// 

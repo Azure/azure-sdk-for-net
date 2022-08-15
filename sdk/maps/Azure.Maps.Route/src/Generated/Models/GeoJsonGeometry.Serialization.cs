@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Route.Models
 {
-    public partial class GeoJsonGeometry : IUtf8JsonSerializable
+    internal partial class GeoJsonGeometry : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

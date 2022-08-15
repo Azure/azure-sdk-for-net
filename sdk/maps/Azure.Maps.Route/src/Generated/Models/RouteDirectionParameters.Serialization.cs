@@ -15,10 +15,10 @@ namespace Azure.Maps.Route.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SupportingPoints))
+            if (Optional.IsDefined(_GeoJsonSupportingPoints))
             {
                 writer.WritePropertyName("supportingPoints");
-                writer.WriteObjectValue(SupportingPoints);
+                writer.WriteObjectValue(_GeoJsonSupportingPoints);
             }
             if (Optional.IsCollectionDefined(AvoidVignette))
             {
@@ -40,10 +40,10 @@ namespace Azure.Maps.Route.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AvoidAreas))
+            if (Optional.IsDefined(_GeoJsonAvoidAreas))
             {
                 writer.WritePropertyName("avoidAreas");
-                writer.WriteObjectValue(AvoidAreas);
+                writer.WriteObjectValue(_GeoJsonAvoidAreas);
             }
             writer.WriteEndObject();
         }

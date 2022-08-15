@@ -29,7 +29,7 @@ namespace Azure.Maps.Route.Models
         /// </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>
         /// <param name="error"> The error object. </param>
-        internal RouteDirectionsBatchItemResponse(string formatVersion, IReadOnlyList<Route> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report, ErrorDetail error) : base(formatVersion, routes, optimizedWaypoints, report)
+        internal RouteDirectionsBatchItemResponse(string formatVersion, IReadOnlyList<RouteData> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report, ErrorDetail error) : base(formatVersion, routes, optimizedWaypoints, report)
         {
             ErrorDetail = error;
             ResponseError = new ResponseError(error?.Code, error?.Message);

@@ -17,7 +17,7 @@ namespace Azure.Maps.Route.Models
         {
             Optional<ErrorDetail> error = default;
             Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<Route>> routes = default;
+            Optional<IReadOnlyList<RouteData>> routes = default;
             Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
             Optional<RouteReport> report = default;
             foreach (var property in element.EnumerateObject())
@@ -44,10 +44,10 @@ namespace Azure.Maps.Route.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Route> array = new List<Route>();
+                    List<RouteData> array = new List<RouteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Route.DeserializeRoute(item));
+                        array.Add(RouteData.DeserializeRouteData(item));
                     }
                     routes = array;
                     continue;

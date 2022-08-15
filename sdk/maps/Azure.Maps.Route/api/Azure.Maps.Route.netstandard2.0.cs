@@ -102,24 +102,6 @@ namespace Azure.Maps.Route.Models
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class GeoJsonGeometry : Azure.Maps.Route.Models.GeoJsonObject
-    {
-        public GeoJsonGeometry() { }
-    }
-    public partial class GeoJsonGeometryCollection : Azure.Maps.Route.Models.GeoJsonGeometry
-    {
-        public GeoJsonGeometryCollection(System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.GeoJsonGeometry> geometries) { }
-        public System.Collections.Generic.IList<Azure.Maps.Route.Models.GeoJsonGeometry> Geometries { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPolygon : Azure.Maps.Route.Models.GeoJsonGeometry
-    {
-        public GeoJsonMultiPolygon(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonObject
-    {
-        public GeoJsonObject() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuidanceInstructionType : System.IEquatable<Azure.Maps.Route.Models.GuidanceInstructionType>
     {
@@ -331,14 +313,6 @@ namespace Azure.Maps.Route.Models
         public static bool operator !=(Azure.Maps.Route.Models.ResponseTravelMode left, Azure.Maps.Route.Models.ResponseTravelMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Route
-    {
-        internal Route() { }
-        public Azure.Maps.Route.Models.RouteGuidance Guidance { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Route.Models.RouteLeg> Legs { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Route.Models.RouteSection> Sections { get { throw null; } }
-        public Azure.Maps.Route.Models.RouteSummary Summary { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RouteAvoidType : System.IEquatable<Azure.Maps.Route.Models.RouteAvoidType>
     {
@@ -361,6 +335,14 @@ namespace Azure.Maps.Route.Models
         public static implicit operator Azure.Maps.Route.Models.RouteAvoidType (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Route.Models.RouteAvoidType left, Azure.Maps.Route.Models.RouteAvoidType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RouteData
+    {
+        internal RouteData() { }
+        public Azure.Maps.Route.Models.RouteGuidance Guidance { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Route.Models.RouteLeg> Legs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Route.Models.RouteSection> Sections { get { throw null; } }
+        public Azure.Maps.Route.Models.RouteSummary Summary { get { throw null; } }
     }
     public partial class RouteDirectionOptions
     {
@@ -412,9 +394,9 @@ namespace Azure.Maps.Route.Models
     {
         public RouteDirectionParameters() { }
         public System.Collections.Generic.IList<string> AllowVignette { get { throw null; } }
-        public Azure.Maps.Route.Models.GeoJsonMultiPolygon AvoidAreas { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPolygonCollection AvoidAreas { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AvoidVignette { get { throw null; } }
-        public Azure.Maps.Route.Models.GeoJsonGeometryCollection SupportingPoints { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoCollection SupportingPoints { get { throw null; } set { } }
     }
     public partial class RouteDirectionQuery
     {
@@ -429,7 +411,7 @@ namespace Azure.Maps.Route.Models
         public string FormatVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Route.Models.RouteOptimizedWaypoint> OptimizedWaypoints { get { throw null; } }
         public Azure.Maps.Route.Models.RouteReport Report { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Route.Models.Route> Routes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Route.Models.RouteData> Routes { get { throw null; } }
     }
     public partial class RouteDirectionsBatchItemResponse : Azure.Maps.Route.Models.RouteDirections
     {
@@ -568,8 +550,8 @@ namespace Azure.Maps.Route.Models
     public static partial class RouteModelFactory
     {
         public static Azure.Maps.Route.Models.EffectiveSetting EffectiveSetting(string key = null, string value = null) { throw null; }
-        public static Azure.Maps.Route.Models.Route Route(Azure.Maps.Route.Models.RouteSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteLeg> legs = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteSection> sections = null, Azure.Maps.Route.Models.RouteGuidance guidance = null) { throw null; }
-        public static Azure.Maps.Route.Models.RouteDirections RouteDirections(string formatVersion = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.Route> routes = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteOptimizedWaypoint> optimizedWaypoints = null, Azure.Maps.Route.Models.RouteReport report = null) { throw null; }
+        public static Azure.Maps.Route.Models.RouteData RouteData(Azure.Maps.Route.Models.RouteSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteLeg> legs = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteSection> sections = null, Azure.Maps.Route.Models.RouteGuidance guidance = null) { throw null; }
+        public static Azure.Maps.Route.Models.RouteDirections RouteDirections(string formatVersion = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteData> routes = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteOptimizedWaypoint> optimizedWaypoints = null, Azure.Maps.Route.Models.RouteReport report = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteGuidance RouteGuidance(System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteInstruction> instructions = null, System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteInstructionGroup> instructionGroups = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteInstructionGroup RouteInstructionGroup(int? firstInstructionIndex = default(int?), int? lastInstructionIndex = default(int?), int? groupLengthInMeters = default(int?), string groupMessage = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteLegSummary RouteLegSummary(int? lengthInMeters = default(int?), int? travelTimeInSeconds = default(int?), int? trafficDelayInSeconds = default(int?), System.DateTimeOffset? departureTime = default(System.DateTimeOffset?), System.DateTimeOffset? arrivalTime = default(System.DateTimeOffset?), int? noTrafficTravelTimeInSeconds = default(int?), int? historicTrafficTravelTimeInSeconds = default(int?), int? liveTrafficIncidentsTravelTimeInSeconds = default(int?), double? fuelConsumptionInLiters = default(double?), double? batteryConsumptionInKwH = default(double?)) { throw null; }
