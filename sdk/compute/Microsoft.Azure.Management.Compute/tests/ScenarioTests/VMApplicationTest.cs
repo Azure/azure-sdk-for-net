@@ -69,5 +69,48 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        public void VMApplicationController_Tests()
+        {
+            /// before re-recording the test, ensure that the resources referr here exist
+
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                var image = m_CrpClient.VirtualMachineImages.Get(
+                    this.m_location, imageRef.Publisher, imageRef.Offer, imageRef.Sku, imageRef.Version);
+                Assert.True(image != null);
+
+                // Create resource group
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                VirtualMachine inputVM;
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
+                    {
+                        vm.StorageProfile.OsDisk.DiskSizeGB = 150;
+                    });
+
+                    VMGalleryApplication doNothingApp = new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/doNothing/versions/1.0.0");
+                    VMGalleryApplication putResult1 = m_CrpClient.VirtualMachineApplications.Put(rgName, inputVM.Name, "doNothing", doNothingApp);
+                    Assert.Equal(doNothingApp.ConfigurationReference, putResult1.ConfigurationReference);
+
+                    VirtualMachineApplicationsListResult listResult = m_CrpClient.VirtualMachineApplications.List(rgName, inputVM.Name);
+                    Assert.Single(listResult.Value);
+                    Assert.Equal(putResult1, listResult.Value[0]);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
     }
 }
