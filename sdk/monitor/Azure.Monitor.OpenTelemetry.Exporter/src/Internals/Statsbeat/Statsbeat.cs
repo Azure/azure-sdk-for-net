@@ -64,6 +64,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // TODO: Add os to the list
             return
+                new Measurement<int>(1,
+                     new("rp", s_resourceProvider),
+                      new("rpId", s_resourceProviderId),
+                      new("attach", "sdk"),
+                      new("cikey", Customer_Ikey),
+                      new("runtimeVersion", s_runtimeVersion),
+                      new("language", "dotnet"),
+                      new("version", s_sdkVersion));
                 new(1,
                 new("rp", s_resourceProvider),
                 new("rpId", s_resourceProviderId),
