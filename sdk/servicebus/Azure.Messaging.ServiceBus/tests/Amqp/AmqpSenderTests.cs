@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
     public class AmqpSenderTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   Verifies functionality of the <see cref="AmqpSender.CreateBatchAsync" />
         ///   method.
         /// </summary>
         ///
