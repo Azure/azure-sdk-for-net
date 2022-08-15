@@ -29,6 +29,46 @@ namespace Azure.Identity.Tests
 
         private const string ExpectedToken = "mock-msi-access-token";
 
+        [Test]
+        public async Task VerifyTokenCaching()
+        {
+            int callCount = 0;
+
+            var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null))
+            {
+                TokenFactory = () => { callCount++; return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddHours(24)); }
+            };
+
+            var cred = InstrumentClient(new ManagedIdentityCredential(mockClient));
+
+            for (int i = 0; i < 5; i++)
+            {
+                await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            }
+
+            Assert.AreEqual(1, callCount);
+        }
+
+        [Test]
+        public async Task VerifyExpiringTokenRefresh()
+        {
+            int callCount = 0;
+
+            var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null))
+            {
+                TokenFactory = () => { callCount++; return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(2)); }
+            };
+
+            var cred = InstrumentClient(new ManagedIdentityCredential(mockClient));
+
+            for (int i = 0; i < 5; i++)
+            {
+                await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            }
+
+            Assert.AreEqual(5, callCount);
+        }
+
         [NonParallelizable]
         [Test]
         public async Task VerifyImdsRequestWithClientIdMockAsync()

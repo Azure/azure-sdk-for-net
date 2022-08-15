@@ -43,9 +43,9 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Get various properties of the call. <see cref="CallConnectionProperties"/>.</summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual async Task<Response<CallConnectionProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallConnectionProperties>> GetCallConnectionPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnectionProperties)}");
             scope.Start();
             try
             {
@@ -64,9 +64,9 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Get various properties of a ongoing call. <see cref="CallConnectionProperties"/>.</summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual Response<CallConnectionProperties> GetProperties(CancellationToken cancellationToken = default)
+        public virtual Response<CallConnectionProperties> GetCallConnectionProperties(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnectionProperties)}");
             scope.Start();
             try
             {
@@ -87,9 +87,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="forEveryone"> If true, this will terminate the call and hang up on all participants in this call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> HangupAsync(bool forEveryone, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> HangUpAsync(bool forEveryone, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Hangup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {
@@ -119,9 +119,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="forEveryone"> If true, this will terminate the call and hang up on all participants in this call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response Hangup(bool forEveryone, CancellationToken cancellationToken = default)
+        public virtual Response HangUp(bool forEveryone, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Hangup)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {

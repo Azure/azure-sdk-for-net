@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [TearDown]
         public async Task TearDown()
         {
-            var collection = _dnsZone.GetRecordSetNS();
+            var collection = _dnsZone.GetRecordSetNs();
             if (collection.Exists(_recordSetName))
             {
                 var recordSetNSResource = await collection.GetAsync(_recordSetName);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNS();
+            var collection = _dnsZone.GetRecordSetNs();
             var recordSetNSResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
             Assert.IsNotNull(recordSetNSResource);
             Assert.IsNotNull(recordSetNSResource.Value.Data.ETag);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNS();
+            var collection = _dnsZone.GetRecordSetNs();
             var recordSetNSResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
             Assert.IsTrue(collection.Exists(_recordSetName));
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNS();
+            var collection = _dnsZone.GetRecordSetNs();
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
             Assert.IsTrue(collection.Exists(_recordSetName));
         }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNS();
+            var collection = _dnsZone.GetRecordSetNs();
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
 
             var recordSetNSResource = await collection.GetAsync(_recordSetName);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNS();
+            var collection = _dnsZone.GetRecordSetNs();
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();

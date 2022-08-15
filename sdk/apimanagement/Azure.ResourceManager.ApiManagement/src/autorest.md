@@ -102,26 +102,28 @@ prepend-rp-prefix:
 
 rename-mapping:
   GatewayHostnameConfigurationContract.properties.negotiateClientCertificate: IsClientCertificateRequired
-  SubscriptionsDelegationSettingsProperties.enabled: EnableSubscriptionDelegation
-  RegistrationDelegationSettingsProperties.enabled: EnableUserRegistrationDelegation
-  DiagnosticContract.properties.logClientIp: EnableLogClientIP
+  SubscriptionsDelegationSettingsProperties.enabled: IsSubscriptionDelegationEnabled
+  RegistrationDelegationSettingsProperties.enabled: IsUserRegistrationDelegationEnabled
+  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
   BackendTlsProperties.validateCertificateChain: ShouldValidateCertificateChain
   BackendTlsProperties.validateCertificateName: ShouldValidateCertificateName
-  HostnameConfiguration.defaultSslBinding: EnableDefaultSslBinding
-  HostnameConfiguration.negotiateClientCertificate: EnableClientCertificateNegotiation
-  PortalSettingsContract.properties.enabled: EnableRedirect
+  HostnameConfiguration.defaultSslBinding: IsDefaultSslBindingEnabled
+  HostnameConfiguration.negotiateClientCertificate: IsClientCertificateNegotiationEnabled
+  PortalSettingsContract.properties.enabled: IsRedirectEnabled
   TermsOfServiceProperties.enabled: IsDisplayEnabled
   TermsOfServiceProperties.consentRequired: IsConsentRequired
   AccessInformationCreateParameters.properties.enabled: IsDirectAccessEnabled
   TenantConfigurationSyncStateContract.properties.isExport: IsExported
   AccessInformationSecretsContract.enabled: IsDirectAccessEnabled
   AccessInformationUpdateParameters.properties.enabled: IsDirectAccessEnabled
-  PortalSigninSettings.properties.enabled: EnableRedirect
-  PortalSignupSettings.properties.enabled: EnableSignUpDeveloperPortal
+  PortalSigninSettings.properties.enabled: IsRedirectEnabled
+  PortalSignupSettings.properties.enabled: IsSignUpDeveloperPortalEnabled
   AccessInformationContract.properties.enabled: IsDirectAccessEnabled
   BackendContract.properties.resourceId: ResourceUri|uri
   BackendUpdateParameters.properties.resourceId: ResourceUri|uri
   RequestReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
+  RequestReportRecordContract.method: -|request-method
+  RequestReportRecordContract.ipAddress: -|ip-address
   ReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   SubscriptionsDelegationSettingsProperties: SubscriptionDelegationSettingProperties
   RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties
@@ -319,5 +321,8 @@ directive:
     where: $.parameters
     transform: >
       $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
+  - from: swagger-document
+    where: $..[?(@.name=='$orderby')]
+    transform: $['x-ms-client-name'] = 'orderBy' 
 
 ```

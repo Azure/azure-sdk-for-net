@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption");
+                writer.WriteObjectValue(Encryption);
+            }
+            if (Optional.IsDefined(StorageSku))
+            {
+                writer.WritePropertyName("storagesku");
+                writer.WriteStringValue(StorageSku.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -60,6 +70,8 @@ namespace Azure.ResourceManager.FluidRelay
             Optional<Guid> frsTenantId = default;
             Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
             Optional<ProvisioningState> provisioningState = default;
+            Optional<Models.EncryptionProperties> encryption = default;
+            Optional<StorageSku> storagesku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -156,11 +168,31 @@ namespace Azure.ResourceManager.FluidRelay
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("encryption"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("storagesku"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storagesku = new StorageSku(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState));
+            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku));
         }
     }
 }

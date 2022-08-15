@@ -44,28 +44,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Subscriptions delegation settings. </summary>
         internal SubscriptionDelegationSettingProperties Subscriptions { get; set; }
         /// <summary> Enable or disable delegation for subscriptions. </summary>
-        public bool? EnableSubscriptionDelegation
+        public bool? IsSubscriptionDelegationEnabled
         {
-            get => Subscriptions is null ? default : Subscriptions.EnableSubscriptionDelegation;
+            get => Subscriptions is null ? default : Subscriptions.IsSubscriptionDelegationEnabled;
             set
             {
                 if (Subscriptions is null)
                     Subscriptions = new SubscriptionDelegationSettingProperties();
-                Subscriptions.EnableSubscriptionDelegation = value;
+                Subscriptions.IsSubscriptionDelegationEnabled = value;
             }
         }
 
         /// <summary> User registration delegation settings. </summary>
         internal RegistrationDelegationSettingProperties UserRegistration { get; set; }
         /// <summary> Enable or disable delegation for user registration. </summary>
-        public bool? EnableUserRegistrationDelegation
+        public bool? IsUserRegistrationDelegationEnabled
         {
-            get => UserRegistration is null ? default : UserRegistration.EnableUserRegistrationDelegation;
+            get => UserRegistration is null ? default : UserRegistration.IsUserRegistrationDelegationEnabled;
             set
             {
                 if (UserRegistration is null)
                     UserRegistration = new RegistrationDelegationSettingProperties();
-                UserRegistration.EnableUserRegistrationDelegation = value;
+                UserRegistration.IsUserRegistrationDelegationEnabled = value;
             }
         }
     }
