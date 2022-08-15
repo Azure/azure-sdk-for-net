@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Automanage.Tests
 {
-    public class automanageManagementTestEnvironment : TestEnvironment
+    public class AutomanageTestEnvironment : TestEnvironment
     {
     }
 }
