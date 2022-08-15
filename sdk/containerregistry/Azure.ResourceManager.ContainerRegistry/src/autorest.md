@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/b9b91929c304f8fb44002267b6c98d9fb9dde014/specification/containerregistry/resource-manager/readme.md
-tag: package-2021-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/containerregistry/resource-manager/readme.md
+tag: package-2022-02-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -123,17 +123,30 @@ prepend-rp-prefix:
   - BaseImageTrigger
   - BaseImageTriggerType
   - Credentials
+  - Token
+  - TokenCertificate
+  - TokenCertificateName
+  - TokenCredentialsProperties
+  - TokenListResult
+  - TokenPassword
+  - TokenPasswordName
+  - TokenStatus
+  - PipelineRun
+  - GenerateCredentialsResult
+  - SoftDeletePolicy
 
 rename-mapping:
   OS: ContainerRegistryOS
   KeyVaultProperties.keyRotationEnabled: IsKeyRotationEnabled
   RegistryNameStatus: ContainerRegistryNameAvailableResult
   RegistryNameStatus.nameAvailable: IsNameAvailable
-  RegistryPatch: ContainerRegistryPatch
+  RegistryUpdateParameters: ContainerRegistryPatch
+  RegistryUpdateParameters.properties.anonymousPullEnabled: IsAnonymousPullEnabled
   RegistryUpdateParameters.properties.adminUserEnabled: IsAdminUserEnabled
   Registry.properties.adminUserEnabled: IsAdminUserEnabled
   RegistryUpdateParameters.properties.dataEndpointEnabled: IsDataEndpointEnabled
   Registry.properties.dataEndpointEnabled: IsDataEndpointEnabled
+  Registry.properties.anonymousPullEnabled: IsAnonymousPullEnabled
   ReplicationUpdateParameters.properties.regionEndpointEnabled: IsRegionEndpointEnabled
   Replication.properties.regionEndpointEnabled: IsRegionEndpointEnabled
   Registry: ContainerRegistry
@@ -200,6 +213,29 @@ rename-mapping:
   Event.id: -|uuid
   EventInfo.id: -|uuid
   Request.id: -|uuid
+  ActivationProperties: ConnectedRegistryActivation
+  ActivationStatus: ConnectedRegistryActivationStatus
+  ConnectionState: ConnectedRegistryConnectionState
+  ParentProperties: ConnectedRegistryParent
+  ParentProperties.id: -|arm-id
+  LoginServerProperties: ConnectedRegistryLoginServer
+  LoggingProperties: ConnectedRegistryLogging
+  StatusDetailProperties: ConnectedRegistryStatusDetail
+  StatusDetailProperties.type: StatusDetailType
+  AuditLogStatus: ConnectedRegistryAuditLogStatus
+  CertificateType: TlsCertificateLocationType
+  GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
+  LogLevel: ContainerRegistryLogLevel
+  PipelineRunRequest: PipelineRunContent
+  PipelineRunResponse: PipelineRunResult
+  ProgressProperties: PipelineProgress
+  SyncProperties: ConnectedRegistrySyncProperties
+  SyncUpdateProperties: ConnectedRegistrySyncUpdateProperties
+  TokenUpdateParameters: ContainerRegistryTokenPatch
+  TokenUpdateParameters.properties.scopeMapId: -|arm-id
+  ScopeMap.properties.type: ScopeMapType
+  ExportPipelineTargetProperties.type: ExportPipelineTargetType
+  TlsCertificateProperties.location: CertificateLocation
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
