@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> domainUsername = default;
             Optional<string> domainUserPassword = default;
             Optional<IList<string>> clusterUsersGroupDNs = default;
-            Optional<string> aaddsResourceId = default;
+            Optional<ResourceIdentifier> aaddsResourceId = default;
             Optional<ResourceIdentifier> msiResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -149,7 +149,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("aaddsResourceId"))
                 {
-                    aaddsResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aaddsResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("msiResourceId"))

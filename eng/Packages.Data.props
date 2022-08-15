@@ -88,9 +88,9 @@
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.21" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.5.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.2" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.10.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.8.1" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.10.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.6.0" />
@@ -99,14 +99,18 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.12.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.10.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.2.1" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.3.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.39.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Desktop" Version="4.39.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.46.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.23.0" />
+    <!--
+      TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
+      Currently, it is referencd by Azure.Identity.BrokeredAuthentication which is still in beta
+    -->
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.46.0-preview" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
@@ -156,7 +160,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220805.3" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220810.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20220111.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

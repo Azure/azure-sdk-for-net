@@ -16,13 +16,13 @@ namespace Azure.Communication.MediaComposition.Tests
         private static readonly Dictionary<string, MediaInput> _presentationInputs = new()
         {
             ["presenter"] = new ParticipantInput(
-                id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7")},
+                id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
                 call: "teamsMeeting")
                 {
                    PlaceholderImageUri = "https://imageendpoint"
                 },
             ["support"] = new ParticipantInput(
-                id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61")},
+                id: new MicrosoftTeamsUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
                 call: "teamsMeeting")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
@@ -307,7 +307,7 @@ namespace Azure.Communication.MediaComposition.Tests
             var inputsToUpsert = new Dictionary<string, MediaInput>()
             {
                 ["james"] = new ParticipantInput(
-                    id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
+                    id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
                     call: "teamsMeeting")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
@@ -331,7 +331,7 @@ namespace Azure.Communication.MediaComposition.Tests
             var inputsToUpsert = new Dictionary<string, MediaInput>()
             {
                 ["presenter"] = new ParticipantInput(
-                    id: new() { MicrosoftTeamsUser = new(updatedUserId) },
+                    id: new MicrosoftTeamsUserIdentifier(updatedUserId),
                     call: "teamsMeeting")
                     {
                         PlaceholderImageUri = "https://imageendpoint"
@@ -342,7 +342,11 @@ namespace Azure.Communication.MediaComposition.Tests
             response.Value.Inputs.TryGetValue("presenter", out var presenter);
             var participant = presenter as ParticipantInput;
             Assert.IsNotNull(participant);
-            Assert.AreEqual(participant?.Id.MicrosoftTeamsUser.UserId, updatedUserId);
+            Assert.IsTrue(participant?.Id is MicrosoftTeamsUserIdentifier);
+            if (participant?.Id is MicrosoftTeamsUserIdentifier teamsUser)
+            {
+                Assert.AreEqual(teamsUser.UserId, updatedUserId);
+            }
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -402,7 +406,7 @@ namespace Azure.Communication.MediaComposition.Tests
                 var inputsToUpsert = new Dictionary<string, MediaInput>()
                 {
                     ["james"] = new ParticipantInput(
-                        id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
+                        id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
                         call: "teamsMeeting")
                         {
                             PlaceholderImageUri = "https://imageendpoint"

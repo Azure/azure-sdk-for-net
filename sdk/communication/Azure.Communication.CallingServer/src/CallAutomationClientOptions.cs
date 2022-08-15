@@ -9,12 +9,12 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The latest version of the Calling Server.
+    /// The latest version of the Call Automation.
     /// </summary>
     public class CallAutomationClientOptions : ClientOptions
     {
         /// <summary>
-        /// The latest version of the CallingServer service.
+        /// The latest version of the CallAutomation service.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V2022_04_07_Preview;
 
@@ -33,12 +33,12 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// The CallingServer service version.
+        /// The CallAutomation service version.
         /// </summary>
         public enum ServiceVersion
         {
             /// <summary>
-            /// The Beta of the CallingServer service.
+            /// The Beta of the CallAutomation service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             V2022_04_07_Preview = 1

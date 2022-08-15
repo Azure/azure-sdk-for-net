@@ -23,6 +23,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   '*ResourceId': 'arm-id'
   'PrincipalId': 'uuid'
+  'taskId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -121,6 +122,7 @@ prepend-rp-prefix:
   - BaseImageDependencyType
   - BaseImageTrigger
   - BaseImageTriggerType
+  - Credentials
 
 rename-mapping:
   OS: ContainerRegistryOS
@@ -143,7 +145,7 @@ rename-mapping:
   TaskRunRequest: ContainerRegistryTaskRunContent
   RunRequest: ContainerRegistryRunContent
   DockerBuildRequest: ContainerRegistryDockerBuildContent
-  EncodedTaskRunRequest: ContainerRegistryEncodedTaskRunRequest
+  EncodedTaskRunRequest: ContainerRegistryEncodedTaskRunContent
   FileTaskRunRequest: ContainerRegistryFileTaskRunContent
   TriggerUpdateParameters: ContainerRegistryTriggerUpdateContent
   TimerTriggerUpdateParameters: ContainerRegistryTimerTriggerUpdateContent
@@ -169,7 +171,6 @@ rename-mapping:
   Source: ContainerRegistryWebhookEventSource
   Request: ContainerRegistryWebhookEventRequestContent
   ConnectionStatus: ContainerRegistryPrivateLinkServiceConnectionStatus
-  Credentials: ContainerRegistryRunCredentials
   DefaultAction: ContainerRegistryNetworkRuleDefaultAction
   EncodedTaskRunRequest.timeout: TimeoutInSeconds
   FileTaskRunRequest.timeout: TimeoutInSeconds

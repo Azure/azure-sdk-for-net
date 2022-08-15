@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RoleDisasterRecovery.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RoleDisasterRecovery
+    public static class RoleDisasterRecovery
     {
-        [EnumMember(Value = "Primary")]
-        Primary,
-        [EnumMember(Value = "PrimaryNotReplicating")]
-        PrimaryNotReplicating,
-        [EnumMember(Value = "Secondary")]
-        Secondary
-    }
-    internal static class RoleDisasterRecoveryEnumExtension
-    {
-        internal static string ToSerializedValue(this RoleDisasterRecovery? value)
-        {
-            return value == null ? null : ((RoleDisasterRecovery)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this RoleDisasterRecovery value)
-        {
-            switch( value )
-            {
-                case RoleDisasterRecovery.Primary:
-                    return "Primary";
-                case RoleDisasterRecovery.PrimaryNotReplicating:
-                    return "PrimaryNotReplicating";
-                case RoleDisasterRecovery.Secondary:
-                    return "Secondary";
-            }
-            return null;
-        }
-
-        internal static RoleDisasterRecovery? ParseRoleDisasterRecovery(this string value)
-        {
-            switch( value )
-            {
-                case "Primary":
-                    return RoleDisasterRecovery.Primary;
-                case "PrimaryNotReplicating":
-                    return RoleDisasterRecovery.PrimaryNotReplicating;
-                case "Secondary":
-                    return RoleDisasterRecovery.Secondary;
-            }
-            return null;
-        }
+        public const string Primary = "Primary";
+        public const string PrimaryNotReplicating = "PrimaryNotReplicating";
+        public const string Secondary = "Secondary";
     }
 }

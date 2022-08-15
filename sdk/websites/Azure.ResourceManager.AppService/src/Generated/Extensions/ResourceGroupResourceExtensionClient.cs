@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -110,17 +109,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteResourceHealthMetadataResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -128,14 +127,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteResourceHealthMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -152,17 +151,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteResourceHealthMetadataResource> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteResourceHealthMetadataResource> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -170,14 +169,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteResourceHealthMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
