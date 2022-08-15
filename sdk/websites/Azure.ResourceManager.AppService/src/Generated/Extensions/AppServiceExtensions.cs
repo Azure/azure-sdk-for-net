@@ -2597,20 +2597,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ScmSiteBasicPublishingCredentialsPolicyResource
+        #region WebSiteScmPublishingCredentialsPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScmSiteBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteScmPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteScmPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteScmPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public static ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteScmPublishingCredentialsPolicyResource" /> object. </returns>
+        public static WebSiteScmPublishingCredentialsPolicyResource GetWebSiteScmPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScmSiteBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
-                return new ScmSiteBasicPublishingCredentialsPolicyResource(client, id);
+                WebSiteScmPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new WebSiteScmPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
