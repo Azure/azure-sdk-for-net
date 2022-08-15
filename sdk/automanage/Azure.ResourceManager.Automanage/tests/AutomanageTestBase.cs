@@ -12,24 +12,34 @@ namespace Azure.ResourceManager.Automanage.Tests
 {
     public class AutomanageTestBase : ManagementRecordedTestBase<AutomanageTestEnvironment>
     {
-        public ArmClient ArmClient { get; private set; }
+        public ArmClient Client { get; private set; }
         public SubscriptionResource Subscription { get; set; }
         protected ResourceGroupCollection ResourceGroups { get; private set; }
         public static AzureLocation DefaultLocation => AzureLocation.EastUS;
 
-        protected AutomanageTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        protected AutomanageTestBase(bool isAsync, RecordedTestMode mode)
+        : base(isAsync, mode)
         {
         }
 
-        protected AutomanageTestBase(bool isAsync) : base(isAsync)
+        protected AutomanageTestBase(bool isAsync)
+            : base(isAsync)
         {
         }
 
         [SetUp]
         public async Task CreateCommonClient()
         {
-            ArmClient = GetArmClient();
-            Subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            Client = GetArmClient();
+            Subscription = await Client.GetDefaultSubscriptionAsync();
+        }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        {
+            string rgName = Recording.GenerateAssetName(rgNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(location);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
         }
 
         public static void VerifyConfigurationProfileProperties(ConfigurationProfileResource profile)
