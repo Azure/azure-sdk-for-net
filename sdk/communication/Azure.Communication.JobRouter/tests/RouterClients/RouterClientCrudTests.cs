@@ -337,11 +337,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
         [Test]
         [TestCase(new string?[] { null, null }, typeof(ArgumentNullException))]
-        [TestCase(new string?[]{null, ""}, typeof(ArgumentNullException))]
+        [TestCase(new string?[] { null, "" }, typeof(ArgumentNullException))]
         [TestCase(new string?[] { "", null }, typeof(ArgumentException))]
         [TestCase(new string?[] { "value", null }, typeof(ArgumentNullException))]
         [TestCase(new string?[] { null, "value" }, typeof(ArgumentNullException))]
-        [TestCase(new string?[] { "value", "" }, typeof(ArgumentNullException))]
+        [TestCase(new string?[] { "value", "" }, typeof(ArgumentException))]
         [TestCase(new string?[] { "", "value" }, typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_SetQueue(string?[] input, Type exceptionType)
         {
@@ -362,7 +362,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [TestCase(new string?[] { "", null }, typeof(ArgumentException))]
         [TestCase(new string?[] { "value", null }, typeof(ArgumentNullException))]
         [TestCase(new string?[] { null, "value" }, typeof(ArgumentNullException))]
-        [TestCase(new string?[] { "value", "" }, typeof(ArgumentNullException))]
+        [TestCase(new string?[] { "value", "" }, typeof(ArgumentException))]
         [TestCase(new string?[] { "", "value" }, typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_SetQueueAsync(string?[] input, Type exceptionType)
         {

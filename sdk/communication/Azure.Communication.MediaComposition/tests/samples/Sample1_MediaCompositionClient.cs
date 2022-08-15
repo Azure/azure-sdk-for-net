@@ -94,7 +94,7 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             {
                 ["james"] = new ParticipantInput
                 (
-                    id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
+                    id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
                     call: "teamsMeeting"
                 )
                 {
@@ -221,21 +221,21 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             {
                 ["jill"] = new ParticipantInput
                 (
-                    id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
+                    id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
                     call: "teamsMeeting")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 },
                 ["jack"] = new ParticipantInput
                 (
-                    id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
+                    id: new MicrosoftTeamsUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
                     call: "teamsMeeting")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 },
                 ["jane"] = new ParticipantInput
                 (
-                    id: new() { MicrosoftTeamsUser = new("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
+                    id: new MicrosoftTeamsUserIdentifier("2dd69470-dc25-49cf-b5c3-f562f08bf3b2"),
                     call: "teamsMeeting"
                 )
                 {
@@ -243,7 +243,7 @@ namespace Azure.Communication.MediaComposition.Tests.samples
                 },
                 ["jerry"] = new ParticipantInput
                 (
-                    id: new() { MicrosoftTeamsUser = new("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
+                    id: new MicrosoftTeamsUserIdentifier("30e29fde-ac1c-448f-bb34-0f3448d5a677"),
                     call: "teamsMeeting")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
