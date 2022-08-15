@@ -12,7 +12,10 @@ namespace Azure.ResourceManager.Automanage.Tests
 {
     public class automanageManagementTestBase : ManagementRecordedTestBase<automanageManagementTestEnvironment>
     {
-        protected ArmClient Client { get; private set; }
+        public ArmClient Client { get; private set; }
+        public SubscriptionResource Subscription { get; set; }
+        protected ResourceGroupCollection ResourceGroups { get; private set; }
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS;
 
         protected automanageManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,9 +28,10 @@ namespace Azure.ResourceManager.Automanage.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            Subscription = await Client.GetDefaultSubscriptionAsync();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
