@@ -23,11 +23,11 @@ namespace Azure.Core.Tests
             });
             gzContent.JsonWriter.WriteEndObject();
 
-            string deserialized = UncompressAndDeserialze(gzContent);
+            string deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
             Console.WriteLine(deserialized);
 
-            deserialized = UncompressAndDeserialze(gzContent);
+            deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
             Console.WriteLine(deserialized);
         }
@@ -39,15 +39,42 @@ namespace Azure.Core.Tests
             RequestContent rc = RequestContent.Create(payload);
             GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent(rc);
 
-            string deserialized = UncompressAndDeserialze(gzContent);
+            string deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
             Console.WriteLine(deserialized);
 
-            deserialized = UncompressAndDeserialze(gzContent);
+            deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
             Console.WriteLine(deserialized);
         }
-        private static string UncompressAndDeserialze(RequestContent gzContent)
+
+        [Test]
+        public void GZipRequestContent_BufferCopy_TryComputeLength()
+        {
+            BinaryData data = BinaryData.FromObjectAsJson(
+                // Use an anonymous type to create the payload
+                new[] {
+                    new
+                    {
+                        Time = DateTime.Now,
+                        Computer = "Computer1",
+                        AdditionalContext = 2,
+                    },
+                    new
+                    {
+                        Time = DateTime.Now,
+                        Computer = "Computer2",
+                        AdditionalContext = 3
+                    },
+                });
+            RequestContent rc = RequestContent.Create(data);
+            GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent(rc);
+            long length = 0;
+            gzContent.TryComputeLength(out length);
+            Assert.Greater(length, 110);
+        }
+
+        private static string UncompressAndDeserialize(RequestContent gzContent)
         {
             var memStream = new MemoryStream();
             gzContent.WriteTo(memStream, default);
