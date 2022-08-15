@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<SystemData> systemData = default;
             Optional<string> title = default;
             Optional<string> description = default;
-            Optional<string> resourceId = default;
+            Optional<Uri> resourceId = default;
             Optional<BackendProperties> properties = default;
             Optional<BackendCredentialsContract> credentials = default;
             Optional<BackendProxyContract> proxy = default;
@@ -132,7 +132,12 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                resourceId = null;
+                                continue;
+                            }
+                            resourceId = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("properties"))

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity file system source. </summary>
-    public partial class FileSystemSource : CopySource
+    public partial class FileSystemSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of FileSystemSource. </summary>
         public FileSystemSource()

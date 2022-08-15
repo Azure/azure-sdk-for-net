@@ -324,14 +324,6 @@ directive:
     $.responses['202'] = {
         'description': 'Creation of notebook workspace will complete asynchronously.'
     };
-- from: swagger-document
-  where: $.definitions..creationTime
-  transform: >
-    $['x-ms-client-name'] = 'CreatedOn';
-- from: swagger-document
-  where: $.definitions..deletionTime
-  transform: >
-    $['x-ms-client-name'] = 'DeletedOn';
 - from: rbac.json
   where: $.definitions
   transform: >

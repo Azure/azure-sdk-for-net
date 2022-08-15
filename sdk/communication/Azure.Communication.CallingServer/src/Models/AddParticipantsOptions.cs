@@ -20,9 +20,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> Timeout before invitation timesout. </summary>
         public int? InvitationTimeoutInSeconds { get; set; }
 
-        /// <summary> The replacement CallConnectionId. </summary>
-        public string ReplacementCallConnectionId { get; set; }
-
         /// <summary>
         /// Add Participants Options.
         /// </summary>

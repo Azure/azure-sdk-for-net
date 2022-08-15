@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element)
         {
             Optional<long> scriptExecutionId = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
             Optional<string> status = default;
             Optional<string> operation = default;
             Optional<IReadOnlyList<ScriptActionExecutionSummary>> executionSummary = default;
@@ -64,12 +64,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    endTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -133,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, Optional.ToNullable(scriptExecutionId), startTime.Value, endTime.Value, status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
+            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
         }
     }
 }

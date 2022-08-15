@@ -64,6 +64,8 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsPublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
         public ResourceIdentifier SourceManagedInstanceId { get; set; }
+        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
+        public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Connection type used for connecting to the instance. </summary>
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>

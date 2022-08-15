@@ -1986,6 +1986,7 @@ namespace Azure.Storage.Files.DataLake
                 options?.TransferValidationOptions,
                 options?.LeaseId,
                 options?.ProgressHandler,
+                options?.Flush,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2034,6 +2035,7 @@ namespace Azure.Storage.Files.DataLake
                 options?.TransferValidationOptions,
                 options?.LeaseId,
                 options?.ProgressHandler,
+                options?.Flush,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2099,12 +2101,13 @@ namespace Azure.Storage.Files.DataLake
                 contentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = contentHash
                     }
                     : default,
                 leaseId,
                 progressHandler,
+                flush: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -2171,12 +2174,13 @@ namespace Azure.Storage.Files.DataLake
                 contentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = contentHash
                     }
                     : default,
                 leaseId,
                 progressHandler,
+                flush: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2209,6 +2213,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="progressHandler">
         /// Progress handler for append operation.
         /// </param>
+        /// <param name="flush">
+        /// Optional.  If true, the file will be flushed after the append.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2230,10 +2237,11 @@ namespace Azure.Storage.Files.DataLake
             UploadTransferValidationOptions validationOptionsOverride,
             string leaseId,
             IProgress<long> progressHandler,
+            bool? flush,
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
@@ -2262,12 +2270,13 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentHash: hashResult?.MD5AsArray,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
+                            flush: flush,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2277,12 +2286,13 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentHash: hashResult?.MD5AsArray,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
+                            flush: flush,
                             cancellationToken: cancellationToken);
                     }
 
@@ -5041,6 +5051,7 @@ namespace Azure.Storage.Files.DataLake
                         validationOptions,
                         args?.Conditions?.LeaseId,
                         progressHandler,
+                        flush: null,
                         async,
                         cancellationToken).ConfigureAwait(false);
 
@@ -5062,6 +5073,7 @@ namespace Azure.Storage.Files.DataLake
                         validationOptions,
                         args?.Conditions?.LeaseId,
                         progressHandler,
+                        flush: null,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>

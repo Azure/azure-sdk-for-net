@@ -49,6 +49,7 @@ namespace Azure.Storage.Files.DataLake
                     validationOptionsOverride: _validationOptions,
                     leaseId: _conditions.LeaseId,
                     progressHandler: _progressHandler,
+                    flush: null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

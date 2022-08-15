@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<ArmPlan> plan = default;
             Optional<RemotePrivateEndpointConnection> properties = default;
-            Optional<SkuDescription> sku = default;
+            Optional<AppServiceSkuDescription> sku = default;
             Optional<string> status = default;
             Optional<ResponseError> error = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))

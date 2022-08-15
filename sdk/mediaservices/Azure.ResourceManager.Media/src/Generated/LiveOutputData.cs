@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Media
         /// <param name="assetName"> The asset that the live output will write to. </param>
         /// <param name="archiveWindowLength"> ISO 8601 time between 1 minute to 25 hours to indicate the maximum content length that can be archived in the asset for this live output. This also sets the maximum content length for the rewind window. For example, use PT1H30M to indicate 1 hour and 30 minutes of archive window. </param>
         /// <param name="manifestName"> The manifest file name. If not provided, the service will generate one automatically. </param>
-        /// <param name="hls"> HTTP Live Streaming (HLS) packing setting for the live output. </param>
+        /// <param name="httpLiveStreaming"> HTTP Live Streaming (HLS) packing setting for the live output. </param>
         /// <param name="outputSnapTime"> The initial timestamp that the live output will start at, any content before this value will not be archived. </param>
-        /// <param name="created"> The creation time the live output. </param>
-        /// <param name="lastModified"> The time the live output was last modified. </param>
+        /// <param name="createdOn"> The creation time the live output. </param>
+        /// <param name="lastModifiedOn"> The time the live output was last modified. </param>
         /// <param name="provisioningState"> The provisioning state of the live output. </param>
         /// <param name="resourceState"> The resource state of the live output. </param>
-        internal LiveOutputData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assetName, TimeSpan? archiveWindowLength, string manifestName, Hls hls, long? outputSnapTime, DateTimeOffset? created, DateTimeOffset? lastModified, string provisioningState, LiveOutputResourceState? resourceState) : base(id, name, resourceType, systemData)
+        internal LiveOutputData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assetName, TimeSpan? archiveWindowLength, string manifestName, Hls httpLiveStreaming, long? outputSnapTime, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, LiveOutputResourceState? resourceState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AssetName = assetName;
             ArchiveWindowLength = archiveWindowLength;
             ManifestName = manifestName;
-            Hls = hls;
+            HttpLiveStreaming = httpLiveStreaming;
             OutputSnapTime = outputSnapTime;
-            Created = created;
-            LastModified = lastModified;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
         }
@@ -58,25 +58,25 @@ namespace Azure.ResourceManager.Media
         /// <summary> The manifest file name. If not provided, the service will generate one automatically. </summary>
         public string ManifestName { get; set; }
         /// <summary> HTTP Live Streaming (HLS) packing setting for the live output. </summary>
-        internal Hls Hls { get; set; }
+        internal Hls HttpLiveStreaming { get; set; }
         /// <summary> The number of fragments in an HTTP Live Streaming (HLS) TS segment in the output of the live event. This value does not affect the packing ratio for HLS CMAF output. </summary>
-        public int? HlsFragmentsPerTsSegment
+        public int? HttpLiveStreamingFragmentsPerTsSegment
         {
-            get => Hls is null ? default : Hls.FragmentsPerTsSegment;
+            get => HttpLiveStreaming is null ? default : HttpLiveStreaming.FragmentsPerTsSegment;
             set
             {
-                if (Hls is null)
-                    Hls = new Hls();
-                Hls.FragmentsPerTsSegment = value;
+                if (HttpLiveStreaming is null)
+                    HttpLiveStreaming = new Hls();
+                HttpLiveStreaming.FragmentsPerTsSegment = value;
             }
         }
 
         /// <summary> The initial timestamp that the live output will start at, any content before this value will not be archived. </summary>
         public long? OutputSnapTime { get; set; }
         /// <summary> The creation time the live output. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time the live output was last modified. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The provisioning state of the live output. </summary>
         public string ProvisioningState { get; }
         /// <summary> The resource state of the live output. </summary>

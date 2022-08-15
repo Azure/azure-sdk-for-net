@@ -905,13 +905,13 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
-				content0.JsonWriter.WriteRawValue(template);
+				content.JsonWriter.WriteRawValue(template);
 #else
-            JsonSerializer.Serialize(content0.JsonWriter, JsonDocument.Parse(template.ToString()).RootElement);
+            JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(template.ToString()).RootElement);
 #endif
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }

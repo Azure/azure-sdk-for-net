@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -20,14 +21,14 @@ namespace Azure.ResourceManager.Dns
         public RecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ARecords = new ChangeTrackingList<ARecord>();
-            AaaaRecords = new ChangeTrackingList<AaaaRecord>();
-            MxRecords = new ChangeTrackingList<MxRecord>();
-            NsRecords = new ChangeTrackingList<NsRecord>();
-            PtrRecords = new ChangeTrackingList<PtrRecord>();
-            SrvRecords = new ChangeTrackingList<SrvRecord>();
-            TxtRecords = new ChangeTrackingList<TxtRecord>();
-            CaaRecords = new ChangeTrackingList<CaaRecord>();
+            ARecords = new ChangeTrackingList<DnsARecord>();
+            AaaaRecords = new ChangeTrackingList<DnsAaaaRecord>();
+            MXRecords = new ChangeTrackingList<DnsMXRecord>();
+            NSRecords = new ChangeTrackingList<DnsNSRecord>();
+            PtrRecords = new ChangeTrackingList<DnsPtrRecord>();
+            SrvRecords = new ChangeTrackingList<DnsSrvRecord>();
+            TxtRecords = new ChangeTrackingList<DnsTxtRecord>();
+            CaaRecords = new ChangeTrackingList<DnsCaaRecord>();
         }
 
         /// <summary> Initializes a new instance of RecordSetData. </summary>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
@@ -51,18 +52,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cnameRecord"> The CNAME record in the  record set. </param>
         /// <param name="soaRecord"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, IList<MxRecord> mxRecords, IList<NsRecord> nsRecords, IList<PtrRecord> ptrRecords, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords, CnameRecord cnameRecord, SoaRecord soaRecord, IList<CaaRecord> caaRecords) : base(id, name, resourceType, systemData)
+        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecord> aRecords, IList<DnsAaaaRecord> aaaaRecords, IList<DnsMXRecord> mxRecords, IList<DnsNSRecord> nsRecords, IList<DnsPtrRecord> ptrRecords, IList<DnsSrvRecord> srvRecords, IList<DnsTxtRecord> txtRecords, DnsCnameRecord cnameRecord, DnsSoaRecord soaRecord, IList<DnsCaaRecord> caaRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
-            TTL = ttl;
+            TtlInSeconds = ttlInSeconds;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
             ARecords = aRecords;
             AaaaRecords = aaaaRecords;
-            MxRecords = mxRecords;
-            NsRecords = nsRecords;
+            MXRecords = mxRecords;
+            NSRecords = nsRecords;
             PtrRecords = ptrRecords;
             SrvRecords = srvRecords;
             TxtRecords = txtRecords;
@@ -72,11 +73,11 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The etag of the record set. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> The metadata attached to the record set. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
-        public long? TTL { get; set; }
+        public long? TtlInSeconds { get; set; }
         /// <summary> Fully qualified domain name of the record set. </summary>
         public string Fqdn { get; }
         /// <summary> provisioning State of the record set. </summary>
@@ -96,21 +97,21 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of A records in the record set. </summary>
-        public IList<ARecord> ARecords { get; }
+        public IList<DnsARecord> ARecords { get; }
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<AaaaRecord> AaaaRecords { get; }
+        public IList<DnsAaaaRecord> AaaaRecords { get; }
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MxRecord> MxRecords { get; }
+        public IList<DnsMXRecord> MXRecords { get; }
         /// <summary> The list of NS records in the record set. </summary>
-        public IList<NsRecord> NsRecords { get; }
+        public IList<DnsNSRecord> NSRecords { get; }
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<PtrRecord> PtrRecords { get; }
+        public IList<DnsPtrRecord> PtrRecords { get; }
         /// <summary> The list of SRV records in the record set. </summary>
-        public IList<SrvRecord> SrvRecords { get; }
+        public IList<DnsSrvRecord> SrvRecords { get; }
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<TxtRecord> TxtRecords { get; }
+        public IList<DnsTxtRecord> TxtRecords { get; }
         /// <summary> The CNAME record in the  record set. </summary>
-        internal CnameRecord CnameRecord { get; set; }
+        internal DnsCnameRecord CnameRecord { get; set; }
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname
         {
@@ -118,14 +119,14 @@ namespace Azure.ResourceManager.Dns
             set
             {
                 if (CnameRecord is null)
-                    CnameRecord = new CnameRecord();
+                    CnameRecord = new DnsCnameRecord();
                 CnameRecord.Cname = value;
             }
         }
 
         /// <summary> The SOA record in the record set. </summary>
-        public SoaRecord SoaRecord { get; set; }
+        public DnsSoaRecord SoaRecord { get; set; }
         /// <summary> The list of CAA records in the record set. </summary>
-        public IList<CaaRecord> CaaRecords { get; }
+        public IList<DnsCaaRecord> CaaRecords { get; }
     }
 }

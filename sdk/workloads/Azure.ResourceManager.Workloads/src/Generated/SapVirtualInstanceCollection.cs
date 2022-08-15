@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> The Virtual Instance for SAP request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
-        public virtual async Task<ArmOperation<SapVirtualInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sapVirtualInstanceName, SapVirtualInstanceData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SapVirtualInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sapVirtualInstanceName, SapVirtualInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> The Virtual Instance for SAP request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
-        public virtual ArmOperation<SapVirtualInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string sapVirtualInstanceName, SapVirtualInstanceData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SapVirtualInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string sapVirtualInstanceName, SapVirtualInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
             scope.Start();

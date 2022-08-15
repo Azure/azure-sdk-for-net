@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckRedisNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckRedisNameAvailabilityAsync(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRedisNameAvailability");
             scope.Start();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckRedisNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response CheckRedisNameAvailability(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRedisNameAvailability");
             scope.Start();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetAsyncOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisOperationStatus>> GetAsyncOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = AsyncOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAsyncOperationStatus");
             scope.Start();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetAsyncOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<RedisOperationStatus> GetAsyncOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = AsyncOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAsyncOperationStatus");
             scope.Start();

@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedBusinessCardJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedBusinessCardJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -151,7 +151,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanParseMultipageBusinessCard(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageBusinessCard(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentWithCustomModel(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModel(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -264,7 +264,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelWithLabelsAndSelectionMarks()
+        public async Task AnalyzeDocumentWithCustomModelWithLabelsAndSelectionMarks()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -304,7 +304,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseMultipageForm(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageForm(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -360,7 +360,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -410,7 +410,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
+        public async Task AnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -440,7 +440,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelWithTableDynamicRows()
+        public async Task AnalyzeDocumentWithCustomModelWithTableDynamicRows()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -464,7 +464,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelWithTableFixedRows()
+        public async Task AnalyzeDocumentWithCustomModelWithTableFixedRows()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -489,7 +489,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         [RecordedTest]
         [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseBlankPage()
+        public async Task AnalyzeDocumentWithCustomModelCanParseBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -529,7 +529,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelThrowsForDamagedFile()
+        public async Task AnalyzeDocumentWithCustomModelThrowsForDamagedFile()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -546,7 +546,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentFromUriWithCustomModelThrowsForNonExistingContent()
+        public async Task AnalyzeDocumentFromUriWithCustomModelThrowsForNonExistingContent()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -566,7 +566,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesDocumentPageJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesDocumentPageJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -668,7 +668,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedIdDocumentJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedIdDocumentJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -743,7 +743,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedInvoiceJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedInvoiceJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -904,8 +904,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29966")]
-        public async Task StartAnalyzeDocumentCanParseMultipageInvoice(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageInvoice(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -967,7 +966,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesLayoutPagePdf(bool useStream)
+        public async Task AnalyzeDocumentPopulatesLayoutPagePdf(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1047,7 +1046,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanParseMultipageLayout(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageLayout(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1088,7 +1087,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentCanParseMultipageLayoutWithBlankPage()
+        public async Task AnalyzeDocumentCanParseMultipageLayoutWithBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1128,7 +1127,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentLayoutWithSelectionMarks()
+        public async Task AnalyzeDocumentLayoutWithSelectionMarks()
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1155,7 +1154,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanReadPageAndLanguage(bool useStream)
+        public async Task AnalyzeDocumentCanReadPageAndLanguage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1207,7 +1206,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1312,7 +1311,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanParseMultipageReceipt(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageReceipt(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1363,7 +1362,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentCanParseMultipageReceiptWithBlankPage()
+        public async Task AnalyzeDocumentCanParseMultipageReceiptWithBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1424,7 +1423,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentCanAuthenticateWithTokenCredential()
+        public async Task AnalyzeDocumentCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential: true);
             AnalyzeDocumentOperation operation;
@@ -1456,7 +1455,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public async Task StartAnalyzeDocumentWithPrebuiltCanParseBlankPage(string modelId)
+        public async Task AnalyzeDocumentWithPrebuiltCanParseBlankPage(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1501,7 +1500,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public void StartAnalyzeDocumentWithPrebuiltThrowsForDamagedFile(string modelId)
+        public void AnalyzeDocumentWithPrebuiltThrowsForDamagedFile(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
 
@@ -1521,7 +1520,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public void StartAnalyzeDocumentFromUriWithPrebuiltThrowsForNonExistingContent(string modelId)
+        public void AnalyzeDocumentFromUriWithPrebuiltThrowsForNonExistingContent(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
             var invalidUri = new Uri("https://idont.ex.ist");
@@ -1537,7 +1536,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public void StartAnalyzeDocumentWithPrebuiltThrowsWithWrongLocale(string modelId)
+        public void AnalyzeDocumentWithPrebuiltThrowsWithWrongLocale(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
             var options = new AnalyzeDocumentOptions() { Locale = "not-locale" };

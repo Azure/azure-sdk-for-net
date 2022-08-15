@@ -502,11 +502,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksForLocationProviders");
+                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksByLocation");
                 scope.Start();
                 try
                 {
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<WebAppStack>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksForLocationProviders");
+                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksByLocation");
                 scope.Start();
                 try
                 {
@@ -546,11 +546,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksByLocation(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksForLocationProviders");
+                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksByLocation");
                 scope.Start();
                 try
                 {
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.AppService
             }
             Page<WebAppStack> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksForLocationProviders");
+                using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetWebAppStacksByLocation");
                 scope.Start();
                 try
                 {

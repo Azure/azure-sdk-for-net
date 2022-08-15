@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
@@ -44,18 +43,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public override bool IsClosed => _closed;
+        public bool IsClosed => _closed;
+
+        /// <summary>
+        /// The identifier of the sender.
+        /// </summary>
+        public string Identifier { get; }
 
         /// <summary>
         ///   The name of the Service Bus entity to which the sender is bound.
         /// </summary>
         ///
         private readonly string _entityPath;
-
-        /// <summary>
-        /// The identifier for the sender.
-        /// </summary>
-        private readonly string _identifier;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -69,7 +68,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private readonly AmqpConnectionScope _connectionScope;
         private readonly FaultTolerantAmqpObject<SendingAmqpLink> _sendLink;
-
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
 
         /// <summary>
@@ -110,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _entityPath = entityPath;
-            _identifier = identifier;
+            Identifier = identifier;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
 
@@ -128,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             RequestResponseAmqpLink link = await _connectionScope.OpenManagementLinkAsync(
                 _entityPath,
-                _identifier,
+                Identifier,
                 timeout,
                 CancellationToken.None).ConfigureAwait(false);
             link.Closed += OnManagementLinkClosed;
@@ -352,12 +350,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private void OnSenderLinkClosed(object sender, EventArgs e) =>
             ServiceBusEventSource.Log.SendLinkClosed(
-                _identifier,
+                Identifier,
                 sender);
 
         private void OnManagementLinkClosed(object managementLink, EventArgs e) =>
             ServiceBusEventSource.Log.ManagementLinkClosed(
-                _identifier,
+                Identifier,
                 managementLink);
 
         /// <summary>
@@ -574,12 +572,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            ServiceBusEventSource.Log.CreateSendLinkStart(_identifier);
+            ServiceBusEventSource.Log.CreateSendLinkStart(Identifier);
             try
             {
                 SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
                     entityPath: _entityPath,
-                    identifier: _identifier,
+                    identifier: Identifier,
                     timeout: timeout,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -596,13 +594,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     await Task.Delay(15, cancellationToken).ConfigureAwait(false);
                     MaxMessageSize = (long)link.Settings.MaxMessageSize;
                 }
-                ServiceBusEventSource.Log.CreateSendLinkComplete(_identifier);
+                ServiceBusEventSource.Log.CreateSendLinkComplete(Identifier);
                 link.Closed += OnSenderLinkClosed;
                 return link;
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.CreateSendLinkException(_identifier, ex.ToString());
+                ServiceBusEventSource.Log.CreateSendLinkException(Identifier, ex.ToString());
                 throw;
             }
         }

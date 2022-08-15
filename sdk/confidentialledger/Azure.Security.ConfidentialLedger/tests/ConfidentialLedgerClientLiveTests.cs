@@ -36,10 +36,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Credential = TestEnvironment.Credential;
             IdentityClient = new ConfidentialLedgerCertificateClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
-                    new());
+                   InstrumentClientOptions(new ConfidentialLedgerCertificateClientOptions()));
 
             serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, new(), IdentityClient);
-            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, AllowAutoRedirect = true } });
+
+            if (Mode != RecordedTestMode.Playback)
+                await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, AllowAutoRedirect = true } });
+
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
@@ -211,6 +214,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task GetLedgerIdentity()
         {
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;

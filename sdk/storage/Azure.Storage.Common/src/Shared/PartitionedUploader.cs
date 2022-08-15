@@ -154,7 +154,7 @@ namespace Azure.Storage
 
             _validationOptions = validationOptions;
             //partitioned uploads don't support pre-calculated hashes
-            if (_validationOptions?.PrecalculatedChecksum != default)
+            if (!(_validationOptions?.PrecalculatedChecksum.IsEmpty ?? true))
             {
                 throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }

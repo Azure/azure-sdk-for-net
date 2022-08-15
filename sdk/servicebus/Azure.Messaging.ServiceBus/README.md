@@ -152,7 +152,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 * [Dead letter a message](#dead-letter-a-message)
 * [Using the processor](#using-the-processor)
 * [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
-* [Initiating the connection with a custom endpoint](#initiating-the-connection-with-a-custom-endpoint)
 * [Working with sessions](#working-with-sessions)
 * [More samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/README.md)
 
@@ -323,8 +322,9 @@ Dead lettering a message is similar to deferring with one main difference being 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-await receiver.DeadLetterMessageAsync(receivedMessage);
+// Dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// We can optionally pass a dead letter reason and dead letter description to further describe the reason for dead-lettering the message.
+await receiver.DeadLetterMessageAsync(receivedMessage, "sample reason", "sample description");
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
 ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
@@ -332,6 +332,10 @@ ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBus
     SubQueue = SubQueue.DeadLetter
 });
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+
+// The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
+string reason = dlqMessage.DeadLetterReason;
+string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
 ### Using the Processor
@@ -412,23 +416,6 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
-```
-
-### Initiating the connection with a custom endpoint
-
-If an alternative host name is needed to establish the connection to the service, a custom endpoint address can be provided through the `ServiceBusClientOptions`. The client will use this endpoint to open the initial connection, and then will use the default endpoint provided by the Service Bus service for all following operations and validation.
-
-```C# Snippet:ServiceBusCustomEndpoint
-// Connect to the service using a custom endpoint
-string connectionString = "<connection_string>";
-string customEndpoint = "<custom_endpoint>";
-
-var options = new ServiceBusClientOptions
-{
-    CustomEndpointAddress = new Uri(customEndpoint)
-};
-
-ServiceBusClient client = new ServiceBusClient(connectionString, options);
 ```
 
 ### Working with Sessions

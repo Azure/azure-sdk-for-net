@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="schemaType"> The schema type. </param>
-        public IntegrationAccountSchemaData(AzureLocation location, SchemaType schemaType) : base(location)
+        public IntegrationAccountSchemaData(AzureLocation location, IntegrationAccountSchemaType schemaType) : base(location)
         {
             SchemaType = schemaType;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="content"> The content. </param>
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
-        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, ContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
         {
             SchemaType = schemaType;
             TargetNamespace = targetNamespace;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary> The schema type. </summary>
-        public SchemaType SchemaType { get; set; }
+        public IntegrationAccountSchemaType SchemaType { get; set; }
         /// <summary> The target namespace of the schema. </summary>
         public string TargetNamespace { get; set; }
         /// <summary> The document name. </summary>
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The metadata. </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> The content. </summary>
-        public string Content { get; set; }
+        public BinaryData Content { get; set; }
         /// <summary> The content type. </summary>
-        public string ContentType { get; set; }
+        public ContentType? ContentType { get; set; }
         /// <summary> The content link. </summary>
-        public ContentLink ContentLink { get; }
+        public LogicContentLink ContentLink { get; }
     }
 }

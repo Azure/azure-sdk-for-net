@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
             writer.WritePropertyName("upgradeReplicaSetCheckTimeout");
-            writer.WriteStringValue(UpgradeReplicaSetCheckTimeout);
+            writer.WriteStringValue(UpgradeReplicaSetCheckTimeout, "c");
             writer.WritePropertyName("healthCheckWaitDuration");
             writer.WriteStringValue(HealthCheckWaitDuration, "c");
             writer.WritePropertyName("healthCheckStableDuration");
             writer.WriteStringValue(HealthCheckStableDuration, "c");
             writer.WritePropertyName("healthCheckRetryTimeout");
-            writer.WriteStringValue(HealthCheckRetryTimeout);
+            writer.WriteStringValue(HealthCheckRetryTimeout, "c");
             writer.WritePropertyName("upgradeTimeout");
-            writer.WriteStringValue(UpgradeTimeout);
+            writer.WriteStringValue(UpgradeTimeout, "c");
             writer.WritePropertyName("upgradeDomainTimeout");
-            writer.WriteStringValue(UpgradeDomainTimeout);
+            writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WritePropertyName("healthPolicy");
             writer.WriteObjectValue(HealthPolicy);
             if (Optional.IsDefined(DeltaHealthPolicy))
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         internal static ClusterUpgradePolicy DeserializeClusterUpgradePolicy(JsonElement element)
         {
             Optional<bool> forceRestart = default;
-            string upgradeReplicaSetCheckTimeout = default;
+            TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
-            string healthCheckRetryTimeout = default;
-            string upgradeTimeout = default;
-            string upgradeDomainTimeout = default;
+            TimeSpan healthCheckRetryTimeout = default;
+            TimeSpan upgradeTimeout = default;
+            TimeSpan upgradeDomainTimeout = default;
             ClusterHealthPolicy healthPolicy = default;
             Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("upgradeReplicaSetCheckTimeout"))
                 {
-                    upgradeReplicaSetCheckTimeout = property.Value.GetString();
+                    upgradeReplicaSetCheckTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("healthCheckWaitDuration"))
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("healthCheckRetryTimeout"))
                 {
-                    healthCheckRetryTimeout = property.Value.GetString();
+                    healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeTimeout"))
                 {
-                    upgradeTimeout = property.Value.GetString();
+                    upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeDomainTimeout"))
                 {
-                    upgradeDomainTimeout = property.Value.GetString();
+                    upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("healthPolicy"))

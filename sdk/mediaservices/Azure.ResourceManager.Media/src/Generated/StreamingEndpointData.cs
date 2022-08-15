@@ -32,48 +32,48 @@ namespace Azure.ResourceManager.Media
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The streaming endpoint sku. </param>
         /// <param name="description"> The streaming endpoint description. </param>
-        /// <param name="scaleUnits"> The number of scale units. Use the Scale operation to adjust this value. </param>
+        /// <param name="scaleUnitsNumber"> The number of scale units. Use the Scale operation to adjust this value. </param>
         /// <param name="availabilitySetName"> This feature is deprecated, do not set a value for this property. </param>
         /// <param name="accessControl"> The access control definition of the streaming endpoint. </param>
         /// <param name="maxCacheAge"> Max cache age. </param>
         /// <param name="customHostNames"> The custom host names of the streaming endpoint. </param>
         /// <param name="hostName"> The streaming endpoint host name. </param>
-        /// <param name="cdnEnabled"> The CDN enabled flag. </param>
+        /// <param name="isCdnEnabled"> The CDN enabled flag. </param>
         /// <param name="cdnProvider"> The CDN provider name. </param>
         /// <param name="cdnProfile"> The CDN profile name. </param>
         /// <param name="provisioningState"> The provisioning state of the streaming endpoint. </param>
         /// <param name="resourceState"> The resource state of the streaming endpoint. </param>
         /// <param name="crossSiteAccessPolicies"> The streaming endpoint access policies. </param>
         /// <param name="freeTrialEndOn"> The free trial expiration time. </param>
-        /// <param name="created"> The exact time the streaming endpoint was created. </param>
-        /// <param name="lastModified"> The exact time the streaming endpoint was last modified. </param>
-        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmStreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? cdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? created, DateTimeOffset? lastModified) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="createdOn"> The exact time the streaming endpoint was created. </param>
+        /// <param name="lastModifiedOn"> The exact time the streaming endpoint was last modified. </param>
+        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StreamingEndpointCurrentSku sku, string description, int? scaleUnitsNumber, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Description = description;
-            ScaleUnits = scaleUnits;
+            ScaleUnitsNumber = scaleUnitsNumber;
             AvailabilitySetName = availabilitySetName;
             AccessControl = accessControl;
             MaxCacheAge = maxCacheAge;
             CustomHostNames = customHostNames;
             HostName = hostName;
-            CdnEnabled = cdnEnabled;
+            IsCdnEnabled = isCdnEnabled;
             CdnProvider = cdnProvider;
             CdnProfile = cdnProfile;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             CrossSiteAccessPolicies = crossSiteAccessPolicies;
             FreeTrialEndOn = freeTrialEndOn;
-            Created = created;
-            LastModified = lastModified;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
         }
 
         /// <summary> The streaming endpoint sku. </summary>
-        public ArmStreamingEndpointCurrentSku Sku { get; set; }
+        public StreamingEndpointCurrentSku Sku { get; set; }
         /// <summary> The streaming endpoint description. </summary>
         public string Description { get; set; }
         /// <summary> The number of scale units. Use the Scale operation to adjust this value. </summary>
-        public int? ScaleUnits { get; set; }
+        public int? ScaleUnitsNumber { get; set; }
         /// <summary> This feature is deprecated, do not set a value for this property. </summary>
         public string AvailabilitySetName { get; set; }
         /// <summary> The access control definition of the streaming endpoint. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> The streaming endpoint host name. </summary>
         public string HostName { get; }
         /// <summary> The CDN enabled flag. </summary>
-        public bool? CdnEnabled { get; set; }
+        public bool? IsCdnEnabled { get; set; }
         /// <summary> The CDN provider name. </summary>
         public string CdnProvider { get; set; }
         /// <summary> The CDN profile name. </summary>
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Media
         /// <summary> The free trial expiration time. </summary>
         public DateTimeOffset? FreeTrialEndOn { get; }
         /// <summary> The exact time the streaming endpoint was created. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The exact time the streaming endpoint was last modified. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
     }
 }

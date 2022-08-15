@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("error");
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(UsingSdk))
+            if (Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk");
-                writer.WriteBooleanValue(UsingSdk.Value);
+                writer.WriteBooleanValue(IsUsingSdk.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
