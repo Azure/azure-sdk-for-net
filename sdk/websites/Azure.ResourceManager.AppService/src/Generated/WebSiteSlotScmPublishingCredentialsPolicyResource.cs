@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetScmSiteSlotBasicPublishingCredentialsPolicyResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetScmSiteSlotBasicPublishingCredentialsPolicy method.
     /// </summary>
-    public partial class WebSiteSlotScmPublishingCredentialsPolicyResource : ArmResource
+    public partial class WebSiteSlotScmPublishingCredentialsPolicyResource : BaseWebSitePublishingCredentialsPolicyResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
@@ -43,10 +43,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotScmPublishingCredentialsPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteSlotScmPublishingCredentialsPolicyResource(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data) : this(client, data.Id)
+        internal WebSiteSlotScmPublishingCredentialsPolicyResource(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string scmSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
+            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scmSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource"/> class. </summary>
@@ -65,34 +69,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CsmPublishingCredentialsPoliciesEntityData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Description for Returns whether Scm basic auth is allowed on the site or not.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
-        /// Operation Id: WebApps_GetScmAllowedSlot
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteSlotScmPublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<T>> GetCoreAsync<T>(CancellationToken cancellationToken = default)
         {
             using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicyResource.Get");
             scope.Start();
@@ -101,7 +84,25 @@ namespace Azure.ResourceManager.AppService
                 var response = await _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.GetScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response.Value) as T, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        protected override Response<T> GetCore<T>(CancellationToken cancellationToken = default)
+        {
+            using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicyResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.GetScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response.Value) as T, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,34 +117,19 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetScmAllowedSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteSlotScmPublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteSlotBasicPublishingCredentialsPolicyResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.GetScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public new virtual async Task<Response<WebSiteSlotScmPublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+            => await GetCoreAsync<WebSiteSlotScmPublishingCredentialsPolicyResource>(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Description for Updates whether user publishing credentials are allowed on the site or not.
+        /// Description for Returns whether Scm basic auth is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
-        /// Operation Id: WebApps_UpdateScmAllowedSlot
+        /// Operation Id: WebApps_GetScmAllowedSlot
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WebSiteSlotScmPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+        public new virtual Response<WebSiteSlotScmPublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
+            => GetCore<WebSiteSlotScmPublishingCredentialsPolicyResource>(cancellationToken);
+
+        protected override async Task<ArmOperation<T>> CreateOrUpdateCoreAsync<T>(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -152,7 +138,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.UpdateScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotScmPublishingCredentialsPolicyResource>(Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<T>(Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response) as T, response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -164,16 +150,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary>
-        /// Description for Updates whether user publishing credentials are allowed on the site or not.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
-        /// Operation Id: WebApps_UpdateScmAllowedSlot
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WebSiteSlotScmPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+        protected override ArmOperation<T> CreateOrUpdateCore<T>(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -182,7 +159,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient.UpdateScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotScmPublishingCredentialsPolicyResource>(Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<T>(Response.FromValue(new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, response) as T, response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -193,5 +170,29 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
+
+        /// <summary>
+        /// Description for Updates whether user publishing credentials are allowed on the site or not.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
+        /// Operation Id: WebApps_UpdateScmAllowedSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public new virtual async Task<ArmOperation<WebSiteSlotScmPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateCoreAsync<WebSiteSlotScmPublishingCredentialsPolicyResource>(waitUntil, data, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Description for Updates whether user publishing credentials are allowed on the site or not.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
+        /// Operation Id: WebApps_UpdateScmAllowedSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public new virtual ArmOperation<WebSiteSlotScmPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+            => CreateOrUpdateCore<WebSiteSlotScmPublishingCredentialsPolicyResource>(waitUntil, data, cancellationToken);
     }
 }

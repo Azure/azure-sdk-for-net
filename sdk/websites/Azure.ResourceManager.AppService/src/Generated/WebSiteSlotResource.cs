@@ -4799,5 +4799,76 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
+
+        // there should be an issue inside our generator that this method is not generated.
+        public virtual AsyncPageable<BaseWebSitePublishingCredentialsPolicyResource> GetBasicPublishingCredentialsPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<BaseWebSitePublishingCredentialsPolicyResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetBasicPublishingCredentialsPolicies");
+                scope.Start();
+                try
+                {
+                    var response = await _webSiteSlotWebAppsRestClient.ListBasicPublishingCredentialsPoliciesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseWebSitePublishingCredentialsPolicyResource.CreateWebSitePublishCredentialsPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<BaseWebSitePublishingCredentialsPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetBasicPublishingCredentialsPolicies");
+                scope.Start();
+                try
+                {
+                    var response = await _webSiteSlotWebAppsRestClient.ListBasicPublishingCredentialsPoliciesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseWebSitePublishingCredentialsPolicyResource.CreateWebSitePublishCredentialsPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        public virtual Pageable<BaseWebSitePublishingCredentialsPolicyResource> GetBasicPublishingCredentialsPolicies(CancellationToken cancellationToken = default)
+        {
+            Page<BaseWebSitePublishingCredentialsPolicyResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetBasicPublishingCredentialsPolicies");
+                scope.Start();
+                try
+                {
+                    var response = _webSiteSlotWebAppsRestClient.ListBasicPublishingCredentialsPoliciesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseWebSitePublishingCredentialsPolicyResource.CreateWebSitePublishCredentialsPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<BaseWebSitePublishingCredentialsPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetBasicPublishingCredentialsPolicies");
+                scope.Start();
+                try
+                {
+                    var response = _webSiteSlotWebAppsRestClient.ListBasicPublishingCredentialsPoliciesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseWebSitePublishingCredentialsPolicyResource.CreateWebSitePublishCredentialsPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
     }
 }

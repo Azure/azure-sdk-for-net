@@ -75,11 +75,21 @@ namespace Azure.ResourceManager.AppService
 
         internal static BaseWebSitePublishingCredentialsPolicyResource CreateWebSitePublishCredentialsPolicyResource(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data)
         {
+            // These might also be problematic (or is it?)
+            // this class has 4 derived class, but the list on WebSiteResource should only contain two of them
+            // on the other hand, the list on WebSiteSlotResource should only contain the other two.
+            // but here we are mixing the 4 of them together
             if (IsWebSiteFtpPublishingCredentialsPolicyResource(data))
                 return new WebSiteFtpPublishingCredentialsPolicyResource(client, data);
 
             if (IsWebSiteScmPublishingCredentialsPolicyResource(data))
                 return new WebSiteScmPublishingCredentialsPolicyResource(client, data);
+
+            if (IsWebSiteSlotFtpPublishingCredentialsPolicyResource(data))
+                return new WebSiteSlotFtpPublishingCredentialsPolicyResource(client, data);
+
+            if (IsWebSiteSlotScmPublishingCredentialsPolicyResource(data))
+                return new WebSiteSlotScmPublishingCredentialsPolicyResource(client, data);
 
             throw new InvalidOperationException($"{data.Id} is not a valid resource type for {nameof(BaseWebSitePublishingCredentialsPolicyResource)}.  Possible values are ({nameof(WebSiteFtpPublishingCredentialsPolicyResource)}, {nameof(WebSiteScmPublishingCredentialsPolicyResource)})");
         }
@@ -92,7 +102,17 @@ namespace Azure.ResourceManager.AppService
         // move this method to its corresponding derived class?
         private static bool IsWebSiteScmPublishingCredentialsPolicyResource(CsmPublishingCredentialsPoliciesEntityData data)
         {
-            return data.Id.ResourceType == WebSiteFtpPublishingCredentialsPolicyResource.ResourceType && data.Id.Name == "scm";
+            return data.Id.ResourceType == WebSiteScmPublishingCredentialsPolicyResource.ResourceType && data.Id.Name == "scm";
+        }
+
+        private static bool IsWebSiteSlotFtpPublishingCredentialsPolicyResource(CsmPublishingCredentialsPoliciesEntityData data)
+        {
+            return data.Id.ResourceType == WebSiteSlotFtpPublishingCredentialsPolicyResource.ResourceType && data.Id.Name == "ftp";
+        }
+
+        private static bool IsWebSiteSlotScmPublishingCredentialsPolicyResource(CsmPublishingCredentialsPoliciesEntityData data)
+        {
+            return data.Id.ResourceType == WebSiteSlotScmPublishingCredentialsPolicyResource.ResourceType && data.Id.Name == "scm";
         }
 
         private class FakeArmOperation<T> : AppServiceArmOperation<T>
