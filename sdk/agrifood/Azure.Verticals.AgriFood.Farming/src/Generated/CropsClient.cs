@@ -16,7 +16,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> Data plane generated client for Crops. </summary>
+    // Data plane generated client. The Crops service client.
+    /// <summary> The Crops service client. </summary>
     public partial class CropsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };

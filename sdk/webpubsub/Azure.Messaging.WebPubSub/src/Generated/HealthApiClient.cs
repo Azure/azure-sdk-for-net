@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
-    /// <summary> Data plane generated client for HealthApi. </summary>
+    // Data plane generated client. The HealthApi service client.
+    /// <summary> The HealthApi service client. </summary>
     internal partial class HealthApiClient
     {
         private readonly HttpPipeline _pipeline;

@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Data plane generated client for ConversationAnalysis. </summary>
+    // Data plane generated client. The ConversationAnalysis service client.
+    /// <summary> The ConversationAnalysis service client. </summary>
     public partial class ConversationAnalysisClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";

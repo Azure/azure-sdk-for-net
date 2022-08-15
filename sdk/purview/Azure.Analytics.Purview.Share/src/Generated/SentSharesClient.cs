@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
+    // Data plane generated client. The SentShares service client.
     /// <summary> The SentShares service client. </summary>
     public partial class SentSharesClient
     {

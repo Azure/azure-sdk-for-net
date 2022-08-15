@@ -16,7 +16,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> Data plane generated client for Attachments. </summary>
+    // Data plane generated client. The Attachments service client.
+    /// <summary> The Attachments service client. </summary>
     public partial class AttachmentsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };

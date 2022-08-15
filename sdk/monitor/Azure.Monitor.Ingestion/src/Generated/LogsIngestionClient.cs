@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Monitor.Ingestion
 {
+    // Data plane generated client. The LogsIngestion service client.
     /// <summary> The LogsIngestion service client. </summary>
     public partial class LogsIngestionClient
     {

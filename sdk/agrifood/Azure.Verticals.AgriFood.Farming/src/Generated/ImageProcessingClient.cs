@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> Data plane generated client for ImageProcessing. </summary>
+    // Data plane generated client. The ImageProcessing service client.
+    /// <summary> The ImageProcessing service client. </summary>
     public partial class ImageProcessingClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
