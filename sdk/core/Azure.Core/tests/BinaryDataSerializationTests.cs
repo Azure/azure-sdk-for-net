@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -53,6 +54,9 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("a.value", data.A);
             Assert.AreEqual(1, data.Properties.ToObjectFromJson<int>());
+
+            var roundTripString = GetSerializedString(data);
+            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringInt.json")).TrimEnd(), roundTripString);
         }
 
         [Test]
@@ -64,6 +68,9 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("a.value", data.A);
             Assert.AreEqual(1.1, data.Properties.ToObjectFromJson<double>());
+
+            var roundTripString = GetSerializedString(data);
+            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringDouble.json")).TrimEnd(), roundTripString);
         }
 
         [Test]
@@ -75,6 +82,51 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("a.value", data.A);
             Assert.AreEqual("1", data.Properties.ToObjectFromJson<string>());
+
+            var roundTripString = GetSerializedString(data);
+            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringString.json")).TrimEnd(), roundTripString);
+        }
+
+        [Test]
+        public void CanConvertNull()
+        {
+            using var fs = File.Open(GetFileName("JsonFormattedStringNull.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var document = JsonDocument.Parse(fs);
+            var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+
+            Assert.AreEqual("a.value", data.A);
+            Assert.AreEqual(null, data.Properties.ToObjectFromJson<string>());
+
+            var roundTripString = GetSerializedString(data);
+            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringNull.json")).TrimEnd(), roundTripString);
+        }
+
+        [Test]
+        public void CanConvertTrue()
+        {
+            using var fs = File.Open(GetFileName("JsonFormattedStringTrue.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var document = JsonDocument.Parse(fs);
+            var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+
+            Assert.AreEqual("a.value", data.A);
+            Assert.AreEqual(true, data.Properties.ToObjectFromJson<bool>());
+
+            var roundTripString = GetSerializedString(data);
+            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringTrue.json")).TrimEnd(), roundTripString);
+        }
+
+        [Test]
+        public void CanConvertFalse()
+        {
+            using var fs = File.Open(GetFileName("JsonFormattedStringFalse.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var document = JsonDocument.Parse(fs);
+            var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+
+            Assert.AreEqual("a.value", data.A);
+            Assert.AreEqual(false, data.Properties.ToObjectFromJson<bool>());
+
+            var roundTripString = GetSerializedString(data);
+            Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringFalse.json")).TrimEnd(), roundTripString);
         }
 
         [Test]
@@ -320,6 +372,85 @@ namespace Azure.Core.Tests
                 }
             };
             payload.Properties = BinaryData.FromObjectAsJson(properties);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObjectSettingString()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringString.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            payload.Properties = BinaryData.FromObjectAsJson("1");
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+
+            payload.Properties = BinaryData.FromString("\"1\"");
+            actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObjectSettingTrue()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringTrue.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            payload.Properties = BinaryData.FromObjectAsJson(true);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObjectSettingFalse()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringFalse.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            payload.Properties = BinaryData.FromObjectAsJson(false);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObjectSettingInt()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringInt.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            payload.Properties = BinaryData.FromObjectAsJson(1);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObjectSettingDouble()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringDouble.json")).TrimEnd();
+#if NET461
+            //work around double serialization issue in 461
+            expected = expected.Replace("1.1", "1.1000000000000001");
+#endif
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            payload.Properties = BinaryData.FromObjectAsJson(1.1);
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingAnonObjectSettingNull()
+        {
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringNull.json")).TrimEnd();
+
+            var payload = new ModelWithBinaryData { A = "a.value" };
+            payload.Properties = BinaryData.FromObjectAsJson<object>(null);
 
             string actual = GetSerializedString(payload);
             Assert.AreEqual(expected, actual);
