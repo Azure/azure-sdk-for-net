@@ -20,15 +20,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal const int AttachStatsBeatInterval = 86400000;
 
-        internal static string s_resourceProviderId;
+        private static string s_resourceProviderId;
 
-        internal static string s_resourceProvider;
+        private static string s_resourceProvider;
 
-        internal static string s_operatingSystem;
+        private static string s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
 
-        internal static string s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
-
-        internal static string s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
+        private static string s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
 
         static Statsbeat()
         {
@@ -83,8 +81,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return vmMetadata;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                AzureMonitorExporterEventSource.Log.WriteWarning("Failed to get VM metadata details", ex);
                 return null;
             }
         }
