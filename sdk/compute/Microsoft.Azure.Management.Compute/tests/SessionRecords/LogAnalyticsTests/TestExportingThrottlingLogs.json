@@ -447,7 +447,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"key1\": \"+mWjPCKU5jVROrlm6PEFo0FKNM1i+PikpgkJcIFbqmA0ji8LFud8rmh2AGMsaaL2CdtLsw3sxEus+AStaWQ/GQ==\",\r\n  \"key2\": \"+LdYC607qGz+UWaZ3Jxc7SBoa48hndhfrxi7pgIahRU91onncFkaT6q7WuOdQ3HCVNJDV22FXGh9+AStUnBwgQ==\"\r\n}",
+      "ResponseBody": "{\r\n  \"key1\": \"{secret}\",\r\n  \"key2\": \"{secret}\"\r\n}",
       "StatusCode": 200
     },
     {
