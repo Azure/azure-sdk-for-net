@@ -105,7 +105,7 @@
       }
     },
     {
-        "RequestUri": "https://sanitized.skype.com/calling/callConnections:play?callConnectionId=401f0b00-13d4-43f9-9c34-01b56eb262e3&api-version=2022-04-07-preview",
+        "RequestUri": "https://sanitized.skype.com/calling/callConnections/401f0b00-13d4-43f9-9c34-01b56eb262e3:play?api-version=2022-04-07-preview",
         "RequestMethod": "POST",
         "RequestHeaders": {
             "Authorization": "Sanitized",

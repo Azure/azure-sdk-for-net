@@ -106,45 +106,45 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/callConnections:play?callConnectionId=401f0b00-22d5-41a1-943f-8f4d7d01b9af&api-version=2022-04-07-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "230",
-        "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20220809.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "fa0ee553f3b2da0da4ef02da5d9bfb8a",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 09 Aug 2022 23:10:28 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "playSourceInfo": {
-          "sourceType": "file",
-          "playSourceId": "playSourceId",
-          "fileSource": {
-            "uri": "https://localhost/bot-hold-music-2.wav"
-          }
+        "RequestUri": "https://sanitized.skype.com/calling/callConnections/401f0b00-22d5-41a1-943f-8f4d7d01b9af:play?api-version=2022-04-07-preview",
+        "RequestMethod": "POST",
+        "RequestHeaders": {
+            "Authorization": "Sanitized",
+            "Content-Length": "230",
+            "Content-Type": "application/json",
+            "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20220809.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+            "x-ms-client-request-id": "fa0ee553f3b2da0da4ef02da5d9bfb8a",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Tue, 09 Aug 2022 23:10:28 GMT",
+            "x-ms-return-client-request-id": "true"
         },
-        "playTo": [
-          {
-            "rawId": "Sanitized",
-            "communicationUser": {
-              "id": "Sanitized"
-            }
-          }
-        ]
-      },
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 09 Aug 2022 23:10:31 GMT",
-        "X-Azure-Ref": "0ZenyYgAAAABPsHIQdnGTT5\u002BxY0J1blLnV1NURURHRTA4MTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "861c425e-06be-4b3b-b353-67173970aaeb",
-        "x-ms-client-request-id": "fa0ee553f3b2da0da4ef02da5d9bfb8a"
-      },
-      "ResponseBody": null
+        "RequestBody": {
+            "playSourceInfo": {
+                "sourceType": "file",
+                "playSourceId": "playSourceId",
+                "fileSource": {
+                    "uri": "https://localhost/bot-hold-music-2.wav"
+                }
+            },
+            "playTo": [
+                {
+                    "rawId": "Sanitized",
+                    "communicationUser": {
+                        "id": "Sanitized"
+                    }
+                }
+            ]
+        },
+        "StatusCode": 202,
+        "ResponseHeaders": {
+            "Content-Length": "0",
+            "Date": "Tue, 09 Aug 2022 23:10:31 GMT",
+            "X-Azure-Ref": "0ZenyYgAAAABPsHIQdnGTT5\u002BxY0J1blLnV1NURURHRTA4MTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Microsoft-Skype-Chain-ID": "861c425e-06be-4b3b-b353-67173970aaeb",
+            "x-ms-client-request-id": "fa0ee553f3b2da0da4ef02da5d9bfb8a"
+        },
+        "ResponseBody": null
     },
     {
       "RequestUri": "https://sanitized.skype.com/calling/callConnections/401f0b00-22d5-41a1-943f-8f4d7d01b9af:terminate?api-version=2022-04-07-preview",
