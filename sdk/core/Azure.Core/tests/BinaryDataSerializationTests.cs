@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
             var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
 
             Assert.AreEqual("a.value", data.A);
-            Assert.AreEqual(1.1, data.Properties.ToObjectFromJson<double>());
+            Assert.AreEqual(1.5, data.Properties.ToObjectFromJson<double>());
 
             var roundTripString = GetSerializedString(data);
             Assert.AreEqual(File.ReadAllText(GetFileName("JsonFormattedStringDouble.json")).TrimEnd(), roundTripString);
@@ -432,13 +432,9 @@ namespace Azure.Core.Tests
         public void SerailizeUsingAnonObjectSettingDouble()
         {
             var expected = File.ReadAllText(GetFileName("JsonFormattedStringDouble.json")).TrimEnd();
-#if NET461
-            //work around double serialization issue in 461
-            expected = expected.Replace("1.1", "1.1000000000000001");
-#endif
 
             var payload = new ModelWithBinaryData { A = "a.value" };
-            payload.Properties = BinaryData.FromObjectAsJson(1.1);
+            payload.Properties = BinaryData.FromObjectAsJson(1.5);
 
             string actual = GetSerializedString(payload);
             Assert.AreEqual(expected, actual);
