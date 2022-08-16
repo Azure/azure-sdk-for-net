@@ -24,22 +24,15 @@ namespace Azure.Communication.CallingServer
              * 4. hang up the call.
              * 5. once call is hung up, verify that call connection cannot be found.
             */
-
-            Console.WriteLine("test mode is: " + TestEnvironment.Mode.ToString());
-            Console.WriteLine("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS is true? " + Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS"));
-            Console.WriteLine("skipCallingServerBoolean is: " + SkipCallingServerInteractionLiveTests);
-
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
-            Console.WriteLine("executing tests.");
-
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             bool wasConnected = false;
+
             try
             {
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                Console.WriteLine("user id is "+ user.Id + " " + user.ToString());
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
                 CreateCallResult response = await client.CreateCallAsync(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -91,7 +84,6 @@ namespace Azure.Communication.CallingServer
             try
             {
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                Console.WriteLine("user id is " + user.Id + " " + user.ToString());
                 var source = new CallSource(user) {
                     CallerId = new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber)
                 };
