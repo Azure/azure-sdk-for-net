@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetAaaaRecords();
             string name = "aaaa";
-            var recordSetAaaaResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new AaaaRecordData() { });
-            Assert.IsNotNull(recordSetAaaaResource);
-            Assert.IsNotNull(recordSetAaaaResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetAaaaResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetAaaaResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/AAAA", recordSetAaaaResource.Value.Data.ResourceType.Type);
+            var aaaaRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new AaaaRecordData() { });
+            Assert.IsNotNull(aaaaRecordResource);
+            Assert.IsNotNull(aaaaRecordResource.Value.Data.ETag);
+            Assert.AreEqual(name, aaaaRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", aaaaRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/AAAA", aaaaRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("aaaa");
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetAaaaResource.Value.DeleteAsync(WaitUntil.Completed);
+            await aaaaRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("aaaa");
             Assert.IsFalse(flag);
         }
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetARecords();
             string name = "a";
-            var recordSetAResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordData() { });
-            Assert.IsNotNull(recordSetAResource);
-            Assert.IsNotNull(recordSetAResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetAResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetAResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/A", recordSetAResource.Value.Data.ResourceType.Type);
+            var aRecordResourcea = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordData() { });
+            Assert.IsNotNull(aRecordResourcea);
+            Assert.IsNotNull(aRecordResourcea.Value.Data.ETag);
+            Assert.AreEqual(name, aRecordResourcea.Value.Data.Name);
+            Assert.AreEqual("Succeeded", aRecordResourcea.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/A", aRecordResourcea.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("a");
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetAResource.Value.DeleteAsync(WaitUntil.Completed);
+            await aRecordResourcea.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("a");
             Assert.IsFalse(flag);
         }
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetCaaRecords();
             string name = "caa";
-            var recordSetCaaResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new CaaRecordData() { });
-            Assert.IsNotNull(recordSetCaaResource);
-            Assert.IsNotNull(recordSetCaaResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetCaaResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetCaaResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/CAA", recordSetCaaResource.Value.Data.ResourceType.Type);
+            var caaRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new CaaRecordData() { });
+            Assert.IsNotNull(caaRecordResource);
+            Assert.IsNotNull(caaRecordResource.Value.Data.ETag);
+            Assert.AreEqual(name, caaRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", caaRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/CAA", caaRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("caa");
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetCaaResource.Value.DeleteAsync(WaitUntil.Completed);
+            await caaRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("caa");
             Assert.IsFalse(flag);
         }
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetCnameRecords();
             string name = "cname";
-            var recordSetCnameResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new CnameRecordData() { });
-            Assert.IsNotNull(recordSetCnameResource);
-            Assert.IsNotNull(recordSetCnameResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetCnameResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetCnameResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/CNAME", recordSetCnameResource.Value.Data.ResourceType.Type);
+            var cnameRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new CnameRecordData() { });
+            Assert.IsNotNull(cnameRecordResource);
+            Assert.IsNotNull(cnameRecordResource.Value.Data.ETag);
+            Assert.AreEqual(name, cnameRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", cnameRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/CNAME", cnameRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("cname");
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetCnameResource.Value.DeleteAsync(WaitUntil.Completed);
+            await cnameRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("cname");
             Assert.IsFalse(flag);
         }
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetMXRecords();
             string name = "mx";
-            var recordSetMXResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordData() { });
-            Assert.IsNotNull(recordSetMXResource);
-            Assert.IsNotNull(recordSetMXResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetMXResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetMXResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/MX", recordSetMXResource.Value.Data.ResourceType.Type);
+            var MXRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordData() { });
+            Assert.IsNotNull(MXRecordResource);
+            Assert.IsNotNull(MXRecordResource.Value.Data.ETag);
+            Assert.AreEqual(name, MXRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", MXRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/MX", MXRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("mx");
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetMXResource.Value.DeleteAsync(WaitUntil.Completed);
+            await MXRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("mx");
             Assert.IsFalse(flag);
         }
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string _recordSetName = "ns";
             var collection = _dnsZone.GetNSRecords();
-            var recordSetNSResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordData() { });
-            Assert.IsNotNull(recordSetNSResource);
-            Assert.IsNotNull(recordSetNSResource.Value.Data.ETag);
-            Assert.AreEqual(_recordSetName, recordSetNSResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetNSResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/NS", recordSetNSResource.Value.Data.ResourceType.Type);
+            var NSRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordData() { });
+            Assert.IsNotNull(NSRecordResource);
+            Assert.IsNotNull(NSRecordResource.Value.Data.ETag);
+            Assert.AreEqual(_recordSetName, NSRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", NSRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/NS", NSRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync(_recordSetName);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetNSResource.Value.DeleteAsync(WaitUntil.Completed);
+            await NSRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(_recordSetName);
             Assert.IsFalse(flag);
         }
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetPtrRecords();
             string name = "ptr";
-            var recordSetPtrResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new PtrRecordData() { });
-            Assert.IsNotNull(recordSetPtrResource);
-            Assert.IsNotNull(recordSetPtrResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetPtrResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetPtrResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/PTR", recordSetPtrResource.Value.Data.ResourceType.Type);
+            var PtrRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new PtrRecordData() { });
+            Assert.IsNotNull(PtrRecordResource);
+            Assert.IsNotNull(PtrRecordResource.Value.Data.ETag);
+            Assert.AreEqual(name, PtrRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", PtrRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/PTR", PtrRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("ptr");
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetPtrResource.Value.DeleteAsync(WaitUntil.Completed);
+            await PtrRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("ptr");
             Assert.IsFalse(flag);
         }
@@ -330,12 +330,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetSrvRecords();
             string name = "srv";
-            var recordSetSrvResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordData() { });
-            Assert.IsNotNull(recordSetSrvResource);
-            Assert.IsNotNull(recordSetSrvResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetSrvResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetSrvResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/SRV", recordSetSrvResource.Value.Data.ResourceType.Type);
+            var SrvRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new SrvRecordData() { });
+            Assert.IsNotNull(SrvRecordResource);
+            Assert.IsNotNull(SrvRecordResource.Value.Data.ETag);
+            Assert.AreEqual(name, SrvRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", SrvRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/SRV", SrvRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("srv");
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetSrvResource.Value.DeleteAsync(WaitUntil.Completed);
+            await SrvRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("srv");
             Assert.IsFalse(flag);
         }
@@ -366,12 +366,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             var collection = _dnsZone.GetTxtRecords();
             string name = "txt";
-            var recordSetTxtResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new TxtRecordData() { });
-            Assert.IsNotNull(recordSetTxtResource);
-            Assert.IsNotNull(recordSetTxtResource.Value.Data.ETag);
-            Assert.AreEqual(name, recordSetTxtResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetTxtResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/TXT", recordSetTxtResource.Value.Data.ResourceType.Type);
+            var TxtRecordResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new TxtRecordData() { });
+            Assert.IsNotNull(TxtRecordResource);
+            Assert.IsNotNull(TxtRecordResource.Value.Data.ETag);
+            Assert.AreEqual(name, TxtRecordResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", TxtRecordResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/TXT", TxtRecordResource.Value.Data.ResourceType.Type);
 
             // exist
             bool flag = await collection.ExistsAsync("txt");
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
 
             // delete
-            await recordSetTxtResource.Value.DeleteAsync(WaitUntil.Completed);
+            await TxtRecordResource.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync("txt");
             Assert.IsFalse(flag);
         }

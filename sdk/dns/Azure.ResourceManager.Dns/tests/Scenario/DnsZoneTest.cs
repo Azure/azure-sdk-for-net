@@ -124,5 +124,17 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsNotEmpty(recordSets);
             Assert.AreEqual(2, recordSets.Count);
         }
+
+        [Test]
+        [RecordedTest]
+        [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
+        public async Task GetRecordSets()
+        {
+            string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
+            var dnszone = await CreateADnsZone(dnsZoneName, _resourceGroup);
+            var recordSets = await dnszone.GetRecordSetsAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(recordSets);
+            Assert.AreEqual(2, recordSets.Count);
+        }
     }
 }
