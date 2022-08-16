@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
             ServerCallId = serverCallId;
             CallSource = callSource;
             Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
-            CallConnectionState = callConnectionState;
+            CallConnectionState = callConnectionState == default(CallConnectionState) ? CallConnectionState.Unknown : callConnectionState;
             Subject = subject;
             CallbackEndpoint = callbackEndpoint;
         }
@@ -28,7 +28,16 @@ namespace Azure.Communication.CallingServer
             CallSource = new CallSource(CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source.Identifier));
             CallSource.CallerId = callConnectionPropertiesDtoInternal.Source.CallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.Source.CallerId.Value);
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
-            CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState;
+
+            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))
+            {
+                CallConnectionState = CallConnectionState.Unknown;
+            }
+            else
+            {
+                CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState.Value;
+            }
+
             Subject = callConnectionPropertiesDtoInternal.Subject;
             CallbackEndpoint = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
         }
@@ -42,7 +51,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifier> Targets { get; }
         /// <summary> The state of the call connection. </summary>
-        public CallConnectionState? CallConnectionState { get; }
+        public CallConnectionState CallConnectionState { get; }
         /// <summary> The subject. </summary>
         public string Subject { get; }
         /// <summary> The callback URI. </summary>
