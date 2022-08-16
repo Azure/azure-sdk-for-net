@@ -3,8 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Tests.Scenario
@@ -13,18 +11,16 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
     {
         public ConfigurationProfileTests(bool async) : base(async) { }
 
-        [Test]
-        [RecordedTest]
-        public async Task GetConfigurationProfile()
+        [TestCase]
+        public async Task CanGetConfigurationProfile()
         {
-            string rgName = Recording.GenerateAssetName("SDKAutomanage-rg");
-            string profileName = Recording.GenerateAssetName("SDKAutomanageProfile");
+            string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
 
             // create resource group
-            var rg = await ResourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(DefaultLocation));
+            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var collection = rg.Value.GetConfigurationProfiles();
+            var collection = rg.GetConfigurationProfiles();
 
             // create configruation profile
             string configuration = "{" +
@@ -48,7 +44,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 Configuration = new BinaryData(configuration)
             };
 
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, data);
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
 
             // fetch new configuration profile
             var profile = await collection.GetAsync(profileName);
