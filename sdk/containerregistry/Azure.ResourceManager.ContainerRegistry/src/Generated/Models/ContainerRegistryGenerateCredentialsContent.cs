@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -18,9 +19,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of the token for which credentials have to be generated. </summary>
-        public string TokenId { get; set; }
+        public ResourceIdentifier TokenId { get; set; }
         /// <summary> The expiry date of the generated credentials after which the credentials become invalid. </summary>
-        public DateTimeOffset? Expiry { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Specifies name of the password which should be regenerated if any -- password1 or password2. </summary>
         public ContainerRegistryTokenPasswordName? Name { get; set; }
     }

@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<string> scopeMapId = default;
-            Optional<ContainerRegistryTokenCredentialsProperties> credentials = default;
+            Optional<ResourceIdentifier> scopeMapId = default;
+            Optional<ContainerRegistryTokenCredentials> credentials = default;
             Optional<ContainerRegistryTokenStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -108,7 +108,12 @@ namespace Azure.ResourceManager.ContainerRegistry
                         }
                         if (property0.NameEquals("scopeMapId"))
                         {
-                            scopeMapId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            scopeMapId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("credentials"))
@@ -118,7 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credentials = ContainerRegistryTokenCredentialsProperties.DeserializeContainerRegistryTokenCredentialsProperties(property0.Value);
+                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"))

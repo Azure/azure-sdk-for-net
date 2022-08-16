@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="scopeMapId"> The resource ID of the scope map to which the token will be associated with. </param>
         /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
         /// <param name="status"> The status of the token example enabled or disabled. </param>
-        internal ContainerRegistryTokenData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, string scopeMapId, ContainerRegistryTokenCredentialsProperties credentials, ContainerRegistryTokenStatus? status) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryTokenData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ResourceIdentifier scopeMapId, ContainerRegistryTokenCredentials credentials, ContainerRegistryTokenStatus? status) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Provisioning state of the resource. </summary>
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
-        public string ScopeMapId { get; set; }
+        public ResourceIdentifier ScopeMapId { get; set; }
         /// <summary> The credentials that can be used for authenticating the token. </summary>
-        public ContainerRegistryTokenCredentialsProperties Credentials { get; set; }
+        public ContainerRegistryTokenCredentials Credentials { get; set; }
         /// <summary> The status of the token example enabled or disabled. </summary>
         public ContainerRegistryTokenStatus? Status { get; set; }
     }

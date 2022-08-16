@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ConnectedRegistryLogging. </summary>
         /// <param name="logLevel"> The verbosity of logs persisted on the connected registry. </param>
         /// <param name="auditLogStatus"> Indicates whether audit logs are enabled on the connected registry. </param>
-        internal ConnectedRegistryLogging(ContainerRegistryLogLevel? logLevel, ConnectedRegistryAuditLogStatus? auditLogStatus)
+        internal ConnectedRegistryLogging(ConnectedRegistryLogLevel? logLevel, ConnectedRegistryAuditLogStatus? auditLogStatus)
         {
             LogLevel = logLevel;
             AuditLogStatus = auditLogStatus;
         }
 
         /// <summary> The verbosity of logs persisted on the connected registry. </summary>
-        public ContainerRegistryLogLevel? LogLevel { get; set; }
+        public ConnectedRegistryLogLevel? LogLevel { get; set; }
         /// <summary> Indicates whether audit logs are enabled on the connected registry. </summary>
         public ConnectedRegistryAuditLogStatus? AuditLogStatus { get; set; }
     }

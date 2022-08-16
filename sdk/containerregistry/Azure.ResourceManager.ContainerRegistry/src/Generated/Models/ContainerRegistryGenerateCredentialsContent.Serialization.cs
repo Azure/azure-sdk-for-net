@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("tokenId");
                 writer.WriteStringValue(TokenId);
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry");
-                writer.WriteStringValue(Expiry.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Name))
             {

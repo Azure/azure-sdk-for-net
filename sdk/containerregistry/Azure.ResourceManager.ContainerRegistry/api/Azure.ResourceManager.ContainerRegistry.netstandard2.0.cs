@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     {
         public ConnectedRegistryData() { }
         public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus? ActivationStatus { get { throw null; } }
-        public System.Collections.Generic.IList<string> ClientTokenIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ClientTokenIds { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState? ConnectionState { get { throw null; } }
         public System.DateTimeOffset? LastActivityOn { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging Logging { get { throw null; } set { } }
@@ -545,9 +545,9 @@ namespace Azure.ResourceManager.ContainerRegistry
     {
         public ContainerRegistryTokenData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCredentialsProperties Credentials { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCredentials Credentials { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
-        public string ScopeMapId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ScopeMapId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus? Status { get { throw null; } set { } }
     }
     public partial class ContainerRegistryTokenResource : Azure.ResourceManager.ArmResource
@@ -827,13 +827,34 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ConnectedRegistryLogging() { }
         public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus? AuditLogStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel? LogLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel? LogLevel { get { throw null; } set { } }
     }
     public partial class ConnectedRegistryLoginServer
     {
         public ConnectedRegistryLoginServer() { }
         public string Host { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.TlsProperties Tls { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectedRegistryLogLevel : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectedRegistryLogLevel(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Debug { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Error { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Information { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel None { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectedRegistryMode : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode>
@@ -864,7 +885,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ConnectedRegistryPatch
     {
         public ConnectedRegistryPatch() { }
-        public System.Collections.Generic.IList<string> ClientTokenIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ClientTokenIds { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging Logging { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NotificationsList { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties SyncProperties { get { throw null; } set { } }
@@ -880,13 +901,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     }
     public partial class ConnectedRegistrySyncProperties
     {
-        public ConnectedRegistrySyncProperties(string tokenId, System.TimeSpan messageTtl) { }
+        public ConnectedRegistrySyncProperties(Azure.Core.ResourceIdentifier tokenId, System.TimeSpan messageTtl) { }
         public string GatewayEndpoint { get { throw null; } }
         public System.DateTimeOffset? LastSyncOn { get { throw null; } }
         public System.TimeSpan MessageTtl { get { throw null; } set { } }
         public string Schedule { get { throw null; } set { } }
         public System.TimeSpan? SyncWindow { get { throw null; } set { } }
-        public string TokenId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TokenId { get { throw null; } set { } }
     }
     public partial class ConnectedRegistrySyncUpdateProperties
     {
@@ -1131,9 +1152,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ContainerRegistryGenerateCredentialsContent
     {
         public ContainerRegistryGenerateCredentialsContent() { }
-        public System.DateTimeOffset? Expiry { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName? Name { get { throw null; } set { } }
-        public string TokenId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TokenId { get { throw null; } set { } }
     }
     public partial class ContainerRegistryGenerateCredentialsResult
     {
@@ -1233,27 +1254,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal ContainerRegistryListCredentialsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword> Passwords { get { throw null; } }
         public string Username { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerRegistryLogLevel : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContainerRegistryLogLevel(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel Debug { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel Error { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel Information { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel None { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryLogLevel right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ContainerRegistryNameAvailabilityContent
     {
@@ -1814,7 +1814,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ContainerRegistryTokenCertificate() { }
         public string EncodedPemCertificate { get { throw null; } set { } }
-        public System.DateTimeOffset? Expiry { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName? Name { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } set { } }
     }
@@ -1836,9 +1836,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificateName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ContainerRegistryTokenCredentialsProperties
+    public partial class ContainerRegistryTokenCredentials
     {
-        public ContainerRegistryTokenCredentialsProperties() { }
+        public ContainerRegistryTokenCredentials() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCertificate> Certificates { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPassword> Passwords { get { throw null; } }
     }
@@ -1846,7 +1846,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ContainerRegistryTokenPassword() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
-        public System.DateTimeOffset? Expiry { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenPasswordName? Name { get { throw null; } set { } }
         public string Value { get { throw null; } }
     }
@@ -1871,7 +1871,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ContainerRegistryTokenPatch
     {
         public ContainerRegistryTokenPatch() { }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCredentialsProperties Credentials { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenCredentials Credentials { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ScopeMapId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus? Status { get { throw null; } set { } }
     }

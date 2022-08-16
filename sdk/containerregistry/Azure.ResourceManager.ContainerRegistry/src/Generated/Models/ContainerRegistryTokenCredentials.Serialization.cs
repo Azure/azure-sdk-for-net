@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTokenCredentialsProperties : IUtf8JsonSerializable
+    public partial class ContainerRegistryTokenCredentials : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryTokenCredentialsProperties DeserializeContainerRegistryTokenCredentialsProperties(JsonElement element)
+        internal static ContainerRegistryTokenCredentials DeserializeContainerRegistryTokenCredentials(JsonElement element)
         {
             Optional<IList<ContainerRegistryTokenCertificate>> certificates = default;
             Optional<IList<ContainerRegistryTokenPassword>> passwords = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTokenCredentialsProperties(Optional.ToList(certificates), Optional.ToList(passwords));
+            return new ContainerRegistryTokenCredentials(Optional.ToList(certificates), Optional.ToList(passwords));
         }
     }
 }

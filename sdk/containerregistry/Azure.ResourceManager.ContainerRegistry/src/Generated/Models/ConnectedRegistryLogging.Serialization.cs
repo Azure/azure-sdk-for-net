@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ConnectedRegistryLogging DeserializeConnectedRegistryLogging(JsonElement element)
         {
-            Optional<ContainerRegistryLogLevel> logLevel = default;
+            Optional<ConnectedRegistryLogLevel> logLevel = default;
             Optional<ConnectedRegistryAuditLogStatus> auditLogStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logLevel = new ContainerRegistryLogLevel(property.Value.GetString());
+                    logLevel = new ConnectedRegistryLogLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("auditLogStatus"))

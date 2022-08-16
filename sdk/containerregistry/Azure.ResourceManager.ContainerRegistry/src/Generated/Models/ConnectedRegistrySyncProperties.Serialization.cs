@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ConnectedRegistrySyncProperties DeserializeConnectedRegistrySyncProperties(JsonElement element)
         {
-            string tokenId = default;
+            ResourceIdentifier tokenId = default;
             Optional<string> schedule = default;
             Optional<TimeSpan> syncWindow = default;
             TimeSpan messageTtl = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("tokenId"))
                 {
-                    tokenId = property.Value.GetString();
+                    tokenId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedule"))

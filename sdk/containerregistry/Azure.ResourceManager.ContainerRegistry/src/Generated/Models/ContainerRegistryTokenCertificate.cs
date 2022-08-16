@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
         /// <param name="name"></param>
-        /// <param name="expiry"> The expiry datetime of the certificate. </param>
+        /// <param name="expireOn"> The expiry datetime of the certificate. </param>
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
         /// <param name="encodedPemCertificate"> Base 64 encoded string of the public certificate1 in PEM format that will be used for authenticating the token. </param>
-        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expiry, string thumbprint, string encodedPemCertificate)
+        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expireOn, string thumbprint, string encodedPemCertificate)
         {
             Name = name;
-            Expiry = expiry;
+            ExpireOn = expireOn;
             Thumbprint = thumbprint;
             EncodedPemCertificate = encodedPemCertificate;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Gets or sets the name. </summary>
         public ContainerRegistryTokenCertificateName? Name { get; set; }
         /// <summary> The expiry datetime of the certificate. </summary>
-        public DateTimeOffset? Expiry { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The thumbprint of the certificate. </summary>
         public string Thumbprint { get; set; }
         /// <summary> Base 64 encoded string of the public certificate1 in PEM format that will be used for authenticating the token. </summary>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of ContainerRegistryTokenPassword. </summary>
         /// <param name="createdOn"> The creation datetime of the password. </param>
-        /// <param name="expiry"> The expiry datetime of the password. </param>
+        /// <param name="expireOn"> The expiry datetime of the password. </param>
         /// <param name="name"> The password name &quot;password1&quot; or &quot;password2&quot;. </param>
         /// <param name="value"> The password value. </param>
-        internal ContainerRegistryTokenPassword(DateTimeOffset? createdOn, DateTimeOffset? expiry, ContainerRegistryTokenPasswordName? name, string value)
+        internal ContainerRegistryTokenPassword(DateTimeOffset? createdOn, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name, string value)
         {
             CreatedOn = createdOn;
-            Expiry = expiry;
+            ExpireOn = expireOn;
             Name = name;
             Value = value;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The creation datetime of the password. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> The expiry datetime of the password. </summary>
-        public DateTimeOffset? Expiry { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The password name &quot;password1&quot; or &quot;password2&quot;. </summary>
         public ContainerRegistryTokenPasswordName? Name { get; set; }
         /// <summary> The password value. </summary>

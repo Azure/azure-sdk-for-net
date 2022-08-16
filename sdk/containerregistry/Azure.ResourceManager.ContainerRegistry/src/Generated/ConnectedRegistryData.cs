@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Initializes a new instance of ConnectedRegistryData. </summary>
         public ConnectedRegistryData()
         {
-            ClientTokenIds = new ChangeTrackingList<string>();
+            ClientTokenIds = new ChangeTrackingList<ResourceIdentifier>();
             StatusDetails = new ChangeTrackingList<ConnectedRegistryStatusDetail>();
             NotificationsList = new ChangeTrackingList<string>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="logging"> The logging properties of the connected registry. </param>
         /// <param name="statusDetails"> The list of current statuses of the connected registry. </param>
         /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
-        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode? mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ConnectedRegistryActivation activation, ConnectedRegistryParent parent, IList<string> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList) : base(id, name, resourceType, systemData)
+        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode? mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ConnectedRegistryActivation activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Mode = mode;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The parent of the connected registry. </summary>
         public ConnectedRegistryParent Parent { get; set; }
         /// <summary> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </summary>
-        public IList<string> ClientTokenIds { get; }
+        public IList<ResourceIdentifier> ClientTokenIds { get; }
         /// <summary> The login server properties of the connected registry. </summary>
         public ConnectedRegistryLoginServer LoginServer { get; set; }
         /// <summary> The logging properties of the connected registry. </summary>

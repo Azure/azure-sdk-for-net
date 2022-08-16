@@ -24,6 +24,8 @@ format-by-name-rules:
   '*ResourceId': 'arm-id'
   'PrincipalId': 'uuid'
   'taskId': 'arm-id'
+  'tokenId': 'arm-id'
+  'scopeMapId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -126,7 +128,6 @@ prepend-rp-prefix:
   - Token
   - TokenCertificate
   - TokenCertificateName
-  - TokenCredentialsProperties
   - TokenListResult
   - TokenPassword
   - TokenPasswordName
@@ -225,17 +226,19 @@ rename-mapping:
   AuditLogStatus: ConnectedRegistryAuditLogStatus
   CertificateType: TlsCertificateLocationType
   GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
-  LogLevel: ContainerRegistryLogLevel
+  LogLevel: ConnectedRegistryLogLevel
   PipelineRunRequest: PipelineRunContent
   PipelineRunResponse: PipelineRunResult
   ProgressProperties: PipelineProgress
   SyncProperties: ConnectedRegistrySyncProperties
   SyncUpdateProperties: ConnectedRegistrySyncUpdateProperties
   TokenUpdateParameters: ContainerRegistryTokenPatch
-  TokenUpdateParameters.properties.scopeMapId: -|arm-id
+#   TokenUpdateParameters.properties.scopeMapId: -|arm-id
+#   Token.properties.scopeMapId: -|arm-id
   ScopeMap.properties.type: ScopeMapType
   ExportPipelineTargetProperties.type: ExportPipelineTargetType
   TlsCertificateProperties.location: CertificateLocation
+  TokenCredentialsProperties: ContainerRegistryTokenCredentials
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -256,4 +259,13 @@ directive:
       $.IdentityProperties.properties.tenantId.readOnly = true;
       $.UserIdentityProperties.properties.principalId.readOnly = true;
       $.UserIdentityProperties.properties.clientId.readOnly = true;
+  - from: containerregistry.json
+    where: $.definitions
+    transform: >
+      $.ConnectedRegistryProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
+      $.ConnectedRegistryUpdateProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
+  - from: swagger-document
+    where: $.definitions..expiry
+    transform: >
+      $['x-ms-client-name'] = 'ExpireOn';
 ```

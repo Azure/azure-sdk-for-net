@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<DateTimeOffset> lastActivityTime = default;
             Optional<ConnectedRegistryActivation> activation = default;
             Optional<ConnectedRegistryParent> parent = default;
-            Optional<IList<string>> clientTokenIds = default;
+            Optional<IList<ResourceIdentifier>> clientTokenIds = default;
             Optional<ConnectedRegistryLoginServer> loginServer = default;
             Optional<ConnectedRegistryLogging> logging = default;
             Optional<IReadOnlyList<ConnectedRegistryStatusDetail>> statusDetails = default;
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new ResourceIdentifier(item.GetString()));
                             }
                             clientTokenIds = array;
                             continue;

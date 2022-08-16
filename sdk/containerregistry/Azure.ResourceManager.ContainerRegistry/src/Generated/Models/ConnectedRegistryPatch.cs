@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ConnectedRegistryPatch. </summary>
         public ConnectedRegistryPatch()
         {
-            ClientTokenIds = new ChangeTrackingList<string>();
+            ClientTokenIds = new ChangeTrackingList<ResourceIdentifier>();
             NotificationsList = new ChangeTrackingList<string>();
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The logging properties of the connected registry. </summary>
         public ConnectedRegistryLogging Logging { get; set; }
         /// <summary> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </summary>
-        public IList<string> ClientTokenIds { get; }
+        public IList<ResourceIdentifier> ClientTokenIds { get; }
         /// <summary> The list of notifications subscription information for the connected registry. </summary>
         public IList<string> NotificationsList { get; }
     }
