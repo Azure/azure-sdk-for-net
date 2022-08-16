@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -143,7 +144,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 s_resourceProviderId = s_resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
 
                 // osType takes precedence.
-                s_operatingSystem = vmMetadata.osType;
+                s_operatingSystem = vmMetadata.osType.ToLower(CultureInfo.InvariantCulture);
 
                 return;
             }
