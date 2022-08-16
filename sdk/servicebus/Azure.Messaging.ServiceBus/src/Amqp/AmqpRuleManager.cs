@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                      timeout,
                      null);
             amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = description.Name;
-            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = _messageConverter.GetRuleDescriptionMap(description);
+            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = AmqpMessageConverter.GetRuleDescriptionMap(description);
 
             AmqpResponseMessage response = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _connectionScope,

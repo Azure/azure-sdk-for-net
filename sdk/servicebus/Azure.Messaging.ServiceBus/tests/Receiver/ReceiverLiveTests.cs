@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCt);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     maxMessages: messageCt))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), peekedMessage.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), peekedMessage.MessageId);
                         ct++;
                     }
                 }
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCt);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     maxMessages: messageCt))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), peekedMessage.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), peekedMessage.MessageId);
                         ct++;
                     }
                 }
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCt);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     maxMessages: messageCt))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), peekedMessage.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), peekedMessage.MessageId);
                         ct++;
                     }
                 }
@@ -179,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 2;
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
                 await sender.SendMessagesAsync(batch);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -211,7 +211,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                _ = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
                 await sender.SendMessagesAsync(batch);
                 var receiver = client.CreateReceiver(
                     scope.QueueName,
@@ -282,7 +282,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -295,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
                         Assert.AreEqual(item.DeliveryCount, 1);
                     }
                 }
@@ -304,7 +304,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 foreach (var item in await receiver.PeekMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
                 }
             }
         }
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -333,7 +333,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
                         await receiver.CompleteMessageAsync(item);
                     }
                 }
@@ -355,7 +355,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 

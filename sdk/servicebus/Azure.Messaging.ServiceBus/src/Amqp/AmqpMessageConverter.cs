@@ -548,7 +548,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return sbMessage;
         }
 
-        public virtual AmqpMap GetRuleDescriptionMap(RuleProperties description)
+        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
         {
             var ruleDescriptionMap = new AmqpMap();
 

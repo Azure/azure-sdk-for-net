@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -235,16 +236,7 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: readOnlyCollection.Count);
-
-            var diagnosticIdentifiers = new List<string>();
-
-            foreach (var message in messages)
-            {
-                var identifier = EntityScopeFactory.InstrumentMessage(message, EntityPath, FullyQualifiedNamespace);
-                diagnosticIdentifiers.Add(identifier);
-            }
-
-            using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers, DiagnosticProperty.SendActivityName);
+            using DiagnosticScope scope = CreateDiagnosticScope(readOnlyCollection, DiagnosticProperty.SendActivityName);
             scope.Start();
 
             try
@@ -264,17 +256,36 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private DiagnosticScope CreateDiagnosticScope(IEnumerable<string> diagnosticIdentifiers, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<ServiceBusMessage> messages, string activityName)
         {
+            foreach (ServiceBusMessage message in messages)
+            {
+                _scopeFactory.InstrumentMessage(message);
+            }
+
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
                 activityName,
                 DiagnosticScope.ActivityKind.Client);
 
-            foreach (var identifier in diagnosticIdentifiers)
+            scope.SetMessageData(messages);
+
+            return scope;
+        }
+
+        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<AmqpMessage> messages, string activityName)
+        {
+            foreach (AmqpMessage message in messages)
             {
-                scope.AddLink(identifier, null);
+                _scopeFactory.InstrumentMessage(message);
             }
+
+            // create a new scope for the specified operation
+            DiagnosticScope scope = _scopeFactory.CreateScope(
+                activityName,
+                DiagnosticScope.ActivityKind.Client);
+
+            scope.SetMessageData(messages);
 
             return scope;
         }
@@ -365,7 +376,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.GetMessageDiagnosticIdentifiers(),
+                messageBatch.AsReadOnly<AmqpMessage>(),
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 
@@ -471,16 +482,8 @@ namespace Azure.Messaging.ServiceBus
                 readOnlyCollection.Count,
                 scheduledEnqueueTime.ToString(CultureInfo.InvariantCulture));
 
-            var diagnosticIdentifiers = new List<string>();
-
-            foreach (var message in messages)
-            {
-                var identifier = EntityScopeFactory.InstrumentMessage(message, EntityPath, FullyQualifiedNamespace);
-                diagnosticIdentifiers.Add(identifier);
-            }
-
             using DiagnosticScope scope = CreateDiagnosticScope(
-                diagnosticIdentifiers,
+                readOnlyCollection,
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 

@@ -51,27 +51,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         private readonly TransportMessageBatch _innerBatch;
 
-        /// <summary>
-        ///   The entity path of the Service Bus entity that this batch is associated with. To be
-        ///   used during instrumentation.
-        /// </summary>
-        ///
-        private readonly string _entityPath;
-
-        /// <summary>
-        ///   The fully qualified Service Bus namespace that the batch is associated with. To be
-        ///   used during instrumentation.
-        /// </summary>
-        ///
-        private readonly string _fullyQualifiedNamespace;
-
-        /// <summary>
-        ///   The list of diagnostic identifiers of messages added to this batch.  To be used during
-        ///   instrumentation.
-        /// </summary>
-        ///
-        private List<string> _messageDiagnosticIdentifiers { get; } = new List<string>();
-
         private readonly EntityScopeFactory _scopeFactory;
 
         /// <summary>
@@ -95,8 +74,6 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(transportBatch, nameof(transportBatch));
             _innerBatch = transportBatch;
             _scopeFactory = entityScope;
-            _fullyQualifiedNamespace = _scopeFactory.FullyQualifiedNamespace;
-            _entityPath = _scopeFactory.EntityPath;
         }
 
         /// <summary>
@@ -128,15 +105,8 @@ namespace Azure.Messaging.ServiceBus
             {
                 AssertNotLocked();
 
-                var identifier = EntityScopeFactory.InstrumentMessage(message, _entityPath, _fullyQualifiedNamespace);
-                var addedToBatch = _innerBatch.TryAddMessage(message);
-
-                if (addedToBatch)
-                {
-                    _messageDiagnosticIdentifiers.Add(identifier);
-                }
-
-                return addedToBatch;
+                _scopeFactory.InstrumentMessage(message);
+                return _innerBatch.TryAddMessage(message);
             }
         }
 
@@ -176,14 +146,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
         internal IReadOnlyCollection<T> AsReadOnly<T>() => _innerBatch.AsReadOnly<T>();
-
-        /// <summary>
-        ///   Gets the list of diagnostic identifiers of messages added to this batch.
-        /// </summary>
-        ///
-        /// <returns>A read-only list of diagnostic identifiers.</returns>
-        ///
-        internal IReadOnlyList<string> GetMessageDiagnosticIdentifiers() => _messageDiagnosticIdentifiers;
 
         /// <summary>
         ///   Locks the batch to prevent new messages from being added while a service
