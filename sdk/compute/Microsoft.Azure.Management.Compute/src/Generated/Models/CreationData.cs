@@ -59,7 +59,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// default.</param>
         /// <param name="securityDataUri">If createOption is ImportSecure, this
         /// is the URI of a blob to be imported into VM guest state.</param>
-        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?), string securityDataUri = default(string))
+        /// <param name="performancePlus">Set this flag to true to get a boost
+        /// on the performance target of the disk deployed, see here on the
+        /// respective performance target. This flag can only be set on disk
+        /// creation time and cannot be disabled after enabled.</param>
+        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?), string securityDataUri = default(string), bool? performancePlus = default(bool?))
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -71,6 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             UploadSizeBytes = uploadSizeBytes;
             LogicalSectorSize = logicalSectorSize;
             SecurityDataUri = securityDataUri;
+            PerformancePlus = performancePlus;
             CustomInit();
         }
 
@@ -154,6 +159,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "securityDataUri")]
         public string SecurityDataUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets set this flag to true to get a boost on the
+        /// performance target of the disk deployed, see here on the respective
+        /// performance target. This flag can only be set on disk creation time
+        /// and cannot be disabled after enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "performancePlus")]
+        public bool? PerformancePlus { get; set; }
 
         /// <summary>
         /// Validate the object.

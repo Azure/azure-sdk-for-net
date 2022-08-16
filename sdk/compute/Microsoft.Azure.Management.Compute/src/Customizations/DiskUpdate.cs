@@ -160,5 +160,31 @@ namespace Microsoft.Azure.Management.Compute.Models
             Sku = sku;
             CustomInit();
         }
+
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), string dataAccessAuthMode = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
+        {
+            OsType = osType;
+            DiskSizeGB = diskSizeGB;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
+            DiskIOPSReadWrite = diskIOPSReadWrite;
+            DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskIOPSReadOnly = diskIOPSReadOnly;
+            DiskMBpsReadOnly = diskMBpsReadOnly;
+            MaxShares = maxShares;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            Tier = tier;
+            BurstingEnabled = burstingEnabled;
+            PurchasePlan = purchasePlan;
+            SupportedCapabilities = supportedCapabilities;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
+            Tags = tags;
+            Sku = sku;
+            CustomInit();
+        }
     }
 }

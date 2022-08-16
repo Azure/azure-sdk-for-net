@@ -546,7 +546,7 @@ namespace Microsoft.Azure.Management.Compute
         /// the dedicated host has restarted and is running. To determine the health of
         /// VMs deployed on the dedicated host after the restart check the Resource
         /// Health Center in the Azure Portal. Please refer to
-        /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+        /// https://docs.microsoft.com/azure/service-health/resource-health-overview
         /// for more details.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1214,7 +1214,7 @@ namespace Microsoft.Azure.Management.Compute
         /// the dedicated host has restarted and is running. To determine the health of
         /// VMs deployed on the dedicated host after the restart check the Resource
         /// Health Center in the Azure Portal. Please refer to
-        /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+        /// https://docs.microsoft.com/azure/service-health/resource-health-overview
         /// for more details.
         /// </summary>
         /// <param name='resourceGroupName'>
