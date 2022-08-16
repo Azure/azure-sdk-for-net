@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The call connected event.
+    /// The play completed event.
     /// </summary>
     [CodeGenModel("PlayCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class PlayCompleted : CallAutomationEventBase
