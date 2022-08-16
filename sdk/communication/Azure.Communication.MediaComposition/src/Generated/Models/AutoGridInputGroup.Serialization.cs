@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class InputGroup : IUtf8JsonSerializable
+    public partial class AutoGridInputGroup : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("inputIds");
+            writer.WriteStartArray();
+            foreach (var item in InputIds)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Position))
@@ -41,16 +49,9 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndObject();
         }
 
-        internal static InputGroup DeserializeInputGroup(JsonElement element)
+        internal static AutoGridInputGroup DeserializeAutoGridInputGroup(JsonElement element)
         {
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "autoGridBased": return AutoGridInputGroup.DeserializeAutoGridInputGroup(element);
-                    case "gridBased": return GridInputGroup.DeserializeGridInputGroup(element);
-                }
-            }
+            IList<string> inputIds = default;
             InputGroupType kind = default;
             Optional<InputPosition> position = default;
             Optional<string> width = default;
@@ -58,6 +59,16 @@ namespace Azure.Communication.MediaComposition
             Optional<string> layer = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("inputIds"))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    inputIds = array;
+                    continue;
+                }
                 if (property.NameEquals("kind"))
                 {
                     kind = new InputGroupType(property.Value.GetString());
@@ -89,7 +100,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new InputGroup(kind, position.Value, width.Value, height.Value, layer.Value);
+            return new AutoGridInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, inputIds);
         }
     }
 }
