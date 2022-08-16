@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {
-            Optional<CustomerManagedKeyEncryptionProperties> customerManagedKeyEncryption = default;
+            Optional<CmkEncryptionProperties> customerManagedKeyEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerManagedKeyEncryption"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customerManagedKeyEncryption = CustomerManagedKeyEncryptionProperties.DeserializeCustomerManagedKeyEncryptionProperties(property.Value);
+                    customerManagedKeyEncryption = CmkEncryptionProperties.DeserializeCmkEncryptionProperties(property.Value);
                     continue;
                 }
             }

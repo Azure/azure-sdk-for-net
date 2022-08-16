@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FluidRelay
             Optional<SystemData> systemData = default;
             Optional<Guid> frsTenantId = default;
             Optional<Guid> frsContainerId = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<FluidRelayProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastAccessTime = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FluidRelay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new FluidRelayProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))
