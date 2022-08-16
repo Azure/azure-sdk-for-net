@@ -32,48 +32,24 @@ namespace Azure.Communication.MediaComposition
         public System.Collections.Generic.IList<string> InputIds { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommunicationCloudEnvironmentModel : System.IEquatable<Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel>
+    public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.MediaComposition.CommunicationIdentifierModelKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CommunicationCloudEnvironmentModel(string value) { throw null; }
-        public static Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel Dod { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel Gcch { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel Public { get { throw null; } }
-        public bool Equals(Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel other) { throw null; }
+        public CommunicationIdentifierModelKind(string value) { throw null; }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind CommunicationUser { get { throw null; } }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind MicrosoftTeamsUser { get { throw null; } }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind PhoneNumber { get { throw null; } }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel left, Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel left, Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel right) { throw null; }
+        public static bool operator ==(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.CommunicationIdentifierModelKind (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class CommunicationError
-    {
-        public CommunicationError(string code, string message) { }
-        public string Code { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.MediaComposition.CommunicationError> Details { get { throw null; } }
-        public Azure.Communication.MediaComposition.CommunicationError InnerError { get { throw null; } }
-        public string Message { get { throw null; } set { } }
-        public string Target { get { throw null; } }
-    }
-    public partial class CommunicationErrorResponse
-    {
-        public CommunicationErrorResponse(Azure.Communication.MediaComposition.CommunicationError error) { }
-        public Azure.Communication.MediaComposition.CommunicationError Error { get { throw null; } set { } }
-    }
-    public partial class CommunicationIdentifierModel
-    {
-        public CommunicationIdentifierModel() { }
-        public Azure.Communication.MediaComposition.CommunicationUserIdentifierModel CommunicationUser { get { throw null; } set { } }
-        public Azure.Communication.MediaComposition.MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get { throw null; } set { } }
-    }
-    public partial class CommunicationUserIdentifierModel
-    {
-        public CommunicationUserIdentifierModel(string id) { }
-        public string Id { get { throw null; } set { } }
     }
     public partial class CompositionStreamState
     {
@@ -203,10 +179,6 @@ namespace Azure.Communication.MediaComposition
             V2022_07_16_Preview1 = 1,
         }
     }
-    public static partial class MediaCompositionModelFactory
-    {
-        public static Azure.Communication.MediaComposition.CommunicationError CommunicationError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.MediaComposition.CommunicationError> details = null, Azure.Communication.MediaComposition.CommunicationError innerError = null) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaInputType : System.IEquatable<Azure.Communication.MediaComposition.MediaInputType>
     {
@@ -253,13 +225,6 @@ namespace Azure.Communication.MediaComposition
         public static implicit operator Azure.Communication.MediaComposition.MediaOutputType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.MediaOutputType left, Azure.Communication.MediaComposition.MediaOutputType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class MicrosoftTeamsUserIdentifierModel
-    {
-        public MicrosoftTeamsUserIdentifierModel(string userId) { }
-        public Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel? Cloud { get { throw null; } set { } }
-        public bool? IsAnonymous { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
     }
     public partial class PresentationLayout : Azure.Communication.MediaComposition.Models.MediaCompositionLayout
     {
@@ -386,10 +351,6 @@ namespace Azure.Communication.MediaComposition
         public TeamsMeetingOutput(string teamsJoinUrl) { }
         public string TeamsJoinUrl { get { throw null; } set { } }
     }
-    public partial class ValueType
-    {
-        public ValueType() { }
-    }
 }
 namespace Azure.Communication.MediaComposition.Models
 {
@@ -398,7 +359,7 @@ namespace Azure.Communication.MediaComposition.Models
         public ImageInput(string uri) { }
         public string Uri { get { throw null; } set { } }
     }
-    public partial class InputPosition : Azure.Communication.MediaComposition.ValueType
+    public partial class InputPosition
     {
         public InputPosition(int x, int y) { }
         public int X { get { throw null; } set { } }
@@ -433,8 +394,8 @@ namespace Azure.Communication.MediaComposition.Models
     }
     public partial class ParticipantInput : Azure.Communication.MediaComposition.Models.MediaInput
     {
-        public ParticipantInput(Azure.Communication.MediaComposition.CommunicationIdentifierModel id, string call) { }
+        public ParticipantInput(Azure.Communication.CommunicationIdentifier id, string call) { }
         public string Call { get { throw null; } set { } }
-        public Azure.Communication.MediaComposition.CommunicationIdentifierModel Id { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Id { get { throw null; } }
     }
 }

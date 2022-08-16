@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for KeyType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeyType
+    public static class KeyType
     {
-        [EnumMember(Value = "PrimaryKey")]
-        PrimaryKey,
-        [EnumMember(Value = "SecondaryKey")]
-        SecondaryKey
-    }
-    internal static class KeyTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this KeyType? value)
-        {
-            return value == null ? null : ((KeyType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this KeyType value)
-        {
-            switch( value )
-            {
-                case KeyType.PrimaryKey:
-                    return "PrimaryKey";
-                case KeyType.SecondaryKey:
-                    return "SecondaryKey";
-            }
-            return null;
-        }
-
-        internal static KeyType? ParseKeyType(this string value)
-        {
-            switch( value )
-            {
-                case "PrimaryKey":
-                    return KeyType.PrimaryKey;
-                case "SecondaryKey":
-                    return KeyType.SecondaryKey;
-            }
-            return null;
-        }
+        public const string PrimaryKey = "PrimaryKey";
+        public const string SecondaryKey = "SecondaryKey";
     }
 }

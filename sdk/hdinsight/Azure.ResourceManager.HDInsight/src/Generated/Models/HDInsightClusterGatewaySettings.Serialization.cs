@@ -14,14 +14,19 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterGatewaySettings DeserializeHDInsightClusterGatewaySettings(JsonElement element)
         {
-            Optional<string> restAuthCredentialIsEnabled = default;
+            Optional<bool> restAuthCredentialIsEnabled = default;
             Optional<string> restAuthCredentialUsername = default;
             Optional<string> restAuthCredentialPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restAuthCredential.isEnabled"))
                 {
-                    restAuthCredentialIsEnabled = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    restAuthCredentialIsEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("restAuthCredential.username"))
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterGatewaySettings(restAuthCredentialIsEnabled.Value, restAuthCredentialUsername.Value, restAuthCredentialPassword.Value);
+            return new HDInsightClusterGatewaySettings(Optional.ToNullable(restAuthCredentialIsEnabled), restAuthCredentialUsername.Value, restAuthCredentialPassword.Value);
         }
     }
 }

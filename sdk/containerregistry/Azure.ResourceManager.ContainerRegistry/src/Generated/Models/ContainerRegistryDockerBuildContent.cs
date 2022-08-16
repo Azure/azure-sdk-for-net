@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        internal ContainerRegistryDockerBuildContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IList<string> imageNames, bool? isPushEnabled, bool? noCache, string dockerFilePath, string target, IList<ContainerRegistryRunArgument> arguments, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryRunCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
+        internal ContainerRegistryDockerBuildContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IList<string> imageNames, bool? isPushEnabled, bool? noCache, string dockerFilePath, string target, IList<ContainerRegistryRunArgument> arguments, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;
@@ -107,6 +107,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         public string SourceLocation { get; set; }
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
-        public ContainerRegistryRunCredentials Credentials { get; set; }
+        public ContainerRegistryCredentials Credentials { get; set; }
     }
 }

@@ -6,13 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "271",
+        "Content-Length": "233",
         "Content-Type": "application/json",
-        "traceparent": "00-66b91cc733d09e47b49e4249e10418fa-4f0f6f2007de9942-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "48ed8d49934c2f4533c8a14de68ebd89",
+        "traceparent": "00-c95527fb0a82bc489fcdc1d7a3475942-39f6c67dc4562444-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220810.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "6ab3940f49661b7c5f315e415c23ba85",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 05 Aug 2022 18:25:00 GMT",
+        "x-ms-date": "Wed, 10 Aug 2022 23:37:07 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,18 +31,15 @@
             "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193",
             "kind": "groupCall"
           }
-        },
-        "streamState": {
-          "status": "notStarted"
         }
       },
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Aug 2022 18:25:00 GMT",
+        "Date": "Wed, 10 Aug 2022 23:37:06 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0fWDtYgAAAABZ7QK12exwRboeIwqyny8YWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0I0H0YgAAAACo9Qq46KMbRrd2bB7/538RWVZSMzExMDAwMTE2MDIxAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Inputs are required to be defined for media composition\u0022"
@@ -50,6 +47,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1074592286"
+    "RandomSeed": "980467736"
   }
 }

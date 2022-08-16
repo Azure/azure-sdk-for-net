@@ -7,13 +7,13 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "Content-Length": "359",
+        "Content-Length": "321",
         "Content-Type": "application/json",
-        "traceparent": "00-a94ec96a40001c48a3dd21610c7cd994-d791f25d7ee0d644-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "f99f8faa58417f5917182eec1aafaccf",
+        "traceparent": "00-813756c64cbe5145872b2395024adbde-58490f58ecfd0545-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220810.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "eeff8ba8e762f310cb682a69fb14c178",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 05 Aug 2022 18:24:59 GMT",
+        "x-ms-date": "Wed, 10 Aug 2022 23:37:03 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -43,18 +43,15 @@
             "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193",
             "kind": "groupCall"
           }
-        },
-        "streamState": {
-          "status": "notStarted"
         }
       },
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Aug 2022 18:25:00 GMT",
+        "Date": "Wed, 10 Aug 2022 23:37:05 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0fWDtYgAAAACoMcMxWueERa6bTEod8TayWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0H0H0YgAAAADffzYTQFGxQYB13P7gpp3iWVZSMzExMDAwMTE2MDIxAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Input with id: InvalidInputId not defined in inputs. If using a selector, check if your syntax is correct.\u0022"
@@ -62,6 +59,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "11318749"
+    "RandomSeed": "708826813"
   }
 }

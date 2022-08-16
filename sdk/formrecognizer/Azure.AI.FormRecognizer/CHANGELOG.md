@@ -1,6 +1,16 @@
 # Release History
 
-## 4.0.0-beta.5 (Unreleased)
+## 4.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.0.0-beta.5 (2022-08-09)
 
 ### Features Added
 - Added `Length` property to `BoundingPolygon`.
@@ -33,10 +43,6 @@
 - In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
 - Updated `CopyAuthorization.TargetModelLocation` to be a `Uri` instead of `string`.
 - Removed method `DocumentAnalysisModelFactory.CopyAuthorization`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 4.0.0-beta.4 (2022-06-08)
 

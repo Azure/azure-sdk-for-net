@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SystemAssignedIdentityResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
-            scope0.Start();
+            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
+            scope.Start();
             try
             {
                 var response = await _systemAssignedIdentityRestClient.GetByScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SystemAssignedIdentityResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
-            scope0.Start();
+            using var scope = _systemAssignedIdentityClientDiagnostics.CreateScope("SystemAssignedIdentityResource.Get");
+            scope.Start();
             try
             {
                 var response = _systemAssignedIdentityRestClient.GetByScope(Id.Parent, cancellationToken);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

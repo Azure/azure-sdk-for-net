@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
         public string PublicData { get { throw null; } }
-        public string Thumbprint { get { throw null; } set { } }
+        public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
     }
     public partial class BatchAccountCertificateResource : Azure.ResourceManager.ArmResource
@@ -398,11 +398,6 @@ namespace Azure.ResourceManager.Batch
 }
 namespace Azure.ResourceManager.Batch.Models
 {
-    public enum AccountKeyType
-    {
-        Primary = 0,
-        Secondary = 1,
-    }
     public partial class BatchAccountAutoScaleSettings
     {
         public BatchAccountAutoScaleSettings(string formula) { }
@@ -424,11 +419,11 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchAccountCertificateCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
         public BatchAccountCertificateCreateOrUpdateContent() { }
-        public string Data { get { throw null; } set { } }
+        public System.BinaryData Data { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
-        public string Thumbprint { get { throw null; } set { } }
+        public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
     }
     public enum BatchAccountCertificateFormat
@@ -472,7 +467,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchAccountEncryptionConfiguration
     {
         public BatchAccountEncryptionConfiguration() { }
-        public string KeyIdentifier { get { throw null; } set { } }
+        public System.Uri KeyIdentifier { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchAccountKeySource? KeySource { get { throw null; } set { } }
     }
     public partial class BatchAccountEndpointDependency
@@ -501,6 +496,11 @@ namespace Azure.ResourceManager.Batch.Models
     {
         MicrosoftBatch = 0,
         MicrosoftKeyVault = 1,
+    }
+    public enum BatchAccountKeyType
+    {
+        Primary = 0,
+        Secondary = 1,
     }
     public partial class BatchAccountOutboundEnvironmentEndpoint
     {
@@ -580,8 +580,8 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchAccountRegenerateKeyContent
     {
-        public BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.AccountKeyType keyName) { }
-        public Azure.ResourceManager.Batch.Models.AccountKeyType KeyName { get { throw null; } }
+        public BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.BatchAccountKeyType keyType) { }
+        public Azure.ResourceManager.Batch.Models.BatchAccountKeyType KeyType { get { throw null; } }
     }
     public partial class BatchApplicationPackageActivateContent
     {
@@ -729,10 +729,10 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchFileShareConfiguration
     {
-        public BatchFileShareConfiguration(string accountName, System.Uri azureFileUri, string accountKey, string relativeMountPath) { }
+        public BatchFileShareConfiguration(string accountName, System.Uri fileUri, string accountKey, string relativeMountPath) { }
         public string AccountKey { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
-        public System.Uri AzureFileUri { get { throw null; } set { } }
+        public System.Uri FileUri { get { throw null; } set { } }
         public string MountOptions { get { throw null; } set { } }
         public string RelativeMountPath { get { throw null; } set { } }
     }
@@ -810,9 +810,9 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchMountConfiguration
     {
         public BatchMountConfiguration() { }
-        public Azure.ResourceManager.Batch.Models.BatchBlobFileSystemConfiguration AzureBlobFileSystemConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchFileShareConfiguration AzureFileShareConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchBlobFileSystemConfiguration BlobFileSystemConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchCifsMountConfiguration CifsMountConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchFileShareConfiguration FileShareConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchNfsMountConfiguration NfsMountConfiguration { get { throw null; } set { } }
     }
     public partial class BatchNameAvailabilityContent
@@ -966,13 +966,13 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchResourceFile
     {
         public BatchResourceFile() { }
-        public string AutoStorageContainerName { get { throw null; } set { } }
+        public string AutoBlobContainerName { get { throw null; } set { } }
+        public System.Uri BlobContainerUri { get { throw null; } set { } }
         public string BlobPrefix { get { throw null; } set { } }
         public string FileMode { get { throw null; } set { } }
         public string FilePath { get { throw null; } set { } }
         public System.Uri HttpUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
-        public System.Uri StorageContainerUri { get { throw null; } set { } }
     }
     public partial class BatchSkuCapability
     {

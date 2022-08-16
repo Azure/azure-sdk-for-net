@@ -1,4 +1,4 @@
-# Azure.Communication.ServerCalling
+# Azure.Communication.CallAutomation
 
 From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to generate code.
 
@@ -19,7 +19,7 @@ tag: V2022_04_07_preview
 model-namespace: false
 
 title:
-  Server Calling
+  Call Automation
 
 generation1-convenience-client: true
 ```

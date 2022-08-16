@@ -1555,9 +1555,9 @@ namespace Azure.ResourceManager.Compute
             if (vmInstanceIds != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(vmInstanceIds);
-                request.Content = content0;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(vmInstanceIds);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
