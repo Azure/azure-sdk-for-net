@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns
     /// <summary>
     /// A class representing a collection of <see cref="MXRecordResource" /> and their operations.
     /// Each <see cref="MXRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="MXRecordCollection" /> instance call the GetRecordSetMXes method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="MXRecordCollection" /> instance call the GetMXRecordes method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
     public partial class MXRecordCollection : ArmCollection, IEnumerable<MXRecordResource>, IAsyncEnumerable<MXRecordResource>
     {

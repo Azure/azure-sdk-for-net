@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetSrv along with the instance operations that can be performed on it.
+    /// A Class representing a SrvRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SrvRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSrvRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetSrv method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetSrvRecord method.
     /// </summary>
     public partial class SrvRecordResource : ArmResource
     {

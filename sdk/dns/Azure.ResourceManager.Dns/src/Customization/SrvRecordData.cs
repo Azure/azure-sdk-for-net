@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the SrvRecordSet data model. </summary>
+    /// <summary> A class representing the SrvRecord data model. </summary>
     public partial class SrvRecordData : ResourceData
     {
         /// <summary> Initializes a new instance of SrvRecordData. </summary>

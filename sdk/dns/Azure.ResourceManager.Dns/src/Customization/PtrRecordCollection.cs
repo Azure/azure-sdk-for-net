@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns
     /// <summary>
     /// A class representing a collection of <see cref="PtrRecordResource" /> and their operations.
     /// Each <see cref="PtrRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="PtrRecordCollection" /> instance call the GetRecordSetPtrs method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="PtrRecordCollection" /> instance call the GetPtrRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
     public partial class PtrRecordCollection : ArmCollection, IEnumerable<PtrRecordResource>, IAsyncEnumerable<PtrRecordResource>
     {

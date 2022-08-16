@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the TxtRecordSet data model. </summary>
+    /// <summary> A class representing the TxtRecord data model. </summary>
     public partial class TxtRecordData : ResourceData
     {
         /// <summary> Initializes a new instance of TxtRecordData. </summary>

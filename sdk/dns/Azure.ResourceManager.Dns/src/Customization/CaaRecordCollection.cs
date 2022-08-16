@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns
     /// <summary>
     /// A class representing a collection of <see cref="CaaRecordResource" /> and their operations.
     /// Each <see cref="CaaRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="CaaRecordCollection" /> instance call the GetRecordSetCaas method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="CaaRecordCollection" /> instance call the GetCaaRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
     public partial class CaaRecordCollection : ArmCollection, IEnumerable<CaaRecordResource>, IAsyncEnumerable<CaaRecordResource>
     {

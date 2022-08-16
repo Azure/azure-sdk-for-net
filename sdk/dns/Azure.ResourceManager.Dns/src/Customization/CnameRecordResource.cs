@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetCname along with the instance operations that can be performed on it.
+    /// A Class representing a CnameRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CnameRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCnameRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetCname method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetCnameRecord method.
     /// </summary>
     public partial class CnameRecordResource : ArmResource
     {

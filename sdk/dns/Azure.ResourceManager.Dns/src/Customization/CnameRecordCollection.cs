@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns
     /// <summary>
     /// A class representing a collection of <see cref="CnameRecordResource" /> and their operations.
     /// Each <see cref="CnameRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="CnameRecordCollection" /> instance call the GetRecordSetCnames method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="CnameRecordCollection" /> instance call the GetCnameRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
     public partial class CnameRecordCollection : ArmCollection, IEnumerable<CnameRecordResource>, IAsyncEnumerable<CnameRecordResource>
     {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns
     /// <summary>
     /// A class representing a collection of <see cref="SoaRecordResource" /> and their operations.
     /// Each <see cref="SoaRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="SoaRecordCollection" /> instance call the GetRecordSetSoas method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="SoaRecordCollection" /> instance call the GetSoaRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
     public partial class SoaRecordCollection : ArmCollection, IEnumerable<SoaRecordResource>, IAsyncEnumerable<SoaRecordResource>
     {

@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetSoa along with the instance operations that can be performed on it.
+    /// A Class representing a SoaRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SoaRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSoaRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetSoa method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetSoaRecord method.
     /// </summary>
     public partial class SoaRecordResource : ArmResource
     {

@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetPtr along with the instance operations that can be performed on it.
+    /// A Class representing a PtrRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PtrRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPtrRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetPtr method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetPtrRecord method.
     /// </summary>
     public partial class PtrRecordResource : ArmResource
     {

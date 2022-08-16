@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetMX along with the instance operations that can be performed on it.
+    /// A Class representing a MXRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MXRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMXRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetMX method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetMXRecord method.
     /// </summary>
     public partial class MXRecordResource : ArmResource
     {

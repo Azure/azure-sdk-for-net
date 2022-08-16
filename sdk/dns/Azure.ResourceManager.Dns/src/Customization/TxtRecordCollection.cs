@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns
     /// <summary>
     /// A class representing a collection of <see cref="TxtRecordResource" /> and their operations.
     /// Each <see cref="TxtRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="TxtRecordCollection" /> instance call the GetRecordSetTxts method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="TxtRecordCollection" /> instance call the GetTxtRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
     public partial class TxtRecordCollection : ArmCollection, IEnumerable<TxtRecordResource>, IAsyncEnumerable<TxtRecordResource>
     {

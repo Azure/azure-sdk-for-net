@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetNS along with the instance operations that can be performed on it.
+    /// A Class representing a NSRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NSRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetNSRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetNS method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetNSRecord method.
     /// </summary>
     public partial class NSRecordResource : ArmResource
     {

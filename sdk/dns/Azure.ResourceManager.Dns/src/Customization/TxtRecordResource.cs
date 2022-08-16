@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetTxt along with the instance operations that can be performed on it.
+    /// A Class representing a TxtRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TxtRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetTxtRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetTxt method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetTxtRecord method.
     /// </summary>
     public partial class TxtRecordResource : ArmResource
     {

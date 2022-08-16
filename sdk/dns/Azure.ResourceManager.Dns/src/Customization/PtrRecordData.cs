@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the PtrRecordSet data model. </summary>
+    /// <summary> A class representing the PtrRecord data model. </summary>
     public partial class PtrRecordData : ResourceData
     {
         /// <summary> Initializes a new instance of PtrRecordData. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the SoaRecordSet data model. </summary>
+    /// <summary> A class representing the SoaRecord data model. </summary>
     public partial class SoaRecordData : ResourceData
     {
         /// <summary> Initializes a new instance of SoaRecordData. </summary>

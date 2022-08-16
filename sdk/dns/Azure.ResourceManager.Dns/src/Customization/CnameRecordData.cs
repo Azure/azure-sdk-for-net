@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the CnameRecordSet data model. </summary>
+    /// <summary> A class representing the CnameRecord data model. </summary>
     public partial class CnameRecordData : ResourceData
     {
         /// <summary> Initializes a new instance of CnameRecordData. </summary>

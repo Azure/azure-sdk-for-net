@@ -18,10 +18,10 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetA along with the instance operations that can be performed on it.
+    /// A Class representing a ARecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ARecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetARecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetA method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetARecord method.
     /// </summary>
     public partial class ARecordResource : ArmResource
     {
