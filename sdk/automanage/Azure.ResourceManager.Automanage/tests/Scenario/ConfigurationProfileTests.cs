@@ -10,14 +10,33 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
     {
         public ConfigurationProfileTests(bool async) : base(async) { }
 
-        //[TestCase]
-        //public async Task CanDeleteConfigurationProfile()
-        //{
+        [TestCase]
+        public async Task CanDeleteConfigurationProfile()
+        {
+            string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
 
-        //}
+            // create resource group
+            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+
+            // fetch configuration profile collection
+            var collection = rg.GetConfigurationProfiles();
+
+            // create configuration profile
+            await CreateConfigurationProfile(collection, profileName);
+
+            // delete configuration profile
+            var deletedProfile = await collection.GetAsync(profileName);
+            await deletedProfile.Value.DeleteAsync(WaitUntil.Completed);
+
+            // attempt to fetch deleted profile
+            var exists = collection.ExistsAsync(profileName).Result.Value;
+
+            // assert
+            Assert.False(exists);
+        }
 
         [TestCase]
-        public async Task CanGetAndCreateConfigurationProfile()
+        public async Task CanGetConfigurationProfile()
         {
             string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
 
