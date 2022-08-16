@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CallSource = callSource;
-            Targets = targets.ToList();
+            Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
             CallConnectionState = callConnectionState;
             Subject = subject;
             CallbackEndpoint = callbackEndpoint;
