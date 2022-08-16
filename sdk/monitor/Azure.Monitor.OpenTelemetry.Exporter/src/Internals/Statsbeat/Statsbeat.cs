@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.Metrics;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -27,6 +28,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static string s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
 
         private static string s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
+
+        private static string s_operatingSystem = GetOS();
+
+        private static string GetOS()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "windows";
+            }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return "linux";
+            }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return "osx";
+            }
+
+            return "unknown";
+        }
 
         static Statsbeat()
         {
@@ -65,7 +86,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     new("cikey", Customer_Ikey),
                     new("runtimeVersion", s_runtimeVersion),
                     new("language", "dotnet"),
-                    new("version", s_sdkVersion));
+                    new("version", s_sdkVersion),
+                    new("os", s_operatingSystem));
         }
 
         private static VmMetadataResponse GetVmMetadataResponse()
@@ -119,6 +141,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 s_resourceProvider = "vm";
                 s_resourceProviderId = s_resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
+
+                // osType takes precedence.
+                s_operatingSystem = vmMetadata.osType;
 
                 return;
             }
