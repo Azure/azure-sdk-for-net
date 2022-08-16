@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="publicData"> The public key of the certificate. </param>
         /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is &apos;Failed&apos;. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, BatchAccountCertificateFormat? format, BatchAccountCertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountCertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitOn, string publicData, ResponseError deleteCertificateError, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BatchAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, BinaryData thumbprint, BatchAccountCertificateFormat? format, BatchAccountCertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountCertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitOn, string publicData, ResponseError deleteCertificateError, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             Thumbprint = thumbprint;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
         public string ThumbprintAlgorithm { get; set; }
         /// <summary> This must match the thumbprint from the name. </summary>
-        public string Thumbprint { get; set; }
+        public BinaryData Thumbprint { get; set; }
         /// <summary> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </summary>
         public BatchAccountCertificateFormat? Format { get; set; }
         /// <summary> Gets the provisioning state. </summary>

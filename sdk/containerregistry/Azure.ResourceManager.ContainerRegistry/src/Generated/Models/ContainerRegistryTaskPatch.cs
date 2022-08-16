@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Identity for the resource. </summary>
-        public ContainerRegistryManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The ARM resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The current status of task. </summary>
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The properties for updating trigger properties. </summary>
         public ContainerRegistryTriggerUpdateContent Trigger { get; set; }
         /// <summary> The parameters that describes a set of credentials that will be used when this run is invoked. </summary>
-        public ContainerRegistryRunCredentials Credentials { get; set; }
+        public ContainerRegistryCredentials Credentials { get; set; }
         /// <summary> The template that describes the repository and tag information for run log artifact. </summary>
         public string LogTemplate { get; set; }
     }

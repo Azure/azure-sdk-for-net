@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -40,9 +39,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <value>
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        public override bool WasClosedExplicitly => _receiverClosedExplicitlyExplicitly;
+        public bool IsClosed => _closed;
 
-        private volatile bool _receiverClosedExplicitlyExplicitly;
+        private volatile bool _closed;
 
         /// <summary>
         /// Indicates whether or not the session link has been closed.
@@ -1301,18 +1300,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task CloseAsync(CancellationToken cancellationToken)
         {
-            if (_receiverClosedExplicitlyExplicitly)
+            if (_closed)
             {
                 return;
             }
 
-            _receiverClosedExplicitlyExplicitly = true;
+            _closed = true;
 
-            await CloseCoreAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        private async Task CloseCoreAsync(CancellationToken cancellationToken)
-        {
             if (_receiveLink?.TryGetOpenedObject(out var _) == true)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -1350,7 +1344,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Clean up and dispose the underlying resources. The receive link should already be closed, but management link may need to be
                 // closed as well.
-                _ = CloseCoreAsync(CancellationToken.None);
+                _ = CloseAsync(CancellationToken.None);
             }
 
             ServiceBusEventSource.Log.ReceiveLinkClosed(
@@ -1394,7 +1388,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
-            !_receiverClosedExplicitlyExplicitly && (link?.IsClosing() ?? false);
+            !_closed && (link?.IsClosing() ?? false);
 
         private void ThrowIfSessionLockLost()
         {

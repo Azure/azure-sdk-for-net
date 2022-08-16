@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="resourceId"> The resource id of azure active directory domain service. </param>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="tenantId"> The tenant id of azure active directory domain service . </param>
-        internal HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, string resourceId, string subnetId, Guid? tenantId)
+        internal HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, ResourceIdentifier resourceId, ResourceIdentifier subnetId, Guid? tenantId)
         {
             DomainName = domainName;
             IsInitialSyncComplete = isInitialSyncComplete;
@@ -45,9 +46,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The base 64 format string of public ldap certificate. </summary>
         public string LdapsPublicCertificateInBase64 { get; }
         /// <summary> The resource id of azure active directory domain service. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> The subnet resource id. </summary>
-        public string SubnetId { get; }
+        public ResourceIdentifier SubnetId { get; }
         /// <summary> The tenant id of azure active directory domain service . </summary>
         public Guid? TenantId { get; }
     }

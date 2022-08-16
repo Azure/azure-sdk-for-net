@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TarGZipReadSettings": return TarGZipReadSettings.DeserializeTarGZipReadSettings(element);
+                    case "TarGZipReadSettings": return TarGzipReadSettings.DeserializeTarGzipReadSettings(element);
                     case "TarReadSettings": return TarReadSettings.DeserializeTarReadSettings(element);
                     case "ZipDeflateReadSettings": return ZipDeflateReadSettings.DeserializeZipDeflateReadSettings(element);
                 }

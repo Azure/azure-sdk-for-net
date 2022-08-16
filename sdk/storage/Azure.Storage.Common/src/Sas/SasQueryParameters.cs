@@ -35,7 +35,7 @@ namespace Azure.Storage.Sas
         private (AccountSasServices? Parsed, string Raw) _services;
 
         // srt
-        private AccountSasResourceTypes? _resourceTypes;
+        private (AccountSasResourceTypes? Parsed, string Raw) _resourceTypes;
 
         // spr
         private SasProtocol _protocol;
@@ -113,7 +113,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public AccountSasResourceTypes? ResourceTypes => _resourceTypes;
+        public AccountSasResourceTypes? ResourceTypes => _resourceTypes.Parsed;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
@@ -282,7 +282,7 @@ namespace Azure.Storage.Sas
                         _services = (SasExtensions.ParseAccountServices(kv.Value), kv.Value);
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
+                        _resourceTypes = (SasExtensions.ParseResourceTypes(kv.Value), kv.Value);
                         break;
                     case Constants.Sas.Parameters.ProtocolUpper:
                         _protocol = SasExtensions.ParseProtocol(kv.Value);
@@ -383,7 +383,7 @@ namespace Azure.Storage.Sas
         {
             _version = version;
             _services = (services, services?.ToPermissionsString());
-            _resourceTypes = resourceTypes;
+            _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
             _protocol = protocol;
             _startTime = startsOn;
             _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
@@ -430,7 +430,7 @@ namespace Azure.Storage.Sas
         {
             _version = version;
             _services = (services, services?.ToPermissionsString());
-            _resourceTypes = resourceTypes;
+            _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
             _protocol = protocol;
             _startTime = startsOn;
             _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
@@ -480,7 +480,7 @@ namespace Azure.Storage.Sas
         {
             _version = version;
             _services = (services, services?.ToPermissionsString());
-            _resourceTypes = resourceTypes;
+            _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
             _protocol = protocol;
             _startTime = startsOn;
             _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
@@ -679,7 +679,7 @@ namespace Azure.Storage.Sas
 
             if (ResourceTypes != null)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ResourceTypes, _resourceTypes.Raw);
             }
 
             if (Protocol != default)

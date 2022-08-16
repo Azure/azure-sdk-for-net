@@ -1,6 +1,6 @@
 # Release History
 
-## 5.7.0-beta.1 (Unreleased)
+## 5.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.7.0 (2022-08-11)
+
+### Features Added
+
+- Added distributed tracing span when for functions that process a batch of messages.
+
+### Bugs Fixed
+
+- Fixed issue related to function apps that are bound to multiple namespaces using the same entity names, which caused messages to not be processed from the second namespace.
 
 ## 5.6.0 (2022-07-28)
 

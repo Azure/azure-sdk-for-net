@@ -84,10 +84,10 @@ rename-mapping:
   KeyVaultReference: IntegrationAccountKeyVaultNameReference
   KeyVaultKeyCollection: IntegrationAccountKeyVaultKeyList
   KeyVaultKey: IntegrationAccountKeyVaultKey
-  KeyVaultKey.kid: KeyId
+  KeyVaultKey.kid: KeyId|uri
   KeyVaultKey.attributes.enabled: IsEnabled
-  KeyVaultKey.attributes.created: CreatedOnInTicks
-  KeyVaultKey.attributes.updated: UpdatedOnInTicks
+  KeyVaultKey.attributes.created: CreatedOn
+  KeyVaultKey.attributes.updated: UpdatedOn
   KeyVaultKeyReference: IntegrationAccountKeyVaultKeyReference
   KeyVaultKeyReference.keyVault.id: ResourceId
   KeyVaultKeyReference.keyVault.name: ResourceName
@@ -151,6 +151,7 @@ rename-mapping:
   WorkflowTriggerHistory: LogicWorkflowTriggerHistory
   WorkflowTriggerHistory.properties.fired: IsFired
   WorkflowTriggerHistoryListResult: LogicWorkflowTriggerHistoryListResult
+  WorkflowTriggerCallbackUrl.method: -|request-method
   WorkflowTriggerCallbackUrl: LogicWorkflowTriggerCallbackUri
   WorkflowReference: LogicWorkflowReference
   WorkflowRunActionListResult: LogicWorkflowRunActionListResult
@@ -222,7 +223,6 @@ directive:
       $.ResourceReference.properties.type['x-ms-format'] = 'resource-type';
       $.IpAddress.properties.address['x-ms-format'] = 'ip-address';
       $.IntegrationServiceEnvironmentSkuDefinition.properties.resourceType['x-ms-format'] = 'resource-type';
-      $.KeyVaultKey.properties.attributes['x-ms-client-flatten'] = true;
       $.KeyVaultKeyReference.properties.keyVault['x-ms-client-flatten'] = true;
       $.KeyVaultKeyReference.properties.keyVault.properties.id['x-ms-format'] = 'arm-id';
       $.KeyVaultKeyReference.properties.keyVault.properties.type['x-ms-format'] = 'resource-type';
@@ -230,13 +230,8 @@ directive:
       $.WorkflowTriggerRecurrence.properties.endTime['format'] = 'date-time';
       $.RecurrenceSchedule.properties.weekDays.items['x-ms-enum']['name'] = 'DayOfWeek';
       $.CallbackUrl.properties.value['x-ms-client-name'] = 'url';
+      $.KeyVaultKey.properties.attributes.properties.created['format'] = 'unixtime';
+      $.KeyVaultKey.properties.attributes.properties.updated['format'] = 'unixtime';
+      $.KeyVaultKey.properties.attributes['x-ms-client-flatten'] = true;
 
-  # TODO: change ManagedServiceIdentity to common identity type(ManagedServiceIdentity)
-  - from: logic.json
-    where: $.definitions
-    transform: >
-      $.ManagedServiceIdentity.properties.type.enum.push('SystemAssigned, UserAssigned');
-      $.Workflow.properties.identity['description'] = 'Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None.';
-      $.IntegrationServiceEnvironment.properties.identity['description'] = 'Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None.';
-    reason: Temporary workaround to match with common type.
 ```

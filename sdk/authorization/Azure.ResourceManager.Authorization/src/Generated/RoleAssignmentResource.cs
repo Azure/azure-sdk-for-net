@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Get");
-            scope0.Start();
+            using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Get");
+            scope.Start();
             try
             {
                 var response = await _roleAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Get");
-            scope0.Start();
+            using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Get");
+            scope.Start();
             try
             {
                 var response = _roleAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<RoleAssignmentResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Delete");
-            scope0.Start();
+            using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Delete");
+            scope.Start();
             try
             {
                 var response = await _roleAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<RoleAssignmentResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Delete");
-            scope0.Start();
+            using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Delete");
+            scope.Start();
             try
             {
                 var response = _roleAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
-            scope0.Start();
+            using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
+            scope.Start();
             try
             {
                 var response = await _roleAssignmentRestClient.CreateAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
-            scope0.Start();
+            using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
+            scope.Start();
             try
             {
                 var response = _roleAssignmentRestClient.Create(Id.Parent, Id.Name, content, cancellationToken);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

@@ -55,6 +55,9 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
+- name: TestDependsOnDependency
+  type: string
+  default: not-specified
 
 variables:
   - template: ../variables/globals.yml
@@ -85,6 +88,7 @@ stages:
           - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
             - BuildConfiguration=Debug/Release
           - ${{ parameters.MatrixReplace }}
+        TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:

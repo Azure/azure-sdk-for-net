@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Container Registry management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ContainerRegistry --prerelease
+dotnet add package Azure.ResourceManager.ContainerRegistry
 ```
 
 ### Prerequisites

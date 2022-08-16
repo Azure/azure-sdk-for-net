@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="jsonError"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal GetOperationResponse(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
+        internal GetOperationResponse(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
         {
             JsonError = jsonError;
             Result = result;

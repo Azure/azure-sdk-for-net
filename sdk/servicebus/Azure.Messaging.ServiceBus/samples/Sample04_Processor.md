@@ -1,8 +1,8 @@
-## Using the Processor
+# Using the processor
 
 This sample demonstrates how to use the processor. The processor offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
 
-### Processing messages
+## Processing messages
 
 ```C# Snippet:ServiceBusProcessMessages
 string connectionString = "<connection_string>";

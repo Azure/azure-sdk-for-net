@@ -48,69 +48,50 @@ var client = new MediaCompositionClient(endpoint, tokenCredential);
 ### Creating the media composition
 
 ```C# Snippet:CreateMediaComposition
-var gridLayoutOptions = new GridLayoutOptions(2, 2);
-gridLayoutOptions.InputIds.Add(new List<string> { "jill", "jack" });
-gridLayoutOptions.InputIds.Add(new List<string> { "jane", "jerry" });
-var layout = new MediaCompositionLayout()
+var layout = new GridLayout(2, 2, new List<List<string>>{ new List<string> { "jill", "jack" }, new List<string> { "jane", "jerry" } })
 {
-    Resolution = new(1920, 1080),
-    Grid = gridLayoutOptions
+    Resolution = new(1920, 1080)
 };
 
 var inputs = new Dictionary<string, MediaInput>()
 {
-    ["jill"] = new()
+    ["jill"] = new ParticipantInput
+    (
+        id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
+        call: "teamsMeeting")
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["jack"] = new()
+    ["jack"] = new ParticipantInput
+    (
+        id: new MicrosoftTeamsUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
+        call: "teamsMeeting")
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["jane"] = new()
+    ["jane"] = new ParticipantInput
+    (
+        id: new MicrosoftTeamsUserIdentifier("2dd69470-dc25-49cf-b5c3-f562f08bf3b2"),
+        call: "teamsMeeting"
+    )
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["jerry"] = new()
+    ["jerry"] = new ParticipantInput
+    (
+        id: new MicrosoftTeamsUserIdentifier("30e29fde-ac1c-448f-bb34-0f3448d5a677"),
+        call: "teamsMeeting")
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     },
-    ["teamsMeeting"] = new()
-    {
-        TeamsMeeting = new("https://teamsJoinUrl")
-    }
+    ["teamsMeeting"] = new TeamsMeetingInput(teamsJoinUrl: "https://teamsJoinUrl")
 };
 
 var outputs = new Dictionary<string, MediaOutput>()
 {
-    {
-        "acsGroupCall",
-        new()
-        {
-            GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
-        }
-    }
+    ["acsGroupCall"] = new GroupCallOutput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
 };
+
 var response = await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
 ```
 
@@ -124,15 +105,11 @@ var gridMediaCompositionResponse = await mediaCompositionClient.GetAsync(mediaCo
 
 You can update the layout:
 ```C# Snippet:UpdateLayout
-var layout = new MediaCompositionLayout()
+var layout = new AutoGridLayout(new List<string>() { "teamsMeeting" })
 {
     Resolution = new(720, 480),
-    Presenter = new("jill", "jack")
-    {
-        SupportPosition = SupportPosition.BottomRight,
-        SupportAspectRatio = 3 / 2
-    }
 };
+
 var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
 ```
 
@@ -142,16 +119,16 @@ You can upsert or remove inputs:
 ```C# Snippet:UpsertInputs
 var inputsToUpsert = new Dictionary<string, MediaInput>()
 {
-    ["james"] = new()
+    ["james"] = new ParticipantInput
+    (
+        id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
+        call: "teamsMeeting"
+    )
     {
-        Participant = new(
-            id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
-            call: "teamsMeeting")
-        {
-            PlaceholderImageUri = "https://imageendpoint"
-        }
+        PlaceholderImageUri = "https://imageendpoint"
     }
 };
+
 var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
 ```
 
@@ -167,14 +144,9 @@ You can also upsert or remove outputs:
 ```C# Snippet:UpsertOutputs
 var outputsToUpsert = new Dictionary<string, MediaOutput>()
 {
-    {
-        "youtube",
-        new()
-        {
-            Rtmp = new("key", new(1920, 1080), "rtmp://a.rtmp.youtube.com/live2")
-        }
-    }
+    ["youtube"] = new RtmpOutput("key", new(1920, 1080), "rtmp://a.rtmp.youtube.com/live2")
 };
+
 var response = await mediaCompositionClient.UpsertOutputsAsync(mediaCompositionId, outputsToUpsert);
 ```
 
