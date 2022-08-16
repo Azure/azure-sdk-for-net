@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotConfigConnectionStringResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotConfigConnectionStringResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="WebSiteSlotConfigConnectionStringCollection" /> instance call the GetWebSiteSlotConfigConnectionStrings method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotConnectionStringConfigResource" /> and their operations.
+    /// Each <see cref="WebSiteSlotConnectionStringConfigResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
+    /// To get a <see cref="WebSiteSlotConnectionStringConfigCollection" /> instance call the GetWebSiteSlotConnectionStringConfigs method from an instance of <see cref="WebSiteSlotResource" />.
     /// </summary>
-    public partial class WebSiteSlotConfigConnectionStringCollection : ArmCollection, IEnumerable<WebSiteSlotConfigConnectionStringResource>, IAsyncEnumerable<WebSiteSlotConfigConnectionStringResource>
+    public partial class WebSiteSlotConnectionStringConfigCollection : ArmCollection, IEnumerable<WebSiteSlotConnectionStringConfigResource>, IAsyncEnumerable<WebSiteSlotConnectionStringConfigResource>
     {
-        private readonly ClientDiagnostics _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteSlotConfigConnectionStringWebAppsRestClient;
+        private readonly ClientDiagnostics _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteSlotConnectionStringConfigWebAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigConnectionStringCollection"/> class for mocking. </summary>
-        protected WebSiteSlotConfigConnectionStringCollection()
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConnectionStringConfigCollection"/> class for mocking. </summary>
+        protected WebSiteSlotConnectionStringConfigCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigConnectionStringCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConnectionStringConfigCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WebSiteSlotConfigConnectionStringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSiteSlotConnectionStringConfigCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotConfigConnectionStringResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebSiteSlotConfigConnectionStringResource.ResourceType, out string webSiteSlotConfigConnectionStringWebAppsApiVersion);
-            _webSiteSlotConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigConnectionStringWebAppsApiVersion);
+            _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotConnectionStringConfigResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(WebSiteSlotConnectionStringConfigResource.ResourceType, out string webSiteSlotConnectionStringConfigWebAppsApiVersion);
+            _webSiteSlotConnectionStringConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConnectionStringConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual async Task<Response<WebSiteSlotConfigConnectionStringResource>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotConnectionStringConfigResource>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Get");
+            using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotConnectionStringConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual Response<WebSiteSlotConfigConnectionStringResource> Get(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteSlotConnectionStringConfigResource> Get(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Get");
+            using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken);
+                var response = _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotConnectionStringConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferencesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteSlotConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteSlotConfigConnectionStringResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteSlotConnectionStringConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteSlotConnectionStringConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteSlotConfigConnectionStringResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteSlotConnectionStringConfigResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteSlotConfigConnectionStringResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteSlotConnectionStringConfigResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferencesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteSlotConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteSlotConfigConnectionStringResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteSlotConnectionStringConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteSlotConnectionStringConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteSlotConfigConnectionStringResource> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteSlotConnectionStringConfigResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteSlotConfigConnectionStringResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteSlotConnectionStringConfigResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Exists");
+            using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringCollection.Exists");
+            using var scope = _webSiteSlotConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConnectionStringConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
+                var response = _webSiteSlotConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<WebSiteSlotConfigConnectionStringResource> IEnumerable<WebSiteSlotConfigConnectionStringResource>.GetEnumerator()
+        IEnumerator<WebSiteSlotConnectionStringConfigResource> IEnumerable<WebSiteSlotConnectionStringConfigResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WebSiteSlotConfigConnectionStringResource> IAsyncEnumerable<WebSiteSlotConfigConnectionStringResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<WebSiteSlotConnectionStringConfigResource> IAsyncEnumerable<WebSiteSlotConnectionStringConfigResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

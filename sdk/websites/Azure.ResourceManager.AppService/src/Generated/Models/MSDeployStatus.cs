@@ -7,20 +7,19 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A class representing the MSDeployStatus data model. </summary>
-    public partial class MSDeployStatusData : ResourceData
+    /// <summary> MSDeploy ARM response. </summary>
+    public partial class MSDeployStatus : ResourceData
     {
-        /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
-        public MSDeployStatusData()
+        /// <summary> Initializes a new instance of MSDeployStatus. </summary>
+        public MSDeployStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
+        /// <summary> Initializes a new instance of MSDeployStatus. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endOn"> End time of deploy operation. </param>
         /// <param name="isComplete"> Whether the deployment operation has completed. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, string kind) : base(id, name, resourceType, systemData)
+        internal MSDeployStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, string kind) : base(id, name, resourceType, systemData)
         {
             Deployer = deployer;
             ProvisioningState = provisioningState;

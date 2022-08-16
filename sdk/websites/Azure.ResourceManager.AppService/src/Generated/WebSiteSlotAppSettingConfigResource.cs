@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a WebSiteSlotConfigAppSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotConfigAppSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotConfigAppSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotConfigAppSetting method.
+    /// A Class representing a WebSiteSlotAppSettingConfig along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotAppSettingConfigResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotAppSettingConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotAppSettingConfig method.
     /// </summary>
-    public partial class WebSiteSlotConfigAppSettingResource : ArmResource
+    public partial class WebSiteSlotAppSettingConfigResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotConfigAppSettingResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotAppSettingConfigResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string appSettingKey)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _webSiteSlotConfigAppSettingWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteSlotConfigAppSettingWebAppsRestClient;
+        private readonly ClientDiagnostics _webSiteSlotAppSettingConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteSlotAppSettingConfigWebAppsRestClient;
         private readonly ApiKeyVaultReferenceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigAppSettingResource"/> class for mocking. </summary>
-        protected WebSiteSlotConfigAppSettingResource()
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotAppSettingConfigResource"/> class for mocking. </summary>
+        protected WebSiteSlotAppSettingConfigResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotConfigAppSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotAppSettingConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteSlotConfigAppSettingResource(ArmClient client, ApiKeyVaultReferenceData data) : this(client, data.Id)
+        internal WebSiteSlotAppSettingConfigResource(ArmClient client, ApiKeyVaultReferenceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigAppSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotAppSettingConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebSiteSlotConfigAppSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSiteSlotAppSettingConfigResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteSlotConfigAppSettingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string webSiteSlotConfigAppSettingWebAppsApiVersion);
-            _webSiteSlotConfigAppSettingWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigAppSettingWebAppsApiVersion);
+            _webSiteSlotAppSettingConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webSiteSlotAppSettingConfigWebAppsApiVersion);
+            _webSiteSlotAppSettingConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotAppSettingConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteSlotConfigAppSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotAppSettingConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingResource.Get");
+            using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigResource.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotAppSettingConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteSlotConfigAppSettingResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteSlotAppSettingConfigResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingResource.Get");
+            using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigResource.Get");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                var response = _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotAppSettingConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

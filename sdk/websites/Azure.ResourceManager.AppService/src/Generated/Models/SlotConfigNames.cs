@@ -9,20 +9,20 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A class representing the SlotConfigNamesResource data model. </summary>
-    public partial class SlotConfigNamesResourceData : ResourceData
+    /// <summary> Slot Config names azure resource. </summary>
+    public partial class SlotConfigNames : ResourceData
     {
-        /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
-        public SlotConfigNamesResourceData()
+        /// <summary> Initializes a new instance of SlotConfigNames. </summary>
+        public SlotConfigNames()
         {
             ConnectionStringNames = new ChangeTrackingList<string>();
             AppSettingNames = new ChangeTrackingList<string>();
             AzureStorageConfigNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
+        /// <summary> Initializes a new instance of SlotConfigNames. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettingNames"> List of application settings names. </param>
         /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames, string kind) : base(id, name, resourceType, systemData)
+        internal SlotConfigNames(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames, string kind) : base(id, name, resourceType, systemData)
         {
             ConnectionStringNames = connectionStringNames;
             AppSettingNames = appSettingNames;

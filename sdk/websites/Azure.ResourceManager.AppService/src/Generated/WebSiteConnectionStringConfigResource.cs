@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a WebSiteConfigConnectionString along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteConfigConnectionStringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteConfigConnectionStringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteConfigConnectionString method.
+    /// A Class representing a WebSiteConnectionStringConfig along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteConnectionStringConfigResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteConnectionStringConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteConnectionStringConfig method.
     /// </summary>
-    public partial class WebSiteConfigConnectionStringResource : ArmResource
+    public partial class WebSiteConnectionStringConfigResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WebSiteConfigConnectionStringResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WebSiteConnectionStringConfigResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string connectionStringKey)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _webSiteConfigConnectionStringWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteConfigConnectionStringWebAppsRestClient;
+        private readonly ClientDiagnostics _webSiteConnectionStringConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteConnectionStringConfigWebAppsRestClient;
         private readonly ApiKeyVaultReferenceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteConfigConnectionStringResource"/> class for mocking. </summary>
-        protected WebSiteConfigConnectionStringResource()
+        /// <summary> Initializes a new instance of the <see cref="WebSiteConnectionStringConfigResource"/> class for mocking. </summary>
+        protected WebSiteConnectionStringConfigResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteConfigConnectionStringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "WebSiteConnectionStringConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteConfigConnectionStringResource(ArmClient client, ApiKeyVaultReferenceData data) : this(client, data.Id)
+        internal WebSiteConnectionStringConfigResource(ArmClient client, ApiKeyVaultReferenceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteConfigConnectionStringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteConnectionStringConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebSiteConfigConnectionStringResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSiteConnectionStringConfigResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string webSiteConfigConnectionStringWebAppsApiVersion);
-            _webSiteConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteConfigConnectionStringWebAppsApiVersion);
+            _webSiteConnectionStringConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webSiteConnectionStringConfigWebAppsApiVersion);
+            _webSiteConnectionStringConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteConnectionStringConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteConfigConnectionStringResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteConnectionStringConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringResource.Get");
+            using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigResource.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteConnectionStringConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteConfigConnectionStringResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteConnectionStringConfigResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringResource.Get");
+            using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigResource.Get");
             scope.Start();
             try
             {
-                var response = _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                var response = _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteConnectionStringConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

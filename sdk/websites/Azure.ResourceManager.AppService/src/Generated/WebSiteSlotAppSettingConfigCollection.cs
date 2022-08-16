@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotConfigAppSettingResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotConfigAppSettingResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="WebSiteSlotConfigAppSettingCollection" /> instance call the GetWebSiteSlotConfigAppSettings method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotAppSettingConfigResource" /> and their operations.
+    /// Each <see cref="WebSiteSlotAppSettingConfigResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
+    /// To get a <see cref="WebSiteSlotAppSettingConfigCollection" /> instance call the GetWebSiteSlotAppSettingConfigs method from an instance of <see cref="WebSiteSlotResource" />.
     /// </summary>
-    public partial class WebSiteSlotConfigAppSettingCollection : ArmCollection, IEnumerable<WebSiteSlotConfigAppSettingResource>, IAsyncEnumerable<WebSiteSlotConfigAppSettingResource>
+    public partial class WebSiteSlotAppSettingConfigCollection : ArmCollection, IEnumerable<WebSiteSlotAppSettingConfigResource>, IAsyncEnumerable<WebSiteSlotAppSettingConfigResource>
     {
-        private readonly ClientDiagnostics _webSiteSlotConfigAppSettingWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteSlotConfigAppSettingWebAppsRestClient;
+        private readonly ClientDiagnostics _webSiteSlotAppSettingConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteSlotAppSettingConfigWebAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigAppSettingCollection"/> class for mocking. </summary>
-        protected WebSiteSlotConfigAppSettingCollection()
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotAppSettingConfigCollection"/> class for mocking. </summary>
+        protected WebSiteSlotAppSettingConfigCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigAppSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotAppSettingConfigCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WebSiteSlotConfigAppSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSiteSlotAppSettingConfigCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteSlotConfigAppSettingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotConfigAppSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebSiteSlotConfigAppSettingResource.ResourceType, out string webSiteSlotConfigAppSettingWebAppsApiVersion);
-            _webSiteSlotConfigAppSettingWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigAppSettingWebAppsApiVersion);
+            _webSiteSlotAppSettingConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotAppSettingConfigResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(WebSiteSlotAppSettingConfigResource.ResourceType, out string webSiteSlotAppSettingConfigWebAppsApiVersion);
+            _webSiteSlotAppSettingConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotAppSettingConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        public virtual async Task<Response<WebSiteSlotConfigAppSettingResource>> GetAsync(string appSettingKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotAppSettingConfigResource>> GetAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Get");
+            using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotAppSettingConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        public virtual Response<WebSiteSlotConfigAppSettingResource> Get(string appSettingKey, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteSlotAppSettingConfigResource> Get(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Get");
+            using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken);
+                var response = _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotAppSettingConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAppSettingsKeyVaultReferencesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteSlotConfigAppSettingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteSlotConfigAppSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteSlotAppSettingConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteSlotAppSettingConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteSlotConfigAppSettingResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteSlotAppSettingConfigResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
+                using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotAppSettingConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteSlotConfigAppSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteSlotAppSettingConfigResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
+                using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotAppSettingConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAppSettingsKeyVaultReferencesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteSlotConfigAppSettingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteSlotConfigAppSettingResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteSlotAppSettingConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteSlotAppSettingConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteSlotConfigAppSettingResource> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteSlotAppSettingConfigResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
+                using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotAppSettingConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteSlotConfigAppSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteSlotAppSettingConfigResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
+                using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotAppSettingConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Exists");
+            using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Exists");
+            using var scope = _webSiteSlotAppSettingConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotAppSettingConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken);
+                var response = _webSiteSlotAppSettingConfigWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<WebSiteSlotConfigAppSettingResource> IEnumerable<WebSiteSlotConfigAppSettingResource>.GetEnumerator()
+        IEnumerator<WebSiteSlotAppSettingConfigResource> IEnumerable<WebSiteSlotAppSettingConfigResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WebSiteSlotConfigAppSettingResource> IAsyncEnumerable<WebSiteSlotConfigAppSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<WebSiteSlotAppSettingConfigResource> IAsyncEnumerable<WebSiteSlotAppSettingConfigResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

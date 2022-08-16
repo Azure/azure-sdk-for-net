@@ -3679,7 +3679,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SlotConfigNamesResourceData>> ListSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<SlotConfigNames>> ListSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3691,13 +3691,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SlotConfigNamesResourceData value = default;
+                        SlotConfigNames value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SlotConfigNamesResourceData.DeserializeSlotConfigNamesResourceData(document.RootElement);
+                        value = SlotConfigNames.DeserializeSlotConfigNames(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SlotConfigNamesResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3710,7 +3708,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SlotConfigNamesResourceData> ListSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<SlotConfigNames> ListSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3722,19 +3720,17 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SlotConfigNamesResourceData value = default;
+                        SlotConfigNames value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SlotConfigNamesResourceData.DeserializeSlotConfigNamesResourceData(document.RootElement);
+                        value = SlotConfigNames.DeserializeSlotConfigNames(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SlotConfigNamesResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateSlotConfigurationNamesRequest(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData data)
+        internal HttpMessage CreateUpdateSlotConfigurationNamesRequest(string subscriptionId, string resourceGroupName, string name, SlotConfigNames slotConfigNames)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3753,7 +3749,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(slotConfigNames);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -3763,26 +3759,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> Names of application settings and connection strings. See example. </param>
+        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotConfigNames"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SlotConfigNamesResourceData>> UpdateSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SlotConfigNames>> UpdateSlotConfigurationNamesAsync(string subscriptionId, string resourceGroupName, string name, SlotConfigNames slotConfigNames, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
 
-            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, slotConfigNames);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SlotConfigNamesResourceData value = default;
+                        SlotConfigNames value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SlotConfigNamesResourceData.DeserializeSlotConfigNamesResourceData(document.RootElement);
+                        value = SlotConfigNames.DeserializeSlotConfigNames(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3794,26 +3790,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> Names of application settings and connection strings. See example. </param>
+        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slotConfigNames"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SlotConfigNamesResourceData> UpdateSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
+        public Response<SlotConfigNames> UpdateSlotConfigurationNames(string subscriptionId, string resourceGroupName, string name, SlotConfigNames slotConfigNames, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
 
-            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateSlotConfigurationNamesRequest(subscriptionId, resourceGroupName, name, slotConfigNames);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SlotConfigNamesResourceData value = default;
+                        SlotConfigNames value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SlotConfigNamesResourceData.DeserializeSlotConfigNamesResourceData(document.RootElement);
+                        value = SlotConfigNames.DeserializeSlotConfigNames(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5833,7 +5829,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetMSDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatus>> GetMSDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5845,13 +5841,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -5864,7 +5858,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetMSDeployStatus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatus> GetMSDeployStatus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5876,13 +5870,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -8600,7 +8592,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetInstanceMSDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatus>> GetInstanceMSDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -8613,13 +8605,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -8633,7 +8623,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetInstanceMSDeployStatus(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatus> GetInstanceMSDeployStatus(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -8646,13 +8636,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -19890,7 +19878,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetMSDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatus>> GetMSDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19903,13 +19891,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -19923,7 +19909,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetMSDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatus> GetMSDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19936,13 +19922,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -22855,7 +22839,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetInstanceMSDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatus>> GetInstanceMSDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22869,13 +22853,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -22890,7 +22872,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetInstanceMSDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatus> GetInstanceMSDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22904,13 +22886,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployStatusData value = default;
+                        MSDeployStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployStatusData.DeserializeMSDeployStatusData(document.RootElement);
+                        value = MSDeployStatus.DeserializeMSDeployStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((MSDeployStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

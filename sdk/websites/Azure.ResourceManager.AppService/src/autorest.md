@@ -40,12 +40,18 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql/status
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: WebSiteWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: WebSiteFtpPublishingCredentialsPolicy
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteConfigConnectionString
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm: WebSiteScmPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteConnectionStringConfig
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}: WebSiteContinuousWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}: WebSiteHybridConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}: WebSitePremierAddon
@@ -58,8 +64,9 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}: WebSiteSlot
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}: WebSiteSlotWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp: WebSiteSlotFtpPublishingCredentialsPolicy
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}: WebSiteSlotConfigAppSetting
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteSlotConfigConnectionString
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm: WebSiteSlotScmPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}: WebSiteSlotAppSettingConfig
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteSlotConnectionStringConfig
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}: WebSiteSlotContinuousWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}: WebSiteSlotPremierAddOn
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks: WebSiteSlotPrivateAccess
@@ -108,6 +115,15 @@ override-operation-name:
   ResourceHealthMetadata_ListByResourceGroup: GetAllResourceHealthMetadata
   WebApps_ListSnapshotsSlot: GetSlotSnapshots
   WebApps_ListSnapshotsFromDRSecondarySlot: GetSlotSnapshotsFromDRSecondary
+  WebApps_GetMSDeployStatus: GetMSDeployStatus
+  WebApps_GetMSDeployStatusSlot: GetMSDeployStatus
+  WebApps_GetInstanceMsDeployStatus: GetMSDeployStatus
+  WebApps_GetInstanceMsDeployStatusSlot: GetMSDeployStatus
+  WebApps_CreateMSDeployOperation: ExecuteMSDeployOperation
+  WebApps_CreateMSDeployOperationSlot: ExecuteMSDeployOperation
+  WebApps_CreateInstanceMSDeployOperation: ExecuteMSDeployOperation
+  WebApps_CreateInstanceMSDeployOperationSlot: ExecuteMSDeployOperation
+  WebApps_GetMSDeployLogSlot: GetMSDeployLog
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -312,8 +328,6 @@ rename-mapping:
   StaticSiteUserProvidedFunctionAppARMResource: StaticSiteUserProvidedFunctionApp
   StaticSiteUserProvidedFunctionApp: StaticSiteUserProvidedFunctionAppProperties # just rename this to avoid collision, this class will be automatically removed
   StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainContent
-# same name in model
-#   VnetInfoResource: VnetInfo
   WorkerPoolResource: WorkerPool
   CsmPublishingProfileOptions: CsmPublishingProfile
   StaticSiteTemplateOptions: StaticSiteTemplate
@@ -348,6 +362,8 @@ rename-mapping:
   SkuDescription: AppServiceSkuDescription
   Snapshot: AppSnapshot
   AnalysisDefinition: WebSiteAnalysisDefinition
+  SlotConfigNamesResource: SlotConfigNames
+  SlotConfigNames: SlotConfigNamesProperties
 
 # mgmt-debug:
 #   show-serialized-names: true

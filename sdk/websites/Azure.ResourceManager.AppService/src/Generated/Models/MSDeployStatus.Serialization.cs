@@ -8,12 +8,11 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MSDeployStatusData : IUtf8JsonSerializable
+    public partial class MSDeployStatus : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             writer.WriteEndObject();
         }
 
-        internal static MSDeployStatusData DeserializeMSDeployStatusData(JsonElement element)
+        internal static MSDeployStatus DeserializeMSDeployStatus(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new MSDeployStatusData(id, name, type, systemData.Value, deployer.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complete), kind.Value);
+            return new MSDeployStatus(id, name, type, systemData.Value, deployer.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complete), kind.Value);
         }
     }
 }

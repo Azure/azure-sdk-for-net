@@ -421,11 +421,11 @@ namespace Azure.ResourceManager.AppService
             return new WebSiteFtpPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
 
-        /// <summary> Gets an object representing a ScmSiteBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSite. </summary>
-        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicy()
+        /// <summary> Gets an object representing a WebSiteScmPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSite. </summary>
+        /// <returns> Returns a <see cref="WebSiteScmPublishingCredentialsPolicyResource" /> object. </returns>
+        public virtual WebSiteScmPublishingCredentialsPolicyResource GetWebSiteScmPublishingCredentialsPolicy()
         {
-            return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new WebSiteScmPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
 
         /// <summary> Gets a collection of SiteConfigAppsettingResources in the WebSite. </summary>
@@ -465,11 +465,11 @@ namespace Azure.ResourceManager.AppService
             return GetSiteConfigAppsettings().Get(appSettingKey, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebSiteConfigConnectionStringResources in the WebSite. </summary>
-        /// <returns> An object representing collection of WebSiteConfigConnectionStringResources and their operations over a WebSiteConfigConnectionStringResource. </returns>
-        public virtual WebSiteConfigConnectionStringCollection GetWebSiteConfigConnectionStrings()
+        /// <summary> Gets a collection of WebSiteConnectionStringConfigResources in the WebSite. </summary>
+        /// <returns> An object representing collection of WebSiteConnectionStringConfigResources and their operations over a WebSiteConnectionStringConfigResource. </returns>
+        public virtual WebSiteConnectionStringConfigCollection GetWebSiteConnectionStringConfigs()
         {
-            return GetCachedClient(Client => new WebSiteConfigConnectionStringCollection(Client, Id));
+            return GetCachedClient(Client => new WebSiteConnectionStringConfigCollection(Client, Id));
         }
 
         /// <summary>
@@ -482,9 +482,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebSiteConfigConnectionStringResource>> GetWebSiteConfigConnectionStringAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteConnectionStringConfigResource>> GetWebSiteConnectionStringConfigAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            return await GetWebSiteConfigConnectionStrings().GetAsync(connectionStringKey, cancellationToken).ConfigureAwait(false);
+            return await GetWebSiteConnectionStringConfigs().GetAsync(connectionStringKey, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -497,9 +497,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebSiteConfigConnectionStringResource> GetWebSiteConfigConnectionString(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteConnectionStringConfigResource> GetWebSiteConnectionStringConfig(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            return GetWebSiteConfigConnectionStrings().Get(connectionStringKey, cancellationToken);
+            return GetWebSiteConnectionStringConfigs().Get(connectionStringKey, cancellationToken);
         }
 
         /// <summary> Gets an object representing a LogsSiteConfigResource along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -507,13 +507,6 @@ namespace Azure.ResourceManager.AppService
         public virtual LogsSiteConfigResource GetLogsSiteConfig()
         {
             return new LogsSiteConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/logs"));
-        }
-
-        /// <summary> Gets an object representing a SlotConfigNamesResource along with the instance operations that can be performed on it in the WebSite. </summary>
-        /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
-        public virtual SlotConfigNamesResource GetSlotConfigNamesResource()
-        {
-            return new SlotConfigNamesResource(Client, new ResourceIdentifier(Id.ToString() + "/config/slotConfigNames"));
         }
 
         /// <summary> Gets an object representing a WebSiteConfigResource along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -632,13 +625,6 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<SiteDomainOwnershipIdentifierResource> GetSiteDomainOwnershipIdentifier(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             return GetSiteDomainOwnershipIdentifiers().Get(domainOwnershipIdentifierName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a SiteExtensionResource along with the instance operations that can be performed on it in the WebSite. </summary>
-        /// <returns> Returns a <see cref="SiteExtensionResource" /> object. </returns>
-        public virtual SiteExtensionResource GetSiteExtension()
-        {
-            return new SiteExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
 
         /// <summary> Gets a collection of SiteFunctionResources in the WebSite. </summary>
@@ -2551,6 +2537,102 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_ListSlotConfigurationNames
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SlotConfigNames>> GetSlotConfigurationNamesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetSlotConfigurationNames");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.ListSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_ListSlotConfigurationNames
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SlotConfigNames> GetSlotConfigurationNames(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetSlotConfigurationNames");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.ListSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_UpdateSlotConfigurationNames
+        /// </summary>
+        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
+        public virtual async Task<Response<SlotConfigNames>> UpdateSlotConfigurationNamesAsync(SlotConfigNames slotConfigNames, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateSlotConfigurationNames");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.UpdateSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotConfigNames, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_UpdateSlotConfigurationNames
+        /// </summary>
+        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
+        public virtual Response<SlotConfigNames> UpdateSlotConfigurationNames(SlotConfigNames slotConfigNames, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(slotConfigNames, nameof(slotConfigNames));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateSlotConfigurationNames");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.UpdateSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotConfigNames, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Description for Gets the last lines of docker logs for the given site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/containerlogs
         /// Operation Id: WebApps_GetWebSiteContainerLogs
@@ -2681,6 +2763,154 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.DiscoverBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
+        /// Operation Id: WebApps_GetMSDeployStatus
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MSDeployStatus>> GetMSDeployStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetMSDeployStatus");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetMSDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
+        /// Operation Id: WebApps_GetMSDeployStatus
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MSDeployStatus> GetMSDeployStatus(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetMSDeployStatus");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetMSDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Invoke the MSDeploy web app extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
+        /// Operation Id: WebApps_CreateMSDeployOperation
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public virtual async Task<ArmOperation<MSDeployStatus>> ExecuteMSDeployOperationAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.ExecuteMSDeployOperation");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.CreateMSDeployOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<MSDeployStatus>(new MSDeployStatusOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Invoke the MSDeploy web app extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
+        /// Operation Id: WebApps_CreateMSDeployOperation
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public virtual ArmOperation<MSDeployStatus> ExecuteMSDeployOperation(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.ExecuteMSDeployOperation");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.CreateMSDeployOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy, cancellationToken);
+                var operation = new AppServiceArmOperation<MSDeployStatus>(new MSDeployStatusOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy/log
+        /// Operation Id: WebApps_GetMSDeployLog
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MSDeployLog>> GetMSDeployLogAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetMSDeployLog");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetMSDeployLogAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy/log
+        /// Operation Id: WebApps_GetMSDeployLog
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MSDeployLog> GetMSDeployLog(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetMSDeployLog");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetMSDeployLog(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteConfigConnectionStringResource" /> and their operations.
-    /// Each <see cref="WebSiteConfigConnectionStringResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="WebSiteConfigConnectionStringCollection" /> instance call the GetWebSiteConfigConnectionStrings method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="WebSiteConnectionStringConfigResource" /> and their operations.
+    /// Each <see cref="WebSiteConnectionStringConfigResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="WebSiteConnectionStringConfigCollection" /> instance call the GetWebSiteConnectionStringConfigs method from an instance of <see cref="WebSiteResource" />.
     /// </summary>
-    public partial class WebSiteConfigConnectionStringCollection : ArmCollection, IEnumerable<WebSiteConfigConnectionStringResource>, IAsyncEnumerable<WebSiteConfigConnectionStringResource>
+    public partial class WebSiteConnectionStringConfigCollection : ArmCollection, IEnumerable<WebSiteConnectionStringConfigResource>, IAsyncEnumerable<WebSiteConnectionStringConfigResource>
     {
-        private readonly ClientDiagnostics _webSiteConfigConnectionStringWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteConfigConnectionStringWebAppsRestClient;
+        private readonly ClientDiagnostics _webSiteConnectionStringConfigWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteConnectionStringConfigWebAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteConfigConnectionStringCollection"/> class for mocking. </summary>
-        protected WebSiteConfigConnectionStringCollection()
+        /// <summary> Initializes a new instance of the <see cref="WebSiteConnectionStringConfigCollection"/> class for mocking. </summary>
+        protected WebSiteConnectionStringConfigCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteConfigConnectionStringCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteConnectionStringConfigCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WebSiteConfigConnectionStringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSiteConnectionStringConfigCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteConfigConnectionStringResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebSiteConfigConnectionStringResource.ResourceType, out string webSiteConfigConnectionStringWebAppsApiVersion);
-            _webSiteConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteConfigConnectionStringWebAppsApiVersion);
+            _webSiteConnectionStringConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteConnectionStringConfigResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(WebSiteConnectionStringConfigResource.ResourceType, out string webSiteConnectionStringConfigWebAppsApiVersion);
+            _webSiteConnectionStringConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteConnectionStringConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual async Task<Response<WebSiteConfigConnectionStringResource>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteConnectionStringConfigResource>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.Get");
+            using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteConnectionStringConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual Response<WebSiteConfigConnectionStringResource> Get(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteConnectionStringConfigResource> Get(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.Get");
+            using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken);
+                var response = _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteConnectionStringConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferences
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteConfigConnectionStringResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteConnectionStringConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteConnectionStringConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteConfigConnectionStringResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteConnectionStringConfigResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteConfigConnectionStringResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteConnectionStringConfigResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferences
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteConfigConnectionStringResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteConnectionStringConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteConnectionStringConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteConfigConnectionStringResource> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteConnectionStringConfigResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferences(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferences(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteConfigConnectionStringResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteConnectionStringConfigResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.GetAll");
+                using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteConnectionStringConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.Exists");
+            using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
-            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.Exists");
+            using var scope = _webSiteConnectionStringConfigWebAppsClientDiagnostics.CreateScope("WebSiteConnectionStringConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
+                var response = _webSiteConnectionStringConfigWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<WebSiteConfigConnectionStringResource> IEnumerable<WebSiteConfigConnectionStringResource>.GetEnumerator()
+        IEnumerator<WebSiteConnectionStringConfigResource> IEnumerable<WebSiteConnectionStringConfigResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WebSiteConfigConnectionStringResource> IAsyncEnumerable<WebSiteConfigConnectionStringResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<WebSiteConnectionStringConfigResource> IAsyncEnumerable<WebSiteConnectionStringConfigResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

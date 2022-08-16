@@ -2597,20 +2597,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ScmSiteBasicPublishingCredentialsPolicyResource
+        #region WebSiteScmPublishingCredentialsPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScmSiteBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteScmPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteScmPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteScmPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public static ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteScmPublishingCredentialsPolicyResource" /> object. </returns>
+        public static WebSiteScmPublishingCredentialsPolicyResource GetWebSiteScmPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScmSiteBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
-                return new ScmSiteBasicPublishingCredentialsPolicyResource(client, id);
+                WebSiteScmPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new WebSiteScmPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
@@ -2635,20 +2635,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region ScmSiteSlotBasicPublishingCredentialsPolicyResource
+        #region WebSiteSlotScmPublishingCredentialsPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public static ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> object. </returns>
+        public static WebSiteSlotScmPublishingCredentialsPolicyResource GetWebSiteSlotScmPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScmSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
-                return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(client, id);
+                WebSiteSlotScmPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new WebSiteSlotScmPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
@@ -2673,58 +2673,58 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region WebSiteConfigConnectionStringResource
+        #region WebSiteConnectionStringConfigResource
         /// <summary>
-        /// Gets an object representing a <see cref="WebSiteConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteConnectionStringConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteConnectionStringConfigResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteConnectionStringConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteConfigConnectionStringResource" /> object. </returns>
-        public static WebSiteConfigConnectionStringResource GetWebSiteConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteConnectionStringConfigResource" /> object. </returns>
+        public static WebSiteConnectionStringConfigResource GetWebSiteConnectionStringConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WebSiteConfigConnectionStringResource.ValidateResourceId(id);
-                return new WebSiteConfigConnectionStringResource(client, id);
+                WebSiteConnectionStringConfigResource.ValidateResourceId(id);
+                return new WebSiteConnectionStringConfigResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WebSiteSlotConfigAppSettingResource
+        #region WebSiteSlotAppSettingConfigResource
         /// <summary>
-        /// Gets an object representing a <see cref="WebSiteSlotConfigAppSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteSlotConfigAppSettingResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigAppSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotAppSettingConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotAppSettingConfigResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotAppSettingConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteSlotConfigAppSettingResource" /> object. </returns>
-        public static WebSiteSlotConfigAppSettingResource GetWebSiteSlotConfigAppSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotAppSettingConfigResource" /> object. </returns>
+        public static WebSiteSlotAppSettingConfigResource GetWebSiteSlotAppSettingConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WebSiteSlotConfigAppSettingResource.ValidateResourceId(id);
-                return new WebSiteSlotConfigAppSettingResource(client, id);
+                WebSiteSlotAppSettingConfigResource.ValidateResourceId(id);
+                return new WebSiteSlotAppSettingConfigResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WebSiteSlotConfigConnectionStringResource
+        #region WebSiteSlotConnectionStringConfigResource
         /// <summary>
-        /// Gets an object representing a <see cref="WebSiteSlotConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteSlotConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotConnectionStringConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotConnectionStringConfigResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConnectionStringConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteSlotConfigConnectionStringResource" /> object. </returns>
-        public static WebSiteSlotConfigConnectionStringResource GetWebSiteSlotConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotConnectionStringConfigResource" /> object. </returns>
+        public static WebSiteSlotConnectionStringConfigResource GetWebSiteSlotConnectionStringConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WebSiteSlotConfigConnectionStringResource.ValidateResourceId(id);
-                return new WebSiteSlotConfigConnectionStringResource(client, id);
+                WebSiteSlotConnectionStringConfigResource.ValidateResourceId(id);
+                return new WebSiteSlotConnectionStringConfigResource(client, id);
             }
             );
         }
@@ -2763,25 +2763,6 @@ namespace Azure.ResourceManager.AppService
             {
                 LogsSiteSlotConfigResource.ValidateResourceId(id);
                 return new LogsSiteSlotConfigResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SlotConfigNamesResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SlotConfigNamesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SlotConfigNamesResource.CreateResourceIdentifier" /> to create a <see cref="SlotConfigNamesResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
-        public static SlotConfigNamesResource GetSlotConfigNamesResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SlotConfigNamesResource.ValidateResourceId(id);
-                return new SlotConfigNamesResource(client, id);
             }
             );
         }
@@ -2972,82 +2953,6 @@ namespace Azure.ResourceManager.AppService
             {
                 SiteSlotDomainOwnershipIdentifierResource.ValidateResourceId(id);
                 return new SiteSlotDomainOwnershipIdentifierResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteExtensionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteExtensionResource" /> object. </returns>
-        public static SiteExtensionResource GetSiteExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteExtensionResource.ValidateResourceId(id);
-                return new SiteExtensionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteInstanceExtensionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteInstanceExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteInstanceExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteInstanceExtensionResource" /> object. </returns>
-        public static SiteInstanceExtensionResource GetSiteInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteInstanceExtensionResource.ValidateResourceId(id);
-                return new SiteInstanceExtensionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteSlotExtensionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
-        public static SiteSlotExtensionResource GetSiteSlotExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteSlotExtensionResource.ValidateResourceId(id);
-                return new SiteSlotExtensionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteSlotInstanceExtensionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotInstanceExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotInstanceExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource" /> object. </returns>
-        public static SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteSlotInstanceExtensionResource.ValidateResourceId(id);
-                return new SiteSlotInstanceExtensionResource(client, id);
             }
             );
         }

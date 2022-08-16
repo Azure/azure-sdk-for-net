@@ -333,33 +333,18 @@ namespace Azure.ResourceManager.AppService
             return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
 
-        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
-        public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicy()
+        /// <summary> Gets an object representing a WebSiteSlotScmPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
+        /// <returns> Returns a <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource" /> object. </returns>
+        public virtual WebSiteSlotScmPublishingCredentialsPolicyResource GetWebSiteSlotScmPublishingCredentialsPolicy()
         {
-            return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new WebSiteSlotScmPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
 
-        /// <summary> Gets a collection of WebSiteSlotConfigAppSettingResources in the WebSiteSlot. </summary>
-        /// <returns> An object representing collection of WebSiteSlotConfigAppSettingResources and their operations over a WebSiteSlotConfigAppSettingResource. </returns>
-        public virtual WebSiteSlotConfigAppSettingCollection GetWebSiteSlotConfigAppSettings()
+        /// <summary> Gets a collection of WebSiteSlotAppSettingConfigResources in the WebSiteSlot. </summary>
+        /// <returns> An object representing collection of WebSiteSlotAppSettingConfigResources and their operations over a WebSiteSlotAppSettingConfigResource. </returns>
+        public virtual WebSiteSlotAppSettingConfigCollection GetWebSiteSlotAppSettingConfigs()
         {
-            return GetCachedClient(Client => new WebSiteSlotConfigAppSettingCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Description for Gets the config reference and status of an app
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
-        /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
-        /// </summary>
-        /// <param name="appSettingKey"> App Setting key name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WebSiteSlotConfigAppSettingResource>> GetWebSiteSlotConfigAppSettingAsync(string appSettingKey, CancellationToken cancellationToken = default)
-        {
-            return await GetWebSiteSlotConfigAppSettings().GetAsync(appSettingKey, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new WebSiteSlotAppSettingConfigCollection(Client, Id));
         }
 
         /// <summary>
@@ -372,16 +357,31 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebSiteSlotConfigAppSettingResource> GetWebSiteSlotConfigAppSetting(string appSettingKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotAppSettingConfigResource>> GetWebSiteSlotAppSettingConfigAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            return GetWebSiteSlotConfigAppSettings().Get(appSettingKey, cancellationToken);
+            return await GetWebSiteSlotAppSettingConfigs().GetAsync(appSettingKey, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WebSiteSlotConfigConnectionStringResources in the WebSiteSlot. </summary>
-        /// <returns> An object representing collection of WebSiteSlotConfigConnectionStringResources and their operations over a WebSiteSlotConfigConnectionStringResource. </returns>
-        public virtual WebSiteSlotConfigConnectionStringCollection GetWebSiteSlotConfigConnectionStrings()
+        /// <summary>
+        /// Description for Gets the config reference and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
+        /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
+        /// </summary>
+        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WebSiteSlotAppSettingConfigResource> GetWebSiteSlotAppSettingConfig(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new WebSiteSlotConfigConnectionStringCollection(Client, Id));
+            return GetWebSiteSlotAppSettingConfigs().Get(appSettingKey, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WebSiteSlotConnectionStringConfigResources in the WebSiteSlot. </summary>
+        /// <returns> An object representing collection of WebSiteSlotConnectionStringConfigResources and their operations over a WebSiteSlotConnectionStringConfigResource. </returns>
+        public virtual WebSiteSlotConnectionStringConfigCollection GetWebSiteSlotConnectionStringConfigs()
+        {
+            return GetCachedClient(Client => new WebSiteSlotConnectionStringConfigCollection(Client, Id));
         }
 
         /// <summary>
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebSiteSlotConfigConnectionStringResource>> GetWebSiteSlotConfigConnectionStringAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotConnectionStringConfigResource>> GetWebSiteSlotConnectionStringConfigAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            return await GetWebSiteSlotConfigConnectionStrings().GetAsync(connectionStringKey, cancellationToken).ConfigureAwait(false);
+            return await GetWebSiteSlotConnectionStringConfigs().GetAsync(connectionStringKey, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -409,9 +409,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebSiteSlotConfigConnectionStringResource> GetWebSiteSlotConfigConnectionString(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteSlotConnectionStringConfigResource> GetWebSiteSlotConnectionStringConfig(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            return GetWebSiteSlotConfigConnectionStrings().Get(connectionStringKey, cancellationToken);
+            return GetWebSiteSlotConnectionStringConfigs().Get(connectionStringKey, cancellationToken);
         }
 
         /// <summary> Gets an object representing a LogsSiteSlotConfigResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
@@ -537,13 +537,6 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<SiteSlotDomainOwnershipIdentifierResource> GetSiteSlotDomainOwnershipIdentifier(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDomainOwnershipIdentifiers().Get(domainOwnershipIdentifierName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a SiteSlotExtensionResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
-        public virtual SiteSlotExtensionResource GetSiteSlotExtension()
-        {
-            return new SiteSlotExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
 
         /// <summary> Gets a collection of SiteSlotFunctionResources in the WebSiteSlot. </summary>
@@ -2366,6 +2359,154 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.DiscoverBackupSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
+        /// Operation Id: WebApps_GetMSDeployStatusSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MSDeployStatus>> GetMSDeployStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetMSDeployStatus");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.GetMSDeployStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
+        /// Operation Id: WebApps_GetMSDeployStatusSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MSDeployStatus> GetMSDeployStatus(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetMSDeployStatus");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.GetMSDeployStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Invoke the MSDeploy web app extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
+        /// Operation Id: WebApps_CreateMSDeployOperationSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public virtual async Task<ArmOperation<MSDeployStatus>> ExecuteMSDeployOperationAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.ExecuteMSDeployOperation");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.CreateMSDeployOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<MSDeployStatus>(new MSDeployStatusOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Invoke the MSDeploy web app extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
+        /// Operation Id: WebApps_CreateMSDeployOperationSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="msDeploy"> Details of MSDeploy operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
+        public virtual ArmOperation<MSDeployStatus> ExecuteMSDeployOperation(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.ExecuteMSDeployOperation");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.CreateMSDeployOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy, cancellationToken);
+                var operation = new AppServiceArmOperation<MSDeployStatus>(new MSDeployStatusOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateCreateMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy/log
+        /// Operation Id: WebApps_GetMSDeployLogSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MSDeployLog>> GetMSDeployLogAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetMSDeployLog");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.GetMSDeployLogSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy/log
+        /// Operation Id: WebApps_GetMSDeployLogSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MSDeployLog> GetMSDeployLog(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetMSDeployLog");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.GetMSDeployLogSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
