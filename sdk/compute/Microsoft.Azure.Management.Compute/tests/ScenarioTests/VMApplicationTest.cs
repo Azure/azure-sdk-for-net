@@ -43,7 +43,8 @@ namespace Compute.Tests
                         // when re-recording the test ensure that you use a valid packageReferenceId
                         // refer to https://microsoft.sharepoint.com/:w:/t/ComputeVM/EcYeD-HHrLZHpYyxo3iRCtkB-VeO8BuWE4dq4hoX9tlzEg?e=nOTgTu
                         // for how to create a valid VMApplication
-                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8", treatFailureAsDeploymentFailure: true, enableAutomaticUpgrade: true)
+                        // * VMGalleryApplication resource is not created in the test because it needs Storage Account access. *
+                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma_testing/providers/Microsoft.Compute/galleries/gallery1/applications/golang/versions/1.15.8", treatFailureAsDeploymentFailure: true, enableAutomaticUpgrade: true)
                     };
 
                     var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
