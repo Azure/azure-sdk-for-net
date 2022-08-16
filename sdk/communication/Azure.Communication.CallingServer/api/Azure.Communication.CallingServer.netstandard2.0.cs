@@ -478,14 +478,6 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.RecordingState left, Azure.Communication.CallingServer.RecordingState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RecordingStateChanged : Azure.Communication.CallingServer.CallAutomationEventBase
-    {
-        internal RecordingStateChanged() { }
-        public string RecordingId { get { throw null; } }
-        public System.DateTimeOffset? StartDateTime { get { throw null; } }
-        public Azure.Communication.CallingServer.RecordingState? State { get { throw null; } }
-        public static Azure.Communication.CallingServer.RecordingStateChanged Deserialize(string content) { throw null; }
-    }
     public partial class RecordingStateResult
     {
         internal RecordingStateResult() { }
