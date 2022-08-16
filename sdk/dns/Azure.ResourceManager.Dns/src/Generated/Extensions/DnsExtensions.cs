@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsZoneResource>(() =>
+            return client.GetResourceClient(() =>
             {
                 DnsZoneResource.ValidateResourceId(id);
                 return new DnsZoneResource(client, id);

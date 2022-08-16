@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -31,14 +32,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static SharedAccessAuthorizationRuleProperties DeserializeSharedAccessAuthorizationRuleProperties(JsonElement element)
         {
-            Optional<IList<AccessRight>> rights = default;
+            Optional<IList<AuthorizationRuleAccessRight>> rights = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> keyName = default;
             Optional<string> claimType = default;
             Optional<string> claimValue = default;
-            Optional<string> modifiedTime = default;
-            Optional<string> createdTime = default;
+            Optional<DateTimeOffset> modifiedTime = default;
+            Optional<DateTimeOffset> createdTime = default;
             Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,10 +50,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccessRight> array = new List<AccessRight>();
+                    List<AuthorizationRuleAccessRight> array = new List<AuthorizationRuleAccessRight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToAccessRight());
+                        array.Add(item.GetString().ToAuthorizationRuleAccessRight());
                     }
                     rights = array;
                     continue;
@@ -84,12 +85,22 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (property.NameEquals("modifiedTime"))
                 {
-                    modifiedTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    modifiedTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    createdTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("revision"))
@@ -103,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     continue;
                 }
             }
-            return new SharedAccessAuthorizationRuleProperties(Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, modifiedTime.Value, createdTime.Value, Optional.ToNullable(revision));
+            return new SharedAccessAuthorizationRuleProperties(Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Optional.ToNullable(modifiedTime), Optional.ToNullable(createdTime), Optional.ToNullable(revision));
         }
     }
 }

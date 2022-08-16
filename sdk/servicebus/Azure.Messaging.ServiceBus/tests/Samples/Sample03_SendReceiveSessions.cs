@@ -118,8 +118,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
-                // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+                // create a message and set the SessionId
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!") { SessionId = "mySessionId" };
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -140,7 +140,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }
         }
     }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The details about the localizable name of a type of usage.
-    /// Serialized Name: LocalizedName
-    /// </summary>
+    /// <summary> The details about the localizable name of a type of usage. </summary>
     public partial class HDInsightLocalizedName
     {
         /// <summary> Initializes a new instance of HDInsightLocalizedName. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightLocalizedName. </summary>
-        /// <param name="value">
-        /// The name of the used resource.
-        /// Serialized Name: LocalizedName.value
-        /// </param>
-        /// <param name="localizedValue">
-        /// The localized name of the used resource.
-        /// Serialized Name: LocalizedName.localizedValue
-        /// </param>
+        /// <param name="value"> The name of the used resource. </param>
+        /// <param name="localizedValue"> The localized name of the used resource. </param>
         internal HDInsightLocalizedName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary>
-        /// The name of the used resource.
-        /// Serialized Name: LocalizedName.value
-        /// </summary>
+        /// <summary> The name of the used resource. </summary>
         public string Value { get; }
-        /// <summary>
-        /// The localized name of the used resource.
-        /// Serialized Name: LocalizedName.localizedValue
-        /// </summary>
+        /// <summary> The localized name of the used resource. </summary>
         public string LocalizedValue { get; }
     }
 }

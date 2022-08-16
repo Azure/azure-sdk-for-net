@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Transformation for data flow sink. </summary>
-    public partial class DataFlowSink : Transformation
+    public partial class DataFlowSink : DataFlowTransformation
     {
         /// <summary> Initializes a new instance of DataFlowSink. </summary>
         /// <param name="name"> Transformation name. </param>
@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
         /// <param name="rejectedDataLinkedService"> Rejected data linked service reference. </param>
-        internal DataFlowSink(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService, LinkedServiceReference rejectedDataLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        internal DataFlowSink(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService, FactoryLinkedServiceReference rejectedDataLinkedService) : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
             RejectedDataLinkedService = rejectedDataLinkedService;
         }
 
         /// <summary> Schema linked service reference. </summary>
-        public LinkedServiceReference SchemaLinkedService { get; set; }
+        public FactoryLinkedServiceReference SchemaLinkedService { get; set; }
         /// <summary> Rejected data linked service reference. </summary>
-        public LinkedServiceReference RejectedDataLinkedService { get; set; }
+        public FactoryLinkedServiceReference RejectedDataLinkedService { get; set; }
     }
 }

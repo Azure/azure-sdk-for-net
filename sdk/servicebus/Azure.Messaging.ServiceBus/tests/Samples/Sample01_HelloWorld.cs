@@ -295,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
-        /// Authenticate with a connection string/>.
+        /// Authenticate with a connection string.
         /// </summary>
         public void AuthenticateWithConnectionString()
         {
@@ -307,7 +307,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
-        /// Connect to the service using a custom endpoint address/>.
+        /// Connect to the service using a custom endpoint address.
         /// </summary>
         public void ConnectUsingCustomEndpoint()
         {
@@ -340,6 +340,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 // Take action based on a service timeout
             }
+            #endregion
+        }
+
+        /// <summary>
+        /// Set the TimeToLive on a message.
+        /// </summary>
+        public void SetMessageTimeToLive()
+        {
+            #region Snippet:ServiceBusMessageTimeToLive
+            var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };
             #endregion
         }
     }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The cluster definition.
-    /// Serialized Name: ClusterDefinition
-    /// </summary>
+    /// <summary> The cluster definition. </summary>
     public partial class HDInsightClusterDefinition
     {
         /// <summary> Initializes a new instance of HDInsightClusterDefinition. </summary>
@@ -24,22 +21,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterDefinition. </summary>
-        /// <param name="blueprint">
-        /// The link to the blueprint.
-        /// Serialized Name: ClusterDefinition.blueprint
-        /// </param>
-        /// <param name="kind">
-        /// The type of cluster.
-        /// Serialized Name: ClusterDefinition.kind
-        /// </param>
-        /// <param name="componentVersion">
-        /// The versions of different services in the cluster.
-        /// Serialized Name: ClusterDefinition.componentVersion
-        /// </param>
-        /// <param name="configurations">
-        /// The cluster configurations.
-        /// Serialized Name: ClusterDefinition.configurations
-        /// </param>
+        /// <param name="blueprint"> The link to the blueprint. </param>
+        /// <param name="kind"> The type of cluster. </param>
+        /// <param name="componentVersion"> The versions of different services in the cluster. </param>
+        /// <param name="configurations"> The cluster configurations. </param>
         internal HDInsightClusterDefinition(string blueprint, string kind, IDictionary<string, string> componentVersion, BinaryData configurations)
         {
             Blueprint = blueprint;
@@ -48,25 +33,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             Configurations = configurations;
         }
 
-        /// <summary>
-        /// The link to the blueprint.
-        /// Serialized Name: ClusterDefinition.blueprint
-        /// </summary>
+        /// <summary> The link to the blueprint. </summary>
         public string Blueprint { get; set; }
-        /// <summary>
-        /// The type of cluster.
-        /// Serialized Name: ClusterDefinition.kind
-        /// </summary>
+        /// <summary> The type of cluster. </summary>
         public string Kind { get; set; }
-        /// <summary>
-        /// The versions of different services in the cluster.
-        /// Serialized Name: ClusterDefinition.componentVersion
-        /// </summary>
+        /// <summary> The versions of different services in the cluster. </summary>
         public IDictionary<string, string> ComponentVersion { get; }
-        /// <summary>
-        /// The cluster configurations.
-        /// Serialized Name: ClusterDefinition.configurations
-        /// </summary>
+        /// <summary> The cluster configurations. </summary>
         public BinaryData Configurations { get; set; }
     }
 }

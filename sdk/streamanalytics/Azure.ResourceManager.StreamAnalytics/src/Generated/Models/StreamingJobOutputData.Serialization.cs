@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(TimeWindow))
             {
                 writer.WritePropertyName("timeWindow");
-                writer.WriteStringValue(TimeWindow);
+                writer.WriteStringValue(TimeWindow.Value);
             }
             if (Optional.IsDefined(SizeWindow))
             {
@@ -56,22 +57,27 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobOutputData DeserializeStreamingJobOutputData(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<OutputDataSource> datasource = default;
-            Optional<string> timeWindow = default;
+            Optional<ResourceType> type = default;
+            Optional<StreamingJobOutputDataSource> datasource = default;
+            Optional<DateTimeOffset> timeWindow = default;
             Optional<float> sizeWindow = default;
-            Optional<Serialization> serialization = default;
-            Optional<Diagnostics> diagnostics = default;
+            Optional<StreamAnalyticsDataSerialization> serialization = default;
+            Optional<StreamingJobDiagnostics> diagnostics = default;
             Optional<ETag> etag = default;
             Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
-            Optional<OutputWatermarkProperties> watermarkSettings = default;
+            Optional<StreamingJobOutputWatermarkProperties> watermarkSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -81,7 +87,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -100,12 +111,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            datasource = OutputDataSource.DeserializeOutputDataSource(property0.Value);
+                            datasource = StreamingJobOutputDataSource.DeserializeStreamingJobOutputDataSource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeWindow"))
                         {
-                            timeWindow = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            timeWindow = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                         if (property0.NameEquals("sizeWindow"))
@@ -125,7 +141,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serialization = Serialization.DeserializeSerialization(property0.Value);
+                            serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"))
@@ -135,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            diagnostics = Diagnostics.DeserializeDiagnostics(property0.Value);
+                            diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("etag"))
@@ -170,14 +186,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            watermarkSettings = OutputWatermarkProperties.DeserializeOutputWatermarkProperties(property0.Value);
+                            watermarkSettings = StreamingJobOutputWatermarkProperties.DeserializeStreamingJobOutputWatermarkProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StreamingJobOutputData(id.Value, name.Value, type.Value, datasource.Value, timeWindow.Value, Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), datasource.Value, Optional.ToNullable(timeWindow), Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
         }
     }
 }

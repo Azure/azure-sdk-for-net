@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.Storage
             TableServices = new TableServicesOperations(this);
             Table = new TableOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-09-01";
+            ApiVersion = "2022-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

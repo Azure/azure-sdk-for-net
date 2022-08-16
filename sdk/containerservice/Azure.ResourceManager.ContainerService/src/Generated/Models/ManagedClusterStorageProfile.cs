@@ -28,44 +28,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
-        /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
-        public bool? DiskCsiDriverEnabled
-        {
-            get => DiskCsiDriver is null ? default : DiskCsiDriver.Enabled;
-            set
-            {
-                if (DiskCsiDriver is null)
-                    DiskCsiDriver = new ManagedClusterStorageProfileDiskCsiDriver();
-                DiskCsiDriver.Enabled = value;
-            }
-        }
 
         /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileFileCsiDriver FileCsiDriver { get; set; }
-        /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
-        public bool? FileCsiDriverEnabled
-        {
-            get => FileCsiDriver is null ? default : FileCsiDriver.Enabled;
-            set
-            {
-                if (FileCsiDriver is null)
-                    FileCsiDriver = new ManagedClusterStorageProfileFileCsiDriver();
-                FileCsiDriver.Enabled = value;
-            }
-        }
 
         /// <summary> Snapshot Controller settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileSnapshotController SnapshotController { get; set; }
-        /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
-        public bool? SnapshotControllerEnabled
-        {
-            get => SnapshotController is null ? default : SnapshotController.Enabled;
-            set
-            {
-                if (SnapshotController is null)
-                    SnapshotController = new ManagedClusterStorageProfileSnapshotController();
-                SnapshotController.Enabled = value;
-            }
-        }
     }
 }

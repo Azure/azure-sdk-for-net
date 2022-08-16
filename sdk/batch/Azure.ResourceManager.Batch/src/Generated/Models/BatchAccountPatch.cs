@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            AllowedAuthenticationModes = new ChangeTrackingList<AuthenticationMode>();
+            AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
         }
 
         /// <summary> The user-specified tags associated with the account. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The properties related to the auto-storage account. </summary>
-        public AutoStorageBaseProperties AutoStorage { get; set; }
+        public BatchAccountAutoStorageBaseConfiguration AutoStorage { get; set; }
         /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
-        public EncryptionProperties Encryption { get; set; }
+        public BatchAccountEncryptionConfiguration Encryption { get; set; }
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IList<AuthenticationMode> AllowedAuthenticationModes { get; set; }
+        public IList<BatchAuthenticationMode> AllowedAuthenticationModes { get; set; }
         /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
-        public BatchVirtualMachineNetworkProfile NetworkProfile { get; set; }
+        public BatchNetworkProfile NetworkProfile { get; set; }
     }
 }

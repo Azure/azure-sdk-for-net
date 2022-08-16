@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidateCertificateChain))
+            if (Optional.IsDefined(ShouldValidateCertificateChain))
             {
                 writer.WritePropertyName("validateCertificateChain");
-                writer.WriteBooleanValue(ValidateCertificateChain.Value);
+                writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
-            if (Optional.IsDefined(ValidateCertificateName))
+            if (Optional.IsDefined(ShouldValidateCertificateName))
             {
                 writer.WritePropertyName("validateCertificateName");
-                writer.WriteBooleanValue(ValidateCertificateName.Value);
+                writer.WriteBooleanValue(ShouldValidateCertificateName.Value);
             }
             writer.WriteEndObject();
         }

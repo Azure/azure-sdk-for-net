@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The update cluster identity certificate request parameters.
-    /// Serialized Name: UpdateClusterIdentityCertificateParameters
-    /// </summary>
+    /// <summary> The update cluster identity certificate request parameters. </summary>
     public partial class HDInsightClusterUpdateIdentityCertificateContent
     {
         /// <summary> Initializes a new instance of HDInsightClusterUpdateIdentityCertificateContent. </summary>
@@ -18,20 +15,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary>
-        /// The application id.
-        /// Serialized Name: UpdateClusterIdentityCertificateParameters.applicationId
-        /// </summary>
+        /// <summary> The application id. </summary>
         public string ApplicationId { get; set; }
-        /// <summary>
-        /// The certificate in base64 encoded format.
-        /// Serialized Name: UpdateClusterIdentityCertificateParameters.certificate
-        /// </summary>
+        /// <summary> The certificate in base64 encoded format. </summary>
         public string Certificate { get; set; }
-        /// <summary>
-        /// The password of the certificate.
-        /// Serialized Name: UpdateClusterIdentityCertificateParameters.certificatePassword
-        /// </summary>
+        /// <summary> The password of the certificate. </summary>
         public string CertificatePassword { get; set; }
     }
 }

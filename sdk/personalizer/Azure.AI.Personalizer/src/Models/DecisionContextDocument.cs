@@ -3,6 +3,7 @@
 
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
+using System;
 
 namespace Azure.AI.Personalizer
 {
@@ -14,7 +15,7 @@ namespace Azure.AI.Personalizer
         /// <param name="actionFeatures"> The json list of action features </param>
         /// <param name="slotId"> The slot Id </param>
         /// <param name="slotFeatures"> The json list of slot features </param>
-        public DecisionContextDocument(string id, List<string> actionFeatures, string slotId, List<string> slotFeatures)
+        public DecisionContextDocument(string id, IList<BinaryData> actionFeatures, string slotId, IList<BinaryData> slotFeatures)
         {
             Id = id;
             ActionFeatures = actionFeatures;
@@ -26,30 +27,24 @@ namespace Azure.AI.Personalizer
         /// Supply _tag for online evaluation
         /// </summary>
         [JsonPropertyName("_tag")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Id { get; }
 
         /// <summary>
         /// A list of generic action feature jsons.
         /// </summary>
         [JsonPropertyName("j")]
-        [JsonConverter(typeof(JsonRawStringListConverter))]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public List<string> ActionFeatures { get; }
+        public IList<BinaryData> ActionFeatures { get; }
 
         /// <summary>
         /// Slot ID.
         /// </summary>
         [JsonPropertyName("_id")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SlotId { get; }
 
         /// <summary>
         /// A list of generic slot feature jsons.
         /// </summary>
         [JsonPropertyName("sj")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonConverter(typeof(JsonRawStringListConverter))]
-        public List<string> SlotFeatures { get; }
+        public IList<BinaryData> SlotFeatures { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of CommonEncryptionCbcs. </summary>
         public CommonEncryptionCbcs()
         {
-            ClearTracks = new ChangeTrackingList<TrackSelection>();
+            ClearTracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of CommonEncryptionCbcs. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="clearTracks"> Representing which tracks should not be encrypted. </param>
         /// <param name="contentKeys"> Representing default content key for each encryption scheme and separate content keys for specific tracks. </param>
         /// <param name="drm"> Configuration of DRMs for current encryption scheme. </param>
-        internal CommonEncryptionCbcs(EnabledProtocols enabledProtocols, IList<TrackSelection> clearTracks, StreamingPolicyContentKeys contentKeys, CbcsDrmConfiguration drm)
+        internal CommonEncryptionCbcs(MediaEnabledProtocols enabledProtocols, IList<MediaTrackSelection> clearTracks, StreamingPolicyContentKeys contentKeys, CbcsDrmConfiguration drm)
         {
             EnabledProtocols = enabledProtocols;
             ClearTracks = clearTracks;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Representing supported protocols. </summary>
-        public EnabledProtocols EnabledProtocols { get; set; }
+        public MediaEnabledProtocols EnabledProtocols { get; set; }
         /// <summary> Representing which tracks should not be encrypted. </summary>
-        public IList<TrackSelection> ClearTracks { get; }
+        public IList<MediaTrackSelection> ClearTracks { get; }
         /// <summary> Representing default content key for each encryption scheme and separate content keys for specific tracks. </summary>
         public StreamingPolicyContentKeys ContentKeys { get; set; }
         /// <summary> Configuration of DRMs for current encryption scheme. </summary>

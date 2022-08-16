@@ -1,6 +1,6 @@
-# Sending and Receiving Messages
+# Sending and receiving messages
 
-This sample demonstrates how to send and receive messages from a Service Bus queue.
+This sample demonstrates how to send and receive messages from a Service Bus queue. Once a message is received, you will typically want to settle it. Message settlement is covered in detail in the [Settling Messages samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample02_MessageSettlement.md).
 
 ### Send and receive a message using queues
 
@@ -140,7 +140,7 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 
 ## Peeking a message
 
-It's also possible to simply peek a message. Peeking a message does not require the message to be locked.
+It's also possible to simply peek a message. Peeking a message does not require the message to be locked. Because the message is not locked to a specific receiver, the message will not be able to be settled. It's also possible that another receiver could lock the message and settle it while you are looking at the peeked message.
 
 ```C# Snippet:ServiceBusPeek
 ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync();
@@ -156,12 +156,22 @@ long seq = await sender.ScheduleMessageAsync(
     DateTimeOffset.Now.AddDays(1));
 ```
 
+You can also schedule a message by setting the `ScheduledEnqueueTime` property on the message and using the `SendMessageAsync` or `SendMessagesAsync` methods. The difference is that you won't get back the sequence number when using these methods so you would need to peek the message to get the sequence number if you wanted to cancel the scheduled message.
+
 ### Cancel a scheduled message
 
 Cancelling the scheduled message will delete it from the service.
 
 ```C# Snippet:ServiceBusCancelScheduled
 await sender.CancelScheduledMessageAsync(seq);
+```
+
+### Setting time to live
+
+Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://docs.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.  
+
+```C# Snippet:ServiceBusMessageTimeToLive
+var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };
 ```
 
 ## Source

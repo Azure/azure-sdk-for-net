@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
-        internal CustomActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData command, LinkedServiceReference resourceLinkedService, BinaryData folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, BinaryData autoUserSpecification) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CustomActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData command, FactoryLinkedServiceReference resourceLinkedService, BinaryData folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, BinaryData autoUserSpecification) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
         public BinaryData Command { get; set; }
         /// <summary> Resource linked service reference. </summary>
-        public LinkedServiceReference ResourceLinkedService { get; set; }
+        public FactoryLinkedServiceReference ResourceLinkedService { get; set; }
         /// <summary> Folder path for resource files Type: string (or Expression with resultType string). </summary>
         public BinaryData FolderPath { get; set; }
         /// <summary> Reference objects. </summary>

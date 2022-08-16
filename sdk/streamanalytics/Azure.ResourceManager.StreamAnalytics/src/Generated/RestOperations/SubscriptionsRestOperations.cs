@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionQuotasListResult>> ListQuotasAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamAnalyticsSubscriptionQuotasListResult>> ListQuotasAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        SubscriptionQuotasListResult value = default;
+                        StreamAnalyticsSubscriptionQuotasListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionQuotasListResult.DeserializeSubscriptionQuotasListResult(document.RootElement);
+                        value = StreamAnalyticsSubscriptionQuotasListResult.DeserializeStreamAnalyticsSubscriptionQuotasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionQuotasListResult> ListQuotas(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<StreamAnalyticsSubscriptionQuotasListResult> ListQuotas(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        SubscriptionQuotasListResult value = default;
+                        StreamAnalyticsSubscriptionQuotasListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionQuotasListResult.DeserializeSubscriptionQuotasListResult(document.RootElement);
+                        value = StreamAnalyticsSubscriptionQuotasListResult.DeserializeStreamAnalyticsSubscriptionQuotasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateTestQueryRequest(string subscriptionId, AzureLocation location, TestQueryContent content)
+        internal HttpMessage CreateTestQueryRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(testQuery);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Test the Stream Analytics query on a sample input. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> The query testing object that defines the input, output, and transformation for the query testing. </param>
+        /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="testQuery"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TestQueryAsync(string subscriptionId, AzureLocation location, TestQueryContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> TestQueryAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
-            using var message = CreateTestQueryRequest(subscriptionId, location, content);
+            using var message = CreateTestQueryRequest(subscriptionId, location, testQuery);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -158,16 +158,16 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Test the Stream Analytics query on a sample input. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> The query testing object that defines the input, output, and transformation for the query testing. </param>
+        /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="testQuery"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TestQuery(string subscriptionId, AzureLocation location, TestQueryContent content, CancellationToken cancellationToken = default)
+        public Response TestQuery(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
-            using var message = CreateTestQueryRequest(subscriptionId, location, content);
+            using var message = CreateTestQueryRequest(subscriptionId, location, testQuery);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateCompileQueryRequest(string subscriptionId, AzureLocation location, CompileQuery compileQuery)
+        internal HttpMessage CreateCompileQueryRequest(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(compileQuery);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(compileQuery);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="compileQuery"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QueryCompilationResult>> CompileQueryAsync(string subscriptionId, AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        public async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQueryAsync(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        QueryCompilationResult value = default;
+                        StreamAnalyticsQueryCompilationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueryCompilationResult.DeserializeQueryCompilationResult(document.RootElement);
+                        value = StreamAnalyticsQueryCompilationResult.DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="compileQuery"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QueryCompilationResult> CompileQuery(string subscriptionId, AzureLocation location, CompileQuery compileQuery, CancellationToken cancellationToken = default)
+        public Response<StreamAnalyticsQueryCompilationResult> CompileQuery(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case 200:
                     {
-                        QueryCompilationResult value = default;
+                        StreamAnalyticsQueryCompilationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueryCompilationResult.DeserializeQueryCompilationResult(document.RootElement);
+                        value = StreamAnalyticsQueryCompilationResult.DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateSampleInputRequest(string subscriptionId, AzureLocation location, SampleContent content)
+        internal HttpMessage CreateSampleInputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SampleInputAsync(string subscriptionId, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> SampleInputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SampleInput(string subscriptionId, AzureLocation location, SampleContent content, CancellationToken cancellationToken = default)
+        public Response SampleInput(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateTestInputRequest(string subscriptionId, AzureLocation location, TestInputContent content)
+        internal HttpMessage CreateTestInputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TestInputAsync(string subscriptionId, AzureLocation location, TestInputContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> TestInputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TestInput(string subscriptionId, AzureLocation location, TestInputContent content, CancellationToken cancellationToken = default)
+        public Response TestInput(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        internal HttpMessage CreateTestOutputRequest(string subscriptionId, AzureLocation location, TestOutputContent content)
+        internal HttpMessage CreateTestOutputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(testOutput);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -422,16 +422,16 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Test the Stream Analytics output. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics output. </param>
+        /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="testOutput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TestOutputAsync(string subscriptionId, AzureLocation location, TestOutputContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> TestOutputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
-            using var message = CreateTestOutputRequest(subscriptionId, location, content);
+            using var message = CreateTestOutputRequest(subscriptionId, location, testOutput);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -445,16 +445,16 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Test the Stream Analytics output. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
-        /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics output. </param>
+        /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="testOutput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TestOutput(string subscriptionId, AzureLocation location, TestOutputContent content, CancellationToken cancellationToken = default)
+        public Response TestOutput(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
-            using var message = CreateTestOutputRequest(subscriptionId, location, content);
+            using var message = CreateTestOutputRequest(subscriptionId, location, testOutput);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
