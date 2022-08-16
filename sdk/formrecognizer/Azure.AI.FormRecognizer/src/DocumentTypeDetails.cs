@@ -6,8 +6,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocTypeInfo")]
-    public partial class DocTypeInfo
+    [CodeGenModel("DocumentTypeDetails")]
+    public partial class DocumentTypeDetails
     {
         /// <summary> Description of the document semantic schema. </summary>
         public IReadOnlyDictionary<string, DocumentFieldSchema> FieldSchema { get; }

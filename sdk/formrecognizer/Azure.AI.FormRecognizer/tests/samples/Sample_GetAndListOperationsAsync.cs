@@ -22,11 +22,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             // Make sure there is at least one operation, so we are going to build a custom model.
 #if SNIPPET
-            Uri trainingFileUri = new Uri("<trainingFileUri>");
+            Uri blobContainerUri = new Uri("<blobContainerUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 
             // List the first ten or fewer operations that have been executed in the last 24h.
             AsyncPageable<DocumentModelOperationSummary> operationSummaries = client.GetOperationsAsync();
@@ -57,8 +57,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             if (operationDetails.Status == DocumentOperationStatus.Succeeded)
             {
                 Console.WriteLine($"My {operationDetails.Kind} operation is completed.");
-                DocumentModelDetails result = operationDetails.Result;
-                Console.WriteLine($"Model ID: {result.ModelId}");
+
+                // Extract the result based on the kind of operation. Currently only Build, CopyTo, and
+                // Compose operations are supported.
+                DocumentModelDetails result = operationDetails switch
+                {
+                    DocumentModelBuildOperationDetails buildOp => buildOp.Result,
+                    DocumentModelCopyToOperationDetails copyToOp => copyToOp.Result,
+                    DocumentModelComposeOperationDetails composeOp => composeOp.Result,
+                    _ => null
+                };
+
+                if (result != null)
+                {
+                    Console.WriteLine($"Model ID: {result.ModelId}");
+                }
             }
             else if (operationDetails.Status == DocumentOperationStatus.Failed)
             {

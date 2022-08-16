@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Document type info. </summary>
-    public partial class DocTypeInfo
+    public partial class DocumentTypeDetails
     {
-        /// <summary> Initializes a new instance of DocTypeInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldSchema"/> is null. </exception>
-        internal DocTypeInfo(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema)
+        internal DocumentTypeDetails(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema)
         {
             if (fieldSchema == null)
             {
@@ -28,12 +28,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             FieldConfidence = new ChangeTrackingDictionary<string, float>();
         }
 
-        /// <summary> Initializes a new instance of DocTypeInfo. </summary>
-        /// <param name="description"> Model description. </param>
-        /// <param name="buildMode"> Custom model build mode. </param>
+        /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <param name="fieldConfidence"> Estimated confidence for each field. </param>
-        internal DocTypeInfo(string description, DocumentBuildMode? buildMode, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema, IReadOnlyDictionary<string, float> fieldConfidence)
+        internal DocumentTypeDetails(string description, DocumentBuildMode? buildMode, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema, IReadOnlyDictionary<string, float> fieldConfidence)
         {
             Description = description;
             BuildMode = buildMode;
@@ -41,9 +41,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             FieldConfidence = fieldConfidence;
         }
 
-        /// <summary> Model description. </summary>
+        /// <summary> Document model description. </summary>
         public string Description { get; }
-        /// <summary> Custom model build mode. </summary>
+        /// <summary> Custom document model build mode. </summary>
         public DocumentBuildMode? BuildMode { get; }
         /// <summary> Estimated confidence for each field. </summary>
         public IReadOnlyDictionary<string, float> FieldConfidence { get; }
