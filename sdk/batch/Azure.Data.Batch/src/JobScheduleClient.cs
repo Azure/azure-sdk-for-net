@@ -12,14 +12,14 @@ namespace Azure.Data.Batch
 {
     public partial class JobScheduleClient : BaseClient
     {
-        public virtual Response<JobSchedule> GetJobSchedule(string jobScheduleId)
+        public virtual Response<JobSchedule> GetJobSchedule(string jobScheduleId, GetOptions options = null)
         {
-            return HandleGet(jobScheduleId, GetJobSchedule, JobSchedule.DeserializeJobSchedule);
+            return HandleGet(jobScheduleId, options, GetJobSchedule, JobSchedule.DeserializeJobSchedule);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<JobSchedule>> GetJobScheduleAsync(string jobScheduleId)
+        public virtual async System.Threading.Tasks.Task<Response<JobSchedule>> GetJobScheduleAsync(string jobScheduleId, GetOptions options = null)
         {
-            return await HandleGetAsync(jobScheduleId, GetJobScheduleAsync, JobSchedule.DeserializeJobSchedule).ConfigureAwait(false);
+            return await HandleGetAsync(jobScheduleId, options, GetJobScheduleAsync, JobSchedule.DeserializeJobSchedule).ConfigureAwait(false);
         }
 
         private static Response<JobSchedule> GetResponse(Response response)

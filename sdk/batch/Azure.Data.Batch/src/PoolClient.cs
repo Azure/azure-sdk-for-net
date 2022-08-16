@@ -12,14 +12,14 @@ namespace Azure.Data.Batch
 {
     public partial class PoolClient : BaseClient
     {
-        public virtual Response<Pool> GetPool(string poolId)
+        public virtual Response<Pool> GetPool(string poolId, GetOptions options = null)
         {
-            return HandleGet(poolId, GetPool, Pool.DeserializePool);
+            return HandleGet(poolId, options, GetPool, Pool.DeserializePool);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<Pool>> GetPoolAsync(string poolId)
+        public virtual async System.Threading.Tasks.Task<Response<Pool>> GetPoolAsync(string poolId, GetOptions options = null)
         {
-            return await HandleGetAsync(poolId, GetPoolAsync, Pool.DeserializePool).ConfigureAwait(false);
+            return await HandleGetAsync(poolId, options, GetPoolAsync, Pool.DeserializePool).ConfigureAwait(false);
         }
 
         private static Response<Pool> GetResponse(Response response)

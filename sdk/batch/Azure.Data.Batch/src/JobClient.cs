@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -12,14 +13,14 @@ namespace Azure.Data.Batch
 {
     public partial class JobClient : BaseClient
     {
-        public virtual Response<Job> GetJob(string jobId)
+        public virtual Response<Job> GetJob(string jobId, GetOptions options = null)
         {
-            return HandleGet(jobId, GetJob, Job.DeserializeJob);
+            return HandleGet(jobId, options, GetJob, Job.DeserializeJob);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<Job>> GetJobAsync(string jobId)
+        public virtual async System.Threading.Tasks.Task<Response<Job>> GetJobAsync(string jobId, GetOptions options = null)
         {
-            return await HandleGetAsync(jobId, GetJobAsync, Job.DeserializeJob).ConfigureAwait(false);
+            return await HandleGetAsync(jobId, options, GetJobAsync, Job.DeserializeJob).ConfigureAwait(false);
         }
 
         private static Response<Job> GetResponse(Response response)
@@ -67,6 +68,11 @@ namespace Azure.Data.Batch
         public virtual async System.Threading.Tasks.Task<Response<JobHeaders>> DeleteJobAsync(string jobId)
         {
             return await HandleDeleteAsync<JobHeaders>(jobId, DeleteAsync).ConfigureAwait(false);
+        }
+
+        public virtual Pageable<Job> ListJobs(ListOptions options = null)
+        {
+            return HandleList(options, GetJobs, Job.DeserializeJob);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Data.Batch.Models;
+using Azure.Data.Batch;
 
 namespace Azure.Data.Batch
 {
@@ -15,19 +16,19 @@ namespace Azure.Data.Batch
     {
         public const int MaxAddTasks = 100;
 
-        public virtual Response<Task> GetTask(string jobId, string taskId)
+        public virtual Response<Task> GetTask(string jobId, string taskId, GetOptions options = null)
         {
-            return HandleGet(jobId, taskId, GetTask, Task.DeserializeTask);
+            return HandleGet(jobId, taskId, options, GetTask, Task.DeserializeTask);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<Task>> GetTaskAsync(string jobId, string taskId)
+        public virtual async System.Threading.Tasks.Task<Response<Task>> GetTaskAsync(string jobId, string taskId, GetOptions options = null)
         {
-            return await HandleGetAsync(jobId, taskId, GetTaskAsync, Task.DeserializeTask).ConfigureAwait(false);
+            return await HandleGetAsync(jobId, taskId, options, GetTaskAsync, Task.DeserializeTask).ConfigureAwait(false);
         }
 
-        public virtual Pageable<Task> ListTasks(string jobId, string filter = null, string select = null, string expand = null, int? maxResults = null, int? timeout = null, Guid? clientRequestId = null, bool? returnClientRequestId = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        public virtual Pageable<Task> ListTasks(string jobId, ListOptions options = null)
         {
-            return HandleList(jobId, GetTasks, Task.DeserializeTask, filter, select, expand, maxResults, timeout, clientRequestId, returnClientRequestId, ocpDate, context);
+            return HandleList(jobId, options, GetTasks, Task.DeserializeTask);
         }
 
         private static Response<Task> GetResponse(Response response)

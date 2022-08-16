@@ -19,33 +19,49 @@ namespace Azure.Data.Batch
             return Response.FromValue(model, response);
         }
 
-        protected internal Response<T> HandleGet<T>(string id, Func<string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> operation, Func<JsonElement, T> deserialize)
+        protected internal Response<T> HandleGet<T>(string id, GetOptions options, Func<string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> operation, Func<JsonElement, T> deserialize)
         {
-            Response response = operation(id, null, null, null, null, null, null, null, null);
+            Response response = operation(id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string id, Func<string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> operation, Func<JsonElement, T> deserialize)
+        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string id, GetOptions options, Func<string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> operation, Func<JsonElement, T> deserialize)
         {
-            Response response = await operation(id, null, null, null, null, null, null, null, null).ConfigureAwait(false);
+            Response response = await operation(id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context).ConfigureAwait(false);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal Response<T> HandleGet<T>(string parentId, string id, Func<string, string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> operation, Func<JsonElement, T> deserialize)
+        protected internal Response<T> HandleGet<T>(string parentId, string id, GetOptions options, Func<string, string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> operation, Func<JsonElement, T> deserialize)
         {
-            Response response = operation(parentId, id, null, null, null, null, null, null, null, null);
+            Response response = operation(parentId, id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string parentId, string id, Func<string, string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> operation, Func<JsonElement, T> deserialize)
+        protected internal async System.Threading.Tasks.Task<Response<T>> HandleGetAsync<T>(string parentId, string id, GetOptions options, Func<string, string, string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> operation, Func<JsonElement, T> deserialize)
         {
-            Response response = await operation(parentId, id, null, null, null, null, null, null, null, null).ConfigureAwait(false);
+            Response response = await operation(parentId, id, options?.Select, options?.Expand, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.RequestConditions, options?.Context).ConfigureAwait(false);
             return HandleResponse(response, deserialize);
         }
 
-        protected internal Pageable<T> HandleList<T>(string parentId, Func<string, string, string, string, int?, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Pageable<BinaryData>> operation, Func<JsonElement, T> deserialize, string filter = null, string select = null, string expand = null, int? maxResults = null, int? timeout = null, Guid? clientRequestId = null, bool? returnClientRequestId = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        protected internal Pageable<T> HandleList<T>(ListOptions options, Func<string, string, string, int?, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Pageable<BinaryData>> operation, Func<JsonElement, T> deserialize)
         {
-            Pageable<BinaryData> data = operation(parentId, filter, select, expand, maxResults, timeout, clientRequestId, returnClientRequestId, ocpDate, context);
+            Pageable<BinaryData> data = operation(options?.Filter, options?.Select, options?.Expand, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.Context);
+            return PageableHelpers.Select(data, response =>
+            {
+                JsonElement root = JsonDocument.Parse(response.Content).RootElement;
+                List<T> items = new List<T>();
+                foreach (JsonElement item in root.GetProperty("value").EnumerateArray())
+                {
+                    items.Add(deserialize(item));
+                }
+
+                return items;
+            });
+        }
+
+        protected internal Pageable<T> HandleList<T>(string parentId, ListOptions options, Func<string, string, string, string, int?, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Pageable<BinaryData>> operation, Func<JsonElement, T> deserialize)
+        {
+            Pageable<BinaryData> data = operation(parentId, options?.Filter, options?.Select, options?.Expand, options?.MaxResults, options?.Timeout, options?.ClientRequestId, options?.ReturnClientRequestId, options?.OcpDate, options?.Context);
             return PageableHelpers.Select(data, response =>
             {
                 JsonElement root = JsonDocument.Parse(response.Content).RootElement;

@@ -49,7 +49,6 @@ namespace Azure.Data.Batch
         private void AddSubmitter()
         {
             List<Task> tasksToAdd = new List<Task>();
-            Console.WriteLine("New submitter");
             while (tasksToAdd.Count < maxTaskCount && pendingTasks.Count > 0)
             {
                 Task task = pendingTasks.Dequeue();
