@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
-require: https://github.com/Azure/azure-rest-api-specs/blob/d0b5e9937f89a600dd25c1aa450b42fe911e067d/specification/appconfiguration/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d7b7399fb1e1a328b49cd6a998714c6efb877bf2/specification/appconfiguration/resource-manager/readme.md
+tag: package-2022-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -16,9 +17,40 @@ modelerfour:
 
 no-property-type-replacement: RegenerateKeyContent
 
+rename-mapping:
+  ApiKey.lastModified: LastModifiedOn
+  ApiKey.readOnly: IsReadOnly
+  DeletedConfigurationStore.properties.purgeProtectionEnabled: IsPurgeProtectionEnabled
+  DeletedConfigurationStore.properties.configurationStoreId: -|arm-id
+  NameAvailabilityStatus.nameAvailable: IsNameAvailable
+  KeyValue.properties.lastModified: LastModifiedOn
+  KeyValue.properties.locked: IsLocked
+  ApiKey: AppConfigurationStoreApiKey
+  ApiKeyListResult: AppConfigurationStoreApiKeyListResult
+  CheckNameAvailabilityParameters: AppConfigurationNameAvailabilityContent
+  ConfigurationResourceType: AppConfigurationResourceType
+  ConfigurationStore: AppConfigurationStore
+  ConfigurationStoreListResult: AppConfigurationStoreListResult
+  ConnectionStatus: AppConfigurationPrivateLinkServiceConnectionStatus
+  DeletedConfigurationStore: DeletedAppConfigurationStore
+  EncryptionProperties: AppConfigurationStoreEncryptionProperties
+  NameAvailabilityStatus: AppConfigurationNameAvailabilityResult
+  PrivateEndpointConnectionReference: AppConfigurationPrivateEndpointConnectionReference
+
+prepend-rp-prefix:
+  - ActionsRequired
+  - CreateMode
+  - KeyValue
+  - KeyValueListResult
+  - KeyVaultProperties
+  - ProvisioningState
+  - PublicNetworkAccess
+  - RegenerateKeyParameters
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
+  'eTag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -56,9 +88,6 @@ directive:
     where: $.definitions.ConfigurationStoreProperties
     transform: >
       $.properties.privateEndpointConnections["x-nullable"] = true;
-  - from: swagger-document
-    where: $.definitions.ResourceIdentity.properties.type["x-ms-enum"]["name"]
-    transform: return "ResourceIdentityType"
   - rename-operation:
       from: Operations_CheckNameAvailability
       to: CheckAppConfigurationNameAvailability

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyFairPlayConfiguration : ContentKeyPolicyConfiguration
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyFairPlayConfiguration. </summary>
-        /// <param name="ask"> The key that must be used as FairPlay Application Secret key. </param>
+        /// <param name="fairPlayApplicationSecretKey"> The key that must be used as FairPlay Application Secret key. </param>
         /// <param name="fairPlayPfxPassword"> The password encrypting FairPlay certificate in PKCS 12 (pfx) format. </param>
         /// <param name="fairPlayPfx"> The Base64 representation of FairPlay certificate in PKCS 12 (pfx) format (including private key). </param>
         /// <param name="rentalAndLeaseKeyType"> The rental and lease key type. </param>
         /// <param name="rentalDuration"> The rental duration. Must be greater than or equal to 0. </param>
-        public ContentKeyPolicyFairPlayConfiguration(byte[] ask, string fairPlayPfxPassword, string fairPlayPfx, ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration)
+        public ContentKeyPolicyFairPlayConfiguration(byte[] fairPlayApplicationSecretKey, string fairPlayPfxPassword, string fairPlayPfx, ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration)
         {
-            Ask = ask;
+            FairPlayApplicationSecretKey = fairPlayApplicationSecretKey;
             FairPlayPfxPassword = fairPlayPfxPassword;
             FairPlayPfx = fairPlayPfx;
             RentalAndLeaseKeyType = rentalAndLeaseKeyType;
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of ContentKeyPolicyFairPlayConfiguration. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        /// <param name="ask"> The key that must be used as FairPlay Application Secret key. </param>
+        /// <param name="fairPlayApplicationSecretKey"> The key that must be used as FairPlay Application Secret key. </param>
         /// <param name="fairPlayPfxPassword"> The password encrypting FairPlay certificate in PKCS 12 (pfx) format. </param>
         /// <param name="fairPlayPfx"> The Base64 representation of FairPlay certificate in PKCS 12 (pfx) format (including private key). </param>
         /// <param name="rentalAndLeaseKeyType"> The rental and lease key type. </param>
         /// <param name="rentalDuration"> The rental duration. Must be greater than or equal to 0. </param>
         /// <param name="offlineRentalConfiguration"> Offline rental policy. </param>
-        internal ContentKeyPolicyFairPlayConfiguration(string odataType, byte[] ask, string fairPlayPfxPassword, string fairPlayPfx, ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration, ContentKeyPolicyFairPlayOfflineRentalConfiguration offlineRentalConfiguration) : base(odataType)
+        internal ContentKeyPolicyFairPlayConfiguration(string odataType, byte[] fairPlayApplicationSecretKey, string fairPlayPfxPassword, string fairPlayPfx, ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration, ContentKeyPolicyFairPlayOfflineRentalConfiguration offlineRentalConfiguration) : base(odataType)
         {
-            Ask = ask;
+            FairPlayApplicationSecretKey = fairPlayApplicationSecretKey;
             FairPlayPfxPassword = fairPlayPfxPassword;
             FairPlayPfx = fairPlayPfx;
             RentalAndLeaseKeyType = rentalAndLeaseKeyType;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> The key that must be used as FairPlay Application Secret key. </summary>
-        public byte[] Ask { get; set; }
+        public byte[] FairPlayApplicationSecretKey { get; set; }
         /// <summary> The password encrypting FairPlay certificate in PKCS 12 (pfx) format. </summary>
         public string FairPlayPfxPassword { get; set; }
         /// <summary> The Base64 representation of FairPlay certificate in PKCS 12 (pfx) format (including private key). </summary>

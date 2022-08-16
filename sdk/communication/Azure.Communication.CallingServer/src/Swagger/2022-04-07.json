@@ -600,7 +600,7 @@
           "200": {
             "description": "Returns the start call recording response.",
             "schema": {
-              "$ref": "#/definitions/RecordingStatusResponse"
+              "$ref": "#/definitions/RecordingStateResponse"
             }
           }
         },
@@ -634,7 +634,7 @@
           "200": {
             "description": "Returns the recording properties.",
             "schema": {
-              "$ref": "#/definitions/RecordingStatusResponse"
+              "$ref": "#/definitions/RecordingStateResponse"
             }
           }
         },
@@ -764,6 +764,10 @@
         "callbackUri": {
           "description": "The callback URI.",
           "type": "string"
+        },
+        "mediaStreamingConfiguration": {
+          "$ref": "#/definitions/MediaStreamingConfigurationDto",
+          "description": "Media Streaming Configuration."
         }
       }
     },
@@ -818,6 +822,58 @@
         "identifier": {
           "$ref": "#/definitions/CommunicationIdentifierModel",
           "description": "The identifier of the source of the call"
+        }
+      }
+    },
+    "MediaStreamingTransportTypeDto": {
+      "description": "The type of tranport to be used for media streaming, eg. Websocket",
+      "enum": [
+        "websocket"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingTransportTypeDto",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingContentTypeDto": {
+      "description": "Content type to stream, eg. audio, audio/video",
+      "enum": [
+        "audio"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingContentTypeDto",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingAudioChannelTypeDto": {
+      "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
+      "enum": [
+        "mixed",
+        "unmixed"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingAudioChannelTypeDto",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingConfigurationDto": {
+      "type": "object",
+      "properties": {
+        "transportUrl": {
+          "description": "Transport URL for media streaming",
+          "type": "string"
+        },
+        "transportType": {
+          "$ref": "#/definitions/MediaStreamingTransportTypeDto"
+        },
+        "contentType": {
+          "$ref": "#/definitions/MediaStreamingContentTypeDto"
+        },
+        "audioChannelType": {
+          "$ref": "#/definitions/MediaStreamingAudioChannelTypeDto"
         }
       }
     },
@@ -915,6 +971,10 @@
         "callbackUri": {
           "description": "The callback URI.",
           "type": "string"
+        },
+        "mediaSubscriptionId": {
+          "description": "SubscriptionId for media streaming",
+          "type": "string"
         }
       }
     },
@@ -936,58 +996,6 @@
         "mediaStreamingConfiguration": {
           "$ref": "#/definitions/MediaStreamingConfigurationDto",
           "description": "Media Streaming Configuration."
-        }
-      }
-    },
-    "MediaStreamingTransportTypeDto": {
-      "description": "The type of tranport to be used for media streaming, eg. Websocket",
-      "enum": [
-        "websocket"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "MediaStreamingTransportTypeDto",
-        "modelAsString": true
-      }
-    },
-    "MediaStreamingContentTypeDto": {
-      "description": "Content type to stream, eg. audio, audio/video",
-      "enum": [
-        "audio"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "MediaStreamingContentTypeDto",
-        "modelAsString": true
-      }
-    },
-    "MediaStreamingAudioChannelTypeDto": {
-      "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
-      "enum": [
-        "mixed",
-        "unmixed"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "MediaStreamingAudioChannelTypeDto",
-        "modelAsString": true
-      }
-    },
-    "MediaStreamingConfigurationDto": {
-      "type": "object",
-      "properties": {
-        "transportUrl": {
-          "description": "Transport URL for media streaming",
-          "type": "string"
-        },
-        "transportType": {
-          "$ref": "#/definitions/MediaStreamingTransportTypeDto"
-        },
-        "contentType": {
-          "$ref": "#/definitions/MediaStreamingContentTypeDto"
-        },
-        "audioChannelType": {
-          "$ref": "#/definitions/MediaStreamingAudioChannelTypeDto"
         }
       }
     },
@@ -1156,7 +1164,7 @@
     "RecognizeInputType": {
       "description": "Determines the type of the recognition.",
       "enum": [
-        "dTMF"
+        "dtmf"
       ],
       "type": "string",
       "x-ms-enum": {
@@ -1166,14 +1174,15 @@
     },
     "RecognizeRequest": {
       "required": [
-        "recognizeOptions"
+        "recognizeInputType",
+        "recognizeConfiguration"
       ],
       "type": "object",
       "properties": {
         "recognizeInputType": {
           "$ref": "#/definitions/RecognizeInputType"
         },
-        "playSourceInfo": {
+        "playPrompt": {
           "$ref": "#/definitions/PlaySource",
           "description": "The source of the audio to be played for recognition."
         },
@@ -1181,8 +1190,8 @@
           "description": "If set recognize can barge into other existing queued-up/currently-processing requests.",
           "type": "boolean"
         },
-        "recognizeOptions": {
-          "$ref": "#/definitions/RecognizeOptions",
+        "recognizeConfiguration": {
+          "$ref": "#/definitions/RecognizeConfigurations",
           "description": "Defines options for recognition."
         },
         "operationContext": {
@@ -1191,40 +1200,55 @@
         }
       }
     },
-    "RecognizeOptions": {
+    "RecognizeConfigurations": {
       "type": "object",
       "properties": {
-        "pausePlayOnResponse": {
-          "description": "Determines if we pause the prompt and start recognizing.",
+        "interruptPromptAndStartRecognition": {
+          "description": "Determines if we interrupt the prompt and start recognizing.",
           "type": "boolean"
         },
         "initialSilenceTimeoutInSeconds": {
           "format": "int32",
-          "description": "Time to wait for first input after prompt (if any) plays.",
+          "description": "Time to wait for first input after prompt (if any).",
           "type": "integer"
         },
-        "dtmfOptions": {
-          "$ref": "#/definitions/DtmfOptions",
-          "description": "Defines options for DTMF."
-        }
-      }
-    },
-    "DtmfOptions": {
-      "description": "Options for DTMF tone recognition",
-      "type": "object",
-      "properties": {
-        "collectTones": {
-          "$ref": "#/definitions/CollectTones",
-          "description": "Collects the number of digit in DTMF."
-        },
-        "dtfmToneProducer": {
+        "targetParticipant": {
           "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "Dtmf tone producer participant"
+          "description": "Target participant of DTFM tone recognition."
+        },
+        "dtmfConfigurations": {
+          "$ref": "#/definitions/DtmfConfigurations",
+          "description": "Defines configurations for DTMF."
         }
       }
     },
-    "CollectTones": {
-      "description": "Container for collecting tones for DTFM.",
+    "StopTones": {
+      "enum": [
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "a",
+        "b",
+        "c",
+        "d",
+        "pound",
+        "asterisk"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "StopTones",
+        "modelAsString": true
+      }
+    },
+    "DtmfConfigurations": {
+      "description": "Options for DTMF recognition",
       "type": "object",
       "properties": {
         "interToneTimeoutInSeconds": {
@@ -1241,7 +1265,7 @@
           "description": "List of tones that will stop recognizing.",
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/StopTones"
           }
         }
       }
@@ -1405,6 +1429,13 @@
         },
         "recordingFormatType": {
           "$ref": "#/definitions/RecordingFormatType"
+        },
+        "channelAffinity": {
+          "description": "The channel affinity of call recording.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChannelAffinity"
+          }
         }
       }
     },
@@ -1437,25 +1468,40 @@
         }
       }
     },
-    "RecordingStatus": {
+    "ChannelAffinity": {
+      "description": "Channel affinity for a participant",
+      "type": "object",
+      "properties": {
+        "channel": {
+          "format": "int32",
+          "description": "Channel number to which bitstream from a particular participant will be written.",
+          "type": "integer"
+        },
+        "participant": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "The identifier for the participant whose bitstream will be written to the channel \r\nrepresented by the channel number."
+        }
+      }
+    },
+    "RecordingState": {
       "enum": [
         "active",
         "inactive"
       ],
       "type": "string",
       "x-ms-enum": {
-        "name": "RecordingStatus",
+        "name": "RecordingState",
         "modelAsString": true
       }
     },
-    "RecordingStatusResponse": {
+    "RecordingStateResponse": {
       "type": "object",
       "properties": {
         "recordingId": {
           "type": "string"
         },
-        "recordingStatus": {
-          "$ref": "#/definitions/RecordingStatus"
+        "recordingState": {
+          "$ref": "#/definitions/RecordingState"
         }
       }
     },
@@ -1468,7 +1514,10 @@
         "callTransferFailed",
         "addParticipantsSucceeded",
         "addParticipantsFailed",
-        "participantsUpdated"
+        "participantsUpdated",
+        "recordingStateChanged",
+        "playCompleted",
+        "playFailed"
       ],
       "type": "string",
       "x-ms-enum": {
@@ -1663,6 +1712,92 @@
           "items": {
             "$ref": "#/definitions/CommunicationIdentifierModel"
           }
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "RecordingStateChangedEvent": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "recordingId": {
+          "description": "The call recording id",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/RecordingState"
+        },
+        "startDateTime": {
+          "format": "date-time",
+          "description": "The time of the recording started",
+          "type": "string"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "PlayCompleted": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation"
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "PlayFailed": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation"
         },
         "type": {
           "$ref": "#/definitions/AcsEventType"

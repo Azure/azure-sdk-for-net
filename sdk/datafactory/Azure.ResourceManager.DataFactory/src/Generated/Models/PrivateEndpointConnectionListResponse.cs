@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResponse. </summary>
         /// <param name="value"> List of Private Endpoint Connections. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateEndpointConnectionListResponse(IEnumerable<DataFactoryPrivateEndpointConnectionData> value)
+        internal PrivateEndpointConnectionListResponse(IEnumerable<FactoryPrivateEndpointConnectionData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResponse. </summary>
         /// <param name="value"> List of Private Endpoint Connections. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal PrivateEndpointConnectionListResponse(IReadOnlyList<DataFactoryPrivateEndpointConnectionData> value, string nextLink)
+        internal PrivateEndpointConnectionListResponse(IReadOnlyList<FactoryPrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Private Endpoint Connections. </summary>
-        public IReadOnlyList<DataFactoryPrivateEndpointConnectionData> Value { get; }
+        public IReadOnlyList<FactoryPrivateEndpointConnectionData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

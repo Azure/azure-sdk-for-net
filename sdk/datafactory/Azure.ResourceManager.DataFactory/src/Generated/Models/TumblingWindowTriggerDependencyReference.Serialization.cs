@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> offset = default;
             Optional<string> size = default;
-            TriggerReference referenceTrigger = default;
+            FactoryTriggerReference referenceTrigger = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("referenceTrigger"))
                 {
-                    referenceTrigger = TriggerReference.DeserializeTriggerReference(property.Value);
+                    referenceTrigger = FactoryTriggerReference.DeserializeFactoryTriggerReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))

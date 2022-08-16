@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// SingletonPartitionSchemeDescription
-    /// Serialized Name: SingletonPartitionSchemeDescription
-    /// </summary>
+    /// <summary> SingletonPartitionSchemeDescription. </summary>
     public partial class SingletonPartitionSchemeDescription : PartitionSchemeDescription
     {
         /// <summary> Initializes a new instance of SingletonPartitionSchemeDescription. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of SingletonPartitionSchemeDescription. </summary>
-        /// <param name="partitionScheme">
-        /// Specifies how the service is partitioned.
-        /// Serialized Name: PartitionSchemeDescription.partitionScheme
-        /// </param>
+        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         internal SingletonPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme) : base(partitionScheme)
         {
             PartitionScheme = partitionScheme;

@@ -21,7 +21,7 @@ request-path-to-singleton-resource:
 
 rename-mapping:
   ManagedClusterPodIdentityProvisioningError.error: 'ErrorDetail'
-  Code: ManagedClusterStateCode
+  Code: ContainerServiceStateCode
   Format: KubeConfigFormat
   Expander: AutoScaleExpander
   KubeletConfig.containerLogMaxSizeMB: ContainerLogMaxSizeInMB
@@ -42,6 +42,20 @@ rename-mapping:
   WindowsGmsaProfile.enabled: IsEnabled
   TimeSpan.start: StartOn
   TimeSpan.end: EndOn
+  KubeletConfig.failSwapOn: FailStartWithSwapOn
+  ManagedClusterStorageProfileDiskCSIDriver.enabled: IsEnabled
+  ManagedClusterStorageProfileFileCSIDriver.enabled: IsEnabled
+  ManagedClusterStorageProfileSnapshotController.enabled: IsEnabled
+  KubeletConfig.cpuCfsQuota: IsCpuCfsQuotaEnabled
+  OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
+  RunCommandRequest: ManagedClusterRunCommandContent
+  RunCommandResult: ManagedClusterRunCommandResult
+  UserAssignedIdentity.objectId: -|uuid
+  UserAssignedIdentity.clientId: -|uuid
+  ManagedClusterServicePrincipalProfile.clientId: -|uuid
+  ManagedClusterAADProfile.serverAppID: -|uuid
+  ManagedClusterAADProfile.clientAppID: -|uuid
+#   ManagedClusterAADProfile.adminGroupObjectIDs.items: -|uuid
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -104,6 +118,29 @@ prepend-rp-prefix:
   - TimeSpan
   - TimeInWeek
   - WeekDay
+  - OSType
+  - OSDiskType
+  - OSOptionProperty
+  - OSSku
+  - UserAssignedIdentity
+  - AgentPool
+  - MaintenanceConfiguration
+  - MaintenanceConfigurationListResult
+  - ManagedCluster
+  - AgentPoolListResult
+  - PublicNetworkAccess
+  - CreationData
+  - EndpointDependency
+  - EndpointDetail
+  - LoadBalancerSku
+  - NetworkMode
+  - NetworkPlugin
+  - NetworkPolicy
+  - OutboundEnvironmentEndpoint
+  - OutboundType
+  - PrivateLinkResourcesListResult
+  - TagsObject
+  - PowerState
 
 directive:
   - from: managedClusters.json
@@ -128,9 +165,5 @@ directive:
       $.PrivateLinkResource.properties.id['x-ms-format'] = 'arm-id';
       $.ManagedClusterProperties.properties.autoScalerProfile.properties['scan-interval']['x-ms-client-name'] = 'ScanIntervalInSeconds';
       $.ManagedClusterWindowsProfile.properties.enableCSIProxy['x-ms-client-name'] = 'IsCsiProxyEnabled';
-# This caused bugs of duplicate names with single property flatten
-#   - from: managedClusters.json
-#     where: $.definitions..enabled
-#     transform: >
-#       $['x-ms-client-name'] = 'IsEnabled';
+      $.ManagedClusterAADProfile.properties.adminGroupObjectIDs.items.format = 'uuid';
 ```

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> dllPath = default;
             Optional<string> @class = default;
             Optional<string> method = default;
-            Optional<UpdateMode> updateMode = default;
+            Optional<StreamingJobFunctionUpdateMode> updateMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updateMode = new UpdateMode(property0.Value.GetString());
+                            updateMode = new StreamingJobFunctionUpdateMode(property0.Value.GetString());
                             continue;
                         }
                     }

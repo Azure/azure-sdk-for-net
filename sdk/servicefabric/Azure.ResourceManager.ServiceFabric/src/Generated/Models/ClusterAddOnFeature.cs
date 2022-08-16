@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Available cluster add-on features
-    /// Serialized Name: AddOnFeatures
-    /// </summary>
+    /// <summary> Available cluster add-on features. </summary>
     public readonly partial struct ClusterAddOnFeature : IEquatable<ClusterAddOnFeature>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string BackupRestoreServiceValue = "BackupRestoreService";
         private const string ResourceMonitorServiceValue = "ResourceMonitorService";
 
-        /// <summary>
-        /// RepairManager
-        /// Serialized Name: AddOnFeatures.RepairManager
-        /// </summary>
+        /// <summary> RepairManager. </summary>
         public static ClusterAddOnFeature RepairManager { get; } = new ClusterAddOnFeature(RepairManagerValue);
-        /// <summary>
-        /// DnsService
-        /// Serialized Name: AddOnFeatures.DnsService
-        /// </summary>
+        /// <summary> DnsService. </summary>
         public static ClusterAddOnFeature DnsService { get; } = new ClusterAddOnFeature(DnsServiceValue);
-        /// <summary>
-        /// BackupRestoreService
-        /// Serialized Name: AddOnFeatures.BackupRestoreService
-        /// </summary>
+        /// <summary> BackupRestoreService. </summary>
         public static ClusterAddOnFeature BackupRestoreService { get; } = new ClusterAddOnFeature(BackupRestoreServiceValue);
-        /// <summary>
-        /// ResourceMonitorService
-        /// Serialized Name: AddOnFeatures.ResourceMonitorService
-        /// </summary>
+        /// <summary> ResourceMonitorService. </summary>
         public static ClusterAddOnFeature ResourceMonitorService { get; } = new ClusterAddOnFeature(ResourceMonitorServiceValue);
         /// <summary> Determines if two <see cref="ClusterAddOnFeature"/> values are the same. </summary>
         public static bool operator ==(ClusterAddOnFeature left, ClusterAddOnFeature right) => left.Equals(right);

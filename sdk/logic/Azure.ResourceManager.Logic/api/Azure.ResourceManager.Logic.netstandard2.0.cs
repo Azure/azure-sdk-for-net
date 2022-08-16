@@ -1116,8 +1116,8 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class AS2EnvelopeSettings
     {
-        public AS2EnvelopeSettings(Azure.Core.ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName) { }
-        public bool AutogenerateFileName { get { throw null; } set { } }
+        public AS2EnvelopeSettings(Azure.Core.ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autoGenerateFileName) { }
+        public bool AutoGenerateFileName { get { throw null; } set { } }
         public string FileNameTemplate { get { throw null; } set { } }
         public Azure.Core.ContentType MessageContentType { get { throw null; } set { } }
         public bool SuspendMessageOnFileNameGenerationError { get { throw null; } set { } }
@@ -1565,10 +1565,10 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class IntegrationAccountKeyVaultKey
     {
         internal IntegrationAccountKeyVaultKey() { }
-        public long? CreatedOnInTicks { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
-        public string KeyId { get { throw null; } }
-        public long? UpdatedOnInTicks { get { throw null; } }
+        public System.Uri KeyId { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class IntegrationAccountKeyVaultKeyReference
     {
@@ -2512,7 +2512,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal LogicWorkflowTriggerCallbackUri() { }
         public string BasePath { get { throw null; } }
-        public string Method { get { throw null; } }
+        public Azure.Core.RequestMethod? Method { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackQueryParameterInfo Queries { get { throw null; } }
         public string RelativePath { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RelativePathParameters { get { throw null; } }
@@ -2710,8 +2710,8 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class SwaggerCustomDynamicTreeParameterInfo
     {
         public SwaggerCustomDynamicTreeParameterInfo() { }
+        public bool? IsRequired { get { throw null; } set { } }
         public string ParameterReference { get { throw null; } set { } }
-        public bool? Required { get { throw null; } set { } }
         public string SelectedItemValuePath { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
     }
@@ -2779,12 +2779,12 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class SwaggerXml
     {
         public SwaggerXml() { }
-        public bool? Attribute { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Extensions { get { throw null; } }
+        public bool? IsAttribute { get { throw null; } set { } }
+        public bool? IsWrapped { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
-        public bool? Wrapped { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrailingSeparatorPolicy : System.IEquatable<Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy>

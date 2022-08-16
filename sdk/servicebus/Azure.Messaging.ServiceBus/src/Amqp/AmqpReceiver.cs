@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -40,9 +39,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <value>
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        public override bool WasClosedExplicitly => _receiverClosedExplicitlyExplicitly;
+        public bool IsClosed => _closed;
 
-        private volatile bool _receiverClosedExplicitlyExplicitly;
+        private volatile bool _closed;
 
         /// <summary>
         /// Indicates whether or not the session link has been closed.
@@ -54,6 +53,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <c>true</c> if the receiver link was closed; otherwise, <c>false</c>.
         /// </value>
         public override bool IsSessionLinkClosed => _isSessionReceiver && LinkException != null;
+
+        /// <summary>
+        /// The identifier for the receiver.
+        /// </summary>
+        public string Identifier { get; }
 
         /// <summary>
         /// The name of the Service Bus entity to which the receiver is bound.
@@ -81,7 +85,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         private readonly ServiceBusReceiveMode _receiveMode;
-        private readonly string _identifier;
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
 
@@ -162,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isSessionReceiver = isSessionReceiver;
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
-            _identifier = identifier;
+            Identifier = identifier;
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
 
@@ -189,7 +192,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             RequestResponseAmqpLink link = await _connectionScope.OpenManagementLinkAsync(
                 _entityPath,
-                _identifier,
+                Identifier,
                 timeout,
                 CancellationToken.None).ConfigureAwait(false);
             link.Closed += OnManagementLinkClosed;
@@ -203,7 +206,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string identifier,
             CancellationToken cancellationToken)
         {
-            ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
+            ServiceBusEventSource.Log.CreateReceiveLinkStart(Identifier);
 
             try
             {
@@ -239,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     // receiver.
                     SessionId = tempSessionId;
                 }
-                ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier, SessionId);
+                ServiceBusEventSource.Log.CreateReceiveLinkComplete(Identifier, SessionId);
                 link.Closed += OnReceiverLinkClosed;
                 return link;
             }
@@ -259,7 +262,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.CreateReceiveLinkException(_identifier, ex.ToString());
+                ServiceBusEventSource.Log.CreateReceiveLinkException(Identifier, ex.ToString());
                 throw;
             }
         }
@@ -480,7 +483,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     // The link state is lost, We need to return a non-retriable error.
                     ServiceBusEventSource.Log.LinkStateLost(
-                        _identifier,
+                        Identifier,
                         receiveLink.Name,
                         receiveLink.State.ToString(),
                         _isSessionReceiver,
@@ -1297,18 +1300,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task CloseAsync(CancellationToken cancellationToken)
         {
-            if (_receiverClosedExplicitlyExplicitly)
+            if (_closed)
             {
                 return;
             }
 
-            _receiverClosedExplicitlyExplicitly = true;
+            _closed = true;
 
-            await CloseCoreAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        private async Task CloseCoreAsync(CancellationToken cancellationToken)
-        {
             if (_receiveLink?.TryGetOpenedObject(out var _) == true)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -1346,18 +1344,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Clean up and dispose the underlying resources. The receive link should already be closed, but management link may need to be
                 // closed as well.
-                _ = CloseCoreAsync(CancellationToken.None);
+                _ = CloseAsync(CancellationToken.None);
             }
 
             ServiceBusEventSource.Log.ReceiveLinkClosed(
-                _identifier,
+                Identifier,
                 SessionId,
                 receiver);
         }
 
         private void OnManagementLinkClosed(object managementLink, EventArgs e) =>
         ServiceBusEventSource.Log.ManagementLinkClosed(
-            _identifier,
+            Identifier,
             managementLink);
 
         /// <summary>
@@ -1390,7 +1388,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
-            !_receiverClosedExplicitlyExplicitly && (link?.IsClosing() ?? false);
+            !_closed && (link?.IsClosing() ?? false);
 
         private void ThrowIfSessionLockLost()
         {
