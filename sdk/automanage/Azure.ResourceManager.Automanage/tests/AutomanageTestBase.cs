@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Automanage.Tests
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            ResourceGroupData data = new ResourceGroupData(location);
+            var rg = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, data);
+            return rg.Value;
         }
 
-        public async Task<ConfigurationProfileResource> CreateConfigurationProfile(ConfigurationProfileCollection collection, string profileName)
+        protected async Task<ConfigurationProfileResource> CreateConfigurationProfile(ConfigurationProfileCollection collection, string profileName)
         {
             string configuration = "{" +
                 "\"Antimalware/Enable\":true," +
