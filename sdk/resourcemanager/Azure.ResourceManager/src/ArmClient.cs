@@ -24,6 +24,7 @@ namespace Azure.ResourceManager
         private TenantResource _tenant;
         private SubscriptionResource _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
+        private bool? _canUseTagResource;
 
         internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
@@ -86,6 +87,26 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
+        }
+
+        internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)
+        {
+            if (_canUseTagResource == null)
+            {
+                var tagRp = GetDefaultSubscription(cancellationToken).GetResourceProvider(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken);
+                _canUseTagResource = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _canUseTagResource.Value;
+        }
+
+        internal virtual async Task<bool> CanUseTagResourceAsync(CancellationToken cancellationToken = default)
+        {
+            if (_canUseTagResource == null)
+            {
+                var tagRp = await GetDefaultSubscription(cancellationToken).GetResourceProviderAsync(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+                _canUseTagResource = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _canUseTagResource.Value;
         }
 
         private void CopyApiVersionOverrides(ArmClientOptions options)

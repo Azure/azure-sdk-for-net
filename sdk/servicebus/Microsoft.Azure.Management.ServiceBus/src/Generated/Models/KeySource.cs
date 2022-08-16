@@ -10,45 +10,12 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for KeySource.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeySource
+    public static class KeySource
     {
-        [EnumMember(Value = "Microsoft.KeyVault")]
-        MicrosoftKeyVault
-    }
-    internal static class KeySourceEnumExtension
-    {
-        internal static string ToSerializedValue(this KeySource? value)
-        {
-            return value == null ? null : ((KeySource)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this KeySource value)
-        {
-            switch( value )
-            {
-                case KeySource.MicrosoftKeyVault:
-                    return "Microsoft.KeyVault";
-            }
-            return null;
-        }
-
-        internal static KeySource? ParseKeySource(this string value)
-        {
-            switch( value )
-            {
-                case "Microsoft.KeyVault":
-                    return KeySource.MicrosoftKeyVault;
-            }
-            return null;
-        }
+        public const string MicrosoftKeyVault = "Microsoft.KeyVault";
     }
 }

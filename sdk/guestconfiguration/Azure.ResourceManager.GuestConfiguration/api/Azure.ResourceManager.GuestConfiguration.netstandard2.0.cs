@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string TargetResourceId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.VmssVmInfo> VmssVmList { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.VmssVmInfo> VmssVmList { get { throw null; } set { } }
     }
     public partial class GuestConfigurationAssignmentReport
     {

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTaskRunContent DeserializeContainerRegistryTaskRunContent(JsonElement element)
         {
-            string taskId = default;
+            ResourceIdentifier taskId = default;
             Optional<ContainerRegistryOverrideTaskStepProperties> overrideTaskStepProperties = default;
             string type = default;
             Optional<bool> isArchiveEnabled = default;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("taskId"))
                 {
-                    taskId = property.Value.GetString();
+                    taskId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("overrideTaskStepProperties"))
