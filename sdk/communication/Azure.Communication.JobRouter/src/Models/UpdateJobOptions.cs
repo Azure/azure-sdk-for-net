@@ -28,7 +28,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Id of the job.
         /// </summary>
-        public string JobId { get; set; }
+        public string JobId { get; }
 
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
         public string ChannelId { get; set; }
 
         /// <summary> The priority of this job. </summary>
-        public int Priority { get; set; }
+        public int? Priority { get; set; }
 
         /// <summary> Reason code for cancelled or closed jobs. </summary>
         public string DispositionCode { get; set; }

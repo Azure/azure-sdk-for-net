@@ -296,7 +296,7 @@
         }
       }
     },
-    "/calling/callConnections:play": {
+    "/calling/callConnections/{callConnectionId}:play": {
       "post": {
         "tags": [
           "MidConnections"
@@ -307,7 +307,7 @@
         "parameters": [
           {
             "name": "callConnectionId",
-            "in": "query",
+            "in": "path",
             "description": "",
             "required": true,
             "type": "string"
@@ -337,7 +337,7 @@
         }
       }
     },
-    "/calling/callConnections:cancelAllMediaOperations": {
+    "/calling/callConnections/{callConnectionId}:cancelAllMediaOperations": {
       "post": {
         "tags": [
           "MidConnections"
@@ -348,7 +348,7 @@
         "parameters": [
           {
             "name": "callConnectionId",
-            "in": "query",
+            "in": "path",
             "description": "The call connection id",
             "required": true,
             "type": "string"
@@ -369,7 +369,7 @@
         }
       }
     },
-    "/calling/callConnections:recognize": {
+    "/calling/callConnections/{callConnectionId}:recognize": {
       "post": {
         "tags": [
           "MidConnections"
@@ -380,7 +380,7 @@
         "parameters": [
           {
             "name": "callConnectionId",
-            "in": "query",
+            "in": "path",
             "description": "The call connection id",
             "required": true,
             "type": "string"
@@ -970,6 +970,10 @@
         },
         "callbackUri": {
           "description": "The callback URI.",
+          "type": "string"
+        },
+        "mediaSubscriptionId": {
+          "description": "SubscriptionId for media streaming",
           "type": "string"
         }
       }

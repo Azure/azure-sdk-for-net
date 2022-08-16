@@ -45,8 +45,9 @@ namespace Azure.Communication.CallingServer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/calling/callConnections:play", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":play", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -117,8 +118,9 @@ namespace Azure.Communication.CallingServer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/calling/callConnections:cancelAllMediaOperations", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":cancelAllMediaOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             return message;
@@ -175,8 +177,9 @@ namespace Azure.Communication.CallingServer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/calling/callConnections:recognize", false);
-            uri.AppendQuery("callConnectionId", callConnectionId, true);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":recognize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");

@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The Id of this policy.
         /// </summary>
-        public string ExceptionPolicyId { get; set; }
+        public string ExceptionPolicyId { get; }
 
         /// <summary> (Optional) The name of the exception policy. </summary>
         public string Name { get; set; } = default!;
