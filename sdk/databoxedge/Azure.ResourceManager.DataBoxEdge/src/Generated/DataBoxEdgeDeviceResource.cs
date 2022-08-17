@@ -247,11 +247,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             return GetDataBoxEdgeDeviceJobs().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataBoxEdgeDeviceOperationsStatuResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeDeviceOperationsStatuResources and their operations over a DataBoxEdgeDeviceOperationsStatuResource. </returns>
-        public virtual DataBoxEdgeDeviceOperationsStatuCollection GetDataBoxEdgeDeviceOperationsStatus()
+        /// <summary> Gets a collection of DataBoxEdgeDeviceJobStatusResources in the DataBoxEdgeDevice. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeDeviceJobStatusResources and their operations over a DataBoxEdgeDeviceJobStatusResource. </returns>
+        public virtual DataBoxEdgeDeviceJobStatusCollection GetDataBoxEdgeDeviceJobStatuses()
         {
-            return GetCachedClient(Client => new DataBoxEdgeDeviceOperationsStatuCollection(Client, Id));
+            return GetCachedClient(Client => new DataBoxEdgeDeviceJobStatusCollection(Client, Id));
         }
 
         /// <summary>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeDeviceOperationsStatuResource>> GetDataBoxEdgeDeviceOperationsStatuAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxEdgeDeviceJobStatusResource>> GetDataBoxEdgeDeviceJobStatusAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetDataBoxEdgeDeviceOperationsStatus().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxEdgeDeviceJobStatuses().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeDeviceOperationsStatuResource> GetDataBoxEdgeDeviceOperationsStatu(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxEdgeDeviceJobStatusResource> GetDataBoxEdgeDeviceJobStatus(string name, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxEdgeDeviceOperationsStatus().Get(name, cancellationToken);
+            return GetDataBoxEdgeDeviceJobStatuses().Get(name, cancellationToken);
         }
 
         /// <summary> Gets an object representing a OrderResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>

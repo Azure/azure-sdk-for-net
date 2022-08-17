@@ -202,23 +202,23 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataBoxEdgeDeviceOperationsStatuCollection : Azure.ResourceManager.ArmCollection
+    public partial class DataBoxEdgeDeviceJobStatusCollection : Azure.ResourceManager.ArmCollection
     {
-        protected DataBoxEdgeDeviceOperationsStatuCollection() { }
+        protected DataBoxEdgeDeviceJobStatusCollection() { }
         public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataBoxEdgeDeviceOperationsStatuResource : Azure.ResourceManager.ArmResource
+    public partial class DataBoxEdgeDeviceJobStatusResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected DataBoxEdgeDeviceOperationsStatuResource() { }
+        protected DataBoxEdgeDeviceJobStatusResource() { }
         public virtual Azure.ResourceManager.DataBoxEdge.JobData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataBoxEdgeDeviceResource : Azure.ResourceManager.ArmResource
     {
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource> GetDataBoxEdgeDeviceJob(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource>> GetDataBoxEdgeDeviceJobAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobCollection GetDataBoxEdgeDeviceJobs() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuResource> GetDataBoxEdgeDeviceOperationsStatu(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuResource>> GetDataBoxEdgeDeviceOperationsStatuAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuCollection GetDataBoxEdgeDeviceOperationsStatus() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource> GetDataBoxEdgeDeviceJobStatus(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource>> GetDataBoxEdgeDeviceJobStatusAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusCollection GetDataBoxEdgeDeviceJobStatuses() { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DeviceCapacityInfoResource GetDeviceCapacityInfo() { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting() { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting() { throw null; }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public static Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobResource GetDataBoxEdgeDeviceJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceOperationsStatuResource GetDataBoxEdgeDeviceOperationsStatuResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceJobStatusResource GetDataBoxEdgeDeviceJobStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public double? ClusterFailoverMemoryMb { get { throw null; } set { } }
         public double? ClusterFragmentationMemoryMb { get { throw null; } set { } }
         public double? ClusterFreeMemoryMb { get { throw null; } set { } }
-        public double? ClusterHypervReserveMemoryMb { get { throw null; } set { } }
+        public double? ClusterHyperVReserveMemoryMb { get { throw null; } set { } }
         public double? ClusterInfraVmMemoryMb { get { throw null; } set { } }
         public double? ClusterMemoryUsedByVmsMb { get { throw null; } set { } }
         public double? ClusterNonFailoverVmMb { get { throw null; } set { } }
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2128GPU1Mx1W { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP22562T4W { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2256GPU2Mx1 { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2641VPUW { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2641VpuW { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP264Mx1W { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName Gateway { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName GPU { get { throw null; } }

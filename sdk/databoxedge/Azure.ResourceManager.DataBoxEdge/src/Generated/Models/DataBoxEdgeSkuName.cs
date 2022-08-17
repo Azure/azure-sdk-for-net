@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string EdgePHighValue = "EdgeP_High";
         private const string EdgePRBaseValue = "EdgePR_Base";
         private const string EdgePRBaseUPSValue = "EdgePR_Base_UPS";
-        private const string EP2641VPUWValue = "EP2_64_1VPU_W";
+        private const string EP2641VpuWValue = "EP2_64_1VPU_W";
         private const string EP21281T4Mx1WValue = "EP2_128_1T4_Mx1_W";
         private const string EP22562T4WValue = "EP2_256_2T4_W";
         private const string EdgeMRMiniValue = "EdgeMR_Mini";
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> EdgePR_Base_UPS. </summary>
         public static DataBoxEdgeSkuName EdgePRBaseUPS { get; } = new DataBoxEdgeSkuName(EdgePRBaseUPSValue);
         /// <summary> EP2_64_1VPU_W. </summary>
-        public static DataBoxEdgeSkuName EP2641VPUW { get; } = new DataBoxEdgeSkuName(EP2641VPUWValue);
+        public static DataBoxEdgeSkuName EP2641VpuW { get; } = new DataBoxEdgeSkuName(EP2641VpuWValue);
         /// <summary> EP2_128_1T4_Mx1_W. </summary>
         public static DataBoxEdgeSkuName EP21281T4Mx1W { get; } = new DataBoxEdgeSkuName(EP21281T4Mx1WValue);
         /// <summary> EP2_256_2T4_W. </summary>

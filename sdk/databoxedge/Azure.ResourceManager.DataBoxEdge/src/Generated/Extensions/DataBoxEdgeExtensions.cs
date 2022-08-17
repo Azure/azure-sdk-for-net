@@ -302,20 +302,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
         #endregion
 
-        #region DataBoxEdgeDeviceOperationsStatuResource
+        #region DataBoxEdgeDeviceJobStatusResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeDeviceOperationsStatuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeDeviceOperationsStatuResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeDeviceOperationsStatuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeDeviceJobStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeDeviceJobStatusResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeDeviceJobStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeDeviceOperationsStatuResource" /> object. </returns>
-        public static DataBoxEdgeDeviceOperationsStatuResource GetDataBoxEdgeDeviceOperationsStatuResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataBoxEdgeDeviceJobStatusResource" /> object. </returns>
+        public static DataBoxEdgeDeviceJobStatusResource GetDataBoxEdgeDeviceJobStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataBoxEdgeDeviceOperationsStatuResource.ValidateResourceId(id);
-                return new DataBoxEdgeDeviceOperationsStatuResource(client, id);
+                DataBoxEdgeDeviceJobStatusResource.ValidateResourceId(id);
+                return new DataBoxEdgeDeviceJobStatusResource(client, id);
             }
             );
         }

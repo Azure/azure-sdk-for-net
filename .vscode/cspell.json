@@ -224,6 +224,30 @@
       ]
     },
     {
+      "filename": "**/sdk/databox/**/*.cs",
+      "words": [
+        "errored"
+      ]
+    },
+    {
+      "filename": "**/sdk/databoxedge/**/*.cs",
+      "words": [
+        "mbps",
+        "mrtcp",
+        "rsaes",
+        "numa",
+        "posix",
+        "rdma"
+      ]
+    },
+    {
+      "filename": "**/sdk/datashare/**/*.cs",
+      "words": [
+        "adls",
+        "kusto"
+      ]
+    },
+    {
       "filename": "**/sdk/datafactory/**/*.cs",
       "words": [
         "Ssis",
@@ -286,6 +310,10 @@
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
+    },
+    {
+      "filename": "**/sdk/frontdoor/**/*.cs",
+      "words": ["cname"]
     },
     {
       "filename": "**/sdk/guestconfiguration/**/*.cs",

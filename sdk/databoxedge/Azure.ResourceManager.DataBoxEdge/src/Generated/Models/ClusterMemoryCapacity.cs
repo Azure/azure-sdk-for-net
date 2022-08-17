@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="clusterUsedMemoryMb"> The used memory in the cluster in MB. </param>
         /// <param name="clusterFailoverMemoryMb"> The failover memory in the cluster in MB. </param>
         /// <param name="clusterFragmentationMemoryMb"> The fragmentation memory in the cluster in MB. </param>
-        /// <param name="clusterHypervReserveMemoryMb"> The memory reserved for Hyper-V in the cluster in MB. </param>
+        /// <param name="clusterHyperVReserveMemoryMb"> The memory reserved for Hyper-V in the cluster in MB. </param>
         /// <param name="clusterInfraVmMemoryMb"> The memory of the Infra VM in the cluster in MB. </param>
         /// <param name="clusterTotalMemoryMb"> The total memory in the cluster in MB. </param>
         /// <param name="clusterNonFailoverVmMb"> The non-failover memory in the cluster in MB. </param>
         /// <param name="clusterMemoryUsedByVmsMb"> The memory used by VMs in the cluster in MB. </param>
-        internal ClusterMemoryCapacity(double? clusterFreeMemoryMb, double? clusterUsedMemoryMb, double? clusterFailoverMemoryMb, double? clusterFragmentationMemoryMb, double? clusterHypervReserveMemoryMb, double? clusterInfraVmMemoryMb, double? clusterTotalMemoryMb, double? clusterNonFailoverVmMb, double? clusterMemoryUsedByVmsMb)
+        internal ClusterMemoryCapacity(double? clusterFreeMemoryMb, double? clusterUsedMemoryMb, double? clusterFailoverMemoryMb, double? clusterFragmentationMemoryMb, double? clusterHyperVReserveMemoryMb, double? clusterInfraVmMemoryMb, double? clusterTotalMemoryMb, double? clusterNonFailoverVmMb, double? clusterMemoryUsedByVmsMb)
         {
             ClusterFreeMemoryMb = clusterFreeMemoryMb;
             ClusterUsedMemoryMb = clusterUsedMemoryMb;
             ClusterFailoverMemoryMb = clusterFailoverMemoryMb;
             ClusterFragmentationMemoryMb = clusterFragmentationMemoryMb;
-            ClusterHypervReserveMemoryMb = clusterHypervReserveMemoryMb;
+            ClusterHyperVReserveMemoryMb = clusterHyperVReserveMemoryMb;
             ClusterInfraVmMemoryMb = clusterInfraVmMemoryMb;
             ClusterTotalMemoryMb = clusterTotalMemoryMb;
             ClusterNonFailoverVmMb = clusterNonFailoverVmMb;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The fragmentation memory in the cluster in MB. </summary>
         public double? ClusterFragmentationMemoryMb { get; set; }
         /// <summary> The memory reserved for Hyper-V in the cluster in MB. </summary>
-        public double? ClusterHypervReserveMemoryMb { get; set; }
+        public double? ClusterHyperVReserveMemoryMb { get; set; }
         /// <summary> The memory of the Infra VM in the cluster in MB. </summary>
         public double? ClusterInfraVmMemoryMb { get; set; }
         /// <summary> The total memory in the cluster in MB. </summary>

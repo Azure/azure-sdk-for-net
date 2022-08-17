@@ -20,6 +20,9 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/jobs/{name}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}: DataBoxEdgeDeviceJobStatus
+
 rename-mapping:
   DataBoxEdgeSku: AvailableDataBoxEdgeSku
   DataBoxEdgeSkuList: AvailableDataBoxEdgeSkuList
@@ -53,5 +56,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Hyperv: HyperV
+  VPUW: VpuW
 
 ```

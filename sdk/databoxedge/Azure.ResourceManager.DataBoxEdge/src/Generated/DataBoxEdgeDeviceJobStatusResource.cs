@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A Class representing a DataBoxEdgeDeviceOperationsStatu along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeDeviceOperationsStatuResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeDeviceOperationsStatuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeDeviceOperationsStatu method.
+    /// A Class representing a DataBoxEdgeDeviceJobStatus along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeDeviceJobStatusResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeDeviceJobStatusResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeDeviceJobStatus method.
     /// </summary>
-    public partial class DataBoxEdgeDeviceOperationsStatuResource : ArmResource
+    public partial class DataBoxEdgeDeviceJobStatusResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeDeviceOperationsStatuResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeDeviceJobStatusResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataBoxEdgeDeviceOperationsStatuOperationsStatusClientDiagnostics;
-        private readonly OperationsStatusRestOperations _dataBoxEdgeDeviceOperationsStatuOperationsStatusRestClient;
+        private readonly ClientDiagnostics _dataBoxEdgeDeviceJobStatusOperationsStatusClientDiagnostics;
+        private readonly OperationsStatusRestOperations _dataBoxEdgeDeviceJobStatusOperationsStatusRestClient;
         private readonly JobData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceOperationsStatuResource"/> class for mocking. </summary>
-        protected DataBoxEdgeDeviceOperationsStatuResource()
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceJobStatusResource"/> class for mocking. </summary>
+        protected DataBoxEdgeDeviceJobStatusResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeDeviceOperationsStatuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeDeviceJobStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataBoxEdgeDeviceOperationsStatuResource(ArmClient client, JobData data) : this(client, data.Id)
+        internal DataBoxEdgeDeviceJobStatusResource(ArmClient client, JobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceOperationsStatuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceJobStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataBoxEdgeDeviceOperationsStatuResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataBoxEdgeDeviceJobStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataBoxEdgeDeviceOperationsStatuOperationsStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceOperationsStatuOperationsStatusApiVersion);
-            _dataBoxEdgeDeviceOperationsStatuOperationsStatusRestClient = new OperationsStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceOperationsStatuOperationsStatusApiVersion);
+            _dataBoxEdgeDeviceJobStatusOperationsStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceJobStatusOperationsStatusApiVersion);
+            _dataBoxEdgeDeviceJobStatusOperationsStatusRestClient = new OperationsStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceJobStatusOperationsStatusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Operation Id: OperationsStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoxEdgeDeviceOperationsStatuResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxEdgeDeviceJobStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceOperationsStatuOperationsStatusClientDiagnostics.CreateScope("DataBoxEdgeDeviceOperationsStatuResource.Get");
+            using var scope = _dataBoxEdgeDeviceJobStatusOperationsStatusClientDiagnostics.CreateScope("DataBoxEdgeDeviceJobStatusResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeDeviceOperationsStatuOperationsStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxEdgeDeviceJobStatusOperationsStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeDeviceOperationsStatuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeDeviceJobStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Operation Id: OperationsStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoxEdgeDeviceOperationsStatuResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxEdgeDeviceJobStatusResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceOperationsStatuOperationsStatusClientDiagnostics.CreateScope("DataBoxEdgeDeviceOperationsStatuResource.Get");
+            using var scope = _dataBoxEdgeDeviceJobStatusOperationsStatusClientDiagnostics.CreateScope("DataBoxEdgeDeviceJobStatusResource.Get");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeDeviceOperationsStatuOperationsStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataBoxEdgeDeviceJobStatusOperationsStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeDeviceOperationsStatuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeDeviceJobStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

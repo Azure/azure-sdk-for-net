@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("clusterFragmentationMemoryMb");
                 writer.WriteNumberValue(ClusterFragmentationMemoryMb.Value);
             }
-            if (Optional.IsDefined(ClusterHypervReserveMemoryMb))
+            if (Optional.IsDefined(ClusterHyperVReserveMemoryMb))
             {
                 writer.WritePropertyName("clusterHypervReserveMemoryMb");
-                writer.WriteNumberValue(ClusterHypervReserveMemoryMb.Value);
+                writer.WriteNumberValue(ClusterHyperVReserveMemoryMb.Value);
             }
             if (Optional.IsDefined(ClusterInfraVmMemoryMb))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<double> clusterUsedMemoryMb = default;
             Optional<double> clusterFailoverMemoryMb = default;
             Optional<double> clusterFragmentationMemoryMb = default;
-            Optional<double> clusterHypervReserveMemoryMb = default;
+            Optional<double> clusterHyperVReserveMemoryMb = default;
             Optional<double> clusterInfraVmMemoryMb = default;
             Optional<double> clusterTotalMemoryMb = default;
             Optional<double> clusterNonFailoverVmMb = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    clusterHypervReserveMemoryMb = property.Value.GetDouble();
+                    clusterHyperVReserveMemoryMb = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("clusterInfraVmMemoryMb"))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new ClusterMemoryCapacity(Optional.ToNullable(clusterFreeMemoryMb), Optional.ToNullable(clusterUsedMemoryMb), Optional.ToNullable(clusterFailoverMemoryMb), Optional.ToNullable(clusterFragmentationMemoryMb), Optional.ToNullable(clusterHypervReserveMemoryMb), Optional.ToNullable(clusterInfraVmMemoryMb), Optional.ToNullable(clusterTotalMemoryMb), Optional.ToNullable(clusterNonFailoverVmMb), Optional.ToNullable(clusterMemoryUsedByVmsMb));
+            return new ClusterMemoryCapacity(Optional.ToNullable(clusterFreeMemoryMb), Optional.ToNullable(clusterUsedMemoryMb), Optional.ToNullable(clusterFailoverMemoryMb), Optional.ToNullable(clusterFragmentationMemoryMb), Optional.ToNullable(clusterHyperVReserveMemoryMb), Optional.ToNullable(clusterInfraVmMemoryMb), Optional.ToNullable(clusterTotalMemoryMb), Optional.ToNullable(clusterNonFailoverVmMb), Optional.ToNullable(clusterMemoryUsedByVmsMb));
         }
     }
 }
