@@ -442,6 +442,15 @@
         "ipfix"
       ]
     },
+    {
+      "filename": "**/sdk/peering/**/*.cs",
+      "words": [
+        "asns",
+        "glas",
+        "rpki",
+        "mbps"
+      ]
+    },
 	{
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
@@ -450,7 +459,7 @@
         "vcores"
       ]
     },
-	{
+    {
       "filename": "**/sdk/redis/**/*.cs",
       "words": [
         "hana",
