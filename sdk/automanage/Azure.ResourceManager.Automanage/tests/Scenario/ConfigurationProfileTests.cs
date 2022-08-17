@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             // fetch configuration profile collection
             var collection = rg.GetConfigurationProfiles();
 
-            // create configuration profile and resync the collection
+            // create configuration profile
             await CreateConfigurationProfile(collection, profileName);
 
             // fetch all profiles and count them
