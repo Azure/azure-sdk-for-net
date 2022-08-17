@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
         }
 
-        /// <summary>Verfies that a json path exists.</summary>
+        /// <summary>Verifies that a JSON path exists.</summary>
         /// <param name="path">The path.</param>
         /// <returns>True if the elements and sub-elements are present.</returns>
         internal bool PathExists(params string[] path)

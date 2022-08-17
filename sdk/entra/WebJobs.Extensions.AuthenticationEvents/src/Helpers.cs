@@ -155,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                 Validator.TryValidateProperty(inst, new ValidationContext(obj) { MemberName = prop.Name }, objectValidations);
 
-                if (inst != null)//Short curcuit the validation if the parent is null.
+                if (inst != null)//Short circuit the validation if the parent is null.
                 {
                     ValidateGraph(inst, validationResults);
                 }

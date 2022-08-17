@@ -63,16 +63,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return GetService(testId, out _);
         }
 
-        private static string GetConfigValue(string enviromentVariable, string defaultValue)
+        private static string GetConfigValue(string environmentVariable, string defaultValue)
         {
-            return Environment.GetEnvironmentVariable(enviromentVariable) ?? defaultValue;
+            return Environment.GetEnvironmentVariable(environmentVariable) ?? defaultValue;
         }
 
-        private static T GetConfigValue<T>(string enviromentVariable, T defaultValue) where T : struct
+        private static T GetConfigValue<T>(string environmentVariable, T defaultValue) where T : struct
         {
-            return Environment.GetEnvironmentVariable(enviromentVariable) == null ?
+            return Environment.GetEnvironmentVariable(environmentVariable) == null ?
                 defaultValue :
-                (T)Convert.ChangeType(Environment.GetEnvironmentVariable(enviromentVariable), typeof(T), CultureInfo.CurrentCulture);
+                (T)Convert.ChangeType(Environment.GetEnvironmentVariable(environmentVariable), typeof(T), CultureInfo.CurrentCulture);
         }
     }
 }

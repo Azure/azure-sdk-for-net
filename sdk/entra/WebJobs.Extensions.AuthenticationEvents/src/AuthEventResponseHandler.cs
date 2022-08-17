@@ -138,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return GetAuthEventFromJObject(jResult, response);
         }
 
-        /// <summary>Tries to convert a Json response payload to an stringly type EventResponse.</summary>
+        /// <summary>Tries to convert a JSON response payload to an string type EventResponse.</summary>
         /// <param name="response">The response payload.</param>
         /// <param name="responseType">Type of the response to generate.</param>
         /// <returns>If the EventResponse is generated then the Typed EventResponse else null.</returns>

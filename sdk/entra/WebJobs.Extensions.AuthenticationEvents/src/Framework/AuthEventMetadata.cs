@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="request">The incoming HTTP request message.</param>
         /// <param name="payload">The Json payload.</param>
         /// <param name="args">The arguments.</param>
-        /// <returns>A newly create EventRequest with related EventReponse and EventData based on event type.</returns>
+        /// <returns>A newly create EventRequest with related EventResponse and EventData based on event type.</returns>
         /// <seealso cref="AuthEventRequestBase" />
         /// <seealso cref="AuthEventData" />
         internal AuthEventRequestBase CreateEventRequestValidate(HttpRequestMessage request, string payload, params object[] args)
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="payload">The Json payload.</param>
         /// <param name="validate">Validate the generated object.</param>
         /// <param name="args">The arguments.</param>
-        /// <returns>A newly create EventRequest with related EventReponse and EventData based on event type.</returns>
+        /// <returns>A newly create EventRequest with related EventResponse and EventData based on event type.</returns>
         /// <seealso cref="AuthEventRequestBase" />
         /// <seealso cref="AuthEventData" />
         internal AuthEventRequestBase CreateEventRequest(HttpRequestMessage request, string payload, bool validate, params object[] args)

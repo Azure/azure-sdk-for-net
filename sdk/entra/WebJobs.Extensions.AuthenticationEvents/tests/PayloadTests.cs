@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         Empty,
         /// <summary> A string response that wll be converted to an IActionResult </summary>
         Conversion,
-        /// <summary>A valid payload for supported cloud event envolope</summary>
+        /// <summary>A valid payload for supported cloud event envelope</summary>
         ValidCloudEvent
     }
 

@@ -15,8 +15,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <value>Gets the Cloud Event @odata.type.</value>
         [JsonPropertyName("oDataType")]
         [Required]
-        public string ODataType { get { return DataTypeIndentifier; } }
-        internal abstract string DataTypeIndentifier { get; }
+        public string ODataType { get { return DataTypeIdentifier; } }
+        internal abstract string DataTypeIdentifier { get; }
 
         /// <summary>Invalidates this instance.
         /// Subsequently invalidates the actions.</summary>

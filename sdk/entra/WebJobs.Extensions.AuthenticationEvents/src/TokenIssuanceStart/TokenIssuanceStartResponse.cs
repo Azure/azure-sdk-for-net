@@ -14,6 +14,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <value>Gets the Cloud Event @odata.type.</value>
 
         [OneOf("microsoft.graph.onTokenIssuanceStartResponseData")]
-        internal override string DataTypeIndentifier => "microsoft.graph.onTokenIssuanceStartResponseData";
+        internal override string DataTypeIdentifier => "microsoft.graph.onTokenIssuanceStartResponseData";
     }
 }

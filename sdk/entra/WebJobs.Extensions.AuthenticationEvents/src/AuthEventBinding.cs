@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="request">The incoming HTTP request message.</param>
         /// <param name="eventResponseHandler">The event response handler.</param>
         /// <param name="ex">The exception that caused the fault.</param>
-        /// <returns>A TiggerData Object with the failed event request based on the event. With the related request status set.</returns>
+        /// <returns>A TriggerData Object with the failed event request based on the event. With the related request status set.</returns>
         /// <seealso cref="TriggerData" />
         /// <seealso cref="AuthEventResponseHandler" />
         private TriggerData GetFaultyRequest(ValueBindingContext context, object value, HttpRequestMessage request, AuthEventResponseHandler eventResponseHandler, Exception ex)

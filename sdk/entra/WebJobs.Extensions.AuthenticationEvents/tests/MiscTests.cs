@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void QueryParameterTest()
         {
             TokenIssuanceStartRequest tokenIssuanceStartRequest = new TokenIssuanceStartRequest(new HttpRequestMessage(HttpMethod.Get, "http://test?param1=test1&param2=test2"));
-            Assert.True(TestHelper.DoesPayloadMatch(payloads.TokenIssuanceStart.TokenInssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
+            Assert.True(TestHelper.DoesPayloadMatch(payloads.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
         }
 
         /// <summary>Tests the OnTokenIssuanceStart request and response object model for CSharp for version: 10_01_2021</summary>

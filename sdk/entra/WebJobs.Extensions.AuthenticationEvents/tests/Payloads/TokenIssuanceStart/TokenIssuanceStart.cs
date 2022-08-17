@@ -42,7 +42,7 @@
             }
         }
 
-        /// <summary>Mocks the data expected from the function execution that will be converted by yhe EvenrResponseHandler to an IActionResult.</summary>
+        /// <summary>Mocks the data expected from the function execution that will be converted by yhe EventResponseHandler to an IActionResult.</summary>
         /// <value>The function response.</value>
         public static string ConversionPayload
         {
@@ -51,9 +51,9 @@
                 return PayloadHelper.GetPayload("TokenIssuanceStart.ConversionPayload.json");
             }
         }
-        /// <summary>Gets the token inssuance start query parameter expected payload</summary>
-        /// <value>The token inssuance start query parameter.</value>
-        public static string TokenInssuanceStartQueryParameter
+        /// <summary>Gets the token issuance start query parameter expected payload</summary>
+        /// <value>The token issuance start query parameter.</value>
+        public static string TokenIssuanceStartQueryParameter
         {
             get
             {

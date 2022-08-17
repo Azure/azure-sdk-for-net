@@ -24,7 +24,7 @@ This project framework provides the following features:
 * If using Visual Studio Code the following extensions:
   * [ms-azuretools.vscode-azurefunctions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
   * [ms-dotnettools.csharp](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
-* For private preview register a Nuget source either using Nugets cli **OR** Visual Studio's Nuget Package Manager.
+* For private preview register a Nuget source either using Nuget''s cli **OR** Visual Studio's Nuget Package Manager.
   * Generate a GIT Personal Access Token. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens)
     * When generating the token, it needs to have the following permissions/scope: **read:package**
     * Authorize **Azure** to use the Personal Access Token. (::Only if you are a member of the Azure Organization on GitHub::)
@@ -97,11 +97,11 @@ The issuer and allowed audience depends on the [`accessTokenAcceptedVersion`](ht
 
 If the `accessTokenAcceptedVersion` property is set to `2`:
 6. Set the `Issuer URL to "https://login.microsoftonline.com/{tenantId}/v2.0"
-7. Set an 'Allowed Audience' to the the Application ID (`appId`)
+7. Set an 'Allowed Audience' to the Application ID (`appId`)
 
 If the `accessTokenAcceptedVersion` property is set to `1` or `null`:
 6. Set the `Issuer URL to "https://sts.windows.net/{tenantId}/"
-7. Set an 'Allowed Audience' to the the Application ID URI (also known as`identifierUri`). It should be in the format of`api://{azureFunctionAppName}.azurewebsites.net/{resourceApiAppId}` or `api://{FunctionAppFullyQualifiedDomainName}/{resourceApiAppId}` if using a [custom domain name](https://docs.microsoft.com/azure/dns/dns-custom-domain#:~:text=Azure%20Function%20App%201%20Navigate%20to%20Function%20App,Custom%20domain%20text%20field%20and%20select%20Validate.%20).
+7. Set an 'Allowed Audience' to the Application ID URI (also known as`identifierUri`). It should be in the format of`api://{azureFunctionAppName}.azurewebsites.net/{resourceApiAppId}` or `api://{FunctionAppFullyQualifiedDomainName}/{resourceApiAppId}` if using a [custom domain name](https://docs.microsoft.com/azure/dns/dns-custom-domain#:~:text=Azure%20Function%20App%201%20Navigate%20to%20Function%20App,Custom%20domain%20text%20field%20and%20select%20Validate.%20).
 
 By default, the Authentication event trigger will validate that Azure Function authentication integration is configured and it will check that the **client** in the token is set to `99045fe1-7639-4a75-9d4a-577b6ca3810f` (via the `azp` or `appid` claims in the token).
 

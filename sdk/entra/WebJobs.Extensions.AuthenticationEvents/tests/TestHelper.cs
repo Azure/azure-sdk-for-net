@@ -335,7 +335,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 return actual.Equals(expected, StringComparison.Ordinal);
             }
         }
-        /// <summary>Doeses the file payload match.</summary>
+        /// <summary>Does the file payload match.</summary>
         /// <param name="expected">The expected payload.</param>
         /// <param name="path">The path to the file containing the payload</param>
         /// <returns>True if payloads match</returns>

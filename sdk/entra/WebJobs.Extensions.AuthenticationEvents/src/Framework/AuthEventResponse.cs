@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             Body = Helpers.GetFailedRequestPayload(ex);
         }
 
-        internal void MarkAsUnauthorised()
+        internal void MarkAsUnauthorized()
         {
             StatusCode = System.Net.HttpStatusCode.Unauthorized;
             ReasonPhrase = String.Empty;
