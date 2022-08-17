@@ -372,6 +372,15 @@
       ]
     },
     {
+      "filename": "**/sdk/netapp/**/*.cs",
+      "words": [
+        "mibps",
+        "hana",
+        "cifs",
+        "nfsv"
+      ]
+    },
+    {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
         "Azfw",
