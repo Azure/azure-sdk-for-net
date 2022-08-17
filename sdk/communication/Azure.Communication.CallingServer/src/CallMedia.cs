@@ -199,48 +199,16 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Recognize tones.
         /// </summary>
-        /// <param name="recognizeAttributes">Different attibutes to recognize.</param>
-        /// <param name="recognizeOptions">Optional attributes for recognize.</param>
+        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> RecognizeAsync(RecognizeAttributes recognizeAttributes, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RecognizeAsync(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
             scope.Start();
             try
             {
-                RecognizeOptionsInternal attributes = new RecognizeOptionsInternal()
-                {
-                    DtmfOptions = new DtmfOptionsInternal()
-                    {
-                        CollectTones = recognizeAttributes.DtmfOptions.CollectTones,
-                        DtfmToneProducer = CommunicationIdentifierSerializer.Serialize(recognizeAttributes.DtmfOptions.DtfmToneProducer),
-                    },
-                    PausePlayOnResponse = recognizeAttributes.PausePlayOnResponse,
-                    InitialSilenceTimeoutInSeconds = recognizeAttributes.InitialSilenceTimeoutInSeconds,
-                };
-                RecognizeRequestInternal request = new RecognizeRequestInternal(attributes);
-
-                if (recognizeOptions != null)
-                {
-                    if (recognizeOptions.PlaySourceInfo != null && recognizeOptions.PlaySourceInfo is FileSource fileSource)
-                    {
-                        PlaySourceInternal sourceInternal;
-                        sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                        sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                        sourceInternal.PlaySourceId = recognizeOptions.PlaySourceInfo.PlaySourceId;
-
-                        request.PlaySourceInfo = sourceInternal;
-                    }
-                    else if (recognizeOptions.PlaySourceInfo != null)
-                    {
-                        throw new NotSupportedException(recognizeOptions.PlaySourceInfo.GetType().Name);
-                    }
-
-                    request.RecognizeInputType = recognizeOptions.RecognizeInputType;
-                    request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
-                    request.OperationContext = recognizeOptions.OperationContext;
-                }
+                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
                 return await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -253,48 +221,16 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Recognize tones.
         /// </summary>
-        /// <param name="recognizeAttributes">Different attibutes to recognize.</param>
-        /// <param name="recognizeOptions">Optional attributes for recognize.</param>
+        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response Recognize(RecognizeAttributes recognizeAttributes, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response Recognize(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
             scope.Start();
             try
             {
-                RecognizeOptionsInternal attributes = new RecognizeOptionsInternal()
-                {
-                    DtmfOptions = new DtmfOptionsInternal()
-                    {
-                        CollectTones = recognizeAttributes.DtmfOptions.CollectTones,
-                        DtfmToneProducer = CommunicationIdentifierSerializer.Serialize(recognizeAttributes.DtmfOptions.DtfmToneProducer),
-                    },
-                    PausePlayOnResponse = recognizeAttributes.PausePlayOnResponse,
-                    InitialSilenceTimeoutInSeconds = recognizeAttributes.InitialSilenceTimeoutInSeconds,
-                };
-                RecognizeRequestInternal request = new RecognizeRequestInternal(attributes);
-
-                if (recognizeOptions != null)
-                {
-                    if (recognizeOptions.PlaySourceInfo != null && recognizeOptions.PlaySourceInfo is FileSource fileSource)
-                    {
-                        PlaySourceInternal sourceInternal;
-                        sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                        sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                        sourceInternal.PlaySourceId = recognizeOptions.PlaySourceInfo.PlaySourceId;
-
-                        request.PlaySourceInfo = sourceInternal;
-                    }
-                    else if (recognizeOptions.PlaySourceInfo != null)
-                    {
-                        throw new NotSupportedException(recognizeOptions.PlaySourceInfo.GetType().Name);
-                    }
-
-                    request.RecognizeInputType = recognizeOptions.RecognizeInputType;
-                    request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
-                    request.OperationContext = recognizeOptions.OperationContext;
-                }
+                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
                 return ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
@@ -302,6 +238,56 @@ namespace Azure.Communication.CallingServer
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private static RecognizeRequestInternal CreateRecognizeRequest(RecognizeOptions recognizeOptions)
+        {
+            if (recognizeOptions == null)
+                throw new ArgumentNullException(nameof(recognizeOptions));
+            RecognizeConfigurations recognizeConfigurations = recognizeOptions.RecognizeConfigurations;
+
+            if (recognizeConfigurations == null)
+                throw new ArgumentException(nameof(recognizeConfigurations));
+
+            DtmfConfigurationsInternal dtmfConfigurations = null;
+            if (recognizeConfigurations.DtmfConfigurations != null)
+            {
+                dtmfConfigurations = new DtmfConfigurationsInternal()
+                {
+                    InterToneTimeoutInSeconds = recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds,
+                    MaxTonesToCollect = recognizeConfigurations.DtmfConfigurations.MaxTonesToCollect,
+                    StopTones = recognizeConfigurations.DtmfConfigurations.StopTones
+                };
+            }
+
+            RecognizeConfigurationsInternal recognizeConfigurationsInternal = new RecognizeConfigurationsInternal()
+            {
+                DtmfConfigurations = dtmfConfigurations,
+                InterruptPromptAndStartRecognition = recognizeConfigurations.InterruptPromptAndStartRecognition,
+                InitialSilenceTimeoutInSeconds = recognizeConfigurations.InitialSilenceTimeoutInSeconds,
+                TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeConfigurations.TargetParticipant)
+            };
+
+            RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeOptions.RecognizeInputType, recognizeConfigurationsInternal);
+
+            if (recognizeOptions.PlaySourceInfo != null && recognizeOptions.PlaySourceInfo is FileSource fileSource)
+            {
+                PlaySourceInternal sourceInternal;
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceId = recognizeOptions.PlaySourceInfo.PlaySourceId;
+
+                request.PlayPrompt = sourceInternal;
+            }
+            else if (recognizeOptions.PlaySourceInfo != null)
+            {
+                throw new NotSupportedException(recognizeOptions.PlaySourceInfo.GetType().Name);
+            }
+
+            request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
+            request.OperationContext = recognizeOptions.OperationContext;
+
+            return request;
         }
     }
 }

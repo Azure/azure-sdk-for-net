@@ -9,19 +9,34 @@ namespace Azure.Communication.CallingServer
     public class RecognizeOptions
     {
         /// <summary>
+        /// Initializes a RecognizeOptions object.
+        /// </summary>
+        /// <param name="recognizeInputType"></param>
+        /// <param name="recognizeConfigurations"></param>
+        public RecognizeOptions(RecognizeInputType recognizeInputType, RecognizeConfigurations recognizeConfigurations)
+        {
+            RecognizeInputType = recognizeInputType;
+            RecognizeConfigurations = recognizeConfigurations;
+        }
+        /// <summary>
         /// Recognize Input Type.
         /// </summary>
-        public RecognizeInputType? RecognizeInputType { get; internal set; }
+        public RecognizeInputType RecognizeInputType { get; }
+
+        /// <summary>
+        /// Recognize Configurations.
+        /// </summary>
+        public RecognizeConfigurations RecognizeConfigurations { get; }
 
         /// <summary>
         /// Should stop current Operations?.
         /// </summary>
-        public bool? StopCurrentOperations { get; internal set; }
+        public bool? StopCurrentOperations { get; set; }
 
         /// <summary>
         /// Operation Context.
         /// </summary>
-        public string OperationContext { get; internal set; }
+        public string OperationContext { get; set; }
 
         /// <summary>
         /// PlaySource information.

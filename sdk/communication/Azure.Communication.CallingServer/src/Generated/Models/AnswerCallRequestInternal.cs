@@ -30,6 +30,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> The callback uri. </summary>
         public string CallbackUri { get; set; }
         /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingConfigurationDto MediaStreamingConfiguration { get; set; }
+        public MediaStreamingConfigurationDtoInternal MediaStreamingConfiguration { get; set; }
     }
 }
