@@ -15,7 +15,7 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 All container registry service operations will throw a [RequestFailedException](https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure.
 
-When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://docs.microsoft.com/en-us/rest/api/containerregistry/) requests. 
+When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://docs.microsoft.com/rest/api/containerregistry/) requests. 
 
 Here's an example of how to catch an exception using synchronous method
 
