@@ -133,22 +133,5 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 }
             }
         }
-
-        public void InstrumentMessage(AmqpMessage message)
-        {
-            if (!message.ApplicationProperties.Map.TryGetValue<string>(DiagnosticProperty.DiagnosticIdAttribute, out var _))
-            {
-                using DiagnosticScope messageScope = CreateScope(
-                    DiagnosticProperty.MessageActivityName,
-                    DiagnosticScope.ActivityKind.Producer);
-                messageScope.Start();
-
-                Activity activity = Activity.Current;
-                if (activity != null)
-                {
-                    message.ApplicationProperties.Map.Add(DiagnosticProperty.DiagnosticIdAttribute, activity.Id);
-                }
-            }
-        }
     }
 }
