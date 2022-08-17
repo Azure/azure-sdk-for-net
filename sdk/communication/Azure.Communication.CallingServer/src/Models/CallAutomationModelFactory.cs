@@ -124,5 +124,36 @@ namespace Azure.Communication.CallingServer
 
             return new ParticipantsUpdated(internalObject);
         }
+
+        /// <summary>
+        /// Initializes a new instance of Play Completed event.
+        /// </summary>
+        public static PlayCompleted PlayCompleted(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new PlayCompleted(operationContext, resultInformation, AcsEventType.PlayCompleted, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Play failed event.
+        /// </summary>
+        public static PlayFailed PlayFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new PlayFailed(operationContext, resultInformation, AcsEventType.PlayCompleted, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Recording state changed event.
+        /// </summary>
+        public static CallRecordingStateChanged RecordingStateChanged(string recordingId = default, RecordingState state = default, DateTimeOffset startDateTime = default,  string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new CallRecordingStateChanged(
+                AcsEventType.RecordingStateChanged,
+                recordingId,
+                state,
+                startDateTime,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
     }
 }
