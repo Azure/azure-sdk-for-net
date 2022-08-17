@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of ExportPipelineTargetProperties. </summary>
-        /// <param name="exportPipelineTargetType"> The type of target for the export pipeline. </param>
+        /// <param name="pipelineTargetType"> The type of target for the export pipeline. </param>
         /// <param name="uri">
         /// The target uri of the export pipeline.
         /// When &apos;AzureStorageBlob&apos;: &quot;https://accountName.blob.core.windows.net/containerName/blobName&quot;
         /// When &apos;AzureStorageBlobContainer&apos;:  &quot;https://accountName.blob.core.windows.net/containerName&quot;
         /// </param>
         /// <param name="keyVaultUri"> They key vault secret uri to obtain the target storage SAS token. </param>
-        internal ExportPipelineTargetProperties(string exportPipelineTargetType, Uri uri, Uri keyVaultUri)
+        internal ExportPipelineTargetProperties(string pipelineTargetType, Uri uri, Uri keyVaultUri)
         {
-            ExportPipelineTargetType = exportPipelineTargetType;
+            PipelineTargetType = pipelineTargetType;
             Uri = uri;
             KeyVaultUri = keyVaultUri;
         }
 
         /// <summary> The type of target for the export pipeline. </summary>
-        public string ExportPipelineTargetType { get; set; }
+        public string PipelineTargetType { get; set; }
         /// <summary>
         /// The target uri of the export pipeline.
         /// When &apos;AzureStorageBlob&apos;: &quot;https://accountName.blob.core.windows.net/containerName/blobName&quot;

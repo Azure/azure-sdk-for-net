@@ -2154,8 +2154,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ExportPipelineTargetProperties
     {
         public ExportPipelineTargetProperties(System.Uri keyVaultUri) { }
-        public string ExportPipelineTargetType { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public string PipelineTargetType { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class ImportPipelineSourceProperties

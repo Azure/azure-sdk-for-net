@@ -233,10 +233,8 @@ rename-mapping:
   SyncProperties: ConnectedRegistrySyncProperties
   SyncUpdateProperties: ConnectedRegistrySyncUpdateProperties
   TokenUpdateParameters: ContainerRegistryTokenPatch
-#   TokenUpdateParameters.properties.scopeMapId: -|arm-id
-#   Token.properties.scopeMapId: -|arm-id
   ScopeMap.properties.type: ScopeMapType
-  ExportPipelineTargetProperties.type: ExportPipelineTargetType
+  ExportPipelineTargetProperties.type: PipelineTargetType
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
 

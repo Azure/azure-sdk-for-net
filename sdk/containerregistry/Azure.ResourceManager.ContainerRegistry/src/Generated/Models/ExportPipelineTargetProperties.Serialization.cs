@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExportPipelineTargetType))
+            if (Optional.IsDefined(PipelineTargetType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ExportPipelineTargetType);
+                writer.WriteStringValue(PipelineTargetType);
             }
             if (Optional.IsDefined(Uri))
             {
