@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The callback uri.
         /// </summary>
-        public Uri CallBackUri { get; set; }
+        public Uri CallbackEndpoint { get; set; }
 
         /// <summary>
         /// Media Streaming Configuration.

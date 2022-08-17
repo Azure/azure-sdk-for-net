@@ -17,12 +17,12 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="targets"></param>
         /// <param name="source"></param>
-        /// <param name="callBackUri"></param>
-        public CreateCallOptions(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callBackUri)
+        /// <param name="callbackEndpoint"></param>
+        public CreateCallOptions(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackEndpoint)
         {
             Targets = targets;
             Source = source;
-            CallBackUri = callBackUri;
+            CallbackEndpoint = callbackEndpoint;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The callback URI.
         /// </summary>
-        public Uri CallBackUri { get; }
+        public Uri CallbackEndpoint { get; }
 
         /// <summary>
         /// The subject.

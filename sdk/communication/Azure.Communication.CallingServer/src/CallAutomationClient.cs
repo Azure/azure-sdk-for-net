@@ -116,7 +116,7 @@ namespace Azure.Communication.CallingServer
         {
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext)
             {
-                CallBackUri = callbackEndpoint
+                CallbackEndpoint = callbackEndpoint
             };
 
             return await AnswerCallAsync(options, cancellationToken).ConfigureAwait(false);
@@ -160,7 +160,7 @@ namespace Azure.Communication.CallingServer
         {
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext)
             {
-                CallBackUri = callbackEndpoint
+                CallbackEndpoint = callbackEndpoint
             };
 
             return AnswerCall(options, cancellationToken);
@@ -197,7 +197,7 @@ namespace Azure.Communication.CallingServer
         private static AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
         {
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext);
-            request.CallbackUri = options.CallBackUri.AbsoluteUri;
+            request.CallbackUri = options.CallbackEndpoint.AbsoluteUri;
             request.MediaStreamingConfiguration = CreateMediaStreamingConfigurationInternal(options.MediaStreamingConfiguration);
 
             return request;
@@ -420,7 +420,7 @@ namespace Azure.Communication.CallingServer
             CreateCallRequestInternal request = new CreateCallRequestInternal(
                 options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                 sourceDto,
-                options.CallBackUri.AbsoluteUri);
+                options.CallbackEndpoint.AbsoluteUri);
             request.Subject = options.Subject;
             request.MediaStreamingConfiguration = CreateMediaStreamingConfigurationInternal(options.MediaStreamingConfiguration);
 

@@ -32,7 +32,7 @@ namespace Azure.Communication.CallingServer
     public partial class AnswerCallOptions
     {
         public AnswerCallOptions(string incomingCallContext) { }
-        public System.Uri CallBackUri { get { throw null; } set { } }
+        public System.Uri CallbackEndpoint { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallingServer.MediaStreamingConfiguration MediaStreamingConfiguration { get { throw null; } set { } }
     }
@@ -94,7 +94,7 @@ namespace Azure.Communication.CallingServer
         public static Azure.Communication.CallingServer.AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participants = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.AnswerCallResult AnswerCallResult(Azure.Communication.CallingServer.CallConnection callConnection = null, Azure.Communication.CallingServer.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallingServer.CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallingServer.CallConnectionProperties CallConnectionProperties(string callConnectionId = null, string serverCallId = null, Azure.Communication.CallingServer.CallSource callSource = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets = null, Azure.Communication.CallingServer.CallConnectionState callConnectionState = default(Azure.Communication.CallingServer.CallConnectionState), string subject = null, System.Uri callbackEndpoint = null) { throw null; }
+        public static Azure.Communication.CallingServer.CallConnectionProperties CallConnectionProperties(string callConnectionId = null, string serverCallId = null, Azure.Communication.CallingServer.CallSource callSource = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets = null, Azure.Communication.CallingServer.CallConnectionState callConnectionState = default(Azure.Communication.CallingServer.CallConnectionState), string subject = null, System.Uri callbackEndpoint = null, string mediaSubscriptionId = null) { throw null; }
         public static Azure.Communication.CallingServer.CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.CallParticipant CallParticipant(Azure.Communication.CommunicationIdentifier identifier = null, bool isMuted = false) { throw null; }
         public static Azure.Communication.CallingServer.CallTransferAccepted CallTransferAccepted(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
@@ -141,6 +141,7 @@ namespace Azure.Communication.CallingServer
         public string CallConnectionId { get { throw null; } }
         public Azure.Communication.CallingServer.CallConnectionState? CallConnectionState { get { throw null; } }
         public Azure.Communication.CallingServer.CallSource CallSource { get { throw null; } }
+        public string MediaSubscriptionId { get { throw null; } }
         public string ServerCallId { get { throw null; } }
         public string Subject { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
@@ -294,8 +295,8 @@ namespace Azure.Communication.CallingServer
     }
     public partial class CreateCallOptions
     {
-        public CreateCallOptions(Azure.Communication.CallingServer.CallSource source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callBackUri) { }
-        public System.Uri CallBackUri { get { throw null; } }
+        public CreateCallOptions(Azure.Communication.CallingServer.CallSource source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackEndpoint) { }
+        public System.Uri CallbackEndpoint { get { throw null; } }
         public Azure.Communication.CallingServer.MediaStreamingConfiguration MediaStreamingConfiguration { get { throw null; } set { } }
         public Azure.Communication.CallingServer.CallSource Source { get { throw null; } }
         public string Subject { get { throw null; } set { } }
