@@ -38,20 +38,12 @@ namespace Azure.ResourceManager.Media.Tests
             _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
         }
 
-        private async Task<MediaTransformResource> CreateDefautMediaTransfer(string mediaTransformName)
-        {
-            MediaTransformData data = new MediaTransformData();
-            data.Outputs.Add(new MediaTransformOutput(new AudioAnalyzerPreset()));
-            var mediaTransfer = await mediaTransformCollection.CreateOrUpdateAsync(WaitUntil.Completed, mediaTransformName, data);
-            return mediaTransfer.Value;
-        }
-
         [Test]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
             string mediaTransformName = SessionRecording.GenerateAssetName("randomtransfer");
-            var mediaTransfer = await CreateDefautMediaTransfer(mediaTransformName);
+            var mediaTransfer = await CreateMediaTransfer(mediaTransformCollection, mediaTransformName);
             Assert.IsNotNull(mediaTransfer);
             Assert.AreEqual(mediaTransformName, mediaTransfer.Data.Name);
         }
@@ -61,7 +53,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Exist()
         {
             string mediaTransformName = SessionRecording.GenerateAssetName("randomtransfer");
-            await CreateDefautMediaTransfer(mediaTransformName);
+            await CreateMediaTransfer(mediaTransformCollection, mediaTransformName);
             bool flag = await mediaTransformCollection.ExistsAsync(mediaTransformName);
             Assert.IsTrue(flag);
         }
@@ -71,7 +63,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Get()
         {
             string mediaTransformName = SessionRecording.GenerateAssetName("randomtransfer");
-            await CreateDefautMediaTransfer(mediaTransformName);
+            await CreateMediaTransfer(mediaTransformCollection, mediaTransformName);
             var mediaTransfer = await mediaTransformCollection.GetAsync(mediaTransformName);
             Assert.IsNotNull(mediaTransfer);
             Assert.AreEqual(mediaTransformName, mediaTransfer.Value.Data.Name);
@@ -82,7 +74,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task GetAll()
         {
             string mediaTransformName = SessionRecording.GenerateAssetName("randomtransfer");
-            var mediaTransfer = await CreateDefautMediaTransfer(mediaTransformName);
+            var mediaTransfer = await CreateMediaTransfer(mediaTransformCollection, mediaTransformName);
             var list = await mediaTransformCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
@@ -92,7 +84,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Delete()
         {
             string mediaTransformName = SessionRecording.GenerateAssetName("randomtransfer");
-            var mediaTransfer = await CreateDefautMediaTransfer(mediaTransformName);
+            var mediaTransfer = await CreateMediaTransfer(mediaTransformCollection, mediaTransformName);
             bool flag = await mediaTransformCollection.ExistsAsync(mediaTransformName);
             Assert.IsTrue(flag);
 

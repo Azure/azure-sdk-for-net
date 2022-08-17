@@ -74,5 +74,13 @@ namespace Azure.ResourceManager.Media.Tests
             var mediaService = await resourceGroup.GetMediaServices().CreateOrUpdateAsync(WaitUntil.Completed, mediaServiceName, data);
             return mediaService.Value;
         }
+
+        protected async Task<MediaTransformResource> CreateMediaTransfer(MediaTransformCollection mediaTransformCollection, string mediaTransformName)
+        {
+            MediaTransformData data = new MediaTransformData();
+            data.Outputs.Add(new MediaTransformOutput(new AudioAnalyzerPreset()));
+            var mediaTransfer = await mediaTransformCollection.CreateOrUpdateAsync(WaitUntil.Completed, mediaTransformName, data);
+            return mediaTransfer.Value;
+        }
     }
 }
