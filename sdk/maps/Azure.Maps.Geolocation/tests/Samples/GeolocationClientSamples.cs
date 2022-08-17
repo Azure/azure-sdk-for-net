@@ -4,106 +4,76 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-#region Snippet:RenderImportNamespace
-using Azure.Maps.Render;
-using Azure.Maps.Render.Models;
+#region Snippet:GeolocationImportNamespace
+using Azure.Maps.Geolocation;
+using Azure.Maps.Geolocation.Models;
 #endregion
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Maps.Render.Tests
+namespace Azure.Maps.Geolocation.Tests
 {
-    public class RenderClientSamples : SamplesBase<RenderClientTestEnvironment>
+    public class GeolocationClientSamples : SamplesBase<GeolocationClientTestEnvironment>
     {
-        public void RenderClientViaAAD()
+        public void GeolocationClientViaAAD()
         {
-            #region Snippet:InstantiateRenderClientViaAAD
-            // Create a MapsRenderClient that will authenticate through Active Directory
+            #region Snippet:InstantiateGeolocationClientViaAAD
+            // Create a MapsGeolocationClient that will authenticate through Active Directory
             var credential = new DefaultAzureCredential();
             var clientId = "<My Map Account Client Id>";
-            MapsRenderClient client = new MapsRenderClient(credential, clientId);
+            MapsGeolocationClient client = new MapsGeolocationClient(credential, clientId);
             #endregion
         }
 
-        public void RenderClientViaSubscriptionKey()
+        public void GeolocationClientViaSubscriptionKey()
         {
-            #region Snippet:InstantiateRenderClientViaSubscriptionKey
-            // Create a MapsRenderClient that will authenticate through Subscription Key (Shared key)
+            #region Snippet:InstantiateGeolocationClientViaSubscriptionKey
+            // Create a MapsGeolocationClient that will authenticate through Subscription Key (Shared key)
             var credential = new AzureKeyCredential("<My Subscription Key>");
-            MapsRenderClient client = new MapsRenderClient(credential);
+            MapsGeolocationClient client = new MapsGeolocationClient(credential);
             #endregion
         }
 
         [Test]
-        public void RenderingImageryTiles()
+        public void GetLocationTest()
         {
-            #region Snippet:RenderImageryTiles
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, clientId);
+            var client = new MapsGeolocationClient(credential, clientId);
 
-            #region Snippet:RenderImagery
-            // Get imagery tile
-            var imageryTile = client.GetMapImageryTile(new TileIndex(10, 12, 12));
-            var imageryStream = new MemoryStream();
-            imageryTile.Value.CopyTo(imageryStream);
-            #endregion
+            #region Snippet:GetLocation
+            //Get location by given IP address
+            var ipAddress = "2001:4898:80e8:b::189";
+            var result = client.GetLocation(ipAddress);
+
+            //Get location result country code
+            Console.WriteLine($"Country code results by given IP Address: {0}", result.Value.IsoCode);
             #endregion
 
-            Assert.IsNotNull(imageryTile);
-            Assert.IsTrue(imageryStream.Length > 0);
+            Assert.IsTrue(result.Value.IsoCode == "US");
         }
 
         [Test]
-        public void RenderingStaticImages()
+        public void GetGeolocationDirectionsError()
         {
             var credential = new DefaultAzureCredential();
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, clientId);
+            var client = new MapsGeolocationClient(credential, clientId);
 
-            #region Snippet:RenderStaticImages
-            // Get static image
-            var staticImageOptions = new RenderStaticImageOptions()
+            #region Snippet:CatchGeolocationException
+            try
             {
-                TileLayer = StaticMapLayer.Basic,
-                TileStyle = MapImageStyle.Dark,
-                CenterCoordinate = new List<double>() { 0.0, 0.0 },
-                RenderLanguage = "en",
-                Height = 100,
-                Width = 100,
-            };
-            var image = client.GetMapStaticImage(staticImageOptions);
-            var imageStream = new MemoryStream();
-            image.Value.CopyTo(imageStream);
-            #endregion
+                // An invalid IP address
+                var inValidIpAddress = "xxx";
 
-            Assert.IsNotNull(image);
-            Assert.IsTrue(imageStream.Length > 0);
-        }
-
-        [Test]
-        public void RenderingMapTiles()
-        {
-            var credential = new DefaultAzureCredential();
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRenderClient(credential, clientId);
-
-            #region Snippet:RenderMapTiles
-            // Fetch map tiles
-            var renderTileOptions = new RenderTileOptions()
+                var result = client.GetLocation(inValidIpAddress);
+                // Do something with result ...
+            }
+            catch (RequestFailedException e)
             {
-                TileFormat = TileFormat.Png,
-                TileLayer = MapTileLayer.Hybrid,
-                TileStyle = MapTileStyle.Main,
-                TileIndex = new TileIndex(10, 88, 88),
-            };
-            var mapTile = client.GetMapTile(renderTileOptions);
-            var tileStream = new MemoryStream();
-            mapTile.Value.CopyTo(tileStream);
+                Console.WriteLine(e.ToString());
+            }
             #endregion
-
-            Assert.IsNotNull(mapTile);
-            Assert.IsTrue(tileStream.Length > 0);
         }
     }
 }

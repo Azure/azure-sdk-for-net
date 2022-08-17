@@ -28,7 +28,7 @@ namespace Azure.Maps.Geolocation
 
 
         /// <summary> Initializes new instance of GeolocationClientOptions. </summary>
-        /// <param name="version"> Route service version. </param>
+        /// <param name="version"> Geolocation service version. </param>
         /// <param name="endpoint"> server parameter. </param>
         public MapsGeolocationClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {

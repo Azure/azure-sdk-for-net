@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Geolocation.Models;
 
-namespace Azure.Maps.Geolocation.Models
+namespace Azure.Maps.Geolocation
 {
     public partial class IpAddressToLocationResult
     {
@@ -25,7 +26,7 @@ namespace Azure.Maps.Geolocation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    countryRegion = CountryRegion.DeserializeCountryRegion(property.Value);
+                    countryRegion = Models.CountryRegion.DeserializeCountryRegion(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ipAddress"))
