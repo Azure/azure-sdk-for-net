@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
         /// <param name="userName"> The gateway settings user name. </param>
         /// <param name="password"> The gateway settings user password. </param>
-        internal HDInsightClusterGatewaySettings(string isCredentialEnabled, string userName, string password)
+        internal HDInsightClusterGatewaySettings(bool? isCredentialEnabled, string userName, string password)
         {
             IsCredentialEnabled = isCredentialEnabled;
             UserName = userName;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Indicates whether or not the gateway settings based authorization is enabled. </summary>
-        public string IsCredentialEnabled { get; }
+        public bool? IsCredentialEnabled { get; }
         /// <summary> The gateway settings user name. </summary>
         public string UserName { get; }
         /// <summary> The gateway settings user password. </summary>

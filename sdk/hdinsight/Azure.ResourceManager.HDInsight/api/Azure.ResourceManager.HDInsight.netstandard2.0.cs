@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterGatewaySettings
     {
         internal HDInsightClusterGatewaySettings() { }
-        public string IsCredentialEnabled { get { throw null; } }
+        public bool? IsCredentialEnabled { get { throw null; } }
         public string Password { get { throw null; } }
         public string UserName { get { throw null; } }
     }
