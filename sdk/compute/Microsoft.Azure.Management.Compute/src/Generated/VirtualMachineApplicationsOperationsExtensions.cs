@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The expand expression to apply on the operation. Possible values include:
             /// 'instanceView'
             /// </param>
-            public static VMGalleryApplicationWithInstanceView Get(this IVirtualMachineApplicationsOperations operations, string resourceGroupName, string vmName, string applicationName, string expand = default(string))
+            public static VMGalleryApplication Get(this IVirtualMachineApplicationsOperations operations, string resourceGroupName, string vmName, string applicationName, ApplicationInstanceView? expand = default(ApplicationInstanceView?))
             {
                 return operations.GetAsync(resourceGroupName, vmName, applicationName, expand).GetAwaiter().GetResult();
             }
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VMGalleryApplicationWithInstanceView> GetAsync(this IVirtualMachineApplicationsOperations operations, string resourceGroupName, string vmName, string applicationName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VMGalleryApplication> GetAsync(this IVirtualMachineApplicationsOperations operations, string resourceGroupName, string vmName, string applicationName, ApplicationInstanceView? expand = default(ApplicationInstanceView?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmName, applicationName, expand, null, cancellationToken).ConfigureAwait(false))
                 {

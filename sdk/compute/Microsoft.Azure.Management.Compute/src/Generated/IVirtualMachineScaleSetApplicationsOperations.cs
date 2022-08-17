@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VMGalleryApplicationWithInstanceView>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VMGalleryApplication>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Removes an application from a VM scale set.
         /// </summary>

@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VMGalleryApplicationWithInstanceView>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, string applicationName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VMGalleryApplication>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, string applicationName, ApplicationInstanceView? expand = default(ApplicationInstanceView?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete an application on a Virtual Machine.
         /// </summary>

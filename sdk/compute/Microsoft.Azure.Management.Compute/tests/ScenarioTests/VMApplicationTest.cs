@@ -121,7 +121,7 @@ namespace Compute.Tests
                 Assert.Equal(2, listResult.Value.Count);
 
                 // test get
-                VMGalleryApplicationWithInstanceView firefoxInstanceView = m_CrpClient.VirtualMachineApplications.Get(rgName, testVM.Name, firefox.applicationName, expand: "instanceView");
+                VMGalleryApplication firefoxInstanceView = m_CrpClient.VirtualMachineApplications.Get(rgName, testVM.Name, firefox.applicationName, expand: ApplicationInstanceView.InstanceView);
                 Assert.Equal(firefox.applicationName, firefoxInstanceView.InstanceView.Name);
 
                 // test delete

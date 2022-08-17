@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='applicationName'>
             /// The name of the application to query.
             /// </param>
-            public static VMGalleryApplicationWithInstanceView Get(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName)
+            public static VMGalleryApplication Get(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName)
             {
                 return operations.GetAsync(resourceGroupName, vmScaleSetName, applicationName).GetAwaiter().GetResult();
             }
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VMGalleryApplicationWithInstanceView> GetAsync(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VMGalleryApplication> GetAsync(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, applicationName, null, cancellationToken).ConfigureAwait(false))
                 {

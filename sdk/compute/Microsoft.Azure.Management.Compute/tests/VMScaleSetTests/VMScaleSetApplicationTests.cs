@@ -64,7 +64,7 @@ namespace Compute.Tests.VMScaleSetTests
                 Assert.Equal(2, listResult.Value.Count);
 
                 // test get
-                VMGalleryApplicationWithInstanceView firefoxInstanceView = m_CrpClient.VirtualMachineScaleSetApplications.Get(rgName, testVMSS.Name, firefox.applicationName);
+                VMGalleryApplication firefoxInstanceView = m_CrpClient.VirtualMachineScaleSetApplications.Get(rgName, testVMSS.Name, firefox.applicationName);
                 Assert.Equal(firefox.v1.PackageReferenceId, firefoxInstanceView.PackageReferenceId);
 
                 // test delete

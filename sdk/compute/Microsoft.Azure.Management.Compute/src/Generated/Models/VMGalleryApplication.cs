@@ -47,7 +47,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="enableAutomaticUpgrade">If set to true, when a new
         /// Gallery Application version is available in PIR/SIG, it will be
         /// automatically updated for the VM/VMSS</param>
-        public VMGalleryApplication(string packageReferenceId, string tags = default(string), int? order = default(int?), string configurationReference = default(string), bool? treatFailureAsDeploymentFailure = default(bool?), bool? enableAutomaticUpgrade = default(bool?))
+        /// <param name="instanceView">Contains instanceView of the
+        /// VMApplication if $expand=instanceView is specified</param>
+        public VMGalleryApplication(string packageReferenceId, string tags = default(string), int? order = default(int?), string configurationReference = default(string), bool? treatFailureAsDeploymentFailure = default(bool?), bool? enableAutomaticUpgrade = default(bool?), VMGalleryApplicationInstanceView instanceView = default(VMGalleryApplicationInstanceView))
         {
             Tags = tags;
             Order = order;
@@ -55,6 +57,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ConfigurationReference = configurationReference;
             TreatFailureAsDeploymentFailure = treatFailureAsDeploymentFailure;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            InstanceView = instanceView;
             CustomInit();
         }
 
@@ -106,6 +109,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; set; }
+
+        /// <summary>
+        /// Gets contains instanceView of the VMApplication if
+        /// $expand=instanceView is specified
+        /// </summary>
+        [JsonProperty(PropertyName = "instanceView")]
+        public VMGalleryApplicationInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Validate the object.

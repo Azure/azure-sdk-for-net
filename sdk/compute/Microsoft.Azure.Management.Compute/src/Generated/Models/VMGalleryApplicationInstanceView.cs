@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">The application name</param>
         /// <param name="version">The application version</param>
         /// <param name="result">The current status of the application</param>
+        /// <param name="actionsPerformed">actions performed on the
+        /// application</param>
         public VMGalleryApplicationInstanceView(string name = default(string), string version = default(string), string result = default(string), IList<VMGalleryApplicationInstanceViewAction> actionsPerformed = default(IList<VMGalleryApplicationInstanceViewAction>))
         {
             Name = name;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Result { get; set; }
 
         /// <summary>
+        /// Gets or sets actions performed on the application
         /// </summary>
         [JsonProperty(PropertyName = "actionsPerformed")]
         public IList<VMGalleryApplicationInstanceViewAction> ActionsPerformed { get; set; }
