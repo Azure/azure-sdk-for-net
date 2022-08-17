@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="keyFrameInterval"> The distance between two key frames. The value should be non-zero in the range [0.5, 20] seconds, specified in ISO 8601 format. The default is 2 seconds(PT2S). Note that this setting is ignored if VideoSyncMode.Passthrough is set, where the KeyFrameInterval value will follow the input source setting. </param>
         /// <param name="stretchMode"> The resizing mode - how the input video will be resized to fit the desired output resolution(s). Default is AutoSize. </param>
         /// <param name="syncMode"> The Video Sync Mode. </param>
-        internal InputVideoEncodingProperties(string odataType, string label, TimeSpan? keyFrameInterval, StretchMode? stretchMode, VideoSyncMode? syncMode) : base(odataType, label)
+        internal InputVideoEncodingProperties(string odataType, string label, TimeSpan? keyFrameInterval, InputVideoStretchMode? stretchMode, VideoSyncMode? syncMode) : base(odataType, label)
         {
             KeyFrameInterval = keyFrameInterval;
             StretchMode = stretchMode;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The distance between two key frames. The value should be non-zero in the range [0.5, 20] seconds, specified in ISO 8601 format. The default is 2 seconds(PT2S). Note that this setting is ignored if VideoSyncMode.Passthrough is set, where the KeyFrameInterval value will follow the input source setting. </summary>
         public TimeSpan? KeyFrameInterval { get; set; }
         /// <summary> The resizing mode - how the input video will be resized to fit the desired output resolution(s). Default is AutoSize. </summary>
-        public StretchMode? StretchMode { get; set; }
+        public InputVideoStretchMode? StretchMode { get; set; }
         /// <summary> The Video Sync Mode. </summary>
         public VideoSyncMode? SyncMode { get; set; }
     }

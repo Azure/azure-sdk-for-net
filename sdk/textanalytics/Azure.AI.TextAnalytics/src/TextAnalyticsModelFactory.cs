@@ -404,6 +404,23 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Recognize PII Entities
 
+        #region Recognize Custom Entities
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="list">Sets the collection of <see cref="RecognizeCustomEntitiesResultCollection"/>.</param>
+        /// <param name="statistics">Sets the <see cref="RecognizeCustomEntitiesResultCollection.Statistics"/> property.</param>
+        /// <param name="projectName">Sets the <see cref="RecognizeCustomEntitiesResultCollection.ProjectName"/> property.</param>
+        /// <param name="deploymentName">Sets hte <see cref="RecognizeCustomEntitiesResultCollection.DeploymentName"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeCustomEntitiesResultCollection"/> for mocking purposes.</returns>
+        public static RecognizeCustomEntitiesResultCollection RecognizeCustomEntitiesResultCollection(IList<RecognizeEntitiesResult> list, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        {
+            return new RecognizeCustomEntitiesResultCollection(list, statistics, projectName, deploymentName);
+        }
+
+        #endregion
+
         #region Extract KeyPhrase
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.
@@ -465,7 +482,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.</returns>
         public static ClassifyDocumentResult ClassifyDocumentResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, warnings.ToList());
+            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, warnings?.ToList());
         }
 
         /// <summary>
@@ -674,7 +691,8 @@ namespace Azure.AI.TextAnalytics
                 analyzeSentimentActionsResults.ToList(),
                 new List<RecognizeCustomEntitiesActionResult>(),
                 new List<SingleLabelClassifyActionResult>(),
-                new List<MultiLabelClassifyActionResult>()
+                new List<MultiLabelClassifyActionResult>(),
+                new List<AnalyzeHealthcareEntitiesActionResult>()
                 );
         }
 
@@ -690,6 +708,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="singleLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.SingleLabelClassifyActionResult"/>.</param>
         /// <param name="multiLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
             IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
@@ -708,7 +727,45 @@ namespace Azure.AI.TextAnalytics
                 analyzeSentimentActionResults.ToList(),
                 recognizeCustomEntitiesActionResults.ToList(),
                 singleLabelClassifyActionResults.ToList(),
-                multiLabelClassifyActionResults.ToList()
+                multiLabelClassifyActionResults.ToList(),
+                new List<AnalyzeHealthcareEntitiesActionResult>()
+                );
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="extractKeyPhrasesActionResults">Sets the collection of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/>.</param>
+        /// <param name="recognizeEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/>.</param>
+        /// <param name="recognizePiiEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/>.</param>
+        /// <param name="recognizeLinkedEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
+        /// <param name="analyzeSentimentActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
+        /// <param name="recognizeCustomEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeCustomEntitiesActionResult"/>.</param>
+        /// <param name="singleLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.SingleLabelClassifyActionResult"/>.</param>
+        /// <param name="multiLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/>.</param>
+        /// <param name="analyzeHealthcareEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
+        public static AnalyzeActionsResult AnalyzeActionsResult(
+            IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
+            IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
+            IEnumerable<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
+            IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
+            IEnumerable<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
+            IEnumerable<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
+            IEnumerable<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
+            IEnumerable<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults)
+        {
+            return new AnalyzeActionsResult(
+                extractKeyPhrasesActionResults.ToList(),
+                recognizeEntitiesActionResults.ToList(),
+                recognizePiiEntitiesActionResults.ToList(),
+                recognizeLinkedEntitiesActionResults.ToList(),
+                analyzeSentimentActionResults.ToList(),
+                recognizeCustomEntitiesActionResults.ToList(),
+                singleLabelClassifyActionResults.ToList(),
+                multiLabelClassifyActionResults.ToList(),
+                analyzeHealthcareEntitiesActionResults.ToList()
                 );
         }
 
@@ -1209,6 +1266,38 @@ namespace Azure.AI.TextAnalytics
             return new RecognizePiiEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="AnalyzeHealthcareEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/> for mocking purposes.</returns>
+        public static AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(
+            AnalyzeHealthcareEntitiesResultCollection result,
+            string actionName,
+            DateTimeOffset completedOn)
+        {
+            return new AnalyzeHealthcareEntitiesActionResult(result, actionName, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/> for mocking purposes.</returns>
+        public static AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(
+            string actionName,
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new AnalyzeHealthcareEntitiesActionResult(actionName, completedOn, new Error(code, message));
+        }
+
         #endregion Action Result Models
 
         #region Healthcare
@@ -1315,7 +1404,6 @@ namespace Azure.AI.TextAnalytics
         {
             return new HealthcareEntityRelation(relationType, roles.ToList());
         }
-        #endregion Healthcare
 
         /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
@@ -1335,5 +1423,7 @@ namespace Azure.AI.TextAnalytics
         {
             return new EntityDataSource(name, entityId);
         }
+
+        #endregion Healthcare
     }
 }

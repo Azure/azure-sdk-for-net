@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             Optional<AnalysisResolution> resolution = default;
             Optional<FaceRedactorMode> mode = default;
-            Optional<BlurType> blurType = default;
+            Optional<FaceDetectorBlurType> blurType = default;
             Optional<IDictionary<string, string>> experimentalOptions = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    blurType = new BlurType(property.Value.GetString());
+                    blurType = new FaceDetectorBlurType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("experimentalOptions"))

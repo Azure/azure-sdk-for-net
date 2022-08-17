@@ -1,0 +1,1073 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "348",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-1c1e9ae3ced875e33828ab0f6b0c6f89-a864bd4f936a134f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "58e6273fd5c2cf115deb3d7cf7a005fb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Prescribed 100mg ibuprofen to Jane Doe, taken twice daily.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "PiiEntityRecognition"
+          },
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "Healthcare"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "3bed4951-31b3-4a35-9491-138927a250e4",
+        "Content-Length": "0",
+        "Date": "Fri, 29 Jul 2022 20:18:06 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/2f336c1c-6fab-4b6b-a67e-ed7779e2f00e?api-version=2022-05-01",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "142"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/2f336c1c-6fab-4b6b-a67e-ed7779e2f00e?api-version=2022-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "839024a97f0c6b811d1f63497e9ff0ea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "125abc19-1cb8-4a4f-b130-082529c6c520",
+        "Content-Length": "341",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 20:18:06 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "10"
+      },
+      "ResponseBody": {
+        "jobId": "2f336c1c-6fab-4b6b-a67e-ed7779e2f00e",
+        "lastUpdatedDateTime": "2022-07-29T20:18:06Z",
+        "createdDateTime": "2022-07-29T20:18:06Z",
+        "expirationDateTime": "2022-07-30T20:18:06Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 2,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/2f336c1c-6fab-4b6b-a67e-ed7779e2f00e?api-version=2022-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cb9cceccac9b8d83d036f06db9536895",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cc73f6a0-5299-48ab-8b7c-165727cad03c",
+        "Content-Length": "3208",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 20:18:07 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "27"
+      },
+      "ResponseBody": {
+        "jobId": "2f336c1c-6fab-4b6b-a67e-ed7779e2f00e",
+        "lastUpdatedDateTime": "2022-07-29T20:18:07Z",
+        "createdDateTime": "2022-07-29T20:18:06Z",
+        "expirationDateTime": "2022-07-30T20:18:06Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "HealthcareLROResults",
+              "lastUpdateDateTime": "2022-07-29T20:18:07.4178685Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "offset": 11,
+                        "length": 5,
+                        "text": "100mg",
+                        "category": "Dosage",
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "offset": 17,
+                        "length": 9,
+                        "text": "ibuprofen",
+                        "category": "MedicationName",
+                        "confidenceScore": 1.0,
+                        "name": "ibuprofen",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0020740"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000019879"
+                          },
+                          {
+                            "dataSource": "ATC",
+                            "id": "M01AE01"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0046165"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000006519"
+                          },
+                          {
+                            "dataSource": "CSP",
+                            "id": "2270-2077"
+                          },
+                          {
+                            "dataSource": "DRUGBANK",
+                            "id": "DB01050"
+                          },
+                          {
+                            "dataSource": "GS",
+                            "id": "1611"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh97005926"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LP16165-0"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "40458"
+                          },
+                          {
+                            "dataSource": "MMSL",
+                            "id": "d00015"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D007052"
+                          },
+                          {
+                            "dataSource": "MTHSPL",
+                            "id": "WK2XYI10QM"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C561"
+                          },
+                          {
+                            "dataSource": "NCI_CTRP",
+                            "id": "C561"
+                          },
+                          {
+                            "dataSource": "NCI_DCP",
+                            "id": "00803"
+                          },
+                          {
+                            "dataSource": "NCI_DTP",
+                            "id": "NSC0256857"
+                          },
+                          {
+                            "dataSource": "NCI_FDA",
+                            "id": "WK2XYI10QM"
+                          },
+                          {
+                            "dataSource": "NCI_NCI-GLOSS",
+                            "id": "CDR0000613511"
+                          },
+                          {
+                            "dataSource": "NDDF",
+                            "id": "002377"
+                          },
+                          {
+                            "dataSource": "PDQ",
+                            "id": "CDR0000040475"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "x02MO"
+                          },
+                          {
+                            "dataSource": "RXNORM",
+                            "id": "5640"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "E-7772"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "C-603C0"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "387207008"
+                          },
+                          {
+                            "dataSource": "USP",
+                            "id": "m39860"
+                          },
+                          {
+                            "dataSource": "USPMG",
+                            "id": "MTHU000060"
+                          },
+                          {
+                            "dataSource": "VANDF",
+                            "id": "4017840"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 35,
+                        "length": 3,
+                        "text": "Doe",
+                        "category": "SymptomOrSign",
+                        "confidenceScore": 0.96,
+                        "name": "Dyspnea on exertion",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0231807"
+                          },
+                          {
+                            "dataSource": "BI",
+                            "id": "BI00180"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0002577"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000022795"
+                          },
+                          {
+                            "dataSource": "COSTAR",
+                            "id": "U000253"
+                          },
+                          {
+                            "dataSource": "DXP",
+                            "id": "U001015"
+                          },
+                          {
+                            "dataSource": "HPO",
+                            "id": "HP:0002875"
+                          },
+                          {
+                            "dataSource": "ICNP",
+                            "id": "10029414"
+                          },
+                          {
+                            "dataSource": "MDR",
+                            "id": "10013971"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "354"
+                          },
+                          {
+                            "dataSource": "NANDA-I",
+                            "id": "00552"
+                          },
+                          {
+                            "dataSource": "NOC",
+                            "id": "040314"
+                          },
+                          {
+                            "dataSource": "OMIM",
+                            "id": "MTHU057374"
+                          },
+                          {
+                            "dataSource": "QMR",
+                            "id": "Q0200096"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "X76Gz"
+                          },
+                          {
+                            "dataSource": "RCDAE",
+                            "id": "X76Gz"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "F-75050"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "F-20050"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "60845006"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 46,
+                        "length": 11,
+                        "text": "twice daily",
+                        "category": "Frequency",
+                        "confidenceScore": 1.0
+                      }
+                    ],
+                    "relations": [
+                      {
+                        "relationType": "DosageOfMedication",
+                        "entities": [
+                          {
+                            "ref": "#/results/documents/0/entities/0",
+                            "role": "Dosage"
+                          },
+                          {
+                            "ref": "#/results/documents/0/entities/1",
+                            "role": "Medication"
+                          }
+                        ]
+                      },
+                      {
+                        "relationType": "FrequencyOfMedication",
+                        "entities": [
+                          {
+                            "ref": "#/results/documents/0/entities/1",
+                            "role": "Medication"
+                          },
+                          {
+                            "ref": "#/results/documents/0/entities/3",
+                            "role": "Frequency"
+                          }
+                        ]
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-03-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/2f336c1c-6fab-4b6b-a67e-ed7779e2f00e?api-version=2022-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "be52a6d0eb8dbf27a67b3aa271c751be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bb8fcee4-8bca-47ab-92c9-eb6961fb325c",
+        "Content-Length": "3208",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 20:18:09 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "jobId": "2f336c1c-6fab-4b6b-a67e-ed7779e2f00e",
+        "lastUpdatedDateTime": "2022-07-29T20:18:07Z",
+        "createdDateTime": "2022-07-29T20:18:06Z",
+        "expirationDateTime": "2022-07-30T20:18:06Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "HealthcareLROResults",
+              "lastUpdateDateTime": "2022-07-29T20:18:07.4178685Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "offset": 11,
+                        "length": 5,
+                        "text": "100mg",
+                        "category": "Dosage",
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "offset": 17,
+                        "length": 9,
+                        "text": "ibuprofen",
+                        "category": "MedicationName",
+                        "confidenceScore": 1.0,
+                        "name": "ibuprofen",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0020740"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000019879"
+                          },
+                          {
+                            "dataSource": "ATC",
+                            "id": "M01AE01"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0046165"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000006519"
+                          },
+                          {
+                            "dataSource": "CSP",
+                            "id": "2270-2077"
+                          },
+                          {
+                            "dataSource": "DRUGBANK",
+                            "id": "DB01050"
+                          },
+                          {
+                            "dataSource": "GS",
+                            "id": "1611"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh97005926"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LP16165-0"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "40458"
+                          },
+                          {
+                            "dataSource": "MMSL",
+                            "id": "d00015"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D007052"
+                          },
+                          {
+                            "dataSource": "MTHSPL",
+                            "id": "WK2XYI10QM"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C561"
+                          },
+                          {
+                            "dataSource": "NCI_CTRP",
+                            "id": "C561"
+                          },
+                          {
+                            "dataSource": "NCI_DCP",
+                            "id": "00803"
+                          },
+                          {
+                            "dataSource": "NCI_DTP",
+                            "id": "NSC0256857"
+                          },
+                          {
+                            "dataSource": "NCI_FDA",
+                            "id": "WK2XYI10QM"
+                          },
+                          {
+                            "dataSource": "NCI_NCI-GLOSS",
+                            "id": "CDR0000613511"
+                          },
+                          {
+                            "dataSource": "NDDF",
+                            "id": "002377"
+                          },
+                          {
+                            "dataSource": "PDQ",
+                            "id": "CDR0000040475"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "x02MO"
+                          },
+                          {
+                            "dataSource": "RXNORM",
+                            "id": "5640"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "E-7772"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "C-603C0"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "387207008"
+                          },
+                          {
+                            "dataSource": "USP",
+                            "id": "m39860"
+                          },
+                          {
+                            "dataSource": "USPMG",
+                            "id": "MTHU000060"
+                          },
+                          {
+                            "dataSource": "VANDF",
+                            "id": "4017840"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 35,
+                        "length": 3,
+                        "text": "Doe",
+                        "category": "SymptomOrSign",
+                        "confidenceScore": 0.96,
+                        "name": "Dyspnea on exertion",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0231807"
+                          },
+                          {
+                            "dataSource": "BI",
+                            "id": "BI00180"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0002577"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000022795"
+                          },
+                          {
+                            "dataSource": "COSTAR",
+                            "id": "U000253"
+                          },
+                          {
+                            "dataSource": "DXP",
+                            "id": "U001015"
+                          },
+                          {
+                            "dataSource": "HPO",
+                            "id": "HP:0002875"
+                          },
+                          {
+                            "dataSource": "ICNP",
+                            "id": "10029414"
+                          },
+                          {
+                            "dataSource": "MDR",
+                            "id": "10013971"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "354"
+                          },
+                          {
+                            "dataSource": "NANDA-I",
+                            "id": "00552"
+                          },
+                          {
+                            "dataSource": "NOC",
+                            "id": "040314"
+                          },
+                          {
+                            "dataSource": "OMIM",
+                            "id": "MTHU057374"
+                          },
+                          {
+                            "dataSource": "QMR",
+                            "id": "Q0200096"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "X76Gz"
+                          },
+                          {
+                            "dataSource": "RCDAE",
+                            "id": "X76Gz"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "F-75050"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "F-20050"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "60845006"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 46,
+                        "length": 11,
+                        "text": "twice daily",
+                        "category": "Frequency",
+                        "confidenceScore": 1.0
+                      }
+                    ],
+                    "relations": [
+                      {
+                        "relationType": "DosageOfMedication",
+                        "entities": [
+                          {
+                            "ref": "#/results/documents/0/entities/0",
+                            "role": "Dosage"
+                          },
+                          {
+                            "ref": "#/results/documents/0/entities/1",
+                            "role": "Medication"
+                          }
+                        ]
+                      },
+                      {
+                        "relationType": "FrequencyOfMedication",
+                        "entities": [
+                          {
+                            "ref": "#/results/documents/0/entities/1",
+                            "role": "Medication"
+                          },
+                          {
+                            "ref": "#/results/documents/0/entities/3",
+                            "role": "Frequency"
+                          }
+                        ]
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-03-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/2f336c1c-6fab-4b6b-a67e-ed7779e2f00e?api-version=2022-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "28b053fa3903fc60a003b3d68f13b1ca",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e706c098-7ac8-4ae8-a976-be80a8626908",
+        "Content-Length": "3694",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 Jul 2022 20:18:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "57"
+      },
+      "ResponseBody": {
+        "jobId": "2f336c1c-6fab-4b6b-a67e-ed7779e2f00e",
+        "lastUpdatedDateTime": "2022-07-29T20:18:09Z",
+        "createdDateTime": "2022-07-29T20:18:06Z",
+        "expirationDateTime": "2022-07-30T20:18:06Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
+        "tasks": {
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 2,
+          "items": [
+            {
+              "kind": "PiiEntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-07-29T20:18:09.7187331Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "redactedText": "Prescribed 100mg ibuprofen to ********, taken twice *****.",
+                    "id": "0",
+                    "entities": [
+                      {
+                        "text": "Jane Doe",
+                        "category": "Person",
+                        "offset": 30,
+                        "length": 8,
+                        "confidenceScore": 0.9
+                      },
+                      {
+                        "text": "daily",
+                        "category": "DateTime",
+                        "subcategory": "Set",
+                        "offset": 52,
+                        "length": 5,
+                        "confidenceScore": 0.8
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            },
+            {
+              "kind": "HealthcareLROResults",
+              "lastUpdateDateTime": "2022-07-29T20:18:07.4178685Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "entities": [
+                      {
+                        "offset": 11,
+                        "length": 5,
+                        "text": "100mg",
+                        "category": "Dosage",
+                        "confidenceScore": 0.98
+                      },
+                      {
+                        "offset": 17,
+                        "length": 9,
+                        "text": "ibuprofen",
+                        "category": "MedicationName",
+                        "confidenceScore": 1.0,
+                        "name": "ibuprofen",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0020740"
+                          },
+                          {
+                            "dataSource": "AOD",
+                            "id": "0000019879"
+                          },
+                          {
+                            "dataSource": "ATC",
+                            "id": "M01AE01"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0046165"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000006519"
+                          },
+                          {
+                            "dataSource": "CSP",
+                            "id": "2270-2077"
+                          },
+                          {
+                            "dataSource": "DRUGBANK",
+                            "id": "DB01050"
+                          },
+                          {
+                            "dataSource": "GS",
+                            "id": "1611"
+                          },
+                          {
+                            "dataSource": "LCH_NW",
+                            "id": "sh97005926"
+                          },
+                          {
+                            "dataSource": "LNC",
+                            "id": "LP16165-0"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "40458"
+                          },
+                          {
+                            "dataSource": "MMSL",
+                            "id": "d00015"
+                          },
+                          {
+                            "dataSource": "MSH",
+                            "id": "D007052"
+                          },
+                          {
+                            "dataSource": "MTHSPL",
+                            "id": "WK2XYI10QM"
+                          },
+                          {
+                            "dataSource": "NCI",
+                            "id": "C561"
+                          },
+                          {
+                            "dataSource": "NCI_CTRP",
+                            "id": "C561"
+                          },
+                          {
+                            "dataSource": "NCI_DCP",
+                            "id": "00803"
+                          },
+                          {
+                            "dataSource": "NCI_DTP",
+                            "id": "NSC0256857"
+                          },
+                          {
+                            "dataSource": "NCI_FDA",
+                            "id": "WK2XYI10QM"
+                          },
+                          {
+                            "dataSource": "NCI_NCI-GLOSS",
+                            "id": "CDR0000613511"
+                          },
+                          {
+                            "dataSource": "NDDF",
+                            "id": "002377"
+                          },
+                          {
+                            "dataSource": "PDQ",
+                            "id": "CDR0000040475"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "x02MO"
+                          },
+                          {
+                            "dataSource": "RXNORM",
+                            "id": "5640"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "E-7772"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "C-603C0"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "387207008"
+                          },
+                          {
+                            "dataSource": "USP",
+                            "id": "m39860"
+                          },
+                          {
+                            "dataSource": "USPMG",
+                            "id": "MTHU000060"
+                          },
+                          {
+                            "dataSource": "VANDF",
+                            "id": "4017840"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 35,
+                        "length": 3,
+                        "text": "Doe",
+                        "category": "SymptomOrSign",
+                        "confidenceScore": 0.96,
+                        "name": "Dyspnea on exertion",
+                        "links": [
+                          {
+                            "dataSource": "UMLS",
+                            "id": "C0231807"
+                          },
+                          {
+                            "dataSource": "BI",
+                            "id": "BI00180"
+                          },
+                          {
+                            "dataSource": "CCPSS",
+                            "id": "0002577"
+                          },
+                          {
+                            "dataSource": "CHV",
+                            "id": "0000022795"
+                          },
+                          {
+                            "dataSource": "COSTAR",
+                            "id": "U000253"
+                          },
+                          {
+                            "dataSource": "DXP",
+                            "id": "U001015"
+                          },
+                          {
+                            "dataSource": "HPO",
+                            "id": "HP:0002875"
+                          },
+                          {
+                            "dataSource": "ICNP",
+                            "id": "10029414"
+                          },
+                          {
+                            "dataSource": "MDR",
+                            "id": "10013971"
+                          },
+                          {
+                            "dataSource": "MEDCIN",
+                            "id": "354"
+                          },
+                          {
+                            "dataSource": "NANDA-I",
+                            "id": "00552"
+                          },
+                          {
+                            "dataSource": "NOC",
+                            "id": "040314"
+                          },
+                          {
+                            "dataSource": "OMIM",
+                            "id": "MTHU057374"
+                          },
+                          {
+                            "dataSource": "QMR",
+                            "id": "Q0200096"
+                          },
+                          {
+                            "dataSource": "RCD",
+                            "id": "X76Gz"
+                          },
+                          {
+                            "dataSource": "RCDAE",
+                            "id": "X76Gz"
+                          },
+                          {
+                            "dataSource": "SNM",
+                            "id": "F-75050"
+                          },
+                          {
+                            "dataSource": "SNMI",
+                            "id": "F-20050"
+                          },
+                          {
+                            "dataSource": "SNOMEDCT_US",
+                            "id": "60845006"
+                          }
+                        ]
+                      },
+                      {
+                        "offset": 46,
+                        "length": 11,
+                        "text": "twice daily",
+                        "category": "Frequency",
+                        "confidenceScore": 1.0
+                      }
+                    ],
+                    "relations": [
+                      {
+                        "relationType": "DosageOfMedication",
+                        "entities": [
+                          {
+                            "ref": "#/results/documents/0/entities/0",
+                            "role": "Dosage"
+                          },
+                          {
+                            "ref": "#/results/documents/0/entities/1",
+                            "role": "Medication"
+                          }
+                        ]
+                      },
+                      {
+                        "relationType": "FrequencyOfMedication",
+                        "entities": [
+                          {
+                            "ref": "#/results/documents/0/entities/1",
+                            "role": "Medication"
+                          },
+                          {
+                            "ref": "#/results/documents/0/entities/3",
+                            "role": "Frequency"
+                          }
+                        ]
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-03-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "89784909",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

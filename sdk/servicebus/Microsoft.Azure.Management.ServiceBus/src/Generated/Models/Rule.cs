@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// correlationFilter</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public Rule(string id = default(string), string name = default(string), string type = default(string), string location = default(string), Action action = default(Action), FilterType? filterType = default(FilterType?), SqlFilter sqlFilter = default(SqlFilter), CorrelationFilter correlationFilter = default(CorrelationFilter), SystemData systemData = default(SystemData))
+        public Rule(string id = default(string), string name = default(string), string type = default(string), string location = default(string), Action action = default(Action), string filterType = default(string), SqlFilter sqlFilter = default(SqlFilter), CorrelationFilter correlationFilter = default(CorrelationFilter), SystemData systemData = default(SystemData))
             : base(id, name, type, location)
         {
             Action = action;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'CorrelationFilter'
         /// </summary>
         [JsonProperty(PropertyName = "properties.filterType")]
-        public FilterType? FilterType { get; set; }
+        public string FilterType { get; set; }
 
         /// <summary>
         /// Gets or sets properties of sqlFilter

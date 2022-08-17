@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationDetailResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReservationDetailResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string reservationOrderId, string reservationId)
+        public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId, Guid reservationId)
         {
             var resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}";
             return new ResourceIdentifier(resourceId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationDetailReservationRestClient.GetAsync(Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _reservationDetailReservationRestClient.GetAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationDetailReservationRestClient.Get(Id.Parent.Name, Id.Name, expand, cancellationToken);
+                var response = _reservationDetailReservationRestClient.Get(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationDetailReservationRestClient.UpdateAsync(Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _reservationDetailReservationRestClient.UpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationDetailReservationRestClient.Update(Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _reservationDetailReservationRestClient.Update(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch, cancellationToken);
+                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationDetailReservationRestClient.AvailableScopesAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _reservationDetailReservationRestClient.AvailableScopesAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,8 +246,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationDetailReservationRestClient.AvailableScopes(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _reservationDetailReservationRestClient.AvailableScopes(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content, cancellationToken);
+                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

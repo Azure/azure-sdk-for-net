@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
         }
 
-        private async Task<DataFactoryPipelineResource> CreateDefaultEmptyPipeLine(DataFactoryResource dataFactory,string pipelineName)
+        private async Task<FactoryPipelineResource> CreateDefaultEmptyPipeLine(DataFactoryResource dataFactory,string pipelineName)
         {
-            DataFactoryPipelineData data = new DataFactoryPipelineData() { };
-            var pipeline = await _dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
+            FactoryPipelineData data = new FactoryPipelineData() { };
+            var pipeline = await _dataFactory.GetFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             return pipeline.Value;
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
             await CreateDefaultEmptyPipeLine(_dataFactory, pipelineName);
-            bool flag = await _dataFactory.GetDataFactoryPipelines().ExistsAsync(pipelineName);
+            bool flag = await _dataFactory.GetFactoryPipelines().ExistsAsync(pipelineName);
             Assert.IsTrue(flag);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
             await CreateDefaultEmptyPipeLine(_dataFactory, pipelineName);
-            var pipeline = await _dataFactory.GetDataFactoryPipelines().GetAsync(pipelineName);
+            var pipeline = await _dataFactory.GetFactoryPipelines().GetAsync(pipelineName);
             Assert.IsNotNull(pipeline);
             Assert.AreEqual(pipelineName, pipeline.Value.Data.Name);
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
             await CreateDefaultEmptyPipeLine(_dataFactory, pipelineName);
-            var list  = await _dataFactory.GetDataFactoryPipelines().GetAllAsync().ToEnumerableAsync();
+            var list  = await _dataFactory.GetFactoryPipelines().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
 
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
             var pipeline = await CreateDefaultEmptyPipeLine(_dataFactory, pipelineName);
-            bool flag = await _dataFactory.GetDataFactoryPipelines().ExistsAsync(pipelineName);
+            bool flag = await _dataFactory.GetFactoryPipelines().ExistsAsync(pipelineName);
             Assert.IsTrue(flag);
 
             await pipeline.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetDataFactoryPipelines().ExistsAsync(pipelineName);
+            flag = await _dataFactory.GetFactoryPipelines().ExistsAsync(pipelineName);
             Assert.IsFalse(flag);
         }
     }

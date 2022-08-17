@@ -61,17 +61,13 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        public virtual async Task<Response<ReservationDetailResource>> GetAsync(string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationDetailResource>> GetAsync(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.Get");
             scope.Start();
             try
             {
-                var response = await _reservationDetailReservationRestClient.GetAsync(Id.Name, reservationId, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _reservationDetailReservationRestClient.GetAsync(Guid.Parse(Id.Name), reservationId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
@@ -91,17 +87,13 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        public virtual Response<ReservationDetailResource> Get(string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReservationDetailResource> Get(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.Get");
             scope.Start();
             try
             {
-                var response = _reservationDetailReservationRestClient.Get(Id.Name, reservationId, expand, cancellationToken);
+                var response = _reservationDetailReservationRestClient.Get(Guid.Parse(Id.Name), reservationId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
@@ -128,7 +120,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await _reservationDetailReservationRestClient.ListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reservationDetailReservationRestClient.ListAsync(Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -143,7 +135,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await _reservationDetailReservationRestClient.ListNextPageAsync(nextLink, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reservationDetailReservationRestClient.ListNextPageAsync(nextLink, Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -170,7 +162,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = _reservationDetailReservationRestClient.List(Id.Name, cancellationToken: cancellationToken);
+                    var response = _reservationDetailReservationRestClient.List(Guid.Parse(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -185,7 +177,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = _reservationDetailReservationRestClient.ListNextPage(nextLink, Id.Name, cancellationToken: cancellationToken);
+                    var response = _reservationDetailReservationRestClient.ListNextPage(nextLink, Guid.Parse(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -204,20 +196,16 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationDetailResource> GetRevisionsAsync(string reservationId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationDetailResource> GetRevisionsAsync(Guid reservationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             async Task<Page<ReservationDetailResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.GetRevisions");
                 scope.Start();
                 try
                 {
-                    var response = await _reservationDetailReservationRestClient.ListRevisionsAsync(Id.Name, reservationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reservationDetailReservationRestClient.ListRevisionsAsync(Guid.Parse(Id.Name), reservationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -232,7 +220,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await _reservationDetailReservationRestClient.ListRevisionsNextPageAsync(nextLink, Id.Name, reservationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reservationDetailReservationRestClient.ListRevisionsNextPageAsync(nextLink, Guid.Parse(Id.Name), reservationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,20 +239,16 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationDetailResource> GetRevisions(string reservationId, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationDetailResource> GetRevisions(Guid reservationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             Page<ReservationDetailResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.GetRevisions");
                 scope.Start();
                 try
                 {
-                    var response = _reservationDetailReservationRestClient.ListRevisions(Id.Name, reservationId, cancellationToken: cancellationToken);
+                    var response = _reservationDetailReservationRestClient.ListRevisions(Guid.Parse(Id.Name), reservationId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -279,7 +263,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = _reservationDetailReservationRestClient.ListRevisionsNextPage(nextLink, Id.Name, reservationId, cancellationToken: cancellationToken);
+                    var response = _reservationDetailReservationRestClient.ListRevisionsNextPage(nextLink, Guid.Parse(Id.Name), reservationId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -299,17 +283,13 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _reservationDetailReservationRestClient.GetAsync(Id.Name, reservationId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _reservationDetailReservationRestClient.GetAsync(Guid.Parse(Id.Name), reservationId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -327,17 +307,13 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        public virtual Response<bool> Exists(string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailCollection.Exists");
             scope.Start();
             try
             {
-                var response = _reservationDetailReservationRestClient.Get(Id.Name, reservationId, expand, cancellationToken: cancellationToken);
+                var response = _reservationDetailReservationRestClient.Get(Guid.Parse(Id.Name), reservationId, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

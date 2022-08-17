@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Possible values include: 'None', 'InvalidName',
         /// 'SubscriptionIsDisabled', 'NameInUse', 'NameInLockdown',
         /// 'TooManyNamespaceInCurrentSubscription'</param>
-        public CheckNameAvailabilityResult(string message = default(string), bool? nameAvailable = default(bool?), UnavailableReason? reason = default(UnavailableReason?))
+        public CheckNameAvailabilityResult(string message = default(string), bool? nameAvailable = default(bool?), string reason = default(string))
         {
             Message = message;
             NameAvailable = nameAvailable;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'TooManyNamespaceInCurrentSubscription'
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
-        public UnavailableReason? Reason { get; set; }
+        public string Reason { get; set; }
 
     }
 }

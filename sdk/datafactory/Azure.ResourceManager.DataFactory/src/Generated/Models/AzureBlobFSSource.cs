@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Azure BlobFS source. </summary>
-    public partial class AzureBlobFSSource : CopySource
+    public partial class AzureBlobFSSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AzureBlobFSSource. </summary>
         public AzureBlobFSSource()

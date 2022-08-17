@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The service resource for patch operations.
-    /// Serialized Name: ServiceResourceUpdate
-    /// </summary>
+    /// <summary> The service resource for patch operations. </summary>
     public partial class ServiceFabricServicePatch : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricServicePatch. </summary>
@@ -34,34 +31,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="placementConstraints">
-        /// The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;.
-        /// Serialized Name: ServiceResourceUpdate.properties.placementConstraints
-        /// </param>
-        /// <param name="correlationScheme">
-        /// A list that describes the correlation of the service with other services.
-        /// Serialized Name: ServiceResourceUpdate.properties.correlationScheme
-        /// </param>
-        /// <param name="serviceLoadMetrics">
-        /// The service load metrics is given as an array of ServiceLoadMetricDescription objects.
-        /// Serialized Name: ServiceResourceUpdate.properties.serviceLoadMetrics
-        /// </param>
-        /// <param name="servicePlacementPolicies">
-        /// A list that describes the correlation of the service with other services.
-        /// Serialized Name: ServiceResourceUpdate.properties.servicePlacementPolicies
-        /// </param>
-        /// <param name="defaultMoveCost">
-        /// Specifies the move cost for the service.
-        /// Serialized Name: ServiceResourceUpdate.properties.defaultMoveCost
-        /// </param>
-        /// <param name="serviceKind">
-        /// The kind of service (Stateless or Stateful).
-        /// Serialized Name: ServiceResourceUpdate.properties.serviceKind
-        /// </param>
-        /// <param name="etag">
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </param>
+        /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
+        /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetricDescription objects. </param>
+        /// <param name="servicePlacementPolicies"> A list that describes the correlation of the service with other services. </param>
+        /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
+        /// <param name="serviceKind"> The kind of service (Stateless or Stateful). </param>
+        /// <param name="etag"> Azure resource etag. </param>
         internal ServiceFabricServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, ApplicationServiceKind? serviceKind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
@@ -73,40 +49,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ETag = etag;
         }
 
-        /// <summary>
-        /// The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;.
-        /// Serialized Name: ServiceResourceUpdate.properties.placementConstraints
-        /// </summary>
+        /// <summary> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </summary>
         public string PlacementConstraints { get; set; }
-        /// <summary>
-        /// A list that describes the correlation of the service with other services.
-        /// Serialized Name: ServiceResourceUpdate.properties.correlationScheme
-        /// </summary>
+        /// <summary> A list that describes the correlation of the service with other services. </summary>
         public IList<ServiceCorrelationDescription> CorrelationScheme { get; }
-        /// <summary>
-        /// The service load metrics is given as an array of ServiceLoadMetricDescription objects.
-        /// Serialized Name: ServiceResourceUpdate.properties.serviceLoadMetrics
-        /// </summary>
+        /// <summary> The service load metrics is given as an array of ServiceLoadMetricDescription objects. </summary>
         public IList<ServiceLoadMetricDescription> ServiceLoadMetrics { get; }
-        /// <summary>
-        /// A list that describes the correlation of the service with other services.
-        /// Serialized Name: ServiceResourceUpdate.properties.servicePlacementPolicies
-        /// </summary>
+        /// <summary> A list that describes the correlation of the service with other services. </summary>
         public IList<ServicePlacementPolicyDescription> ServicePlacementPolicies { get; }
-        /// <summary>
-        /// Specifies the move cost for the service.
-        /// Serialized Name: ServiceResourceUpdate.properties.defaultMoveCost
-        /// </summary>
+        /// <summary> Specifies the move cost for the service. </summary>
         public ApplicationMoveCost? DefaultMoveCost { get; set; }
-        /// <summary>
-        /// The kind of service (Stateless or Stateful).
-        /// Serialized Name: ServiceResourceUpdate.properties.serviceKind
-        /// </summary>
+        /// <summary> The kind of service (Stateless or Stateful). </summary>
         internal ApplicationServiceKind? ServiceKind { get; set; }
-        /// <summary>
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </summary>
+        /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static NoEncryption DeserializeNoEncryption(JsonElement element)
         {
-            Optional<EnabledProtocols> enabledProtocols = default;
+            Optional<MediaEnabledProtocols> enabledProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enabledProtocols = EnabledProtocols.DeserializeEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
             }
