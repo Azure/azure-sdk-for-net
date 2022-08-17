@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
 
@@ -129,8 +130,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(3);
 
             mockTransportBatch
-                .Setup(transport => transport.AsReadOnly<ServiceBusMessage>())
-                .Returns(new List<ServiceBusMessage>());
+                .Setup(transport => transport.AsReadOnly<AmqpMessage>())
+                .Returns(new List<AmqpMessage>());
 
             mockTransportSender.Setup(
                  sender => sender.CreateMessageBatchAsync(

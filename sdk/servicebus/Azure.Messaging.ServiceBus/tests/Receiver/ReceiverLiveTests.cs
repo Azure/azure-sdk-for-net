@@ -8,9 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Amqp;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
@@ -464,7 +461,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Properties.MessageId, item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
             }

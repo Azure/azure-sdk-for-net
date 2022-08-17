@@ -273,8 +273,9 @@ namespace Azure.Messaging.ServiceBus
             return scope;
         }
 
-        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<AmqpMessage> messages, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messagBatch, string activityName)
         {
+            var messages = messagBatch.AsReadOnly<AmqpMessage>();
             foreach (AmqpMessage message in messages)
             {
                 _scopeFactory.InstrumentMessage(message);
@@ -376,7 +377,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsReadOnly<AmqpMessage>(),
+                messageBatch,
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 

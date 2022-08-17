@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
-using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
