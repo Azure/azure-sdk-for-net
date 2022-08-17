@@ -273,13 +273,11 @@ namespace Azure.Messaging.ServiceBus
             return scope;
         }
 
-        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messagBatch, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messageBatch, string activityName)
         {
-            var messages = messagBatch.AsReadOnly<AmqpMessage>();
-            foreach (AmqpMessage message in messages)
-            {
-                _scopeFactory.InstrumentMessage(message);
-            }
+            // Messages in a batch have already been instrumented when
+            // they are added to the batch.
+            var messages = messageBatch.AsReadOnly<AmqpMessage>();
 
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
