@@ -9,21 +9,16 @@ namespace Azure.Storage.Shared
 {
     internal static class StorageExtensions
     {
+#pragma warning disable CA1801 // Review unused parameters
         public static string EscapePath(this string path, bool preserveOuterSlashes = false)
+#pragma warning restore CA1801 // Review unused parameters
         {
             if (path == null)
             {
                 return null;
             }
 
-            string leader = preserveOuterSlashes && path.StartsWith("/", StringComparison.InvariantCulture)
-                ? "/"
-                : "";
-            string trailer = preserveOuterSlashes && path.EndsWith("/", StringComparison.InvariantCulture)
-                ? "/"
-                : "";
-
-            path = path.Trim('/');
+            path = preserveOuterSlashes ? path : path.Trim('/');
             string[] split = path.Split('/');
 
             for (int i = 0; i < split.Length; i++)
@@ -31,24 +26,19 @@ namespace Azure.Storage.Shared
                 split[i] = Uri.EscapeDataString(split[i]);
             }
 
-            return leader + string.Join("/", split) + trailer;
+            return string.Join("/", split);
         }
 
+#pragma warning disable CA1801 // Review unused parameters
         public static string UnescapePath(this string path, bool preserveOuterSlashes = false)
+#pragma warning restore CA1801 // Review unused parameters
         {
             if (path == null)
             {
                 return null;
             }
 
-            string leader = preserveOuterSlashes && path.StartsWith("/", StringComparison.InvariantCulture)
-                ? "/"
-                : "";
-            string trailer = preserveOuterSlashes && path.EndsWith("/", StringComparison.InvariantCulture)
-                ? "/"
-                : "";
-
-            path = path.Trim('/');
+            path = preserveOuterSlashes ? path : path.Trim('/');
             string[] split = path.Split('/');
 
             for (int i = 0; i < split.Length; i++)
@@ -56,7 +46,7 @@ namespace Azure.Storage.Shared
                 split[i] = Uri.UnescapeDataString(split[i]);
             }
 
-            return leader + string.Join("/", split) + trailer;
+            return string.Join("/", split);
         }
 
         public static string GenerateBlockId(long offset)

@@ -102,15 +102,7 @@ namespace Azure.Storage.Blobs
         public string BlobName
         {
             get => _blobName;
-            set
-            {
-                ResetUri();
-                // initializing blob name via uri in constructor (when not preserving) strips the trailling slash
-                // stripping on property set ensures a consistent experience in reading this value
-                _blobName = !PreserveBlobNameOuterSlashes && value != null
-                    ? StripOuterSlashes(value)
-                    : value;
-            }
+            set { ResetUri(); _blobName = value; }
         }
         private string _blobName;
 
@@ -369,19 +361,6 @@ namespace Azure.Storage.Blobs
                 Path = path.ToString(),
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
-        }
-
-        private static string StripOuterSlashes(string value)
-        {
-            if (value.EndsWith("/", StringComparison.InvariantCulture))
-            {
-                value = value.Substring(0, value.Length - 1);
-            }
-            if (value.StartsWith("/", StringComparison.InvariantCulture))
-            {
-                value = value.Substring(1);
-            }
-            return value;
         }
     }
 }
