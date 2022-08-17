@@ -53,7 +53,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="userData">UserData for the VM, which must be base-64
         /// encoded. Customer should not pass any secrets in here.
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01</param>
-        public VirtualMachineScaleSetUpdateVMProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default(VirtualMachineScaleSetUpdateOSProfile), VirtualMachineScaleSetUpdateStorageProfile storageProfile = default(VirtualMachineScaleSetUpdateStorageProfile), VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default(VirtualMachineScaleSetUpdateNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string))
+        /// <param name="applicationProfile">Specifies the gallery applications
+        /// that should be made available to the VM/VMSS</param>
+        public VirtualMachineScaleSetUpdateVMProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default(VirtualMachineScaleSetUpdateOSProfile), VirtualMachineScaleSetUpdateStorageProfile storageProfile = default(VirtualMachineScaleSetUpdateStorageProfile), VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default(VirtualMachineScaleSetUpdateNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), ApplicationProfile applicationProfile = default(ApplicationProfile))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             BillingProfile = billingProfile;
             ScheduledEventsProfile = scheduledEventsProfile;
             UserData = userData;
+            ApplicationProfile = applicationProfile;
             CustomInit();
         }
 
@@ -137,6 +140,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the gallery applications that should be made
+        /// available to the VM/VMSS
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationProfile")]
+        public ApplicationProfile ApplicationProfile { get; set; }
 
     }
 }

@@ -165,9 +165,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='applicationName'>
             /// The name of the application to query.
             /// </param>
-            public static VMGalleryApplication Put(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName)
+            /// <param name='application'>
+            /// The definition of the VMApplication to add the virtual machine
+            /// </param>
+            public static VMGalleryApplication Put(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application)
             {
-                return operations.PutAsync(resourceGroupName, vmScaleSetName, applicationName).GetAwaiter().GetResult();
+                return operations.PutAsync(resourceGroupName, vmScaleSetName, applicationName, application).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -185,12 +188,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='applicationName'>
             /// The name of the application to query.
             /// </param>
+            /// <param name='application'>
+            /// The definition of the VMApplication to add the virtual machine
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VMGalleryApplication> PutAsync(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VMGalleryApplication> PutAsync(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, applicationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, applicationName, application, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -254,9 +260,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='applicationName'>
             /// The name of the application to query.
             /// </param>
-            public static VMGalleryApplication BeginPut(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName)
+            /// <param name='application'>
+            /// The definition of the VMApplication to add the virtual machine
+            /// </param>
+            public static VMGalleryApplication BeginPut(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application)
             {
-                return operations.BeginPutAsync(resourceGroupName, vmScaleSetName, applicationName).GetAwaiter().GetResult();
+                return operations.BeginPutAsync(resourceGroupName, vmScaleSetName, applicationName, application).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -274,12 +283,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='applicationName'>
             /// The name of the application to query.
             /// </param>
+            /// <param name='application'>
+            /// The definition of the VMApplication to add the virtual machine
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VMGalleryApplication> BeginPutAsync(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VMGalleryApplication> BeginPutAsync(this IVirtualMachineScaleSetApplicationsOperations operations, string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginPutWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, applicationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginPutWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, applicationName, application, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

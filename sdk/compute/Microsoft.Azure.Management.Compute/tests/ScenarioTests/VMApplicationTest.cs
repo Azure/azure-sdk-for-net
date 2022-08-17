@@ -84,60 +84,51 @@ namespace Compute.Tests
                 // refer to https://microsoft.sharepoint.com/:w:/t/ComputeVM/EcYeD-HHrLZHpYyxo3iRCtkB-VeO8BuWE4dq4hoX9tlzEg?e=nOTgTu
                 // for how to create a valid VMApplication
                 (string applicationName, VMGalleryApplication v1, VMGalleryApplication v2) golang =
-                    (
-                        "golang",
-                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma_testing/providers/Microsoft.Compute/galleries/gallery1/applications/golang/versions/1.15.8", treatFailureAsDeploymentFailure: true),
-                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma_testing/providers/Microsoft.Compute/galleries/gallery1/applications/golang/versions/1.19.0", treatFailureAsDeploymentFailure: true)
-                    );
+                (
+                    "golang",
+                    new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma_testing/providers/Microsoft.Compute/galleries/gallery1/applications/golang/versions/1.15.8", treatFailureAsDeploymentFailure: true),
+                    new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma_testing/providers/Microsoft.Compute/galleries/gallery1/applications/golang/versions/1.19.0", treatFailureAsDeploymentFailure: true)
+                );
                 (string applicationName, VMGalleryApplication v1) firefox =
-                    (
-                        "firefox",
-                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma_testing/providers/Microsoft.Compute/galleries/gallery1/applications/firefox/versions/103.0.2", treatFailureAsDeploymentFailure: true)
-                    );
+                (
+                    "firefox",
+                    new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma_testing/providers/Microsoft.Compute/galleries/gallery1/applications/firefox/versions/103.0.2", treatFailureAsDeploymentFailure: true)
+                );
 
                 VirtualMachine testVM;
-                try
+                testVM = m_CrpClient.VirtualMachines.Get(rgName, vmName);
+                IList<VMGalleryApplication> galleryApplications = new List<VMGalleryApplication>()
                 {
-                    testVM = m_CrpClient.VirtualMachines.Get(rgName, vmName);
-                    IList<VMGalleryApplication> galleryApplications = new List<VMGalleryApplication>()
-                    {
-                        golang.v1,
-                    };
+                    golang.v1,
+                };
 
-                    m_CrpClient.VirtualMachines.Update(rgName, vmName, new VirtualMachineUpdate(applicationProfile: new ApplicationProfile(galleryApplications)));
+                m_CrpClient.VirtualMachines.Update(rgName, vmName, new VirtualMachineUpdate(applicationProfile: new ApplicationProfile(galleryApplications)));
 
-                    // test list
-                    VirtualMachineApplicationsListResult listResult = m_CrpClient.VirtualMachineApplications.List(rgName, testVM.Name);
-                    Assert.Single(listResult.Value);
-                    Assert.Equal(galleryApplications[0].PackageReferenceId, listResult.Value[0].PackageReferenceId);
+                // test list
+                VirtualMachineApplicationsListResult listResult = m_CrpClient.VirtualMachineApplications.List(rgName, testVM.Name);
+                Assert.Single(listResult.Value);
+                Assert.Equal(galleryApplications[0].PackageReferenceId, listResult.Value[0].PackageReferenceId);
 
-                    // add app 
-                    VMGalleryApplication putResult = m_CrpClient.VirtualMachineApplications.Put(rgName, testVM.Name, firefox.applicationName, firefox.v1);
-                    Assert.Equal(firefox.v1.PackageReferenceId, putResult.PackageReferenceId);
-                    listResult = m_CrpClient.VirtualMachineApplications.List(rgName, testVM.Name);
-                    Assert.Equal(2, listResult.Value.Count);
+                // add app 
+                VMGalleryApplication putResult = m_CrpClient.VirtualMachineApplications.Put(rgName, testVM.Name, firefox.applicationName, firefox.v1);
+                Assert.Equal(firefox.v1.PackageReferenceId, putResult.PackageReferenceId);
+                listResult = m_CrpClient.VirtualMachineApplications.List(rgName, testVM.Name);
+                Assert.Equal(2, listResult.Value.Count);
 
-                    // update app
-                    m_CrpClient.VirtualMachineApplications.Put(rgName, testVM.Name, golang.applicationName, golang.v2);
-                    listResult = m_CrpClient.VirtualMachineApplications.List(rgName, testVM.Name);
-                    Assert.Equal(2, listResult.Value.Count);
+                // update app
+                m_CrpClient.VirtualMachineApplications.Put(rgName, testVM.Name, golang.applicationName, golang.v2);
+                listResult = m_CrpClient.VirtualMachineApplications.List(rgName, testVM.Name);
+                Assert.Equal(2, listResult.Value.Count);
 
-                    // test get
-                    VMGalleryApplicationWithInstanceView golangInstanceView = m_CrpClient.VirtualMachineApplications.Get(rgName, testVM.Name, golang.applicationName, expand: "instanceView");
-                    VMGalleryApplicationWithInstanceView firefoxInstanceView = m_CrpClient.VirtualMachineApplications.Get(rgName, testVM.Name, firefox.applicationName, expand: "instanceView");
-                    Assert.Equal(golang.applicationName, golangInstanceView.InstanceView.Name);
-                    Assert.Equal(firefox.applicationName, firefoxInstanceView.InstanceView.Name);
+                // test get
+                VMGalleryApplicationWithInstanceView firefoxInstanceView = m_CrpClient.VirtualMachineApplications.Get(rgName, testVM.Name, firefox.applicationName, expand: "instanceView");
+                Assert.Equal(firefox.applicationName, firefoxInstanceView.InstanceView.Name);
 
-                    // test delete
-                    m_CrpClient.VirtualMachineApplications.Delete(rgName, testVM.Name, golang.applicationName);
-                    m_CrpClient.VirtualMachineApplications.Delete(rgName, testVM.Name, firefox.applicationName);
-                    testVM = m_CrpClient.VirtualMachines.Get(rgName, vmName);
-                    Assert.Equal(0, testVM.ApplicationProfile.GalleryApplications.Count);
-                }
-                finally
-                {
-                    // no cleanup required
-                }
+                // test delete
+                m_CrpClient.VirtualMachineApplications.Delete(rgName, testVM.Name, golang.applicationName);
+                m_CrpClient.VirtualMachineApplications.Delete(rgName, testVM.Name, firefox.applicationName);
+                testVM = m_CrpClient.VirtualMachines.Get(rgName, vmName);
+                Assert.Equal(0, testVM.ApplicationProfile?.GalleryApplications?.Count ?? 0);
             }
         }
     }

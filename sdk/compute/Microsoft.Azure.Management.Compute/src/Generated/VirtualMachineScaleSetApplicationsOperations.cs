@@ -484,16 +484,19 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='applicationName'>
         /// The name of the application to query.
         /// </param>
+        /// <param name='application'>
+        /// The definition of the VMApplication to add the virtual machine
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VMGalleryApplication>> PutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VMGalleryApplication>> PutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VMGalleryApplication> _response = await BeginPutWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, applicationName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VMGalleryApplication> _response = await BeginPutWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, applicationName, application, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -691,6 +694,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='applicationName'>
         /// The name of the application to query.
         /// </param>
+        /// <param name='application'>
+        /// The definition of the VMApplication to add the virtual machine
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -712,7 +718,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VMGalleryApplication>> BeginPutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VMGalleryApplication>> BeginPutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -725,6 +731,14 @@ namespace Microsoft.Azure.Management.Compute
             if (applicationName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationName");
+            }
+            if (application == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "application");
+            }
+            if (application != null)
+            {
+                application.Validate();
             }
             if (Client.SubscriptionId == null)
             {
@@ -741,6 +755,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
                 tracingParameters.Add("applicationName", applicationName);
+                tracingParameters.Add("application", application);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPut", tracingParameters);
@@ -795,6 +810,12 @@ namespace Microsoft.Azure.Management.Compute
 
             // Serialize Request
             string _requestContent = null;
+            if(application != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(application, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

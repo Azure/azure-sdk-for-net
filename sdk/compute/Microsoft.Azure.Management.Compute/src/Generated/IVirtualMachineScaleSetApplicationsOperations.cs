@@ -113,6 +113,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='applicationName'>
         /// The name of the application to query.
         /// </param>
+        /// <param name='application'>
+        /// The definition of the VMApplication to add the virtual machine
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -128,7 +131,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VMGalleryApplication>> PutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VMGalleryApplication>> PutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Removes an application from a VM scale set.
         /// </summary>
@@ -166,6 +169,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='applicationName'>
         /// The name of the application to query.
         /// </param>
+        /// <param name='application'>
+        /// The definition of the VMApplication to add the virtual machine
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -181,6 +187,6 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VMGalleryApplication>> BeginPutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VMGalleryApplication>> BeginPutWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string applicationName, VMGalleryApplication application, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
