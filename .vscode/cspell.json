@@ -123,6 +123,12 @@
       ]
     },
     {
+      "filename": "**/sdk/automation/**/*.cs",
+      "words": [
+        "tfvc"
+      ]
+    },
+    {
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
