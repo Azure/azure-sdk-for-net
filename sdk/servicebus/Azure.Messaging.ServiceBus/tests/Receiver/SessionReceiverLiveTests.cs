@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var sessionId = "sessionId1";
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
                 await sender.SendMessagesAsync(batch);
 
                 ServiceBusReceiver receiver = await client.AcceptNextSessionAsync(
@@ -259,7 +259,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -275,8 +275,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 foreach (var item in await receiver.ReceiveMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                     Assert.AreEqual(item.DeliveryCount, 1);
                 }
 
@@ -284,8 +284,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 foreach (var item in await receiver.PeekMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                 }
             }
         }
@@ -301,7 +301,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -323,8 +323,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     foreach (var item in await receiver.ReceiveMessagesAsync(remainingMessages))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                         remainingMessages--;
                     }
                 }
@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -364,8 +364,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                         await receiver.CompleteMessageAsync(item);
                     }
                 }
@@ -389,7 +389,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -406,8 +406,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), msg.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), msg.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
                         receivedMessages.Add(msg);
                         Assert.AreEqual(msg.DeliveryCount, 1);
                     }
@@ -427,8 +427,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
             }
@@ -446,7 +446,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -462,8 +462,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                         await receiver.DeadLetterMessageAsync(item, "testReason", "testDescription");
                     }
                 }
@@ -485,8 +485,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), msg.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), msg.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
                         Assert.AreEqual("testReason", msg.DeadLetterReason);
                         Assert.AreEqual("testDescription", msg.DeadLetterErrorDescription);
                         await deadLetterReceiver.CompleteMessageAsync(msg);
@@ -511,7 +511,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
 
                 await sender.SendMessagesAsync(batch);
                 var topicName = scope.TopicName;
@@ -530,8 +530,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                         var props = new Dictionary<string, object>();
                         // these should be ignored by DeadLetter property getters as they are not strings
                         props[AmqpMessageConstants.DeadLetterReasonHeader] = DateTime.UtcNow;
@@ -558,8 +558,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), msg.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), msg.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
                         Assert.IsNull(msg.DeadLetterErrorDescription);
                         Assert.IsNull(msg.DeadLetterReason);
                         Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterReasonHeader]);
@@ -587,7 +587,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -603,8 +603,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.Properties.GroupId.ToString(), item.SessionId);
+                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                         sequenceNumbers.Add(item.SequenceNumber);
                         await receiver.DeferMessageAsync(item);
                     }
@@ -616,7 +616,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(messageList.Count, deferedMessages.Count);
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].Properties.MessageId.ToString(), deferedMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].MessageId, deferedMessages[i].MessageId);
                 }
             }
         }
@@ -957,7 +957,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, "SessionId");
                 await sender.SendMessagesAsync(batch);
                 var receiver = await client.AcceptSessionAsync(
                     scope.QueueName,

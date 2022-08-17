@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     maxMessages: messageCt))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), peekedMessage.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
                         ct++;
                     }
                 }
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     maxMessages: messageCt))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), peekedMessage.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
                         ct++;
                     }
                 }
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     maxMessages: messageCt))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), peekedMessage.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
                         ct++;
                     }
                 }
@@ -295,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         Assert.AreEqual(item.DeliveryCount, 1);
                     }
                 }
@@ -304,7 +304,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 foreach (var item in await receiver.PeekMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                 }
             }
         }
@@ -333,7 +333,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         await receiver.CompleteMessageAsync(item);
                     }
                 }
@@ -429,7 +429,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -444,7 +444,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), msg.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
                         receivedMessages.Add(msg);
                         Assert.AreEqual(msg.DeliveryCount, 1);
                     }
@@ -464,7 +464,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.Properties.MessageId, item.MessageId);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
             }
@@ -621,7 +621,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(messageList.Count, deferredMessages.Count);
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].MessageId.ToString(), deferredMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
                     Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray());
                     Assert.AreEqual(ServiceBusMessageState.Deferred, deferredMessages[i].State);
                 }
@@ -726,7 +726,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -742,7 +742,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     foreach (var item in await receiver.ReceiveMessagesAsync(remainingMessages).ConfigureAwait(false))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         remainingMessages--;
                     }
                 }
