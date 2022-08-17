@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Core.Amqp;
-using Azure.Messaging.ServiceBus.Amqp.Framing;
-using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
