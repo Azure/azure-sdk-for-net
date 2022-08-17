@@ -16,7 +16,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  EventGridDataFormat.APACHEAVRO: ApacheAvro
 
 format-by-name-rules:
   'tenantId': 'uuid'

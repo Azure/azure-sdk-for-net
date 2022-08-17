@@ -16,7 +16,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  RestoreFileSpec.isdir: IsDirectory
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,5 +48,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - remove-operation: OperationStatus_Get
 
 ```

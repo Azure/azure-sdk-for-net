@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ApplicationTypeResource>> GetApplicationTypeResourceAsync(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ApplicationTypeResourceCollection GetApplicationTypeResources() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus> GetManagedAzResiliencyStatu(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatuAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.NodeTypeResource> GetNodeType(string nodeTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.NodeTypeResource>> GetNodeTypeAsync(string nodeTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.NodeTypeCollection GetNodeTypes() { throw null; }
@@ -405,8 +405,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public static Azure.ResourceManager.ServiceFabricManagedClusters.NodeTypeResource GetNodeTypeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response GetOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response> GetOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.LongRunningOperationResult> GetOperationStatu(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.LongRunningOperationResult>> GetOperationStatuAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.ServiceResource GetServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class ServiceResource : Azure.ResourceManager.ArmResource
@@ -651,12 +649,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public int EndPort { get { throw null; } set { } }
         public int StartPort { get { throw null; } set { } }
     }
-    public partial class ErrorModelError
-    {
-        internal ErrorModelError() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EvictionPolicyType : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EvictionPolicyType>
     {
@@ -734,16 +726,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ProbeProtocol ProbeProtocol { get { throw null; } set { } }
         public string ProbeRequestPath { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.Protocol Protocol { get { throw null; } set { } }
-    }
-    public partial class LongRunningOperationResult
-    {
-        internal LongRunningOperationResult() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ErrorModelError Error { get { throw null; } }
-        public string Name { get { throw null; } }
-        public double? PercentComplete { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string Status { get { throw null; } }
     }
     public partial class ManagedAzResiliencyStatus
     {

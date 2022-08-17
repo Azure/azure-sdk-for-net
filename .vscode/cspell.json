@@ -411,7 +411,24 @@
         "mhsmip"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/kusto/**/*.cs",
+      "words": [
+        "kusto",
+        "tbps",
+        "scsv",
+        "sohsv",
+        "tsve"
+      ]
+    },
+    {
+      "filename": "**/sdk/labservices/**/*.cs",
+      "words": [
+        "reimage",
+        "reimaging"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -440,6 +457,14 @@
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
+      ]
+    },
+    {
+      "filename": "**/sdk/orbital/**/*.cs",
+      "words": [
+        "eirpd",
+        "lhcp",
+        "rhcp"
       ]
     },
     {
@@ -476,6 +501,13 @@
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": ["Puid"]
+    },
+    {
+      "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
+      "words": [
+        "reimage",
+        "ssdlrs"
+      ]
     },
     {
       "filename": "**/sdk/sqlmanagement/**/*.cs",

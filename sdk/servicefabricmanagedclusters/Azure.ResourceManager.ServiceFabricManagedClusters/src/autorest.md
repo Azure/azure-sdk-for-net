@@ -48,7 +48,11 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+override-operation-name:
+  managedAzResiliencyStatus_get: GetManagedAzResiliencyStatus
+
 directive:
+  - remove-operation: OperationStatus_Get
   - from: managedapplication.json
     where: $.definitions
     transform: >

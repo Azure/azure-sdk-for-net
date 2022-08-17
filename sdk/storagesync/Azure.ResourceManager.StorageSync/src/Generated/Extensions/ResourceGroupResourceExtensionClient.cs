@@ -5,23 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _operationStatusClientDiagnostics;
-        private OperationStatusRestOperations _operationStatusRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -34,9 +25,6 @@ namespace Azure.ResourceManager.StorageSync
         {
         }
 
-        private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationStatusRestOperations OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -48,56 +36,6 @@ namespace Azure.ResourceManager.StorageSync
         public virtual StorageSyncServiceCollection GetStorageSyncServices()
         {
             return GetCachedClient(Client => new StorageSyncServiceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/locations/{locationName}/workflows/{workflowId}/operations/{operationId}
-        /// Operation Id: OperationStatus_Get
-        /// </summary>
-        /// <param name="locationName"> The desired region to obtain information from. </param>
-        /// <param name="workflowId"> workflow Id. </param>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetOperationStatuAsync(string locationName, string workflowId, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = await OperationStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, workflowId, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/locations/{locationName}/workflows/{workflowId}/operations/{operationId}
-        /// Operation Id: OperationStatus_Get
-        /// </summary>
-        /// <param name="locationName"> The desired region to obtain information from. </param>
-        /// <param name="workflowId"> workflow Id. </param>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetOperationStatu(string locationName, string workflowId, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = OperationStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, locationName, workflowId, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

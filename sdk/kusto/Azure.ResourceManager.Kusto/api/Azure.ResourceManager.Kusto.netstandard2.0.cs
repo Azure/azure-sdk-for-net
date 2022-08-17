@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EventGridDataFormat(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.EventGridDataFormat Apacheavro { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.EventGridDataFormat ApacheAvro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.EventGridDataFormat Avro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.EventGridDataFormat CSV { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.EventGridDataFormat Json { get { throw null; } }

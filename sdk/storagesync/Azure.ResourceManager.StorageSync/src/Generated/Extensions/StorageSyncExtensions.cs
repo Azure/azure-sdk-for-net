@@ -179,48 +179,6 @@ namespace Azure.ResourceManager.StorageSync
             return resourceGroupResource.GetStorageSyncServices().Get(storageSyncServiceName, cancellationToken);
         }
 
-        /// <summary>
-        /// Get Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/locations/{locationName}/workflows/{workflowId}/operations/{operationId}
-        /// Operation Id: OperationStatus_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The desired region to obtain information from. </param>
-        /// <param name="workflowId"> workflow Id. </param>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="workflowId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="workflowId"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetOperationStatuAsync(this ResourceGroupResource resourceGroupResource, string locationName, string workflowId, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(resourceGroupResource).GetOperationStatuAsync(locationName, workflowId, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/locations/{locationName}/workflows/{workflowId}/operations/{operationId}
-        /// Operation Id: OperationStatus_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The desired region to obtain information from. </param>
-        /// <param name="workflowId"> workflow Id. </param>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="workflowId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="workflowId"/> or <paramref name="operationId"/> is null. </exception>
-        public static Response<OperationStatus> GetOperationStatu(this ResourceGroupResource resourceGroupResource, string locationName, string workflowId, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(resourceGroupResource).GetOperationStatu(locationName, workflowId, operationId, cancellationToken);
-        }
-
         #region StorageSyncServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncServiceResource" /> along with the instance operations that can be performed on it but with no data.

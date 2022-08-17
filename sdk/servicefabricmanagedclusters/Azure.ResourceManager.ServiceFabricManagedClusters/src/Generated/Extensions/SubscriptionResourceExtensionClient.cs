@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     {
         private ClientDiagnostics _managedClusterClientDiagnostics;
         private ManagedClustersRestOperations _managedClusterRestClient;
-        private ClientDiagnostics _operationStatusClientDiagnostics;
-        private OperationStatusRestOperations _operationStatusRestClient;
         private ClientDiagnostics _operationResultsClientDiagnostics;
         private OperationResultsRestOperations _operationResultsRestClient;
 
@@ -41,8 +39,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         private ClientDiagnostics ManagedClusterClientDiagnostics => _managedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ManagedClusterResource.ResourceType.Namespace, Diagnostics);
         private ManagedClustersRestOperations ManagedClusterRestClient => _managedClusterRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedClusterResource.ResourceType));
-        private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationStatusRestOperations OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -159,54 +155,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get long running operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterOperations/{operationId}
-        /// Operation Id: OperationStatus_Get
-        /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="operationId"> operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LongRunningOperationResult>> GetOperationStatuAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = await OperationStatusRestClient.GetAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get long running operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterOperations/{operationId}
-        /// Operation Id: OperationStatus_Get
-        /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="operationId"> operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LongRunningOperationResult> GetOperationStatu(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = OperationStatusRestClient.Get(Id.SubscriptionId, location, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

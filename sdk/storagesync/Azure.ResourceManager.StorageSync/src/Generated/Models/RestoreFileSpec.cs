@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Restore file spec path. </summary>
         public string Path { get; set; }
         /// <summary> Restore file spec isdir. </summary>
-        public bool? Isdir { get; set; }
+        public bool? IsDirectory { get; set; }
     }
 }

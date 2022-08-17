@@ -173,8 +173,6 @@ namespace Azure.ResourceManager.StorageSync
         public static Azure.Response<Azure.ResourceManager.StorageSync.Models.CheckNameAvailabilityResult> CheckNameAvailabilityStorageSyncService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.StorageSync.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityStorageSyncServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.StorageSync.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StorageSync.CloudEndpointResource GetCloudEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.StorageSync.Models.OperationStatus> GetOperationStatu(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName, string workflowId, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.Models.OperationStatus>> GetOperationStatuAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string locationName, string workflowId, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StorageSync.RegisteredServerResource GetRegisteredServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StorageSync.ServerEndpointResource GetServerEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource GetStorageSyncPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -650,15 +648,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator !=(Azure.ResourceManager.StorageSync.Models.OperationDirection left, Azure.ResourceManager.StorageSync.Models.OperationDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OperationStatus
-    {
-        internal OperationStatus() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.StorageSync.Models.StorageSyncApiError Error { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
     public partial class PostBackupResponse
     {
         internal PostBackupResponse() { }
@@ -731,7 +720,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     public partial class RestoreFileSpec
     {
         public RestoreFileSpec() { }
-        public bool? Isdir { get { throw null; } set { } }
+        public bool? IsDirectory { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
     }
     public partial class ServerEndpointBackgroundDataDownloadActivity
