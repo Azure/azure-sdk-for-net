@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Cluster monitoring extensions.
-    /// Serialized Name: Extension
-    /// </summary>
+    /// <summary> Cluster monitoring extensions. </summary>
     public partial class HDInsightClusterCreateExtensionContent
     {
         /// <summary> Initializes a new instance of HDInsightClusterCreateExtensionContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary>
-        /// The workspace ID for the cluster monitoring extension.
-        /// Serialized Name: Extension.workspaceId
-        /// </summary>
+        /// <summary> The workspace ID for the cluster monitoring extension. </summary>
         public string WorkspaceId { get; set; }
-        /// <summary>
-        /// The certificate for the cluster monitoring extensions.
-        /// Serialized Name: Extension.primaryKey
-        /// </summary>
+        /// <summary> The certificate for the cluster monitoring extensions. </summary>
         public string PrimaryKey { get; set; }
     }
 }

@@ -10,15 +10,15 @@ namespace Azure.Communication.CallingServer
     /// <summary> The call connection properties. </summary>
     public class CallConnectionProperties
     {
-        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackUri)
+        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackEndpoint)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CallSource = callSource;
-            Targets = targets.ToList();
-            CallConnectionState = callConnectionState;
+            Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
+            CallConnectionState = callConnectionState == default(CallConnectionState) ? CallConnectionState.Unknown : callConnectionState;
             Subject = subject;
-            CallbackUri = callbackUri;
+            CallbackEndpoint = callbackEndpoint;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesDtoInternal callConnectionPropertiesDtoInternal)
@@ -28,9 +28,18 @@ namespace Azure.Communication.CallingServer
             CallSource = new CallSource(CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source.Identifier));
             CallSource.CallerId = callConnectionPropertiesDtoInternal.Source.CallerId == null ? null : new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.Source.CallerId.Value);
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
-            CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState;
+
+            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))
+            {
+                CallConnectionState = CallConnectionState.Unknown;
+            }
+            else
+            {
+                CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState.Value;
+            }
+
             Subject = callConnectionPropertiesDtoInternal.Subject;
-            CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
+            CallbackEndpoint = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
         }
 
         /// <summary> The call connection id. </summary>
@@ -42,10 +51,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifier> Targets { get; }
         /// <summary> The state of the call connection. </summary>
-        public CallConnectionState? CallConnectionState { get; }
+        public CallConnectionState CallConnectionState { get; }
         /// <summary> The subject. </summary>
         public string Subject { get; }
         /// <summary> The callback URI. </summary>
-        public Uri CallbackUri { get; }
+        public Uri CallbackEndpoint { get; }
     }
 }

@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="lastAvailableBackupOn"> The last available backup date time. </param>
         /// <param name="serviceLevelObjective"> The service level objective. </param>
         /// <param name="edition"> Edition of the performance tier. </param>
-        /// <param name="vCore"> vCore associated with the service level objective. </param>
+        /// <param name="vCores"> vCore associated with the service level objective. </param>
         /// <param name="hardwareGeneration"> Hardware generation associated with the service level objective. </param>
         /// <param name="version"> The MySQL version. </param>
-        internal MySqlRecoverableServerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastAvailableBackupOn, string serviceLevelObjective, string edition, int? vCore, string hardwareGeneration, string version) : base(id, name, resourceType, systemData)
+        internal MySqlRecoverableServerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastAvailableBackupOn, string serviceLevelObjective, string edition, int? vCores, string hardwareGeneration, string version) : base(id, name, resourceType, systemData)
         {
             LastAvailableBackupOn = lastAvailableBackupOn;
             ServiceLevelObjective = serviceLevelObjective;
             Edition = edition;
-            VCore = vCore;
+            VCores = vCores;
             HardwareGeneration = hardwareGeneration;
             Version = version;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Edition of the performance tier. </summary>
         public string Edition { get; }
         /// <summary> vCore associated with the service level objective. </summary>
-        public int? VCore { get; }
+        public int? VCores { get; }
         /// <summary> Hardware generation associated with the service level objective. </summary>
         public string HardwareGeneration { get; }
         /// <summary> The MySQL version. </summary>

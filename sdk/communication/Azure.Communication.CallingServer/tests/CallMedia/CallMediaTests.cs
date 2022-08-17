@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    public class CallMediaTests : CallingServerTestBase
+    public class CallMediaTests : CallAutomationTestBase
     {
         private static readonly IEnumerable<CommunicationIdentifier> _target = new CommunicationIdentifier[]
         {
@@ -27,8 +27,8 @@ namespace Azure.Communication.CallingServer
         [SetUp]
         public void Setup()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(202);
-            _callMedia = callingServerClient.GetCallConnection("callConnectionId").GetCallMedia();
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(202);
+            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
             _fileSource.PlaySourceId = "playSourceId";
         }
 
@@ -59,8 +59,8 @@ namespace Azure.Communication.CallingServer
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
         public void MediaOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
-            _callMedia = callingServerClient.GetCallConnection("callConnectionId").GetCallMedia();
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
+            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
@@ -71,8 +71,8 @@ namespace Azure.Communication.CallingServer
         [TestCaseSource(nameof(TestData_PlayOperations))]
         public void MediaOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
-            _callMedia = callingServerClient.GetCallConnection("callConnectionId").GetCallMedia();
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
+            _callMedia = callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
                 () => operation(_callMedia));

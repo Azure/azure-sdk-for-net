@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             Optional<string> id = default;
             string name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             string groupId = default;
             Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
             IList<HDInsightIPConfiguration> ipConfigurations = default;
@@ -55,7 +55,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightPrivateLinkConfiguration(id.Value, name, type.Value, groupId, Optional.ToNullable(provisioningState), ipConfigurations);
+            return new HDInsightPrivateLinkConfiguration(id.Value, name, Optional.ToNullable(type), groupId, Optional.ToNullable(provisioningState), ipConfigurations);
         }
     }
 }

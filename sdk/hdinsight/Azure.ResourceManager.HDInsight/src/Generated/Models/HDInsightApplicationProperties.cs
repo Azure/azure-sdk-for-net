@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The HDInsight cluster application GET response.
-    /// Serialized Name: ApplicationProperties
-    /// </summary>
+    /// <summary> The HDInsight cluster application GET response. </summary>
     public partial class HDInsightApplicationProperties
     {
         /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>
@@ -29,54 +26,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>
-        /// <param name="computeProfile">
-        /// The list of roles in the cluster.
-        /// Serialized Name: ApplicationProperties.computeProfile
-        /// </param>
-        /// <param name="installScriptActions">
-        /// The list of install script actions.
-        /// Serialized Name: ApplicationProperties.installScriptActions
-        /// </param>
-        /// <param name="uninstallScriptActions">
-        /// The list of uninstall script actions.
-        /// Serialized Name: ApplicationProperties.uninstallScriptActions
-        /// </param>
-        /// <param name="httpsEndpoints">
-        /// The list of application HTTPS endpoints.
-        /// Serialized Name: ApplicationProperties.httpsEndpoints
-        /// </param>
-        /// <param name="sshEndpoints">
-        /// The list of application SSH endpoints.
-        /// Serialized Name: ApplicationProperties.sshEndpoints
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the application.
-        /// Serialized Name: ApplicationProperties.provisioningState
-        /// </param>
-        /// <param name="applicationType">
-        /// The application type.
-        /// Serialized Name: ApplicationProperties.applicationType
-        /// </param>
-        /// <param name="applicationState">
-        /// The application state.
-        /// Serialized Name: ApplicationProperties.applicationState
-        /// </param>
-        /// <param name="errors">
-        /// The list of errors.
-        /// Serialized Name: ApplicationProperties.errors
-        /// </param>
-        /// <param name="createdDate">
-        /// The application create date time.
-        /// Serialized Name: ApplicationProperties.createdDate
-        /// </param>
-        /// <param name="marketplaceIdentifier">
-        /// The marketplace identifier.
-        /// Serialized Name: ApplicationProperties.marketplaceIdentifier
-        /// </param>
-        /// <param name="privateLinkConfigurations">
-        /// The private link configurations.
-        /// Serialized Name: ApplicationProperties.privateLinkConfigurations
-        /// </param>
+        /// <param name="computeProfile"> The list of roles in the cluster. </param>
+        /// <param name="installScriptActions"> The list of install script actions. </param>
+        /// <param name="uninstallScriptActions"> The list of uninstall script actions. </param>
+        /// <param name="httpsEndpoints"> The list of application HTTPS endpoints. </param>
+        /// <param name="sshEndpoints"> The list of application SSH endpoints. </param>
+        /// <param name="provisioningState"> The provisioning state of the application. </param>
+        /// <param name="applicationType"> The application type. </param>
+        /// <param name="applicationState"> The application state. </param>
+        /// <param name="errors"> The list of errors. </param>
+        /// <param name="createdDate"> The application create date time. </param>
+        /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
+        /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, string createdDate, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations)
         {
             ComputeProfile = computeProfile;
@@ -93,15 +54,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateLinkConfigurations = privateLinkConfigurations;
         }
 
-        /// <summary>
-        /// The list of roles in the cluster.
-        /// Serialized Name: ApplicationProperties.computeProfile
-        /// </summary>
+        /// <summary> The list of roles in the cluster. </summary>
         internal ComputeProfile ComputeProfile { get; set; }
-        /// <summary>
-        /// The list of roles in the cluster.
-        /// Serialized Name: ComputeProfile.roles
-        /// </summary>
+        /// <summary> The list of roles in the cluster. </summary>
         public IList<HDInsightClusterRole> ComputeRoles
         {
             get
@@ -112,60 +67,27 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <summary>
-        /// The list of install script actions.
-        /// Serialized Name: ApplicationProperties.installScriptActions
-        /// </summary>
+        /// <summary> The list of install script actions. </summary>
         public IList<RuntimeScriptAction> InstallScriptActions { get; }
-        /// <summary>
-        /// The list of uninstall script actions.
-        /// Serialized Name: ApplicationProperties.uninstallScriptActions
-        /// </summary>
+        /// <summary> The list of uninstall script actions. </summary>
         public IList<RuntimeScriptAction> UninstallScriptActions { get; }
-        /// <summary>
-        /// The list of application HTTPS endpoints.
-        /// Serialized Name: ApplicationProperties.httpsEndpoints
-        /// </summary>
+        /// <summary> The list of application HTTPS endpoints. </summary>
         public IList<HDInsightApplicationHttpsEndpoint> HttpsEndpoints { get; }
-        /// <summary>
-        /// The list of application SSH endpoints.
-        /// Serialized Name: ApplicationProperties.sshEndpoints
-        /// </summary>
+        /// <summary> The list of application SSH endpoints. </summary>
         public IList<HDInsightApplicationEndpoint> SshEndpoints { get; }
-        /// <summary>
-        /// The provisioning state of the application.
-        /// Serialized Name: ApplicationProperties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the application. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The application type.
-        /// Serialized Name: ApplicationProperties.applicationType
-        /// </summary>
+        /// <summary> The application type. </summary>
         public string ApplicationType { get; set; }
-        /// <summary>
-        /// The application state.
-        /// Serialized Name: ApplicationProperties.applicationState
-        /// </summary>
+        /// <summary> The application state. </summary>
         public string ApplicationState { get; }
-        /// <summary>
-        /// The list of errors.
-        /// Serialized Name: ApplicationProperties.errors
-        /// </summary>
+        /// <summary> The list of errors. </summary>
         public IList<ResponseError> Errors { get; }
-        /// <summary>
-        /// The application create date time.
-        /// Serialized Name: ApplicationProperties.createdDate
-        /// </summary>
+        /// <summary> The application create date time. </summary>
         public string CreatedDate { get; }
-        /// <summary>
-        /// The marketplace identifier.
-        /// Serialized Name: ApplicationProperties.marketplaceIdentifier
-        /// </summary>
+        /// <summary> The marketplace identifier. </summary>
         public string MarketplaceIdentifier { get; }
-        /// <summary>
-        /// The private link configurations.
-        /// Serialized Name: ApplicationProperties.privateLinkConfigurations
-        /// </summary>
+        /// <summary> The private link configurations. </summary>
         public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
     }
 }

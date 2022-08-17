@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementPrivateLinkResourceListResult DeserializeApiManagementPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiManagementPrivateLinkData>> value = default;
+            Optional<IReadOnlyList<ApiManagementPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiManagementPrivateLinkData> array = new List<ApiManagementPrivateLinkData>();
+                    List<ApiManagementPrivateLinkResourceData> array = new List<ApiManagementPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPrivateLinkData.DeserializeApiManagementPrivateLinkData(item));
+                        array.Add(ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

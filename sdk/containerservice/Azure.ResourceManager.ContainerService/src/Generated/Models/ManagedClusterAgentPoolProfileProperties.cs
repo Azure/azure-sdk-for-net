@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="enableFips"> See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </param>
         /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
         /// <param name="creationData"> CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot. </param>
-        internal ManagedClusterAgentPoolProfileProperties(int? count, string vmSize, int? osDiskSizeInGB, OSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, OSType? osType, OSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, PowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, CreationData creationData)
+        internal ManagedClusterAgentPoolProfileProperties(int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData)
         {
             Count = count;
             VmSize = vmSize;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </summary>
         public int? OSDiskSizeInGB { get; set; }
         /// <summary> The default is &apos;Ephemeral&apos; if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to &apos;Managed&apos;. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </summary>
-        public OSDiskType? OSDiskType { get; set; }
+        public ContainerServiceOSDiskType? OSDiskType { get; set; }
         /// <summary> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </summary>
         public KubeletDiskType? KubeletDiskType { get; set; }
         /// <summary> Determines the type of workload a node can run. </summary>
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The maximum number of pods that can run on a node. </summary>
         public int? MaxPods { get; set; }
         /// <summary> The operating system type. The default is Linux. </summary>
-        public OSType? OSType { get; set; }
+        public ContainerServiceOSType? OSType { get; set; }
         /// <summary> Specifies an OS SKU. This value must not be specified if OSType is Windows. </summary>
-        public OSSku? OSSku { get; set; }
+        public ContainerServiceOSSku? OSSku { get; set; }
         /// <summary> The maximum number of nodes for auto-scaling. </summary>
         public int? MaxCount { get; set; }
         /// <summary> The minimum number of nodes for auto-scaling. </summary>
@@ -164,15 +164,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The current deployment or provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> When an Agent Pool is first created it is initially Running. The Agent Pool can be stopped by setting this field to Stopped. A stopped Agent Pool stops all of its VMs and does not accrue billing charges. An Agent Pool can only be stopped if it is Running and provisioning state is Succeeded. </summary>
-        internal PowerState PowerState { get; set; }
+        internal ContainerServicePowerState PowerState { get; set; }
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
-        public ManagedClusterStateCode? PowerStateCode
+        public ContainerServiceStateCode? PowerStateCode
         {
             get => PowerState is null ? default : PowerState.Code;
             set
             {
                 if (PowerState is null)
-                    PowerState = new PowerState();
+                    PowerState = new ContainerServicePowerState();
                 PowerState.Code = value;
             }
         }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </summary>
         public GpuInstanceProfile? GpuInstanceProfile { get; set; }
         /// <summary> CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot. </summary>
-        internal CreationData CreationData { get; set; }
+        internal ContainerServiceCreationData CreationData { get; set; }
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
         public ResourceIdentifier CreationDataSourceResourceId
         {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             set
             {
                 if (CreationData is null)
-                    CreationData = new CreationData();
+                    CreationData = new ContainerServiceCreationData();
                 CreationData.SourceResourceId = value;
             }
         }

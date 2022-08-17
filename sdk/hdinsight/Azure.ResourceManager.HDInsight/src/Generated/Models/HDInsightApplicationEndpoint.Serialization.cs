@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,10 +16,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Optional.IsDefined(EndpointLocation))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(EndpointLocation);
             }
             if (Optional.IsDefined(DestinationPort))
             {
@@ -33,27 +34,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress");
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static HDInsightApplicationEndpoint DeserializeHDInsightApplicationEndpoint(JsonElement element)
         {
-            Optional<AzureLocation> location = default;
+            Optional<string> location = default;
             Optional<int> destinationPort = default;
             Optional<int> publicPort = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("destinationPort"))
@@ -78,11 +74,16 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("privateIPAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
             }
-            return new HDInsightApplicationEndpoint(Optional.ToNullable(location), Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value);
+            return new HDInsightApplicationEndpoint(location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value);
         }
     }
 }
