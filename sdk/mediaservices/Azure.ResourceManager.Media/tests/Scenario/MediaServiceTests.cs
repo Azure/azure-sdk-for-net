@@ -25,10 +25,9 @@ namespace Azure.ResourceManager.Media.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName($"MediaService-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            _resourceGroupIdentifier = rgLro.Value.Id;
-            string storageAccountName = SessionRecording.GenerateAssetName("azstorageformedia");
-            var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
+            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
+            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
+            _resourceGroupIdentifier = rgLro.Value.Data.Id;
             _storageAccountIdentifier = storage.Id;
             await StopSessionRecordingAsync();
         }

@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Media.Tests
     public class MediaManagementTestBase : ManagementRecordedTestBase<MediaManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected const string ResourceGroupNamePrefix = "MediaServiceRG";
+        protected const string StorageAccountNamePrefix = "azstorageformedia";
 
         protected MediaManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
