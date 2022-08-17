@@ -95,6 +95,17 @@
                 "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
             ],
             "_justification": "File contains a string value that ends with credential, not a true credential."
+        },
+        {
+            "file":[
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryScopeMap().json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryScopeMap()Async.json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryConnectedRegistry().json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryConnectedRegistry()Async.json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryToken().json",
+                "sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/tests/SessionRecords/ContainerRegistryTests/ContainerRegistryToken()Async.json"
+            ],
+            "_justification": "The async operation id starts with token, not a true token value."
         }
     ]
 }
