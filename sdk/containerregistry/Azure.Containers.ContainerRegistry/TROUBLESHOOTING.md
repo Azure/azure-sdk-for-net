@@ -6,10 +6,10 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 * [General troubleshooting](#general-troubleshooting)
   * [Enable client logging](#enable-client-logging)
-  * [Troubleshooting authentication issues](#authentication-errors)
-     * [AuthenticationFailedException](#authenticationfailedexception)
-     * [CredentialUnavailableException](#credentialunavailableexception)
-     * [Permission Issues](#permission-issues)
+* [Troubleshooting authentication issues](#authentication-errors)
+  * [AuthenticationFailedException](#authenticationfailedexception)
+  * [CredentialUnavailableException](#credentialunavailableexception)
+  * [Permission Issues](#permission-issues)
 
 ## General troubleshooting
 
@@ -123,7 +123,7 @@ ContainerRegistryClientOptions options = new ContainerRegistryClientOptions()
 
 To learn about other logging mechanisms, see [Azure SDK diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
-### Authentication errors
+## Authentication errors
 
 Azure Container Registry supports Azure Active Directory authentication. To provide a valid credential, you can use the `Azure.Identity` package. For more information on getting started, see the [Azure Container Registry library's README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/containerregistry/Azure.Containers.ContainerRegistry#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity library's documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
 
