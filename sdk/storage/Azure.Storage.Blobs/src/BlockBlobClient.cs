@@ -358,7 +358,7 @@ namespace Azure.Storage.Blobs.Specialized
                     options.CustomerProvidedKey,
                     options.TransferValidation,
                     null,
-                    options.PreserveBlobNameOuterSlashes));
+                    options.PreserveBlobNameSlashes));
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)

@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameOuterSlashes: preservesSlash);
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash);
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
@@ -168,7 +168,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameOuterSlashes: preservesSlash)
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash)
             {
                 BlobName = blobName
             };
@@ -208,7 +208,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameOuterSlashes: preservesSlash);
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash);
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
@@ -237,7 +237,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameOuterSlashes: preservesSlash)
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash)
             {
                 BlobName = blobName
             };
@@ -267,7 +267,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(blobName, req.Uri.Path.Substring(req.Uri.Path.IndexOf('/') + 1)));
 
             BlobClientOptions options = GetOptions();
-            options.PreserveBlobNameOuterSlashes = true;
+            options.PreserveBlobNameSlashes = true;
             options.AddPolicy(
                 assertPolicy,
                 Core.HttpPipelinePosition.BeforeTransport);

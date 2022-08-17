@@ -187,7 +187,7 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder = new BlobUriBuilder(conn.BlobEndpoint, options?.PreserveBlobNameOuterSlashes ?? false) { BlobContainerName = blobContainerName };
+            var builder = new BlobUriBuilder(conn.BlobEndpoint, options?.PreserveBlobNameSlashes ?? false) { BlobContainerName = blobContainerName };
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
 
@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameOuterSlashes);
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _containerRestClient = BuildContainerRestClient(_uri);
@@ -260,7 +260,7 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameOuterSlashes);
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -350,7 +350,7 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameOuterSlashes);
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -421,7 +421,7 @@ namespace Azure.Storage.Blobs
                     customerProvidedKey: null,
                     transferValidation: options.TransferValidation,
                     encryptionScope: null,
-                    preserveBlobNameOuterSlashes: options.PreserveBlobNameOuterSlashes),
+                    preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes),
                 clientSideEncryption: null);
         }
 

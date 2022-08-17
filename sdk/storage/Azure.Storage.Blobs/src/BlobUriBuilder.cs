@@ -35,9 +35,9 @@ namespace Azure.Storage.Blobs
         private readonly bool _isPathStyleUri;
 
         /// <summary>
-        /// Whether to preserve trailing slashes on blob names when constructing a URI with this instance.
+        /// Whether to preserve all '/' characters on blob names when constructing a URI with this instance.
         /// </summary>
-        public bool PreserveBlobNameOuterSlashes { get; }
+        public bool PreserveBlobNameSlashes { get; }
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -179,13 +179,13 @@ namespace Azure.Storage.Blobs
         /// <param name="uri">
         /// The <see cref="System.Uri"/> to a storage resource.
         /// </param>
-        /// <param name="preserveBlobNameOuterSlashes">
-        /// Whether to preserve a trailing slash at the end of a blob name.
+        /// <param name="preserveBlobNameSlashes">
+        /// Whether to preserve all '/' characters in a blob name.
         /// </param>
-        public BlobUriBuilder(Uri uri, bool preserveBlobNameOuterSlashes)
+        public BlobUriBuilder(Uri uri, bool preserveBlobNameSlashes)
         {
             uri = uri ?? throw new ArgumentNullException(nameof(uri));
-            PreserveBlobNameOuterSlashes = preserveBlobNameOuterSlashes;
+            PreserveBlobNameSlashes = preserveBlobNameSlashes;
 
             Scheme = uri.Scheme;
             Host = uri.Host;
@@ -238,7 +238,7 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     BlobContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath(PreserveBlobNameOuterSlashes);   // The blob name is after the container slash
+                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath(PreserveBlobNameSlashes);   // The blob name is after the container slash
                 }
             }
 
@@ -326,7 +326,7 @@ namespace Azure.Storage.Blobs
                 path.Append('/').Append(BlobContainerName);
                 if (BlobName != null && BlobName.Length > 0)
                 {
-                    path.Append('/').Append(BlobName.EscapePath(PreserveBlobNameOuterSlashes));
+                    path.Append('/').Append(BlobName.EscapePath(PreserveBlobNameSlashes));
                 }
             }
 

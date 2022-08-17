@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
-        public bool PreserveBlobNameOuterSlashes { get { throw null; } set { } }
+        public bool PreserveBlobNameSlashes { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -195,13 +195,13 @@ namespace Azure.Storage.Blobs
     public partial class BlobUriBuilder
     {
         public BlobUriBuilder(System.Uri uri) { }
-        public BlobUriBuilder(System.Uri uri, bool preserveBlobNameOuterSlashes) { }
+        public BlobUriBuilder(System.Uri uri, bool preserveBlobNameSlashes) { }
         public string AccountName { get { throw null; } set { } }
         public string BlobContainerName { get { throw null; } set { } }
         public string BlobName { get { throw null; } set { } }
         public string Host { get { throw null; } set { } }
         public int Port { get { throw null; } set { } }
-        public bool PreserveBlobNameOuterSlashes { get { throw null; } }
+        public bool PreserveBlobNameSlashes { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public Azure.Storage.Sas.BlobSasQueryParameters Sas { get { throw null; } set { } }
         public string Scheme { get { throw null; } set { } }

@@ -215,7 +215,7 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameOuterSlashes);
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(_uri);
@@ -369,7 +369,7 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                preserveBlobNameOuterSlashes: options.PreserveBlobNameOuterSlashes);
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);

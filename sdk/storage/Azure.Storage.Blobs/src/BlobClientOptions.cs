@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs
         /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
         /// Defaults to false for backwards compatibility.
         /// </summary>
-        public bool PreserveBlobNameOuterSlashes { get; set; }
+        public bool PreserveBlobNameSlashes { get; set; }
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
