@@ -6,6 +6,7 @@
     <Folder Include="SessionRecords\ConfigurationProfileTests\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Compute" VersionOverride="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Resources" VersionOverride="1.3.0" />
   </ItemGroup>
 </Project>
