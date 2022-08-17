@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new SamplingAlgorithm(samplingAlgorithmType);
+            return new UnknownSamplingAlgorithm(samplingAlgorithmType);
         }
     }
 }

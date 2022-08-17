@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new JobLimits(jobLimitsType, Optional.ToNullable(timeout));
+            return new UnknownJobLimits(jobLimitsType, Optional.ToNullable(timeout));
         }
     }
 }

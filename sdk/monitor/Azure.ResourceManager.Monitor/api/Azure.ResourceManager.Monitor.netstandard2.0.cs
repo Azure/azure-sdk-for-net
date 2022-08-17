@@ -890,13 +890,13 @@ namespace Azure.ResourceManager.Monitor.Models
         public int? ThrottlingInMin { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.TriggerCondition Trigger { get { throw null; } set { } }
     }
-    public partial class AlertRuleAction
+    public abstract partial class AlertRuleAction
     {
-        public AlertRuleAction() { }
+        protected AlertRuleAction() { }
     }
-    public partial class AlertRuleCondition
+    public abstract partial class AlertRuleCondition
     {
-        public AlertRuleCondition() { }
+        protected AlertRuleCondition() { }
         public Azure.ResourceManager.Monitor.Models.RuleDataSource DataSource { get { throw null; } set { } }
     }
     public partial class AlertRuleLeafCondition
@@ -1448,9 +1448,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MetricTriggerType left, Azure.ResourceManager.Monitor.Models.MetricTriggerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MonitorAction
+    public abstract partial class MonitorAction
     {
-        public MonitorAction() { }
+        protected MonitorAction() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorAggregationType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorAggregationType>
@@ -2033,9 +2033,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public int Days { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
     }
-    public partial class RuleDataSource
+    public abstract partial class RuleDataSource
     {
-        public RuleDataSource() { }
+        protected RuleDataSource() { }
         public string LegacyResourceId { get { throw null; } set { } }
         public string MetricNamespace { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapSizingRecommendationResult(deploymentType);
+            return new UnknownSapSizingRecommendationResult(deploymentType);
         }
     }
 }

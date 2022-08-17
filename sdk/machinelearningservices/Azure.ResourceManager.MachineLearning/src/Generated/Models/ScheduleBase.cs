@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
     /// </summary>
-    public partial class ScheduleBase
+    public abstract partial class ScheduleBase
     {
         /// <summary> Initializes a new instance of ScheduleBase. </summary>
-        public ScheduleBase()
+        protected ScheduleBase()
         {
         }
 

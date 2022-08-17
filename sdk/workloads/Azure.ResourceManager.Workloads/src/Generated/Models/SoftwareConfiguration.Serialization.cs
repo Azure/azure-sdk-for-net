@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SoftwareConfiguration(softwareInstallationType);
+            return new UnknownSoftwareConfiguration(softwareInstallationType);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,6 +18,29 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WritePropertyName("type");
             writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
+        }
+
+        internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element)
+        {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureResource": return AzureResourceInfo.DeserializeAzureResourceInfo(element);
+                    case "ConfluentBootstrapServer": return ConfluentBootstrapServerInfo.DeserializeConfluentBootstrapServerInfo(element);
+                    case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element);
+                }
+            }
+            TargetServiceType type = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"))
+                {
+                    type = new TargetServiceType(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new UnknownTargetServiceBaseInfo(type);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AlertRuleAction(odataType);
+            return new UnknownAlertRuleAction(odataType);
         }
     }
 }

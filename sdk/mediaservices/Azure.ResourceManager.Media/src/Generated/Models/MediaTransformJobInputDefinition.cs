@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaTransformJobInputDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FromAllInputFile"/>, <see cref="FromEachInputFile"/> and <see cref="MediaTransformJobInputFile"/>.
     /// </summary>
-    public partial class MediaTransformJobInputDefinition
+    public abstract partial class MediaTransformJobInputDefinition
     {
         /// <summary> Initializes a new instance of MediaTransformJobInputDefinition. </summary>
-        public MediaTransformJobInputDefinition()
+        protected MediaTransformJobInputDefinition()
         {
             IncludedTracks = new ChangeTrackingList<TrackDescriptor>();
         }

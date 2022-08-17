@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new ReferenceInputDataSource(type);
+            return new UnknownReferenceInputDataSource(type);
         }
     }
 }

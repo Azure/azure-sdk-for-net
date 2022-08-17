@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DependencyReference(type);
+            return new UnknownDependencyReference(type);
         }
     }
 }

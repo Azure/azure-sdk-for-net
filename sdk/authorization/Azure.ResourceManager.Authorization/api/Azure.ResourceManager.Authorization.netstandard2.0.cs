@@ -1011,9 +1011,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType left, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RoleManagementPolicyRule
+    public abstract partial class RoleManagementPolicyRule
     {
-        public RoleManagementPolicyRule() { }
+        protected RoleManagementPolicyRule() { }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget Target { get { throw null; } set { } }
     }

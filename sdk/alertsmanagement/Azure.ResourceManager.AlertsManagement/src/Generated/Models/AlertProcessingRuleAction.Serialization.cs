@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new AlertProcessingRuleAction(actionType);
+            return new UnknownAlertProcessingRuleAction(actionType);
         }
     }
 }

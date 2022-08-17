@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="OSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LinuxConfiguration"/> and <see cref="WindowsConfiguration"/>.
     /// </summary>
-    public partial class OSConfiguration
+    public abstract partial class OSConfiguration
     {
         /// <summary> Initializes a new instance of OSConfiguration. </summary>
-        public OSConfiguration()
+        protected OSConfiguration()
         {
         }
 

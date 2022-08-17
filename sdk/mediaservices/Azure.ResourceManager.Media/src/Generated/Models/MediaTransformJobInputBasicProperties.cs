@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaTransformJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MediaTransformJobInputAsset"/>, <see cref="MediaTransformJobInputClip"/>, <see cref="MediaTransformJobInputHttp"/>, <see cref="MediaTransformJobInputSequence"/> and <see cref="MediaTransformJobInputs"/>.
     /// </summary>
-    public partial class MediaTransformJobInputBasicProperties
+    public abstract partial class MediaTransformJobInputBasicProperties
     {
         /// <summary> Initializes a new instance of MediaTransformJobInputBasicProperties. </summary>
-        public MediaTransformJobInputBasicProperties()
+        protected MediaTransformJobInputBasicProperties()
         {
         }
 

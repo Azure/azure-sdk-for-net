@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AutoMLVertical(Optional.ToNullable(logVerbosity), taskType);
+            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), taskType);
         }
     }
 }

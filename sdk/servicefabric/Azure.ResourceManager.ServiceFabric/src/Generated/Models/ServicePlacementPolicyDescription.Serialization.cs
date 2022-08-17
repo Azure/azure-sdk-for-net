@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServicePlacementPolicyDescription(type);
+            return new UnknownServicePlacementPolicyDescription(type);
         }
     }
 }

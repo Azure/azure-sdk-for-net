@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType));
+            return new UnknownMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType));
         }
     }
 }

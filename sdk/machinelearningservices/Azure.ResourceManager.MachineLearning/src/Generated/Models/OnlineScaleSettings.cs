@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="OnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DefaultScaleSettings"/> and <see cref="TargetUtilizationScaleSettings"/>.
     /// </summary>
-    public partial class OnlineScaleSettings
+    public abstract partial class OnlineScaleSettings
     {
         /// <summary> Initializes a new instance of OnlineScaleSettings. </summary>
-        public OnlineScaleSettings()
+        protected OnlineScaleSettings()
         {
         }
 

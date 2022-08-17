@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new TrackDescriptor(odataType);
+            return new UnknownTrackDescriptor(odataType);
         }
     }
 }

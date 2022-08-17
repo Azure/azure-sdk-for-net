@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyRule(id.Value, ruleType, target.Value);
+            return new UnknownRoleManagementPolicyRule(id.Value, ruleType, target.Value);
         }
     }
 }

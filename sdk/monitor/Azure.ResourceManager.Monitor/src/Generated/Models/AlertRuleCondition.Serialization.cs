@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AlertRuleCondition(odataType, dataSource.Value);
+            return new UnknownAlertRuleCondition(odataType, dataSource.Value);
         }
     }
 }

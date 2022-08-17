@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new DistributionConfiguration(distributionType);
+            return new UnknownDistributionConfiguration(distributionType);
         }
     }
 }

@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="PostgreSqlServerPropertiesForRestore"/> and <see cref="PostgreSqlServerPropertiesForReplica"/>.
     /// </summary>
-    public partial class PostgreSqlServerPropertiesForCreate
+    public abstract partial class PostgreSqlServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForCreate. </summary>
-        public PostgreSqlServerPropertiesForCreate()
+        protected PostgreSqlServerPropertiesForCreate()
         {
         }
 

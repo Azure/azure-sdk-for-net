@@ -23,6 +23,13 @@ operation-id-mappings:
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
       customDomainName: Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults
 
+suppress-abstract-base-class:
+- CustomDomainHttpsContent
+- DeliveryRuleAction
+- DeliveryRuleCondition
+- FrontDoorSecretProperties
+- SecurityPolicyProperties
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

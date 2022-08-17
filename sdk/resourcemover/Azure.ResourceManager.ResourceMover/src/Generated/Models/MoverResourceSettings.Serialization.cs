@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceSettings(resourceType, targetResourceName);
+            return new UnknownMoverResourceSettings(resourceType, targetResourceName);
         }
     }
 }

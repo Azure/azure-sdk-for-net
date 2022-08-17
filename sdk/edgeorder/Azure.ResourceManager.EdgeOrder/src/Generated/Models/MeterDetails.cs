@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// Please note <see cref="MeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
     /// </summary>
-    public partial class MeterDetails
+    public abstract partial class MeterDetails
     {
         /// <summary> Initializes a new instance of MeterDetails. </summary>
-        internal MeterDetails()
+        protected MeterDetails()
         {
         }
 

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new DatastoreSecrets(secretsType);
+            return new UnknownDatastoreSecrets(secretsType);
         }
     }
 }

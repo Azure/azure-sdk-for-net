@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaTransformJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MediaTransformJobOutputAsset"/>.
     /// </summary>
-    public partial class MediaTransformJobOutput
+    public abstract partial class MediaTransformJobOutput
     {
         /// <summary> Initializes a new instance of MediaTransformJobOutput. </summary>
-        public MediaTransformJobOutput()
+        protected MediaTransformJobOutput()
         {
         }
 

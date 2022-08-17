@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ForecastHorizon(mode);
+            return new UnknownForecastHorizon(mode);
         }
     }
 }

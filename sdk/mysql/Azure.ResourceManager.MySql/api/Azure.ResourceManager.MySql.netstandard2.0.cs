@@ -1580,9 +1580,9 @@ namespace Azure.ResourceManager.MySql.Models
         public string Description { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus Status { get { throw null; } }
     }
-    public partial class MySqlServerPropertiesForCreate
+    public abstract partial class MySqlServerPropertiesForCreate
     {
-        public MySqlServerPropertiesForCreate() { }
+        protected MySqlServerPropertiesForCreate() { }
         public Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum? PublicNetworkAccess { get { throw null; } set { } }

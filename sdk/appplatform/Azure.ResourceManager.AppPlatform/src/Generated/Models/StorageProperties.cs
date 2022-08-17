@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// Please note <see cref="StorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="StorageAccount"/>.
     /// </summary>
-    public partial class StorageProperties
+    public abstract partial class StorageProperties
     {
         /// <summary> Initializes a new instance of StorageProperties. </summary>
-        public StorageProperties()
+        protected StorageProperties()
         {
         }
 

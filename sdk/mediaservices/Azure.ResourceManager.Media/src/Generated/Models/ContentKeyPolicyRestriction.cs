@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
     /// </summary>
-    public partial class ContentKeyPolicyRestriction
+    public abstract partial class ContentKeyPolicyRestriction
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyRestriction. </summary>
-        public ContentKeyPolicyRestriction()
+        protected ContentKeyPolicyRestriction()
         {
         }
 

@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Authorization.Models
     /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
     /// </summary>
-    public partial class RoleManagementPolicyRule
+    public abstract partial class RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyRule. </summary>
-        public RoleManagementPolicyRule()
+        protected RoleManagementPolicyRule()
         {
         }
 

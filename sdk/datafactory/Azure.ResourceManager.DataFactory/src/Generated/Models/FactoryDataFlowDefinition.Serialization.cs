@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new FactoryDataFlowDefinition(type, description.Value, Optional.ToList(annotations), folder.Value);
+            return new UnknownFactoryDataFlowDefinition(type, description.Value, Optional.ToList(annotations), folder.Value);
         }
     }
 }

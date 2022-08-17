@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AssetReferenceBase(referenceType);
+            return new UnknownAssetReferenceBase(referenceType);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new FactorySecretBaseDefinition(type);
+            return new UnknownFactorySecretBaseDefinition(type);
         }
     }
 }

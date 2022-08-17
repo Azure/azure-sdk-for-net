@@ -448,9 +448,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public Azure.ResourceManager.ResourceMover.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
     }
-    public partial class MoverResourceSettings
+    public abstract partial class MoverResourceSettings
     {
-        public MoverResourceSettings(string targetResourceName) { }
+        protected MoverResourceSettings(string targetResourceName) { }
         public string TargetResourceName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

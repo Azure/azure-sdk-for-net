@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ComputeSecrets(computeType);
+            return new UnknownComputeSecrets(computeType);
         }
     }
 }

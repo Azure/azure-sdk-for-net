@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="MonthlyRecurrence"/> and <see cref="WeeklyRecurrence"/>.
     /// </summary>
-    public partial class AlertProcessingRuleRecurrence
+    public abstract partial class AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
-        public AlertProcessingRuleRecurrence()
+        protected AlertProcessingRuleRecurrence()
         {
         }
 

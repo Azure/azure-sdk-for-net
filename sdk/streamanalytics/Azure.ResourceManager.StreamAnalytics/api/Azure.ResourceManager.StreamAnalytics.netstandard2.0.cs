@@ -592,9 +592,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public int? MaxBatchCount { get { throw null; } set { } }
         public int? MaxBatchSize { get { throw null; } set { } }
     }
-    public partial class FunctionRetrieveDefaultDefinitionContent
+    public abstract partial class FunctionRetrieveDefaultDefinitionContent
     {
-        public FunctionRetrieveDefaultDefinitionContent() { }
+        protected FunctionRetrieveDefaultDefinitionContent() { }
     }
     public partial class GatewayMessageBusOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
     {
@@ -758,9 +758,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public System.BinaryData Payload { get { throw null; } set { } }
         public System.Uri PayloadUri { get { throw null; } set { } }
     }
-    public partial class ReferenceInputDataSource
+    public abstract partial class ReferenceInputDataSource
     {
-        public ReferenceInputDataSource() { }
+        protected ReferenceInputDataSource() { }
     }
     public partial class ReferenceInputProperties : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputProperties
     {
@@ -916,9 +916,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType JobType { get { throw null; } }
         public string Query { get { throw null; } }
     }
-    public partial class StreamAnalyticsDataSerialization
+    public abstract partial class StreamAnalyticsDataSerialization
     {
-        public StreamAnalyticsDataSerialization() { }
+        protected StreamAnalyticsDataSerialization() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamAnalyticsDataSerializationEncoding : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding>
@@ -1224,9 +1224,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobRefreshConfiguration RefreshConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsStorageAccount StorageAccount { get { throw null; } set { } }
     }
-    public partial class StreamingJobFunctionBinding
+    public abstract partial class StreamingJobFunctionBinding
     {
-        public StreamingJobFunctionBinding() { }
+        protected StreamingJobFunctionBinding() { }
     }
     public partial class StreamingJobFunctionInput
     {
@@ -1239,9 +1239,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public StreamingJobFunctionOutput() { }
         public string DataType { get { throw null; } set { } }
     }
-    public partial class StreamingJobFunctionProperties
+    public abstract partial class StreamingJobFunctionProperties
     {
-        public StreamingJobFunctionProperties() { }
+        protected StreamingJobFunctionProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionBinding Binding { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionInput> Inputs { get { throw null; } }
@@ -1282,9 +1282,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUpdateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StreamingJobInputProperties
+    public abstract partial class StreamingJobInputProperties
     {
-        public StreamingJobInputProperties() { }
+        protected StreamingJobInputProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingCompressionType? CompressionType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.StreamingJobDiagnosticCondition> DiagnosticsConditions { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -1310,9 +1310,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StreamingJobOutputDataSource
+    public abstract partial class StreamingJobOutputDataSource
     {
-        public StreamingJobOutputDataSource() { }
+        protected StreamingJobOutputDataSource() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamingJobOutputErrorPolicy : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputErrorPolicy>
@@ -1433,9 +1433,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType left, Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StreamInputDataSource
+    public abstract partial class StreamInputDataSource
     {
-        public StreamInputDataSource() { }
+        protected StreamInputDataSource() { }
     }
     public partial class StreamInputProperties : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputProperties
     {

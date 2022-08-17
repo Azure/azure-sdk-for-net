@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="OverlayBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AudioOverlay"/> and <see cref="VideoOverlay"/>.
     /// </summary>
-    public partial class OverlayBasicProperties
+    public abstract partial class OverlayBasicProperties
     {
         /// <summary> Initializes a new instance of OverlayBasicProperties. </summary>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputLabel"/> is null. </exception>
-        public OverlayBasicProperties(string inputLabel)
+        protected OverlayBasicProperties(string inputLabel)
         {
             if (inputLabel == null)
             {

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new CertificateProperties(type, thumbprint.Value, issuer.Value, issuedDate.Value, expirationDate.Value, activateDate.Value, subjectName.Value, Optional.ToList(dnsNames));
+            return new UnknownCertificateProperties(type, thumbprint.Value, issuer.Value, issuedDate.Value, expirationDate.Value, activateDate.Value, subjectName.Value, Optional.ToList(dnsNames));
         }
     }
 }

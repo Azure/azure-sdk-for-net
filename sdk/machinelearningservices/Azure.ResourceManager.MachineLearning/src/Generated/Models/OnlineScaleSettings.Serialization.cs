@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new OnlineScaleSettings(scaleType);
+            return new UnknownOnlineScaleSettings(scaleType);
         }
     }
 }

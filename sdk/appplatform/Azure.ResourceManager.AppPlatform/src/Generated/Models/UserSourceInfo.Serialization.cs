@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new UserSourceInfo(type, version.Value);
+            return new UnknownUserSourceInfo(type, version.Value);
         }
     }
 }

@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public AddActionGroups(System.Collections.Generic.IEnumerable<string> actionGroupIds) { }
         public System.Collections.Generic.IList<string> ActionGroupIds { get { throw null; } }
     }
-    public partial class AlertProcessingRuleAction
+    public abstract partial class AlertProcessingRuleAction
     {
-        public AlertProcessingRuleAction() { }
+        protected AlertProcessingRuleAction() { }
     }
     public partial class AlertProcessingRuleCondition
     {
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class AlertProcessingRuleRecurrence
+    public abstract partial class AlertProcessingRuleRecurrence
     {
-        public AlertProcessingRuleRecurrence() { }
+        protected AlertProcessingRuleRecurrence() { }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
@@ -507,9 +507,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         internal ServiceAlertsMetaData() { }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertsMetaDataProperties Properties { get { throw null; } }
     }
-    public partial class ServiceAlertsMetaDataProperties
+    public abstract partial class ServiceAlertsMetaDataProperties
     {
-        internal ServiceAlertsMetaDataProperties() { }
+        protected ServiceAlertsMetaDataProperties() { }
     }
     public partial class ServiceAlertsSummary : Azure.ResourceManager.Models.ResourceData
     {
