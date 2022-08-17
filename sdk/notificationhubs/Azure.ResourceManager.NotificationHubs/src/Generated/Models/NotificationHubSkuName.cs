@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Name of the notification hub sku
-    /// Serialized Name: SkuName
-    /// </summary>
+    /// <summary> Name of the notification hub sku. </summary>
     public readonly partial struct NotificationHubSkuName : IEquatable<NotificationHubSkuName>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
 
-        /// <summary>
-        /// Free
-        /// Serialized Name: SkuName.Free
-        /// </summary>
+        /// <summary> Free. </summary>
         public static NotificationHubSkuName Free { get; } = new NotificationHubSkuName(FreeValue);
-        /// <summary>
-        /// Basic
-        /// Serialized Name: SkuName.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static NotificationHubSkuName Basic { get; } = new NotificationHubSkuName(BasicValue);
-        /// <summary>
-        /// Standard
-        /// Serialized Name: SkuName.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static NotificationHubSkuName Standard { get; } = new NotificationHubSkuName(StandardValue);
         /// <summary> Determines if two <see cref="NotificationHubSkuName"/> values are the same. </summary>
         public static bool operator ==(NotificationHubSkuName left, NotificationHubSkuName right) => left.Equals(right);

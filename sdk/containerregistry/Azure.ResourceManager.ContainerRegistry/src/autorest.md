@@ -23,6 +23,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   '*ResourceId': 'arm-id'
   'PrincipalId': 'uuid'
+  'taskId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -121,6 +122,7 @@ prepend-rp-prefix:
   - BaseImageDependencyType
   - BaseImageTrigger
   - BaseImageTriggerType
+  - Credentials
 
 rename-mapping:
   OS: ContainerRegistryOS
@@ -143,7 +145,7 @@ rename-mapping:
   TaskRunRequest: ContainerRegistryTaskRunContent
   RunRequest: ContainerRegistryRunContent
   DockerBuildRequest: ContainerRegistryDockerBuildContent
-  EncodedTaskRunRequest: ContainerRegistryEncodedTaskRunRequest
+  EncodedTaskRunRequest: ContainerRegistryEncodedTaskRunContent
   FileTaskRunRequest: ContainerRegistryFileTaskRunContent
   TriggerUpdateParameters: ContainerRegistryTriggerUpdateContent
   TimerTriggerUpdateParameters: ContainerRegistryTimerTriggerUpdateContent
@@ -167,9 +169,8 @@ rename-mapping:
   EventResponseMessage: ContainerRegistryWebhookEventResponseMessage
   Target: ContainerRegistryWebhookEventTarget
   Source: ContainerRegistryWebhookEventSource
-  Request: ContainerRegistryWebhookEventRequest
+  Request: ContainerRegistryWebhookEventRequestContent
   ConnectionStatus: ContainerRegistryPrivateLinkServiceConnectionStatus
-  Credentials: ContainerRegistryRunCredentials
   DefaultAction: ContainerRegistryNetworkRuleDefaultAction
   EncodedTaskRunRequest.timeout: TimeoutInSeconds
   FileTaskRunRequest.timeout: TimeoutInSeconds
@@ -188,13 +189,17 @@ rename-mapping:
   Status: ContainerRegistryResourceStatus
   Variant: ContainerRegistryCpuVariant
   Actor: ContainerRegistryWebhookEventActor
-  IdentityProperties: ContainerRegistryManagedIdentity
-  ResourceIdentityType: ContainerRegistryManagedIdentityType
   NetworkRuleBypassOptions: ContainerRegistryNetworkRuleBypassOption
   PlatformUpdateParameters: ContainerRegistryPlatformUpdateContent
   RegistryListResult: ContainerRegistryListResult
   RegistryUsageListResult: ContainerRegistryUsageListResult
   StepType: ContainerRegistryTaskStepType
+  ImageUpdateTrigger.id: -|uuid
+  SourceTriggerDescriptor.id: -|uuid
+  EventContent.id: -|uuid
+  Event.id: -|uuid
+  EventInfo.id: -|uuid
+  Request.id: -|uuid
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -208,5 +213,11 @@ directive:
   - rename-operation:
       from: Registries_ScheduleRun
       to: Schedules_ScheduleRun
-
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.IdentityProperties.properties.principalId.readOnly = true;
+      $.IdentityProperties.properties.tenantId.readOnly = true;
+      $.UserIdentityProperties.properties.principalId.readOnly = true;
+      $.UserIdentityProperties.properties.clientId.readOnly = true;
 ```

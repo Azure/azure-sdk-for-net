@@ -436,5 +436,38 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         #endregion Healthcare
+
+        #region Recognize Custom Entities
+
+        [Test]
+        public void CancelRecognizeCustomEntitiesOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartRecognizeCustomEntitiesAsync(new[] { "100mg ibuprofen" }, "project", "deployment", "en"));
+        }
+
+        #endregion
+
+        #region Single Label Classify
+
+        [Test]
+        public void CancelSingleLabelClassifyDocumentOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartSingleLabelClassifyAsync(new[] { "It was the best of times, it was the worst of times." }, "project", "deployment", "en"));
+        }
+
+        #endregion
+
+        #region Multi Label Classify
+
+        [Test]
+        public void CancelMultiLabelClassifyDocumentOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartMultiLabelClassifyAsync(new[] { "It was the best of times, it was the worst of times." }, "project", "deployment", "en"));
+        }
+
+        #endregion
     }
 }

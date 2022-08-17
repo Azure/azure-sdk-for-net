@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="highAvailability"> High availability properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
         /// <param name="sourceServerResourceId"> The source server resource ID to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos;. </param>
-        /// <param name="pointInTimeUTC"> Restore point creation time (ISO8601 format), specifying the time to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos;. </param>
+        /// <param name="pointInTimeUtc"> Restore point creation time (ISO8601 format), specifying the time to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos;. </param>
         /// <param name="availabilityZone"> availability zone information of the server. </param>
         /// <param name="createMode"> The mode to create a new PostgreSQL server. </param>
-        internal PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUTC, string availabilityZone, PostgreSqlFlexibleServerCreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
+        internal PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerCreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AdministratorLogin = administratorLogin;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             HighAvailability = highAvailability;
             MaintenanceWindow = maintenanceWindow;
             SourceServerResourceId = sourceServerResourceId;
-            PointInTimeUTC = pointInTimeUTC;
+            PointInTimeUtc = pointInTimeUtc;
             AvailabilityZone = availabilityZone;
             CreateMode = createMode;
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> The source server resource ID to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos;. </summary>
         public ResourceIdentifier SourceServerResourceId { get; set; }
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos;. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
+        public DateTimeOffset? PointInTimeUtc { get; set; }
         /// <summary> availability zone information of the server. </summary>
         public string AvailabilityZone { get; set; }
         /// <summary> The mode to create a new PostgreSQL server. </summary>

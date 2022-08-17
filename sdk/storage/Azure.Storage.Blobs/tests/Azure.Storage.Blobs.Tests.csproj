@@ -19,7 +19,6 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Microsoft.Azure.Management.Storage\src\Microsoft.Azure.Management.Storage.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageSharedTestSources)..\Sas\*.cs" LinkBase="Shared\Sas" />
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

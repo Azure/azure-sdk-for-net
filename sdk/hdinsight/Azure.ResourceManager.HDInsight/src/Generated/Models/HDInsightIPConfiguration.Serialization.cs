@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress");
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<ResourceIdentifier> type = default;
             Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
             Optional<bool> primary = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             Optional<HDInsightPrivateIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<WritableSubResource> subnet = default;
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                         }
                         if (property0.NameEquals("privateIPAddress"))
                         {
-                            privateIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateIPAllocationMethod"))

@@ -34,13 +34,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
-                writer.WritePropertyName("vmssVMList");
-                writer.WriteStartArray();
-                foreach (var item in VmssVmList)
+                if (VmssVmList != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("vmssVMList");
+                    writer.WriteStartArray();
+                    foreach (var item in VmssVmList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vmssVMList");
+                }
             }
             writer.WriteEndObject();
         }
@@ -170,7 +177,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        vmssVmList = null;
                         continue;
                     }
                     List<VmssVmInfo> array = new List<VmssVmInfo>();

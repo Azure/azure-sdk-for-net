@@ -288,8 +288,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public partial class NotificationHubGcmCredential
     {
         public NotificationHubGcmCredential() { }
+        public string GcmApiKey { get { throw null; } set { } }
         public System.Uri GcmEndpoint { get { throw null; } set { } }
-        public string GoogleApiKey { get { throw null; } set { } }
     }
     public partial class NotificationHubMpnsCredential
     {
@@ -398,10 +398,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public partial class NotificationHubTestSendResult : Azure.ResourceManager.Models.TrackedResourceData
     {
         public NotificationHubTestSendResult(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public float? Failure { get { throw null; } set { } }
+        public int? Failure { get { throw null; } set { } }
         public System.BinaryData Results { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
-        public float? Success { get { throw null; } set { } }
+        public int? Success { get { throw null; } set { } }
     }
     public partial class NotificationHubWnsCredential
     {

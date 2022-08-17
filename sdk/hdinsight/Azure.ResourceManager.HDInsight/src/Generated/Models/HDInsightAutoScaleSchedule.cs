@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
         public HDInsightAutoScaleSchedule()
         {
-            Days = new ChangeTrackingList<DaysOfWeek>();
+            Days = new ChangeTrackingList<HDInsightDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
         /// <param name="days"> Days of the week for a schedule-based autoscale rule. </param>
         /// <param name="timeAndCapacity"> Time and capacity for a schedule-based autoscale rule. </param>
-        internal HDInsightAutoScaleSchedule(IList<DaysOfWeek> days, HDInsightAutoScaleTimeAndCapacity timeAndCapacity)
+        internal HDInsightAutoScaleSchedule(IList<HDInsightDayOfWeek> days, HDInsightAutoScaleTimeAndCapacity timeAndCapacity)
         {
             Days = days;
             TimeAndCapacity = timeAndCapacity;
         }
 
         /// <summary> Days of the week for a schedule-based autoscale rule. </summary>
-        public IList<DaysOfWeek> Days { get; }
+        public IList<HDInsightDayOfWeek> Days { get; }
         /// <summary> Time and capacity for a schedule-based autoscale rule. </summary>
         public HDInsightAutoScaleTimeAndCapacity TimeAndCapacity { get; set; }
     }

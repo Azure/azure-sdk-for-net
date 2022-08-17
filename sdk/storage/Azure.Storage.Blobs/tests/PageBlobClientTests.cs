@@ -3115,6 +3115,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3155,6 +3156,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3190,6 +3192,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task SetTierAsync_AccessTier()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3207,6 +3210,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task SetTierAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();

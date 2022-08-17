@@ -22,6 +22,7 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Logs reflect intermittent HTTP 412 and HTTP 409 responses from storage](#logs-reflect-intermittent-http-412-and-http-409-responses-from-storage)
   - [Partitions close and initialize intermittently or during scaling](#partitions-close-and-initialize-intermittently-or-during-scaling)
   - [Partitions close and initialize frequently](#partitions-close-and-initialize-frequently)
+  - [Warnings being raised to the error handler that starts with "A load balancing cycle has taken too long to complete."](#warnings-being-raised-to-the-error-handler-that-starts-with--a-load-balancing-cycle-has-taken-too-long-to-complete-)
   - ["Frequent errors for "...current receiver '< RECEIVER_NAME >' with epoch '0' is getting disconnected""](#frequent-errors-for-current-receiver--receiver_name--with-epoch-0-is-getting-disconnected)
   - [High CPU usage](#high-cpu-usage)
   - [A partition is not being processed](#a-partition-is-not-being-processed)
