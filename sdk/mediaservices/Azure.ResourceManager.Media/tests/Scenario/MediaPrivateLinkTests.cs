@@ -9,14 +9,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Tests
 {
-    public class MediaPrivateEndpointConnectionTests : MediaManagementTestBase
+    public class MediaPrivateLinkTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
         private MediaServiceResource _mediaService;
 
-        private MediaPrivateEndpointConnectionCollection mediaPrivateEndpointConnectionCollection => _mediaService.GetMediaPrivateEndpointConnections();
+        private MediaPrivateLinkResourceCollection mediaPrivateLinkResourceCollection => _mediaService.GetMediaPrivateLinkResources();
 
-        public MediaPrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
+        public MediaPrivateLinkTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -38,10 +38,28 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        public async Task Exist()
+        {
+            bool flag = await mediaPrivateLinkResourceCollection.ExistsAsync("keydelivery");
+            Assert.IsTrue(flag);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Get()
+        {
+            var mediaPrivateLinkResource = await mediaPrivateLinkResourceCollection.GetAsync("keydelivery");
+            Assert.IsNotNull(mediaPrivateLinkResource);
+            Assert.AreEqual("keydelivery", mediaPrivateLinkResource.Value.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
-            var list = await mediaPrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            var list = await mediaPrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            Assert.AreEqual(3, list.Count);
         }
     }
 }
