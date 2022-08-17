@@ -14,15 +14,5 @@ namespace Azure.Maps.Geolocation.Models
         internal ErrorResponse()
         {
         }
-
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"> The error object. </param>
-        internal ErrorResponse(ErrorDetail error)
-        {
-            Error = error;
-        }
-
-        /// <summary> The error object. </summary>
-        public ErrorDetail Error { get; }
     }
 }

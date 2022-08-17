@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Geolocation.Models
 {
-    public partial class CountryRegion
+    internal partial class CountryRegion
     {
         internal static CountryRegion DeserializeCountryRegion(JsonElement element)
         {

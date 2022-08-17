@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Maps.Geolocation;
 
 namespace Azure.Maps.Geolocation
 {
@@ -20,7 +22,7 @@ namespace Azure.Maps.Geolocation
         private readonly HttpPipeline _pipeline;
 
         /// <summary> The restClient is used to access Geolocation REST client. </summary>
-        internal GeolocationRestClient restClient { get; }
+        internal GeolocationRestClient RestClient { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics _clientDiagnostics { get; }
@@ -30,7 +32,7 @@ namespace Azure.Maps.Geolocation
         {
             _clientDiagnostics = null;
             _pipeline = null;
-            restClient = null;
+            RestClient = null;
         }
 
         /// <summary> Initializes a new instance of MapsGeolocationClient. </summary>
@@ -97,14 +99,12 @@ namespace Azure.Maps.Geolocation
         /// <summary>
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. Allowed values: &quot;json&quot;. </param>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="ipAddress"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual async Task<Response> GetLocationAsync(string ipAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IpAddressToLocationResult>> GetLocationAsync(string ipAddress, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsGeolocationClient.GetLocation");
             scope.Start();
@@ -127,17 +127,17 @@ namespace Azure.Maps.Geolocation
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="ipAddress"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual Response GetLocation(string ipAddress, CancellationToken cancellationToken = default)
+        public virtual Response<IpAddressToLocationResult> GetLocation(string ipAddress, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsGeolocationClient.GetLocation");
             scope.Start();
             try
             {
-                return RestClient.Geolocation(
+                return RestClient.GetLocation(
                     ipAddress,
                     JsonFormat.Json,
                     cancellationToken

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Maps.Geolocation.Models;
 
 namespace Azure.Maps.Geolocation
 {
@@ -64,8 +63,8 @@ namespace Azure.Maps.Geolocation
 
         /// <summary>
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
+        /// 
+        /// 
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
@@ -98,8 +97,8 @@ namespace Azure.Maps.Geolocation
 
         /// <summary>
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
+        /// 
+        /// 
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
