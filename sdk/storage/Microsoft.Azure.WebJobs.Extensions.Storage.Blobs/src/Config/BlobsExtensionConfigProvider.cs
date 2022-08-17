@@ -111,6 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             rule.BindToInput<AppendBlobClient>((attr, cts) => CreateBlobReference<AppendBlobClient>(attr, cts));
             rule.BindToInput<BlobClient>((attr, cts) => CreateBlobReference<BlobClient>(attr, cts));
             rule.BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
+            rule.BindToInput<RichBindingReferenceType>((attr, cts) => CreateBlobReference<RichBindingReferenceType>(attr, cts));
 
             // If caching is enabled, create a binding for that
             if (_functionDataCache != null && _functionDataCache.IsEnabled)
@@ -152,6 +153,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             rule.AddConverter(new StorageBlobConverter<AppendBlobClient>());
             rule.AddConverter(new StorageBlobConverter<BlockBlobClient>());
             rule.AddConverter(new StorageBlobConverter<PageBlobClient>());
+            rule.AddConverter(new StorageBlobConverter<RichBindingReferenceType>());
         }
 
         #region Container rules
