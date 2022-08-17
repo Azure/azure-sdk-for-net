@@ -51,7 +51,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<RecordingStatusResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecordingStateResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
@@ -93,7 +93,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<RecordingStatusResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordingStateResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
@@ -135,7 +135,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<RecordingStatusResult> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response<RecordingStateResult> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecordingState)}");
             scope.Start();
@@ -158,7 +158,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<RecordingStatusResult>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordingStateResult>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecordingState)}");
             scope.Start();

@@ -1,4 +1,4 @@
-# Advanced Configuration
+# Advanced configuration
 
 This sample demonstrates how to use some of the advanced configuration options available in the Service Bus client library.
 

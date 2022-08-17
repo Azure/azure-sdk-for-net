@@ -30,7 +30,9 @@ namespace Azure.Communication.CallingServer
         private const string AddParticipantsSucceededValue = "addParticipantsSucceeded";
         private const string AddParticipantsFailedValue = "addParticipantsFailed";
         private const string ParticipantsUpdatedValue = "participantsUpdated";
-        private const string PlayResultValue = "playResult";
+        private const string RecordingStateChangedValue = "recordingStateChanged";
+        private const string PlayCompletedValue = "playCompleted";
+        private const string PlayFailedValue = "playFailed";
 
         /// <summary> unknown. </summary>
         public static AcsEventType Unknown { get; } = new AcsEventType(UnknownValue);
@@ -48,8 +50,12 @@ namespace Azure.Communication.CallingServer
         public static AcsEventType AddParticipantsFailed { get; } = new AcsEventType(AddParticipantsFailedValue);
         /// <summary> participantsUpdated. </summary>
         public static AcsEventType ParticipantsUpdated { get; } = new AcsEventType(ParticipantsUpdatedValue);
-        /// <summary> playResult. </summary>
-        public static AcsEventType PlayResult { get; } = new AcsEventType(PlayResultValue);
+        /// <summary> recordingStateChanged. </summary>
+        public static AcsEventType RecordingStateChanged { get; } = new AcsEventType(RecordingStateChangedValue);
+        /// <summary> playCompleted. </summary>
+        public static AcsEventType PlayCompleted { get; } = new AcsEventType(PlayCompletedValue);
+        /// <summary> playFailed. </summary>
+        public static AcsEventType PlayFailed { get; } = new AcsEventType(PlayFailedValue);
         /// <summary> Determines if two <see cref="AcsEventType"/> values are the same. </summary>
         public static bool operator ==(AcsEventType left, AcsEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsEventType"/> values are not the same. </summary>

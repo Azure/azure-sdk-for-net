@@ -43,9 +43,9 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Get various properties of the call. <see cref="CallConnectionProperties"/>.</summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual async Task<Response<CallConnectionProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallConnectionProperties>> GetCallConnectionPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnectionProperties)}");
             scope.Start();
             try
             {
@@ -64,9 +64,9 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Get various properties of a ongoing call. <see cref="CallConnectionProperties"/>.</summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual Response<CallConnectionProperties> GetProperties(CancellationToken cancellationToken = default)
+        public virtual Response<CallConnectionProperties> GetCallConnectionProperties(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnectionProperties)}");
             scope.Start();
             try
             {
