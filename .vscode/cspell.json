@@ -334,6 +334,13 @@
       ]
     },
     {
+      "filename": "**/sdk/healthcareapis/**/*.cs",
+      "words": [
+        "dicom",
+        "fhir"
+      ]
+    },
+    {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
