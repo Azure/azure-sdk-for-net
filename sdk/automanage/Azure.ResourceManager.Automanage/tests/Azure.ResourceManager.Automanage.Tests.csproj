@@ -2,4 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Automanage.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\ConfigurationProfileTests\" />
+  </ItemGroup>
 </Project>
