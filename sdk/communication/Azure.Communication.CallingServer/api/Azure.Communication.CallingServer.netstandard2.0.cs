@@ -311,7 +311,7 @@ namespace Azure.Communication.CallingServer
     public partial class DtmfConfigurations
     {
         public DtmfConfigurations() { }
-        public System.TimeSpan InterToneTimeoutInSeconds { get { throw null; } set { } }
+        public System.TimeSpan? InterToneTimeoutInSeconds { get { throw null; } set { } }
         public int? MaxTonesToCollect { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CallingServer.StopTones> StopTones { get { throw null; } set { } }
     }
@@ -422,7 +422,7 @@ namespace Azure.Communication.CallingServer
     {
         public RecognizeConfigurations() { }
         public Azure.Communication.CallingServer.DtmfConfigurations DtmfConfigurations { get { throw null; } set { } }
-        public System.TimeSpan InitialSilenceTimeoutInSeconds { get { throw null; } set { } }
+        public System.TimeSpan? InitialSilenceTimeoutInSeconds { get { throw null; } set { } }
         public bool? InterruptPromptAndStartRecognition { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } set { } }
     }

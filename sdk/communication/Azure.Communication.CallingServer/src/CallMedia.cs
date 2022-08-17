@@ -254,7 +254,7 @@ namespace Azure.Communication.CallingServer
             {
                 dtmfConfigurations = new DtmfConfigurationsInternal()
                 {
-                    InterToneTimeoutInSeconds = (int)recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds.TotalSeconds,
+                    InterToneTimeoutInSeconds = (int)recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds?.TotalSeconds,
                     MaxTonesToCollect = recognizeConfigurations.DtmfConfigurations.MaxTonesToCollect,
                     StopTones = (IList<StopTones>)recognizeConfigurations.DtmfConfigurations.StopTones
                 };
@@ -264,7 +264,7 @@ namespace Azure.Communication.CallingServer
             {
                 DtmfConfigurations = dtmfConfigurations,
                 InterruptPromptAndStartRecognition = recognizeConfigurations.InterruptPromptAndStartRecognition,
-                InitialSilenceTimeoutInSeconds = (int)recognizeConfigurations.InitialSilenceTimeoutInSeconds.TotalSeconds,
+                InitialSilenceTimeoutInSeconds = (int)recognizeConfigurations.InitialSilenceTimeoutInSeconds?.TotalSeconds,
                 TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeConfigurations.TargetParticipant)
             };
 
