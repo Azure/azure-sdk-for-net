@@ -192,7 +192,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             options.MaxSizeInBytes ??= MaxMessageSize;
 
             Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaxMessageSize.Value, nameof(options.MaxSizeInBytes));
-            return new AmqpMessageBatch(new AmqpMessageConverter(), options);
+            return new AmqpMessageBatch(_messageConverter, options);
         }
 
         /// <summary>

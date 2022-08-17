@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _messageConverter = new AmqpMessageConverter();
+            _messageConverter = AmqpMessageConverter.AmqpMessageConverterInstance;
 
             ServiceEndpoint = new UriBuilder
             {
