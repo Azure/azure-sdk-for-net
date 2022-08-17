@@ -436,7 +436,7 @@ namespace Azure.Communication.CallingServer
                     AudioChannelType = configuration.AudioChannelType,
                     ContentType = configuration.ContentType,
                     TransportType = configuration.TransportType,
-                    TransportUrl = configuration.TransportUrl
+                    TransportUrl = configuration.TransportUrl.AbsoluteUri
                 };
         }
 

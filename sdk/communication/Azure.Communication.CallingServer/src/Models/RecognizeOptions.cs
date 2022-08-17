@@ -41,6 +41,6 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// PlaySource information.
         /// </summary>
-        public PlaySource PlaySourceInfo { get; set; }
+        public PlaySource Prompt { get; set; }
     }
 }

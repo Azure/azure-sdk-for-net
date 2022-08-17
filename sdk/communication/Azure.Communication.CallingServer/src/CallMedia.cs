@@ -254,9 +254,9 @@ namespace Azure.Communication.CallingServer
             {
                 dtmfConfigurations = new DtmfConfigurationsInternal()
                 {
-                    InterToneTimeoutInSeconds = recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds,
+                    InterToneTimeoutInSeconds = (int)recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds.TotalSeconds,
                     MaxTonesToCollect = recognizeConfigurations.DtmfConfigurations.MaxTonesToCollect,
-                    StopTones = recognizeConfigurations.DtmfConfigurations.StopTones
+                    StopTones = (IList<StopTones>)recognizeConfigurations.DtmfConfigurations.StopTones
                 };
             }
 
@@ -264,24 +264,24 @@ namespace Azure.Communication.CallingServer
             {
                 DtmfConfigurations = dtmfConfigurations,
                 InterruptPromptAndStartRecognition = recognizeConfigurations.InterruptPromptAndStartRecognition,
-                InitialSilenceTimeoutInSeconds = recognizeConfigurations.InitialSilenceTimeoutInSeconds,
+                InitialSilenceTimeoutInSeconds = (int)recognizeConfigurations.InitialSilenceTimeoutInSeconds.TotalSeconds,
                 TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeConfigurations.TargetParticipant)
             };
 
             RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeOptions.RecognizeInputType, recognizeConfigurationsInternal);
 
-            if (recognizeOptions.PlaySourceInfo != null && recognizeOptions.PlaySourceInfo is FileSource fileSource)
+            if (recognizeOptions.Prompt != null && recognizeOptions.Prompt is FileSource fileSource)
             {
                 PlaySourceInternal sourceInternal;
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
                 sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = recognizeOptions.PlaySourceInfo.PlaySourceId;
+                sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
 
                 request.PlayPrompt = sourceInternal;
             }
-            else if (recognizeOptions.PlaySourceInfo != null)
+            else if (recognizeOptions.Prompt != null)
             {
-                throw new NotSupportedException(recognizeOptions.PlaySourceInfo.GetType().Name);
+                throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
             }
 
             request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;

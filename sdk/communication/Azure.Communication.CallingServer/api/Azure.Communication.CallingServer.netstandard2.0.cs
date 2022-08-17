@@ -311,9 +311,9 @@ namespace Azure.Communication.CallingServer
     public partial class DtmfConfigurations
     {
         public DtmfConfigurations() { }
-        public int? InterToneTimeoutInSeconds { get { throw null; } set { } }
+        public System.TimeSpan InterToneTimeoutInSeconds { get { throw null; } set { } }
         public int? MaxTonesToCollect { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Communication.CallingServer.StopTones> StopTones { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Communication.CallingServer.StopTones> StopTones { get { throw null; } set { } }
     }
     public partial class FileSource : Azure.Communication.CallingServer.PlaySource
     {
@@ -351,7 +351,7 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.MediaStreamingAudioChannelType? AudioChannelType { get { throw null; } set { } }
         public Azure.Communication.CallingServer.MediaStreamingContentType? ContentType { get { throw null; } set { } }
         public Azure.Communication.CallingServer.MediaStreamingTransportType? TransportType { get { throw null; } set { } }
-        public string TransportUrl { get { throw null; } set { } }
+        public System.Uri TransportUrl { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingContentType : System.IEquatable<Azure.Communication.CallingServer.MediaStreamingContentType>
@@ -422,7 +422,7 @@ namespace Azure.Communication.CallingServer
     {
         public RecognizeConfigurations() { }
         public Azure.Communication.CallingServer.DtmfConfigurations DtmfConfigurations { get { throw null; } set { } }
-        public int? InitialSilenceTimeoutInSeconds { get { throw null; } set { } }
+        public System.TimeSpan InitialSilenceTimeoutInSeconds { get { throw null; } set { } }
         public bool? InterruptPromptAndStartRecognition { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } set { } }
     }
@@ -447,7 +447,7 @@ namespace Azure.Communication.CallingServer
     {
         public RecognizeOptions(Azure.Communication.CallingServer.RecognizeInputType recognizeInputType, Azure.Communication.CallingServer.RecognizeConfigurations recognizeConfigurations) { }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallingServer.PlaySource PlaySourceInfo { get { throw null; } set { } }
+        public Azure.Communication.CallingServer.PlaySource Prompt { get { throw null; } set { } }
         public Azure.Communication.CallingServer.RecognizeConfigurations RecognizeConfigurations { get { throw null; } }
         public Azure.Communication.CallingServer.RecognizeInputType RecognizeInputType { get { throw null; } }
         public bool? StopCurrentOperations { get { throw null; } set { } }
