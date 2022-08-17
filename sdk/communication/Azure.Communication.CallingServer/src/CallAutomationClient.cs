@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
-using System.Xml.Linq;
 
 namespace Azure.Communication.CallingServer
 {
