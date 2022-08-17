@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class DelegationSettingTests : ApiManagementManagementTestBase
     {
         public DelegationSettingTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [PlaybackOnly("ValidationKey Sanitized")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Subscriptions = new SubscriptionsDelegationSettingsProperties(true),
                 UserRegistration = new RegistrationDelegationSettingsProperties(true),
                 Uri = new Uri(urlParameter),
-                ValidationKey = GenerateValidationKey()
+                ValidationKey = "Sanitized"
             };
             var portalDelegationSettings = (await delegationCollection.CreateOrUpdateAsync(WaitUntil.Completed, portalDelegationSettingsParams)).Value;
             //Assert.NotNull(portalDelegationSettings);

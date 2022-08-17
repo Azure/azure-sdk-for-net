@@ -2958,7 +2958,7 @@
       "RequestBody": {
         "properties": {
           "url": "https://delegationserver1207/",
-          "validationKey": "jdNVpkHtMNtdWRkBbBSP2GdMlGcD98f/2uXGQdX9g\u002BrEy6XVfmueQi7/pOf8nt2EvUIQak/TUZULVcxbJu8GXw==",
+          "validationKey": "Sanitized",
           "subscriptions": {
             "enabled": true
           },
