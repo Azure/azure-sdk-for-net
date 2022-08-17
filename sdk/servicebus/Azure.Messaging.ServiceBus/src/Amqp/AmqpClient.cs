@@ -223,8 +223,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 subscriptionPath,
                 ConnectionScope,
                 retryPolicy,
-                identifier,
-                _messageConverter
+                identifier
             );
         }
 

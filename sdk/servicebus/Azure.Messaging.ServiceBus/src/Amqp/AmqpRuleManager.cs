@@ -11,6 +11,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -28,11 +29,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private readonly AmqpConnectionScope _connectionScope;
-
-        /// <summary>
-        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
-        /// </summary>
-        private readonly AmqpMessageConverter _messageConverter;
 
         /// <summary>
         /// Indicates whether or not this instance has been closed.
@@ -69,7 +65,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the rule manager.</param>
-        /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -83,17 +78,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string subscriptionPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
-            string identifier,
-            AmqpMessageConverter messageConverter)
+            string identifier)
         {
             Argument.AssertNotNullOrEmpty(subscriptionPath, nameof(subscriptionPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            Argument.AssertNotNull(messageConverter, nameof(messageConverter));
 
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
-            _messageConverter = messageConverter;
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
                     subscriptionPath,
@@ -151,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                      timeout,
                      null);
             amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = description.Name;
-            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = AmqpMessageConverter.GetRuleDescriptionMap(description);
+            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = GetRuleDescriptionMap(description);
 
             AmqpResponseMessage response = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _connectionScope,
@@ -233,6 +225,164 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
+        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
+        {
+            var ruleDescriptionMap = new AmqpMap();
+
+            switch (description.Filter)
+            {
+                case SqlRuleFilter sqlRuleFilter:
+                    var filterMap = GetSqlRuleFilterMap(sqlRuleFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.SqlRuleFilter] = filterMap;
+                    break;
+                case CorrelationRuleFilter correlationFilter:
+                    var correlationFilterMap = GetCorrelationRuleFilterMap(correlationFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationRuleFilter] = correlationFilterMap;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Resources.RuleFilterNotSupported.FormatForUser(
+                            description.Filter.GetType(),
+                            nameof(SqlRuleFilter),
+                            nameof(CorrelationRuleFilter)));
+            }
+
+            var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
+            ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
+            ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
+
+            return ruleDescriptionMap;
+        }
+
+        public virtual RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        {
+            var filter = GetFilter(amqpDescription.Filter);
+            var ruleAction = GetRuleAction(amqpDescription.Action);
+
+            var ruleDescription = new RuleProperties(amqpDescription.RuleName, filter)
+            {
+                Action = ruleAction
+            };
+
+            return ruleDescription;
+        }
+
+        internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
+        {
+            var amqpFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.Expression] = sqlRuleFilter.SqlExpression
+            };
+            return amqpFilterMap;
+        }
+
+        internal static AmqpMap GetCorrelationRuleFilterMap(CorrelationRuleFilter correlationRuleFilter)
+        {
+            var correlationRuleFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.CorrelationId] = correlationRuleFilter.CorrelationId,
+                [ManagementConstants.Properties.MessageId] = correlationRuleFilter.MessageId,
+                [ManagementConstants.Properties.To] = correlationRuleFilter.To,
+                [ManagementConstants.Properties.ReplyTo] = correlationRuleFilter.ReplyTo,
+                [ManagementConstants.Properties.Label] = correlationRuleFilter.Subject,
+                [ManagementConstants.Properties.SessionId] = correlationRuleFilter.SessionId,
+                [ManagementConstants.Properties.ReplyToSessionId] = correlationRuleFilter.ReplyToSessionId,
+                [ManagementConstants.Properties.ContentType] = correlationRuleFilter.ContentType
+            };
+
+            var propertiesMap = new AmqpMap();
+            foreach (var property in correlationRuleFilter.ApplicationProperties)
+            {
+                propertiesMap[new MapKey(property.Key)] = property.Value;
+            }
+
+            correlationRuleFilterMap[ManagementConstants.Properties.CorrelationRuleFilterProperties] = propertiesMap;
+
+            return correlationRuleFilterMap;
+        }
+
+        internal static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
+        {
+            AmqpMap ruleActionMap = null;
+            if (sqlRuleAction != null)
+            {
+                ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
+            }
+
+            return ruleActionMap;
+        }
+
+        private static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
+        {
+            RuleAction action;
+
+            if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
+            {
+                action = null;
+            }
+            else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
+            {
+                var amqpSqlRuleAction = (AmqpSqlRuleActionCodec)amqpAction;
+                var sqlRuleAction = new SqlRuleAction(amqpSqlRuleAction.SqlExpression);
+
+                action = sqlRuleAction;
+            }
+            else
+            {
+                throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
+            }
+
+            return action;
+        }
+
+        public virtual RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
+        {
+            RuleFilter filter;
+
+            switch (amqpFilter.DescriptorCode)
+            {
+                case AmqpSqlRuleFilterCodec.Code:
+                    var amqpSqlFilter = (AmqpSqlRuleFilterCodec)amqpFilter;
+                    filter = new SqlRuleFilter(amqpSqlFilter.Expression);
+                    break;
+
+                case AmqpTrueRuleFilterCodec.Code:
+                    filter = new TrueRuleFilter();
+                    break;
+
+                case AmqpFalseRuleFilterCodec.Code:
+                    filter = new FalseRuleFilter();
+                    break;
+
+                case AmqpCorrelationRuleFilterCodec.Code:
+                    var amqpCorrelationFilter = (AmqpCorrelationRuleFilterCodec)amqpFilter;
+                    var correlationFilter = new CorrelationRuleFilter
+                    {
+                        CorrelationId = amqpCorrelationFilter.CorrelationId,
+                        MessageId = amqpCorrelationFilter.MessageId,
+                        To = amqpCorrelationFilter.To,
+                        ReplyTo = amqpCorrelationFilter.ReplyTo,
+                        Subject = amqpCorrelationFilter.Subject,
+                        SessionId = amqpCorrelationFilter.SessionId,
+                        ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
+                        ContentType = amqpCorrelationFilter.ContentType
+                    };
+
+                    foreach (var property in amqpCorrelationFilter.Properties)
+                    {
+                        correlationFilter.ApplicationProperties.Add(property.Key.Key.ToString(), property.Value);
+                    }
+
+                    filter = correlationFilter;
+                    break;
+
+                default:
+                    throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
+            }
+
+            return filter;
+        }
+
         /// <summary>
         /// Get rules associated with the subscription.
         /// </summary>
@@ -262,7 +412,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 foreach (var entry in ruleList)
                 {
                     var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
-                    var ruleDescription = _messageConverter.GetRuleDescription(amqpRule);
+                    var ruleDescription = GetRuleDescription(amqpRule);
                     ruleDescriptions.Add(ruleDescription);
                 }
             }
