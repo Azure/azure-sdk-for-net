@@ -12,7 +12,7 @@ model-namespace: false
 generation1-convenience-client: true
 payload-flattening-threshold: 10
 require:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d0065fc88b192e819305eacac33e151f055e097e/specification/communication/data-plane/MediaComposition/readme.md
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/140b5b64350c17e0900034d66cee2d6623af3ea8/specification/communication/data-plane/MediaComposition/readme.md
 ```
 
 ``` yaml

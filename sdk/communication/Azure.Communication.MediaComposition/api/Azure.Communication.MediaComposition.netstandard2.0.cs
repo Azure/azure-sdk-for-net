@@ -25,53 +25,16 @@ namespace Azure.Communication.MediaComposition
         public static bool operator !=(Azure.Communication.MediaComposition.AudiencePosition left, Azure.Communication.MediaComposition.AudiencePosition right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AutoGridInputGroup : Azure.Communication.MediaComposition.InputGroup
+    {
+        public AutoGridInputGroup(System.Collections.Generic.IEnumerable<string> inputIds) { }
+        public System.Collections.Generic.IList<string> InputIds { get { throw null; } }
+    }
     public partial class AutoGridLayout : Azure.Communication.MediaComposition.Models.MediaCompositionLayout
     {
         public AutoGridLayout(System.Collections.Generic.IEnumerable<string> inputIds) { }
         public bool? HighlightDominantSpeaker { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> InputIds { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommunicationCloudEnvironmentModel : System.IEquatable<Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommunicationCloudEnvironmentModel(string value) { throw null; }
-        public static Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel Dod { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel Gcch { get { throw null; } }
-        public static Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel Public { get { throw null; } }
-        public bool Equals(Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel left, Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel right) { throw null; }
-        public static implicit operator Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel left, Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CommunicationError
-    {
-        public CommunicationError(string code, string message) { }
-        public string Code { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.MediaComposition.CommunicationError> Details { get { throw null; } }
-        public Azure.Communication.MediaComposition.CommunicationError InnerError { get { throw null; } }
-        public string Message { get { throw null; } set { } }
-        public string Target { get { throw null; } }
-    }
-    public partial class CommunicationErrorResponse
-    {
-        public CommunicationErrorResponse(Azure.Communication.MediaComposition.CommunicationError error) { }
-        public Azure.Communication.MediaComposition.CommunicationError Error { get { throw null; } set { } }
-    }
-    public partial class CommunicationIdentifierModel
-    {
-        public CommunicationIdentifierModel() { }
-        public Azure.Communication.MediaComposition.CommunicationUserIdentifierModel CommunicationUser { get { throw null; } set { } }
-        public Azure.Communication.MediaComposition.CommunicationIdentifierModelKind? Kind { get { throw null; } set { } }
-        public Azure.Communication.MediaComposition.MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get { throw null; } set { } }
-        public Azure.Communication.MediaComposition.PhoneNumberIdentifierModel PhoneNumber { get { throw null; } set { } }
-        public string RawId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.MediaComposition.CommunicationIdentifierModelKind>
@@ -93,11 +56,6 @@ namespace Azure.Communication.MediaComposition
         public static bool operator !=(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CommunicationUserIdentifierModel
-    {
-        public CommunicationUserIdentifierModel(string id) { }
-        public string Id { get { throw null; } set { } }
-    }
     public partial class CompositionStreamState
     {
         public CompositionStreamState() { }
@@ -113,6 +71,13 @@ namespace Azure.Communication.MediaComposition
     {
         public DominantSpeaker(string call) { }
         public string Call { get { throw null; } set { } }
+    }
+    public partial class GridInputGroup : Azure.Communication.MediaComposition.InputGroup
+    {
+        public GridInputGroup(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> inputIds, int rows, int columns) { }
+        public int Columns { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
+        public int Rows { get { throw null; } set { } }
     }
     public partial class GridLayout : Azure.Communication.MediaComposition.Models.MediaCompositionLayout
     {
@@ -134,13 +99,28 @@ namespace Azure.Communication.MediaComposition
     public partial class InputGroup
     {
         public InputGroup() { }
-        public int? Columns { get { throw null; } set { } }
         public string Height { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
         public string Layer { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.InputPosition Position { get { throw null; } set { } }
-        public int? Rows { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InputGroupType : System.IEquatable<Azure.Communication.MediaComposition.InputGroupType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InputGroupType(string value) { throw null; }
+        public static Azure.Communication.MediaComposition.InputGroupType AutoGridBased { get { throw null; } }
+        public static Azure.Communication.MediaComposition.InputGroupType GridBased { get { throw null; } }
+        public bool Equals(Azure.Communication.MediaComposition.InputGroupType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.MediaComposition.InputGroupType left, Azure.Communication.MediaComposition.InputGroupType right) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.InputGroupType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.MediaComposition.InputGroupType left, Azure.Communication.MediaComposition.InputGroupType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LayerVisibility : System.IEquatable<Azure.Communication.MediaComposition.LayerVisibility>
@@ -226,10 +206,6 @@ namespace Azure.Communication.MediaComposition
             V2022_07_16_Preview1 = 1,
         }
     }
-    public static partial class MediaCompositionModelFactory
-    {
-        public static Azure.Communication.MediaComposition.CommunicationError CommunicationError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.MediaComposition.CommunicationError> details = null, Azure.Communication.MediaComposition.CommunicationError innerError = null) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaInputType : System.IEquatable<Azure.Communication.MediaComposition.MediaInputType>
     {
@@ -276,18 +252,6 @@ namespace Azure.Communication.MediaComposition
         public static implicit operator Azure.Communication.MediaComposition.MediaOutputType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.MediaComposition.MediaOutputType left, Azure.Communication.MediaComposition.MediaOutputType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class MicrosoftTeamsUserIdentifierModel
-    {
-        public MicrosoftTeamsUserIdentifierModel(string userId) { }
-        public Azure.Communication.MediaComposition.CommunicationCloudEnvironmentModel? Cloud { get { throw null; } set { } }
-        public bool? IsAnonymous { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
-    }
-    public partial class PhoneNumberIdentifierModel
-    {
-        public PhoneNumberIdentifierModel(string value) { }
-        public string Value { get { throw null; } set { } }
     }
     public partial class PresentationLayout : Azure.Communication.MediaComposition.Models.MediaCompositionLayout
     {
@@ -457,8 +421,8 @@ namespace Azure.Communication.MediaComposition.Models
     }
     public partial class ParticipantInput : Azure.Communication.MediaComposition.Models.MediaInput
     {
-        public ParticipantInput(Azure.Communication.MediaComposition.CommunicationIdentifierModel id, string call) { }
+        public ParticipantInput(Azure.Communication.CommunicationIdentifier id, string call) { }
         public string Call { get { throw null; } set { } }
-        public Azure.Communication.MediaComposition.CommunicationIdentifierModel Id { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Id { get { throw null; } }
     }
 }

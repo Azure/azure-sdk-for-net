@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.MediaComposition;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication
 {
-    public partial class CommunicationIdentifierModel : IUtf8JsonSerializable
+    internal partial class CommunicationIdentifierModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
