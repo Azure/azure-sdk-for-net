@@ -31,3 +31,4 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager
       safeName: AzureResourceManager
+    TestDependsOnDependency: Azure.Core
