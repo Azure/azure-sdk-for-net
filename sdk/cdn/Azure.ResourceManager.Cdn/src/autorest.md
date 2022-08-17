@@ -90,7 +90,7 @@ rename-mapping:
   CacheLevel: CdnCacheLevel
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
- 
+  
 directive:
   - from: swagger-document
     where: $.definitions..parameters

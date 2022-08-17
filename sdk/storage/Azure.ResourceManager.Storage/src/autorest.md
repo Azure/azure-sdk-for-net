@@ -227,10 +227,6 @@ rename-mapping:
   StorageAccountInternetEndpoints.web: WebUri
   StorageAccountInternetEndpoints.dfs: DfsUri
 
-enable-lro-interim-status:
-- StorageAccounts_RestoreBlobRanges
-- StorageAccounts_Create
-
 directive:
   - from: swagger-document
     where: $.definitions.FileShareItems.properties.value.items["$ref"]
@@ -312,4 +308,7 @@ directive:
         "itemName": "keys",
         "nextLinkName": null
       };
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges"].post
+    transform: $["x-ms-long-running-operation-options"]["enable-interim-state"] = true
 ```
