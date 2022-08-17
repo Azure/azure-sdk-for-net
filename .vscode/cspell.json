@@ -377,7 +377,8 @@
         "mibps",
         "hana",
         "cifs",
-        "nfsv"
+        "nfsv",
+        "ntfs"
       ]
     },
     {
