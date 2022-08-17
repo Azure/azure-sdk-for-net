@@ -37,7 +37,7 @@ namespace Azure.Communication.CallingServer
             AudioChannelType = MediaStreamingAudioChannelType.Unmixed,
             ContentType = MediaStreamingContentType.Audio,
             TransportType = MediaStreamingTransportType.Websocket,
-            TransportUrl = "https://websocket"
+            TransportUrl = new Uri("https://websocket")
         };
 
         [Test]
