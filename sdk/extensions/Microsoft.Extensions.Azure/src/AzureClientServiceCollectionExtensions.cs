@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary>
         /// Adds the <see cref="IAzureClientFactory{TClient}"/> and related services to the <see cref="IServiceCollection"/>.
-        /// Azure SDK logging is enabled once the configured client is created.
+        /// Azure SDK log forwarding to <see cref="ILogger"/> is enabled once the configured client is created.
         /// </summary>
         /// <param name="collection">The <see cref="IServiceCollection"/>.</param>
         /// <param name="configureClients">An <see cref="AzureClientFactoryBuilder"/> that can be used to configure the client.</param>
@@ -29,7 +29,7 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary>
         /// Adds the minimum essential Azure SDK interop services like <see cref="AzureEventSourceLogForwarder"/> and <see cref="AzureComponentFactory"/> to the specified <see cref="IServiceCollection"/> without registering any client types.
-        /// Azure SDK log forwarding to to <see cref="ILogger"/> will not be enabled by default, but can be enabled by calling the <see cref="AzureEventSourceLogForwarder.Start"/> method.
+        /// Azure SDK log forwarding to <see cref="ILogger"/> is disabled by default. It can be enabled by calling the <see cref="AzureEventSourceLogForwarder.Start"/> method.
         /// Alternatively, you can use the <see cref="AddAzureClientsCore(Microsoft.Extensions.DependencyInjection.IServiceCollection, bool)"/> overload
         /// and pass <value>true</value> to enable log forwarding.
         /// </summary>
@@ -43,8 +43,8 @@ namespace Microsoft.Extensions.Azure
         /// Adds the minimum essential Azure SDK interop services like <see cref="AzureEventSourceLogForwarder"/> and <see cref="AzureComponentFactory"/> to the specified <see cref="IServiceCollection"/> without registering any client types.
         /// </summary>
         /// <param name="collection">The <see cref="IServiceCollection"/>.</param>
-        /// <param name="enableLogForwarding">Whether or not to enable Azure SDK log forwarding to <see cref="ILogger"/>. Even if this is set to <value>false</value>,
-        /// log forwarding can be enabled by calling the <see cref="AzureEventSourceLogForwarder.Start"/> method.</param>
+        /// <param name="enableLogForwarding">Whether to enable Azure SDK log forwarding to <see cref="ILogger"/>. If set to <value>false</value>,
+        /// log forwarding can still be enabled by calling the <see cref="AzureEventSourceLogForwarder.Start"/> method.</param>
         public static void AddAzureClientsCore(this IServiceCollection collection, bool enableLogForwarding)
         {
             collection.AddOptions();

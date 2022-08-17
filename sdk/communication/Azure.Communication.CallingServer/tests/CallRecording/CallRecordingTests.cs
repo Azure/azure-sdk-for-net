@@ -15,30 +15,30 @@ namespace Azure.Communication.CallingServer
         private const string ServerCallId = "sampleServerCallId";
         private const string DummyRecordingStatusResponse = "{" +
                                         "\"recordingId\": \"dummyRecordingId\"," +
-                                        "\"recordingStatus\": \"active\"" +
+                                        "\"recordingState\": \"active\"" +
                                         "}";
 
         private static readonly CallLocator _callLocator = new ServerCallLocator(ServerCallId);
         private static readonly Uri _callBackUri = new Uri("https://somecallbackurl");
 
         [TestCaseSource(nameof(TestData_OperationsWithStatus))]
-        public void RecordingOperations_WithRecordingStatus_Success(Func<CallRecording, RecordingStatusResult> operation)
+        public void RecordingOperations_WithRecordingStatus_Success(Func<CallRecording, RecordingStateResult> operation)
         {
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
 
-            RecordingStatusResult result = operation(callRecording);
+            RecordingStateResult result = operation(callRecording);
             Assert.AreEqual("dummyRecordingId", result.RecordingId);
-            Assert.AreEqual(RecordingStatus.Active, result.RecordingStatus);
+            Assert.AreEqual(RecordingState.Active, result.RecordingState);
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsyncWithStatus))]
-        public async Task RecordingOperationsAsync_WithRecordingStatus_Success(Func<CallRecording, Task<Response<RecordingStatusResult>>> operation)
+        public async Task RecordingOperationsAsync_WithRecordingStatus_Success(Func<CallRecording, Task<Response<RecordingStateResult>>> operation)
         {
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
 
-            Response<RecordingStatusResult> result = await operation(callRecording);
+            Response<RecordingStateResult> result = await operation(callRecording);
             Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
-            Assert.AreEqual(RecordingStatus.Active, result.Value.RecordingStatus);
+            Assert.AreEqual(RecordingState.Active, result.Value.RecordingState);
         }
 
         [TestCaseSource(nameof(TestData_OperationsSuccess))]
@@ -144,11 +144,11 @@ namespace Azure.Communication.CallingServer
         {
             return new[]
             {
-                new Func<CallRecording, RecordingStatusResult>?[]
+                new Func<CallRecording, RecordingStateResult>?[]
                 {
-                   callRecording => callRecording.StartRecording(_callLocator, _callBackUri)
+                   callRecording => callRecording.StartRecording(new StartRecordingOptions(_callLocator) { RecordingStateCallbackEndpoint = _callBackUri })
                 },
-                new Func<CallRecording, RecordingStatusResult>?[]
+                new Func<CallRecording, RecordingStateResult>?[]
                 {
                    callRecording => callRecording.GetRecordingState(RecordingId)
                 }
@@ -159,11 +159,11 @@ namespace Azure.Communication.CallingServer
         {
             return new[]
             {
-                new Func<CallRecording, Task<Response<RecordingStatusResult>>>?[]
+                new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
                 {
-                   callRecording => callRecording.StartRecordingAsync(_callLocator, _callBackUri)
+                   callRecording => callRecording.StartRecordingAsync(new StartRecordingOptions(_callLocator) { RecordingStateCallbackEndpoint = _callBackUri })
                 },
-                new Func<CallRecording, Task<Response<RecordingStatusResult>>>?[]
+                new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
                 {
                    callRecording => callRecording.GetRecordingStateAsync(RecordingId)
                 }
@@ -176,27 +176,38 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.StartRecording(_callLocator, _callBackUri)
+                    callRecording => () =>
+                        callRecording.StartRecording(
+                            new StartRecordingOptions(_callLocator)
+                            {
+                                RecordingStateCallbackEndpoint = _callBackUri
+                            })
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.StartRecording(_callLocator, _callBackUri, new StartRecordingOptions(){RecordingContent = RecordingContent.AudioVideo, RecordingChannel = RecordingChannel.Mixed, RecordingFormat = RecordingFormat.Mp4 })
+                    callRecording => () => callRecording.StartRecording(new StartRecordingOptions(_callLocator)
+                    {
+                        RecordingContent = RecordingContent.AudioVideo,
+                        RecordingChannel = RecordingChannel.Mixed,
+                        RecordingFormat = RecordingFormat.Mp4,
+                        ChannelAffinity = new List<ChannelAffinity> { new() { Channel = 0, Participant = new CommunicationUserIdentifier("test") }}
+                    })
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.StopRecording(RecordingId)
+                    callRecording => () => callRecording.StopRecording(RecordingId)
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.PauseRecording(RecordingId)
+                    callRecording => () => callRecording.PauseRecording(RecordingId)
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.ResumeRecording(RecordingId)
+                    callRecording => () => callRecording.ResumeRecording(RecordingId)
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.GetRecordingState(RecordingId)
+                    callRecording => () => callRecording.GetRecordingState(RecordingId)
                 },
             };
         }
@@ -207,11 +218,21 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallRecording, AsyncTestDelegate>?[]
                 {
-                   callRecording => async () => await callRecording.StartRecordingAsync(_callLocator, _callBackUri).ConfigureAwait(false),
+                   callRecording => async () => await callRecording.StartRecordingAsync(new StartRecordingOptions(_callLocator)
+                   {
+                       RecordingStateCallbackEndpoint = _callBackUri
+                   }).ConfigureAwait(false),
                 },
                 new Func<CallRecording, AsyncTestDelegate>?[]
                 {
-                   callRecording => async () => await callRecording.StartRecordingAsync(_callLocator, _callBackUri).ConfigureAwait(false),
+                   callRecording => async () => await callRecording.StartRecordingAsync(new StartRecordingOptions(_callLocator)
+                   {
+                       RecordingStateCallbackEndpoint = _callBackUri,
+                       RecordingContent = RecordingContent.AudioVideo,
+                       RecordingChannel = RecordingChannel.Mixed,
+                       RecordingFormat = RecordingFormat.Mp4,
+                       ChannelAffinity = new List<ChannelAffinity> { new() { Channel = 0, Participant = new CommunicationUserIdentifier("test") }}
+                   }).ConfigureAwait(false),
                 },
                 new Func<CallRecording, AsyncTestDelegate>?[]
                 {

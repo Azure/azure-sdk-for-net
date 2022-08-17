@@ -28,7 +28,7 @@ CreateCallResult createCallResult = callAutomationClient.CreateCall(
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
     callbackEndpoint: new Uri(TestEnvironment.AppCallbackUrl)
     );
-Console.WriteLine($"Call connection id: {createCallResult.CallProperties.CallConnectionId}");
+Console.WriteLine($"Call connection id: {createCallResult.CallConnectionProperties.CallConnectionId}");
 ```
 
 To see the full example source files, see:
