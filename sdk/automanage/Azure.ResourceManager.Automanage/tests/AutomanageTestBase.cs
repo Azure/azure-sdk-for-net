@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automanage.Tests
 {
     public class AutomanageTestBase : ManagementRecordedTestBase<AutomanageTestEnvironment>
     {
-        public ArmClient Client { get; private set; }
+        public ArmClient ArmClient { get; private set; }
         public SubscriptionResource Subscription { get; set; }
         protected ResourceGroupCollection ResourceGroups { get; private set; }
         public static AzureLocation DefaultLocation => AzureLocation.EastUS;
@@ -31,8 +31,15 @@ namespace Azure.ResourceManager.Automanage.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient();
-            Subscription = await Client.GetDefaultSubscriptionAsync();
+            ArmClient = GetArmClient();
+            //ResourceMgmtClient = new ResourceManagementClient(new DefaultAzureCredential());
+            Subscription = await ArmClient.GetDefaultSubscriptionAsync();
+        }
+
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            CleanupResourceGroups();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // create VM
 
+
+
             // create assignment between profile and VM
         }
     }

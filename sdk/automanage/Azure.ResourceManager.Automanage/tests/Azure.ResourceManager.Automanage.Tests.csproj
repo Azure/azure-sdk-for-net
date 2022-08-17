@@ -5,4 +5,7 @@
   <ItemGroup>
     <Folder Include="SessionRecords\ConfigurationProfileTests\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="3.17.4-preview" />
+  </ItemGroup>
 </Project>
