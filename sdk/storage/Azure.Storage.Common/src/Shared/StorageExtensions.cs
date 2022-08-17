@@ -9,9 +9,7 @@ namespace Azure.Storage.Shared
 {
     internal static class StorageExtensions
     {
-#pragma warning disable CA1801 // Review unused parameters
         public static string EscapePath(this string path, bool preserveOuterSlashes = false)
-#pragma warning restore CA1801 // Review unused parameters
         {
             if (path == null)
             {
@@ -29,9 +27,7 @@ namespace Azure.Storage.Shared
             return string.Join("/", split);
         }
 
-#pragma warning disable CA1801 // Review unused parameters
         public static string UnescapePath(this string path, bool preserveOuterSlashes = false)
-#pragma warning restore CA1801 // Review unused parameters
         {
             if (path == null)
             {
