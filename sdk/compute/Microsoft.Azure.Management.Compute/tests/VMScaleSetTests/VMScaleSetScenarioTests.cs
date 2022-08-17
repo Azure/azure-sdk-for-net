@@ -346,6 +346,82 @@ namespace Compute.Tests
         }
 
         [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_PriorityMixPolicy")]
+        public void TestVMScaleSetScenarioOperations_PriorityMixPolicy()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // create a resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var publicIPConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration();
+                    publicIPConfiguration.Name = "pip1";
+                    publicIPConfiguration.IdleTimeoutInMinutes = 10;
+
+                    PriorityMixPolicy priorityMixPolicy = new PriorityMixPolicy(baseRegularPriorityCount: 2, regularPriorityPercentageAboveBase: 50);
+
+                    var createVmssResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.Priority = VirtualMachinePriorityTypes.Spot;
+                            vmScaleSet.VirtualMachineProfile.EvictionPolicy = VirtualMachineEvictionPolicyTypes.Deallocate;
+                            vmScaleSet.OrchestrationMode = OrchestrationMode.Flexible.ToString();
+                            vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1V2;
+                            vmScaleSet.Sku.Tier = "Standard";
+                            vmScaleSet.Sku.Capacity = 4;
+                            vmScaleSet.PriorityMixPolicy = priorityMixPolicy;
+                            vmScaleSet.PlatformFaultDomainCount = 1;
+                            vmScaleSet.UpgradePolicy = null;
+                            vmScaleSet.Overprovision = null;
+                            vmScaleSet.SinglePlacementGroup = false;
+                            vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkApiVersion = NetworkApiVersion.TwoZeroTwoZeroHyphenMinusOneOneHyphenMinusZeroOne;
+                            vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration = publicIPConfiguration;
+                        },
+                        createWithManagedDisks: true,
+                        createWithPublicIpAddress: false);
+
+                    ValidateVMScaleSet(inputVMScaleSet, createVmssResponse, true);
+
+                    VirtualMachineScaleSet getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    ValidateVMScaleSet(inputVMScaleSet, getVmss, true);
+                    
+                    Assert.NotNull(getVmss);
+                    Assert.NotNull(getVmss.PriorityMixPolicy);
+                    Assert.True(getVmss.PriorityMixPolicy.BaseRegularPriorityCount == 2);
+                    Assert.True(getVmss.PriorityMixPolicy.RegularPriorityPercentageAboveBase == 50);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // clean up the created resources
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
         public void TestVMScaleSetScenarioOperations_ScheduledEvents()
         {
