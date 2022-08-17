@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessageConverter AmqpMessageConverterInstance = new AmqpMessageConverter();
+        public static AmqpMessageConverter Default = new AmqpMessageConverter();
 
         public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
         {
