@@ -71,7 +71,11 @@ namespace Azure.Core.Tests
             GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent(rc);
             long length = 0;
             gzContent.TryComputeLength(out length);
+#if NETFRAMEWORK
+            Assert.Greater(length, 5); // Data gets compressed in NetFramework
+#else
             Assert.Greater(length, 110);
+#endif
         }
 
         private static string UncompressAndDeserialize(RequestContent gzContent)
