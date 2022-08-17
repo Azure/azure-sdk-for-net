@@ -6,7 +6,7 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 * [General troubleshooting](#general-troubleshooting)
   * [Enable client logging](#enable-client-logging)
-* [Troubleshooting authentication issues](#authentication-errors)
+* [Troubleshooting authentication issues](#troubleshooting-authentication-issues)
   * [AuthenticationFailedException](#authenticationfailedexception)
   * [CredentialUnavailableException](#credentialunavailableexception)
   * [Permission Issues](#permission-issues)
