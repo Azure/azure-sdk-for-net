@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -66,12 +67,13 @@ namespace Azure.Monitor.Ingestion
         /// <typeparam name="T"></typeparam>
         /// <param name="logEntries"></param>
         /// <returns></returns>
-        internal static IEnumerable<BinaryData> Batch<T>(IEnumerable<T> logEntries)
+        internal static IEnumerable<Tuple<List<T>, BinaryData>> Batch<T>(IEnumerable<T> logEntries)
         {
             //TODO: use Array pool instead
             MemoryStream stream = new MemoryStream(SingleUploadThreshold);
             WriteMemory(stream, BinaryData.FromString("[").ToMemory());
             int entryCount = 0;
+            List<T> currentLogList = new List<T>();
             foreach (var log in logEntries)
             {
                 BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
@@ -79,14 +81,17 @@ namespace Azure.Monitor.Ingestion
                 var memory = entry.ToMemory();
                 if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
                 {
-                    yield return BinaryData.FromStream(entry.ToStream());
+                    currentLogList.Add(log);
+                    yield return Tuple.Create(currentLogList, entry);
                 }
                 else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
                     WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                     stream.Position = 0; // set Position to 0 to return everything from beginning of stream
-                    yield return BinaryData.FromStream(stream);
+                    currentLogList.Add(log);
+                    yield return Tuple.Create(currentLogList, entry);
                     stream = new MemoryStream(SingleUploadThreshold); // reset stream
+                    currentLogList = new List<T>(); // reset log list
                 }
                 else
                 {
@@ -96,11 +101,13 @@ namespace Azure.Monitor.Ingestion
                         // reached end of logEntries and we haven't returned yet
                         WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                         stream.Position = 0;
-                        yield return BinaryData.FromStream(stream);
+                        currentLogList.Add(log);
+                        yield return Tuple.Create(currentLogList, entry);
                     }
                     else
                     {
                         WriteMemory(stream, BinaryData.FromString(",").ToMemory());
+                        currentLogList.Add(log);
                     }
                 }
                 entryCount++;
@@ -137,7 +144,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
+        public virtual Response<UploadLogsResult> Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -145,12 +152,32 @@ namespace Azure.Monitor.Ingestion
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             scope.Start();
+
+            var requestContext = new RequestContext() { CancellationToken = cancellationToken };
+            requestContext.AddClassifier(500, false);
+            requestContext.AddClassifier(403, false);
+            requestContext.AddClassifier(413, false);
+            requestContext.AddClassifier(429, false);
+            requestContext.AddClassifier(503, false);
+            Response response = null;
+            List<UploadLogsError> errors = new List<UploadLogsError>();
             try
             {
-                foreach (BinaryData partition in Batch(logEntries))
+                foreach (Tuple<List<T>, BinaryData> result in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-                    return Upload(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken });
+                    response = Upload(ruleId, streamName, result.Item2, "gzip", requestContext);
+                    if (response.Status != 204) //and response.Content == 500)
+                    {
+                        RequestFailedException requestFailedException = new RequestFailedException(response);
+                        ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
+                        List<Object> objectLogs = new List<Object>();
+                        foreach (var log in result.Item1)
+                        {
+                            objectLogs.Add(log);
+                        }
+                        errors.Add(new UploadLogsError(responseError, objectLogs));
+                    }
                 }
             }
             catch (Exception e)
@@ -158,7 +185,9 @@ namespace Azure.Monitor.Ingestion
                 scope.Failed(e);
                 throw;
             }
-            return null;
+
+            UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logEntries, errors));
+            return Response.FromValue(finalResult, response);
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
@@ -186,7 +215,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadLogsResult>> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -194,12 +223,32 @@ namespace Azure.Monitor.Ingestion
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             scope.Start();
+
+            var requestContext = new RequestContext() { CancellationToken = cancellationToken };
+            requestContext.AddClassifier(500, false);
+            requestContext.AddClassifier(403, false);
+            requestContext.AddClassifier(413, false);
+            requestContext.AddClassifier(429, false);
+            requestContext.AddClassifier(503, false);
+            Response response = null;
+            List<UploadLogsError> errors = new List<UploadLogsError>();
             try
             {
-                foreach (var partition in Batch(logEntries))
+                foreach (Tuple<List<T>, BinaryData> result in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-                    return await UploadAsync(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                    response = await UploadAsync(ruleId, streamName, result.Item2, "gzip", requestContext).ConfigureAwait(false);
+                    if (response.Status != 204) //and response.Content == 500)
+                    {
+                        RequestFailedException requestFailedException = new RequestFailedException(response);
+                        ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
+                        List<Object> objectLogs = new List<Object>();
+                        foreach (var log in result.Item1)
+                        {
+                            objectLogs.Add(log);
+                        }
+                        errors.Add(new UploadLogsError(responseError, objectLogs));
+                    }
                 }
             }
             catch (Exception e)
@@ -207,7 +256,28 @@ namespace Azure.Monitor.Ingestion
                 scope.Failed(e);
                 throw;
             }
-            return null;
+
+            UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logEntries, errors));
+            return Response.FromValue(finalResult, response);
+        }
+
+        private static UploadLogsStatus Status<T>(IEnumerable<T> logEntries, List<UploadLogsError> errors)
+        {
+            UploadLogsStatus status;
+            if (errors.Count == 0)
+            {
+                status = UploadLogsStatus.SUCCESS;
+            }
+            else if (errors.Count > logEntries.Count())
+            {
+                status = UploadLogsStatus.PARTIALFAILURE;
+            }
+            else
+            {
+                status = UploadLogsStatus.FAILURE;
+            }
+
+            return status;
         }
     }
 }

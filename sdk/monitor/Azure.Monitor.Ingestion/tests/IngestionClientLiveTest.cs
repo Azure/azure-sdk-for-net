@@ -75,10 +75,10 @@ namespace Azure.Monitor.Ingestion.Tests
             });
 
             // Make the request
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(204, response.Status);
+            Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
         }
         [LiveOnly]
         [Test]
@@ -95,9 +95,10 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<BinaryData> x = LogsIngestionClient.Batch(entries);
+            IEnumerable<Tuple<List<IEnumerable>, BinaryData>> x = LogsIngestionClient.Batch(entries);
             Assert.AreEqual(1, x.Count());
         }
+
         [LiveOnly]
         [Test]
         public void ValidateBatchingMultiChunkNoGzip()
@@ -113,7 +114,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<BinaryData> x = LogsIngestionClient.Batch(entries);
+            IEnumerable<Tuple<List<IEnumerable>, BinaryData>> x = LogsIngestionClient.Batch(entries);
             Assert.Greater(x.Count(), 1);
         }
         [LiveOnly]
@@ -137,10 +138,10 @@ namespace Azure.Monitor.Ingestion.Tests
             }
 
            // Make the request
-           Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+           var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(204, response.Status);
+            Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
         }
         [LiveOnly]
         [Test]
@@ -169,6 +170,7 @@ namespace Azure.Monitor.Ingestion.Tests
             // Check the response
             Assert.AreEqual(204, response.Status);
         }
+
         [LiveOnly]
         [Test]
         public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
@@ -188,10 +190,35 @@ namespace Azure.Monitor.Ingestion.Tests
             }
 
             // Make the request
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(204, response.Status);
+            Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
+        }
+
+        [LiveOnly]
+        [Test]
+        public void InvalidInputFromObjectAsJsonNoBatchingNoGzip()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            var entries = new List<IEnumerable>();
+            for (int i = 0; i < 100000; i++)
+            {
+                entries.Add(new Object[] {
+                    new {
+                        Time = "2021",
+                        Computer = "Computer" + i.ToString(),
+                        AdditionalContext = i
+                    }
+                });
+            }
+
+            Response<UploadLogsResult> response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries); //takes StreamName not tablename
+            // Check the response - run without Batching and Gzip for error 413
+            Assert.AreEqual(UploadLogsStatus.FAILURE, response.Value.Status);
+            Assert.AreEqual(413, response.Value.Errors.FirstOrDefault().Error.Code);
+            Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
         }
     }
 }
