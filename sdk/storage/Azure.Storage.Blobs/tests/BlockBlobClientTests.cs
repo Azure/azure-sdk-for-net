@@ -1701,6 +1701,31 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task CommitBlockListAsync_ColdTier()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Size);
+            string blockName = GetNewBlockName();
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await blob.StageBlockAsync(ToBase64(blockName), stream);
+            string[] commitList = new string[]
+            {
+                ToBase64(blockName),
+            };
+
+            await blob.CommitBlockListAsync(commitList, accessTier: AccessTier.Cold);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
+        }
+
+        [RecordedTest]
         public async Task GetBlockListAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
