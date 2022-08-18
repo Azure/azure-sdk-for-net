@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.EventHubs.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
 {
     public class LoggerTests : ApiManagementManagementTestBase
     {
         public LoggerTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task CreateApiServiceAsync()
         {
-            await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
@@ -46,125 +48,77 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task CRUD()
         {
+            await SetCollectionsAsync();
+
+            string newloggerId = Recording.GenerateAssetName("newlogger");
+            string eventHubNameSpaceName = Recording.GenerateAssetName("eventHubNamespace");
+            string eventHubName = Recording.GenerateAssetName("eventhubname");
+
+            // first create the event hub namespace
+            var eventCollection = ResourceGroup.GetEventHubsNamespaces();
+            var eventHubNamespace = (await eventCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubNameSpaceName, new EventHubsNamespaceData(AzureLocation.EastUS))).Value;
+            //Assert.NotNull(eventHubNamespace.Data.Name);
+
+            // then create eventhub
+            var hubCollection = eventHubNamespace.GetEventHubs();
+            var eventHub = (await hubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, new EventHubData())).Value;
+            //Assert.NotNull(eventHub.Data.Name);
+
+            // create send policy auth rule
+            string sendPolicy = Recording.GenerateAssetName("sendPolicy");
+            var authCollection = eventHub.GetEventHubAuthorizationRules();
+            var eventHubAuthRule = (await authCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                sendPolicy,
+                new EventHubsAuthorizationRuleData()
+                {
+                    Rights = { EventHubsAccessRight.Send }
+                })).Value;
+
+            // get the keys
+            var eventHubKeys = (await eventHubAuthRule.GetKeysAsync()).Value;
+
+            // now create logger using the eventhub
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementLoggers();
+            var logCollection = ApiServiceResource.GetApiManagementLoggers();
+            var loggerCreateParameters = new ApiManagementLoggerData()
+            {
+                LoggerType = LoggerType.AzureEventHub,
+                Credentials = { { "name", eventHubName }, { "connectionString", eventHubKeys.PrimaryConnectionString } }
+            };
+            // create new group with default parameters
+            string loggerDescription = Recording.GenerateAssetName("newloggerDescription");
+            loggerCreateParameters.Description = loggerDescription;
 
-            //string newloggerId = Recording.GenerateAssetName("newlogger");
-            //string eventHubNameSpaceName = Recording.GenerateAssetName("eventHubNamespace");
-            //string eventHubName = Recording.GenerateAssetName("eventhubname");
-            //// first create the event hub namespace
-            //var eventHubNamespace = testBase.eventHubClient.Namespaces.CreateOrUpdate(
-            //    testBase.rgName,
-            //    eventHubNameSpaceName,
-            //    new NamespaceCreateOrUpdateParameters(testBase.location));
-            //Assert.NotNull(eventHubNamespace);
-            //Assert.NotNull(eventHubNamespace.Name);
-
-            //// then create eventhub
-            //var eventHub = testBase.eventHubClient.EventHubs.CreateOrUpdate(
-            //    testBase.rgName,
-            //    eventHubNameSpaceName,
-            //    eventHubName,
-            //    new EventHubCreateOrUpdateParameters(testBase.location));
-            //Assert.NotNull(eventHub);
-
-            //// create send policy auth rule
-            //string sendPolicy = TestUtilities.GenerateName("sendPolicy");
-            //var eventHubAuthRule = testBase.eventHubClient.EventHubs.CreateOrUpdateAuthorizationRule(
-            //    testBase.rgName,
-            //    eventHubNameSpaceName,
-            //    eventHubName,
-            //    sendPolicy,
-            //    new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
-            //    {
-            //        Rights = new List<AccessRights?>() { AccessRights.Send }
-            //    });
-
-            //// get the keys
-            //var eventHubKeys = testBase.eventHubClient.EventHubs.ListKeys(
-            //    testBase.rgName,
-            //    eventHubNameSpaceName,
-            //    eventHubName,
-            //    sendPolicy);
-
-            //// now create logger using the eventhub
-            //var credentials = new Dictionary<string, string>();
-            //credentials.Add("name", eventHubName);
-            //credentials.Add("connectionString", eventHubKeys.PrimaryConnectionString);
-
-            //var loggerCreateParameters = new LoggerContract(LoggerType.AzureEventHub, credentials: credentials);
-            //// create new group with default parameters
-            //string loggerDescription = TestUtilities.GenerateName("newloggerDescription");
-            //loggerCreateParameters.Description = loggerDescription;
-
-            //var loggerContract = testBase.client.Logger.CreateOrUpdate(
-            //    testBase.rgName,
-            //    testBase.serviceName,
-            //    newloggerId,
-            //    loggerCreateParameters);
+            var loggerContract = (await logCollection.CreateOrUpdateAsync(WaitUntil.Completed, newloggerId, loggerCreateParameters)).Value;
 
             //Assert.NotNull(loggerContract);
-            //Assert.Equal(newloggerId, loggerContract.Name);
-            //Assert.True(loggerContract.IsBuffered);
-            //Assert.Equal(LoggerType.AzureEventHub, loggerContract.LoggerType);
-            //Assert.NotNull(loggerContract.Credentials);
-            //Assert.Equal(2, loggerContract.Credentials.Keys.Count);
+            //Assert.AreEqual(newloggerId, loggerContract.Data.Name);
+            //Assert.IsTrue(loggerContract.Data.IsBuffered);
+            //Assert.AreEqual(LoggerType.AzureEventHub, loggerContract.Data.LoggerType);
+            //Assert.NotNull(loggerContract.Data.Credentials);
+            //Assert.AreEqual(2, loggerContract.Data.Credentials.Keys.Count);
 
-            //var listLoggers = testBase.client.Logger.ListByService(
-            //    testBase.rgName,
-            //    testBase.serviceName,
-            //    null);
+            var listLoggers = await logCollection.GetAllAsync().ToEnumerableAsync();
+            // there should be one user
+            //Assert.GreaterOrEqual(listLoggers.Count, 1);
 
-            //Assert.NotNull(listLoggers);
-            //// there should be one user
-            //Assert.True(listLoggers.Count() >= 1);
+            // patch logger
+            string patchedDescription = Recording.GenerateAssetName("patchedDescription");
+            await loggerContract.UpdateAsync("*", new ApiManagementLoggerPatch() { Description = patchedDescription });
 
-            //// get the logger tag
-            //var loggerTag = await testBase.client.Logger.GetEntityTagAsync(
-            //    testBase.rgName,
-            //    testBase.serviceName,
-            //    newloggerId);
-            //Assert.NotNull(loggerTag);
-            //Assert.NotNull(loggerTag.ETag);
-
-            //// patch logger
-            //string patchedDescription = TestUtilities.GenerateName("patchedDescription");
-            //testBase.client.Logger.Update(
-            //    testBase.rgName,
-            //    testBase.serviceName,
-            //    newloggerId,
-            //    new LoggerUpdateContract(LoggerType.AzureEventHub)
-            //    {
-            //        Description = patchedDescription
-            //    },
-            //    loggerTag.ETag);
-
-            //// get to check it was patched
-            //loggerContract = await testBase.client.Logger.GetAsync(
-            //    testBase.rgName,
-            //    testBase.serviceName,
-            //    newloggerId);
+            // get to check it was patched
+            loggerContract = await logCollection.GetAsync(newloggerId);
 
             //Assert.NotNull(loggerContract);
-            //Assert.Equal(newloggerId, loggerContract.Name);
-            //Assert.Equal(patchedDescription, loggerContract.Description);
-            //Assert.NotNull(loggerContract.Credentials);
-            //Assert.NotNull(loggerContract.CredentialsPropertyName);
+            //Assert.AreEqual(newloggerId, loggerContract.Data.Name);
+            //Assert.AreEqual(patchedDescription, loggerContract.Data.Description);
+            //Assert.NotNull(loggerContract.Data.Credentials);
 
-            //// get the logger tag
-            //loggerTag = await testBase.client.Logger.GetEntityTagAsync(
-            //    testBase.rgName,
-            //    testBase.serviceName,
-            //    newloggerId);
-            //Assert.NotNull(loggerTag);
-            //Assert.NotNull(loggerTag.ETag);
-
-            //// delete the logger
-            //testBase.client.Logger.Delete(
-            //    testBase.rgName,
-            //    testBase.serviceName,
-            //    newloggerId,
-            //    loggerTag.ETag);
+            // delete the logger
+            await loggerContract.DeleteAsync(WaitUntil.Completed, "*");
+            var falseResult = await logCollection.ExistsAsync(newloggerId);
+            //Assert.IsFalse(falseResult);
         }
     }
 }

@@ -186,6 +186,7 @@
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-beta.7" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-beta.8" />
+    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.12.0" />
