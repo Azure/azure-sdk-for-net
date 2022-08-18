@@ -37,15 +37,16 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             int scm = 0;
             await foreach (var policy in site.GetBasicPublishingCredentialsPoliciesAsync())
             {
-                // unfortunately all the element here is of type of BaseWebSitePublishingCredentialsPolicyResourceProxy
-                // therefore the following switch statement does not work
+                BaseWebSitePublishingCredentialsPolicyResource p = await policy.GetAsync();
                 switch (policy)
                 {
-                    case WebSiteFtpPublishingCredentialsPolicyResource:
+                    case WebSiteFtpPublishingCredentialsPolicyResource ftpPolicy:
                         ftp++;
+                        WebSiteFtpPublishingCredentialsPolicyResource ftpResource = await ftpPolicy.GetAsync();
                         break;
-                    case WebSiteScmPublishingCredentialsPolicyResource:
+                    case WebSiteScmPublishingCredentialsPolicyResource scmPolicy:
                         scm++;
+                        WebSiteScmPublishingCredentialsPolicyResource scmResource = await scmPolicy.GetAsync();
                         break;
                 }
             }
