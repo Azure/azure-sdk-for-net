@@ -5,20 +5,22 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
-    public partial class CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity
+    public partial class CmkIdentity
     {
-        /// <summary> Initializes a new instance of CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity. </summary>
-        public CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity()
+        /// <summary> Initializes a new instance of CmkIdentity. </summary>
+        public CmkIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity. </summary>
+        /// <summary> Initializes a new instance of CmkIdentity. </summary>
         /// <param name="identityType"> Values can be SystemAssigned or UserAssigned. </param>
         /// <param name="userAssignedIdentityResourceId"> user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
-        internal CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity(CmkIdentityType? identityType, string userAssignedIdentityResourceId)
+        internal CmkIdentity(CmkIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId)
         {
             IdentityType = identityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <summary> Values can be SystemAssigned or UserAssigned. </summary>
         public CmkIdentityType? IdentityType { get; set; }
         /// <summary> user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </summary>
-        public string UserAssignedIdentityResourceId { get; set; }
+        public ResourceIdentifier UserAssignedIdentityResourceId { get; set; }
     }
 }

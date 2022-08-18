@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
-    public partial class CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity : IUtf8JsonSerializable
+    public partial class CmkIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity DeserializeCustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity(JsonElement element)
+        internal static CmkIdentity DeserializeCmkIdentity(JsonElement element)
         {
             Optional<CmkIdentityType> identityType = default;
-            Optional<string> userAssignedIdentityResourceId = default;
+            Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identityType"))
@@ -46,11 +46,16 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 if (property.NameEquals("userAssignedIdentityResourceId"))
                 {
-                    userAssignedIdentityResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    userAssignedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity(Optional.ToNullable(identityType), userAssignedIdentityResourceId.Value);
+            return new CmkIdentity(Optional.ToNullable(identityType), userAssignedIdentityResourceId.Value);
         }
     }
 }

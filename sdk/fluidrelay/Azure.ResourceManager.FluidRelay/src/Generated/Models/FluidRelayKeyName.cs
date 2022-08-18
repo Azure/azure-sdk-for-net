@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     /// <summary> The key to regenerate. </summary>
-    public enum KeyName
+    public enum FluidRelayKeyName
     {
         /// <summary> key1. </summary>
         Key1,

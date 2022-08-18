@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
             Assert.IsTrue(await fluidRelayServerResourceCollection2.GetAsyncEnumerator().MoveNextAsync());
 
             //Regenerate Keys
-            RegenerateKeyContent key1 = new RegenerateKeyContent(KeyName.Key1);
-            Response<FluidRelayServerKeys> regenerateKeyFluidRelayResponse = await fluidRelayServerResource.RegenerateKeyAsync(key1);
+            RegenerateKeyContent key1 = new RegenerateKeyContent(FluidRelayKeyName.Key1);
+            Response<FluidRelayServerKeys> regenerateKeyFluidRelayResponse = await fluidRelayServerResource.RegenerateKeysAsync(key1);
             FluidRelayServerKeys NewFluidRelayServerKeys = regenerateKeyFluidRelayResponse.Value;
             Assert.IsTrue(NewFluidRelayServerKeys.Key2.Equals(fluidRelayServerKeys.Key2));
             Assert.IsFalse(NewFluidRelayServerKeys.Key1.Equals(fluidRelayServerKeys.Key1));

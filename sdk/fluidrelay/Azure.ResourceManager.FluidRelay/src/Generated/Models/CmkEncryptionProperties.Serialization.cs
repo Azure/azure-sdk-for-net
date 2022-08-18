@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
-    public partial class CustomerManagedKeyEncryptionProperties : IUtf8JsonSerializable
+    public partial class CmkEncryptionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.FluidRelay.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomerManagedKeyEncryptionProperties DeserializeCustomerManagedKeyEncryptionProperties(JsonElement element)
+        internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element)
         {
-            Optional<CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity> keyEncryptionKeyIdentity = default;
+            Optional<CmkIdentity> keyEncryptionKeyIdentity = default;
             Optional<Uri> keyEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyEncryptionKeyIdentity = CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity.DeserializeCustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity(property.Value);
+                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     continue;
                 }
             }
-            return new CustomerManagedKeyEncryptionProperties(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value);
+            return new CmkEncryptionProperties(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value);
         }
     }
 }
