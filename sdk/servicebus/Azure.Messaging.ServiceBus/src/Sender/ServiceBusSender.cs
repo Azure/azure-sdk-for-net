@@ -276,7 +276,7 @@ namespace Azure.Messaging.ServiceBus
         private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messageBatch, string activityName)
         {
             // Messages in a batch have already been instrumented when
-            // they are added to the batch.
+            // they are added to the batch so we don't need to instrument them here.
             var messages = messageBatch.AsReadOnly<AmqpMessage>();
 
             // create a new scope for the specified operation
