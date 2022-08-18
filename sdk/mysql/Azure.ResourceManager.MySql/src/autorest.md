@@ -225,6 +225,7 @@ rename-rules:
 rename-mapping:
   Storage.storageSizeGB: StorageSizeInGB
   SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+  ConfigurationListForBatchUpdate.value: Values
   ConfigurationListResult.value: Values
   Configuration: MySqlFlexibleServerConfiguration
   Database: MySqlFlexibleServerDatabase
