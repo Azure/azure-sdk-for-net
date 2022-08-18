@@ -218,6 +218,7 @@ namespace Azure.Storage.Blobs.Models
         private readonly int _dummyPrimitive;
         public AccessTier(string value) { throw null; }
         public static Azure.Storage.Blobs.Models.AccessTier Archive { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier Cold { get { throw null; } }
         public static Azure.Storage.Blobs.Models.AccessTier Cool { get { throw null; } }
         public static Azure.Storage.Blobs.Models.AccessTier Hot { get { throw null; } }
         public static Azure.Storage.Blobs.Models.AccessTier P10 { get { throw null; } }
