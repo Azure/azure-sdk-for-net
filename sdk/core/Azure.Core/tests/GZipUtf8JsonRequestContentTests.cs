@@ -74,6 +74,32 @@ namespace Azure.Core.Tests
             Assert.Greater(length, 110);
         }
 
+        [Test]
+        public void GZipRequestContent_DirectWriteAndComputeLength()
+        {
+            long length = 0;
+            GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent();
+            gzContent.TryComputeLength(out length);
+            Assert.AreEqual(0, length);
+            gzContent.JsonWriter.WriteStartObject();
+            Enumerable.Range(1, 100).ToList().ForEach(i =>
+            {
+                gzContent.JsonWriter.WritePropertyName("FooProp" + i);
+                gzContent.JsonWriter.WriteStringValue(Guid.NewGuid().ToString());
+            });
+            gzContent.JsonWriter.WriteEndObject();
+            gzContent.TryComputeLength(out length);
+            Assert.Greater(length, 1000);
+            string deserialized = UncompressAndDeserialize(gzContent);
+            Assert.IsNotEmpty(deserialized);
+            Console.WriteLine(deserialized);
+            gzContent.TryComputeLength(out length);
+            Assert.Greater(length, 1000);
+            deserialized = UncompressAndDeserialize(gzContent);
+            Assert.IsNotEmpty(deserialized);
+            Console.WriteLine(deserialized);
+        }
+
         private static string UncompressAndDeserialize(RequestContent gzContent)
         {
             var memStream = new MemoryStream();
