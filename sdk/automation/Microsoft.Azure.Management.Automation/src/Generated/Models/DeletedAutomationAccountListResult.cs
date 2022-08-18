@@ -11,31 +11,33 @@
 namespace Microsoft.Azure.Management.Automation.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the update operation.
+    /// The response model for the list deleted automation account.
     /// </summary>
-    public partial class HybridRunbookWorkerGroupUpdateParameters
+    public partial class DeletedAutomationAccountListResult
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// HybridRunbookWorkerGroupUpdateParameters class.
+        /// DeletedAutomationAccountListResult class.
         /// </summary>
-        public HybridRunbookWorkerGroupUpdateParameters()
+        public DeletedAutomationAccountListResult()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// HybridRunbookWorkerGroupUpdateParameters class.
+        /// DeletedAutomationAccountListResult class.
         /// </summary>
-        /// <param name="credential">Sets the credential of a worker
-        /// group.</param>
-        public HybridRunbookWorkerGroupUpdateParameters(RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty))
+        /// <param name="value">Gets or sets the list of deleted automation
+        /// accounts.</param>
+        public DeletedAutomationAccountListResult(IList<DeletedAutomationAccount> value = default(IList<DeletedAutomationAccount>))
         {
-            Credential = credential;
+            Value = value;
             CustomInit();
         }
 
@@ -45,10 +47,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sets the credential of a worker group.
+        /// Gets or sets the list of deleted automation accounts.
         /// </summary>
-        [JsonProperty(PropertyName = "credential")]
-        public RunAsCredentialAssociationProperty Credential { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<DeletedAutomationAccount> Value { get; set; }
 
     }
 }
