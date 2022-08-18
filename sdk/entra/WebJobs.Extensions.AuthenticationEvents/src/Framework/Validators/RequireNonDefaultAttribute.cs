@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
     {
         /// <summary>Initializes a new instance of the <see cref="RequireNonDefaultAttribute" /> class.</summary>
         public RequireNonDefaultAttribute()
-            : base(AuthEventResource.Val_Non_Default)
+            : base(AuthenticationEventResource.Val_Non_Default)
         {
         }
 

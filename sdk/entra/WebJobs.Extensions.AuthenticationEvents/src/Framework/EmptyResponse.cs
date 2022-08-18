@@ -5,16 +5,16 @@ using System.Net.Http;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
-    internal class EmptyResponse : AuthEventResponse
+    internal class EmptyResponse : AuthenticationEventResponse
     {
-        internal override void InstanceCreated(AuthEventJsonElement payload) { }
+        internal override void InstanceCreated(AuthenticationEventJsonElement payload) { }
         internal override void Invalidate() { }
 
         #region Empty Response/Data
 
-        internal class EmptyData : AuthEventData { }
+        internal class EmptyData : AuthenticationEventData { }
 
-        internal class EmptyRequest : AuthEventRequest<EmptyResponse, EmptyData>
+        internal class EmptyRequest : AuthenticationEventRequest<EmptyResponse, EmptyData>
         {
             public EmptyRequest(HttpRequestMessage request) : base(request)
             {
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 Response = new EmptyResponse();
             }
 
-            internal override AuthEventResponse GetResponseObject()
+            internal override AuthenticationEventResponse GetResponseObject()
             {
                 return Response;
             }

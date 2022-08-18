@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             if (string.IsNullOrEmpty(configurationManager.TenantId) || string.IsNullOrEmpty(configurationManager.AudienceAppId))
             {
-                throw new MissingFieldException(string.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Trigger_Required_Attrs, ConfigurationManager.TENANT_ID, ConfigurationManager.AUDIENCE_APPID));
+                throw new MissingFieldException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Trigger_Required_Attrs, ConfigurationManager.TENANT_ID, ConfigurationManager.AUDIENCE_APPID));
             }
 
             string accessToken = request.Headers?.Authorization?.Parameter;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>This class is attached to each function that calls into our authentication event trigger.</summary>
-    internal class AuthEventListener : IListener
+    internal class AuthenticationEventListener : IListener
     {
         /// <summary>Gets or sets the function executor.</summary>
         /// <value>The function executor that would execute the attached function.</value>
@@ -21,10 +21,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <value>The event trigger attribute assigned to the function that the listener is attached to.</value>
         internal AuthenticationEventsTriggerAttribute Attribute { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventListener" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventListener" /> class.</summary>
         /// <param name="executor">The executor.</param>
         /// <param name="attribute">The attribute to assign to the listener.</param>
-        internal AuthEventListener(ITriggeredFunctionExecutor executor, AuthenticationEventsTriggerAttribute attribute)
+        internal AuthenticationEventListener(ITriggeredFunctionExecutor executor, AuthenticationEventsTriggerAttribute attribute)
         {
             FunctionExecutor = executor;
             Attribute = attribute;

@@ -14,12 +14,12 @@ using System.Web;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>The base class for all typed event requests.</summary>
-    public abstract class AuthEventRequestBase
+    public abstract class AuthenticationEventRequestBase
     {
         private readonly Dictionary<string, string> queryParameters;
-        /// <summary>Initializes a new instance of the <see cref="AuthEventRequestBase" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventRequestBase" /> class.</summary>
         /// <param name="request">The HTTP request message.</param>
-        internal AuthEventRequestBase(HttpRequestMessage request)
+        internal AuthenticationEventRequestBase(HttpRequestMessage request)
         {
             HttpRequestMessage = request;
             queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query).ToDictionary();
@@ -56,28 +56,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="args">The arguments.</param>
         internal abstract void InstanceCreated(params object[] args);
 
-        internal virtual void ParseInbound(AuthEventJsonElement payload) { }
+        internal virtual void ParseInbound(AuthenticationEventJsonElement payload) { }
 
         /// <summary>Converts to string.</summary>
         /// <returns>A <see cref="string" /> that represents this instance.</returns>
         public override string ToString()
         {
             JsonSerializerOptions options = new();
-            options.Converters.Add(new AuthEventResponseConverterFactory());
+            options.Converters.Add(new AuthenticationEventResponseConverterFactory());
             return JsonSerializer.Serialize((object)this, options);
         }
 
         internal virtual JsonSerializerOptions JsonSerializerOptions => new() { WriteIndented = true, PropertyNameCaseInsensitive = true };
 
-        internal abstract AuthEventResponse GetResponseObject();
+        internal abstract AuthenticationEventResponse GetResponseObject();
 
         /// <summary>Set the response to Failed mode.</summary>
         /// <param name="exception">The exception to return in the response.</param>
         /// <returns>The Underlying AuthEventResponse.</returns>
-        public abstract Task<AuthEventResponse> Failed(Exception exception);
+        public abstract Task<AuthenticationEventResponse> Failed(Exception exception);
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
-        public abstract Task<AuthEventResponse> Completed();
+        public abstract Task<AuthenticationEventResponse> Completed();
     }
 }

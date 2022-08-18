@@ -21,19 +21,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <seealso cref="HttpRequestMessage" />
     /// <seealso cref="HttpResponseMessage" />
     [Extension("AuthenticationEvents", "AuthenticationEvents")]
-    internal class AuthEventConfigProvider : IExtensionConfigProvider, IAsyncConverter<HttpRequestMessage, HttpResponseMessage>
+    internal class AuthenticationEventConfigProvider : IExtensionConfigProvider, IAsyncConverter<HttpRequestMessage, HttpResponseMessage>
     {
         private readonly ILogger _logger;
         private Uri _base_uri;
 
         /// <summary>The listeners that are attached to the functions that implement the AuthenticationEventTriggerAttribute.</summary>
-        public Dictionary<string, AuthEventListener> Listeners { get; } = new Dictionary<string, AuthEventListener>();
+        public Dictionary<string, AuthenticationEventListener> Listeners { get; } = new Dictionary<string, AuthenticationEventListener>();
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventConfigProvider" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventConfigProvider" /> class.</summary>
         /// <param name="loggerFactory">The logger factory from the WebJobs framework.</param>
-        public AuthEventConfigProvider(ILoggerFactory loggerFactory)
+        public AuthenticationEventConfigProvider(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<AuthEventConfigProvider>();
+            _logger = loggerFactory.CreateLogger<AuthenticationEventConfigProvider>();
         }
 
         /// <summary>Initializes the specified configuration.
@@ -43,10 +43,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public void Initialize(ExtensionConfigContext context)
         {
             context.AddBindingRule<AuthenticationEventsTriggerAttribute>()
-                    .BindToTrigger(new AuthEventBindingProvider(this));
+                    .BindToTrigger(new AuthenticationEventBindingProvider(this));
 
             _base_uri = context.GetWebhookHandler();
-            //LogInformation(string.Format(AuthEventResource.Log_EventHandler_Url, Uri));
+            //LogInformation(string.Format(AuthenticationEventResource.Log_EventHandler_Url, Uri));
         }
 
         internal void LogInformation(string message)
@@ -61,17 +61,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             if (Listeners.Count == 1)
             {
                 Console.WriteLine();
-                Console.WriteLine(AuthEventResource.Out_Console_Seperator);
+                Console.WriteLine(AuthenticationEventResource.Out_Console_Seperator);
             }
-            Console.Write(AuthEventResource.Out_Console_FunctName);
+            Console.Write(AuthenticationEventResource.Out_Console_FunctName);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(functionName);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write(AuthEventResource.Out_Console_FunctUrl);
+            Console.Write(AuthenticationEventResource.Out_Console_FunctUrl);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{_base_uri}&functionName={functionName}");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(AuthEventResource.Out_Console_Seperator);
+            Console.WriteLine(AuthenticationEventResource.Out_Console_Seperator);
             Console.ResetColor();
         }
 
@@ -97,19 +97,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 var functionName = queryStringParmeters["function"] ?? queryStringParmeters["functionName"];
                 if (string.IsNullOrEmpty(functionName))
                 {
-                    throw new MissingFieldException(string.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Missing_Function, string.Join(", ", Listeners.Select(l => l.Key))));
+                    throw new MissingFieldException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Missing_Function, string.Join(", ", Listeners.Select(l => l.Key))));
                 }
 
-                KeyValuePair<string, AuthEventListener> listener = Listeners.FirstOrDefault(l => l.Key.Equals(functionName, StringComparison.OrdinalIgnoreCase));
+                KeyValuePair<string, AuthenticationEventListener> listener = Listeners.FirstOrDefault(l => l.Key.Equals(functionName, StringComparison.OrdinalIgnoreCase));
                 if (listener.Key == null)
                 {
-                    throw new MissingMethodException(string.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Invalid_Function, functionName, string.Join(", ", Listeners.Select(l => l.Key))));
+                    throw new MissingMethodException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Invalid_Function, functionName, string.Join(", ", Listeners.Select(l => l.Key))));
                 }
 
                 //We create an event response handler and attach it to the income HTTP message, then on the trigger we set the function response
                 //in the event response handler and after the executor calls the functions we have reference to the function response.
-                AuthEventResponseHandler eventsResponseHandler = new AuthEventResponseHandler();
-                input.Properties.Add(AuthEventResponseHandler.EventResponseProperty, eventsResponseHandler);
+                AuthenticationEventResponseHandler eventsResponseHandler = new AuthenticationEventResponseHandler();
+                input.Properties.Add(AuthenticationEventResponseHandler.EventResponseProperty, eventsResponseHandler);
 
                 TriggeredFunctionData triggerData = new TriggeredFunctionData()
                 {

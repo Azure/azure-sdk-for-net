@@ -7,14 +7,14 @@ using System;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>EventMetadata enum attribute that controls the related request object, schemas and json payloads</summary>
-    /// <seealso cref="AuthEventRequest{T, K}" />
+    /// <seealso cref="AuthenticationEventRequest{T, K}" />
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-    public class AuthEventMetadataAttribute : Attribute
+    public class AuthenticationEventMetadataAttribute : Attribute
     {
         /// <summary>Gets or sets the type of the request.</summary>
         /// <value>The type of the request.
         /// Which is must inherit EventRequest</value>
-        /// <seealso cref="AuthEventRequest{T, K}" />
+        /// <seealso cref="AuthenticationEventRequest{T, K}" />
         internal Type RequestType { get; set; }
         /// <summary>Gets or sets the request schema.
         /// The name of the schema file in the event folder.</summary>
@@ -32,18 +32,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <value>The Event Identifier.</value>
         internal string EventIdentifier { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventMetadataAttribute" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventMetadataAttribute" /> class.</summary>
         /// <param name="requestType">Type of the request.</param>
         /// <param name="eventIdentifier">The event identifier.</param>
         /// <param name="eventNamespace">The name space related to the event</param>
         /// <param name="responseTemplate">The response template.
         /// Defaulted to ResponseTemplate.json</param>
         /// <exception cref="Exception">If the requestType in not of type EventRequest</exception>
-        internal AuthEventMetadataAttribute(Type requestType, string eventIdentifier, string eventNamespace, string responseTemplate = "ResponseTemplate.json")
+        internal AuthenticationEventMetadataAttribute(Type requestType, string eventIdentifier, string eventNamespace, string responseTemplate = "ResponseTemplate.json")
         {
-            if (!typeof(AuthEventRequestBase).IsAssignableFrom(requestType))
+            if (!typeof(AuthenticationEventRequestBase).IsAssignableFrom(requestType))
             {
-                throw new Exception(AuthEventResource.Ex_Invalid_EventType);
+                throw new Exception(AuthenticationEventResource.Ex_Invalid_EventType);
             }
 
             RequestType = requestType;

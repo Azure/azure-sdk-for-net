@@ -16,19 +16,19 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
-using AuthEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventMetadata;
+using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Main trigger binding class where we handle the incoming HTTP request message.</summary>
     /// <seealso cref="ITriggerBinding" />
-    internal class AuthEventBinding : ITriggerBinding
+    internal class AuthenticationEventBinding : ITriggerBinding
     {
         internal const string InstanceIdBindingPropertyName = "instanceId";
         private const string DataBindingPropertyName = "data";
 
         private readonly AuthenticationEventsTriggerAttribute _authEventTriggerAttr;
-        private readonly AuthEventConfigProvider _configuration;
+        private readonly AuthenticationEventConfigProvider _configuration;
         private readonly ParameterInfo _parameterInfo;
         private readonly IReadOnlyDictionary<string, Type> _contract;
         /// <summary>Gets the type of the trigger value.</summary>
@@ -39,11 +39,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <value>The binding data contract.</value>
         public IReadOnlyDictionary<string, Type> BindingDataContract => _contract;
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventBinding" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventBinding" /> class.</summary>
         /// <param name="authEventTriggerAttr">The authentication event trigger attribute.</param>
         /// <param name="configProvider">The configuration provider.</param>
         /// <param name="parameterInfo">Initial parameter details.</param>
-        internal AuthEventBinding(AuthenticationEventsTriggerAttribute authEventTriggerAttr, AuthEventConfigProvider configProvider, ParameterInfo parameterInfo)
+        internal AuthenticationEventBinding(AuthenticationEventsTriggerAttribute authEventTriggerAttr, AuthenticationEventConfigProvider configProvider, ParameterInfo parameterInfo)
         {
             _authEventTriggerAttr = authEventTriggerAttr;
             _configuration = configProvider;
@@ -83,20 +83,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
             var request = (HttpRequestMessage)value;
-            AuthEventResponseHandler eventResponseHandler = (AuthEventResponseHandler)request.Properties[AuthEventResponseHandler.EventResponseProperty];
+            AuthenticationEventResponseHandler eventResponseHandler = (AuthenticationEventResponseHandler)request.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
             try
             {
                 if (request == null)
                 {
-                    throw new NotSupportedException(AuthEventResource.Ex_Invalid_Inbound);
+                    throw new NotSupportedException(AuthenticationEventResource.Ex_Invalid_Inbound);
                 }
 
                 Dictionary<string, string> Claims = await GetClaimsAndValidateRequest(request).ConfigureAwait(false);
                 string payload = await request.Content.ReadAsStringAsync().ConfigureAwait(false);
-                AuthEventMetadata eventMetadata = GetEventAndValidateSchema(payload);
+                AuthenticationEventMetadata eventMetadata = GetEventAndValidateSchema(payload);
 
                 eventResponseHandler.Request = GetRequestForEvent(request, payload, eventMetadata, Claims);
-                return new TriggerData(new AuthEventValueBinder(eventResponseHandler.Request, _authEventTriggerAttr), GetBindingData(context, value, eventResponseHandler))
+                return new TriggerData(new AuthenticationEventValueBinder(eventResponseHandler.Request, _authEventTriggerAttr), GetBindingData(context, value, eventResponseHandler))
                 {
                     ReturnValueProvider = eventResponseHandler
                 };
@@ -116,10 +116,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="ex">The exception that caused the fault.</param>
         /// <returns>A TriggerData Object with the failed event request based on the event. With the related request status set.</returns>
         /// <seealso cref="TriggerData" />
-        /// <seealso cref="AuthEventResponseHandler" />
-        private TriggerData GetFaultyRequest(ValueBindingContext context, object value, HttpRequestMessage request, AuthEventResponseHandler eventResponseHandler, Exception ex)
+        /// <seealso cref="AuthenticationEventResponseHandler" />
+        private TriggerData GetFaultyRequest(ValueBindingContext context, object value, HttpRequestMessage request, AuthenticationEventResponseHandler eventResponseHandler, Exception ex)
         {
-            eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
+            eventResponseHandler.Request = _parameterInfo.ParameterType == typeof(string) ? new EmptyRequest(request) : AuthenticationEventMetadata.CreateEventRequest(request, _parameterInfo.ParameterType, null);
             eventResponseHandler.Request.StatusMessage = ex.Message;
             eventResponseHandler.Request.RequestStatus = ex is UnauthorizedAccessException ? RequestStatusType.TokenInvalid : RequestStatusType.Failed;
             if (eventResponseHandler.Response != null)
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 }
             }
 
-            return new TriggerData(new AuthEventValueBinder(eventResponseHandler.Request, _authEventTriggerAttr), GetBindingData(context, value, eventResponseHandler))
+            return new TriggerData(new AuthenticationEventValueBinder(eventResponseHandler.Request, _authEventTriggerAttr), GetBindingData(context, value, eventResponseHandler))
             {
                 ReturnValueProvider = eventResponseHandler
             };
@@ -146,9 +146,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="eventMetadata">The event metadata.</param>
         /// <param name="tokenClaims">The token claims.</param>
         /// <returns>The related EventRequest based on the event requested.<br /></returns>
-        /// <seealso cref="AuthEventMetadata" />
-        /// <seealso cref="AuthEventRequestBase" />
-        private AuthEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthEventMetadata eventMetadata, Dictionary<string, string> tokenClaims)
+        /// <seealso cref="AuthenticationEventMetadata" />
+        /// <seealso cref="AuthenticationEventRequestBase" />
+        private AuthenticationEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthenticationEventMetadata eventMetadata, Dictionary<string, string> tokenClaims)
             => GetRequestForEvent(request, payload, eventMetadata, tokenClaims, null);
 
         /// <summary>Gets the request for event.
@@ -160,27 +160,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="ex">An exception if any occurred along the way.</param>
         /// <returns>The related EventRequest based on the event requested.</returns>
         /// <exception cref="Exception">An exception is thrown if the IRequestEvent could not be determined from the incoming HTTP request message.</exception>
-        /// <seealso cref="AuthEventMetadata" />
-        /// <seealso cref="AuthEventRequestBase" />
-        private AuthEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthEventMetadata eventMetaData, Dictionary<string, string> tokenClaims, Exception ex)
+        /// <seealso cref="AuthenticationEventMetadata" />
+        /// <seealso cref="AuthenticationEventRequestBase" />
+        private AuthenticationEventRequestBase GetRequestForEvent(HttpRequestMessage request, string payload, AuthenticationEventMetadata eventMetaData, Dictionary<string, string> tokenClaims, Exception ex)
         {
-            AuthEventRequestBase requestEvent = eventMetaData?.CreateEventRequestValidate(request, payload, tokenClaims);
+            AuthenticationEventRequestBase requestEvent = eventMetaData?.CreateEventRequestValidate(request, payload, tokenClaims);
             if (requestEvent == null)
             {
-                throw new Exception(AuthEventResource.Ex_Invalid_Event);
+                throw new Exception(AuthenticationEventResource.Ex_Invalid_Event);
             }
             else if (requestEvent.GetType() != _parameterInfo.ParameterType && ex == null && _parameterInfo.ParameterType != typeof(string))
             {
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Parm_Mismatch, requestEvent.GetType(), _parameterInfo.ParameterType));
+                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Parm_Mismatch, requestEvent.GetType(), _parameterInfo.ParameterType));
             }
 
-            requestEvent.StatusMessage = ex == null ? AuthEventResource.Status_Good : ex.Message;
+            requestEvent.StatusMessage = ex == null ? AuthenticationEventResource.Status_Good : ex.Message;
             requestEvent.RequestStatus = ex == null ? RequestStatusType.Successful : ex is UnauthorizedAccessException ? RequestStatusType.TokenInvalid : RequestStatusType.Failed;
 
             return requestEvent;
         }
 
-        private Dictionary<string, object> GetBindingData(ValueBindingContext context, object value, AuthEventResponseHandler eventResponseHandler)
+        private Dictionary<string, object> GetBindingData(ValueBindingContext context, object value, AuthenticationEventResponseHandler eventResponseHandler)
         {
             return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
             {
@@ -220,14 +220,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <returns>The Event Metadata object.</returns>
         /// <exception cref="AggregateException">Aggregates all the schema validation exceptions.</exception>
         /// <exception cref="Exception">IF the event cannot be determined or if the object model event differs from the requested event on the incoming payload.</exception>
-        private static AuthEventMetadata GetEventAndValidateSchema(string body)
+        private static AuthenticationEventMetadata GetEventAndValidateSchema(string body)
         {
             if (!Helpers.IsJson(body))
             {
                 throw new InvalidDataException();
             }
 
-            return AuthEventMetadataLoader.GetEventMetadata(body);
+            return AuthenticationEventMetadataLoader.GetEventMetadata(body);
         }
         #endregion
 
@@ -239,11 +239,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             if (context == null)
             {
-                throw new ArgumentNullException(AuthEventResource.Ex_Context_Null);
+                throw new ArgumentNullException(AuthenticationEventResource.Ex_Context_Null);
             }
 
             var function = context.Descriptor.ShortName.Split('.').Last();
-            _configuration.Listeners.Add(function, new AuthEventListener(context.Executor, _authEventTriggerAttr));
+            _configuration.Listeners.Add(function, new AuthenticationEventListener(context.Executor, _authEventTriggerAttr));
             //_configuration.LogInformation($"Added function listener: {function}");
             _configuration.DisplayAzureFunctionInfoToConsole(function);
 

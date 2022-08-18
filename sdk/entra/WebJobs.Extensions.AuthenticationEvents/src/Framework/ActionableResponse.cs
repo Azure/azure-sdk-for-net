@@ -9,10 +9,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>And abstract class for responses that implements actions.</summary>
     /// <typeparam name="T">Of type EventAction.</typeparam>
-    /// <seealso cref="AuthEventAction" />
+    /// <seealso cref="AuthenticationEventAction" />
     ///
 
-    public abstract class ActionableResponse<T> : AuthEventResponse where T : AuthEventAction
+    public abstract class ActionableResponse<T> : AuthenticationEventResponse where T : AuthenticationEventAction
     {
         /// <summary>Gets or sets the actions.</summary>
         /// <value>The actions.</value>
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         /// <summary>Invalidates this instance.
         /// Subsequently invalidates the actions.</summary>
-        /// <seealso cref="AuthEventResponse" />
+        /// <seealso cref="AuthenticationEventResponse" />
         internal override void Invalidate()
         {
             InvalidateActions();
@@ -33,22 +33,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             string actionElement = "actions";
             string typeProperty = "type";
 
-            AuthEventJsonElement jPayload = new AuthEventJsonElement(Body);
-            AuthEventJsonElement jActions = jPayload.FindFirstElementNamed(actionElement);
+            AuthenticationEventJsonElement jPayload = new AuthenticationEventJsonElement(Body);
+            AuthenticationEventJsonElement jActions = jPayload.FindFirstElementNamed(actionElement);
             if (jActions == null)
             {
-                jActions = new AuthEventJsonElement();
+                jActions = new AuthenticationEventJsonElement();
                 jPayload.Properties.Add(actionElement, jActions);
             }
 
             foreach (T action in Actions)
             {
-                AuthEventJsonElement jBody = action.BuildActionBody();
-                AuthEventJsonElement jAction = jActions.FindFirstElementWithPropertyNamed(typeProperty);
+                AuthenticationEventJsonElement jBody = action.BuildActionBody();
+                AuthenticationEventJsonElement jAction = jActions.FindFirstElementWithPropertyNamed(typeProperty);
 
                 if (jAction == null || !jAction.Properties[typeProperty].ToString().Equals(action.ActionType, StringComparison.OrdinalIgnoreCase))
                 {
-                    jAction = new AuthEventJsonElement();
+                    jAction = new AuthenticationEventJsonElement();
                     jActions.Elements.Add(jAction);
                 }
                 else

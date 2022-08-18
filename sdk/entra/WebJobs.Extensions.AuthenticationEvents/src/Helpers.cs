@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             try
             {
-                AuthEventJsonElement jPayload = new AuthEventJsonElement(payload);
+                AuthenticationEventJsonElement jPayload = new AuthenticationEventJsonElement(payload);
                 string comparable = string.Empty;
                 if (jPayload.Properties.ContainsKey("type"))
                 {
@@ -29,18 +29,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                 foreach (EventDefinition eventDefinition in Enum.GetValues(typeof(EventDefinition)))
                 {
-                    AuthEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthEventMetadataAttribute>();
+                    AuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthenticationEventMetadataAttribute>();
                     if (eventMetadata.EventIdentifier.Equals(comparable, StringComparison.OrdinalIgnoreCase))
                     {
                         return eventDefinition;
                     }
                 }
 
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Comparable_Not_Found, comparable));
+                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Event_Missing, ex.Message));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Event_Missing, ex.Message));
             }
         }
 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             else
             {
-                errors.Add(AuthEventResource.Ex_Gen_Failure);
+                errors.Add(AuthenticationEventResource.Ex_Gen_Failure);
             }
 
             return $"{{\"errors\":[\"{String.Join("\",\"", errors.Select(m => m))}\"]}}";
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
         }
 
-        internal static HttpResponseMessage HttpJsonResponse(AuthEventJsonElement json)
+        internal static HttpResponseMessage HttpJsonResponse(AuthenticationEventJsonElement json)
         {
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK)
             {
@@ -111,24 +111,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 || (input.StartsWith("[", StringComparison.OrdinalIgnoreCase) && input.EndsWith("]", StringComparison.OrdinalIgnoreCase));
         }
 
-        internal static AuthEventAction GetEventActionForActionType(string actionType)
+        internal static AuthenticationEventAction GetEventActionForActionType(string actionType)
         {
             if (_eventActions.IsEmpty)
             {
-                Type eventType = typeof(AuthEventAction);
+                Type eventType = typeof(AuthenticationEventAction);
                 var actions = Assembly.GetExecutingAssembly().GetTypes()
                     .Where(p => eventType.IsAssignableFrom(p) && !(p.IsInterface || p.IsAbstract));
 
                 foreach (Type type in actions)
                 {
-                    AuthEventAction action = (AuthEventAction)Activator.CreateInstance(type);
+                    AuthenticationEventAction action = (AuthenticationEventAction)Activator.CreateInstance(type);
                     _eventActions.TryAdd(action.ActionType, type);
                 }
             }
 
             return actionType != null && _eventActions.ContainsKey(actionType)
-                ? (AuthEventAction)Activator.CreateInstance(_eventActions[actionType])
-                : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Action_Invalid, actionType, String.Join("', '", _eventActions.Select(x => x.Key))));
+                ? (AuthenticationEventAction)Activator.CreateInstance(_eventActions[actionType])
+                : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Action_Invalid, actionType, String.Join("', '", _eventActions.Select(x => x.Key))));
         }
 
         internal static void ValidateGraph(object graph)
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             if (validationResults.Count > 0)
             {
-                throw new AggregateException(AuthEventResource.Ex_Invalid_Payload, validationResults.Select(v => new Exception(v.ErrorMessage)));
+                throw new AggregateException(AuthenticationEventResource.Ex_Invalid_Payload, validationResults.Select(v => new Exception(v.ErrorMessage)));
             }
         }
 

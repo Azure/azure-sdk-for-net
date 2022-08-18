@@ -8,8 +8,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>Abstract class for any responses that implement an cloud event payload and has actions on it.</summary>
     /// <typeparam name="T">Of type EventAction.</typeparam>
-    /// <seealso cref="AuthEventAction" />
-    public abstract class ActionableCloudEventResponse<T> : ActionableResponse<T> where T : AuthEventAction
+    /// <seealso cref="AuthenticationEventAction" />
+    public abstract class ActionableCloudEventResponse<T> : ActionableResponse<T> where T : AuthenticationEventAction
     {
         /// <summary>Gets the Cloud Event @odata.type.</summary>
         /// <value>Gets the Cloud Event @odata.type.</value>
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// Subsequently invalidates the actions.</summary>
         internal override void Invalidate()
         {
-            AuthEventJsonElement eventJsonElement = new AuthEventJsonElement(Body);
+            AuthenticationEventJsonElement eventJsonElement = new AuthenticationEventJsonElement(Body);
             if (eventJsonElement.SetProperty<string>(ODataType, "data", "@odata.type"))
             {
                 Body = eventJsonElement.ToString();

@@ -1,5 +1,21 @@
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field, AllowMultiple=false)]
+    public partial class AuthenticationEventMetadataAttribute : System.Attribute
+    {
+        internal AuthenticationEventMetadataAttribute() { }
+        public string EventNamespace { get { throw null; } set { } }
+    }
+    public partial class AuthenticationEventResponseHandler : Microsoft.Azure.WebJobs.Host.Bindings.IValueBinder, Microsoft.Azure.WebJobs.Host.Bindings.IValueProvider
+    {
+        public AuthenticationEventResponseHandler() { }
+        public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequestBase Request { get { throw null; } }
+        public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse Response { get { throw null; } }
+        public System.Type Type { get { throw null; } }
+        public System.Threading.Tasks.Task<object> GetValueAsync() { throw null; }
+        public System.Threading.Tasks.Task SetValueAsync(object result, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public string ToInvokeString() { throw null; }
+    }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
     public partial class AuthenticationEventsTriggerAttribute : System.Attribute
@@ -8,32 +24,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public string AudienceAppId { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Field, AllowMultiple=false)]
-    public partial class AuthEventMetadataAttribute : System.Attribute
+    public partial class AuthenticationEventWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
     {
-        internal AuthEventMetadataAttribute() { }
-        public string EventNamespace { get { throw null; } set { } }
-    }
-    public partial class AuthEventResponseHandler : Microsoft.Azure.WebJobs.Host.Bindings.IValueBinder, Microsoft.Azure.WebJobs.Host.Bindings.IValueProvider
-    {
-        public AuthEventResponseHandler() { }
-        public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventRequestBase Request { get { throw null; } }
-        public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse Response { get { throw null; } }
-        public System.Type Type { get { throw null; } }
-        public System.Threading.Tasks.Task<object> GetValueAsync() { throw null; }
-        public System.Threading.Tasks.Task SetValueAsync(object result, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public string ToInvokeString() { throw null; }
-    }
-    public partial class AuthEventWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
-    {
-        public AuthEventWebJobsStartup() { }
+        public AuthenticationEventWebJobsStartup() { }
         public void Configure(Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { }
     }
     public enum EventDefinition
     {
-        [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "onTokenIssuanceStartCustomExtension", "TokenIssuanceStart.preview_10_01_2021", "ResponseTemplate.json")]
+        [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "onTokenIssuanceStartCustomExtension", "TokenIssuanceStart.preview_10_01_2021", "ResponseTemplate.json")]
         TokenIssuanceStartV20211001Preview = 0,
-        [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "microsoft.graph.authenticationEvent.TokenIssuanceStart", "TokenIssuanceStart", "CloudEventActionableTemplate.json")]
+        [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "microsoft.graph.authenticationEvent.TokenIssuanceStart", "TokenIssuanceStart", "CloudEventActionableTemplate.json")]
         TokenIssuanceStart = 1,
     }
     public enum EventType
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 }
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
-    public abstract partial class ActionableCloudEventResponse<T> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.ActionableResponse<T> where T : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventAction
+    public abstract partial class ActionableCloudEventResponse<T> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.ActionableResponse<T> where T : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventAction
     {
         protected ActionableCloudEventResponse() { }
         internal abstract string DataTypeIdentifier { get; }
@@ -57,23 +57,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("oDataType")]
         public string ODataType { get { throw null; } }
     }
-    public abstract partial class ActionableResponse<T> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse where T : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventAction
+    public abstract partial class ActionableResponse<T> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse where T : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventAction
     {
         protected ActionableResponse() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("actions")]
         public System.Collections.Generic.List<T> Actions { get { throw null; } set { } }
     }
-    public abstract partial class AuthEventAction
+    public abstract partial class AuthenticationEventAction
     {
-        public AuthEventAction() { }
+        public AuthenticationEventAction() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("actionType")]
         internal abstract string ActionType { get; }
-        internal abstract Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventJsonElement BuildActionBody();
-        internal abstract void FromJson(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventJsonElement actionBody);
+        internal abstract Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventJsonElement BuildActionBody();
+        internal abstract void FromJson(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventJsonElement actionBody);
     }
-    public abstract partial class AuthEventData
+    public abstract partial class AuthenticationEventData
     {
-        protected AuthEventData() { }
+        protected AuthenticationEventData() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("authenticationEventListenerId")]
         public System.Guid AuthenticationEventListenerId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("AuthenticationEventsId")]
@@ -81,9 +81,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("tenantId")]
         public System.Guid TenantId { get { throw null; } set { } }
     }
-    public abstract partial class AuthEventRequestBase
+    public abstract partial class AuthenticationEventRequestBase
     {
-        internal AuthEventRequestBase() { }
+        internal AuthenticationEventRequestBase() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("queryParameters")]
         public System.Collections.Generic.Dictionary<string, string> QueryParameters { get { throw null; } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
@@ -96,34 +96,34 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("type")]
         public string Type { get { throw null; } set { } }
-        public abstract System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse> Completed();
-        public abstract System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse> Failed(System.Exception exception);
+        public abstract System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Completed();
+        public abstract System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Failed(System.Exception exception);
         public override string ToString() { throw null; }
     }
-    public abstract partial class AuthEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventRequestBase where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventData
+    public abstract partial class AuthenticationEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequestBase where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventData
     {
-        internal AuthEventRequest() { }
+        internal AuthenticationEventRequest() { }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("payload")]
         public TData Payload { get { throw null; } set { } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("response")]
         public TResponse Response { get { throw null; } set { } }
-        public override System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse> Completed() { throw null; }
-        public override System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse> Failed(System.Exception exception) { throw null; }
+        public override System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Completed() { throw null; }
+        public override System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Failed(System.Exception exception) { throw null; }
     }
-    public abstract partial class AuthEventResponse : System.Net.Http.HttpResponseMessage
+    public abstract partial class AuthenticationEventResponse : System.Net.Http.HttpResponseMessage
     {
-        protected AuthEventResponse() { }
+        protected AuthenticationEventResponse() { }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         public string Body { get { throw null; } set { } }
         internal abstract void Invalidate();
     }
-    public abstract partial class CloudEventData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventData
+    public abstract partial class CloudEventData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventData
     {
         protected CloudEventData() { }
     }
-    public abstract partial class CloudEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventRequest<TResponse, TData> where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventResponse where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.CloudEventData
+    public abstract partial class CloudEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequest<TResponse, TData> where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.CloudEventData
     {
         internal CloudEventRequest() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("oDataType")]
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("values")]
         public string[] Values { get { throw null; } set { } }
     }
-    public abstract partial class TokenIssuanceAction : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthEventAction
+    public abstract partial class TokenIssuanceAction : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventAction
     {
         public TokenIssuanceAction() { }
     }

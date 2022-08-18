@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
         private readonly string[] _allowed;
         /// <summary>Initializes a new instance of the <see cref="OneOfAttribute" /> class.</summary>
         /// <param name="allowed">The allowed values.</param>
-        internal OneOfAttribute(params string[] allowed) : base($"{AuthEventResource.Val_One_Of} '{string.Join("' ,'", allowed)}'")
+        internal OneOfAttribute(params string[] allowed) : base($"{AuthenticationEventResource.Val_One_Of} '{string.Join("' ,'", allowed)}'")
         {
             _allowed = allowed;
         }

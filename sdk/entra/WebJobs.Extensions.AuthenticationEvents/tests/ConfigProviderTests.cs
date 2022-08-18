@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
 
-                    AuthEventResponseHandler eventsResponseHandler = (AuthEventResponseHandler)mockedRequest.Properties[AuthEventResponseHandler.EventResponseProperty];
+                    AuthenticationEventResponseHandler eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
                     eventsResponseHandler.Response = GetContentForHttpStatus(httpStatusCode);
                 }
             });

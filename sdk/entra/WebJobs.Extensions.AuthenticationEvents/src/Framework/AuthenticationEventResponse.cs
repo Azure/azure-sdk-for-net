@@ -10,7 +10,7 @@ using System.Text;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>Represents an event response based on the event type and request.</summary>
-    public abstract class AuthEventResponse : HttpResponseMessage
+    public abstract class AuthenticationEventResponse : HttpResponseMessage
     {
         // internal HttpResponseMessage HttpResponseMessage { get; set; }
         /// <summary>Invalidates this instance. (Builds the Json payload).</summary>
@@ -31,17 +31,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="type">The type to create.</param>
         /// <param name="body">The Json payload for the body.</param>
         /// <returns>A created instance of EventResponse based on the Type.</returns>
-        /// <seealso cref="AuthEventResponse"/>
-        internal static AuthEventResponse CreateInstance(Type type, string body)
+        /// <seealso cref="AuthenticationEventResponse"/>
+        internal static AuthenticationEventResponse CreateInstance(Type type, string body)
         {
-            AuthEventResponse response = (AuthEventResponse)Activator.CreateInstance(type, true);
+            AuthenticationEventResponse response = (AuthenticationEventResponse)Activator.CreateInstance(type, true);
             response.Body = body;
             return response;
         }
 
-        internal virtual void InstanceCreated(AuthEventJsonElement payload)
+        internal virtual void InstanceCreated(AuthenticationEventJsonElement payload)
         {
-            AuthEventJsonElement jBody = new(Body);
+            AuthenticationEventJsonElement jBody = new(Body);
 
             Dictionary<string[], string> updates = new();
 
@@ -68,11 +68,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <exception cref="Exception">Thrown if the path cannot be found.</exception>
         internal void SetJsonValue<T>(T value, params string[] path)
         {
-            AuthEventJsonElement payload = new(Body);
+            AuthenticationEventJsonElement payload = new(Body);
             (string key, Dictionary<string, object> props) = payload.FindPropertyDictionary(true, path);
             if (key == null)
             {
-                throw new Exception(AuthEventResource.Ex_Invalid_JsonPath);
+                throw new Exception(AuthenticationEventResource.Ex_Invalid_JsonPath);
             }
 
             props[key] = value;
@@ -81,13 +81,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal void SetJsonValue<T>(Dictionary<string[], T> values)
         {
-            AuthEventJsonElement payload = new(Body);
+            AuthenticationEventJsonElement payload = new(Body);
             foreach (KeyValuePair<string[], T> keyValuePair in values)
             {
                 (string key, Dictionary<string, object> props) = payload.FindPropertyDictionary(true, keyValuePair.Key);
                 if (key == null)
                 {
-                    throw new Exception(AuthEventResource.Ex_Invalid_JsonPath);
+                    throw new Exception(AuthenticationEventResource.Ex_Invalid_JsonPath);
                 }
 
                 props[key] = keyValuePair.Value;

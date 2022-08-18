@@ -23,10 +23,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="AuthEventResource.Designer.cs">
+		<Compile Update="AuthenticationEventResource.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
-		  <DependentUpon>AuthEventResource.resx</DependentUpon>
+		  <DependentUpon>AuthenticationEventResource.resx</DependentUpon>
 		</Compile>
 		<Compile Update="AuthEventResourceAuthEventResource.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -37,9 +37,9 @@
 
 
 	<ItemGroup>
-		<EmbeddedResource Update="AuthEventResource.resx">
+		<EmbeddedResource Update="AuthenticationEventResource.resx">
 		  <Generator>ResXFileCodeGenerator</Generator>
-		  <LastGenOutput>AuthEventResource.Designer.cs</LastGenOutput>
+		  <LastGenOutput>AuthenticationEventResource.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="AuthEventResourceAuthEventResource.resx">
 			<Generator>ResXFileCodeGenerator</Generator>

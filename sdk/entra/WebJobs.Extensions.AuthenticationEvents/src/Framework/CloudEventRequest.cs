@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     /// <summary>Abstract class that wraps any request that relies on cloud events.</summary>
     /// <typeparam name="TResponse">The Cloud Event Response.</typeparam>
     /// <typeparam name="TData">The Cloud Event Data.</typeparam>
-    public abstract class CloudEventRequest<TResponse, TData> : AuthEventRequest<TResponse, TData> where TResponse : AuthEventResponse where TData : CloudEventData
+    public abstract class CloudEventRequest<TResponse, TData> : AuthenticationEventRequest<TResponse, TData> where TResponse : AuthenticationEventResponse where TData : CloudEventData
     {
         /// <summary>Gets or sets the source.</summary>
         /// <value>The source.</value>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="request">The request.</param>
         internal CloudEventRequest(HttpRequestMessage request) : base(request) { }
 
-        internal override void ParseInbound(AuthEventJsonElement payload)
+        internal override void ParseInbound(AuthenticationEventJsonElement payload)
         {
             if (payload.Properties.ContainsKey("type"))
             {

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
             {
                 if (_eventIds == null)
                 {
-                    _eventIds = Enum.GetValues(typeof(EventDefinition)).Cast<EventDefinition>().Select(x => x.GetAttribute<AuthEventMetadataAttribute>().EventIdentifier).ToArray();
+                    _eventIds = Enum.GetValues(typeof(EventDefinition)).Cast<EventDefinition>().Select(x => x.GetAttribute<AuthenticationEventMetadataAttribute>().EventIdentifier).ToArray();
                 }
 
                 return _eventIds;
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
         /// <returns>An instance of the formatted error message.</returns>
         public override string FormatErrorMessage(string name)
         {
-            return String.Format(CultureInfo.CurrentCulture, AuthEventResource.Val_One_Of, name) + string.Join(", ", EventIds);
+            return String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Val_One_Of, name) + string.Join(", ", EventIds);
         }
 
         /// <summary>Returns true if the value is a valid event identifier.</summary>

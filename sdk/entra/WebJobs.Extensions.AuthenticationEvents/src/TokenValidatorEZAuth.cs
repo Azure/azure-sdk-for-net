@@ -18,9 +18,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             try
             {
                 string principal = request.Headers.DecodeBase64(ConfigurationManager.HEADER_EZAUTH_PRINCIPAL);
-                AuthEventJsonElement jPrincipal = new AuthEventJsonElement(principal);
+                AuthenticationEventJsonElement jPrincipal = new AuthenticationEventJsonElement(principal);
 
-                foreach (AuthEventJsonElement jVal in jPrincipal.GetPropertyValue<AuthEventJsonElement>("claims").Elements)
+                foreach (AuthenticationEventJsonElement jVal in jPrincipal.GetPropertyValue<AuthenticationEventJsonElement>("claims").Elements)
                     Claims.Add(jVal.GetPropertyValue("typ"), jVal.GetPropertyValue("val"));
 
                 SupportedTokenSchemaVersions tokenSchemaVersion = TokenValidatorHelper.ParseSupportedTokenVersion(Claims["ver"]);

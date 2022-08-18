@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     {
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.IsGenericType ? typeof(AuthEventAction).IsAssignableFrom(typeToConvert.GenericTypeArguments[0]) : false;
+            return typeToConvert.IsGenericType ? typeof(AuthenticationEventAction).IsAssignableFrom(typeToConvert.GenericTypeArguments[0]) : false;
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -23,13 +23,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             return converter;
         }
 
-        internal class ActionConverter<T> : JsonConverter<List<T>> where T : AuthEventAction
+        internal class ActionConverter<T> : JsonConverter<List<T>> where T : AuthenticationEventAction
         {
             public override List<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 List<T> result = new List<T>();
-                AuthEventJsonElement actions = new AuthEventJsonElement(ref reader);
-                foreach (AuthEventJsonElement action in actions.Elements)
+                AuthenticationEventJsonElement actions = new AuthenticationEventJsonElement(ref reader);
+                foreach (AuthenticationEventJsonElement action in actions.Elements)
                 {
                     T eventAction = (T)Helpers.GetEventActionForActionType(GetActionValue(action));
                     if (eventAction != null)
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     }
                 }
 
-                return result.Count == 0 ? throw new Exception(AuthEventResource.Ex_No_Action) : result;
+                return result.Count == 0 ? throw new Exception(AuthenticationEventResource.Ex_No_Action) : result;
             }
 
             public override void Write(Utf8JsonWriter writer, List<T> value, JsonSerializerOptions options)
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 JsonSerializer.Serialize(writer, value);
             }
 
-            private static string GetActionValue(AuthEventJsonElement jAction)
+            private static string GetActionValue(AuthenticationEventJsonElement jAction)
             {
                 if (jAction.Properties.ContainsKey("actionType"))
                 {

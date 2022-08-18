@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>Class to wrap System.Json.Text.JsonElement.</summary>
-    internal class AuthEventJsonElement : ICloneable
+    internal class AuthenticationEventJsonElement : ICloneable
     {
         private JsonElement _jsonElement;
 
@@ -25,24 +25,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         internal string Value { get; set; }
         /// <summary>Gets or sets the child json elements.</summary>
         /// <value>The elements.</value>
-        internal List<AuthEventJsonElement> Elements { get; } = new List<AuthEventJsonElement>();
+        internal List<AuthenticationEventJsonElement> Elements { get; } = new List<AuthenticationEventJsonElement>();
         /// <summary>If the object is derived from a property, the is represents the property name.</summary>
         /// <value>The key.</value>
         internal string Key { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventJsonElement" /> class.</summary>
-        internal AuthEventJsonElement() { }
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventJsonElement" /> class.</summary>
+        internal AuthenticationEventJsonElement() { }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventJsonElement" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventJsonElement" /> class.</summary>
         /// <param name="properties">Predefined properties and values.</param>
-        internal AuthEventJsonElement(Dictionary<string, object> properties)
+        internal AuthenticationEventJsonElement(Dictionary<string, object> properties)
         {
             Properties = properties;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventJsonElement" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventJsonElement" /> class.</summary>
         /// <param name="value">A json string to build the object from.</param>
-        internal AuthEventJsonElement(string value)
+        internal AuthenticationEventJsonElement(string value)
         {
             Utf8JsonReader reader = new(new ReadOnlySequence<byte>(Encoding.UTF8.GetBytes(value)));
             if (!BuildElement(ref reader))
@@ -51,16 +51,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventJsonElement" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventJsonElement" /> class.</summary>
         /// <param name="reader">A json reader to build the object from.</param>
-        internal AuthEventJsonElement(ref Utf8JsonReader reader)
+        internal AuthenticationEventJsonElement(ref Utf8JsonReader reader)
         {
             BuildElement(ref reader);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthEventJsonElement" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventJsonElement" /> class.</summary>
         /// <param name="jsonElement">A System.Text.Json.JsonElement to build the object from.</param>
-        internal AuthEventJsonElement(JsonElement jsonElement)
+        internal AuthenticationEventJsonElement(JsonElement jsonElement)
         {
             BuildElement(jsonElement);
         }
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             else if (_jsonElement.ValueKind == JsonValueKind.Array)
             {
                 foreach (var prop in _jsonElement.EnumerateArray())
-                    Elements.Add(new AuthEventJsonElement(prop));
+                    Elements.Add(new AuthenticationEventJsonElement(prop));
             }
 
             return true;
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Finds the elements based on the parent property name.</summary>
         /// <param name="name">The name.</param>
         /// <returns>A list of all elements that match the name.</returns>
-        internal List<AuthEventJsonElement> FindElementsNamed(string name)
+        internal List<AuthenticationEventJsonElement> FindElementsNamed(string name)
         {
-            List<AuthEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new();
             SearchForElements(name, result, this);
             return result;
         }
@@ -128,9 +128,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Finds the elements with that has a child property that matches the name parameter.</summary>
         /// <param name="name">The name.</param>
         /// <returns>A list of elements that contain the property name.</returns>
-        internal List<AuthEventJsonElement> FindElementsWithPropertyNamed(string name)
+        internal List<AuthenticationEventJsonElement> FindElementsWithPropertyNamed(string name)
         {
-            List<AuthEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new();
             SearchForElements(name, result, this, false, true);
             return result;
         }
@@ -138,9 +138,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Finds the first element that that property name matches the name parameter.</summary>
         /// <param name="name">The name.</param>
         /// <returns>The first element found else null.</returns>
-        internal AuthEventJsonElement FindFirstElementNamed(string name)
+        internal AuthenticationEventJsonElement FindFirstElementNamed(string name)
         {
-            List<AuthEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new();
             SearchForElements(name, result, this, true);
             return result.FirstOrDefault();
         }
@@ -148,9 +148,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Finds the first element with that has a child property that matches the name parameter.</summary>
         /// <param name="name">The name.</param>
         /// <returns>The first element matched or null.</returns>
-        internal AuthEventJsonElement FindFirstElementWithPropertyNamed(string name)
+        internal AuthenticationEventJsonElement FindFirstElementWithPropertyNamed(string name)
         {
-            List<AuthEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new();
             SearchForElements(name, result, this, true, true);
             return result.FirstOrDefault();
         }
@@ -160,9 +160,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>
         ///   A list of elements that match.
         /// </returns>
-        internal List<AuthEventJsonElement> FindElementsByExpression(Regex expression)
+        internal List<AuthenticationEventJsonElement> FindElementsByExpression(Regex expression)
         {
-            List<AuthEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new();
             SearchForElementsByRegex(expression, result, this);
             return result;
         }
@@ -170,19 +170,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Finds the elements with that has a child property that matches on the regular expression parameter.</summary>
         /// <param name="expression">The regular expression.</param>
         /// <returns>All elements that matching child properties.</returns>
-        internal List<AuthEventJsonElement> FindElementsByPropertyExpression(Regex expression)
+        internal List<AuthenticationEventJsonElement> FindElementsByPropertyExpression(Regex expression)
         {
-            List<AuthEventJsonElement> result = new();
+            List<AuthenticationEventJsonElement> result = new();
             SearchForElementsByRegex(expression, result, this, true);
             return result;
         }
-        private void SearchForElementsByRegex(Regex expresson, List<AuthEventJsonElement> container, AuthEventJsonElement element, bool withPropertyValue = false)
+        private void SearchForElementsByRegex(Regex expresson, List<AuthenticationEventJsonElement> container, AuthenticationEventJsonElement element, bool withPropertyValue = false)
         {
             foreach (KeyValuePair<string, object> keyValue in element.Properties)
             {
                 if (expresson.IsMatch(keyValue.Key))
                 {
-                    if (keyValue.Value is AuthEventJsonElement ele)
+                    if (keyValue.Value is AuthenticationEventJsonElement ele)
                     {
                         container.Add(ele);
                     }
@@ -196,22 +196,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     container.Add(element);
                 }
 
-                if (keyValue.Value is AuthEventJsonElement e)
+                if (keyValue.Value is AuthenticationEventJsonElement e)
                 {
                     SearchForElementsByRegex(expresson, container, e, withPropertyValue);
                 }
             }
-            foreach (AuthEventJsonElement eventJsonElement in element.Elements)
+            foreach (AuthenticationEventJsonElement eventJsonElement in element.Elements)
                 SearchForElementsByRegex(expresson, container, eventJsonElement, withPropertyValue);
         }
 
-        private void SearchForElements(string name, List<AuthEventJsonElement> container, AuthEventJsonElement element, bool findFirst = false, bool withPropertyValue = false)
+        private void SearchForElements(string name, List<AuthenticationEventJsonElement> container, AuthenticationEventJsonElement element, bool findFirst = false, bool withPropertyValue = false)
         {
             foreach (KeyValuePair<string, object> keyValue in element.Properties)
             {
                 if (keyValue.Key.Equals(name))
                 {
-                    if (keyValue.Value is AuthEventJsonElement ele)
+                    if (keyValue.Value is AuthenticationEventJsonElement ele)
                     {
                         container.Add(ele);
                     }
@@ -230,14 +230,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     container.Add(element);
                 }
 
-                if ((container.Count == 0 || !findFirst) && (keyValue.Value is AuthEventJsonElement e))
+                if ((container.Count == 0 || !findFirst) && (keyValue.Value is AuthenticationEventJsonElement e))
                 {
                     SearchForElements(name, container, e, findFirst, withPropertyValue);
                 }
             }
             if (container.Count == 0 || !findFirst)
             {
-                foreach (AuthEventJsonElement eventJsonElement in element.Elements)
+                foreach (AuthenticationEventJsonElement eventJsonElement in element.Elements)
                     SearchForElements(name, container, eventJsonElement, findFirst, withPropertyValue);
             }
         }
@@ -294,10 +294,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>Returns the key and it's related dictionary.</returns>
         internal (string Key, Dictionary<string, object> Container) FindPropertyDictionary(bool create = false, params string[] path)
         {
-            AuthEventJsonElement current = this;
+            AuthenticationEventJsonElement current = this;
             for (int i = 0; i < path.Length - 1; i++)
             {
-                if (current != null && current.Properties.ContainsKey(path[i]) && current.Properties[path[i]] is AuthEventJsonElement jsonElement)
+                if (current != null && current.Properties.ContainsKey(path[i]) && current.Properties[path[i]] is AuthenticationEventJsonElement jsonElement)
                 {
                     current = jsonElement;
                 }
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 {
                     if (create)
                     {
-                        AuthEventJsonElement newEle = new();
+                        AuthenticationEventJsonElement newEle = new();
                         current.Properties.Add(path[i], newEle);
                         current = newEle;
                     }
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
             else if (create)
             {
-                AuthEventJsonElement newEle = new();
+                AuthenticationEventJsonElement newEle = new();
                 current.Properties.Add(path.Last(), newEle);
                 return (path.Last(), current.Properties);
             }
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         /// <summary>Merges the specified element with another element, coping the parameter element's properties and elements. If there is a conflict, the parameter element value is used.</summary>
         /// <param name="element">The element to merge in.</param>
-        internal void Merge(AuthEventJsonElement element)
+        internal void Merge(AuthenticationEventJsonElement element)
         {
             foreach (string key in element.Properties.Keys)
             {
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 }
                 else
                 {
-                    if (Properties[key] is AuthEventJsonElement subElement && value is AuthEventJsonElement mergeSubElement)
+                    if (Properties[key] is AuthenticationEventJsonElement subElement && value is AuthenticationEventJsonElement mergeSubElement)
                     {
                         subElement.Merge(mergeSubElement);
                     }
@@ -361,8 +361,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 }
             }
             Value = element.Value;
-            foreach (AuthEventJsonElement e in element.Elements)
-                Elements.Add((AuthEventJsonElement)e.Clone());
+            foreach (AuthenticationEventJsonElement e in element.Elements)
+                Elements.Add((AuthenticationEventJsonElement)e.Clone());
         }
 
         /// <summary>Output the element to a json string.</summary>
@@ -449,10 +449,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     case Guid v:
                         writer.WriteStringValue(v);
                         break;
-                    case AuthEventJsonElement v:
+                    case AuthenticationEventJsonElement v:
                         v.WriteTo(writer);
                         break;
-                    case List<AuthEventJsonElement> arr:
+                    case List<AuthenticationEventJsonElement> arr:
                         writer.WriteStartArray();
                         foreach (var item in arr)
                             item.WriteTo(writer);
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 JsonValueKind.Number => value.GetInt32(),
                 JsonValueKind.True => true,
                 JsonValueKind.String => value.GetString(),
-                _ => new AuthEventJsonElement(value)
+                _ => new AuthenticationEventJsonElement(value)
                 {
                     Key = key
                 },

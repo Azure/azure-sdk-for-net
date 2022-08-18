@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <param name="testTypes">Defines the type of test</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         [Obsolete]
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthEventResponseHandler> action, TestTypes testTypes)
+        public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthenticationEventResponseHandler> action, TestTypes testTypes)
         {
             return await EventResponseBaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action, testTypes);
         }
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <param name="action">Action to emulate the external function call.</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         [Obsolete]
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthEventResponseHandler> action)
+        public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthenticationEventResponseHandler> action)
         {
             return await EventResponseBaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action);
         }
@@ -123,13 +123,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         ///
         [Obsolete]
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthEventResponseHandler> action, TestTypes testTypes)
+        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthenticationEventResponseHandler> action, TestTypes testTypes)
         {
             return await (BaseTest(httpMethods, url, t =>
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
-                    AuthEventResponseHandler eventsResponseHandler = (AuthEventResponseHandler)mockedRequest.Properties[AuthEventResponseHandler.EventResponseProperty];
+                    AuthenticationEventResponseHandler eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
                         Response = testTypes == TestTypes.ValidCloudEvent ? CreateTokenIssuanceStartResponse() : CreateIssuanceStartLegacyResponse(),
@@ -149,13 +149,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <param name="action">Action to emulate the external function call.</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
         [Obsolete]
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthEventResponseHandler> action)
+        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthenticationEventResponseHandler> action)
         {
             return await (BaseTest(httpMethods, url, t =>
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
-                    AuthEventResponseHandler eventsResponseHandler = (AuthEventResponseHandler)mockedRequest.Properties[AuthEventResponseHandler.EventResponseProperty];
+                    AuthenticationEventResponseHandler eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
 
@@ -182,9 +182,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
             Mock<ITriggeredFunctionExecutor> mockObject = new Mock<ITriggeredFunctionExecutor>();
 
-            AuthEventConfigProvider eventsTriggerConfigProvider = new AuthEventConfigProvider(new LoggerFactory());
+            AuthenticationEventConfigProvider eventsTriggerConfigProvider = new AuthenticationEventConfigProvider(new LoggerFactory());
 
-            eventsTriggerConfigProvider.Listeners.Add("onTokenIssuanceStart", new AuthEventListener(mockObject.Object, attr));
+            eventsTriggerConfigProvider.Listeners.Add("onTokenIssuanceStart", new AuthenticationEventListener(mockObject.Object, attr));
 
             mockObject.Setup(m => m.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).Callback<TriggeredFunctionData, CancellationToken>(
                 (t, x) =>

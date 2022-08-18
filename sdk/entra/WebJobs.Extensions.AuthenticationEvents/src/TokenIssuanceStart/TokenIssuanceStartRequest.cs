@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         [JsonPropertyName("tokenClaims")]
         public Dictionary<string, string> TokenClaims { get; } = new Dictionary<string, string>();
 
-        internal override AuthEventResponse GetResponseObject()
+        internal override AuthenticationEventResponse GetResponseObject()
         {
             return Response;
         }

@@ -11,22 +11,22 @@ using System.Threading;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
     /// <summary>Lazy loader and caching for events and the event's related event.</summary>
-    internal class AuthEventMetadataLoader
+    internal class AuthenticationEventMetadataLoader
     {
-        private static AuthEventMetadataLoader _instance;
+        private static AuthenticationEventMetadataLoader _instance;
         private static readonly SemaphoreSlim _semaphore = new(0, 1);
-        private readonly Dictionary<string, AuthEventMetadata> _events = new();
+        private readonly Dictionary<string, AuthenticationEventMetadata> _events = new();
 
-        /// <summary>Prevents a default instance of the <see cref="AuthEventMetadataLoader" /> class from being created.</summary>
-        private AuthEventMetadataLoader() { }
+        /// <summary>Prevents a default instance of the <see cref="AuthenticationEventMetadataLoader" /> class from being created.</summary>
+        private AuthenticationEventMetadataLoader() { }
 
         /// <summary>Gets the instance.</summary>
         /// <value>The instance.</value>
-        internal static AuthEventMetadataLoader Instance
+        internal static AuthenticationEventMetadataLoader Instance
         {
             get
             {
-                _instance ??= new AuthEventMetadataLoader();
+                _instance ??= new AuthenticationEventMetadataLoader();
 
                 return _instance;
             }
@@ -37,21 +37,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>The related event meta-data.</returns>
         /// <exception cref="MissingFieldException">Is thrown when the event metadata attribute is not found on the event definition enum.</exception>
         /// <exception cref="Exception">If not lock is achieved on the thread.</exception>
-        /// <seealso cref="AuthEventMetadata" />
-        internal static AuthEventMetadata GetEventMetadata(string payload)
+        /// <seealso cref="AuthenticationEventMetadata" />
+        internal static AuthenticationEventMetadata GetEventMetadata(string payload)
         {
             return GetEventMetadata(Helpers.GetEventDefintionFromPayload(payload));
         }
 
-        internal static AuthEventMetadata GetEventMetadata(EventDefinition eventDef)
+        internal static AuthenticationEventMetadata GetEventMetadata(EventDefinition eventDef)
         {
-            var eventMetadataAttr = eventDef.GetAttribute<AuthEventMetadataAttribute>();
+            var eventMetadataAttr = eventDef.GetAttribute<AuthenticationEventMetadataAttribute>();
             if (eventMetadataAttr == null)
             {
-                throw new MissingFieldException(AuthEventResource.Ex_No_Attr);
+                throw new MissingFieldException(AuthenticationEventResource.Ex_No_Attr);
             }
 
-            AuthEventMetadata eventMetadata = Instance._events.ContainsKey(eventMetadataAttr.EventIdentifier) ? Instance._events[eventMetadataAttr.EventIdentifier] : null;
+            AuthenticationEventMetadata eventMetadata = Instance._events.ContainsKey(eventMetadataAttr.EventIdentifier) ? Instance._events[eventMetadataAttr.EventIdentifier] : null;
 
             //If the current event meta-data is not associated to the event we load it from file, associated it and store it in memory
             return eventMetadata ?? LoadFromResource(eventMetadataAttr);
@@ -60,14 +60,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Loads from schema and payload resource files that are stored as an embedded resource.</summary>
         /// <param name="eventMetadataAttr">The event metadata attribute with reference the schema files and template payloads.</param>
         /// <returns>EventMetadata with the contents of the embedded resources.</returns>
-        /// <seealso cref="AuthEventMetadata" />
-        private static AuthEventMetadata LoadFromResource(AuthEventMetadataAttribute eventMetadataAttr)
+        /// <seealso cref="AuthenticationEventMetadata" />
+        private static AuthenticationEventMetadata LoadFromResource(AuthenticationEventMetadataAttribute eventMetadataAttr)
         {
             //As we read from files we lock this thread to only one execution at a time.
             _semaphore.Wait();
             try
             {
-                AuthEventMetadata eventMetadata = Instance._events.ContainsKey(eventMetadataAttr.EventIdentifier) ? Instance._events[eventMetadataAttr.EventIdentifier] : null;
+                AuthenticationEventMetadata eventMetadata = Instance._events.ContainsKey(eventMetadataAttr.EventIdentifier) ? Instance._events[eventMetadataAttr.EventIdentifier] : null;
                 if (eventMetadata == null)
                 {
                     eventMetadata = CreateEventMetadata(eventMetadataAttr);
@@ -82,18 +82,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
         }
 
-        internal static AuthEventMetadata CreateEventMetadata(AuthEventMetadataAttribute eventMetadataAttr)
+        internal static AuthenticationEventMetadata CreateEventMetadata(AuthenticationEventMetadataAttribute eventMetadataAttr)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var defaultNS = typeof(AuthenticationEventsTriggerAttribute).Namespace;
-            return new AuthEventMetadata()
+            return new AuthenticationEventMetadata()
             {
                 RequestType = eventMetadataAttr.RequestType,
                 ResponseTemplate = GetResponseTemplate(assembly, defaultNS ?? string.Empty, eventMetadataAttr)
             };
         }
 
-        private static string GetResponseTemplate(Assembly assembly, string defaultNS, AuthEventMetadataAttribute verAttr)
+        private static string GetResponseTemplate(Assembly assembly, string defaultNS, AuthenticationEventMetadataAttribute verAttr)
         {
             string resource = string.Join(".", defaultNS, "Templates", verAttr.ResponseTemplate);
 
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 if (!assembly.GetManifestResourceNames().Any(x => x == resource))
                 {
-                    return defaultBody != null ? defaultBody : throw new Exception(AuthEventResource.Ex_Invalid_EventSchema);
+                    return defaultBody != null ? defaultBody : throw new Exception(AuthenticationEventResource.Ex_Invalid_EventSchema);
                 }
                 stream = assembly.GetManifestResourceStream(resource);
 

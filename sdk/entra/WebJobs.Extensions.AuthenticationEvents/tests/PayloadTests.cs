@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
     }
 
-    internal class TestAuthResponse : AuthEventResponse
+    internal class TestAuthResponse : AuthenticationEventResponse
     {
         internal TestAuthResponse(HttpStatusCode code, string content)
             : this(code)

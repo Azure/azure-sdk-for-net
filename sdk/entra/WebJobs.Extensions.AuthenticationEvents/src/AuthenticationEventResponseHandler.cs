@@ -18,22 +18,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Contains the IActionRequest response when the function is called.</summary>
     /// <seealso cref="IValueBinder" />
-    public class AuthEventResponseHandler : IValueBinder
+    public class AuthenticationEventResponseHandler : IValueBinder
     {
         /// <summary>The response property.</summary>
         internal const string EventResponseProperty = "$event$response";
 
         /// <summary>Gets or sets the action result.</summary>
         /// <value>The action result.</value>
-        public AuthEventResponse Response { get; internal set; }
+        public AuthenticationEventResponse Response { get; internal set; }
 
         /// <summary>Gets the type.</summary>
         /// <value>The type.</value>
-        public Type Type => typeof(AuthEventResponse).MakeByRefType();
+        public Type Type => typeof(AuthenticationEventResponse).MakeByRefType();
 
         /// <summary>Gets or sets the request.</summary>
         /// <value>The associated request.</value>
-        public AuthEventRequestBase Request { get; internal set; }
+        public AuthenticationEventRequestBase Request { get; internal set; }
 
         /// <summary>Gets the value asynchronous.</summary>
         /// <returns>
@@ -56,19 +56,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 if (result == null)
                 {
-                    throw new ArgumentNullException(AuthEventResource.Ex_Invalid_Return);
+                    throw new ArgumentNullException(AuthenticationEventResource.Ex_Invalid_Return);
                 }
 
-                if (result is AuthEventResponse action)
+                if (result is AuthenticationEventResponse action)
                 {
                     Response = action;
                 }
                 else
                 {
-                    AuthEventResponse response = Request.GetResponseObject();
+                    AuthenticationEventResponse response = Request.GetResponseObject();
                     if (response == null)
                     {
-                        throw new InvalidOperationException(AuthEventResource.Ex_Missing_Request_Response);
+                        throw new InvalidOperationException(AuthenticationEventResource.Ex_Missing_Request_Response);
                     }
 
                     Response = GetActionResult(result, response);
@@ -88,9 +88,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return Task.CompletedTask;
         }
 
-        internal AuthEventResponse GetActionResult(object result, AuthEventResponse response)
+        internal AuthenticationEventResponse GetActionResult(object result, AuthenticationEventResponse response)
         {
-            AuthEventJsonElement jResult;
+            AuthenticationEventJsonElement jResult;
 
             //If the request was unsuccessful we return the IActionResult based on the error and do no further processing.
             if (Request.RequestStatus != RequestStatusType.Successful)
@@ -115,16 +115,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             else//An unexpected return type was found
             {
-                throw new InvalidCastException(AuthEventResource.Ex_Invalid_Return);
+                throw new InvalidCastException(AuthenticationEventResource.Ex_Invalid_Return);
             }
 
-            AuthEventResponse convertedResponse = ConvertToEventResponse(jResult, response.GetType());
+            AuthenticationEventResponse convertedResponse = ConvertToEventResponse(jResult, response.GetType());
 
             if (convertedResponse != null && !string.IsNullOrEmpty(response.Body))
             {
                 if (convertedResponse.GetType() != response.GetType())
                 {
-                    throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthEventResource.Ex_Response_Mismatch, Request.GetResponseObject().GetType()));
+                    throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Response_Mismatch, Request.GetResponseObject().GetType()));
                 }
 
                 if (string.IsNullOrEmpty(convertedResponse.Body))
@@ -142,16 +142,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="response">The response payload.</param>
         /// <param name="responseType">Type of the response to generate.</param>
         /// <returns>If the EventResponse is generated then the Typed EventResponse else null.</returns>
-        internal static AuthEventResponse ConvertToEventResponse(AuthEventJsonElement response, Type responseType)
+        internal static AuthenticationEventResponse ConvertToEventResponse(AuthenticationEventJsonElement response, Type responseType)
         {
-            if (response.Properties.ContainsKey("data") && response.Properties["data"] is AuthEventJsonElement jsonElement)
+            if (response.Properties.ContainsKey("data") && response.Properties["data"] is AuthenticationEventJsonElement jsonElement)
             {
                 response = jsonElement;
             }
 
             return responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableResponse<>) ||
                    responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableCloudEventResponse<>) ?
-                     (AuthEventResponse)JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
+                     (AuthenticationEventResponse)JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
                      null;
         }
 
@@ -165,17 +165,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return options;
         }
 
-        internal static AuthEventJsonElement GetJsonObjectFromHttpResponseMessage(HttpResponseMessage httpResponseMessage)
+        internal static AuthenticationEventJsonElement GetJsonObjectFromHttpResponseMessage(HttpResponseMessage httpResponseMessage)
         {
             return GetJsonObjectFromString(httpResponseMessage.Content.ReadAsStringAsync().Result);
         }
 
-        internal static AuthEventJsonElement GetJsonObjectFromHttpResponse(HttpResponse result)
+        internal static AuthenticationEventJsonElement GetJsonObjectFromHttpResponse(HttpResponse result)
         {
             return GetJsonObjectFromStream(result.Body);
         }
 
-        internal static AuthEventJsonElement GetJsonObjectFromStream(Stream stream)
+        internal static AuthenticationEventJsonElement GetJsonObjectFromStream(Stream stream)
         {
             // Build up the request body in a string builder.
             StringBuilder builder = new StringBuilder();
@@ -201,14 +201,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return GetJsonObjectFromString(builder.ToString());
         }
 
-        internal static AuthEventJsonElement GetJsonObjectFromString(string result)
+        internal static AuthenticationEventJsonElement GetJsonObjectFromString(string result)
         {
             return !Helpers.IsJson(result)
-                ? throw new InvalidCastException(AuthEventResource.Ex_Invalid_Return)
-                : new AuthEventJsonElement(result);
+                ? throw new InvalidCastException(AuthenticationEventResource.Ex_Invalid_Return)
+                : new AuthenticationEventJsonElement(result);
         }
 
-        internal static AuthEventResponse GetAuthEventFromJObject(AuthEventJsonElement result, AuthEventResponse response)
+        internal static AuthenticationEventResponse GetAuthEventFromJObject(AuthenticationEventJsonElement result, AuthenticationEventResponse response)
         {
             //see if the jObject contains an error
             if (result.Properties.ContainsKey("error"))
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 result.Properties.Remove("schema");
             }
 
-            var jBody = new AuthEventJsonElement(response.Body);
+            var jBody = new AuthenticationEventJsonElement(response.Body);
             jBody.Merge(result);
 
             response.Body = jBody.ToString();

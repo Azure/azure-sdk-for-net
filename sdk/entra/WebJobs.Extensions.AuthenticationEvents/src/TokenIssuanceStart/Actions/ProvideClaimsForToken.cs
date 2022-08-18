@@ -42,26 +42,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
 
         /// <summary>Builds the action body.</summary>
         /// <returns>A JObject representing the claims in Json format.</returns>
-        internal override AuthEventJsonElement BuildActionBody()
+        internal override AuthenticationEventJsonElement BuildActionBody()
         {
             //Create the json based on the current claims, for example... {"id":"DateOfBirth","value":"01-01-1990"} or {"id":"Roles","value":["Writer", "Editor"]}
             var body = Claims.Select(x => x.Values.Length == 1 ?
-                new AuthEventJsonElement($"{{\"{x.Id}\":\"{x.Values[0]}\" }}") :
-                new AuthEventJsonElement($"{{\"{x.Id}\": [{string.Join(", ", x.Values.Select(v => $"\"{v}\""))}] }}")
+                new AuthenticationEventJsonElement($"{{\"{x.Id}\":\"{x.Values[0]}\" }}") :
+                new AuthenticationEventJsonElement($"{{\"{x.Id}\": [{string.Join(", ", x.Values.Select(v => $"\"{v}\""))}] }}")
              ).ToList();
 
-            return new AuthEventJsonElement(new Dictionary<string, object> { { "claims", body } });
+            return new AuthenticationEventJsonElement(new Dictionary<string, object> { { "claims", body } });
         }
 
         /// <summary>Create the ProvideClaimsForToken action
         /// from Json. </summary>
         /// <param name="actionBody">The action body.</param>
-        internal override void FromJson(AuthEventJsonElement actionBody)
+        internal override void FromJson(AuthenticationEventJsonElement actionBody)
         {
-            AuthEventJsonElement claims = actionBody.FindFirstElementNamed("claims");
+            AuthenticationEventJsonElement claims = actionBody.FindFirstElementNamed("claims");
             if (claims != null)
             {
-                foreach (AuthEventJsonElement claim in claims.Elements)
+                foreach (AuthenticationEventJsonElement claim in claims.Elements)
                 {
                     var value = claim.GetPropertyValue<object>("value");
                     if (value != null)//TODO: Remove: Old preview version.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
                         {
                             AddClaim(claim.GetPropertyValue("id"), sValue);
                         }
-                        else if (value is AuthEventJsonElement jValue)
+                        else if (value is AuthenticationEventJsonElement jValue)
                         {
                             AddClaim(claim.GetPropertyValue("id"), jValue.Elements.Select(x => x.Value).ToArray());
                         }
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
                             {
                                 AddClaim(key, sValue);
                             }
-                            else if (val is AuthEventJsonElement jValue)
+                            else if (val is AuthenticationEventJsonElement jValue)
                             {
                                 AddClaim(key, jValue.Elements.Select(x => x.Value).ToArray());
                             }
