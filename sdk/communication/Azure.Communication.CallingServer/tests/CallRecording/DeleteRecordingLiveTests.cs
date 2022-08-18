@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.CallingServer.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
@@ -21,7 +20,7 @@ namespace Azure.Communication.CallingServer
                 Assert.Ignore("Skip callingserver interaction live tests flag is on");
             }
 
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string documentId = "0-wus-d4-d4c223871b58d3664401b66d35fca784";
             Uri contentEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}");
             CallRecording callRecordingClient = client.GetCallRecording();
@@ -38,9 +37,9 @@ namespace Azure.Communication.CallingServer
                 Assert.Ignore("Skip callingserver interaction live tests flag is on");
             }
 
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
-            string documentId = "0-wus-d4-d4c223871b58d3664401b66d35fca785";
-            Uri contentEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}");
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+            string nonExistentDocumentId = "0-wus-d4-d4c223871b58d3664401b66d35fca785";
+            Uri contentEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{nonExistentDocumentId}");
             CallRecording callRecordingClient = client.GetCallRecording();
             try
             {

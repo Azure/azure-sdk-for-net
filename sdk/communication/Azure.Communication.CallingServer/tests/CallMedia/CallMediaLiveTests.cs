@@ -3,12 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.CallingServer.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    public class CallMediaLiveTests : CallAutomationClientLiveTestsBase
+    internal class CallMediaLiveTests : CallAutomationClientLiveTestsBase
     {
         public CallMediaLiveTests(bool isAsync) : base(isAsync)
         { }
@@ -16,7 +15,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public async Task PlayAudio()
         {
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
             try
             {

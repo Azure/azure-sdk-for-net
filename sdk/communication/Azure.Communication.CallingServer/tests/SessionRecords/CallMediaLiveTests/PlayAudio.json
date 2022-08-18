@@ -173,7 +173,7 @@
   "Variables": {
     "RandomSeed": "1038648934",
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acs-recording-common-e2e.communication.azure.com/;accesskey=Kg==",
-    "TARGET_USER_ID": "8:acs:70559d7c-67b2-444f-a1f3-8027a1412880_00000013-24bb-ba02-d68a-084822008625",
+    "TARGET_USER_ID": "8:acs:75d93288-131e-4faa-b5b6-f7a8cf962802_00000013-24bb-ba02-d68a-084822008625",
     "PMA_Endpoint": ""
   }
 }

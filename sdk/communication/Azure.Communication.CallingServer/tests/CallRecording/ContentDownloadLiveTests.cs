@@ -5,12 +5,11 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Communication.CallingServer.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    public class ContentDownloadLiveTests : CallAutomationClientLiveTestsBase
+    internal class ContentDownloadLiveTests : CallAutomationClientLiveTestsBase
     {
         public ContentDownloadLiveTests(bool isAsync) : base(isAsync)
         { }
@@ -23,14 +22,14 @@ namespace Azure.Communication.CallingServer
                 Assert.Ignore("Skip callingserver interaction live tests flag is on");
             }
 
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string documentId = "0-wus-d4-d4c223871b58d3664401b66d35fca784";
             Uri metadataEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}/content/acsmetadata");
             CallRecording callRecordingClient = client.GetCallRecording();
             Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
             Assert.IsNotNull(metadata);
-            JsonElement expected = JsonDocument.Parse(metadata).RootElement;
-            Assert.AreEqual(documentId, expected.GetProperty("chunkDocumentId").ToString());
+            JsonElement actual = JsonDocument.Parse(metadata).RootElement;
+            Assert.AreEqual(documentId, actual.GetProperty("chunkDocumentId").ToString());
         }
 
         [Test]
@@ -41,16 +40,16 @@ namespace Azure.Communication.CallingServer
                 Assert.Ignore("Skip callingserver interaction live tests flag is on");
             }
 
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
-            string documentId = "0-wus-d4-d4c223871b58d3664401b66d35fca785";
-            Uri metadataEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}/content/acsmetadata");
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+            string nonExistentDocumentId = "0-wus-d4-d4c223871b58d3664401b66d35fca785";
+            Uri metadataEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{nonExistentDocumentId}/content/acsmetadata");
             CallRecording callRecordingClient = client.GetCallRecording();
             try
             {
                 Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
                 Assert.IsNotNull(metadata);
-                JsonElement expected = JsonDocument.Parse(metadata).RootElement;
-                Assert.AreEqual(documentId, expected.GetProperty("chunkDocumentId").ToString());
+                JsonElement actual = JsonDocument.Parse(metadata).RootElement;
+                Assert.AreEqual(nonExistentDocumentId, actual.GetProperty("chunkDocumentId").ToString());
             }
             catch (RequestFailedException ex)
             {
@@ -73,7 +72,7 @@ namespace Azure.Communication.CallingServer
                 Assert.Ignore("Skip callingserver interaction live tests flag is on");
             }
 
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             int length = 5;
             string documentId = "0-wus-d4-d4c223871b58d3664401b66d35fca784";
             Uri metadataEndpoint = new Uri($"https://us-storage.asm.skype.com/v1/objects/{documentId}/content/acsmetadata");
@@ -84,6 +83,9 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        /// This test tries to get a US stored document id from EU endpoint.
+        /// The backend server will redirect (respond with a 301) the request to a US endpoint
+        /// and the SDK should be able to make the new request with no error.
         public async Task DownloadMetadataWithRedirection()
         {
             if (SkipCallingServerInteractionLiveTests)
@@ -91,14 +93,14 @@ namespace Azure.Communication.CallingServer
                 Assert.Ignore("Skip callingserver interaction live tests flag is on");
             }
 
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string documentId = "0-wus-d4-d4c223871b58d3664401b66d35fca784";
             Uri metadataEndpoint = new Uri($"https://eu-storage.asm.skype.com/v1/objects/{documentId}/content/acsmetadata");
             CallRecording callRecordingClient = client.GetCallRecording();
             Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
             Assert.IsNotNull(metadata);
-            JsonElement expected = JsonDocument.Parse(metadata).RootElement;
-            Assert.AreEqual(documentId, expected.GetProperty("chunkDocumentId").ToString());
+            JsonElement actual = JsonDocument.Parse(metadata).RootElement;
+            Assert.AreEqual(documentId, actual.GetProperty("chunkDocumentId").ToString());
         }
     }
 }

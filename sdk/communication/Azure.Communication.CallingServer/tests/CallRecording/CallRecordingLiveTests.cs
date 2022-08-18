@@ -3,12 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.CallingServer.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    public class CallRecordingLiveTests : CallAutomationClientLiveTestsBase
+    internal class CallRecordingLiveTests : CallAutomationClientLiveTestsBase
     {
         public CallRecordingLiveTests(bool isAsync) : base(isAsync)
         { }
@@ -21,7 +20,7 @@ namespace Azure.Communication.CallingServer
                 Assert.Ignore("Skip callingserver interaction live tests flag is on");
             }
 
-            CallAutomationClient client = CreateInstrumentedCallingServerClientWithConnectionString();
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
             bool stopRecording = false;
             try
