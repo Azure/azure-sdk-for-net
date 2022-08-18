@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.ResourceManager.Automanage.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Tests.Scenario
@@ -22,14 +21,9 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             // create VM from existing ARM template
             var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
 
-            // create assignment between best practices profiles and VM
-            string profileID = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
-            var data = new ConfigurationProfileAssignmentData()
-            {
-                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileID }
-            };
-
-            await vm.GetConfigurationProfileAssignments().CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
+            // create assignment between best practices profile and VM
+            string profileId = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
+            await CreateAssignment(vm, profileId);
 
             // fetch assignment
             var assignment = vm.GetConfigurationProfileAssignmentAsync("default").Result.Value;
@@ -53,13 +47,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
 
             // create assignment between best practices profile and VM
-            string profileID = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
-            var data = new ConfigurationProfileAssignmentData()
-            {
-                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileID }
-            };
-
-            var assignment = vm.GetConfigurationProfileAssignments().CreateOrUpdateAsync(WaitUntil.Completed, "default", data).Result.Value;
+            string profileId = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
+            var assignment = CreateAssignment(vm, profileId).Result;
 
             // assert
             Assert.True(assignment.HasData);
@@ -86,12 +75,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
 
             // create assignment between custom profile and VM
-            var data = new ConfigurationProfileAssignmentData()
-            {
-                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profile.Id }
-            };
-
-            var assignment = vm.GetConfigurationProfileAssignments().CreateOrUpdateAsync(WaitUntil.Completed, "default", data).Result.Value;
+            var assignment = CreateAssignment(vm, profile.Id).Result;
 
             // assert
             Assert.True(assignment.HasData);
