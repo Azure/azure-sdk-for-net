@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static string s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
 
-        private static string s_operatingSystem => GetOS();
+        private static string s_operatingSystem = GetOS();
 
         private static string GetOS()
         {
