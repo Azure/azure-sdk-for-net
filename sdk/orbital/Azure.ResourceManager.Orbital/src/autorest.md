@@ -49,7 +49,7 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  - from: swagger-document
+  - from: orbital.json
     where: $.definitions
     transform: >
       $.AvailableGroundStationProperties['x-ms-client-name'] = 'GroundStationProperties';
