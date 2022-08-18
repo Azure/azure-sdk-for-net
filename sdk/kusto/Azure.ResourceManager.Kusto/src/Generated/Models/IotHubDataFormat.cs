@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string TsveValue = "TSVE";
         private const string ParquetValue = "PARQUET";
         private const string ORCValue = "ORC";
-        private const string ApacheavroValue = "APACHEAVRO";
+        private const string ApacheAvroValue = "APACHEAVRO";
         private const string W3ClogfileValue = "W3CLOGFILE";
 
         /// <summary> MULTIJSON. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> ORC. </summary>
         public static IotHubDataFormat ORC { get; } = new IotHubDataFormat(ORCValue);
         /// <summary> APACHEAVRO. </summary>
-        public static IotHubDataFormat Apacheavro { get; } = new IotHubDataFormat(ApacheavroValue);
+        public static IotHubDataFormat ApacheAvro { get; } = new IotHubDataFormat(ApacheAvroValue);
         /// <summary> W3CLOGFILE. </summary>
         public static IotHubDataFormat W3Clogfile { get; } = new IotHubDataFormat(W3ClogfileValue);
         /// <summary> Determines if two <see cref="IotHubDataFormat"/> values are the same. </summary>

@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EventHubDataFormat(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.EventHubDataFormat Apacheavro { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.EventHubDataFormat ApacheAvro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.EventHubDataFormat Avro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.EventHubDataFormat CSV { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.EventHubDataFormat Json { get { throw null; } }
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public IotHubDataFormat(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.IotHubDataFormat Apacheavro { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.IotHubDataFormat ApacheAvro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.IotHubDataFormat Avro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.IotHubDataFormat CSV { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.IotHubDataFormat Json { get { throw null; } }

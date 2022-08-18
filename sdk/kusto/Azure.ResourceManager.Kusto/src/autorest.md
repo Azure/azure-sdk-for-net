@@ -18,6 +18,8 @@ modelerfour:
 
 rename-mapping:
   EventGridDataFormat.APACHEAVRO: ApacheAvro
+  EventHubDataFormat.APACHEAVRO: ApacheAvro
+  IotHubDataFormat.APACHEAVRO: ApacheAvro
 
 format-by-name-rules:
   'tenantId': 'uuid'
