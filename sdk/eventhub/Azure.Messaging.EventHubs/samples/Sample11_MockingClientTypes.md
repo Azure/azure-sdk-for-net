@@ -4,8 +4,8 @@ Event Hubs is built to be entirely mockable, an important feature that allows fo
 
 ## `EventHubProducerClient`
 
-### Testing Batching logic
-Say you have an application that needs to send large events often. You have logic to shrink events that are too large to fit in a batch. One way to test this method is to mock the `EventHubProducerClient` and `EventDataBatch` types 
+### Testing Batching logic 
+When writing an application that uses batches to send events to an Event Hub, you may have logic surrounding how you manipulate events when adding them to the batch. For example, if you have an application that needs to send large events often, you may have logic to simplify events that are too large to fit in a batch. One way to test this method is to mock the `EventHubProducerClient` and `EventDataBatch` types, and focus testing on the application-defined method instead.
 
 ```C# Snippet:EventHubs_Sample11_Validating
 // Define the custom TryAdd callback to return false for any bodies
@@ -32,8 +32,8 @@ using (var eventBatch = await producer.CreateBatchAsync())
     var wasAdded = eventBatch.TryAdd(largeEvent);
     if (!wasAdded)
     {
-        // Validate the application-defined EventShrinker method
-        var smallerEvent = EventShrinker(largeEvent);
+        // Validate the application-defined SimplifyEvent method
+        var smallerEvent = SimplifyEvent(largeEvent);
         Assert.IsTrue(eventBatch.TryAdd(smallerEvent));
     }
 }
