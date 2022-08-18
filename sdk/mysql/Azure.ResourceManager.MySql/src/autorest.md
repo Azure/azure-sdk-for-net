@@ -223,6 +223,9 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
+  Storage.storageSizeGB: StorageSizeInGB
+  SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+  ConfigurationListResult.value: Values
   Configuration: MySqlFlexibleServerConfiguration
   Database: MySqlFlexibleServerDatabase
   FirewallRule: MySqlFlexibleServerFirewallRule
@@ -273,10 +276,7 @@ rename-mapping:
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
   NameAvailability.nameAvailable: IsNameAvailable
-  Storage.storageSizeGB: StorageSizeInGB
-  SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
-  ConfigurationListResult.value: Values
-
+  
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   Configurations_BatchUpdate: UpdateConfigurations
@@ -286,15 +286,30 @@ directive:
     where: $.definitions
     transform: >
       $.Identity['x-ms-client-flatten'] = false;
-      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = "#/definitions/UserAssignedIdentity";
+      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
       delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
-      delete $.ConfigurationListResult.properties.nextLink;
+  
+  # Add a new mode for update operation
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.MySqlFlexibleServerConfigurations =  {
+          'type': 'object',
+          'properties': {
+            'values': {
+              'type': 'array',
+              'items': {
+                '$ref': '#/definitions/Configuration'
+              },
+              'description': 'The list of server configurations.'
+            }
+          },
+          'description': 'A list of server configurations.'
+        };
 
   - from: mysql.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations'].get
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/updateConfigurations'].post
     transform: >
-      $['x-ms-pageable'] = {
-        'nextLinkName': null
-      };
+      $.responses['200']['schema']['$ref'] = '#/definitions/MySqlFlexibleServerConfigurations';
 
 ```

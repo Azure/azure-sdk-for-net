@@ -12,11 +12,12 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerConfigurationListResult
+    internal partial class MySqlFlexibleServerConfigurationListResult
     {
         internal static MySqlFlexibleServerConfigurationListResult DeserializeMySqlFlexibleServerConfigurationListResult(JsonElement element)
         {
             Optional<IReadOnlyList<MySqlFlexibleServerConfigurationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -34,8 +35,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MySqlFlexibleServerConfigurationListResult(Optional.ToList(value));
+            return new MySqlFlexibleServerConfigurationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
