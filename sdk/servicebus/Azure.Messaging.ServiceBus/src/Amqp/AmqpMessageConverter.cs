@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        public virtual AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
+        private AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
         {
             var batchMessages = new List<AmqpMessage>(source.Count);
             foreach (ServiceBusMessage sbMessage in source)

@@ -323,7 +323,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     var (sender, messages) = value;
                     await sender.SendBatchInternalAsync(
-                        sender._messageConverter.BuildAmqpBatchFromMessage(messages, false),
+                        sender._messageConverter.BatchSBMessagesAsAmqpMessage(messages, false),
                         timeout,
                         token).ConfigureAwait(false);
                 },
