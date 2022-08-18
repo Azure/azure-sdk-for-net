@@ -5707,6 +5707,48 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task SetTierAsync_Cold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetAccessTierAsync(AccessTier.Cold);
+
+            // We are also going to test that get blob properties and list blobs return cold tier correctly.
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual("Cold", response.Value.AccessTier);
+
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.AreEqual(AccessTier.Cold, blobItems[0].Properties.AccessTier);
+
+            // Act
+            List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+            await foreach (BlobHierarchyItem blobHierarchyItem in test.Container.GetBlobsByHierarchyAsync())
+            {
+                blobHierarchyItems.Add(blobHierarchyItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobHierarchyItems.Count);
+            Assert.AreEqual(AccessTier.Cold, blobHierarchyItems[0].Blob.Properties.AccessTier);
+        }
+
+        [RecordedTest]
         [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
         [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
         [TestCase(nameof(BlobRequestConditions.IfMatch))]
