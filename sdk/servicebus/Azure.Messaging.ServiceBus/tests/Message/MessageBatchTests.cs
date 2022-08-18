@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubsModelFactory.EventDataBatch" />
+        ///   Verifies functionality of the <see cref="ServiceBusModelFactory.ServiceBusMessageBatch" />
         ///   method.
         /// </summary>
         ///

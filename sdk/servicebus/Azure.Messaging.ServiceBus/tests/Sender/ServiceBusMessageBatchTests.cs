@@ -140,6 +140,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
+        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddInstrumentsMessage()
+        {
+            // TODO - want to create a mock batch, maybe need a new mock transport batch type?
+        }
+
+        /// <summary>
         ///   Verifies property accessors for the <see cref="AmqpMessageBatch.Clear" />
         ///   method.
         /// </summary>
