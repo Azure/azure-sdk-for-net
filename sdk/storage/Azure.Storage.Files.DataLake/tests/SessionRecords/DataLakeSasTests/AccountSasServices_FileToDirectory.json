@@ -65,7 +65,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandaadlscanary.dfs.core.windows.net/test-filesystem-9fe9b2f6-18e2-0536-576d-23ad4528a172/test-directory-aec691c8-f878-35e9-1bd1-521fe0849abf/test-file-b125fd92-d39a-f34a-bf5d-614bf7a13152?sv=2021-10-04\u0026ss=fqb\u0026srt=sco\u0026se=2022-07-28T22%3A26%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026resource=file",
+      "RequestUri": "https://amandaadlscanary.dfs.core.windows.net/test-filesystem-9fe9b2f6-18e2-0536-576d-23ad4528a172/test-directory-aec691c8-f878-35e9-1bd1-521fe0849abf/test-file-b125fd92-d39a-f34a-bf5d-614bf7a13152?sv=2021-12-02\u0026ss=fqb\u0026srt=sco\u0026se=2022-07-28T22%3A26%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -95,7 +95,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandaadlscanary.blob.core.windows.net/test-filesystem-9fe9b2f6-18e2-0536-576d-23ad4528a172/test-directory-aec691c8-f878-35e9-1bd1-521fe0849abf?sv=2021-10-04\u0026ss=fqb\u0026srt=sco\u0026se=2022-07-28T22%3A26%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized",
+      "RequestUri": "https://amandaadlscanary.blob.core.windows.net/test-filesystem-9fe9b2f6-18e2-0536-576d-23ad4528a172/test-directory-aec691c8-f878-35e9-1bd1-521fe0849abf?sv=2021-12-02\u0026ss=fqb\u0026srt=sco\u0026se=2022-07-28T22%3A26%3A54Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
