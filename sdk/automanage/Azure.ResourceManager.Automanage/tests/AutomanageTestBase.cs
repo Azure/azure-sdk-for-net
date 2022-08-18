@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -83,6 +84,23 @@ namespace Azure.ResourceManager.Automanage.Tests
 
             var newProfile = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
             return newProfile.Value;
+        }
+
+        /// <summary>
+        /// Creates an assignment between a configuration profile and a virtual machine
+        /// </summary>
+        /// <param name="vm">Virtual Machine to assign a profile to</param>
+        /// <param name="profileId">ID of desired configuration profile to use</param>
+        /// <returns>ConfigurationProfileAssignmentResource</returns>
+        protected async Task<ConfigurationProfileAssignmentResource> CreateAssignment(VirtualMachineResource vm, string profileId)
+        {
+            var data = new ConfigurationProfileAssignmentData()
+            {
+                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId }
+            };
+
+            var assignment = await vm.GetConfigurationProfileAssignments().CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
+            return assignment.Value;
         }
 
         /// <summary>
