@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string TsveValue = "TSVE";
         private const string ParquetValue = "PARQUET";
         private const string ORCValue = "ORC";
-        private const string ApacheavroValue = "APACHEAVRO";
+        private const string ApacheAvroValue = "APACHEAVRO";
         private const string W3ClogfileValue = "W3CLOGFILE";
 
         /// <summary> MULTIJSON. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> ORC. </summary>
         public static EventHubDataFormat ORC { get; } = new EventHubDataFormat(ORCValue);
         /// <summary> APACHEAVRO. </summary>
-        public static EventHubDataFormat Apacheavro { get; } = new EventHubDataFormat(ApacheavroValue);
+        public static EventHubDataFormat ApacheAvro { get; } = new EventHubDataFormat(ApacheAvroValue);
         /// <summary> W3CLOGFILE. </summary>
         public static EventHubDataFormat W3Clogfile { get; } = new EventHubDataFormat(W3ClogfileValue);
         /// <summary> Determines if two <see cref="EventHubDataFormat"/> values are the same. </summary>
