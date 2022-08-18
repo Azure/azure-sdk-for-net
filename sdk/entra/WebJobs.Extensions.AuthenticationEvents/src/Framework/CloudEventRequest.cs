@@ -34,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             if (payload.Properties.ContainsKey("type"))
             {
                 Type = payload.GetPropertyValue("type");
+                Source = payload.GetPropertyValue("source");//REMOVE: Fail over for legacy payload.
             }
 
             if (payload.Properties.ContainsKey("source"))

@@ -4,7 +4,6 @@
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
 		<Version>1.0.0-beta.1</Version>
 		<Description>Triggers for Azure AD Authentication event custom extensions. Lets you focus on your business logic.</Description>
-		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -46,13 +45,6 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>AuthEventResourceAuthEventResource.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-	</ItemGroup>
-
-
-	<ItemGroup>
-		<None Update=".gitignore">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 
