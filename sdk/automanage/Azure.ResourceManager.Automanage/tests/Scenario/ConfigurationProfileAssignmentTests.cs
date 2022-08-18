@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             };
 
             await vm.GetConfigurationProfileAssignments().CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
+
+            // fetch assignment
+            var assignment = vm.GetConfigurationProfileAssignmentAsync("default").Result.Value;
+
+            // assert
+            Assert.True(assignment.HasData);
+            Assert.AreEqual(vm.Id, assignment.Data.Properties.TargetId);
+            Assert.NotNull(assignment.Data.Name);
         }
     }
 }
