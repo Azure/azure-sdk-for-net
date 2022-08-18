@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
-using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -19,7 +18,7 @@ namespace Azure.Storage.Blobs.Test
     public class BlobUriBuilderTests : BlobTestBase
     {
         public BlobUriBuilderTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -260,11 +259,16 @@ namespace Azure.Storage.Blobs.Test
         public async Task ClientTargetsWithAppropriateSlash()
         {
             // blob name starts and ends with slash, not a path separator
-            const string blobName = "/myblob/";
+            const string blobClientName = "///blob///client///";
+            const string blockBlobClientName = "///blockblob///client///";
+            const string pageBlobClientName = "///pageblob///client///";
+            const string appendBlobClientName = "///appendblob///client///";
+            const string blobBaseClientName = "///blobbase///client///";
 
             // Arrange
-            var assertPolicy = new AssertMessageContentsPolicy(checkRequest: req =>
-                Assert.AreEqual(blobName, req.Uri.Path.Substring(req.Uri.Path.IndexOf('/') + 1)));
+            var assertPolicy = new AssertMessageContentsPolicy(checkRequest: req => Assert.That(
+                req.Uri.Path.Substring(req.Uri.Path.IndexOf('/') + 1), // extract blob name from uri path
+                Does.Match(@"\/\/\/\w+\/\/\/\w+\/\/\/"))); // matches "///<alphanum>///<alphanum>///"
 
             BlobClientOptions options = GetOptions();
             options.PreserveBlobNameSlashes = true;
@@ -275,20 +279,30 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer container = await BlobsClientBuilder.GetTestContainerAsync(
                 BlobsClientBuilder.GetServiceClient_SharedKey(options));
 
-            BlobClient blob = container.Container.GetBlobClient(blobName);
+            BlobClient blob = container.Container.GetBlobClient(blobClientName);
+            BlockBlobClient blockBlob = container.Container.GetBlockBlobClient(blockBlobClientName);
+            PageBlobClient pageBlob = container.Container.GetPageBlobClient(pageBlobClientName);
+            AppendBlobClient appendBlob = container.Container.GetAppendBlobClient(appendBlobClientName);
+            BlobBaseClient blobBase = container.Container.GetBlobBaseClient(blobBaseClientName);
 
             // Act
+            var content = BinaryData.FromString("Hello world!");
             try
             {
                 assertPolicy.CheckRequest = true;
-                await blob.UploadAsync(BinaryData.FromString("Hello world!"));
+                // any request with each of these clients
+                await blob.UploadAsync(content);
+                await blockBlob.StageBlockAsync(Convert.ToBase64String(Encoding.UTF8.GetBytes("foo")), content.ToStream());
+                await pageBlob.CreateIfNotExistsAsync(Constants.KB);
+                await appendBlob.CreateIfNotExistsAsync();
+                await blobBase.ExistsAsync();
             }
             finally
             {
                 assertPolicy.CheckRequest = false;
             }
 
-            // assertion in pipeline
+            // assertions in pipeline
         }
 
         [RecordedTest]
