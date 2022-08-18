@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <returns>VirtualMachineResource</returns>
         protected async Task<VirtualMachineResource> CreateVirtualMachineFromTemplate(string vmName, ResourceGroupResource rg)
         {
-            string templateContent = File.ReadAllText("../../../../../sdk/automanage/test-resources.json");
+            string templateContent = File.ReadAllText("https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/automanage/test-resources.json");
             var deploymentContent = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 Template = BinaryData.FromString(templateContent),
