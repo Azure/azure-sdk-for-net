@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
@@ -75,6 +78,27 @@ namespace Azure.ResourceManager.Automanage.Tests
 
             var newProfile = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
             return newProfile.Value;
+        }
+
+        protected async Task<VirtualMachineResource> CreateVirtualMachineFromTemplate(string vmName, ResourceGroupResource rg)
+        {
+            string templateContent = File.ReadAllText("../../../../sdk/automanage/test-resources.json");
+            var deploymentContent = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+            {
+                Template = BinaryData.FromString(templateContent),
+                Parameters = BinaryData.FromObjectAsJson(new
+                {
+                    adminPassword = new { value = "!Admin12345" },
+                    vmName = new { value = vmName }
+                })
+            });
+
+            // create vm
+            await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, "deployVM", deploymentContent);
+
+            // fetch vm
+            var vm = rg.GetVirtualMachineAsync(vmName).Result.Value;
+            return vm;
         }
     }
 }
