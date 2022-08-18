@@ -2108,6 +2108,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task UploadAsync_AccessTier_Cold()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Size);
+
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(content: stream, options: options);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
+        }
+
+        [RecordedTest]
         public async Task UploadAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3394,6 +3418,34 @@ namespace Azure.Storage.Blobs.Test
             {
                 AssertDictionaryEquality(destTags, getTagsResponse.Value.Tags);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task SyncUploadFromUriAsync_AccessTier_Cold()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
         }
 
         [RecordedTest]
