@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -82,6 +82,24 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             Assert.AreEqual(sqlVmGroupName, sqlVmGroupFromGet.Data.Name);
             Assert.AreEqual(1, sqlVmGroupFromGet.Data.Tags.Keys.Count);
             Assert.AreEqual(value, sqlVmGroupFromGet.Data.Tags[key]);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task SetTags()
+        {
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "sqlvmtestrg", AzureLocation.WestUS);
+            StorageAccountResource storageAccount = await CreateStorageAccountAsync(rg);
+            var sqlVmGroupCollection = rg.GetSqlVmGroups();
+            var sqlVmGroupName = Recording.GenerateAssetName("sqlvmgrp");
+            SqlVmGroupResource sqlVmGroup = await CreateSqlVmGroupAsync(rg, sqlVmGroupName, storageAccount);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            SqlVmGroupResource updatedSqlVmGroup = await sqlVmGroup.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updatedSqlVmGroup.Data.Tags);
         }
     }
 }

@@ -82,6 +82,23 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             Assert.True(sqlVms.Count == count);
         }
 
+        [TestCase]
+        [RecordedTest]
+        public async Task SetTags()
+        {
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "sqlvmtestrg", AzureLocation.WestUS);
+            var sqlVmCollections = rg.GetSqlVms();
+            Dictionary<ResourceIdentifier, SqlVmResource> sqlVms = new Dictionary<ResourceIdentifier, SqlVmResource>();
+            SqlVmResource sqlVm = await CreateSqlVmAsync(rg);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            SqlVmResource updatedSqlVm = await sqlVm.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updatedSqlVm.Data.Tags);
+        }
+
         private static void ValidateSqlVirtualMachine(SqlVmData sqlVM1, SqlVmData sqlVM2, bool sameTags = true)
         {
             Assert.AreEqual(sqlVM1.Id, sqlVM2.Id);
