@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.Network" OverrideVersion="1.0.0" />
   </ItemGroup>
   <ItemGroup>
