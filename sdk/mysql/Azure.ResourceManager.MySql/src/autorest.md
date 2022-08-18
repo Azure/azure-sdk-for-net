@@ -148,11 +148,10 @@ rename-mapping:
   PerformanceTierProperties: MySqlPerformanceTier
   ConfigurationListResult: MySqlConfigurationList
   LogFile.properties.type: LogFileType
+  ConfigurationListResult.value: Values
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
-#   LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
-#   LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
   MySqlServers_Start: Start
   MySqlServers_Stop: Stop
   MySqlServers_Upgrade: Upgrade
@@ -176,6 +175,7 @@ directive:
     transform: >
       $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
+
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2021-05-01'
@@ -223,6 +223,9 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
+  Storage.storageSizeGB: StorageSizeInGB
+  SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+  ConfigurationListResult.value: Values
   Configuration: MySqlFlexibleServerConfiguration
   Database: MySqlFlexibleServerDatabase
   FirewallRule: MySqlFlexibleServerFirewallRule
@@ -273,8 +276,7 @@ rename-mapping:
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
   NameAvailability.nameAvailable: IsNameAvailable
-  Storage.storageSizeGB: StorageSizeInGB
-  SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+  
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   Configurations_BatchUpdate: UpdateConfigurations
@@ -284,7 +286,30 @@ directive:
     where: $.definitions
     transform: >
       $.Identity['x-ms-client-flatten'] = false;
-      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = "#/definitions/UserAssignedIdentity";
+      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
       delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
+  
+  # Add a new mode for update operation
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.MySqlFlexibleServerConfigurations =  {
+          'type': 'object',
+          'properties': {
+            'values': {
+              'type': 'array',
+              'items': {
+                '$ref': '#/definitions/Configuration'
+              },
+              'description': 'The list of server configurations.'
+            }
+          },
+          'description': 'A list of server configurations.'
+        };
+
+  - from: mysql.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/updateConfigurations'].post
+    transform: >
+      $.responses['200']['schema']['$ref'] = '#/definitions/MySqlFlexibleServerConfigurations';
 
 ```
