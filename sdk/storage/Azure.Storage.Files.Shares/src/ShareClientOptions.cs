@@ -115,14 +115,9 @@ namespace Azure.Storage.Files.Shares
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Transfer validation options to be applied to blob uploads from this client.
+        /// Transfer validation options to be applied to blob transfers from this client.
         /// </summary>
-        public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
-
-        /// <summary>
-        /// Transfer validation options to be applied to blob downloads from this client.
-        /// </summary>
-        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; set; }
+        public TransferValidationOptions TransferValidation { get; } = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClientOptions"/>

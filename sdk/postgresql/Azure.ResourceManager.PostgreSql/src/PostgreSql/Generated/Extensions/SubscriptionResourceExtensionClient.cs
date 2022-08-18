@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _serverClientDiagnostics;
-        private ServersRestOperations _serverRestClient;
+        private ClientDiagnostics _postgreSqlServerServersClientDiagnostics;
+        private ServersRestOperations _postgreSqlServerServersRestClient;
         private ClientDiagnostics _locationBasedPerformanceTierClientDiagnostics;
         private LocationBasedPerformanceTierRestOperations _locationBasedPerformanceTierRestClient;
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.PostgreSql
         {
         }
 
-        private ClientDiagnostics ServerClientDiagnostics => _serverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql", ServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations ServerRestClient => _serverRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServerResource.ResourceType));
+        private ClientDiagnostics PostgreSqlServerServersClientDiagnostics => _postgreSqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql", PostgreSqlServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations PostgreSqlServerServersRestClient => _postgreSqlServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PostgreSqlServerResource.ResourceType));
         private ClientDiagnostics LocationBasedPerformanceTierClientDiagnostics => _locationBasedPerformanceTierClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationBasedPerformanceTierRestOperations LocationBasedPerformanceTierRestClient => _locationBasedPerformanceTierRestClient ??= new LocationBasedPerformanceTierRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.PostgreSql
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerResource> GetServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlServerResource> GetPostgreSqlServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PostgreSqlServerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = PostgreSqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPostgreSqlServers");
                 scope.Start();
                 try
                 {
-                    var response = await ServerRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = await PostgreSqlServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.PostgreSql
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerResource> GetServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlServerResource> GetPostgreSqlServers(CancellationToken cancellationToken = default)
         {
-            Page<ServerResource> FirstPageFunc(int? pageSizeHint)
+            Page<PostgreSqlServerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = PostgreSqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPostgreSqlServers");
                 scope.Start();
                 try
                 {
-                    var response = ServerRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = PostgreSqlServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PerformanceTierProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PostgreSqlPerformanceTierProperties>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedPerformanceTierClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers");
                 scope.Start();
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PerformanceTierProperties> GetLocationBasedPerformanceTiers(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Page<PerformanceTierProperties> FirstPageFunc(int? pageSizeHint)
+            Page<PostgreSqlPerformanceTierProperties> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedPerformanceTierClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers");
                 scope.Start();
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> ExecuteCheckNameAvailabilityAsync(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlNameAvailabilityResult>> CheckPostgreSqlNameAvailabilityAsync(PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlNameAvailability");
             scope.Start();
             try
             {
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> ExecuteCheckNameAvailability(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlNameAvailabilityResult> CheckPostgreSqlNameAvailability(PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPostgreSqlNameAvailability");
             scope.Start();
             try
             {

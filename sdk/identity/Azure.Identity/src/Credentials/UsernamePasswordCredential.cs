@@ -24,7 +24,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;
-        private readonly SecureString _password;
+        private readonly string _password;
         private AuthenticationRecord _record;
         private readonly string _tenantId;
         internal MsalPublicClient Client { get; }
@@ -88,7 +88,7 @@ namespace Azure.Identity
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             _username = username;
-            _password = password.ToSecureString();
+            _password = password;
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);

@@ -55,6 +55,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Communication.MediaComposition.Tests", "Azure.Communication.MediaComposition\tests\Azure.Communication.MediaComposition.Tests.csproj", "{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms", "Azure.Communication.Rooms\src\Azure.Communication.Rooms.csproj", "{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms.Tests", "Azure.Communication.Rooms\tests\Azure.Communication.Rooms.Tests.csproj", "{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.JobRouter", "Azure.Communication.JobRouter\src\Azure.Communication.JobRouter.csproj", "{679E68FD-DCF0-4943-A85E-A46E159E0308}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.JobRouter.Tests", "Azure.Communication.JobRouter\tests\Azure.Communication.JobRouter.Tests.csproj", "{960543FA-55FE-4475-833B-DDDD4AC0AB2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +137,14 @@ Global
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{679E68FD-DCF0-4943-A85E-A46E159E0308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{679E68FD-DCF0-4943-A85E-A46E159E0308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{679E68FD-DCF0-4943-A85E-A46E159E0308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{679E68FD-DCF0-4943-A85E-A46E159E0308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{960543FA-55FE-4475-833B-DDDD4AC0AB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960543FA-55FE-4475-833B-DDDD4AC0AB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960543FA-55FE-4475-833B-DDDD4AC0AB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960543FA-55FE-4475-833B-DDDD4AC0AB2E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7C16A81-CCB6-4F86-8815-3CE8B6321258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F7C16A81-CCB6-4F86-8815-3CE8B6321258}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C16A81-CCB6-4F86-8815-3CE8B6321258}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -153,6 +169,14 @@ Global
 		{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

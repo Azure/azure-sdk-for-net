@@ -25,33 +25,27 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
-        /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal MonitorPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, MonitorPrivateLinkServiceConnectionStateProperty connectionState, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        internal MonitorPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, MonitorPrivateLinkServiceConnectionState connectionState, MonitorPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Private endpoint which the connection belongs to. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> The resource of private end point. </summary>
+        internal SubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            set
-            {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
-            }
         }
 
-        /// <summary> Connection state of the private endpoint connection. </summary>
-        public MonitorPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
-        /// <summary> State of the private endpoint connection. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        public MonitorPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        public MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

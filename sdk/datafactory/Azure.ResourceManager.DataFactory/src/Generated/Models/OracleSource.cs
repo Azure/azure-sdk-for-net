@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Oracle source. </summary>
-    public partial class OracleSource : CopySource
+    public partial class OracleSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of OracleSource. </summary>
         public OracleSource()

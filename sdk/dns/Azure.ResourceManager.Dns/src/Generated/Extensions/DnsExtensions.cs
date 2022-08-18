@@ -213,39 +213,39 @@ namespace Azure.ResourceManager.Dns
         }
         #endregion
 
-        #region RecordSetMxResource
+        #region RecordSetMXResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecordSetMxResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecordSetMxResource.CreateResourceIdentifier" /> to create a <see cref="RecordSetMxResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RecordSetMXResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecordSetMXResource.CreateResourceIdentifier" /> to create a <see cref="RecordSetMXResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecordSetMxResource" /> object. </returns>
-        public static RecordSetMxResource GetRecordSetMxResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecordSetMXResource" /> object. </returns>
+        public static RecordSetMXResource GetRecordSetMXResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<RecordSetMxResource>(() =>
+            return client.GetResourceClient<RecordSetMXResource>(() =>
             {
-                RecordSetMxResource.ValidateResourceId(id);
-                return new RecordSetMxResource(client, id);
+                RecordSetMXResource.ValidateResourceId(id);
+                return new RecordSetMXResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RecordSetNsResource
+        #region RecordSetNSResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecordSetNsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecordSetNsResource.CreateResourceIdentifier" /> to create a <see cref="RecordSetNsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RecordSetNSResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecordSetNSResource.CreateResourceIdentifier" /> to create a <see cref="RecordSetNSResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecordSetNsResource" /> object. </returns>
-        public static RecordSetNsResource GetRecordSetNsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecordSetNSResource" /> object. </returns>
+        public static RecordSetNSResource GetRecordSetNSResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<RecordSetNsResource>(() =>
+            return client.GetResourceClient<RecordSetNSResource>(() =>
             {
-                RecordSetNsResource.ValidateResourceId(id);
-                return new RecordSetNsResource(client, id);
+                RecordSetNSResource.ValidateResourceId(id);
+                return new RecordSetNSResource(client, id);
             }
             );
         }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsZoneResource>(() =>
+            return client.GetResourceClient(() =>
             {
                 DnsZoneResource.ValidateResourceId(id);
                 return new DnsZoneResource(client, id);

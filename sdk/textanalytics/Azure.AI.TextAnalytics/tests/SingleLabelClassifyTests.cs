@@ -94,7 +94,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(1, singleLabelClassifyActions.Count);
 
-            SingleLabelClassifyResultCollection documentsResults = singleLabelClassifyActions[0].DocumentsResults;
+            ClassifyDocumentResultCollection documentsResults = singleLabelClassifyActions[0].DocumentsResults;
             Assert.IsFalse(documentsResults[0].HasError);
             Assert.IsTrue(documentsResults[1].HasError);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, documentsResults[1].Error.ErrorCode.ToString());
@@ -122,7 +122,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionsResults = resultCollection.SingleLabelClassifyResults;
-            SingleLabelClassifyResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(singleLabelClassifyResults);
         }
@@ -154,7 +154,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionsResults = resultCollection.SingleLabelClassifyResults;
-            SingleLabelClassifyResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(singleLabelClassifyResults, includeStatistics : true);
         }
@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionsResults = resultCollection.SingleLabelClassifyResults;
-            SingleLabelClassifyResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(singleLabelClassifyResults);
         }
@@ -213,7 +213,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionsResults = resultCollection.SingleLabelClassifyResults;
-            SingleLabelClassifyResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection singleLabelClassifyResults = singleLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(singleLabelClassifyResults, includeStatistics: true);
         }
@@ -254,14 +254,31 @@ namespace Azure.AI.TextAnalytics.Tests
             IList<string> expected = new List<string> { "SingleLabelClassify", "SingleLabelClassifyWithDisabledServiceLogs" };
             CollectionAssert.AreEquivalent(expected, singleLabelClassifyActionsResults.Select(result => result.ActionName));
         }
-        private void ValidateSummaryDocumentResult(ClassificationCategory classification)
+
+        [RecordedTest]
+        public async Task StartSingleLabelClassify()
         {
-            Assert.GreaterOrEqual(classification.ConfidenceScore, 0);
-            Assert.LessOrEqual(classification.ConfidenceScore, 1);
-            Assert.NotNull(classification.Category);
+            TextAnalyticsClient client = GetClient();
+            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName);
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+
+            // Take the first page.
+            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection);
         }
 
-        private void ValidateSummaryBatchResult(SingleLabelClassifyResultCollection results, bool includeStatistics = false)
+        private void ValidateSummaryDocumentResult(ClassificationCategory? classification)
+        {
+            Assert.IsNotNull(classification);
+
+            Assert.GreaterOrEqual(classification.Value.ConfidenceScore, 0);
+            Assert.LessOrEqual(classification.Value.ConfidenceScore, 1);
+            Assert.NotNull(classification.Value.Category);
+        }
+
+        private void ValidateSummaryBatchResult(ClassifyDocumentResultCollection results, bool includeStatistics = false)
         {
             Assert.AreEqual(results.ProjectName, TestEnvironment.SingleClassificationProjectName);
             Assert.AreEqual(results.DeploymentName, TestEnvironment.SingleClassificationDeploymentName);
@@ -279,7 +296,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNull(results.Statistics);
             }
 
-            foreach (SingleLabelClassifyResult result in results)
+            foreach (ClassifyDocumentResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.False(result.HasError);
@@ -296,7 +313,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                ValidateSummaryDocumentResult(result.Classification);
+                ValidateSummaryDocumentResult(result.ClassificationCategories.FirstOrDefault());
             }
         }
     }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -35,10 +34,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(StorageAccountUri))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("storageAccountUrl");
-                writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
+                writer.WriteStringValue(IsEnabled);
             }
             if (Optional.IsDefined(BackupSchedule))
             {
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<string> backupName = default;
             Optional<bool> enabled = default;
-            Optional<Uri> storageAccountUrl = default;
+            Optional<string> storageAccountUrl = default;
             Optional<BackupSchedule> backupSchedule = default;
             Optional<IList<DatabaseBackupSetting>> databases = default;
             foreach (var property in element.EnumerateObject())
@@ -129,12 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("storageAccountUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                storageAccountUrl = null;
-                                continue;
-                            }
-                            storageAccountUrl = new Uri(property0.Value.GetString());
+                            storageAccountUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("backupSchedule"))

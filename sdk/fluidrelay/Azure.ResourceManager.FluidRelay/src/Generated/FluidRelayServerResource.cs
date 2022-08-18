@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Get primary and secondary key for this server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/getKeys
-        /// Operation Id: FluidRelayServers_GetKeys
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/listKeys
+        /// Operation Id: FluidRelayServers_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FluidRelayServerKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.FluidRelay
             scope.Start();
             try
             {
-                var response = await _fluidRelayServerRestClient.GetKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _fluidRelayServerRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -354,8 +354,8 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Get primary and secondary key for this server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/getKeys
-        /// Operation Id: FluidRelayServers_GetKeys
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/listKeys
+        /// Operation Id: FluidRelayServers_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FluidRelayServerKeys> GetKeys(CancellationToken cancellationToken = default)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.FluidRelay
             scope.Start();
             try
             {
-                var response = _fluidRelayServerRestClient.GetKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _fluidRelayServerRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

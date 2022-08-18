@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The call connection properties. </summary>
     public class CallConnectionProperties
     {
-        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackUri)
+        internal CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackEndpoint)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
             Targets = targets.ToList();
             CallConnectionState = callConnectionState;
             Subject = subject;
-            CallbackUri = callbackUri;
+            CallbackEndpoint = callbackEndpoint;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesDtoInternal callConnectionPropertiesDtoInternal)
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
             CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState;
             Subject = callConnectionPropertiesDtoInternal.Subject;
-            CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
+            CallbackEndpoint = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
         }
 
         /// <summary> The call connection id. </summary>
@@ -46,6 +46,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> The subject. </summary>
         public string Subject { get; }
         /// <summary> The callback URI. </summary>
-        public Uri CallbackUri { get; }
+        public Uri CallbackEndpoint { get; }
     }
 }

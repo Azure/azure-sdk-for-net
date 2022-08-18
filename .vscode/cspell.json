@@ -277,6 +277,10 @@
       "words": ["ZhHant"]
     },
     {
+      "filename": "**/sdk/guestconfiguration/**/*.cs",
+      "words": ["Hcrp"]
+    },
+    {
       "filename": "**/sdk/hdinsight/**/*.cs",
       "words": [
         "aadds",
@@ -429,7 +433,8 @@
         "Nvarchar",
         "Stdev",
         "Unrestorable",
-        "Vcores"
+        "Vcores",
+        "Dtcs"
       ]
     },
     {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,26 +16,31 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLicenseAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUrlTemplate);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
         internal static StreamingPolicyWidevineConfiguration DeserializeStreamingPolicyWidevineConfiguration(JsonElement element)
         {
-            Optional<string> customLicenseAcquisitionUrlTemplate = default;
+            Optional<Uri> customLicenseAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
                 {
-                    customLicenseAcquisitionUrlTemplate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        customLicenseAcquisitionUriTemplate = null;
+                        continue;
+                    }
+                    customLicenseAcquisitionUriTemplate = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new StreamingPolicyWidevineConfiguration(customLicenseAcquisitionUrlTemplate.Value);
+            return new StreamingPolicyWidevineConfiguration(customLicenseAcquisitionUriTemplate.Value);
         }
     }
 }

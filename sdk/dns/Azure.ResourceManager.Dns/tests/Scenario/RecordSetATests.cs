@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [TearDown]
         public async Task TearDown()
         {
-            var list = await _dnsZone.GetRecordSetAs().GetAllAsync().ToEnumerableAsync();
-            foreach (var item in list)
+            await foreach (var item in _dnsZone.GetRecordSetAs())
             {
                 await item.DeleteAsync(WaitUntil.Completed);
             }
@@ -57,6 +56,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string name = "a";
             var recordSetAResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ARecordSetData() { });
             Assert.IsNotNull(recordSetAResource);
+            Assert.IsNotNull(recordSetAResource.Value.Data.ETag);
             Assert.AreEqual(name, recordSetAResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetAResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/A", recordSetAResource.Value.Data.ResourceType.Type);
@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(name, recordSetAResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetAResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/A", recordSetAResource.Value.Data.ResourceType.Type);
+            Assert.AreEqual(300, recordSetAResource.Value.Data.TtlInSeconds);
         }
 
         [Test]

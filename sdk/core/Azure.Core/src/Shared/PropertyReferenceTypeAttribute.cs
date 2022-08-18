@@ -14,23 +14,23 @@ namespace Azure.Core
         /// <summary>
         /// Instatiate a new reference type attribute.
         /// </summary>
-        /// <param name="skipTypes"> An array of types to skip for this reference type. </param>
-        public PropertyReferenceTypeAttribute(Type[] skipTypes)
+        /// <param name="optionalProperties"> An array of property names that are optional when comparing the type. </param>
+        public PropertyReferenceTypeAttribute(string[] optionalProperties)
         {
-            SkipTypes = skipTypes;
+            OptionalProperties = optionalProperties;
         }
 
         /// <summary>
-        /// Instatiate a new reference type attribute.
+        /// Instantiate a new reference type attribute.
         /// </summary>
         public PropertyReferenceTypeAttribute()
-            : this(Array.Empty<Type>())
+            : this(Array.Empty<string>())
         {
         }
 
         /// <summary>
-        /// Get an array of types to skip for this reference type.
+        /// Get an array of property names that are optional when comparing the type.
         /// </summary>
-        public Type[] SkipTypes { get; }
+        public string[] OptionalProperties { get; }
     }
 }

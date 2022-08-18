@@ -12,5 +12,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Specifies the default encryption scope to set on the file system and use for all future writes.
         /// </summary>
         public string DefaultEncryptionScope { get; set; }
+
+        /// <summary>
+        /// If true, prevents any request from specifying a different encryption scope than the scope set on the container.
+        /// </summary>
+        public bool PreventEncryptionScopeOverride { get; set; }
     }
 }

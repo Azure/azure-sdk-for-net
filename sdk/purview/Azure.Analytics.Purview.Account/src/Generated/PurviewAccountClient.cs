@@ -379,7 +379,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "<DataPlaneAccountUpdateParametersFriendlyName>",
+        ///     friendlyName = "<friendlyName>",
         /// };
         /// 
         /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
@@ -553,7 +553,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "<DataPlaneAccountUpdateParametersFriendlyName>",
+        ///     friendlyName = "<friendlyName>",
         /// };
         /// 
         /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
@@ -821,7 +821,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keyType = "<PrimaryAtlasKafkaKey>",
+        ///     keyType = "PrimaryAtlasKafkaKey",
         /// };
         /// 
         /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
@@ -897,7 +897,7 @@ namespace Azure.Analytics.Purview.Account
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keyType = "<PrimaryAtlasKafkaKey>",
+        ///     keyType = "PrimaryAtlasKafkaKey",
         /// };
         /// 
         /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));

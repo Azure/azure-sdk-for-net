@@ -12,16 +12,16 @@ namespace Azure.ResourceManager.Logic.Models
     {
         /// <summary> Initializes a new instance of AS2ErrorSettings. </summary>
         /// <param name="suspendDuplicateMessage"> The value indicating whether to suspend duplicate message. </param>
-        /// <param name="resendIfMDNNotReceived"> The value indicating whether to resend message If MDN is not received. </param>
-        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMDNNotReceived)
+        /// <param name="resendIfMdnNotReceived"> The value indicating whether to resend message If MDN is not received. </param>
+        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived)
         {
             SuspendDuplicateMessage = suspendDuplicateMessage;
-            ResendIfMDNNotReceived = resendIfMDNNotReceived;
+            ResendIfMdnNotReceived = resendIfMdnNotReceived;
         }
 
         /// <summary> The value indicating whether to suspend duplicate message. </summary>
         public bool SuspendDuplicateMessage { get; set; }
         /// <summary> The value indicating whether to resend message If MDN is not received. </summary>
-        public bool ResendIfMDNNotReceived { get; set; }
+        public bool ResendIfMdnNotReceived { get; set; }
     }
 }

@@ -275,6 +275,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class DeletedKeyVaultProperties
     {
         internal DeletedKeyVaultProperties() { }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
@@ -285,6 +287,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class DeletedManagedHsmProperties
     {
         internal DeletedManagedHsmProperties() { }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedHsmId { get { throw null; } }
