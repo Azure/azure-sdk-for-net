@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <Description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</Description>
-    <Version>3.8.5</Version>
+    <Version>4.0.0</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
