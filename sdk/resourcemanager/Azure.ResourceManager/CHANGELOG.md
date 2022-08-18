@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.3.1 (2022-08-18)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added CanUseTagResource methods to check if the TagResource API is deployed in the current environment.
 
 ## 1.3.0 (2022-08-09)
 
