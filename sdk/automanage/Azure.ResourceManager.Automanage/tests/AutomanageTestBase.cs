@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Automanage.Tests
         public async Task CreateCommonClient()
         {
             ArmClient = GetArmClient();
-            //ResourceMgmtClient = new ResourceManagementClient(new DefaultAzureCredential());
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <returns>VirtualMachineResource</returns>
         protected async Task<VirtualMachineResource> CreateVirtualMachineFromTemplate(string vmName, ResourceGroupResource rg)
         {
-            string templateContent = File.ReadAllText("../../../../sdk/automanage/test-resources.json");
+            string templateContent = File.ReadAllText("../../../../../sdk/automanage/test-resources.json");
             var deploymentContent = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 Template = BinaryData.FromString(templateContent),
