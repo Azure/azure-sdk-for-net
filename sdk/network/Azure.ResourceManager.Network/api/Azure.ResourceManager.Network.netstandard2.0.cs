@@ -6892,9 +6892,9 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? ActionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
-    public partial class FirewallPolicyRule
+    public abstract partial class FirewallPolicyRule
     {
-        public FirewallPolicyRule() { }
+        protected FirewallPolicyRule() { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
@@ -6922,9 +6922,9 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FirewallPolicyRuleCollectionInfo
+    public abstract partial class FirewallPolicyRuleCollectionInfo
     {
-        public FirewallPolicyRuleCollectionInfo() { }
+        protected FirewallPolicyRuleCollectionInfo() { }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
     }

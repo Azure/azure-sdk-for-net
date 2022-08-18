@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public abstract partial class AuthBaseInfo
     {
-        public AuthBaseInfo() { }
+        protected AuthBaseInfo() { }
     }
     public partial class AzureKeyVaultProperties : Azure.ResourceManager.ServiceLinker.Models.AzureResourceBaseProperties
     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     }
     public abstract partial class AzureResourceBaseProperties
     {
-        public AzureResourceBaseProperties() { }
+        protected AzureResourceBaseProperties() { }
     }
     public partial class AzureResourceInfo : Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo
     {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     }
     public abstract partial class SecretBaseInfo
     {
-        public SecretBaseInfo() { }
+        protected SecretBaseInfo() { }
     }
     public partial class ServicePrincipalCertificateAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo
     {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     }
     public abstract partial class TargetServiceBaseInfo
     {
-        public TargetServiceBaseInfo() { }
+        protected TargetServiceBaseInfo() { }
     }
     public partial class UserAssignedIdentityAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo
     {
