@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
         protected async Task<StorageAccountResource> CreateStorageAccountAsync(ResourceGroupResource rg)
         {
             var storageAccountName = Recording.GenerateAssetName("sqlvmteststorage");
-            StorageAccountCreateOrUpdateContent input = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLRS), StorageKind.StorageV2, rg.Data.Location);
+            StorageAccountCreateOrUpdateContent input = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.StorageV2, rg.Data.Location);
             var lro = await rg.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, input);
             return lro.Value;
         }
 
         protected async Task<SqlVmGroupResource> CreateSqlVmGroupAsync(ResourceGroupResource rg, string sqlVmGroupName, StorageAccountResource storageAccount)
         {
-            StorageAccountListKeysResult keysResult = await storageAccount.GetKeysAsync();
+            StorageAccountGetKeysResult keysResult = await storageAccount.GetKeysAsync();
             var key = keysResult.Keys.First(_ => true).Value;
-            string blobAccount = storageAccount.Data.PrimaryEndpoints.Blob;
+            Uri blobUri = storageAccount.Data.PrimaryEndpoints.BlobUri;
             var lro = await rg.GetSqlVmGroups().CreateOrUpdateAsync(WaitUntil.Completed, sqlVmGroupName, new SqlVmGroupData(rg.Data.Location)
             {
                 SqlImageOffer = ImageOffer,
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                     SqlServiceAccount = GetUsername("sqlService", DomainName),
                     ClusterOperatorAccount = GetUsername(AdminLogin, DomainName),
                     DomainFqdn = $"{DomainName}.com",
-                    StorageAccountUri = new Uri(blobAccount),
+                    StorageAccountUri = blobUri,
                     StorageAccountPrimaryKey = key,
                     ClusterSubnetType = SqlVmClusterSubnetType.SingleSubnet,
                 }
@@ -134,21 +134,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             var vmName = Recording.GenerateAssetName("vm");
             VirtualMachineResource vm = (await rg.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, vmName, new VirtualMachineData(rg.Data.Location)
             {
-                HardwareProfile = new HardwareProfile
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardDS132V2
+                    VmSize = VirtualMachineSizeType.StandardDS132V2
                 },
-                NetworkProfile = new NetworkProfile
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
                     NetworkInterfaces =
                     {
-                        new NetworkInterfaceReference
+                        new VirtualMachineNetworkInterfaceReference
                         {
                             Id = nic.Id
                         }
                     }
                 },
-                StorageProfile = new StorageProfile
+                StorageProfile = new VirtualMachineStorageProfile
                 {
                     ImageReference = new ImageReference
                     {
@@ -157,30 +157,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                         Sku = "Enterprise",
                         Version = "latest"
                     },
-                    OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
                     {
-                        Caching = CachingTypes.None,
-                        ManagedDisk = new ManagedDiskParameters
+                        Caching = CachingType.None,
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
-                            StorageAccountType = StorageAccountTypes.StandardLRS,
+                            StorageAccountType = StorageAccountType.StandardLrs,
                         },
                         WriteAcceleratorEnabled = false
                     },
                     DataDisks =
                     {
-                        new DataDisk(0, DiskCreateOptionTypes.Empty)
+                        new VirtualMachineDataDisk(0, DiskCreateOptionType.Empty)
                         {
-                            Caching = CachingTypes.None,
+                            Caching = CachingType.None,
                             WriteAcceleratorEnabled = false,
                             DiskSizeGB = 30,
-                            ManagedDisk = new ManagedDiskParameters
+                            ManagedDisk = new VirtualMachineManagedDisk
                             {
-                                StorageAccountType = StorageAccountTypes.StandardLRS,
+                                StorageAccountType = StorageAccountType.StandardLrs,
                             },
                         }
                     }
                 },
-                OSProfile = new OSProfile
+                OSProfile = new VirtualMachineOSProfile
                 {
                     AdminUsername = AdminLogin,
                     AdminPassword = AdminPassword,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 {
                     { "key", "value" }
                 },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = Recording.GenerateAssetName("dnslabel")
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                     {
                         Name = Recording.GenerateAssetName("ipconfig"),
                         Subnet = subnetData,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = publicIPAddress.Data
                     }
                 },
