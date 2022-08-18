@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -25,14 +24,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of LiveEventInput. </summary>
         /// <param name="streamingProtocol"> The input protocol for the live event. This is specified at creation time and cannot be updated. </param>
         /// <param name="accessControl"> Access control for live event input. </param>
-        /// <param name="keyFrameIntervalDuration"> ISO 8601 time duration of the key frame interval duration of the input. This value sets the EXT-X-TARGETDURATION property in the HLS output. For example, use PT2S to indicate 2 seconds. Leave the value empty for encoding live events. </param>
+        /// <param name="keyFrameInterval"> ISO 8601 time duration of the key frame interval duration of the input. This value sets the EXT-X-TARGETDURATION property in the HLS output. For example, use PT2S to indicate 2 seconds. Leave the value empty for encoding live events. </param>
         /// <param name="accessToken"> A UUID in string form to uniquely identify the stream. This can be specified at creation time but cannot be updated. If omitted, the service will generate a unique value. </param>
         /// <param name="endpoints"> The input endpoints for the live event. </param>
-        internal LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl, TimeSpan? keyFrameIntervalDuration, string accessToken, IList<LiveEventEndpoint> endpoints)
+        internal LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl, string keyFrameInterval, string accessToken, IList<LiveEventEndpoint> endpoints)
         {
             StreamingProtocol = streamingProtocol;
             AccessControl = accessControl;
-            KeyFrameIntervalDuration = keyFrameIntervalDuration;
+            KeyFrameInterval = keyFrameInterval;
             AccessToken = accessToken;
             Endpoints = endpoints;
         }
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> ISO 8601 time duration of the key frame interval duration of the input. This value sets the EXT-X-TARGETDURATION property in the HLS output. For example, use PT2S to indicate 2 seconds. Leave the value empty for encoding live events. </summary>
-        public TimeSpan? KeyFrameIntervalDuration { get; set; }
+        public string KeyFrameInterval { get; set; }
         /// <summary> A UUID in string form to uniquely identify the stream. This can be specified at creation time but cannot be updated. If omitted, the service will generate a unique value. </summary>
         public string AccessToken { get; set; }
         /// <summary> The input endpoints for the live event. </summary>

@@ -56,15 +56,8 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(AccessControl))
             {
-                if (AccessControl != null)
-                {
-                    writer.WritePropertyName("accessControl");
-                    writer.WriteObjectValue(AccessControl);
-                }
-                else
-                {
-                    writer.WriteNull("accessControl");
-                }
+                writer.WritePropertyName("accessControl");
+                writer.WriteObjectValue(AccessControl);
             }
             if (Optional.IsDefined(MaxCacheAge))
             {
@@ -234,7 +227,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                accessControl = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessControl = StreamingEndpointAccessControl.DeserializeStreamingEndpointAccessControl(property0.Value);

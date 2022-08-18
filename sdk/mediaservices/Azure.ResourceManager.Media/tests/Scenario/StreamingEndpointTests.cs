@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.Media.Tests
             {
                 Description = "changes test."
             };
-            data.Location = null; // System.ArgumentNullException : Value cannot be null. (Parameter 'location')
             var response = await streamingEndpoint.UpdateAsync(WaitUntil.Completed, data);
             Assert.IsNotNull(response);
             Assert.AreEqual(_streamingEndpointName, response.Value.Data.Name);

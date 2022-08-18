@@ -236,7 +236,7 @@ directive:
   - from: streamingservice.json
     where: $.definitions
     transform: >
-      $.LiveEventInput.properties.keyFrameIntervalDuration['format'] = 'duration';
+      $.LiveEventInput.properties.keyFrameIntervalDuration["x-ms-client-name"] = 'keyFrameInterval';
       $.ArmStreamingEndpointSkuInfo.properties.resourceType['x-ms-format'] = 'resource-type';
   - from: Encoding.json
     where: $.definitions
@@ -265,6 +265,14 @@ directive:
     where: $.definitions
     transform: >
       $.StreamingEndpointProperties.properties.maxCacheAge["x-nullable"] = true;
-      $.StreamingEndpointProperties.properties.accessControl["x-nullable"] = true;
       $.StreamingEndpointProperties.properties.crossSiteAccessPolicies["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.LiveEventEncoding.properties.stretchMode
+    transform: $["x-nullable"] = true
+  - from: swagger-document
+    where: $.definitions.LiveEventEncoding.properties.keyFrameInterval
+    transform: $["x-nullable"] = true
+  - from: swagger-document
+    where: $.definitions.LiveEventEncoding.properties.accessControl
+    transform: $["x-nullable"] = true
 ```

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -24,10 +23,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("accessControl");
                 writer.WriteObjectValue(AccessControl);
             }
-            if (Optional.IsDefined(KeyFrameIntervalDuration))
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameIntervalDuration");
-                writer.WriteStringValue(KeyFrameIntervalDuration.Value, "P");
+                writer.WriteStringValue(KeyFrameInterval);
             }
             if (Optional.IsDefined(AccessToken))
             {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             LiveEventInputProtocol streamingProtocol = default;
             Optional<LiveEventInputAccessControl> accessControl = default;
-            Optional<TimeSpan> keyFrameIntervalDuration = default;
+            Optional<string> keyFrameIntervalDuration = default;
             Optional<string> accessToken = default;
             Optional<IList<LiveEventEndpoint>> endpoints = default;
             foreach (var property in element.EnumerateObject())
@@ -73,12 +72,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("keyFrameIntervalDuration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    keyFrameIntervalDuration = property.Value.GetTimeSpan("P");
+                    keyFrameIntervalDuration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("accessToken"))
@@ -102,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new LiveEventInput(streamingProtocol, accessControl.Value, Optional.ToNullable(keyFrameIntervalDuration), accessToken.Value, Optional.ToList(endpoints));
+            return new LiveEventInput(streamingProtocol, accessControl.Value, keyFrameIntervalDuration.Value, accessToken.Value, Optional.ToList(endpoints));
         }
     }
 }
