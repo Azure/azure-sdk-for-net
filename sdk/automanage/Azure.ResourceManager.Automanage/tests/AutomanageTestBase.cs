@@ -76,16 +76,5 @@ namespace Azure.ResourceManager.Automanage.Tests
             var newProfile = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
             return newProfile.Value;
         }
-
-        public static void VerifyConfigurationProfileProperties(ConfigurationProfileResource profile)
-        {
-            Assert.NotNull(profile);
-            Assert.True(profile.HasData);
-            Assert.NotNull(profile.Id);
-            Assert.NotNull(profile.Id.Name);
-            Assert.NotNull(profile.Data);
-            Assert.NotNull(profile.Data.Configuration);
-            Assert.NotNull(profile.Data.Location);
-        }
     }
 }
