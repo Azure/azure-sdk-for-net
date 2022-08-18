@@ -53,6 +53,12 @@ namespace Azure.ResourceManager.Automanage.Tests
             return rg.Value;
         }
 
+        /// <summary>
+        /// Creates a custom configuration profile
+        /// </summary>
+        /// <param name="collection">Configruation Profile Collection to perform actions against</param>
+        /// <param name="profileName">Desired name of the Configuration Profile</param>
+        /// <returns>ConfigurationProfileResource</returns>
         protected async Task<ConfigurationProfileResource> CreateConfigurationProfile(ConfigurationProfileCollection collection, string profileName)
         {
             string configuration = "{" +
@@ -80,6 +86,12 @@ namespace Azure.ResourceManager.Automanage.Tests
             return newProfile.Value;
         }
 
+        /// <summary>
+        /// Creates a Virtual Machine from an existing ARM template
+        /// </summary>
+        /// <param name="vmName">Desired name of the Virtual Machine</param>
+        /// <param name="rg">Resource Group to perform actions against</param>
+        /// <returns>VirtualMachineResource</returns>
         protected async Task<VirtualMachineResource> CreateVirtualMachineFromTemplate(string vmName, ResourceGroupResource rg)
         {
             string templateContent = File.ReadAllText("../../../../sdk/automanage/test-resources.json");
