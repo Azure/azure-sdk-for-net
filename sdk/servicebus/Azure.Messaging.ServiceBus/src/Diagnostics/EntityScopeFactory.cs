@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             id = null;
 
-            if (properties.TryGetValue<string>(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            if (properties.TryGetValue<string>(DiagnosticProperty.DiagnosticIdAttribute, out string stringId))
             {
                 id = stringId;
                 return true;
