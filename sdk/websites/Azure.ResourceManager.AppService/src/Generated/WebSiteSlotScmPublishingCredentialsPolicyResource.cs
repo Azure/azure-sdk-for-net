@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient;
-        private readonly CsmPublishingCredentialsPoliciesEntityData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteSlotScmPublishingCredentialsPolicyResource"/> class for mocking. </summary>
         protected WebSiteSlotScmPublishingCredentialsPolicyResource()
