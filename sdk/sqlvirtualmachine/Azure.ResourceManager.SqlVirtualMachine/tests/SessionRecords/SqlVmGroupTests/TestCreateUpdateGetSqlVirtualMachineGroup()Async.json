@@ -324,7 +324,7 @@
           "wsfcDomainProfile": {
             "domainFqdn": "Domain.com",
             "clusterOperatorAccount": "myvmadmin@Domain.com",
-            "sqlServiceAccount": "sqlservice@Domain.com",
+            "sqlServiceAccount": "sqlService@Domain.com",
             "storageAccountUrl": "https://sqlvmteststorage8807.blob.core.windows.net/",
             "storageAccountPrimaryKey": "XaUYAZupHfNWuQRchNJg8egryrS62kwrAGDIUTBdRnYPpI7EyKPqj1SnJIkPDvX3QxRMb\u002BiHivpL\u002BAStCwW9tg==",
             "clusterSubnetType": "SingleSubnet"
@@ -434,7 +434,7 @@
           "wsfcDomainProfile": {
             "domainFqdn": "Domain.com",
             "clusterOperatorAccount": "myvmadmin@Domain.com",
-            "sqlServiceAccount": "sqlservice@Domain.com",
+            "sqlServiceAccount": "sqlService@Domain.com",
             "storageAccountUrl": "https://sqlvmteststorage8807.blob.core.windows.net/",
             "clusterSubnetType": "SingleSubnet"
           }
@@ -536,7 +536,7 @@
           "wsfcDomainProfile": {
             "domainFqdn": "Domain.com",
             "clusterOperatorAccount": "myvmadmin@Domain.com",
-            "sqlServiceAccount": "sqlservice@Domain.com",
+            "sqlServiceAccount": "sqlService@Domain.com",
             "storageAccountUrl": "https://sqlvmteststorage8807.blob.core.windows.net/",
             "clusterSubnetType": "SingleSubnet"
           }
@@ -586,7 +586,7 @@
           "wsfcDomainProfile": {
             "domainFqdn": "Domain.com",
             "clusterOperatorAccount": "myvmadmin@Domain.com",
-            "sqlServiceAccount": "sqlservice@Domain.com",
+            "sqlServiceAccount": "sqlService@Domain.com",
             "storageAccountUrl": "https://sqlvmteststorage8807.blob.core.windows.net/",
             "clusterSubnetType": "SingleSubnet"
           }

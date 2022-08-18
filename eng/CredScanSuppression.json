@@ -92,6 +92,15 @@
         },
         {
             "file":[
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup().json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup()Async.json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup().json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup()Async.json"
+            ],
+            "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
+        },
+        {
+            "file":[
                 "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
             ],
             "_justification": "File contains a string value that ends with credential, not a true credential."

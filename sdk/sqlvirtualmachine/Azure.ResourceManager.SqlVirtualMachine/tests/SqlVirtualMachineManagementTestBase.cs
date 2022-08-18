@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 {
     public class SqlVirtualMachineManagementTestBase : ManagementRecordedTestBase<SqlVirtualMachineManagementTestEnvironment>
     {
-        public const string imageOffer = "SQL2017-WS2016";
-        public const string domainName = "Domain";
+        protected const string ImageOffer = "SQL2017-WS2016";
+        protected const string DomainName = "Domain";
 
-        public const string adminLogin = "myvmadmin";
-        public const string adminPassword = "sql@zure123!";
+        protected const string AdminLogin = "myvmadmin";
+        protected const string AdminPassword = "sql@zure123!";
 
         protected ArmClient Client { get; private set; }
 
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             string blobAccount = storageAccount.Data.PrimaryEndpoints.Blob;
             var lro = await rg.GetSqlVmGroups().CreateOrUpdateAsync(WaitUntil.Completed, sqlVmGroupName, new SqlVmGroupData(rg.Data.Location)
             {
-                SqlImageOffer = imageOffer,
+                SqlImageOffer = ImageOffer,
                 SqlImageSku = SqlVmGroupImageSku.Enterprise,
                 WindowsServerFailoverClusterDomainProfile = new WindowsServerFailoverClusterDomainProfile()
                 {
-                    SqlServiceAccount = GetUsername("sqlService", domainName),
-                    ClusterOperatorAccount = GetUsername(adminLogin, domainName),
-                    DomainFqdn = $"{domainName}.com",
+                    SqlServiceAccount = GetUsername("sqlService", DomainName),
+                    ClusterOperatorAccount = GetUsername(AdminLogin, DomainName),
+                    DomainFqdn = $"{DomainName}.com",
                     StorageAccountUri = new Uri(blobAccount),
                     StorageAccountPrimaryKey = key,
                     ClusterSubnetType = SqlVmClusterSubnetType.SingleSubnet,
@@ -100,13 +100,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 SqlServerLicenseType = SqlServerLicenseType.Payg,
                 SqlManagement = SqlManagementMode.Full,
                 SqlImageSku = SqlImageSku.Enterprise,
-                SqlImageOffer = imageOffer,
+                SqlImageOffer = ImageOffer,
                 ServerConfigurationsManagementSettings = new SqlServerConfigurationsManagementSettings()
                 {
                     SqlConnectivityUpdateSettings = new SqlConnectivityUpdateSettings()
                     {
                         SqlAuthUpdateUserName = "sqlLogin",
-                        SqlAuthUpdatePassword = adminPassword,
+                        SqlAuthUpdatePassword = AdminPassword,
                         ConnectivityType = SqlServerConnectivityType.Private,
                         Port = 1433
                     },
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                     ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftSQLServer",
-                        Offer = imageOffer,
+                        Offer = ImageOffer,
                         Sku = "Enterprise",
                         Version = "latest"
                     },
@@ -182,8 +182,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 },
                 OSProfile = new OSProfile
                 {
-                    AdminUsername = adminLogin,
-                    AdminPassword = adminPassword,
+                    AdminUsername = AdminLogin,
+                    AdminPassword = AdminPassword,
                     ComputerName = vmName,
                     WindowsConfiguration = new WindowsConfiguration
                     {

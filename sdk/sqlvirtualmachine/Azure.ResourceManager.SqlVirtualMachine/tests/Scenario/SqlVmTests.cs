@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task TestCreateGetUpdateDeleteSqlVirtualMachine()
+        public async Task TestCreateGetUpdateDeleteListSqlVirtualMachine()
         {
             // Create SQL VM
             ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "sqlvmtestrg", AzureLocation.WestUS);
