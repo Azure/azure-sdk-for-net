@@ -22,10 +22,10 @@ namespace Azure.Communication.CallingServer
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DTMFValue = "dTMF";
+        private const string DtmfValue = "dtmf";
 
-        /// <summary> dTMF. </summary>
-        public static RecognizeInputType DTMF { get; } = new RecognizeInputType(DTMFValue);
+        /// <summary> dtmf. </summary>
+        public static RecognizeInputType Dtmf { get; } = new RecognizeInputType(DtmfValue);
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are the same. </summary>
         public static bool operator ==(RecognizeInputType left, RecognizeInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are not the same. </summary>

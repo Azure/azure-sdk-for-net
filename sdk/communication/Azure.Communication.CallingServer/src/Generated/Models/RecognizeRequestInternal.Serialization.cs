@@ -15,23 +15,20 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecognizeInputType))
+            writer.WritePropertyName("recognizeInputType");
+            writer.WriteStringValue(RecognizeInputType.ToString());
+            if (Optional.IsDefined(PlayPrompt))
             {
-                writer.WritePropertyName("recognizeInputType");
-                writer.WriteStringValue(RecognizeInputType.Value.ToString());
-            }
-            if (Optional.IsDefined(PlaySourceInfo))
-            {
-                writer.WritePropertyName("playSourceInfo");
-                writer.WriteObjectValue(PlaySourceInfo);
+                writer.WritePropertyName("playPrompt");
+                writer.WriteObjectValue(PlayPrompt);
             }
             if (Optional.IsDefined(StopCurrentOperations))
             {
                 writer.WritePropertyName("stopCurrentOperations");
                 writer.WriteBooleanValue(StopCurrentOperations.Value);
             }
-            writer.WritePropertyName("recognizeOptions");
-            writer.WriteObjectValue(RecognizeOptions);
+            writer.WritePropertyName("recognizeConfiguration");
+            writer.WriteObjectValue(RecognizeConfiguration);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");

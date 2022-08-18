@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+
 namespace Azure.Communication.CallingServer
 {
     public class CallAutomationTestBase
