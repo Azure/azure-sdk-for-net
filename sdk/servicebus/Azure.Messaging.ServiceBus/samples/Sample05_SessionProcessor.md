@@ -1,4 +1,4 @@
-# Using the Session Processor
+# Using the session processor
 
 This sample demonstrates how to use the session processor. The session processor offers automatic completion of processed session messages, automatic session lock renewal, and concurrent execution of user specified event handlers.
 

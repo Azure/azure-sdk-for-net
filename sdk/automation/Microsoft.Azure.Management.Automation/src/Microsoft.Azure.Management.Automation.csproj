@@ -6,14 +6,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <Description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</Description>
-    <Version>3.8.4</Version>
+    <Version>4.0.0</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
-    <PackageTags>Automation;Runbook;AAD</PackageTags>
+    <PackageTags>Automation;Runbook;AAD;Hybrid Runbook Worker Group</PackageTags>
     <PackageReleaseNotes><![CDATA[
 New features:
-   Adding support for Azure Active directory authentication
+   Hybrid runbook worker group payload to be in compliant with ARM
       ]]>
 	  </PackageReleaseNotes>
   </PropertyGroup>

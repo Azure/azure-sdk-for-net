@@ -32,12 +32,12 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Id of the job.
         /// </summary>
-        public string JobId { get; set; }
+        public string JobId { get; }
 
         /// <summary>
         /// The id used to assign the job to a worker.
         /// </summary>
-        public string AssignmentId { get; set; }
+        public string AssignmentId { get; }
 
         /// <summary> Reason code for cancelled or closed jobs. </summary>
         public string DispositionCode { get; set; }
