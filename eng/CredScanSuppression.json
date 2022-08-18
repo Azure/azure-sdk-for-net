@@ -95,7 +95,9 @@
                 "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup().json",
                 "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup()Async.json",
                 "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup().json",
-                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup()Async.json"
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup()Async.json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/SetTags().json",
+                "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/SetTags()Async.json"
             ],
             "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
         },
