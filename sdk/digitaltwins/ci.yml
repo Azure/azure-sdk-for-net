@@ -30,5 +30,5 @@ extends:
     - name: Azure.DigitalTwins.Core
       safeName: AzureDigitalTwinsCore
     - name: Azure.ResourceManager.DigitalTwins
-      safeName: Azure.ResourceManagerDigitalTwins
+      safeName: AzureResourceManagerDigitalTwins
 

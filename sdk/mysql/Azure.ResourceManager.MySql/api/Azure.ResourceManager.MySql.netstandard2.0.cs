@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public partial class MySqlFlexibleServerConfigurationListForBatchUpdate
     {
         public MySqlFlexibleServerConfigurationListForBatchUpdate() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate> Value { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate> Values { get { throw null; } }
     }
     public partial class MySqlFlexibleServerConfigurations
     {
