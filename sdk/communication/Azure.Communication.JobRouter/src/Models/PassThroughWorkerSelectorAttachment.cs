@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="ttl"> Describes how long the attached label selector is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? ttl = default)
-            : this(null, key, labelOperator, ttl?.Seconds)
+            : this(null, key, labelOperator, ttl?.TotalSeconds)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
         }
