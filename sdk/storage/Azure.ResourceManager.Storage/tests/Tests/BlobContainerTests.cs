@@ -529,16 +529,6 @@ namespace Azure.ResourceManager.Storage.Tests
                             new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
                             100,
                             new[] { "x-ms-meta-*" },
-                            new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }),
-                        new StorageCorsRule(new[] { "*" },
-                            new[] { CorsRuleAllowedMethod.Get },
-                            2,
-                            new[] { "*" },
-                            new[] { "*" }),
-                        new StorageCorsRule(new[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
-                            new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put, CorsRuleAllowedMethod.Post },
-                            2000,
-                            new[] { "x-ms-meta-12345675754564*" },
                             new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
                     }
                 }

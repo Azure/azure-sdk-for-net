@@ -1051,6 +1051,7 @@ namespace Azure.ResourceManager.Storage.Models
         private readonly int _dummyPrimitive;
         public DirectoryServiceOption(string value) { throw null; }
         public static Azure.ResourceManager.Storage.Models.DirectoryServiceOption Aadds { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.DirectoryServiceOption Aadkerb { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.DirectoryServiceOption AD { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.DirectoryServiceOption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Storage.Models.DirectoryServiceOption other) { throw null; }
@@ -1980,7 +1981,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class StorageActiveDirectoryProperties
     {
-        public StorageActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, System.Guid domainGuid, string domainSid, string azureStorageSid) { }
+        public StorageActiveDirectoryProperties(string domainName, System.Guid domainGuid) { }
         public Azure.ResourceManager.Storage.Models.ActiveDirectoryAccountType? AccountType { get { throw null; } set { } }
         public string AzureStorageSid { get { throw null; } set { } }
         public System.Guid DomainGuid { get { throw null; } set { } }
