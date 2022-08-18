@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                 {
                     case WebSiteFtpPublishingCredentialsPolicyResource ftpPolicy:
                         ftp++;
-                        WebSiteFtpPublishingCredentialsPolicyResource ftpResource = await ftpPolicy.GetAsync();
+                        //WebSiteFtpPublishingCredentialsPolicyResource ftpResource = await ftpPolicy.GetAsync();
                         break;
                     case WebSiteScmPublishingCredentialsPolicyResource scmPolicy:
                         scm++;
-                        WebSiteScmPublishingCredentialsPolicyResource scmResource = await scmPolicy.GetAsync();
+                        //WebSiteScmPublishingCredentialsPolicyResource scmResource = await scmPolicy.GetAsync();
                         break;
                 }
             }

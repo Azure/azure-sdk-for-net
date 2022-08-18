@@ -49,10 +49,12 @@ namespace Azure.ResourceManager.AppService
             return Response.FromValue(default(T), default);
         }
 
-        public virtual async Task<Response<BaseWebSitePublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public async Task<Response<BaseWebSitePublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
             => await GetCoreAsync<BaseWebSitePublishingCredentialsPolicyResource>(cancellationToken).ConfigureAwait(false);
 
-        public virtual Response<BaseWebSitePublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public Response<BaseWebSitePublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
             => GetCore<BaseWebSitePublishingCredentialsPolicyResource>(cancellationToken);
 
         // do we really have to implement these?
@@ -67,10 +69,12 @@ namespace Azure.ResourceManager.AppService
             return new FakeArmOperation<T>();
         }
 
-        public virtual async Task<ArmOperation<BaseWebSitePublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public async Task<ArmOperation<BaseWebSitePublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
             => await CreateOrUpdateCoreAsync<BaseWebSitePublishingCredentialsPolicyResource>(waitUntil, data, cancellationToken).ConfigureAwait(false);
 
-        public virtual ArmOperation<BaseWebSitePublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public ArmOperation<BaseWebSitePublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
             => CreateOrUpdateCore<BaseWebSitePublishingCredentialsPolicyResource>(waitUntil, data, cancellationToken);
 
         internal static BaseWebSitePublishingCredentialsPolicyResource CreateWebSitePublishCredentialsPolicyResource(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data)

@@ -116,7 +116,8 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetFtpAllowed
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public new virtual async Task<Response<WebSiteFtpPublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<WebSiteFtpPublishingCredentialsPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
             => await GetCoreAsync<WebSiteFtpPublishingCredentialsPolicyResource>(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -125,7 +126,8 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetFtpAllowed
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public new virtual Response<WebSiteFtpPublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new Response<WebSiteFtpPublishingCredentialsPolicyResource> Get(CancellationToken cancellationToken = default)
             => GetCore<WebSiteFtpPublishingCredentialsPolicyResource>(cancellationToken);
 
         protected override async Task<ArmOperation<T>> CreateOrUpdateCoreAsync<T>(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
@@ -179,7 +181,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public new virtual async Task<ArmOperation<WebSiteFtpPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<ArmOperation<WebSiteFtpPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
             => await CreateOrUpdateCoreAsync<WebSiteFtpPublishingCredentialsPolicyResource>(waitUntil, data, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -191,7 +194,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public new virtual ArmOperation<WebSiteFtpPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new ArmOperation<WebSiteFtpPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
             => CreateOrUpdateCore<WebSiteFtpPublishingCredentialsPolicyResource>(waitUntil, data, cancellationToken);
     }
 }
