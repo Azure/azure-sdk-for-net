@@ -166,16 +166,16 @@ namespace Compute.Tests.DiskRPTests
                     {
                         Assert.NotNull(diskOut.BurstingEnabledTime);
                     }
-                    if (isPerformancePlus == true)
-                    {
-                        Assert.True(diskOut.CreationData.PerformancePlus);
-                    }
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(tier, diskOut.Tier);
                     Assert.Equal(burstingEnabled, diskOut.BurstingEnabled);
+                    if (burstingEnabled == true)
+                    {
+                        Assert.NotNull(diskOut.BurstingEnabledTime);
+                    }
 
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
@@ -2029,6 +2029,7 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(creationDataExp.SourceUri, creationDataAct.SourceUri);
             Assert.Equal(creationDataExp.SourceResourceId, creationDataAct.SourceResourceId);
             Assert.Equal(creationDataExp.StorageAccountId, creationDataAct.StorageAccountId);
+            Assert.Equal(creationDataExp.PerformancePlus, creationDataAct.PerformancePlus);
 
             // Image reference
             ImageDiskReference imgRefExp = creationDataExp.GalleryImageReference ?? creationDataExp.ImageReference;
