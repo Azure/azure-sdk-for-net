@@ -11,6 +11,59 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         public ConfigurationProfileTests(bool async) : base(async) { }
 
         [TestCase]
+        public async Task CanGetAllConfigurationProfilesInSubscription()
+        {
+            // create resource groups
+            var rg1 = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            var rg2 = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+
+            // fetch configuration profile collections
+            var collection1 = rg1.GetConfigurationProfiles();
+            var collection2 = rg2.GetConfigurationProfiles();
+
+            // create two configuration profiles in seperate resource groups
+            for (int i = 0; i < 2; i++)
+            {
+                await CreateConfigurationProfile(collection1, Recording.GenerateAssetName("SDKAutomanageProfile-"));
+                await CreateConfigurationProfile(collection2, Recording.GenerateAssetName("SDKAutomanageProfile-"));
+            }
+
+            // fetch all profiles and count them
+            var profiles = Subscription.GetConfigurationProfilesAsync().ConfigureAwait(false);
+
+            int count = 0;
+            await foreach (var item in profiles)
+                count++;
+
+            // assert
+            Assert.AreEqual(4, count);
+        }
+
+        [TestCase]
+        public async Task CanGetAllConfigurationProfilesInResourceGroup()
+        {
+            // create resource group
+            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+
+            // fetch configuration profile collection
+            var collection = rg.GetConfigurationProfiles();
+
+            // create configuration profile
+            for (int i = 0; i < 4; i++)
+                await CreateConfigurationProfile(collection, Recording.GenerateAssetName("SDKAutomanageProfile-"));
+
+            // fetch all profiles and count them
+            var profiles = collection.GetAllAsync().ConfigureAwait(false);
+
+            int count = 0;
+            await foreach (var item in profiles)
+                count++;
+
+            // assert
+            Assert.AreEqual(4, count);
+        }
+
+        [TestCase]
         public async Task CanCreateConfigurationProfile()
         {
             string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
