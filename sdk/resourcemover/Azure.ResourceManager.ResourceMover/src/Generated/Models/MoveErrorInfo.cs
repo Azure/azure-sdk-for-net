@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoveErrorInfo. </summary>
         internal MoveErrorInfo()
         {
-            MoveResources = new ChangeTrackingList<MoverAffectedMoveResourceInfo>();
+            InfoMoverResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of MoveErrorInfo. </summary>
-        /// <param name="moveResources"> The affected move resources. </param>
-        internal MoveErrorInfo(IReadOnlyList<MoverAffectedMoveResourceInfo> moveResources)
+        /// <param name="infoMoverResources"> The affected move resources. </param>
+        internal MoveErrorInfo(IReadOnlyList<AffectedMoverResourceInfo> infoMoverResources)
         {
-            MoveResources = moveResources;
+            InfoMoverResources = infoMoverResources;
         }
 
         /// <summary> The affected move resources. </summary>
-        public IReadOnlyList<MoverAffectedMoveResourceInfo> MoveResources { get; }
+        public IReadOnlyList<AffectedMoverResourceInfo> InfoMoverResources { get; }
     }
 }

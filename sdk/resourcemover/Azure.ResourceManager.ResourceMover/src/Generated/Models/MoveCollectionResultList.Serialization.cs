@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoveCollectionResultList DeserializeMoveCollectionResultList(JsonElement element)
         {
-            Optional<IReadOnlyList<MoveCollectionData>> value = default;
+            Optional<IReadOnlyList<MoverResourceSetData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MoveCollectionData> array = new List<MoveCollectionData>();
+                    List<MoverResourceSetData> array = new List<MoverResourceSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoveCollectionData.DeserializeMoveCollectionData(item));
+                        array.Add(MoverResourceSetData.DeserializeMoverResourceSetData(item));
                     }
                     value = array;
                     continue;

@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverPrepareContent
     {
         /// <summary> Initializes a new instance of MoverPrepareContent. </summary>
-        /// <param name="moveResources"> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResources"/> is null. </exception>
-        public MoverPrepareContent(IEnumerable<ResourceIdentifier> moveResources)
+        /// <param name="moverResources"> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
+        public MoverPrepareContent(IEnumerable<ResourceIdentifier> moverResources)
         {
-            if (moveResources == null)
+            if (moverResources == null)
             {
-                throw new ArgumentNullException(nameof(moveResources));
+                throw new ArgumentNullException(nameof(moverResources));
             }
 
-            MoveResources = moveResources.ToList();
+            MoverResources = moverResources.ToList();
         }
 
         /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>
         public bool? IsValidateOnly { get; set; }
         /// <summary> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </summary>
-        public IList<ResourceIdentifier> MoveResources { get; }
+        public IList<ResourceIdentifier> MoverResources { get; }
         /// <summary> Defines the move resource input type. </summary>
-        public MoveResourceInputType? MoveResourceInputType { get; set; }
+        public MoverResourceInputType? MoverResourceInputType { get; set; }
     }
 }

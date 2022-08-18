@@ -10,18 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    /// <summary> Defines reference to a public IP. </summary>
-    internal partial class PublicIPReferenceInfo : MoverResourceReferenceInfo
+    /// <summary> Defines reference to an Azure resource. </summary>
+    public partial class MoverResourceReferenceInfo
     {
-        /// <summary> Initializes a new instance of PublicIPReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of MoverResourceReferenceInfo. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        public PublicIPReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
+        public MoverResourceReferenceInfo(ResourceIdentifier sourceArmResourceId)
         {
             if (sourceArmResourceId == null)
             {
                 throw new ArgumentNullException(nameof(sourceArmResourceId));
             }
+
+            SourceArmResourceId = sourceArmResourceId;
         }
+
+        /// <summary> Gets the ARM resource ID of the tracked resource being referenced. </summary>
+        public ResourceIdentifier SourceArmResourceId { get; set; }
     }
 }
