@@ -2,17 +2,25 @@
 
 ## 5.8.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.7.2 (2022-08-09)
+
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
+
+- Fixed a regression with the `EventHubProducerClient` overloads of `SendAsync` which accept an enumerable of events.  When specifying a partition key, it was ignored when sending.  As a result, the Event Hub applied round-robin partition assignment, spreading events across partitions rather than grouping them in a single partition.
 
 ### Other Changes
 

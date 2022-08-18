@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="runRequest">
         /// The request (parameters) for the run
         /// Please note <see cref="ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunRequest"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
+        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
         /// </param>
         /// <param name="runResult"> The result of this task run. </param>
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
-        internal ContainerRegistryTaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryManagedIdentity identity, AzureLocation? location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryRunContent runRequest, ContainerRegistryRunData runResult, string forceUpdateTag) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryTaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryRunContent runRequest, ContainerRegistryRunData runResult, string forceUpdateTag) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Identity for the resource. </summary>
-        public ContainerRegistryManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The provisioning state of this task run. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary>
         /// The request (parameters) for the run
         /// Please note <see cref="ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunRequest"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
+        /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
         /// </summary>
         public ContainerRegistryRunContent RunRequest { get; set; }
         /// <summary> The result of this task run. </summary>

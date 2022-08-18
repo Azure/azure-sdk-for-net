@@ -41,9 +41,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdOn"> created time. </param>
         /// <param name="lastModified"> modified time. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> A new <see cref="Models.AnomalyAlert"/> instance for mocking. </returns>
         public static AnomalyAlert AnomalyAlert(string id = null, DateTimeOffset timestamp = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             return new AnomalyAlert(id, timestamp, createdOn, lastModified);
         }
 
@@ -92,9 +98,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataFeedIngestionStatus"/> instance for mocking. </returns>
         public static DataFeedIngestionStatus DataFeedIngestionStatus(DateTimeOffset timestamp = default, IngestionStatusType status = default, string message = null)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             return new DataFeedIngestionStatus(timestamp, status, message);
         }
 
@@ -117,9 +129,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest enrichment status for this data slice. </param>
         /// <param name="message"> the trimmed message describes details of the enrichment status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="message"/> is null. </exception>
         /// <returns> A new <see cref="Models.EnrichmentStatus"/> instance for mocking. </returns>
         public static EnrichmentStatus EnrichmentStatus(DateTimeOffset timestamp = default, string status = null, string message = null)
         {
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             return new EnrichmentStatus(timestamp, status, message);
         }
     }

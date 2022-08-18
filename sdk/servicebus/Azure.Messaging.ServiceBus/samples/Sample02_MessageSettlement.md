@@ -1,4 +1,4 @@
-# Settling Messages
+# Settling messages
 
 This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) 
 received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock)
@@ -31,7 +31,7 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 await receiver.CompleteMessageAsync(receivedMessage);
 ```
 
-### Abandon a message
+## Abandon a message
 
 ```C# Snippet:ServiceBusAbandonMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -40,7 +40,7 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 await receiver.AbandonMessageAsync(receivedMessage);
 ```
 
-### Defer a message
+## Defer a message
 
 ```C# Snippet:ServiceBusDeferMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -54,7 +54,7 @@ await receiver.DeferMessageAsync(receivedMessage);
 ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessageAsync(receivedMessage.SequenceNumber);
 ```
 
-### Dead letter a message
+## Dead letter a message
 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -75,7 +75,7 @@ string reason = dlqMessage.DeadLetterReason;
 string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
-### Renew the lock for a message and then complete it
+## Renew the lock for a message and then complete it
 
 ```C# Snippet:ServiceBusRenewMessageLockAndComplete
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();

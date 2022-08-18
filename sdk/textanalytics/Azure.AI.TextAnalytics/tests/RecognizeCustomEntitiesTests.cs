@@ -288,6 +288,27 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, RecognizeCustomEntitiesActionsResults.Select(result => result.ActionName));
         }
 
+        [RecordedTest]
+        public async Task StartRecognizeCustomEntities()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", e_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
+        }
+
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
         {
             var resultCollection = analyzeActionOperation.Value.ToEnumerableAsync().Result.FirstOrDefault();

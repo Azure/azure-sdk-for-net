@@ -11,10 +11,7 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// The response of the List NotificationHub operation.
-    /// Serialized Name: NotificationHubListResult
-    /// </summary>
+    /// <summary> The response of the List NotificationHub operation. </summary>
     internal partial class NotificationHubListResult
     {
         /// <summary> Initializes a new instance of NotificationHubListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubListResult. </summary>
-        /// <param name="value">
-        /// Result of the List NotificationHub operation.
-        /// Serialized Name: NotificationHubListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub
-        /// Serialized Name: NotificationHubListResult.nextLink
-        /// </param>
+        /// <param name="value"> Result of the List NotificationHub operation. </param>
+        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub. </param>
         internal NotificationHubListResult(IReadOnlyList<NotificationHubData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Result of the List NotificationHub operation.
-        /// Serialized Name: NotificationHubListResult.value
-        /// </summary>
+        /// <summary> Result of the List NotificationHub operation. </summary>
         public IReadOnlyList<NotificationHubData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub
-        /// Serialized Name: NotificationHubListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub. </summary>
         public string NextLink { get; }
     }
 }

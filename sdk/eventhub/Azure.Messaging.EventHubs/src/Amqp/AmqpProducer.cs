@@ -479,7 +479,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     try
                     {
-                        using AmqpMessage batchMessage = MessageConverter.CreateBatchFromMessages(messages);
+                        using AmqpMessage batchMessage = MessageConverter.CreateBatchFromMessages(messages, partitionKey);
 
                         if (!SendLink.TryGetOpenedObject(out link))
                         {
