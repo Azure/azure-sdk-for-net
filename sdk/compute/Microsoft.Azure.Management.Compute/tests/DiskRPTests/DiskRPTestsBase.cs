@@ -123,7 +123,7 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
-        protected void PremiumDisk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, bool? burstingEnabled = null, string location = null, IList<string> zones = null)
+        protected void PremiumDisk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, bool? burstingEnabled = null, string location = null, IList<string> zones = null, bool? isPerformancePlus = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -140,6 +140,7 @@ namespace Compute.Tests.DiskRPTests
                 };
                 disk.Tier = tier;
                 disk.BurstingEnabled = burstingEnabled;
+                disk.CreationData.PerformancePlus = isPerformancePlus;
 
                 try
                 {
@@ -161,6 +162,14 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(tier, diskOut.Tier);
                     Assert.Equal(burstingEnabled, diskOut.BurstingEnabled);
+                    if (burstingEnabled == true)
+                    {
+                        Assert.NotNull(diskOut.BurstingEnabledTime);
+                    }
+                    if (isPerformancePlus == true)
+                    {
+                        Assert.True(diskOut.CreationData.PerformancePlus);
+                    }
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
@@ -215,7 +224,6 @@ namespace Compute.Tests.DiskRPTests
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
-
         }
 
         protected void SSDZRSDisk_CRUD_Execute(string diskCreateOption, string accountType, string methodName, int? diskSizeGB = null, string tier = "E4", string location = null)
