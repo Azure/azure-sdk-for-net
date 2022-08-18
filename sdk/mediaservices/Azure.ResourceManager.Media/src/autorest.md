@@ -261,4 +261,10 @@ directive:
           "itemName": "contentKeys",
           "nextLinkName": null
         };
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.StreamingEndpointProperties.properties.maxCacheAge["x-nullable"] = true;
+      $.StreamingEndpointProperties.properties.accessControl["x-nullable"] = true;
+      $.StreamingEndpointProperties.properties.crossSiteAccessPolicies["x-nullable"] = true;
 ```
