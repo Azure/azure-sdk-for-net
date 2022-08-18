@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<ResourceIdentifier> existingTargetId = default;
             Optional<MoverResourceSettings> resourceSettings = default;
             Optional<MoverResourceSettings> sourceResourceSettings = default;
-            Optional<MoveResourcePropertiesMoveStatus> moveStatus = default;
+            Optional<MoverResourcePropertiesMoveStatus> moveStatus = default;
             Optional<IReadOnlyList<MoverResourceDependency>> dependsOn = default;
-            Optional<IList<MoveResourceDependencyOverride>> dependsOnOverrides = default;
+            Optional<IList<MoverResourceDependencyOverride>> dependsOnOverrides = default;
             Optional<bool> isResolveRequired = default;
             Optional<MoveResourcePropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    moveStatus = MoveResourcePropertiesMoveStatus.DeserializeMoveResourcePropertiesMoveStatus(property.Value);
+                    moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MoveResourceDependencyOverride> array = new List<MoveResourceDependencyOverride>();
+                    List<MoverResourceDependencyOverride> array = new List<MoverResourceDependencyOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoveResourceDependencyOverride.DeserializeMoveResourceDependencyOverride(item));
+                        array.Add(MoverResourceDependencyOverride.DeserializeMoverResourceDependencyOverride(item));
                     }
                     dependsOnOverrides = array;
                     continue;

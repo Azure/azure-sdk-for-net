@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
             SourceId = sourceId;
             DependsOn = new ChangeTrackingList<MoverResourceDependency>();
-            DependsOnOverrides = new ChangeTrackingList<MoveResourceDependencyOverride>();
+            DependsOnOverrides = new ChangeTrackingList<MoverResourceDependencyOverride>();
         }
 
         /// <summary> Initializes a new instance of MoverResourceProperties. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependsOnOverrides"> Gets or sets the move resource dependencies overrides. </param>
         /// <param name="isResolveRequired"> Gets a value indicating whether the resolve action is required over the move collection. </param>
         /// <param name="errors"> Defines the move resource errors. </param>
-        internal MoverResourceProperties(MoverProvisioningState? provisioningState, ResourceIdentifier sourceId, ResourceIdentifier targetId, ResourceIdentifier existingTargetId, MoverResourceSettings resourceSettings, MoverResourceSettings sourceResourceSettings, MoveResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoverResourceDependency> dependsOn, IList<MoveResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors)
+        internal MoverResourceProperties(MoverProvisioningState? provisioningState, ResourceIdentifier sourceId, ResourceIdentifier targetId, ResourceIdentifier existingTargetId, MoverResourceSettings resourceSettings, MoverResourceSettings sourceResourceSettings, MoverResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoverResourceDependency> dependsOn, IList<MoverResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors)
         {
             ProvisioningState = provisioningState;
             SourceId = sourceId;
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// </summary>
         public MoverResourceSettings SourceResourceSettings { get; }
         /// <summary> Defines the move resource status. </summary>
-        public MoveResourcePropertiesMoveStatus MoveStatus { get; }
+        public MoverResourcePropertiesMoveStatus MoveStatus { get; }
         /// <summary> Gets or sets the move resource dependencies. </summary>
         public IReadOnlyList<MoverResourceDependency> DependsOn { get; }
         /// <summary> Gets or sets the move resource dependencies overrides. </summary>
-        public IList<MoveResourceDependencyOverride> DependsOnOverrides { get; }
+        public IList<MoverResourceDependencyOverride> DependsOnOverrides { get; }
         /// <summary> Gets a value indicating whether the resolve action is required over the move collection. </summary>
         public bool? IsResolveRequired { get; }
         /// <summary> Defines the move resource errors. </summary>

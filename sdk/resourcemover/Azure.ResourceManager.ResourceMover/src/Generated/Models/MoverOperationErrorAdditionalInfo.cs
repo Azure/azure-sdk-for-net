@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> The operation error info. </summary>
         internal MoveErrorInfo Info { get; }
         /// <summary> The affected move resources. </summary>
-        public IReadOnlyList<AffectedMoverResourceInfo> InfoMoveResources
+        public IReadOnlyList<AffectedMoverResourceInfo> InfoMoverResources
         {
-            get => Info?.MoveResources;
+            get => Info?.InfoMoverResources;
         }
     }
 }

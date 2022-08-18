@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoveResourcePropertiesMoveStatus
+    public partial class MoverResourceStatus
     {
-        internal static MoveResourcePropertiesMoveStatus DeserializeMoveResourcePropertiesMoveStatus(JsonElement element)
+        internal static MoverResourceStatus DeserializeMoverResourceStatus(JsonElement element)
         {
             Optional<MoverResourceMoveState> moveState = default;
             Optional<MoverResourceJobStatus> jobStatus = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveResourcePropertiesMoveStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value);
+            return new MoverResourceStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value);
         }
     }
 }

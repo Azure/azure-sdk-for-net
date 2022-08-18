@@ -18,25 +18,39 @@ modelerfour:
 
 rename-mapping:
   AffectedMoveResource.id: -|arm-id
+  AffectedMoveResource.moveResources: MoverResources
   AutomaticResolutionProperties.moveResourceId: ResourceId|arm-id
   AzureResourceReference.sourceArmResourceId: -|arm-id
+  BulkRemoveRequest.moveResourceInputType: MoverResourceInputType
+  BulkRemoveRequest.moveResources: MoverResources
+  BulkRemoveRequest.validateOnly: IsValidateOnly
+  CommitRequest.moveResourceInputType: MoverResourceInputType
+  CommitRequest.moveResources: MoverResources
+  CommitRequest.validateOnly: IsValidateOnly
+  DiscardRequest.moveResourceInputType: MoverResourceInputType
+  DiscardRequest.moveResources: MoverResources
+  DiscardRequest.validateOnly: IsValidateOnly
   LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
   ManualResolutionProperties.targetId: -|arm-id
-  BulkRemoveRequest.validateOnly: IsValidateOnly
-  CommitRequest.validateOnly: IsValidateOnly
-  DiscardRequest.validateOnly: IsValidateOnly
+  MoveErrorInfo.moveResources: InfoMoverResources
   MoveResourceDependency.id: -|arm-id
   MoveResourceDependency.isOptional: -|boolean
   MoveResourceDependencyOverride.id: -|arm-id
   MoveResourceDependencyOverride.targetId: -|arm-id
   MoveResourceProperties.targetId: -|arm-id
   MoveResourceProperties.existingTargetId: -|arm-id
+  MoveResourceInputType.MoveResourceId: MoverResourceId
+  MoveResourceInputType.MoveResourceSourceId: MoverResourceSourceId
   NicIpConfigurationResourceSettings.primary: IsValidateOnly
   NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
   OperationStatus.endTime: EndOn|datetime
   OperationStatus.id: -|arm-id
   OperationStatus.startTime: startOn|datetime
+  PrepareRequest.moveResourceInputType: MoverResourceInputType
+  PrepareRequest.moveResources: MoverResources
   PrepareRequest.validateOnly: IsValidateOnly
+  ResourceMoveRequest.moveResourceInputType: MoverResourceInputType
+  ResourceMoveRequest.moveResources: MoverResources
   ResourceMoveRequest.validateOnly: IsValidateOnly
   UnresolvedDependency.id: -|arm-id
   #ResourceSettings.resourceType: -|resource-type, One value is here https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/resourcemovercollection.json#L2418 is not a valid ResourceType, so can't change this property's format to ResourceType
@@ -60,8 +74,12 @@ rename-mapping:
   MoveCollectionProperties: MoverResourceSetProperties
   MoveResource: MoverResource
   MoveResourceCollection: MoverResourceList
-  MoveResourceProperties: MoverResourceProperties
   MoveResourceDependency: MoverResourceDependency
+  MoveResourceDependencyOverride: MoverResourceDependencyOverride
+  MoveResourceInputType: MoverResourceInputType
+  MoveResourceProperties: MoverResourceProperties
+  MoveResourcePropertiesMoveStatus: MoverResourcePropertiesMoveStatus
+  MoveResourceStatus: MoverResourceStatus
   MoveState: MoverResourceMoveState
   NsgReference: NetworkSecurityGroupResourceReferenceInfo
   NsgSecurityRule: NetworkSecurityGroupSecurityRule
@@ -132,5 +150,17 @@ directive:
       $.DiscardRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
       $.BulkRemoveRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
       $.VirtualMachineResourceSettings.properties.userManagedIdentities.items['x-ms-format'] = 'arm-id';
-
+  - from: resourcemovercollection.json
+    where: $.parameters
+    transform: >
+      $.moveResourceName['x-ms-client-name'] = 'moverResourceName';
+      $.moveCollectionName['x-ms-client-name'] = 'moverResourceSetName';
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name === 'moveCollectionName')]
+    transform: >
+      $['x-ms-client-name'] = 'moverResourceSetName';
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name === 'moveResourceName')]
+    transform: >
+      $['x-ms-client-name'] = 'moverResourceName';
 ```

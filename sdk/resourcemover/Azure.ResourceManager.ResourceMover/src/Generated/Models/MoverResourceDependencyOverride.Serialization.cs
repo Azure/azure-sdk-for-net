@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoveResourceDependencyOverride : IUtf8JsonSerializable
+    public partial class MoverResourceDependencyOverride : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteEndObject();
         }
 
-        internal static MoveResourceDependencyOverride DeserializeMoveResourceDependencyOverride(JsonElement element)
+        internal static MoverResourceDependencyOverride DeserializeMoverResourceDependencyOverride(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<ResourceIdentifier> targetId = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveResourceDependencyOverride(id.Value, targetId.Value);
+            return new MoverResourceDependencyOverride(id.Value, targetId.Value);
         }
     }
 }

@@ -10,20 +10,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the dependency override of the move resource. </summary>
-    public partial class MoveResourceDependencyOverride
+    public partial class MoverResourceDependencyOverride
     {
-        /// <summary> Initializes a new instance of MoveResourceDependencyOverride. </summary>
-        public MoveResourceDependencyOverride()
+        /// <summary> Initializes a new instance of MoverResourceDependencyOverride. </summary>
+        public MoverResourceDependencyOverride()
         {
         }
 
-        /// <summary> Initializes a new instance of MoveResourceDependencyOverride. </summary>
+        /// <summary> Initializes a new instance of MoverResourceDependencyOverride. </summary>
         /// <param name="id"> Gets or sets the ARM ID of the dependent resource. </param>
         /// <param name="targetId">
         /// Gets or sets the resource ARM id of either the MoveResource or the resource ARM ID of
         /// the dependent resource.
         /// </param>
-        internal MoveResourceDependencyOverride(ResourceIdentifier id, ResourceIdentifier targetId)
+        internal MoverResourceDependencyOverride(ResourceIdentifier id, ResourceIdentifier targetId)
         {
             Id = id;
             TargetId = targetId;

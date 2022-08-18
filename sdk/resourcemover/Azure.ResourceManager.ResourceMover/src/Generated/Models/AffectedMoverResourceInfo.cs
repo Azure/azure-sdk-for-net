@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
         internal AffectedMoverResourceInfo()
         {
-            MoveResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
+            MoverResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
         /// <param name="id"> The affected move resource id. </param>
         /// <param name="sourceId"> The affected move resource source id. </param>
-        /// <param name="moveResources"> The affected move resources. </param>
-        internal AffectedMoverResourceInfo(ResourceIdentifier id, ResourceIdentifier sourceId, IReadOnlyList<AffectedMoverResourceInfo> moveResources)
+        /// <param name="moverResources"> The affected move resources. </param>
+        internal AffectedMoverResourceInfo(ResourceIdentifier id, ResourceIdentifier sourceId, IReadOnlyList<AffectedMoverResourceInfo> moverResources)
         {
             Id = id;
             SourceId = sourceId;
-            MoveResources = moveResources;
+            MoverResources = moverResources;
         }
 
         /// <summary> The affected move resource id. </summary>
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> The affected move resource source id. </summary>
         public ResourceIdentifier SourceId { get; }
         /// <summary> The affected move resources. </summary>
-        public IReadOnlyList<AffectedMoverResourceInfo> MoveResources { get; }
+        public IReadOnlyList<AffectedMoverResourceInfo> MoverResources { get; }
     }
 }

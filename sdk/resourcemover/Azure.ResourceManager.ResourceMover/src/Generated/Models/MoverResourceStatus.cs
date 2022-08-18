@@ -10,18 +10,18 @@ using Azure;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the move resource status. </summary>
-    public partial class MoveResourceStatus
+    public partial class MoverResourceStatus
     {
-        /// <summary> Initializes a new instance of MoveResourceStatus. </summary>
-        internal MoveResourceStatus()
+        /// <summary> Initializes a new instance of MoverResourceStatus. </summary>
+        internal MoverResourceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoveResourceStatus. </summary>
+        /// <summary> Initializes a new instance of MoverResourceStatus. </summary>
         /// <param name="moveState"> Defines the MoveResource states. </param>
         /// <param name="jobStatus"> Defines the job status. </param>
         /// <param name="errors"> An error response from the azure resource mover service. </param>
-        internal MoveResourceStatus(MoverResourceMoveState? moveState, MoverResourceJobStatus jobStatus, MoveResourceError errors)
+        internal MoverResourceStatus(MoverResourceMoveState? moveState, MoverResourceJobStatus jobStatus, MoveResourceError errors)
         {
             MoveState = moveState;
             JobStatus = jobStatus;

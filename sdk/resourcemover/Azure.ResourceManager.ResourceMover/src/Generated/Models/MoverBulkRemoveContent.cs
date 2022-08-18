@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverBulkRemoveContent. </summary>
         public MoverBulkRemoveContent()
         {
-            MoveResources = new ChangeTrackingList<ResourceIdentifier>();
+            MoverResources = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>
         public bool? IsValidateOnly { get; set; }
         /// <summary> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </summary>
-        public IList<ResourceIdentifier> MoveResources { get; }
+        public IList<ResourceIdentifier> MoverResources { get; }
         /// <summary> Defines the move resource input type. </summary>
-        public MoveResourceInputType? MoveResourceInputType { get; set; }
+        public MoverResourceInputType? MoverResourceInputType { get; set; }
     }
 }

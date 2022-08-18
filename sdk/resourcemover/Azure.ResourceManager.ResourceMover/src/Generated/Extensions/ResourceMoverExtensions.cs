@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveCollectionName"> The Move Collection Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MoverResourceSetResource>> GetMoverResourceSetAsync(this ResourceGroupResource resourceGroupResource, string moveCollectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MoverResourceSetResource>> GetMoverResourceSetAsync(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMoverResourceSets().GetAsync(moveCollectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMoverResourceSets().GetAsync(moverResourceSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveCollections_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="moveCollectionName"> The Move Collection Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MoverResourceSetResource> GetMoverResourceSet(this ResourceGroupResource resourceGroupResource, string moveCollectionName, CancellationToken cancellationToken = default)
+        public static Response<MoverResourceSetResource> GetMoverResourceSet(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMoverResourceSets().Get(moveCollectionName, cancellationToken);
+            return resourceGroupResource.GetMoverResourceSets().Get(moverResourceSetName, cancellationToken);
         }
 
         #region MoverResourceSetResource

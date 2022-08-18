@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveResources_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveResourceName"> The Move Resource Name. </param>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="data"> The MoverResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MoverResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moveResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<MoverResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moverResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moveResourceName, nameof(moveResourceName));
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _moverResourceMoveResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _moverResourceMoveResourcesRestClient.CreateAsync(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.ResourceMover
         /// Operation Id: MoveResources_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="moveResourceName"> The Move Resource Name. </param>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="data"> The MoverResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MoverResource> CreateOrUpdate(WaitUntil waitUntil, string moveResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<MoverResource> CreateOrUpdate(WaitUntil waitUntil, string moverResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moveResourceName, nameof(moveResourceName));
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _moverResourceMoveResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, data, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _moverResourceMoveResourcesRestClient.Create(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
+                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -124,19 +124,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
         /// Operation Id: MoveResources_Get
         /// </summary>
-        /// <param name="moveResourceName"> The Move Resource Name. </param>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceName"/> is null. </exception>
-        public virtual async Task<Response<MoverResource>> GetAsync(string moveResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        public virtual async Task<Response<MoverResource>> GetAsync(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moveResourceName, nameof(moveResourceName));
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
@@ -153,19 +153,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
         /// Operation Id: MoveResources_Get
         /// </summary>
-        /// <param name="moveResourceName"> The Move Resource Name. </param>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceName"/> is null. </exception>
-        public virtual Response<MoverResource> Get(string moveResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        public virtual Response<MoverResource> Get(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moveResourceName, nameof(moveResourceName));
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _moverResourceMoveResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, cancellationToken);
+                var response = _moverResourceMoveResourcesRestClient.Get(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ResourceMover
                 scope.Start();
                 try
                 {
-                    var response = await _moverResourceMoveResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _moverResourceMoveResourcesRestClient.ListAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ResourceMover
                 scope.Start();
                 try
                 {
-                    var response = await _moverResourceMoveResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _moverResourceMoveResourcesRestClient.ListNextPageAsync(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ResourceMover
                 scope.Start();
                 try
                 {
-                    var response = _moverResourceMoveResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _moverResourceMoveResourcesRestClient.List(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ResourceMover
                 scope.Start();
                 try
                 {
-                    var response = _moverResourceMoveResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _moverResourceMoveResourcesRestClient.ListNextPage(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -268,19 +268,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
         /// Operation Id: MoveResources_Get
         /// </summary>
-        /// <param name="moveResourceName"> The Move Resource Name. </param>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string moveResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moveResourceName, nameof(moveResourceName));
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,19 +295,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
         /// Operation Id: MoveResources_Get
         /// </summary>
-        /// <param name="moveResourceName"> The Move Resource Name. </param>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moveResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceName"/> is null. </exception>
-        public virtual Response<bool> Exists(string moveResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        public virtual Response<bool> Exists(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moveResourceName, nameof(moveResourceName));
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _moverResourceMoveResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moveResourceName, cancellationToken: cancellationToken);
+                var response = _moverResourceMoveResourcesRestClient.Get(Id.Name, moverResourceName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
