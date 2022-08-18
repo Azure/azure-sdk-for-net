@@ -66,8 +66,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 
         protected async Task<SqlVmGroupResource> CreateSqlVmGroupAsync(ResourceGroupResource rg, string sqlVmGroupName, StorageAccountResource storageAccount)
         {
-            StorageAccountGetKeysResult keysResult = await storageAccount.GetKeysAsync();
-            var key = keysResult.Keys.First(_ => true).Value;
+            var pageableKeys = storageAccount.GetKeysAsync();
+            StorageAccountKey storageAccountKey = await pageableKeys.FirstOrDefaultAsync(_ => true);
+            string key = storageAccountKey.Value;
             Uri blobUri = storageAccount.Data.PrimaryEndpoints.BlobUri;
             var lro = await rg.GetSqlVmGroups().CreateOrUpdateAsync(WaitUntil.Completed, sqlVmGroupName, new SqlVmGroupData(rg.Data.Location)
             {
