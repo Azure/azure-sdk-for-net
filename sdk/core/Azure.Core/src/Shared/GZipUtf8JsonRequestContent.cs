@@ -65,6 +65,12 @@ namespace Azure.Core
         public override bool TryComputeLength(out long length)
         {
             Flush();
+#if NETFRAMEWORK
+            _gzip.Dispose();
+            _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
+            JsonWriter.Reset(_gzip);
+#else
+#endif
             length = _stream.Length;
             return true;
         }
