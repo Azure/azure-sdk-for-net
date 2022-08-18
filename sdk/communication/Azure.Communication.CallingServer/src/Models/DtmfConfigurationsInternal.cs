@@ -5,8 +5,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("RecordingStatusResponse")]
-    public partial class RecordingStatusResult
+    [CodeGenModel("DtmfConfigurations")]
+
+    internal partial class DtmfConfigurationsInternal
     {
     }
 }
