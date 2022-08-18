@@ -86,8 +86,8 @@ namespace Azure.Data.AppConfiguration
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] {new CustomHeadersPolicy()},
-                new HttpPipelinePolicy[] {authenticationPolicy, syncTokenPolicy},
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
+                new HttpPipelinePolicy[] { authenticationPolicy, syncTokenPolicy },
                 new ResponseClassifier());
         }
 
@@ -552,7 +552,7 @@ namespace Azure.Data.AppConfiguration
                 RequestContext context = CreateContext(cancellationToken);
                 context.AddClassifier(304, isError: false);
 
-                var dateTime = acceptDateTime.HasValue? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture): null;
+                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
                 using Response response = await GetKeyValueAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
 
                 return response.Status switch
@@ -615,7 +615,12 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetConfigurationSettingsPageAsync(selector, nextLink, cancellationToken));
+            var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+            RequestContext context = CreateContext(cancellationToken);
+            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? selector.Fields.ToString().Split(',') : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            AsyncPageable<BinaryData> pageableBinaryData = GetKeyValuesImplementationAsync($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}", selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
+            return PageableHelpers.Select(pageableBinaryData, response => ConfigurationServiceSerializer.ParseBatch(response).Settings);
         }
 
         /// <summary>
@@ -661,7 +666,12 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetRevisionsPageAsync(selector, nextLink, cancellationToken));
+            var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+            RequestContext context = CreateContext(cancellationToken);
+            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? selector.Fields.ToString().Split(',') : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            AsyncPageable<BinaryData> pageableBinaryData = GetRevisionsAsync(selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
+            return PageableHelpers.Select(pageableBinaryData, response => ConfigurationServiceSerializer.ParseBatch(response).Settings);
         }
 
         /// <summary>
