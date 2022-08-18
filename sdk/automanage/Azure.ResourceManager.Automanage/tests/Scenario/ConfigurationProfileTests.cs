@@ -50,10 +50,16 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             await CreateConfigurationProfile(collection, profileName);
 
             // fetch new configuration profile
-            var profile = await collection.GetAsync(profileName);
+            var profile = collection.GetAsync(profileName).Result.Value;
 
             // assert
-            VerifyConfigurationProfileProperties(profile);
+            Assert.NotNull(profile);
+            Assert.True(profile.HasData);
+            Assert.NotNull(profile.Id);
+            Assert.NotNull(profile.Id.Name);
+            Assert.NotNull(profile.Data);
+            Assert.NotNull(profile.Data.Configuration);
+            Assert.NotNull(profile.Data.Location);
         }
 
         [TestCase]
