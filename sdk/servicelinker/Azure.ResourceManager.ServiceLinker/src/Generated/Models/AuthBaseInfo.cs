@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class AuthBaseInfo
     {
+        /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
+        protected AuthBaseInfo()
+        {
+        }
 
         /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
         /// <param name="authType"> The authentication type. </param>

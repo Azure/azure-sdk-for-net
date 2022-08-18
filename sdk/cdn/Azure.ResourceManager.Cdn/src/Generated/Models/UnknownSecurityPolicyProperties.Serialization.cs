@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyProperties : IUtf8JsonSerializable
+    internal partial class UnknownSecurityPolicyProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,15 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityPolicyProperties DeserializeSecurityPolicyProperties(JsonElement element)
+        internal static UnknownSecurityPolicyProperties DeserializeUnknownSecurityPolicyProperties(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element);
-                }
-            }
             SecurityPolicyType type = default;
             foreach (var property in element.EnumerateObject())
             {

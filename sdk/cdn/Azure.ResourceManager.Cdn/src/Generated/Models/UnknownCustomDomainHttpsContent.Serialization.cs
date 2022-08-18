@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomDomainHttpsContent : IUtf8JsonSerializable
+    internal partial class UnknownCustomDomainHttpsContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,16 +27,8 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomDomainHttpsContent DeserializeCustomDomainHttpsContent(JsonElement element)
+        internal static UnknownCustomDomainHttpsContent DeserializeUnknownCustomDomainHttpsContent(JsonElement element)
         {
-            if (element.TryGetProperty("certificateSource", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element);
-                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
-                }
-            }
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
             Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
