@@ -14,41 +14,17 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of StorageActiveDirectoryProperties. </summary>
         /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
-        /// <param name="netBiosDomainName"> Specifies the NetBIOS domain name. </param>
-        /// <param name="forestName"> Specifies the Active Directory forest to get. </param>
         /// <param name="domainGuid"> Specifies the domain GUID. </param>
-        /// <param name="domainSid"> Specifies the security identifier (SID). </param>
-        /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/>, <paramref name="netBiosDomainName"/>, <paramref name="forestName"/>, <paramref name="domainSid"/> or <paramref name="azureStorageSid"/> is null. </exception>
-        public StorageActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, Guid domainGuid, string domainSid, string azureStorageSid)
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        public StorageActiveDirectoryProperties(string domainName, Guid domainGuid)
         {
             if (domainName == null)
             {
                 throw new ArgumentNullException(nameof(domainName));
             }
-            if (netBiosDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(netBiosDomainName));
-            }
-            if (forestName == null)
-            {
-                throw new ArgumentNullException(nameof(forestName));
-            }
-            if (domainSid == null)
-            {
-                throw new ArgumentNullException(nameof(domainSid));
-            }
-            if (azureStorageSid == null)
-            {
-                throw new ArgumentNullException(nameof(azureStorageSid));
-            }
 
             DomainName = domainName;
-            NetBiosDomainName = netBiosDomainName;
-            ForestName = forestName;
             DomainGuid = domainGuid;
-            DomainSid = domainSid;
-            AzureStorageSid = azureStorageSid;
         }
 
         /// <summary> Initializes a new instance of StorageActiveDirectoryProperties. </summary>
