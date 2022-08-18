@@ -71,7 +71,36 @@ namespace Azure.ResourceManager.Automation
         public DateTimeOffset? NextRun { get; set; }
         /// <summary> Gets or sets the next run time&apos;s offset in minutes. </summary>
         public double? NextRunOffsetMinutes { get; set; }
-        /// <summary> Gets or sets the interval of the schedule. </summary>
+        /// <summary>
+        /// Gets or sets the interval of the schedule..
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Interval { get; set; }
         /// <summary> Gets or sets the frequency of the schedule. </summary>
         public ScheduleFrequency? Frequency { get; set; }
