@@ -7,9 +7,9 @@ using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 
-namespace Azure.Communication.CallingServer.Tests.Infrastructure
+namespace Azure.Communication.CallingServer
 {
-    public class CallAutomationClientLiveTestsBase : RecordedTestBase<CallAutomationClientTestEnvironment>
+    internal class CallAutomationClientLiveTestsBase : RecordedTestBase<CallAutomationClientTestEnvironment>
     {
         private const string URIDomainRegEx = @"https://([^/?]+)";
 
@@ -24,33 +24,33 @@ namespace Azure.Communication.CallingServer.Tests.Infrastructure
         }
 
         public bool SkipCallingServerInteractionLiveTests
-            => TestEnvironment.Mode == RecordedTestMode.Live && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS")== "TRUE";
 
         /// <summary>
-        /// Creates a <see cref="CallingServerClient" />
+        /// Creates a <see cref="CallAutomationClient" />
         /// </summary>
-        /// <returns>The instrumented <see cref="CallingServerClient" />.</returns>
-        protected CallAutomationClient CreateInstrumentedCallingServerClientWithConnectionString()
+        /// <returns>The instrumented <see cref="CallAutomationClient" />.</returns>
+        protected CallAutomationClient CreateInstrumentedCallAutomationClientWithConnectionString()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
-            CallAutomationClient callingServerClient;
+            CallAutomationClient callAutomationClient;
             if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
             {
-                callingServerClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             }
             else
             {
-                callingServerClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             }
 
-            return InstrumentClient(callingServerClient);
+            return InstrumentClient(callAutomationClient);
         }
 
         /// <summary>
-        /// Creates a <see cref="CallingServerClientOptions" />
+        /// Creates a <see cref="CallAutomationClientOptions" />
         /// </summary>
-        /// <returns>The instrumented <see cref="CallingServerClientOptions" />.</returns>
+        /// <returns>The instrumented <see cref="CallAutomationClientOptions" />.</returns>
         private CallAutomationClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs()
         {
             CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions();
@@ -77,11 +77,10 @@ namespace Azure.Communication.CallingServer.Tests.Infrastructure
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                     TestEnvironment.LiveTestStaticConnectionString,
+                    TestEnvironment.LiveTestStaticConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
-        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
-        {
+        protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync() {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             return await communicationIdentityClient.CreateUserAsync().ConfigureAwait(false);
         }

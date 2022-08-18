@@ -529,16 +529,6 @@ namespace Azure.ResourceManager.Storage.Tests
                             new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
                             100,
                             new[] { "x-ms-meta-*" },
-                            new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }),
-                        new StorageCorsRule(new[] { "*" },
-                            new[] { CorsRuleAllowedMethod.Get },
-                            2,
-                            new[] { "*" },
-                            new[] { "*" }),
-                        new StorageCorsRule(new[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
-                            new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put, CorsRuleAllowedMethod.Post },
-                            2000,
-                            new[] { "x-ms-meta-12345675754564*" },
                             new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
                     }
                 }
@@ -640,7 +630,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("can pass locally, cost too much time on pipeline")]
         public async Task PITR()
         {
             //update storage account to v2
@@ -677,8 +666,10 @@ namespace Azure.ResourceManager.Storage.Tests
                     new BlobRestoreRange("container1/blob2", "container2/blob3"),
                     new BlobRestoreRange("container3/blob3", "")
                 });
-            ArmOperation<BlobRestoreStatus> restoreOperation = await _storageAccount.RestoreBlobRangesAsync(WaitUntil.Started, restoreContent);
+            var restoreOperation = await _storageAccount.RestoreBlobRangesAsync(WaitUntil.Started, restoreContent);
 
+            BlobRestoreStatus interimRestoreStatus = await restoreOperation.GetCurrentStatusAsync();
+            Assert.IsTrue(interimRestoreStatus.Status == BlobRestoreProgressStatus.InProgress);
             //wait for restore completion
             BlobRestoreStatus restoreStatus = await restoreOperation.WaitForCompletionAsync();
 

@@ -22,6 +22,11 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'UserAssignedIdentityResourceId': 'arm-id'
+
+prepend-rp-prefix:
+  - ProvisioningState
+  - KeyName
 
 rename-rules:
   CPU: Cpu
@@ -47,10 +52,16 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
-  StorageSKU: StorageSku
+  StorageSKU: FluidRelayStorageSku
   FluidRelayServer.properties.storagesku: StorageSku
-  
+  CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity: CmkIdentity
+  CustomerManagedKeyEncryptionProperties: CmkEncryptionProperties
+
+override-operation-name:
+  FluidRelayServers_RegenerateKey: RegenerateKeys
+
 directive:
+  - remove-operation: FluidRelayOperations_List
   - from: fluidrelay.json
     where: "$.definitions"
     transform: >

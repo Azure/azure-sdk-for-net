@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlConfigurationList. </summary>
         public MySqlConfigurationList()
         {
-            Value = new ChangeTrackingList<MySqlConfigurationData>();
+            Values = new ChangeTrackingList<MySqlConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of MySqlConfigurationList. </summary>
-        /// <param name="value"> The list of server configurations. </param>
-        internal MySqlConfigurationList(IList<MySqlConfigurationData> value)
+        /// <param name="values"> The list of server configurations. </param>
+        internal MySqlConfigurationList(IList<MySqlConfigurationData> values)
         {
-            Value = value;
+            Values = values;
         }
 
         /// <summary> The list of server configurations. </summary>
-        public IList<MySqlConfigurationData> Value { get; }
+        public IList<MySqlConfigurationData> Values { get; }
     }
 }
