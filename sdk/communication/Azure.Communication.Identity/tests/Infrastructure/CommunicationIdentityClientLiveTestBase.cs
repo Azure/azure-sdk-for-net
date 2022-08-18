@@ -62,7 +62,7 @@ namespace Azure.Communication.Identity.Tests
         protected async Task<GetTokenForTeamsUserOptions> CreateTeamsUserParams()
         {
             GetTokenForTeamsUserOptions options = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
-            if (!TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest && Mode != RecordedTestMode.Playback)
+            if (Mode != RecordedTestMode.Playback)
             {
                 IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
                                                     .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)

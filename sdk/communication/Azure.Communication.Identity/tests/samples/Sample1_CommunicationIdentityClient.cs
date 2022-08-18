@@ -154,11 +154,6 @@ namespace Azure.Communication.Identity.Samples
         [SyncOnly]
         public void GetTokenForTeamsUser()
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
-            {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
-            }
-
             var options = CreateTeamsUserParams().Result;
             var teamsUserAadToken = options.TeamsUserAadToken;
             var clientId = options.ClientId;
@@ -177,10 +172,6 @@ namespace Azure.Communication.Identity.Samples
         [AsyncOnly]
         public async Task GetTokenForTeamsUserAsync()
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
-            }
-
             var options = await CreateTeamsUserParams();
             var teamsUserAadToken = options.TeamsUserAadToken;
             var clientId = options.ClientId;

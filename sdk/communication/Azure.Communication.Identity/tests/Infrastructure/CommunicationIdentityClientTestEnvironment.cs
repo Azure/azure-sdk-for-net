@@ -14,7 +14,6 @@ namespace Azure.Communication.Identity.Tests
         public const string CommunicationM365AadTenantEnvironmentVariableName  = "COMMUNICATION_M365_AAD_TENANT";
         public const string CommunicationM365RedirectUriEnvironmentVariableName  = "COMMUNICATION_M365_REDIRECT_URI";
         public const string CommunicationExpiredTeamsTokenEnvironmentVariableName  = "COMMUNICATION_EXPIRED_TEAMS_TOKEN";
-        private const string SkipIntIdentityExchangeTokenTestEnvironmentVariableName = "SKIP_INT_IDENTITY_EXCHANGE_TOKEN_TEST";
 
         public string CommunicationMsalUsername => GetOptionalVariable(CommunicationMsalUsernameEnvironmentVariableName) ?? "Sanitized";
 
@@ -29,8 +28,5 @@ namespace Azure.Communication.Identity.Tests
         public string CommunicationM365RedirectUri => GetOptionalVariable(CommunicationM365RedirectUriEnvironmentVariableName) ?? "Sanitized";
 
         public string CommunicationExpiredTeamsToken => GetOptionalVariable(CommunicationExpiredTeamsTokenEnvironmentVariableName) ?? "Sanitized";
-
-        public string SkipIntIdentityExchangeTokenTest => GetOptionalVariable(SkipIntIdentityExchangeTokenTestEnvironmentVariableName) ?? "False";
-        public bool ShouldIgnoreIdentityExchangeTokenTest => bool.Parse(SkipIntIdentityExchangeTokenTest);
     }
 }

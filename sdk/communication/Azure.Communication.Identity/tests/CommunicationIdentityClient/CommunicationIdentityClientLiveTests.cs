@@ -143,10 +143,6 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         public async Task GetTokenForTeamsUserWithValidParameters()
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
-            }
-
             CommunicationIdentityClient client = CreateClientWithConnectionString();
             Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(CTEOptions);
             Assert.IsNotNull(tokenResponse.Value);
@@ -219,11 +215,6 @@ namespace Azure.Communication.Identity.Tests
         [TestCase("invalid", TestName = "GetTokenForTeamsUserWithInvalidClientIdShouldThrow")]
         public async Task GetTokenForTeamsUserWithInvalidClientIdShouldThrow(string clientId)
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
-            {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
-            }
-
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
@@ -242,11 +233,6 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         public async Task GetTokenForTeamsUserWithWrongClientIdShouldThrow()
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
-            {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
-            }
-
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
@@ -267,11 +253,6 @@ namespace Azure.Communication.Identity.Tests
         [TestCase("invalid", TestName = "GetTokenForTeamsUserWithInvalidUserObjectIdShouldThrow")]
         public async Task GetTokenForTeamsUserWithInvalidUserObjectIdShouldThrow(string userObjectId)
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
-            {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
-            }
-
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
@@ -290,11 +271,6 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         public async Task GetTokenForTeamsUserWithWrongUserObjectIdShouldThrow()
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
-            {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
-            }
-
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
