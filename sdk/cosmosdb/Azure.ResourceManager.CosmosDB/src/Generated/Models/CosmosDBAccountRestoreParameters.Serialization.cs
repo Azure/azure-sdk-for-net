@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc");
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(DatabasesToRestore))
+            if (Optional.IsCollectionDefined(DatabasesToRestoreV2))
             {
                 writer.WritePropertyName("databasesToRestore");
                 writer.WriteStartArray();
-                foreach (var item in DatabasesToRestore)
+                foreach (var item in DatabasesToRestoreV2)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<CosmosDBAccountRestoreMode> restoreMode = default;
             Optional<string> restoreSource = default;
             Optional<DateTimeOffset> restoreTimestampInUtc = default;
-            Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
+            Optional<IList<RestorableSqlResourceData>> databasesToRestore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreMode"))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseRestoreResourceInfo> array = new List<DatabaseRestoreResourceInfo>();
+                    List<RestorableSqlResourceData> array = new List<RestorableSqlResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseRestoreResourceInfo.DeserializeDatabaseRestoreResourceInfo(item));
+                        array.Add(RestorableSqlResourceData.DeserializeRestorableSqlResourceData(item));
                     }
                     databasesToRestore = array;
                     continue;

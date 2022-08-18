@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -281,10 +283,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableSqlResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableSqlResourceData> GetRestorableSqlResourcesV2Async(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RestorableSqlResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableSqlResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableSqlResources");
                 scope.Start();
@@ -310,10 +312,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableSqlResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableSqlResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableSqlResourceData> GetRestorableSqlResourcesV2(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
-            Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
+            Page<RestorableSqlResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableSqlResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableSqlResources");
                 scope.Start();
@@ -449,10 +451,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableMongoDBResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableMongoDBResourceData> GetRestorableMongoDBResourcesV2Async(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RestorableMongoDBResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableMongoDBResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
                 scope.Start();
@@ -478,10 +480,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableMongoDBResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableMongoDBResourceData> GetRestorableMongoDBResourcesV2(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
-            Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
+            Page<RestorableMongoDBResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableMongoDBResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
                 scope.Start();
@@ -498,5 +500,101 @@ namespace Azure.ResourceManager.CosmosDB
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
+
+        // TODO:
+        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(AzureLocation? restoreLocation, string restoreTimestampInUtc, CancellationToken cancellationToken)
+        {
+            Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _restorableMongoDBResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
+                scope.Start();
+                try
+                {
+                    var response = _restorableMongoDBResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        // TODO:
+        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(AzureLocation? restoreLocation, string restoreTimestampInUtc, CancellationToken cancellationToken)
+        {
+            async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _restorableMongoDBResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
+                scope.Start();
+                try
+                {
+                    var response = await _restorableMongoDBResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _restorableSqlResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableSqlResources");
+                scope.Start();
+                try
+                {
+                    var response = await _restorableSqlResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableSqlResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        {
+            Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _restorableSqlResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableSqlResources");
+                scope.Start();
+                try
+                {
+                    var response = _restorableSqlResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        private DatabaseRestoreResourceInfo GetDatabaseResourceResourceInfoFromRestorableMongoDBResourceData(RestorableMongoDBResourceData x)
+        {
+            // TODO:
+            throw new NotImplementedException();
+        }
+
+        private DatabaseRestoreResourceInfo GetDatabaseResourceResourceInfoFromRestorableSqlResourceData(RestorableSqlResourceData x)
+        {
+            // TODO:
+            throw new NotImplementedException();
+        }
+
+
     }
 }
