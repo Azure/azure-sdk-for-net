@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var portalDelegationSettingsParams = new ApiManagementPortalDelegationSettingData()
             {
-                Subscriptions = new SubscriptionsDelegationSettingsProperties(true),
-                UserRegistration = new RegistrationDelegationSettingsProperties(true),
+                Subscriptions = new SubscriptionDelegationSettingProperties(true),
+                UserRegistration = new RegistrationDelegationSettingProperties(true),
                 Uri = new Uri(urlParameter),
                 ValidationKey = "Sanitized"
             };
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // update the delegation settings
             var data = portalDelegationSettings.Data;
-            data.Subscriptions.Enabled = false;
-            data.UserRegistration.Enabled = false;
+            data.Subscriptions.IsSubscriptionDelegationEnabled = false;
+            data.UserRegistration.IsUserRegistrationDelegationEnabled = false;
 
             await portalDelegationSettings.UpdateAsync("*", data);
             portalDelegationSettings = await portalDelegationSettings.GetAsync();

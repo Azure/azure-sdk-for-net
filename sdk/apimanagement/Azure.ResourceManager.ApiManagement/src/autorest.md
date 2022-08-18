@@ -314,6 +314,9 @@ directive:
       $.ApiEntityBaseContract.properties.authenticationSettings["x-nullable"] = true;
       $.ApiEntityBaseContract.properties.subscriptionKeyParameterNames["x-nullable"] = true;
       $.LoggerContractProperties.properties.resourceId["x-nullable"] = true;
+      $.ApiContractProperties.properties.protocols["x-nullable"] = true;
+      $.ApiTagResourceContractProperties.properties.protocols["x-nullable"] = true;
+      $.ApiContractUpdateProperties.properties.protocols["x-nullable"] = true;
       $.PolicyDescriptionContractProperties.properties.scope = {
           "description": "Binary OR value of the Snippet scope.",
           "readOnly": true

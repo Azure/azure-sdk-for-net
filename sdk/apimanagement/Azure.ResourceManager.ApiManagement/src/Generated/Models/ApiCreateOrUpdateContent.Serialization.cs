@@ -123,13 +123,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols");
-                writer.WriteStartArray();
-                foreach (var item in Protocols)
+                if (Protocols != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("protocols");
+                    writer.WriteStartArray();
+                    foreach (var item in Protocols)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("protocols");
+                }
             }
             if (Optional.IsDefined(ApiVersionSet))
             {

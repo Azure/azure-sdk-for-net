@@ -13,7 +13,6 @@ using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using static System.Windows.Forms.AxHost;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
 {
@@ -145,13 +144,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.IsFalse(resultFalse);
 
             // get the issue attachments
-            var apiIssueAttachments = await testBase.client.ApiIssueAttachment.ListByServiceAsync(
-                testBase.rgName,
-                testBase.serviceName,
-                echoApi.Name,
-                newissueId,
-                null);
-            Assert.Empty(apiIssueAttachments);
+            var attachmentsCollection = issueData.GetApiIssueAttachments();
+            var apiIssueAttachments = await attachmentsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsEmpty(apiIssueAttachments);
 
             // add an attachment to the issue
             FileInfo fileInfo = new FileInfo(attachmentPath);
@@ -166,46 +161,27 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             }
 
             var content = Convert.ToBase64String(data);
-            var issueAttachmentContract = new IssueAttachmentContract()
+            var issueAttachmentContract = new ApiIssueAttachmentData()
             {
                 Content = content,
                 ContentFormat = "image/jpeg",
-                Title = TestUtilities.GenerateName("attachment")
+                Title = Recording.GenerateAssetName("attachment")
             };
-            var issueAttachment = await testBase.client.ApiIssueAttachment.CreateOrUpdateAsync(
-                testBase.rgName,
-                testBase.serviceName,
-                echoApi.Name,
-                newissueId,
-                newattachmentId,
-                issueAttachmentContract);
+            var issueAttachment = (await attachmentsCollection.CreateOrUpdateAsync(WaitUntil.Completed, newattachmentId, issueAttachmentContract)).Value;
             Assert.NotNull(issueAttachment);
-            Assert.Equal(newattachmentId, issueAttachment.Name);
-            Assert.Equal("link", issueAttachment.ContentFormat);
-            Assert.NotNull(issueAttachment.Content);
-
-            // get the attachment tag
-            var issueAttachmentTag = await testBase.client.ApiIssueAttachment.GetEntityTagAsync(
-                testBase.rgName,
-                testBase.serviceName,
-                echoApi.Name,
-                newissueId,
-                newattachmentId);
-            Assert.NotNull(issueAttachmentTag);
-            Assert.NotNull(issueAttachmentTag.ETag);
+            Assert.AreEqual(newattachmentId, issueAttachment.Data.Name);
+            Assert.AreEqual("link", issueAttachment.Data.ContentFormat);
+            Assert.NotNull(issueAttachment.Data.Content);
 
             // delete the attachment
-            await testBase.client.ApiIssueAttachment.DeleteAsync(
-                testBase.rgName,
-                testBase.serviceName,
-                echoApi.Name,
-                newissueId,
-                newattachmentId,
-            issueAttachmentTag.ETag);
+            await issueAttachment.DeleteAsync(WaitUntil.Completed, "*");
+            resultFalse = (await attachmentsCollection.ExistsAsync(newattachmentId)).Value;
+            Assert.IsFalse(resultFalse);
 
-
-
-            ApiCollection data vprotocols
+            // delete the issue
+            await issueData.DeleteAsync(WaitUntil.Completed, "*");
+            resultFalse = (await issueCollection.ExistsAsync(newissueId)).Value;
+            Assert.IsFalse(resultFalse);
         }
     }
 }

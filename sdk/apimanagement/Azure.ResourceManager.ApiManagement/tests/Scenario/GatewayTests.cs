@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // assign gateway to api
             var assignResponse = (await getResponse.CreateOrUpdateGatewayApiAsync(echoApi.Data.Name, associationContract)).Value;
+//            System.ArgumentException : Invalid resource type
+//Microsoft.ApiManagement/service/gateways/apis
+//expected
+//Microsoft.ApiManagement/service/apis (Parameter 'id')
 
             //Assert.NotNull(assignResponse);
             //Assert.AreEqual(echoApi.Data.Name, assignResponse.Data.Name);

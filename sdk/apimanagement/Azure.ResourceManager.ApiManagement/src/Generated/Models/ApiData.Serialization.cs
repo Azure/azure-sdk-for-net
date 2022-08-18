@@ -127,13 +127,20 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols");
-                writer.WriteStartArray();
-                foreach (var item in Protocols)
+                if (Protocols != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("protocols");
+                    writer.WriteStartArray();
+                    foreach (var item in Protocols)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("protocols");
+                }
             }
             if (Optional.IsDefined(ApiVersionSet))
             {
@@ -366,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                protocols = null;
                                 continue;
                             }
                             List<ApiOperationInvokableProtocol> array = new List<ApiOperationInvokableProtocol>();
