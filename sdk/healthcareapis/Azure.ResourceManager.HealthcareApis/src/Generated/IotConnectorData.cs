@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> Device Mappings. </summary>
         internal IotMappingProperties DeviceMapping { get; set; }
         /// <summary>
-        /// The mapping..
+        /// The mapping.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

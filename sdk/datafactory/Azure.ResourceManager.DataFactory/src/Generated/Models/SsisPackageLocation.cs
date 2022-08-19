@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The SSIS package path. Type: string (or Expression with resultType string)..
+        /// The SSIS package path. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary>
-        /// The configuration file of the package execution. Type: string (or Expression with resultType string)..
+        /// The configuration file of the package execution. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The package name. </summary>
         public string PackageName { get; set; }
         /// <summary>
-        /// The embedded package content. Type: string (or Expression with resultType string)..
+        /// The embedded package content. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> If the action type is block, this field defines the default customer overridable http response status code. </summary>
         public PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get; set; }
         /// <summary>
-        /// If the action type is block, customer can override the response body. The body must be specified in base64 encoding..
+        /// If the action type is block, customer can override the response body. The body must be specified in base64 encoding.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

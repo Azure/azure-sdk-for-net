@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
         /// <summary>
-        /// The metadata..
+        /// The metadata.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         public BinaryData Metadata { get; set; }
         /// <summary>
-        /// The content..
+        /// The content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

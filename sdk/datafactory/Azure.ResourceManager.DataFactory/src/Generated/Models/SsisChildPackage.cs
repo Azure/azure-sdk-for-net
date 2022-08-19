@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Path for embedded child package. Type: string (or Expression with resultType string)..
+        /// Path for embedded child package. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Name for embedded child package. </summary>
         public string PackageName { get; set; }
         /// <summary>
-        /// Content for embedded child package. Type: string (or Expression with resultType string)..
+        /// Content for embedded child package. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

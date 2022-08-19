@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string)..
+        /// Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Query { get; set; }
         /// <summary>
-        /// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit..
+        /// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData NoTruncation { get; set; }
         /// <summary>
-        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))...
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData QueryTimeout { get; set; }
         /// <summary>
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects)..
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

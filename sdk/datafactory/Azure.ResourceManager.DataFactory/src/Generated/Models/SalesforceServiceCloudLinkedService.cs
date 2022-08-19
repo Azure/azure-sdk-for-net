@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The URL of Salesforce Service Cloud instance. Default is &apos;https://login.salesforce.com&apos;. To copy data from sandbox, specify &apos;https://test.salesforce.com&apos;. To copy data from custom domain, specify, for example, &apos;https://[domain].my.salesforce.com&apos;. Type: string (or Expression with resultType string)..
+        /// The URL of Salesforce Service Cloud instance. Default is &apos;https://login.salesforce.com&apos;. To copy data from sandbox, specify &apos;https://test.salesforce.com&apos;. To copy data from custom domain, specify, for example, &apos;https://[domain].my.salesforce.com&apos;. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EnvironmentUri { get; set; }
         /// <summary>
-        /// The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string)..
+        /// The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition SecurityToken { get; set; }
         /// <summary>
-        /// The Salesforce API version used in ADF. Type: string (or Expression with resultType string)..
+        /// The Salesforce API version used in ADF. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ApiVersion { get; set; }
         /// <summary>
-        /// Extended properties appended to the connection string. Type: string (or Expression with resultType string)..
+        /// Extended properties appended to the connection string. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ExtendedProperties { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

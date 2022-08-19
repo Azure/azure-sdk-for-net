@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Free-form schema entity description. </summary>
         public string Description { get; set; }
         /// <summary>
-        /// Json-encoded string for non json-based schema..
+        /// Json-encoded string for non json-based schema.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         public BinaryData Value { get; set; }
         /// <summary>
-        /// Global Schema document object for json-based schema formats(e.g. json schema)..
+        /// Global Schema document object for json-based schema formats(e.g. json schema).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

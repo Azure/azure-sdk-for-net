@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Type of dataset compression. Type: string (or Expression with resultType string)..
+        /// Type of dataset compression. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DatasetCompressionType { get; set; }
         /// <summary>
-        /// The dataset compression level. Type: string (or Expression with resultType string)..
+        /// The dataset compression level. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

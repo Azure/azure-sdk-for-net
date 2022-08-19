@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Host name of the server. Type: string (or Expression with resultType string)..
+        /// Host name of the server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Host { get; set; }
         /// <summary>
-        /// User ID to logon the server. Type: string (or Expression with resultType string)..
+        /// User ID to logon the server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

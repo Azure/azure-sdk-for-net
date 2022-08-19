@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The HTTP request message. </summary>
         internal HttpMessage Request { get; }
         /// <summary>
-        /// HTTP message content..
+        /// HTTP message content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The HTTP response message. </summary>
         internal HttpMessage Response { get; }
         /// <summary>
-        /// HTTP message content..
+        /// HTTP message content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

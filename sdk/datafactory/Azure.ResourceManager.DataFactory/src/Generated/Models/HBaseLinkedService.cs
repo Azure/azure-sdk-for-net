@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The IP address or host name of the HBase server. (i.e. 192.168.222.160).
+        /// The IP address or host name of the HBase server. (i.e. 192.168.222.160)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Host { get; set; }
         /// <summary>
-        /// The TCP port that the HBase instance uses to listen for client connections. The default value is 9090..
+        /// The TCP port that the HBase instance uses to listen for client connections. The default value is 9090.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Port { get; set; }
         /// <summary>
-        /// The partial URL corresponding to the HBase server. (i.e. /gateway/sandbox/hbase/version).
+        /// The partial URL corresponding to the HBase server. (i.e. /gateway/sandbox/hbase/version)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The authentication mechanism to use to connect to the HBase server. </summary>
         public HBaseAuthenticationType AuthenticationType { get; set; }
         /// <summary>
-        /// The user name used to connect to the HBase instance..
+        /// The user name used to connect to the HBase instance.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// Specifies whether the connections to the server are encrypted using SSL. The default value is false..
+        /// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EnableSsl { get; set; }
         /// <summary>
-        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR..
+        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TrustedCertPath { get; set; }
         /// <summary>
-        /// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false..
+        /// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AllowHostNameCNMismatch { get; set; }
         /// <summary>
-        /// Specifies whether to allow self-signed certificates from the server. The default value is false..
+        /// Specifies whether to allow self-signed certificates from the server. The default value is false.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AllowSelfSignedServerCert { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

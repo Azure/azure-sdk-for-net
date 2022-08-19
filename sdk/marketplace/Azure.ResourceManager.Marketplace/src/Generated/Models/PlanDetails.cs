@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Gets the plan status. </summary>
         public Status? Status { get; }
         /// <summary>
-        /// Gets request date.
+        /// Gets request date
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> State of Arc agent in each of the nodes. </summary>
         public IReadOnlyList<PerNodeArcState> PerNodeDetails { get; }
         /// <summary>
-        /// contains connectivity related configuration for ARC resources.
+        /// contains connectivity related configuration for ARC resources
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

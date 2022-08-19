@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The type. </summary>
         public LogicWorkflowParameterType? ParameterType { get; set; }
         /// <summary>
-        /// The value..
+        /// The value.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// </summary>
         public BinaryData Value { get; set; }
         /// <summary>
-        /// The metadata..
+        /// The metadata.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

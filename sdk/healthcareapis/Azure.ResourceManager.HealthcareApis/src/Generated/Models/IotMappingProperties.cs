@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary>
-        /// The mapping..
+        /// The mapping.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

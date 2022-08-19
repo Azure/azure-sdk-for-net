@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// A query to retrieve data from source. Type: string (or Expression with resultType string)..
+        /// A query to retrieve data from source. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Query { get; set; }
         /// <summary>
-        /// The partition mechanism that will be used for Netezza read in parallel. Possible values include: &quot;None&quot;, &quot;DataSlice&quot;, &quot;DynamicRange&quot;..
+        /// The partition mechanism that will be used for Netezza read in parallel. Possible values include: &quot;None&quot;, &quot;DataSlice&quot;, &quot;DynamicRange&quot;.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The explanation about why the resource is unsupported by What-If. </summary>
         public string UnsupportedReason { get; }
         /// <summary>
-        /// The snapshot of the resource before the deployment is executed..
+        /// The snapshot of the resource before the deployment is executed.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         public BinaryData Before { get; }
         /// <summary>
-        /// The predicted snapshot of the resource after the deployment is executed..
+        /// The predicted snapshot of the resource after the deployment is executed.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

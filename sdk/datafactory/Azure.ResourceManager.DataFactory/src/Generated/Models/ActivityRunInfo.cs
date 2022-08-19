@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The duration of the activity run. </summary>
         public int? DurationInMs { get; }
         /// <summary>
-        /// The input for the activity..
+        /// The input for the activity.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Input { get; }
         /// <summary>
-        /// The output for the activity..
+        /// The output for the activity.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Output { get; }
         /// <summary>
-        /// The error if any from the activity run..
+        /// The error if any from the activity run.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

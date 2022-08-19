@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The policy set definition description. </summary>
         public string Description { get; set; }
         /// <summary>
-        /// The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs..
+        /// The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

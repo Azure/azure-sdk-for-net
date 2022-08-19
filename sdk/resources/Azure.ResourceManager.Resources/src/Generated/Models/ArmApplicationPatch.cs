@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The fully qualified path of managed application definition Id. </summary>
         public ResourceIdentifier ApplicationDefinitionId { get; set; }
         /// <summary>
-        /// Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string..
+        /// Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         public BinaryData Parameters { get; set; }
         /// <summary>
-        /// Name and value pairs that define the managed application outputs..
+        /// Name and value pairs that define the managed application outputs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

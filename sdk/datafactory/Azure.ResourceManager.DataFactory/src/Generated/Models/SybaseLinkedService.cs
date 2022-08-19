@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Server name for connection. Type: string (or Expression with resultType string)..
+        /// Server name for connection. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Server { get; set; }
         /// <summary>
-        /// Database name for connection. Type: string (or Expression with resultType string)..
+        /// Database name for connection. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Database { get; set; }
         /// <summary>
-        /// Schema name for connection. Type: string (or Expression with resultType string)..
+        /// Schema name for connection. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> AuthenticationType to be used for connection. </summary>
         public SybaseAuthenticationType? AuthenticationType { get; set; }
         /// <summary>
-        /// Username for authentication. Type: string (or Expression with resultType string)..
+        /// Username for authentication. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

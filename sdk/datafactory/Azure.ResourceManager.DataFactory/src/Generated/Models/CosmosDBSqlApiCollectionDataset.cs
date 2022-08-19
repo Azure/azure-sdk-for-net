@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string)..
+        /// CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string)..
+        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestMethod { get; set; }
         /// <summary>
-        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string)..
+        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestBody { get; set; }
         /// <summary>
-        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string)..
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AdditionalHeaders { get; set; }
         /// <summary>
-        /// Specifies the timeout for a HTTP client to get HTTP response from HTTP server..
+        /// Specifies the timeout for a HTTP client to get HTTP response from HTTP server.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
         /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string)..
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

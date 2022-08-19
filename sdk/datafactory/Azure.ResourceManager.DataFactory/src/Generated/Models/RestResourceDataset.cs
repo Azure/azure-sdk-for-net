@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string)..
+        /// The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RelativeUri { get; set; }
         /// <summary>
-        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string)..
+        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestMethod { get; set; }
         /// <summary>
-        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string)..
+        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestBody { get; set; }
         /// <summary>
-        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string)..
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AdditionalHeaders { get; set; }
         /// <summary>
-        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string)..
+        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
