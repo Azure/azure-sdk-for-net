@@ -77,10 +77,35 @@ namespace Azure.Data.AppConfiguration
 
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
+            _syncToken = _syncTokenPolicy.ToString();
             _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)), _syncTokenPolicy);
             _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal ConfigurationClient(Uri endpoint) : this(endpoint, (string)null, new ConfigurationClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal ConfigurationClient(Uri endpoint, string syncToken, ConfigurationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new ConfigurationClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _syncToken = syncToken;
+            _apiVersion = options.Version;
         }
 
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
@@ -617,7 +642,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(selector, nameof(selector));
             var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
             RequestContext context = CreateContext(cancellationToken);
-            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? selector.Fields.ToString().Split(',') : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
             AsyncPageable<BinaryData> pageableBinaryData = GetKeyValuesImplementationAsync($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}", selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
             return PageableHelpers.Select(pageableBinaryData, response => ConfigurationServiceSerializer.ParseBatch(response).Settings);
@@ -631,7 +656,12 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetConfigurationSettingsPage(selector, nextLink, cancellationToken));
+            var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+            RequestContext context = CreateContext(cancellationToken);
+            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+
+            Pageable<BinaryData> pageableBinaryData = GetKeyValuesImplementation($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}", selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
+            return PageableHelpers.Select(pageableBinaryData, response => ConfigurationServiceSerializer.ParseBatch(response).Settings);
         }
 
         /// <summary>
@@ -668,7 +698,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(selector, nameof(selector));
             var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
             RequestContext context = CreateContext(cancellationToken);
-            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? selector.Fields.ToString().Split(',') : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
             AsyncPageable<BinaryData> pageableBinaryData = GetRevisionsAsync(selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
             return PageableHelpers.Select(pageableBinaryData, response => ConfigurationServiceSerializer.ParseBatch(response).Settings);
@@ -682,193 +712,12 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSetting> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
-        }
+            var dateTime = selector.AcceptDateTime.HasValue ? selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+            RequestContext context = CreateContext(cancellationToken);
+            IEnumerable<String> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
 
-        private Request CreateGetRequest(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions requestOptions)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            BuildUriForKvRoute(request.Uri, key, label);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-
-            if (acceptDateTime.HasValue)
-            {
-                var dateTime = acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
-            }
-
-            if (requestOptions != null)
-            {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
-            }
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            return request;
-        }
-
-        /// <summary>
-        /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private async Task<Page<ConfigurationSetting>> GetConfigurationSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateBatchRequest(selector, pageLink);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private Page<ConfigurationSetting> GetConfigurationSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateBatchRequest(selector, pageLink);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw ClientDiagnostics.CreateRequestFailedException(response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateBatchRequest(SettingSelector selector, string pageLink)
-        {
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            BuildUriForGetBatch(request.Uri, selector, pageLink);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AcceptDateTime.HasValue)
-            {
-                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
-            }
-
-            return request;
-        }
-
-        /// <summary>
-        /// Lists chronological/historical representation of <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private async Task<Page<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateGetRevisionsRequest(selector, pageLink);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists chronological/historical representation of <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
-        /// </summary>
-        /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
-        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="pageLink"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private Page<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateGetRevisionsRequest(selector, pageLink);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-                switch (response.Status)
-                {
-                    case 200:
-                    case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
-                    default:
-                        throw ClientDiagnostics.CreateRequestFailedException(response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateGetRevisionsRequest(SettingSelector selector, string pageLink)
-        {
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            BuildUriForRevisions(request.Uri, selector, pageLink);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AcceptDateTime.HasValue)
-            {
-                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
-            }
-
-            return request;
+            Pageable<BinaryData> pageableBinaryData = GetRevisions(selector.KeyFilter, selector.LabelFilter, null, dateTime, fieldsString, context);
+            return PageableHelpers.Select(pageableBinaryData, response => ConfigurationServiceSerializer.ParseBatch(response).Settings);
         }
 
         /// <summary>
@@ -993,20 +842,6 @@ namespace Azure.Data.AppConfiguration
         {
             Response response = isReadOnly ? PutLock(key, label, requestOptions, context) : DeleteLock(key, label, requestOptions, context);
             return response;
-        }
-
-        private Request CreateSetReadOnlyRequest(string key, string label,  MatchConditions requestOptions, bool isReadOnly)
-        {
-            Request request = _pipeline.CreateRequest();
-            request.Method = isReadOnly ? RequestMethod.Put : RequestMethod.Delete;
-            BuildUriForLocksRoute(request.Uri, key, label);
-
-            if (requestOptions != null)
-            {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
-            }
-
-            return request;
         }
 
         /// <summary>

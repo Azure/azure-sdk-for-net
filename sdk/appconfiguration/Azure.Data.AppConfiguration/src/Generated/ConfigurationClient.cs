@@ -30,30 +30,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
-        /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ConfigurationClient(Uri endpoint) : this(endpoint, (string)null, new ConfigurationClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
-        /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ConfigurationClient(Uri endpoint, string syncToken, ConfigurationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new ConfigurationClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
-            _syncToken = syncToken;
-            _apiVersion = options.Version;
-        }
-
         /// <summary> Requests the headers and status of the given resource. </summary>
         /// <param name="name"> A filter for the name of the returned keys. </param>
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>

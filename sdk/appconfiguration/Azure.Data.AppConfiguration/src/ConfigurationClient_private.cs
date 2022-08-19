@@ -15,7 +15,6 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClient
     {
         private const string AcceptDateTimeFormat = "R";
-        private const string AcceptDatetimeHeader = "Accept-Datetime";
         private const string KvRoute = "/kv/";
         private const string RevisionsRoute = "/revisions/";
         private const string LocksRoute = "/locks/";
@@ -24,11 +23,6 @@ namespace Azure.Data.AppConfiguration
         private const string FieldsQueryFilter = "$select";
 
         private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
-
-        private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
-            HttpHeader.Names.Accept,
-            "application/vnd.microsoft.appconfig.kv+json"
-        );
 
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
