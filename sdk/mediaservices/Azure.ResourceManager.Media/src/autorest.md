@@ -273,6 +273,9 @@ directive:
     where: $.definitions.LiveEventEncoding.properties.keyFrameInterval
     transform: $["x-nullable"] = true
   - from: swagger-document
-    where: $.definitions.LiveEventEncoding.properties.accessControl
+    where: $.definitions.LiveEventPreview.properties.accessControl
+    transform: $["x-nullable"] = true
+  - from: swagger-document
+    where: $.definitions.LiveEventInput.properties.accessControl
     transform: $["x-nullable"] = true
 ```

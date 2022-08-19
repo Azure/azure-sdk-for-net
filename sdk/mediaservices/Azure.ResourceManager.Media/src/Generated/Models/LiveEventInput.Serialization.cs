@@ -20,8 +20,15 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(StreamingProtocol.ToString());
             if (Optional.IsDefined(AccessControl))
             {
-                writer.WritePropertyName("accessControl");
-                writer.WriteObjectValue(AccessControl);
+                if (AccessControl != null)
+                {
+                    writer.WritePropertyName("accessControl");
+                    writer.WriteObjectValue(AccessControl);
+                }
+                else
+                {
+                    writer.WriteNull("accessControl");
+                }
             }
             if (Optional.IsDefined(KeyFrameInterval))
             {
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        accessControl = null;
                         continue;
                     }
                     accessControl = LiveEventInputAccessControl.DeserializeLiveEventInputAccessControl(property.Value);

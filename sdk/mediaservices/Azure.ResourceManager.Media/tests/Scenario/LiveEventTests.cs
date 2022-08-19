@@ -37,28 +37,68 @@ namespace Azure.ResourceManager.Media.Tests
             _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
         }
 
-        [Test]
-        [RecordedTest]
-        [Ignore("LiveEventInput.keyFrameIntervalDuration: System.FormatException : The string '' is not a valid TimeSpan value")]
-        public async Task CreateOrUpdate()
+        private async Task<LiveEventResource> CreateLiveEvent(string liveEventName)
         {
             LiveEventData data = new LiveEventData(_mediaService.Data.Location)
             {
-                Input  = new LiveEventInput(LiveEventInputProtocol.Rtmp),
+                Input = new LiveEventInput(LiveEventInputProtocol.Rtmp),
+                CrossSiteAccessPolicies = new CrossSiteAccessPolicies(),
             };
-            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
             var liveEvent = await liveEventCollection.CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
-            Assert.IsNotNull(liveEvent);
-            Assert.AreEqual(liveEventName,liveEvent.Value.Data.Name);
+            return liveEvent.Value;
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("temp ignore")]
+        public async Task Create()
+        {
+            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            var liveEvent = await CreateLiveEvent(liveEventName);
+            Assert.IsNotNull(liveEvent);
+            Assert.AreEqual(liveEventName, liveEvent.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Exist()
+        {
+            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            await CreateLiveEvent(liveEventName);
+            bool flag = await liveEventCollection.ExistsAsync(liveEventName);
+            Assert.IsTrue(flag);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Get()
+        {
+            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            await CreateLiveEvent(liveEventName);
+            var liveEvent = await liveEventCollection.GetAsync(liveEventName);
+            Assert.IsNotNull(liveEvent);
+            Assert.AreEqual(liveEventName, liveEvent.Value.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             var list = await liveEventCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            Assert.IsNotEmpty(list);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            var liveEvent = await CreateLiveEvent(liveEventName);
+            bool flag = await liveEventCollection.ExistsAsync(liveEventName);
+            Assert.IsTrue(flag);
+
+            await liveEvent.DeleteAsync(WaitUntil.Completed);
+            flag = await liveEventCollection.ExistsAsync(liveEventName);
+            Assert.IsFalse(flag);
         }
     }
 }
