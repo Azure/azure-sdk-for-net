@@ -10,10 +10,6 @@ namespace Azure.Communication.CallingServer
     {
         protected const string connectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
 
-        protected const string CreateOrJoinCallPayload = "{" +
-                                                 "\"callConnectionId\": \"cad9df7b-f3ac-4c53-96f7-c76e7437b3c1\"" +
-                                                 "}";
-
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {
             var mockResponse = new MockResponse(responseCode);
