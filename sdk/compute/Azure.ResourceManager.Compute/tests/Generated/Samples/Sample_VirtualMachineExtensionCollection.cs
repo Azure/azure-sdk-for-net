@@ -168,6 +168,36 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // VirtualMachineExtensions_Get_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_VirtualMachineExtensionsGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineExamples/VirtualMachineExtensions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // get the collection of this VirtualMachineExtensionResource
+            Compute.VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
+
+            // invoke the operation
+            string vmExtensionName = "aaaaaaa";
+            string expand = "aaaaaa";
+            bool result = await collection.ExistsAsync(vmExtensionName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // VirtualMachineExtensions_Get_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -199,6 +229,35 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
             Compute.VirtualMachineExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // VirtualMachineExtensions_Get_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_VirtualMachineExtensionsGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineExamples/VirtualMachineExtensions_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "a";
+            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // get the collection of this VirtualMachineExtensionResource
+            Compute.VirtualMachineExtensionCollection collection = virtualMachine.GetVirtualMachineExtensions();
+
+            // invoke the operation
+            string vmExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            bool result = await collection.ExistsAsync(vmExtensionName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // VirtualMachineExtensions_List_MaximumSet_Gen

@@ -50,6 +50,36 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // VirtualMachineExtensionImages_Get_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_VirtualMachineExtensionImagesGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineExtensionImageExamples/VirtualMachineExtensionImages_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensionImages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this VirtualMachineExtensionImageResource
+            AzureLocation location = new AzureLocation("aaaaaaaaaaaaa");
+            string publisherName = "aaaaaaaaaaaaaaaaaaaa";
+            Compute.VirtualMachineExtensionImageCollection collection = subscriptionResource.GetVirtualMachineExtensionImages(location, publisherName);
+
+            // invoke the operation
+            string type = "aaaaaaaaaaaaaaaaaa";
+            string version = "aaaaaaaaaaaaaa";
+            bool result = await collection.ExistsAsync(type, version);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // VirtualMachineExtensionImages_Get_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -82,6 +112,36 @@ namespace Azure.ResourceManager.Compute
             Compute.VirtualMachineExtensionImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // VirtualMachineExtensionImages_Get_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_VirtualMachineExtensionImagesGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineExtensionImageExamples/VirtualMachineExtensionImages_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineExtensionImages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this VirtualMachineExtensionImageResource
+            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaa");
+            string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
+            Compute.VirtualMachineExtensionImageCollection collection = subscriptionResource.GetVirtualMachineExtensionImages(location, publisherName);
+
+            // invoke the operation
+            string type = "aa";
+            string version = "aaa";
+            bool result = await collection.ExistsAsync(type, version);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // VirtualMachineExtensionImages_ListTypes_MaximumSet_Gen

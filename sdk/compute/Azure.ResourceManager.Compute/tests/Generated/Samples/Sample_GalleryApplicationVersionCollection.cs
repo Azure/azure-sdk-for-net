@@ -105,6 +105,37 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a gallery Application Version with replication status.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAGalleryApplicationVersionWithReplicationStatus()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this GalleryApplicationResource created on azure
+            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryApplicationName = "myGalleryApplicationName";
+            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+
+            // get the collection of this GalleryApplicationVersionResource
+            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+
+            // invoke the operation
+            string galleryApplicationVersionName = "1.0.0";
+            Compute.Models.ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
+            bool result = await collection.ExistsAsync(galleryApplicationVersionName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Get a gallery Application Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -137,6 +168,36 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
             Compute.GalleryApplicationVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a gallery Application Version.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAGalleryApplicationVersion()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this GalleryApplicationResource created on azure
+            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryApplicationName = "myGalleryApplicationName";
+            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+
+            // get the collection of this GalleryApplicationVersionResource
+            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+
+            // invoke the operation
+            string galleryApplicationVersionName = "1.0.0";
+            bool result = await collection.ExistsAsync(galleryApplicationVersionName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // List gallery Application Versions in a gallery Application Definition.

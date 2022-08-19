@@ -3314,6 +3314,34 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a virtual machine scale set
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAVirtualMachineScaleSet()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineScaleSetResource
+            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+
+            // invoke the operation
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            bool result = await collection.ExistsAsync(virtualMachineScaleSetName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -3346,6 +3374,34 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineScaleSetResource
+            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+
+            // invoke the operation
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            bool result = await collection.ExistsAsync(virtualMachineScaleSetName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Get a virtual machine scale set with UserData
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -3376,6 +3432,34 @@ EnableIPForwarding = true,
             Compute.VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a virtual machine scale set with UserData
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAVirtualMachineScaleSetWithUserData()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineScaleSetResource
+            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+
+            // invoke the operation
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            bool result = await collection.ExistsAsync(virtualMachineScaleSetName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // VirtualMachineScaleSets_List_MaximumSet_Gen

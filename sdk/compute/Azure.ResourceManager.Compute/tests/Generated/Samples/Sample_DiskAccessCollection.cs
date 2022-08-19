@@ -83,6 +83,34 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get information about a disk access resource with private endpoints.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetInformationAboutADiskAccessResourceWithPrivateEndpoints()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskAccessExamples/DiskAccess_Get_WithPrivateEndpoints.json
+            // this example is just showing the usage of "DiskAccesses_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DiskAccessResource
+            Compute.DiskAccessCollection collection = resourceGroupResource.GetDiskAccesses();
+
+            // invoke the operation
+            string diskAccessName = "myDiskAccess";
+            bool result = await collection.ExistsAsync(diskAccessName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Get information about a disk access resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -113,6 +141,34 @@ namespace Azure.ResourceManager.Compute
             Compute.DiskAccessData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get information about a disk access resource.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetInformationAboutADiskAccessResource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskAccessExamples/DiskAccess_Get.json
+            // this example is just showing the usage of "DiskAccesses_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DiskAccessResource
+            Compute.DiskAccessCollection collection = resourceGroupResource.GetDiskAccesses();
+
+            // invoke the operation
+            string diskAccessName = "myDiskAccess";
+            bool result = await collection.ExistsAsync(diskAccessName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // List all disk access resources in a resource group.

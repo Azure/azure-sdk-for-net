@@ -949,6 +949,34 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get information about a managed disk.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetInformationAboutAManagedDisk()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskExamples/Disk_Get.json
+            // this example is just showing the usage of "Disks_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ManagedDiskResource
+            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+
+            // invoke the operation
+            string diskName = "myManagedDisk";
+            bool result = await collection.ExistsAsync(diskName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List all managed disks in a resource group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

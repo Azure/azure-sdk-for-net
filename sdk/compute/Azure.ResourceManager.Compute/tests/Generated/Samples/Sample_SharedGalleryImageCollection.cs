@@ -82,5 +82,34 @@ namespace Azure.ResourceManager.Compute
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
+
+        // Get a shared gallery image.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetASharedGalleryImage()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/sharedGalleryExamples/SharedGalleryImage_Get.json
+            // this example is just showing the usage of "SharedGalleryImages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this SharedGalleryResource created on azure
+            // for more information of creating SharedGalleryResource, please refer to the document of SharedGalleryResource
+            string subscriptionId = "{subscription-id}";
+            AzureLocation location = new AzureLocation("myLocation");
+            string galleryUniqueName = "galleryUniqueName";
+            ResourceIdentifier sharedGalleryResourceId = Compute.SharedGalleryResource.CreateResourceIdentifier(subscriptionId, location, galleryUniqueName);
+            Compute.SharedGalleryResource sharedGallery = client.GetSharedGalleryResource(sharedGalleryResourceId);
+
+            // get the collection of this SharedGalleryImageResource
+            Compute.SharedGalleryImageCollection collection = sharedGallery.GetSharedGalleryImages();
+
+            // invoke the operation
+            string galleryImageName = "myGalleryImageName";
+            bool result = await collection.ExistsAsync(galleryImageName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
     }
 }

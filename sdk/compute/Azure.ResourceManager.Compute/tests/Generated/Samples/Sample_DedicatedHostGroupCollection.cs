@@ -142,6 +142,34 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Create a dedicated host group.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_CreateADedicatedHostGroup()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/dedicatedHostExamples/DedicatedHostGroup_Get.json
+            // this example is just showing the usage of "DedicatedHostGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHostGroupResource
+            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+
+            // invoke the operation
+            string hostGroupName = "myDedicatedHostGroup";
+            bool result = await collection.ExistsAsync(hostGroupName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Create an ultraSSDEnabled dedicated host group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -172,6 +200,34 @@ namespace Azure.ResourceManager.Compute
             Compute.DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create an ultraSSDEnabled dedicated host group.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_CreateAnUltraSSDEnabledDedicatedHostGroup()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/dedicatedHostExamples/DedicatedHostGroup_Get_UltraSSDEnabledDedicatedHostGroup.json
+            // this example is just showing the usage of "DedicatedHostGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHostGroupResource
+            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+
+            // invoke the operation
+            string hostGroupName = "myDedicatedHostGroup";
+            bool result = await collection.ExistsAsync(hostGroupName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // DedicatedHostGroups_ListByResourceGroup_MaximumSet_Gen

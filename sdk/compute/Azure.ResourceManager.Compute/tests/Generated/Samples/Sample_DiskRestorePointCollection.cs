@@ -49,6 +49,36 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get an incremental disk restorePoint resource.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAnIncrementalDiskRestorePointResource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskRestorePointExamples/DiskRestorePoint_Get.json
+            // this example is just showing the usage of "DiskRestorePoint_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this RestorePointResource created on azure
+            // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string restorePointGroupName = "rpc";
+            string vmRestorePointName = "vmrp";
+            ResourceIdentifier restorePointResourceId = Compute.RestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
+            Compute.RestorePointResource restorePoint = client.GetRestorePointResource(restorePointResourceId);
+
+            // get the collection of this DiskRestorePointResource
+            Compute.DiskRestorePointCollection collection = restorePoint.GetDiskRestorePoints();
+
+            // invoke the operation
+            string diskRestorePointName = "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745";
+            bool result = await collection.ExistsAsync(diskRestorePointName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Get an incremental disk restorePoint when source resource is from a different region
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -81,6 +111,36 @@ namespace Azure.ResourceManager.Compute
             Compute.DiskRestorePointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get an incremental disk restorePoint when source resource is from a different region
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAnIncrementalDiskRestorePointWhenSourceResourceIsFromADifferentRegion()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskRestorePointExamples/DiskRestorePoint_Get_WhenSourceResourceIsFromDifferentRegion.json
+            // this example is just showing the usage of "DiskRestorePoint_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this RestorePointResource created on azure
+            // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string restorePointGroupName = "rpc";
+            string vmRestorePointName = "vmrp";
+            ResourceIdentifier restorePointResourceId = Compute.RestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
+            Compute.RestorePointResource restorePoint = client.GetRestorePointResource(restorePointResourceId);
+
+            // get the collection of this DiskRestorePointResource
+            Compute.DiskRestorePointCollection collection = restorePoint.GetDiskRestorePoints();
+
+            // invoke the operation
+            string diskRestorePointName = "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745";
+            bool result = await collection.ExistsAsync(diskRestorePointName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Get an incremental disk restorePoint resource.

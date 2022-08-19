@@ -48,6 +48,35 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a community gallery image.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetACommunityGalleryImage()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/communityGalleryExamples/CommunityGalleryImage_Get.json
+            // this example is just showing the usage of "CommunityGalleryImages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this CommunityGalleryResource created on azure
+            // for more information of creating CommunityGalleryResource, please refer to the document of CommunityGalleryResource
+            string subscriptionId = "{subscription-id}";
+            AzureLocation location = new AzureLocation("myLocation");
+            string publicGalleryName = "publicGalleryName";
+            ResourceIdentifier communityGalleryResourceId = Compute.CommunityGalleryResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName);
+            Compute.CommunityGalleryResource communityGallery = client.GetCommunityGalleryResource(communityGalleryResourceId);
+
+            // get the collection of this CommunityGalleryImageResource
+            Compute.CommunityGalleryImageCollection collection = communityGallery.GetCommunityGalleryImages();
+
+            // invoke the operation
+            string galleryImageName = "myGalleryImageName";
+            bool result = await collection.ExistsAsync(galleryImageName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List community gallery images.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

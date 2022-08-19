@@ -99,6 +99,35 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a capacity reservation.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetACapacityReservation()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/capacityReservationExamples/CapacityReservation_Get.json
+            // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this CapacityReservationGroupResource created on azure
+            // for more information of creating CapacityReservationGroupResource, please refer to the document of CapacityReservationGroupResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "myResourceGroup";
+            string capacityReservationGroupName = "myCapacityReservationGroup";
+            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+
+            // get the collection of this CapacityReservationResource
+            Compute.CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
+
+            // invoke the operation
+            string capacityReservationName = "myCapacityReservation";
+            bool result = await collection.ExistsAsync(capacityReservationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List capacity reservations in reservation group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

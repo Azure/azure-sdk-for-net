@@ -214,6 +214,34 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a community gallery.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetACommunityGallery()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/CommunityGallery_Get.json
+            // this example is just showing the usage of "Galleries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this GalleryResource
+            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+
+            // invoke the operation
+            string galleryName = "myGalleryName";
+            bool result = await collection.ExistsAsync(galleryName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Get a gallery with expand sharingProfile groups.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -245,6 +273,35 @@ namespace Azure.ResourceManager.Compute
             Compute.GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a gallery with expand sharingProfile groups.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAGalleryWithExpandSharingProfileGroups()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/Gallery_Get_WithExpandSharingProfileGroups.json
+            // this example is just showing the usage of "Galleries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this GalleryResource
+            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+
+            // invoke the operation
+            string galleryName = "myGalleryName";
+            Compute.Models.GalleryExpand? expand = GalleryExpand.SharingProfileGroups;
+            bool result = await collection.ExistsAsync(galleryName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Get a gallery with select permissions.
@@ -280,6 +337,35 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a gallery with select permissions.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAGalleryWithSelectPermissions()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/Gallery_Get_WithSelectPermissions.json
+            // this example is just showing the usage of "Galleries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this GalleryResource
+            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+
+            // invoke the operation
+            string galleryName = "myGalleryName";
+            Compute.Models.SelectPermission? select = SelectPermission.Permissions;
+            bool result = await collection.ExistsAsync(galleryName, select: select);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Get a gallery.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -310,6 +396,34 @@ namespace Azure.ResourceManager.Compute
             Compute.GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a gallery.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAGallery()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/Gallery_Get.json
+            // this example is just showing the usage of "Galleries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this GalleryResource
+            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+
+            // invoke the operation
+            string galleryName = "myGalleryName";
+            bool result = await collection.ExistsAsync(galleryName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // List galleries in a resource group.

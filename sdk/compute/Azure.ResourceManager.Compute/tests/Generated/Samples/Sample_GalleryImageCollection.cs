@@ -91,6 +91,35 @@ namespace Azure.ResourceManager.Compute
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Get a gallery image.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetAGalleryImage()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImage_Get.json
+            // this example is just showing the usage of "GalleryImages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this GalleryResource created on azure
+            // for more information of creating GalleryResource, please refer to the document of GalleryResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            ResourceIdentifier galleryResourceId = Compute.GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
+            Compute.GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
+
+            // get the collection of this GalleryImageResource
+            Compute.GalleryImageCollection collection = gallery.GetGalleryImages();
+
+            // invoke the operation
+            string galleryImageName = "myGalleryImageName";
+            bool result = await collection.ExistsAsync(galleryImageName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List gallery images in a gallery.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
