@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> scope = default;
             Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<Guid> principalId = default;
-            Optional<PrincipalType> principalType = default;
+            Optional<RoleAssignmentPrincipalType> principalType = default;
             Optional<string> description = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            principalType = new PrincipalType(property0.Value.GetString());
+                            principalType = new RoleAssignmentPrincipalType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"))

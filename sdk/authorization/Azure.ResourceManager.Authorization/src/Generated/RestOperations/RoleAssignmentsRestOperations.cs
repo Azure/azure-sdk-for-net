@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        internal HttpMessage CreateListForScopeRequest(string scope, string filter, string tenantId, string skipToken)
+        internal HttpMessage CreateListForScopeRequest(string scope, string filter, string tenantId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -563,10 +563,6 @@ namespace Azure.ResourceManager.Authorization
             {
                 uri.AppendQuery("tenantId", tenantId, true);
             }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, false);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -577,14 +573,13 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RoleAssignmentListResult>> ListForScopeAsync(string scope, string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignmentListResult>> ListForScopeAsync(string scope, string filter = null, string tenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListForScopeRequest(scope, filter, tenantId, skipToken);
+            using var message = CreateListForScopeRequest(scope, filter, tenantId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -604,14 +599,13 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<RoleAssignmentListResult> ListForScope(string scope, string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<RoleAssignmentListResult> ListForScope(string scope, string filter = null, string tenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListForScopeRequest(scope, filter, tenantId, skipToken);
+            using var message = CreateListForScopeRequest(scope, filter, tenantId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -863,7 +857,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string scope, string filter, string tenantId, string skipToken)
+        internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string scope, string filter, string tenantId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -882,15 +876,14 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RoleAssignmentListResult>> ListForScopeNextPageAsync(string nextLink, string scope, string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignmentListResult>> ListForScopeNextPageAsync(string nextLink, string scope, string filter = null, string tenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter, tenantId, skipToken);
+            using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter, tenantId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -911,15 +904,14 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="scope"> The scope of the operation or resource. Valid scopes are: subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="skipToken"> The skipToken to apply on the operation. Use $skipToken={skiptoken} to return paged role assignments following the skipToken passed. Only supported on provider level calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<RoleAssignmentListResult> ListForScopeNextPage(string nextLink, string scope, string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<RoleAssignmentListResult> ListForScopeNextPage(string nextLink, string scope, string filter = null, string tenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter, tenantId, skipToken);
+            using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter, tenantId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

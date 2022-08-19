@@ -29,6 +29,7 @@ rename-mapping:
   Principal: RoleManagementPrincipal
   NotificationLevel: RoleManagementPolicyNotificationLevel
   RecipientType: RoleManagementPolicyRecipientType
+  DenyAssignment.properties.doNotApplyToChildScopes: IsAppliedToChildScopes
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -80,7 +81,11 @@ directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'
   - remove-operation: 'RoleManagementPolicyAssignments_Delete'
-
+  # TODO: remove this once the https://github.com/Azure/autorest.csharp/issues/2629 was fixed
+  - from: authorization-RoleAssignmentsCalls.json
+    where: $.paths['/{scope}/providers/Microsoft.Authorization/roleAssignments'].get
+    transform: >
+      $.parameters = $.parameters.filter(param => (param['$ref'] != '#/parameters/PaginationSkipToken'));
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
     where: $.paths['/{roleAssignmentId}']
@@ -109,6 +114,10 @@ directive:
       $.UserSet.properties.id['x-ms-format'] = 'uuid';
       delete $.Permission;
 
+  - from: authorization-RoleAssignmentsCalls.json
+    where: $.definitions
+    transform: >
+      $.RoleAssignmentProperties.properties.principalType['x-ms-enum']['name'] = 'RoleAssignmentPrincipalType';
   - from: RoleAssignmentSchedule.json
     where: $.definitions
     transform: >

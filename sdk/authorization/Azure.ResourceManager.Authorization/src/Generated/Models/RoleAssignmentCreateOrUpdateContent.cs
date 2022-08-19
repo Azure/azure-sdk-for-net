@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> The principal ID. </summary>
         public Guid PrincipalId { get; }
         /// <summary> The principal type of the assigned principal ID. </summary>
-        public PrincipalType? PrincipalType { get; set; }
+        public RoleAssignmentPrincipalType? PrincipalType { get; set; }
         /// <summary> Description of role assignment. </summary>
         public string Description { get; set; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>

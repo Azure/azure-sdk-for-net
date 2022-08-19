@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="description"> The description of the deny assignment. </param>
         /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
         /// <param name="scope"> The deny assignment scope. </param>
-        /// <param name="doNotApplyToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
+        /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
         /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
         /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
-        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? doNotApplyToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected) : base(id, name, resourceType, systemData)
+        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected) : base(id, name, resourceType, systemData)
         {
             DenyAssignmentName = denyAssignmentName;
             Description = description;
             Permissions = permissions;
             Scope = scope;
-            DoNotApplyToChildScopes = doNotApplyToChildScopes;
+            IsAppliedToChildScopes = isAppliedToChildScopes;
             Principals = principals;
             ExcludePrincipals = excludePrincipals;
             IsSystemProtected = isSystemProtected;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The deny assignment scope. </summary>
         public string Scope { get; }
         /// <summary> Determines if the deny assignment applies to child scopes. Default value is false. </summary>
-        public bool? DoNotApplyToChildScopes { get; }
+        public bool? IsAppliedToChildScopes { get; }
         /// <summary> Array of principals to which the deny assignment applies. </summary>
         public IReadOnlyList<RoleManagementPrincipal> Principals { get; }
         /// <summary> Array of principals to which the deny assignment does not apply. </summary>
