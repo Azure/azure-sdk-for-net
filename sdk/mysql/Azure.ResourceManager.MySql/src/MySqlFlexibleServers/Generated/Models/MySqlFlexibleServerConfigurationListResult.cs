@@ -12,25 +12,25 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> A list of server configurations. </summary>
-    public partial class MySqlFlexibleServerConfigurationListResult
+    internal partial class MySqlFlexibleServerConfigurationListResult
     {
         /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationListResult. </summary>
         internal MySqlFlexibleServerConfigurationListResult()
         {
-            Value = new ChangeTrackingList<MySqlFlexibleServerConfigurationData>();
+            Values = new ChangeTrackingList<MySqlFlexibleServerConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationListResult. </summary>
-        /// <param name="value"> The list of server configurations. </param>
+        /// <param name="values"> The list of server configurations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal MySqlFlexibleServerConfigurationListResult(IReadOnlyList<MySqlFlexibleServerConfigurationData> value, string nextLink)
+        internal MySqlFlexibleServerConfigurationListResult(IReadOnlyList<MySqlFlexibleServerConfigurationData> values, string nextLink)
         {
-            Value = value;
+            Values = values;
             NextLink = nextLink;
         }
 
         /// <summary> The list of server configurations. </summary>
-        public IReadOnlyList<MySqlFlexibleServerConfigurationData> Value { get; }
+        public IReadOnlyList<MySqlFlexibleServerConfigurationData> Values { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }
