@@ -59,7 +59,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Disk_CRUD_PerformancePlusDiskWithBursting()
         {
-            PremiumDisk_CRUD_Execute(DiskCreateOption.Empty, "Disk_CRUD_PremiumDiskWithBurstingTime", tier: "P30", diskSizeGB: 1024, burstingEnabled: true, location: "eastus2euap", isPerformancePlus : true);
+            PremiumDisk_CRUD_Execute(DiskCreateOption.Empty, "Disk_CRUD_PerformancePlusDiskWithBursting", tier: "P30", diskSizeGB: 1024, burstingEnabled: true, location: "eastus2euap", isPerformancePlus : true);
         }
 
         [Fact]
