@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="content"> The details of which keys to generate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<FluidRelayServerKeys>> RegenerateKeyAsync(RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FluidRelayServerKeys>> RegenerateKeysAsync(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RegenerateKey");
+            using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -312,11 +312,11 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="content"> The details of which keys to generate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<FluidRelayServerKeys> RegenerateKey(RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<FluidRelayServerKeys> RegenerateKeys(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RegenerateKey");
+            using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RegenerateKeys");
             scope.Start();
             try
             {
