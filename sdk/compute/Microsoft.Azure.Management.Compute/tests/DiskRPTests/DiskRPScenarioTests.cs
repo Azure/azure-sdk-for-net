@@ -130,13 +130,13 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Disk_CRUD_WithDiskControllerType()
         {
-            Disk_CRUD_WithDiskControllerType_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithDiskControllerType_Execute", diskSizeGB: 5);
+            Disk_CRUD_WithDiskControllerType_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithDiskControllerType", diskSizeGB: 5);
         }
 
         [Fact]
-        public void Disk_OptimizeFrequentAttach_()
+        public void Disk_OptimizeFrequentAttach()
         {
-            Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Empty, "Disk_OptimizeFrequentAttach_Execute", diskSizeGB: 5);
+            Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Empty, "Disk_OptimizeFrequentAttach", diskSizeGB: 5, location: "eastus2euap");
         }
     }
 }
