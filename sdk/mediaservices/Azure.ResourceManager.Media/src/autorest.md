@@ -236,7 +236,7 @@ directive:
   - from: streamingservice.json
     where: $.definitions
     transform: >
-      $.LiveEventInput.properties.keyFrameIntervalDuration["x-ms-client-name"] = 'keyFrameInterval';
+      $.LiveEventInput.properties.keyFrameIntervalDuration["format"] = 'duration';
       $.ArmStreamingEndpointSkuInfo.properties.resourceType['x-ms-format'] = 'resource-type';
   - from: Encoding.json
     where: $.definitions
