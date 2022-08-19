@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             // TODO: provide a way to turn off statsbeat
-            // StatsbeatHelper.InitializeStatsbeat(options.ConnectionString);
+            // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
             return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
