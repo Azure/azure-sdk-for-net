@@ -63,7 +63,7 @@ namespace Azure.Core.Samples
             // Start the operation
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
-            while (operation.HasCompleted)
+            while (!operation.HasCompleted)
             {
                 // there could be more complex logic to control polling interval
                 await Task.Delay(TimeSpan.FromSeconds(60));
