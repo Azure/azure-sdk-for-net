@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
             logForwarder.Start();
         }
 
-        internal ServiceBusClient CreateClientFromSetting(string connection)
+        public ServiceBusClient CreateClientFromSetting(string connection)
         {
             var connectionInfo = ResolveConnectionInformation(connection);
 
