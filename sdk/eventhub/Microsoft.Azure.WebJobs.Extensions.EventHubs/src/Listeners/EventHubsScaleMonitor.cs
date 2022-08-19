@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
-    public class EventHubsScaleMonitor : IScaleMonitor<EventHubsTriggerMetrics>
+    internal class EventHubsScaleMonitor : IScaleMonitor<EventHubsTriggerMetrics>
     {
         private const int PartitionLogIntervalInMinutes = 5;
 

@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///   A storage blob service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    public partial class BlobCheckpointStoreInternal : CheckpointStore
+    internal partial class BlobCheckpointStoreInternal : CheckpointStore
     {
 #pragma warning disable CA1802 // Use a constant field
         /// <summary>A message to use when throwing exception when checkpoint container or blob does not exists.</summary>
