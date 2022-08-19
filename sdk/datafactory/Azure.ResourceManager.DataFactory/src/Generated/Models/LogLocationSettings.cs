@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Log storage linked service reference. </summary>
         public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
-        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string)..
+        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

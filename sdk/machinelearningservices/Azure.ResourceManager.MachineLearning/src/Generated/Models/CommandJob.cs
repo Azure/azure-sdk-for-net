@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary>
-        /// Input parameters..
+        /// Input parameters.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

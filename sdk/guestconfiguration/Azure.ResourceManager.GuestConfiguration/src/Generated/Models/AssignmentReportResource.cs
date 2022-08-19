@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Compliance reason and reason code for a resource. </summary>
         public IList<AssignmentReportResourceComplianceReason> Reasons { get; }
         /// <summary>
-        /// Properties of a guest configuration assignment resource..
+        /// Properties of a guest configuration assignment resource.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary>
-        /// base-64 representation of X509 certificate .cer file or just .pem file content..
+        /// base-64 representation of X509 certificate .cer file or just .pem file content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

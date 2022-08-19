@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with resultType string)..
+        /// The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TableName { get; set; }
         /// <summary>
-        /// The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string)..
+        /// The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Table { get; set; }
         /// <summary>
-        /// The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string)..
+        /// The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

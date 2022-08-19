@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary>
-        /// contains connectivity related configuration for ARC resources.
+        /// contains connectivity related configuration for ARC resources
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

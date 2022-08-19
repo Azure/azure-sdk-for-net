@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The content hash. </summary>
         public LogicContentHash ContentHash { get; }
         /// <summary>
-        /// The metadata..
+        /// The metadata.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

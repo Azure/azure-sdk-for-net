@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> The common name of the client certificate. </summary>
         public string CertificateCommonName { get; set; }
         /// <summary>
-        /// The issuer thumbprint of the client certificate..
+        /// The issuer thumbprint of the client certificate.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

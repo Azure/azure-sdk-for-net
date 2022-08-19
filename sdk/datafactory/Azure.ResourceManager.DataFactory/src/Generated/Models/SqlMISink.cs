@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// SQL writer stored procedure name. Type: string (or Expression with resultType string)..
+        /// SQL writer stored procedure name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SqlWriterStoredProcedureName { get; set; }
         /// <summary>
-        /// SQL writer table type. Type: string (or Expression with resultType string)..
+        /// SQL writer table type. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SqlWriterTableType { get; set; }
         /// <summary>
-        /// SQL pre-copy script. Type: string (or Expression with resultType string)..
+        /// SQL pre-copy script. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> SQL stored procedure parameters. </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
         /// <summary>
-        /// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string)..
+        /// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData StoredProcedureTableTypeParameterName { get; set; }
         /// <summary>
-        /// The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string)..
+        /// The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TableOption { get; set; }
         /// <summary>
-        /// Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean)..
+        /// Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SqlWriterUseTableLock { get; set; }
         /// <summary>
-        /// White behavior when copying data into azure SQL MI. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum).
+        /// White behavior when copying data into azure SQL MI. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Blob writer overwrite files. Type: boolean (or Expression with resultType boolean)..
+        /// Blob writer overwrite files. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData BlobWriterOverwriteFiles { get; set; }
         /// <summary>
-        /// Blob writer date time format. Type: string (or Expression with resultType string)..
+        /// Blob writer date time format. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData BlobWriterDateTimeFormat { get; set; }
         /// <summary>
-        /// Blob writer add header. Type: boolean (or Expression with resultType boolean)..
+        /// Blob writer add header. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData BlobWriterAddHeader { get; set; }
         /// <summary>
-        /// The type of copy behavior for copy sink..
+        /// The type of copy behavior for copy sink.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

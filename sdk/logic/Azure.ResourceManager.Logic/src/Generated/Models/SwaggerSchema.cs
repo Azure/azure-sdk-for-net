@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The object properties. </summary>
         public IDictionary<string, SwaggerSchema> Properties { get; }
         /// <summary>
-        /// The additional properties..
+        /// The additional properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The external documentation. </summary>
         public SwaggerExternalDocumentation ExternalDocs { get; set; }
         /// <summary>
-        /// The example value..
+        /// The example value.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
