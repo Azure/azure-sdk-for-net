@@ -1614,7 +1614,7 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
-
+        
         protected void Disk_CRUD_WithDiskControllerType_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
@@ -1652,7 +1652,7 @@ namespace Compute.Tests.DiskRPTests
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.NotNull(diskOut.SupportedCapabilities);
-                    Assert.AreEqual(diskOut.SupportedCapabilities.DiskControllerTypes, "SCSI");
+                    Assert.Equal("SCSI", diskOut.SupportedCapabilities.DiskControllerTypes);
 
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
@@ -1676,7 +1676,7 @@ namespace Compute.Tests.DiskRPTests
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.NotNull(diskOut.SupportedCapabilities);
-                    Assert.AreEqual(diskOut.SupportedCapabilities.DiskControllerTypes, "SCSI, NVMe");
+                    Assert.Equal("SCSI, NVMe", diskOut.SupportedCapabilities.DiskControllerTypes);
 
                     // End disk access
                     m_CrpClient.Disks.RevokeAccess(rgName, diskName);
@@ -1702,8 +1702,7 @@ namespace Compute.Tests.DiskRPTests
                 }
             }
         }
-
-
+       
         protected void Disk_OptimizeFrequentAttach_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, bool? burstingEnabled = null, string location = null, IList<string> zones = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
@@ -1712,10 +1711,12 @@ namespace Compute.Tests.DiskRPTests
                 DiskRPLocation = location ?? DiskRPLocation;
 
                 // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage);
                 disk.Location = location;
                 disk.OsType = OperatingSystemTypes.Linux;
-                disk.properties.optimizedForFrequentAttach = true;
+                disk.OptimizedForFrequentAttach = true;
                 disk.CreationData.ImageReference = new ImageDiskReference
                 {
                     Id = "/Subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/Providers/Microsoft.Compute/Locations/EASTUS2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-lts-gen2/Versions/latest"
@@ -1739,7 +1740,7 @@ namespace Compute.Tests.DiskRPTests
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
-                    Assert.True(diskOut.properties.optimizedForFrequentAttach);
+                    Assert.True(diskOut.OptimizedForFrequentAttach);
 
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
@@ -1756,7 +1757,7 @@ namespace Compute.Tests.DiskRPTests
                         const string tagKey = "tageKey";
                         var updatedisk = new DiskUpdate();
                         updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
-                        updatedisk.properties.optimizedForFrequentAttach = false;
+                        updatedisk.OptimizedForFrequentAttach = false;
                         diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
                         Validate(disk, diskOut, DiskRPLocation);
                         Assert.Equal(tier, disk.Tier);
@@ -1765,7 +1766,7 @@ namespace Compute.Tests.DiskRPTests
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
-                    Assert.False(diskOut.properties.optimizedForFrequentAttach);
+                    Assert.False(diskOut.OptimizedForFrequentAttach);
 
                     // End disk access
                     m_CrpClient.Disks.RevokeAccess(rgName, diskName);
@@ -1791,6 +1792,7 @@ namespace Compute.Tests.DiskRPTests
                 }
             }
         }
+        
         #endregion
 
         #region Generation
