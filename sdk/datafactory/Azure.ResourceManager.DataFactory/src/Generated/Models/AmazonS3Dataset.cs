@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The name of the Amazon S3 bucket. Type: string (or Expression with resultType string)..
+        /// The name of the Amazon S3 bucket. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData BucketName { get; set; }
         /// <summary>
-        /// The key of the Amazon S3 object. Type: string (or Expression with resultType string)..
+        /// The key of the Amazon S3 object. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Key { get; set; }
         /// <summary>
-        /// The prefix filter for the S3 object name. Type: string (or Expression with resultType string)..
+        /// The prefix filter for the S3 object name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Prefix { get; set; }
         /// <summary>
-        /// The version for the S3 object. Type: string (or Expression with resultType string)..
+        /// The version for the S3 object. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Version { get; set; }
         /// <summary>
-        /// The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary>
-        /// The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetLocation DataLocation { get; set; }
         /// <summary>
-        /// The data orcCompressionCodec. Type: string (or Expression with resultType string)..
+        /// The data orcCompressionCodec. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

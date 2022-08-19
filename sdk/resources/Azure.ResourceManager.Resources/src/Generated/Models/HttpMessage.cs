@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// HTTP message content..
+        /// HTTP message content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public SamplingAlgorithm SamplingAlgorithm { get; set; }
         /// <summary>
-        /// [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter.
+        /// [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

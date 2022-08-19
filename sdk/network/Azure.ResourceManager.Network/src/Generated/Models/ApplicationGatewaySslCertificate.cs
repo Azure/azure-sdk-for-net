@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary>
-        /// Base-64 encoded pfx certificate. Only applicable in PUT Request..
+        /// Base-64 encoded pfx certificate. Only applicable in PUT Request.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Password for the pfx file specified in data. Only applicable in PUT request. </summary>
         public string Password { get; set; }
         /// <summary>
-        /// Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request..
+        /// Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

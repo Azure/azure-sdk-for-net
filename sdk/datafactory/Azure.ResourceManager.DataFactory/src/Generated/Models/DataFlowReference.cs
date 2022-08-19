@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Reference data flow name. </summary>
         public string ReferenceName { get; set; }
         /// <summary>
-        /// Reference data flow parameters from dataset..
+        /// Reference data flow parameters from dataset.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

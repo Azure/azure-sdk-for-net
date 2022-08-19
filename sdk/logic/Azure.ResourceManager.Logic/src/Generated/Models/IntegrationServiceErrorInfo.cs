@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The error message details. </summary>
         public IReadOnlyList<IntegrationServiceErrorInfo> Details { get; }
         /// <summary>
-        /// The inner error..
+        /// The inner error.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

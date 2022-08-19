@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> The time period over which the quota usage values are summarized. For example, P1D (per one day), PT1M (per one minute), and PT1S (per one second). This parameter is optional because, for some resources such as compute, the time period is irrelevant. </summary>
         public string QuotaPeriod { get; }
         /// <summary>
-        /// Additional properties for the specified resource provider..
+        /// Additional properties for the specified resource provider.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

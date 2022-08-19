@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary>
-        /// Twin Tags.
+        /// Twin Tags
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

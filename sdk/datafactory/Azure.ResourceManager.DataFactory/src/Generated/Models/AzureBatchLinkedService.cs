@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The Azure Batch account name. Type: string (or Expression with resultType string)..
+        /// The Azure Batch account name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition AccessKey { get; set; }
         /// <summary>
-        /// The Azure Batch URI. Type: string (or Expression with resultType string)..
+        /// The Azure Batch URI. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData BatchUri { get; set; }
         /// <summary>
-        /// The Azure Batch pool name. Type: string (or Expression with resultType string)..
+        /// The Azure Batch pool name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Azure Storage linked service reference. </summary>
         public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

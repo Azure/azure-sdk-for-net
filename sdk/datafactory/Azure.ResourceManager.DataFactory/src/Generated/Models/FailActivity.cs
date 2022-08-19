@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string)..
+        /// The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Message { get; set; }
         /// <summary>
-        /// The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string)..
+        /// The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string)..
+        /// Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Server { get; set; }
         /// <summary>
-        /// System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string)..
+        /// System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SystemNumber { get; set; }
         /// <summary>
-        /// Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string)..
+        /// Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ClientId { get; set; }
         /// <summary>
-        /// Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string)..
+        /// Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Language { get; set; }
         /// <summary>
-        /// SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string)..
+        /// SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SystemId { get; set; }
         /// <summary>
-        /// Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string)..
+        /// Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// The hostname of the SAP Message Server. Type: string (or Expression with resultType string)..
+        /// The hostname of the SAP Message Server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData MessageServer { get; set; }
         /// <summary>
-        /// The service name or port number of the Message Server. Type: string (or Expression with resultType string)..
+        /// The service name or port number of the Message Server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData MessageServerService { get; set; }
         /// <summary>
-        /// The Logon Group for the SAP System. Type: string (or Expression with resultType string)..
+        /// The Logon Group for the SAP System. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData LogonGroup { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary>
-        /// Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
+        /// Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

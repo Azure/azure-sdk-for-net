@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The JSON title. </summary>
         public string Title { get; }
         /// <summary>
-        /// The JSON content..
+        /// The JSON content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Data flow parameters. </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary>
-        /// Parameters for dataset..
+        /// Parameters for dataset.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

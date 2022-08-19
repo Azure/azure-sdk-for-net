@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> FHIR Mappings. </summary>
         internal IotMappingProperties FhirMapping { get; set; }
         /// <summary>
-        /// The mapping..
+        /// The mapping.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Function URI. </summary>
         public string Href { get; set; }
         /// <summary>
-        /// Config information..
+        /// Config information.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

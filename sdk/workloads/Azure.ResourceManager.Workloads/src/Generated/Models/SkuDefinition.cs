@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> List of locations where this SKU is available. </summary>
         public IReadOnlyList<SkuLocationAndZones> LocationInfo { get; }
         /// <summary>
-        /// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted..
+        /// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

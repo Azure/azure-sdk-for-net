@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Parameter type. </summary>
         public EntityParameterType ParameterType { get; set; }
         /// <summary>
-        /// Default value of parameter..
+        /// Default value of parameter.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
