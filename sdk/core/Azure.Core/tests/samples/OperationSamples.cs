@@ -66,7 +66,7 @@ namespace Azure.Core.Samples
             while (operation.HasCompleted)
             {
                 // there could be more complex logic to control polling interval
-                Thread.Sleep(TimeSpan.FromSeconds(60));
+                await Task.Delay(TimeSpan.FromSeconds(60));
 
                 Response statusResponse = await operation.UpdateStatusAsync();
                 // optionally do something with the statusResponse
