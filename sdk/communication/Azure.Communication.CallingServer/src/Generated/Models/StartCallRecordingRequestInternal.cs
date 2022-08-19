@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -23,6 +25,7 @@ namespace Azure.Communication.CallingServer
             }
 
             CallLocator = callLocator;
+            ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
         }
 
         /// <summary> The call locator. </summary>
@@ -35,5 +38,7 @@ namespace Azure.Communication.CallingServer
         public RecordingChannel? RecordingChannelType { get; set; }
         /// <summary> The format type of call recording. </summary>
         public RecordingFormat? RecordingFormatType { get; set; }
+        /// <summary> The channel affinity of call recording. </summary>
+        public IList<ChannelAffinityInternal> ChannelAffinity { get; }
     }
 }

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of RegistrationDelegationSettingProperties. </summary>
-        /// <param name="enableUserRegistrationDelegation"> Enable or disable delegation for user registration. </param>
-        internal RegistrationDelegationSettingProperties(bool? enableUserRegistrationDelegation)
+        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
+        internal RegistrationDelegationSettingProperties(bool? isUserRegistrationDelegationEnabled)
         {
-            EnableUserRegistrationDelegation = enableUserRegistrationDelegation;
+            IsUserRegistrationDelegationEnabled = isUserRegistrationDelegationEnabled;
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
-        public bool? EnableUserRegistrationDelegation { get; set; }
+        public bool? IsUserRegistrationDelegationEnabled { get; set; }
     }
 }

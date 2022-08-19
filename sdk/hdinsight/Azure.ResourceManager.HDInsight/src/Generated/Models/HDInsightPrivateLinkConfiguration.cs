@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;. </param>
         /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
         /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
-        internal HDInsightPrivateLinkConfiguration(string id, string name, string resourceType, string groupId, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, IList<HDInsightIPConfiguration> ipConfigurations)
+        internal HDInsightPrivateLinkConfiguration(string id, string name, ResourceType? resourceType, string groupId, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, IList<HDInsightIPConfiguration> ipConfigurations)
         {
             Id = id;
             Name = name;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The name of private link configuration. </summary>
         public string Name { get; set; }
         /// <summary> The type of the private link configuration. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;. </summary>
         public string GroupId { get; set; }
         /// <summary> The private link configuration provisioning state, which only appears in the response. </summary>

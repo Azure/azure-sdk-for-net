@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: redisenterprise
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.RedisEnterpriseCache
-      safeName: AzureResourceManagerRedisEnterpriseCache
+    - name: Azure.ResourceManager.RedisEnterprise
+      safeName: AzureResourceManagerRedisEnterprise
