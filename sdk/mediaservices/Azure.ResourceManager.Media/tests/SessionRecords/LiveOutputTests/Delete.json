@@ -106,7 +106,7 @@
           "input": {
             "keyFrameIntervalDuration": "",
             "streamingProtocol": "RTMP",
-            "accessToken": "d6e0b84a02794992a94e41212a0bf9e2",
+            "accessToken": "Sanitized",
             "endpoints": [],
             "accessControl": null
           },
