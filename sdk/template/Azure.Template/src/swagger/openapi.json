@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "ModelCollectionPropertiesClient",
-    "version": "1.0.0",
-    "description": "Illustrates input, output, and round-trip models that have properties that are collections of models.",
+    "title": "MultiVersionClient",
+    "version": "2022-02-02",
+    "description": "Illustrates a v1 client model for the purposes of testing multi-version client scenarios.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -11,9 +11,23 @@
     ]
   },
   "schemes": [
-    "http"
+    "https"
   ],
-  "host": "localhost:3000",
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{Endpoint}",
+    "useSchemePrefix": false,
+    "parameters": [
+      {
+        "name": "Endpoint",
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "format": "url",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client"
+      }
+    ]
+  },
   "produces": [
     "application/json"
   ],
@@ -22,72 +36,29 @@
   ],
   "tags": [],
   "paths": {
-    "/models": {
-      "post": {
-        "operationId": "ModelCollectionProperties_SendCollectionModel",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Http response with status code"
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
-            }
-          }
-        }
-      },
+    "/ops/v1op": {
       "get": {
-        "operationId": "ModelCollectionProperties_GetCollectionModel",
+        "operationId": "MultiVersionClient_ServiceV1Operation",
         "parameters": [],
         "responses": {
           "200": {
             "description": "The request has succeeded.",
             "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
-            }
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
+              "$ref": "#/definitions/null"
             }
           }
         }
-      },
-      "put": {
-        "operationId": "ModelCollectionProperties_SetCollectionModel",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
-            }
-          }
-        ],
+      }
+    },
+    "/ops/v2op": {
+      "get": {
+        "operationId": "MultiVersionClient_ServiceV2Operation",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Simple model with model collection properties",
+            "description": "The request has succeeded.",
             "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
-            }
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
+              "$ref": "#/definitions/null"
             }
           }
         }
@@ -95,112 +66,9 @@
     }
   },
   "definitions": {
-    "Azure.Core.Operations.Error": {
+    "null": {
       "type": "object",
-      "properties": {
-        "code": {
-          "type": "string",
-          "description": "One of a server-defined set of error codes."
-        },
-        "message": {
-          "type": "string",
-          "description": "A human-readable representation of the error."
-        },
-        "target": {
-          "type": "string",
-          "description": "The target of the error."
-        },
-        "details": {
-          "$ref": "#/definitions/Azure.Core.Operations.Error",
-          "description": "An array of details about specific errors that led to this reported error."
-        },
-        "innererror": {
-          "$ref": "#/definitions/Azure.Core.Operations.InnerError",
-          "description": "An object containing more specific information than the current object about the error."
-        }
-      },
-      "description": "The error object.",
-      "required": [
-        "code",
-        "message",
-        "details"
-      ]
-    },
-    "Azure.Core.Operations.ErrorResponse": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "$ref": "#/definitions/Azure.Core.Operations.Error",
-          "description": "The error object."
-        }
-      },
-      "description": "A response containing error details.",
-      "required": [
-        "error"
-      ]
-    },
-    "Azure.Core.Operations.InnerError": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string",
-          "description": "One of a server-defined set of error codes."
-        },
-        "innererror": {
-          "$ref": "#/definitions/Azure.Core.Operations.InnerError",
-          "description": "Inner error."
-        }
-      },
-      "description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
-      "required": [
-        "code"
-      ]
-    },
-    "ModelCollectionModel": {
-      "type": "object",
-      "properties": {
-        "requiredModelCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SimpleModel"
-          },
-          "x-ms-identifiers": [],
-          "x-cadl-name": "SimpleModel[]",
-          "description": "Required collection of models."
-        },
-        "optionalModelCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SimpleModel"
-          },
-          "x-ms-identifiers": [],
-          "x-cadl-name": "SimpleModel[]",
-          "description": "Optional collection of models."
-        }
-      },
-      "description": "Simple model with model collection properties",
-      "required": [
-        "requiredModelCollection"
-      ]
-    },
-    "SimpleModel": {
-      "type": "object",
-      "properties": {
-        "requiredString": {
-          "type": "string",
-          "description": "Required string."
-        },
-        "requiredInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Required int."
-        }
-      },
-      "description": "Simple model that will appear in a collection.",
-      "required": [
-        "requiredString",
-        "requiredInt"
-      ]
+      "properties": {}
     }
   },
   "parameters": {}
