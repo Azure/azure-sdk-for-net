@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Create()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Exist()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Get()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task GetAll()
         {
             var list = await liveEventCollection.GetAllAsync().ToEnumerableAsync();
@@ -78,6 +82,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Delete()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");

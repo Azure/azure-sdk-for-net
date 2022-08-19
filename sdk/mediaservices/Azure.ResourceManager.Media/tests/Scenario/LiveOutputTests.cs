@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task CreateOrUpdate()
         {
             var liveoutput = await CreateLiveOutPut();
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Exist()
         {
             await CreateLiveOutPut();
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Get()
         {
             await CreateLiveOutPut();
@@ -103,6 +106,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task GetAll()
         {
             await CreateLiveOutPut();
@@ -112,6 +116,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Delete()
         {
             var liveoutput = await CreateLiveOutPut();
