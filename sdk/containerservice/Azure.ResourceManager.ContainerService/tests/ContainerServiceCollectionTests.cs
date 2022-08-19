@@ -44,5 +44,25 @@ namespace Azure.ResourceManager.ContainerService.Tests
             // Delete
             await clusterFromGet.DeleteAsync(WaitUntil.Completed);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Update()
+        {
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testaksrg", AzureLocation.EastUS);
+            var clusterCollection = rg.GetContainerServiceManagedClusters();
+            string clusterName = Recording.GenerateAssetName("akscluster");
+            // Create
+            ContainerServiceManagedClusterResource cluster = await CreateContainerServiceAsync(rg, clusterName, rg.Data.Location);
+            // Update
+            var clusterData = cluster.Data;
+            clusterData.AgentPoolProfiles[0].Count = 2;
+            var lro = await rg.GetContainerServiceManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
+            ContainerServiceManagedClusterResource clusterFromUpdate = lro.Value;
+            Assert.AreEqual(clusterFromUpdate.Data.Name, clusterName);
+            Assert.AreEqual(clusterFromUpdate.Data.AgentPoolProfiles[0].Count, 2);
+            // Delete
+            await clusterFromUpdate.DeleteAsync(WaitUntil.Completed);
+        }
     }
 }
