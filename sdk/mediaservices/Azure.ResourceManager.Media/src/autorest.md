@@ -266,19 +266,9 @@ directive:
     transform: >
       $.StreamingEndpointProperties.properties.maxCacheAge["x-nullable"] = true;
       $.StreamingEndpointProperties.properties.crossSiteAccessPolicies["x-nullable"] = true;
-  - from: swagger-document
-    where: $.definitions.LiveEventEncoding.properties.stretchMode
-    transform: $["x-nullable"] = true
-  - from: swagger-document
-    where: $.definitions.LiveEventEncoding.properties.keyFrameInterval
-    transform: $["x-nullable"] = true
-  - from: swagger-document
-    where: $.definitions.StreamingEndpointProperties.properties.accessControl
-    transform: $["x-nullable"] = true
-  - from: swagger-document
-    where: $.definitions.LiveEventPreview.properties.accessControl
-    transform: $["x-nullable"] = true
-  - from: swagger-document
-    where: $.definitions.LiveEventInput.properties.accessControl
-    transform: $["x-nullable"] = true
+      $.StreamingEndpointProperties.properties.accessControl["x-nullable"] = true;
+      $.LiveEventEncoding.properties.stretchMode["x-nullable"] = true;
+      $.LiveEventEncoding.properties.keyFrameInterval["x-nullable"] = true;
+      $.LiveEventPreview.properties.accessControl["x-nullable"] = true;
+      $.LiveEventInput.properties.accessControl["x-nullable"] = true;
 ```
