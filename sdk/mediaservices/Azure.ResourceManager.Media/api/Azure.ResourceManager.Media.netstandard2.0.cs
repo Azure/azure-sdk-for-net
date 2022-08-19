@@ -1954,7 +1954,7 @@ namespace Azure.ResourceManager.Media.Models
         public string AccessToken { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.LiveEventEndpoint> Endpoints { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllowedIPs { get { throw null; } }
-        public System.TimeSpan? KeyFrameIntervalDuration { get { throw null; } set { } }
+        public string KeyFrameInterval { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.LiveEventInputProtocol StreamingProtocol { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

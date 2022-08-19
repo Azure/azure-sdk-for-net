@@ -82,5 +82,16 @@ namespace Azure.ResourceManager.Media.Tests
             var mediaTransfer = await mediaTransformCollection.CreateOrUpdateAsync(WaitUntil.Completed, mediaTransformName, data);
             return mediaTransfer.Value;
         }
+
+        protected async Task<LiveEventResource> CreateLiveEvent(MediaServiceResource mediaService, string liveEventName)
+        {
+            LiveEventData data = new LiveEventData(mediaService.Data.Location)
+            {
+                Input = new LiveEventInput(LiveEventInputProtocol.Rtmp),
+                CrossSiteAccessPolicies = new CrossSiteAccessPolicies(),
+            };
+            var liveEvent = await mediaService.GetLiveEvents().CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
+            return liveEvent.Value;
+        }
     }
 }

@@ -37,23 +37,12 @@ namespace Azure.ResourceManager.Media.Tests
             _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
         }
 
-        private async Task<LiveEventResource> CreateLiveEvent(string liveEventName)
-        {
-            LiveEventData data = new LiveEventData(_mediaService.Data.Location)
-            {
-                Input = new LiveEventInput(LiveEventInputProtocol.Rtmp),
-                CrossSiteAccessPolicies = new CrossSiteAccessPolicies(),
-            };
-            var liveEvent = await liveEventCollection.CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
-            return liveEvent.Value;
-        }
-
         [Test]
         [RecordedTest]
         public async Task Create()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
-            var liveEvent = await CreateLiveEvent(liveEventName);
+            var liveEvent = await CreateLiveEvent(_mediaService, liveEventName);
             Assert.IsNotNull(liveEvent);
             Assert.AreEqual(liveEventName, liveEvent.Data.Name);
         }
@@ -63,7 +52,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Exist()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
-            await CreateLiveEvent(liveEventName);
+            await CreateLiveEvent(_mediaService, liveEventName);
             bool flag = await liveEventCollection.ExistsAsync(liveEventName);
             Assert.IsTrue(flag);
         }
@@ -73,7 +62,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Get()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
-            await CreateLiveEvent(liveEventName);
+            await CreateLiveEvent(_mediaService, liveEventName);
             var liveEvent = await liveEventCollection.GetAsync(liveEventName);
             Assert.IsNotNull(liveEvent);
             Assert.AreEqual(liveEventName, liveEvent.Value.Data.Name);
@@ -92,7 +81,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task Delete()
         {
             string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
-            var liveEvent = await CreateLiveEvent(liveEventName);
+            var liveEvent = await CreateLiveEvent(_mediaService, liveEventName);
             bool flag = await liveEventCollection.ExistsAsync(liveEventName);
             Assert.IsTrue(flag);
 
