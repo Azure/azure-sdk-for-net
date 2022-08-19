@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@autorest/core": "^3.9.1"
+  }
+}

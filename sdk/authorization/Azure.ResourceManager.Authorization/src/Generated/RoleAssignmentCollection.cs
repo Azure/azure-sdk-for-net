@@ -46,19 +46,18 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Creates a role assignment.
+        /// Create or update a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="roleAssignmentName"> A GUID for the role assignment to create. The name must be unique and different for each role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<RoleAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.CreateOrUpdate");
@@ -79,19 +78,18 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Creates a role assignment.
+        /// Create or update a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="roleAssignmentName"> A GUID for the role assignment to create. The name must be unique and different for each role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<RoleAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.CreateOrUpdate");
@@ -112,23 +110,23 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Get the specified role assignment.
+        /// Get a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Get
         /// </summary>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<RoleAssignmentResource>> GetAsync(string roleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleAssignmentResource>> GetAsync(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _roleAssignmentRestClient.GetAsync(Id, roleAssignmentName, cancellationToken).ConfigureAwait(false);
+                var response = await _roleAssignmentRestClient.GetAsync(Id, roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -141,23 +139,23 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Get the specified role assignment.
+        /// Get a role assignment by scope and name.
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Get
         /// </summary>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        public virtual Response<RoleAssignmentResource> Get(string roleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<RoleAssignmentResource> Get(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _roleAssignmentRestClient.Get(Id, roleAssignmentName, cancellationToken);
+                var response = _roleAssignmentRestClient.Get(Id, roleAssignmentName, tenantId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -170,22 +168,23 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Gets role assignments for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/roleAssignments
-        /// Operation Id: RoleAssignments_ListForResource
+        /// List all role assignments that apply to a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleAssignments
+        /// Operation Id: RoleAssignments_ListForSubscription
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForResourceGroup
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleAssignments
-        /// Operation Id: RoleAssignments_List
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/roleAssignments
+        /// Operation Id: RoleAssignments_ListForResource
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForScope
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleAssignmentResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleAssignmentResource> GetAllAsync(string filter = null, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 async Task<Page<RoleAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForSubscriptionAsync(Id.SubscriptionId, filter, tenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, tenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == SubscriptionResource.ResourceType)
+            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
                 async Task<Page<RoleAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, tenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, tenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListForScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForScopeAsync(Id, filter, tenantId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, tenantId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, tenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = await _roleAssignmentRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _roleAssignmentRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, tenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -324,22 +323,23 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Gets role assignments for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/roleAssignments
-        /// Operation Id: RoleAssignments_ListForResource
+        /// List all role assignments that apply to a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleAssignments
+        /// Operation Id: RoleAssignments_ListForSubscription
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForResourceGroup
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleAssignments
-        /// Operation Id: RoleAssignments_List
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/roleAssignments
+        /// Operation Id: RoleAssignments_ListForResource
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForScope
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleAssignmentResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleAssignmentResource> GetAll(string filter = null, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 Page<RoleAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForSubscription(Id.SubscriptionId, filter, tenantId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, tenantId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == SubscriptionResource.ResourceType)
+            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
                 Page<RoleAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, tenantId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, tenantId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.ListForScope(Id, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForScope(Id, filter, tenantId, skipToken, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.ListForScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForScopeNextPage(nextLink, Id, filter, tenantId, skipToken, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, tenantId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Authorization
                     scope.Start();
                     try
                     {
-                        var response = _roleAssignmentRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken);
+                        var response = _roleAssignmentRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, tenantId, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -482,19 +482,19 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Get
         /// </summary>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string roleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _roleAssignmentRestClient.GetAsync(Id, roleAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _roleAssignmentRestClient.GetAsync(Id, roleAssignmentName, tenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,19 +509,19 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Get
         /// </summary>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        public virtual Response<bool> Exists(string roleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _roleAssignmentRestClient.Get(Id, roleAssignmentName, cancellationToken: cancellationToken);
+                var response = _roleAssignmentRestClient.Get(Id, roleAssignmentName, tenantId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

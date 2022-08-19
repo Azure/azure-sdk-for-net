@@ -6,10 +6,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 csharp: true
-tag: package-2020-10-01
 library-name: Authorization
 namespace: Azure.ResourceManager.Authorization
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a416080c85111fbe4e0a483a1b99f1126ca6e97c/specification/authorization/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a436672b07fb1fe276c203b086b3f0e0d0c4aa24/specification/authorization/resource-manager/readme.md
+tag: package-2022-04-01
 output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
@@ -76,10 +76,6 @@ rename-rules:
 request-path-to-resource-type:
   /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
 
-list-exception: 
-- /{roleDefinitionId}
-- /{roleAssignmentId}
-
 directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'
@@ -91,6 +87,12 @@ directive:
     transform: $ = {}
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/{roleDefinitionId}']
+    transform: $ = {}
+  - from: authorization-RoleDefinitionsCalls.json
+    where: $['x-ms-paths']['/{roleId}?disambiguation_dummy']
+    transform: $ = {}
+  - from: authorization-DenyAssignmentCalls.json
+    where: $.paths['/{denyAssignmentId}']
     transform: $ = {}
 
   - from: authorization-RoleDefinitionsCalls.json

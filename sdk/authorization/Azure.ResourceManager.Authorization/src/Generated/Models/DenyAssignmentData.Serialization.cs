@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -13,26 +13,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleAssignmentData
+    public partial class DenyAssignmentData
     {
-        internal static RoleAssignmentData DeserializeRoleAssignmentData(JsonElement element)
+        internal static DenyAssignmentData DeserializeDenyAssignmentData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<Guid> principalId = default;
-            Optional<PrincipalType> principalType = default;
+            Optional<string> denyAssignmentName = default;
             Optional<string> description = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> updatedOn = default;
-            Optional<string> createdBy = default;
-            Optional<string> updatedBy = default;
-            Optional<string> delegatedManagedIdentityResourceId = default;
+            Optional<IReadOnlyList<DenyAssignmentPermission>> permissions = default;
+            Optional<string> scope = default;
+            Optional<bool> doNotApplyToChildScopes = default;
+            Optional<IReadOnlyList<RoleManagementPrincipal>> principals = default;
+            Optional<IReadOnlyList<RoleManagementPrincipal>> excludePrincipals = default;
+            Optional<bool> isSystemProtected = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -69,39 +65,9 @@ namespace Azure.ResourceManager.Authorization
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("scope"))
+                        if (property0.NameEquals("denyAssignmentName"))
                         {
-                            scope = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("roleDefinitionId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("principalId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            principalId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("principalType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            principalType = new PrincipalType(property0.Value.GetString());
+                            denyAssignmentName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -109,56 +75,81 @@ namespace Azure.ResourceManager.Authorization
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("condition"))
-                        {
-                            condition = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("conditionVersion"))
-                        {
-                            conditionVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdOn"))
+                        if (property0.NameEquals("permissions"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdOn = property0.Value.GetDateTimeOffset("O");
+                            List<DenyAssignmentPermission> array = new List<DenyAssignmentPermission>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item));
+                            }
+                            permissions = array;
                             continue;
                         }
-                        if (property0.NameEquals("updatedOn"))
+                        if (property0.NameEquals("scope"))
+                        {
+                            scope = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("doNotApplyToChildScopes"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updatedOn = property0.Value.GetDateTimeOffset("O");
+                            doNotApplyToChildScopes = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("principals"))
                         {
-                            createdBy = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                            }
+                            principals = array;
                             continue;
                         }
-                        if (property0.NameEquals("updatedBy"))
+                        if (property0.NameEquals("excludePrincipals"))
                         {
-                            updatedBy = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                            }
+                            excludePrincipals = array;
                             continue;
                         }
-                        if (property0.NameEquals("delegatedManagedIdentityResourceId"))
+                        if (property0.NameEquals("isSystemProtected"))
                         {
-                            delegatedManagedIdentityResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isSystemProtected = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RoleAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value);
+            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Optional.ToList(permissions), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), Optional.ToList(principals), Optional.ToList(excludePrincipals), Optional.ToNullable(isSystemProtected));
         }
     }
 }

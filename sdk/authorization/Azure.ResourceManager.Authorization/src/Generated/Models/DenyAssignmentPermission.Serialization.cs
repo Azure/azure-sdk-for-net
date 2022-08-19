@@ -11,60 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleDefinitionPermission : IUtf8JsonSerializable
+    public partial class DenyAssignmentPermission
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static DenyAssignmentPermission DeserializeDenyAssignmentPermission(JsonElement element)
         {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Actions))
-            {
-                writer.WritePropertyName("actions");
-                writer.WriteStartArray();
-                foreach (var item in Actions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(NotActions))
-            {
-                writer.WritePropertyName("notActions");
-                writer.WriteStartArray();
-                foreach (var item in NotActions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DataActions))
-            {
-                writer.WritePropertyName("dataActions");
-                writer.WriteStartArray();
-                foreach (var item in DataActions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(NotDataActions))
-            {
-                writer.WritePropertyName("notDataActions");
-                writer.WriteStartArray();
-                foreach (var item in NotDataActions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
-        internal static RoleDefinitionPermission DeserializeRoleDefinitionPermission(JsonElement element)
-        {
-            Optional<IList<string>> actions = default;
-            Optional<IList<string>> notActions = default;
-            Optional<IList<string>> dataActions = default;
-            Optional<IList<string>> notDataActions = default;
+            Optional<IReadOnlyList<string>> actions = default;
+            Optional<IReadOnlyList<string>> notActions = default;
+            Optional<IReadOnlyList<string>> dataActions = default;
+            Optional<IReadOnlyList<string>> notDataActions = default;
+            Optional<string> condition = default;
+            Optional<string> conditionVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))
@@ -127,8 +83,18 @@ namespace Azure.ResourceManager.Authorization.Models
                     notDataActions = array;
                     continue;
                 }
+                if (property.NameEquals("condition"))
+                {
+                    condition = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("conditionVersion"))
+                {
+                    conditionVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new RoleDefinitionPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
+            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value);
         }
     }
 }
