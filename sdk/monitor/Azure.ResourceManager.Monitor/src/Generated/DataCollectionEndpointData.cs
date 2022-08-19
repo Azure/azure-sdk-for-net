@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="etag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the data collection endpoint. </param>
         /// <param name="immutableId"> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </param>
-        /// <param name="configurationAccess"> The endpoint used by agents to access their configuration. </param>
+        /// <param name="configurationAccess"> The endpoint used by clients to access their configuration. </param>
         /// <param name="logsIngestion"> The endpoint used by clients to ingest logs. </param>
         /// <param name="networkAcls"> Network access control rules for the endpoints. </param>
         /// <param name="provisioningState"> The resource provisioning state. This property is READ-ONLY. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
         public string Description { get; set; }
         /// <summary> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </summary>
         public string ImmutableId { get; set; }
-        /// <summary> The endpoint used by agents to access their configuration. </summary>
+        /// <summary> The endpoint used by clients to access their configuration. </summary>
         internal DataCollectionEndpointConfigurationAccess ConfigurationAccess { get; set; }
         /// <summary> The endpoint. This property is READ-ONLY. </summary>
         public string ConfigurationAccessEndpoint
