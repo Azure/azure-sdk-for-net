@@ -120,7 +120,7 @@
           "input": {
             "keyFrameIntervalDuration": "",
             "streamingProtocol": "RTMP",
-            "accessToken": "3f8066258952422c8cbe044ca2c584e3",
+            "accessToken": "Sanitized",
             "endpoints": [],
             "accessControl": null
           },
@@ -241,7 +241,7 @@
           "input": {
             "keyFrameIntervalDuration": "",
             "streamingProtocol": "RTMP",
-            "accessToken": "3f8066258952422c8cbe044ca2c584e3",
+            "accessToken": "Sanitized",
             "endpoints": [],
             "accessControl": null
           },

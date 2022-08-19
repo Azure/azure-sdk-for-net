@@ -120,7 +120,7 @@
           "input": {
             "keyFrameIntervalDuration": "",
             "streamingProtocol": "RTMP",
-            "accessToken": "3df4b5e40f264b6e862692aa2b32083f",
+            "accessToken": "Sanitized",
             "endpoints": [],
             "accessControl": null
           },
@@ -241,7 +241,7 @@
           "input": {
             "keyFrameIntervalDuration": "",
             "streamingProtocol": "RTMP",
-            "accessToken": "3df4b5e40f264b6e862692aa2b32083f",
+            "accessToken": "Sanitized",
             "endpoints": [],
             "accessControl": null
           },
@@ -322,7 +322,7 @@
           "input": {
             "keyFrameIntervalDuration": "",
             "streamingProtocol": "RTMP",
-            "accessToken": "3df4b5e40f264b6e862692aa2b32083f",
+            "accessToken": "Sanitized",
             "endpoints": [],
             "accessControl": null
           },
