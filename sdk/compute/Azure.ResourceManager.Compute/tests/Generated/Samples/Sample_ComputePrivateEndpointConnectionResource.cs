@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ApproveAPrivateEndpointConnectionUnderADiskAccessResource()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskAccessExamples/DiskAccessPrivateEndpointConnection_Approve.json
             // this example is just showing the usage of "DiskAccesses_UpdateAPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetInformationAboutAPrivateEndpointConnectionUnderADiskAccessResource()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskAccessExamples/DiskAccessPrivateEndpointConnection_Get.json
             // this example is just showing the usage of "DiskAccesses_GetAPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAPrivateEndpointConnectionUnderADiskAccessResource()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-02/DiskRP/examples/diskAccessExamples/DiskAccessPrivateEndpointConnection_Delete.json
             // this example is just showing the usage of "DiskAccesses_DeleteAPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

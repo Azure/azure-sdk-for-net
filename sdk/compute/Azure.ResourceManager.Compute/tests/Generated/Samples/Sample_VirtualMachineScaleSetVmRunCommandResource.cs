@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateVirtualMachineScaleSetVMRunCommand()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Update.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteVirtualMachineScaleSetVMRunCommand()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Delete.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVirtualMachineScaleSetVMRunCommands()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Get.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

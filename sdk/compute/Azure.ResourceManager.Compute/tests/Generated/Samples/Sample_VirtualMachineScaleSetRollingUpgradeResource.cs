@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VirtualMachineScaleSetRollingUpgradesGetLatestMaximumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_GetLatest_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_GetLatest" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VirtualMachineScaleSetRollingUpgradesGetLatestMinimumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_GetLatest_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_GetLatest" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

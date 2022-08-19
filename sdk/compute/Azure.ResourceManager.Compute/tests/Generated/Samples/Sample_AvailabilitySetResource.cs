@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AvailabilitySetsUpdateMaximumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -76,7 +76,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AvailabilitySetsUpdateMinimumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -106,7 +106,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_AvailabilitySetsDeleteMaximumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -131,7 +131,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_AvailabilitySetsDeleteMinimumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -156,7 +156,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AvailabilitySetsGetMaximumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -185,7 +185,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AvailabilitySetsGetMinimumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -214,7 +214,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAvailabilitySets_ListAvailabilitySetsInASubscription()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySet_ListBySubscription.json
             // this example is just showing the usage of "AvailabilitySets_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -245,7 +245,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAvailableSizes_AvailabilitySetsListAvailableSizesMaximumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_ListAvailableSizes_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_ListAvailableSizes" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -273,7 +273,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAvailableSizes_AvailabilitySetsListAvailableSizesMinimumSetGen()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/availabilitySetExamples/AvailabilitySets_ListAvailableSizes_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_ListAvailableSizes" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

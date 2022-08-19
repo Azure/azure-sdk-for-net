@@ -7,6 +7,7 @@ Run `dotnet build /t:GenerateTest` to generate code.
 > see https://aka.ms/autorest
 ``` yaml
 require: ../src/autorest.md
+include-x-ms-examples-original-file: true
 testgen:
   sample: true
 ```

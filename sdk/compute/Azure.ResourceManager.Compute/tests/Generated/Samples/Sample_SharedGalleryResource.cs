@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetASharedGallery()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/sharedGalleryExamples/SharedGallery_Get.json
             // this example is just showing the usage of "SharedGalleries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteCloudServiceRoleInstance()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudServiceRoleInstance_Delete.json
             // this example is just showing the usage of "CloudServiceRoleInstances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCloudServiceRoleInstance()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudServiceRoleInstance_Get.json
             // this example is just showing the usage of "CloudServiceRoleInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetInstanceView_GetInstanceViewOfCloudServiceRoleInstance()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudServiceRoleInstance_Get_InstanceView.json
             // this example is just showing the usage of "CloudServiceRoleInstances_GetInstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_RestartCloudServiceRoleInstance()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudServiceRoleInstance_Restart.json
             // this example is just showing the usage of "CloudServiceRoleInstances_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Reimage_ReimageCloudServiceRoleInstance()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudServiceRoleInstance_Reimage.json
             // this example is just showing the usage of "CloudServiceRoleInstances_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Rebuild_RebuildCloudServiceRoleInstance()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudServiceRoleInstance_Rebuild.json
             // this example is just showing the usage of "CloudServiceRoleInstances_Rebuild" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRemoteDesktopFile_GetCloudServiceRole()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudServiceRoleInstance_Get_RemoteDesktopFile.json
             // this example is just showing the usage of "CloudServiceRoleInstances_GetRemoteDesktopFile" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

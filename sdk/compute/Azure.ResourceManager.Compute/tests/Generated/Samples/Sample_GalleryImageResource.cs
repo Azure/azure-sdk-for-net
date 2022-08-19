@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateASimpleGalleryImage()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImage_Update.json
             // this example is just showing the usage of "GalleryImages_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImage()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImage_Get.json
             // this example is just showing the usage of "GalleryImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAGalleryImage()
         {
-            // Generated from example definition: 
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImage_Delete.json
             // this example is just showing the usage of "GalleryImages_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
