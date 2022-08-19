@@ -74,24 +74,32 @@ namespace Azure.Monitor.Ingestion
             WriteMemory(stream, BinaryData.FromString("[").ToMemory());
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
+
             foreach (var log in logEntries)
             {
                 BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
-
                 var memory = entry.ToMemory();
+
                 if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
                 {
-                    currentLogList.Add(log);
-                    yield return Tuple.Create(currentLogList, entry);
+                    MemoryStream tempStream = new MemoryStream(); // create tempStream for individual log
+                    WriteMemory(tempStream, BinaryData.FromString("[").ToMemory());
+                    WriteMemory(tempStream, memory);
+                    WriteMemory(tempStream, BinaryData.FromString("]").ToMemory());
+                    tempStream.Position = 0;
+                    yield return Tuple.Create(new List<T>{log}, BinaryData.FromStream(tempStream));
                 }
                 else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
                     WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                     stream.Position = 0; // set Position to 0 to return everything from beginning of stream
-                    currentLogList.Add(log);
-                    yield return Tuple.Create(currentLogList, entry);
+                    yield return Tuple.Create(currentLogList, BinaryData.FromStream(stream));
+
+                    // reset stream and currentLogList
                     stream = new MemoryStream(SingleUploadThreshold); // reset stream
                     currentLogList = new List<T>(); // reset log list
+                    WriteMemory(stream, memory); // add log to memory and currentLogList
+                    currentLogList.Add(log);
                 }
                 else
                 {
@@ -102,7 +110,7 @@ namespace Azure.Monitor.Ingestion
                         WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                         stream.Position = 0;
                         currentLogList.Add(log);
-                        yield return Tuple.Create(currentLogList, entry);
+                        yield return Tuple.Create(currentLogList, BinaryData.FromStream(stream));
                     }
                     else
                     {
