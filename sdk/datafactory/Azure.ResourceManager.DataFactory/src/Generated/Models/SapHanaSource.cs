@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// SAP HANA Sql query. Type: string (or Expression with resultType string)..
+        /// SAP HANA Sql query. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Query { get; set; }
         /// <summary>
-        /// The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer)..
+        /// The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PacketSize { get; set; }
         /// <summary>
-        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. .
+        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. 
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
         internal SapHanaPartitionSettings PartitionSettings { get; set; }
         /// <summary>
-        /// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string)..
+        /// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

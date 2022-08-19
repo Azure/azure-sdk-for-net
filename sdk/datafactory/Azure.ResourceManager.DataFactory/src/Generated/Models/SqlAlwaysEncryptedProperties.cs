@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </summary>
         public SqlAlwaysEncryptedAkvAuthType AlwaysEncryptedAkvAuthType { get; set; }
         /// <summary>
-        /// The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string)..
+        /// The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

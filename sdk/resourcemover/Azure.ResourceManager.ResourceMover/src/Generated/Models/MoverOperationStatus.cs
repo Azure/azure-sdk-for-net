@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Error stating all error details for the operation. </summary>
         public MoverOperationStatusError Error { get; }
         /// <summary>
-        /// Custom data..
+        /// Custom data.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

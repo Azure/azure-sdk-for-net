@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string)..
+        /// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ClusterSize { get; set; }
         /// <summary>
-        /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string)..
+        /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TimeToLiveExpression { get; set; }
         /// <summary>
-        /// Version of the HDInsight cluster.  Type: string (or Expression with resultType string)..
+        /// Version of the HDInsight cluster.  Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </summary>
         public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
-        /// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string)..
+        /// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData HostSubscriptionId { get; set; }
         /// <summary>
-        /// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string)..
+        /// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
-        /// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string)..
+        /// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Tenant { get; set; }
         /// <summary>
-        /// The resource group where the cluster belongs. Type: string (or Expression with resultType string)..
+        /// The resource group where the cluster belongs. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ClusterResourceGroup { get; set; }
         /// <summary>
-        /// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string)..
+        /// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ClusterNamePrefix { get; set; }
         /// <summary>
-        /// The username to access the cluster. Type: string (or Expression with resultType string)..
+        /// The username to access the cluster. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition ClusterPassword { get; set; }
         /// <summary>
-        /// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string)..
+        /// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>
         public FactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary>
-        /// The cluster type. Type: string (or Expression with resultType string)..
+        /// The cluster type. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ClusterType { get; set; }
         /// <summary>
-        /// The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string)..
+        /// The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SparkVersion { get; set; }
         /// <summary>
-        /// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created..
+        /// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData CoreConfiguration { get; set; }
         /// <summary>
-        /// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster..
+        /// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData HBaseConfiguration { get; set; }
         /// <summary>
-        /// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster..
+        /// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData HdfsConfiguration { get; set; }
         /// <summary>
-        /// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster..
+        /// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData HiveConfiguration { get; set; }
         /// <summary>
-        /// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster..
+        /// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData MapReduceConfiguration { get; set; }
         /// <summary>
-        /// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster..
+        /// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData OozieConfiguration { get; set; }
         /// <summary>
-        /// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster..
+        /// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData StormConfiguration { get; set; }
         /// <summary>
-        /// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster..
+        /// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData YarnConfiguration { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EncryptedCredential { get; set; }
         /// <summary>
-        /// Specifies the size of the head node for the HDInsight cluster..
+        /// Specifies the size of the head node for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData HeadNodeSize { get; set; }
         /// <summary>
-        /// Specifies the size of the data node for the HDInsight cluster..
+        /// Specifies the size of the data node for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DataNodeSize { get; set; }
         /// <summary>
-        /// Specifies the size of the Zoo Keeper node for the HDInsight cluster..
+        /// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
         public IList<ScriptAction> ScriptActions { get; }
         /// <summary>
-        /// The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string)..
+        /// The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData VirtualNetworkId { get; set; }
         /// <summary>
-        /// The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string)..
+        /// The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

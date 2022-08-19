@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The data effect name. </summary>
         public string Name { get; }
         /// <summary>
-        /// The data effect details schema..
+        /// The data effect details schema.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

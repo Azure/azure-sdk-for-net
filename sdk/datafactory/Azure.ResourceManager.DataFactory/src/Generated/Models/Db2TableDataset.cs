@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// This property will be retired. Please consider using schema + table properties instead..
+        /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TableName { get; set; }
         /// <summary>
-        /// The Db2 schema name. Type: string (or Expression with resultType string)..
+        /// The Db2 schema name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SchemaTypePropertiesSchema { get; set; }
         /// <summary>
-        /// The Db2 table name. Type: string (or Expression with resultType string)..
+        /// The Db2 table name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

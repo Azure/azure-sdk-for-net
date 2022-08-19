@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The context of the SAP ODP Object. Type: string (or Expression with resultType string)..
+        /// The context of the SAP ODP Object. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Context { get; set; }
         /// <summary>
-        /// The name of the SAP ODP Object. Type: string (or Expression with resultType string)..
+        /// The name of the SAP ODP Object. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

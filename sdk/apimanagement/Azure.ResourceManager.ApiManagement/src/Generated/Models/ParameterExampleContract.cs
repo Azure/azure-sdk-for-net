@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Long description for the example. </summary>
         public string Description { get; set; }
         /// <summary>
-        /// Example value. May be a primitive value, or an object..
+        /// Example value. May be a primitive value, or an object.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

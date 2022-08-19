@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Name of the variable whose value needs to be appended to. </summary>
         public string VariableName { get; set; }
         /// <summary>
-        /// Value to be appended. Could be a static value or Expression.
+        /// Value to be appended. Could be a static value or Expression
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Command for custom activity Type: string (or Expression with resultType string)..
+        /// Command for custom activity Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Resource linked service reference. </summary>
         public FactoryLinkedServiceReference ResourceLinkedService { get; set; }
         /// <summary>
-        /// Folder path for resource files Type: string (or Expression with resultType string)..
+        /// Folder path for resource files Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </summary>
         public IDictionary<string, BinaryData> ExtendedProperties { get; }
         /// <summary>
-        /// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double)..
+        /// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RetentionTimeInDays { get; set; }
         /// <summary>
-        /// Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double)..
+        /// Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

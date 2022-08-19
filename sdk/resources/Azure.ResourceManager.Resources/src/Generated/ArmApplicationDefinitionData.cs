@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application definition package file Uri. Use this element. </summary>
         public Uri PackageFileUri { get; set; }
         /// <summary>
-        /// The inline main template json which has resources to be provisioned. It can be a JObject or well-formed JSON string..
+        /// The inline main template json which has resources to be provisioned. It can be a JObject or well-formed JSON string.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         public BinaryData MainTemplate { get; set; }
         /// <summary>
-        /// The createUiDefinition json for the backing template with Microsoft.Solutions/applications resource. It can be a JObject or well-formed JSON string..
+        /// The createUiDefinition json for the backing template with Microsoft.Solutions/applications resource. It can be a JObject or well-formed JSON string.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

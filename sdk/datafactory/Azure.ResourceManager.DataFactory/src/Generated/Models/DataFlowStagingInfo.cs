@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Staging linked service reference. </summary>
         public FactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary>
-        /// Folder path for staging blob. Type: string (or Expression with resultType string).
+        /// Folder path for staging blob. Type: string (or Expression with resultType string)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

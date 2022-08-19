@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Azure Table default partition key value. Type: string (or Expression with resultType string)..
+        /// Azure Table default partition key value. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AzureTableDefaultPartitionKeyValue { get; set; }
         /// <summary>
-        /// Azure Table partition key name. Type: string (or Expression with resultType string)..
+        /// Azure Table partition key name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AzureTablePartitionKeyName { get; set; }
         /// <summary>
-        /// Azure Table row key name. Type: string (or Expression with resultType string)..
+        /// Azure Table row key name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AzureTableRowKeyName { get; set; }
         /// <summary>
-        /// Azure Table insert type. Type: string (or Expression with resultType string)..
+        /// Azure Table insert type. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

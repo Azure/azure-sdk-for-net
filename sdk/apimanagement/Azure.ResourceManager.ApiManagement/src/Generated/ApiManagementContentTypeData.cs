@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Content type description. </summary>
         public string Description { get; set; }
         /// <summary>
-        /// Content type schema..
+        /// Content type schema.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

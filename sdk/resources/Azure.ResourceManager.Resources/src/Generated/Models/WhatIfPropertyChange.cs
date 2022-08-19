@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The type of property change. </summary>
         public WhatIfPropertyChangeType PropertyChangeType { get; }
         /// <summary>
-        /// The value of the property before the deployment is executed..
+        /// The value of the property before the deployment is executed.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         public BinaryData Before { get; }
         /// <summary>
-        /// The value of the property after the deployment is executed..
+        /// The value of the property after the deployment is executed.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

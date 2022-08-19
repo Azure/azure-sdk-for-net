@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Record namespace in the write result. </summary>
         public string RecordNamespace { get; set; }
         /// <summary>
-        /// Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer)..
+        /// Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData MaxRowsPerFile { get; set; }
         /// <summary>
-        /// Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string)..
+        /// Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

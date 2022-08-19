@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Host name of the server. Type: string (or Expression with resultType string)..
+        /// Host name of the server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Host { get; set; }
         /// <summary>
-        /// User ID to logon the server. Type: string (or Expression with resultType string)..
+        /// User ID to logon the server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference..
+        /// The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
         public AzureKeyVaultSecretReference AccountKey { get; set; }
         /// <summary>
-        /// SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference..
+        /// SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
         public AzureKeyVaultSecretReference SasToken { get; set; }
         /// <summary>
-        /// The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string)..
+        /// The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FileShare { get; set; }
         /// <summary>
-        /// The azure file share snapshot version. Type: string (or Expression with resultType string)..
+        /// The azure file share snapshot version. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Snapshot { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

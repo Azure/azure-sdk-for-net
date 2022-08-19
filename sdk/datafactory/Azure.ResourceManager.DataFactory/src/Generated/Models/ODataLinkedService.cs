@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The URL of the OData service endpoint. Type: string (or Expression with resultType string)..
+        /// The URL of the OData service endpoint. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of authentication used to connect to the OData service. </summary>
         public ODataAuthenticationType? AuthenticationType { get; set; }
         /// <summary>
-        /// User name of the OData service. Type: string (or Expression with resultType string)..
+        /// User name of the OData service. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object)..
+        /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AuthHeaders { get; set; }
         /// <summary>
-        /// Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string)..
+        /// Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Tenant { get; set; }
         /// <summary>
-        /// Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string)..
+        /// Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
-        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string)..
+        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AzureCloudType { get; set; }
         /// <summary>
-        /// Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string)..
+        /// Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalEmbeddedCertPassword { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

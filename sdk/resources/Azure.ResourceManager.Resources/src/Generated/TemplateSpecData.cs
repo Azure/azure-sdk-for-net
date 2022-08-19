@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Template Spec display name. </summary>
         public string DisplayName { get; set; }
         /// <summary>
-        /// The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs..
+        /// The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

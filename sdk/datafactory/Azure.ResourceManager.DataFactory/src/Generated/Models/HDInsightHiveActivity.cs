@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary>
-        /// Script path. Type: string (or Expression with resultType string)..
+        /// Script path. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> This object contains consistent fields across different monitor services. </summary>
         public ServiceAlertEssentials Essentials { get; set; }
         /// <summary>
-        /// Information specific to the monitor service that gives more contextual details about the alert..
+        /// Information specific to the monitor service that gives more contextual details about the alert.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         public BinaryData Context { get; }
         /// <summary>
-        /// Config which would be used for displaying the data in portal..
+        /// Config which would be used for displaying the data in portal.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
