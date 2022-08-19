@@ -531,8 +531,8 @@ namespace Azure.Maps.Route.Models
     public partial class RouteMatrixQuery
     {
         public RouteMatrixQuery() { }
-        public Azure.Core.GeoJson.GeoPointCollection Destinations { get { throw null; } set { } }
-        public Azure.Core.GeoJson.GeoPointCollection Origins { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Destinations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> Origins { get { throw null; } set { } }
     }
     public partial class RouteMatrixResult
     {

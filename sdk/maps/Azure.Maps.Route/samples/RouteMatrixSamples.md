@@ -11,12 +11,12 @@ User can send synchronous Route Matrix request when `origins * destination <= 10
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new GeoPointCollection(new List<GeoPoint>() {
-        new GeoPoint(45.9375, 123.751),
-        new GeoPoint(45.96875, 123.791)
-    }),
+    Origins = new List<GeoPosition>() {
+        new GeoPosition(45.9375, 123.751),
+        new GeoPosition(45.96875, 123.791)
+    },
     // one destination point
-    Destinations = new GeoPointCollection(new List<GeoPoint>() { new GeoPoint(45.90625, 123.767) }),
+    Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
 };
 var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
 ```
@@ -28,12 +28,12 @@ To add more options to route matrix request, one can use `RouteMatrixOptions` as
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new GeoPointCollection(new List<GeoPoint>() {
-        new GeoPoint(45.9375, 123.751),
-        new GeoPoint(45.96875, 123.791)
-    }),
+    Origins = new List<GeoPosition>() {
+        new GeoPosition(45.9375, 123.751),
+        new GeoPosition(45.96875, 123.791)
+    },
     // one destination point
-    Destinations = new GeoPointCollection(new List<GeoPoint>() { new GeoPoint(45.90625, 123.767) }),
+    Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
 };
 
 // Add more options for route matrix request
@@ -57,12 +57,12 @@ If the route matrix request is large (`origins * destination > 100`), one can us
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new GeoPointCollection(new List<GeoPoint>() {
-        new GeoPoint(45.9375, 123.751),
-        new GeoPoint(45.96875, 123.791)
-    }),
+    Origins = new List<GeoPosition>() {
+        new GeoPosition(45.9375, 123.751),
+        new GeoPosition(45.96875, 123.791)
+    },
     // one destination point
-    Destinations = new GeoPointCollection(new List<GeoPoint>() { new GeoPoint(45.90625, 123.767) }),
+    Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
 };
 
 // Instantiate route matrix options

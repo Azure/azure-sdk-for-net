@@ -173,12 +173,12 @@ To find the route matrix between multiple origins and destinations, Azure Maps r
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new GeoPointCollection(new List<GeoPoint>() {
-        new GeoPoint(45.9375, 123.751),
-        new GeoPoint(45.96875, 123.791)
-    }),
+    Origins = new List<GeoPosition>() {
+        new GeoPosition(45.9375, 123.751),
+        new GeoPosition(45.96875, 123.791)
+    },
     // one destination point
-    Destinations = new GeoPointCollection(new List<GeoPoint>() { new GeoPoint(45.90625, 123.767) }),
+    Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
 };
 var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
 ```
@@ -190,12 +190,12 @@ An async route matrix request looks like below. This is useful when user have `o
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new GeoPointCollection(new List<GeoPoint>() {
-        new GeoPoint(45.9375, 123.751),
-        new GeoPoint(45.96875, 123.791)
-    }),
+    Origins = new List<GeoPosition>() {
+        new GeoPosition(45.9375, 123.751),
+        new GeoPosition(45.96875, 123.791)
+    },
     // one destination point
-    Destinations = new GeoPointCollection(new List<GeoPoint>() { new GeoPoint(45.90625, 123.767) }),
+    Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
 };
 
 // Instantiate route matrix options

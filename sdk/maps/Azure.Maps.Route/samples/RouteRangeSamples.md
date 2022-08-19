@@ -20,10 +20,10 @@ var result = client.GetRouteRange(options);
 User can fine tune the route range via different options:
 
 ```C# Snippet:ComplexRouteRange
-var geoPoint = new GeoPosition(123.75, 46);
+var GeoPosition = new GeoPosition(123.75, 46);
 // Search from a point of distance budget that can be reached in 6075.35 meters,
 // And departure time after 2 hours later in car
-var options = new RouteRangeOptions(geoPoint)
+var options = new RouteRangeOptions(GeoPosition)
 {
     DistanceBudgetInMeters = 6075.38,
     DepartAt = DateTimeOffset.Now.AddHours(2),

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
 
@@ -18,28 +19,44 @@ namespace Azure.Maps.Route.Models
         [CodeGenMember("Destinations")]
         internal GeoJsonMultiPoint GeoJsonMultiPointDestinations { get; set; }
 
-        private GeoPointCollection _Origins;
-        private GeoPointCollection _Destinations;
+        private IList<GeoPosition> _Origins;
+        private IList<GeoPosition> _Destinations;
 
+#pragma warning disable CA2227
         /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </summary>
-        public GeoPointCollection Origins {
+        public IList<GeoPosition> Origins {
             get => _Origins;
 
             set
             {
                 _Origins = value;
-                GeoJsonMultiPointOrigins = new GeoJsonMultiPoint(value);
+                List<IList<double>> multiPoint = new List<IList<double>>();
+                foreach (var point in value)
+                {
+                    multiPoint.Add(new List<double>() {
+                        point.Longitude, point.Latitude
+                    });
+                }
+                GeoJsonMultiPointOrigins = new GeoJsonMultiPoint(multiPoint);
             }
         }
         /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </summary>
-        public GeoPointCollection Destinations {
+        public IList<GeoPosition> Destinations {
             get => _Destinations;
 
             set
             {
                 _Destinations = value;
-                GeoJsonMultiPointDestinations = new GeoJsonMultiPoint(value);
+                List<IList<double>> multiPoint = new List<IList<double>>();
+                foreach (var point in value)
+                {
+                    multiPoint.Add(new List<double>() {
+                        point.Longitude, point.Latitude
+                    });
+                }
+                GeoJsonMultiPointDestinations = new GeoJsonMultiPoint(multiPoint);
             }
         }
+#pragma warning restore CA2227
     }
 }

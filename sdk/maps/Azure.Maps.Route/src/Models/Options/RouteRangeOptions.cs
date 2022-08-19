@@ -29,13 +29,16 @@ namespace Azure.Maps.Route.Models
         }
 
         /// <summary> RouteRangeOptions constructor, "query" parameter must not be null. </summary>
-        /// <param name="routeRangePoint"> A coordinate (GeoPoint) for the route range query. </param>
+        /// <param name="routeRangePoint"> A coordinate (GeoPosition) for the route range query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeRangePoint"/> is null. </exception>
         public RouteRangeOptions(GeoPosition routeRangePoint)
         {
             Argument.AssertNotNull(routeRangePoint, nameof(routeRangePoint));
 
-            this.Query = new List<double>() { routeRangePoint.Latitude, routeRangePoint.Longitude };
+            this.Query = new List<double>() {
+                routeRangePoint.Longitude,
+                routeRangePoint.Latitude
+            };
         }
 
         /// <summary> The Coordinate from which the range calculation should start. </summary>
