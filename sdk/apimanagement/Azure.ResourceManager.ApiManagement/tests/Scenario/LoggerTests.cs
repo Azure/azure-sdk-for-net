@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class LoggerTests : ApiManagementManagementTestBase
     {
         public LoggerTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // first create the event hub namespace
             var eventCollection = ResourceGroup.GetEventHubsNamespaces();
             var eventHubNamespace = (await eventCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubNameSpaceName, new EventHubsNamespaceData(AzureLocation.EastUS))).Value;
-            //Assert.NotNull(eventHubNamespace.Data.Name);
+            Assert.NotNull(eventHubNamespace.Data.Name);
 
             // then create eventhub
             var hubCollection = eventHubNamespace.GetEventHubs();
             var eventHub = (await hubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, new EventHubData())).Value;
-            //Assert.NotNull(eventHub.Data.Name);
+            Assert.NotNull(eventHub.Data.Name);
 
             // create send policy auth rule
             string sendPolicy = Recording.GenerateAssetName("sendPolicy");
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var loggerContract = (await logCollection.CreateOrUpdateAsync(WaitUntil.Completed, newloggerId, loggerCreateParameters)).Value;
 
-            //Assert.NotNull(loggerContract);
-            //Assert.AreEqual(newloggerId, loggerContract.Data.Name);
-            //Assert.IsTrue(loggerContract.Data.IsBuffered);
-            //Assert.AreEqual(LoggerType.AzureEventHub, loggerContract.Data.LoggerType);
-            //Assert.NotNull(loggerContract.Data.Credentials);
-            //Assert.AreEqual(2, loggerContract.Data.Credentials.Keys.Count);
+            Assert.NotNull(loggerContract);
+            Assert.AreEqual(newloggerId, loggerContract.Data.Name);
+            Assert.IsTrue(loggerContract.Data.IsBuffered);
+            Assert.AreEqual(LoggerType.AzureEventHub, loggerContract.Data.LoggerType);
+            Assert.NotNull(loggerContract.Data.Credentials);
+            Assert.AreEqual(2, loggerContract.Data.Credentials.Keys.Count);
 
             var listLoggers = await logCollection.GetAllAsync().ToEnumerableAsync();
             // there should be one user
-            //Assert.GreaterOrEqual(listLoggers.Count, 1);
+            Assert.GreaterOrEqual(listLoggers.Count, 1);
 
             // patch logger
             string patchedDescription = Recording.GenerateAssetName("patchedDescription");
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get to check it was patched
             loggerContract = await logCollection.GetAsync(newloggerId);
 
-            //Assert.NotNull(loggerContract);
-            //Assert.AreEqual(newloggerId, loggerContract.Data.Name);
-            //Assert.AreEqual(patchedDescription, loggerContract.Data.Description);
-            //Assert.NotNull(loggerContract.Data.Credentials);
+            Assert.NotNull(loggerContract);
+            Assert.AreEqual(newloggerId, loggerContract.Data.Name);
+            Assert.AreEqual(patchedDescription, loggerContract.Data.Description);
+            Assert.NotNull(loggerContract.Data.Credentials);
 
             // delete the logger
             await loggerContract.DeleteAsync(WaitUntil.Completed, "*");
             var falseResult = await logCollection.ExistsAsync(newloggerId);
-            //Assert.IsFalse(falseResult);
+            Assert.IsFalse(falseResult);
         }
     }
 }
