@@ -126,5 +126,17 @@ namespace Compute.Tests.DiskRPTests
         {
             Disk_CRUD_WithArchitecture_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithArchitecture_EmptyDisk", diskSizeGB: 5);
         }
+
+        [Fact]
+        public void Disk_CRUD_WithDiskControllerType()
+        {
+            Disk_CRUD_WithDiskControllerType_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithDiskControllerType_Execute", diskSizeGB: 5);
+        }
+
+        [Fact]
+        public void Disk_OptimizeFrequentAttach_()
+        {
+            Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Empty, "Disk_OptimizeFrequentAttach_Execute", diskSizeGB: 5);
+        }
     }
 }
