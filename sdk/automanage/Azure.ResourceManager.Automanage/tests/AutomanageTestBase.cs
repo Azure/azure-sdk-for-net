@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -111,7 +111,11 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <returns>VirtualMachineResource</returns>
         protected async Task<VirtualMachineResource> CreateVirtualMachineFromTemplate(string vmName, ResourceGroupResource rg)
         {
-            string templateContent = File.ReadAllText("https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/automanage/test-resources.json");
+            // get ARM template contents
+            var httpClient = new HttpClient();
+            string url = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/automanage/test-resources.json";
+            var templateContent = await httpClient.GetAsync(url).Result.Content.ReadAsStringAsync();
+
             var deploymentContent = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 Template = BinaryData.FromString(templateContent),
