@@ -18,17 +18,24 @@ namespace Azure.Template
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
+            /// <summary> Service version "2022-01-01". </summary>
+            V2022_01_01 = 1,
             /// <summary> Service version "2022-02-02". </summary>
-            V2022_02_02 = 1,
+            V2022_02_02 = 2,
         }
+
+        internal ServiceVersion TargetVersion { get; }
 
         internal string Version { get; }
 
         /// <summary> Initializes new instance of MultiVersionClientOptions. </summary>
         public MultiVersionClientOptions(ServiceVersion version = LatestVersion)
         {
+            TargetVersion = version;
+
             Version = version switch
             {
+                ServiceVersion.V2022_01_01 => "2022-01-01",
                 ServiceVersion.V2022_02_02 => "2022-02-02",
                 _ => throw new NotSupportedException()
             };

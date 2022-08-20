@@ -20,6 +20,10 @@ namespace Azure.Template
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        // TODO: yuck
+        private readonly MultiVersionClientOptions.ServiceVersion _serviceVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -55,6 +59,8 @@ namespace Azure.Template
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _apiVersion = options.Version;
+            _serviceVersion = options.TargetVersion;
         }
 
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -121,6 +127,7 @@ namespace Azure.Template
             }
         }
 
+        /// <summary>Servicev2Operation method. Added in service version 2022-02-02. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -139,6 +146,12 @@ namespace Azure.Template
         /// </example>
         public virtual async Task<Response> ServiceV2OperationAsync(RequestContext context = null)
         {
+            // Generator knows from Cadl @added decorator which version an operation was added in.
+            if (_serviceVersion < MultiVersionClientOptions.ServiceVersion.V2022_02_02)
+            {
+                throw new NotSupportedException($"Operation not available in service version {_serviceVersion}");
+            }
+
             using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.ServiceV2Operation");
             scope.Start();
             try
@@ -171,6 +184,11 @@ namespace Azure.Template
         /// </example>
         public virtual Response ServiceV2Operation(RequestContext context = null)
         {
+            if (_serviceVersion < MultiVersionClientOptions.ServiceVersion.V2022_02_02)
+            {
+                throw new NotSupportedException($"Operation not available in service version {_serviceVersion}");
+            }
+
             using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.ServiceV2Operation");
             scope.Start();
             try
@@ -193,6 +211,7 @@ namespace Azure.Template
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/ops/v1op", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -206,6 +225,7 @@ namespace Azure.Template
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/ops/v2op", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
