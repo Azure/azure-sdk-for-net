@@ -16,7 +16,8 @@ namespace Azure.Template
         public MultiVersionClientOptions(Azure.Template.MultiVersionClientOptions.ServiceVersion version = Azure.Template.MultiVersionClientOptions.ServiceVersion.V2022_02_02) { }
         public enum ServiceVersion
         {
-            V2022_02_02 = 1,
+            V2022_01_01 = 1,
+            V2022_02_02 = 2,
         }
     }
 }
