@@ -22,13 +22,20 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartArray();
-                foreach (var item in Tags)
+                if (Tags != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartArray();
+                    foreach (var item in Tags)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             if (Optional.IsDefined(IsSecret))
             {
@@ -105,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                tags = null;
                                 continue;
                             }
                             List<string> array = new List<string>();

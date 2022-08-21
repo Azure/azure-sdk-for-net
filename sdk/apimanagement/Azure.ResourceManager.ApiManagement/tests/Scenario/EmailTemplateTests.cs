@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class EmailTemplateTests : ApiManagementManagementTestBase
     {
         public EmailTemplateTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -19,13 +19,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartArray();
-                foreach (var item in Tags)
+                if (Tags != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartArray();
+                    foreach (var item in Tags)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             if (Optional.IsDefined(IsSecret))
             {
