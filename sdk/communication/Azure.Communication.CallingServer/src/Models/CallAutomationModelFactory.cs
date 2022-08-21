@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.AddParticipantsResult"/> instance for mocking. </returns>
         public static AddParticipantsResult AddParticipantsResult(IEnumerable<CallParticipant> participants = default, string operationContext = default)
         {
-            return new AddParticipantsResult(participants.ToList(), operationContext);
+            return new AddParticipantsResult(participants == null ? new List<CallParticipant>() : participants.ToList(), operationContext);
         }
 
         /// <summary> Initializes a new instance of AnswerCallResult. </summary>
@@ -68,7 +68,13 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         public static AddParticipantsFailed AddParticipantsFailed(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            var internalObject = new AddParticipantsFailedInternal(operationContext, resultInformation, participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(), AcsEventType.AddParticipantsFailed, callConnectionId,  serverCallId, correlationId);
+            var internalObject = new AddParticipantsFailedInternal(operationContext,
+                resultInformation,
+                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
+                AcsEventType.AddParticipantsFailed,
+                callConnectionId,
+                serverCallId,
+                correlationId);
 
             return new AddParticipantsFailed(internalObject);
         }
@@ -78,7 +84,13 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         public static AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            var internalObject = new AddParticipantsSucceededInternal(operationContext, resultInformation, participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(), AcsEventType.AddParticipantsSucceeded, callConnectionId, serverCallId, correlationId);
+            var internalObject = new AddParticipantsSucceededInternal(operationContext,
+                resultInformation,
+                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
+                AcsEventType.AddParticipantsSucceeded,
+                callConnectionId,
+                serverCallId,
+                correlationId);
 
             return new AddParticipantsSucceeded(internalObject);
         }
@@ -120,9 +132,44 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
-            var internalObject = new ParticipantsUpdatedInternal(participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(), AcsEventType.ParticipantsUpdated, callConnectionId, serverCallId, correlationId);
+            var internalObject = new ParticipantsUpdatedInternal(participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(),
+                AcsEventType.ParticipantsUpdated,
+                callConnectionId,
+                serverCallId,
+                correlationId);
 
             return new ParticipantsUpdated(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Play Completed event.
+        /// </summary>
+        public static PlayCompleted PlayCompleted(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new PlayCompleted(operationContext, resultInformation, AcsEventType.PlayCompleted, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Play failed event.
+        /// </summary>
+        public static PlayFailed PlayFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new PlayFailed(operationContext, resultInformation, AcsEventType.PlayCompleted, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Recording state changed event.
+        /// </summary>
+        public static CallRecordingStateChanged RecordingStateChanged(string recordingId = default, RecordingState state = default, DateTimeOffset startDateTime = default,  string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new CallRecordingStateChanged(
+                AcsEventType.RecordingStateChanged,
+                recordingId,
+                state,
+                startDateTime,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
     }
 }

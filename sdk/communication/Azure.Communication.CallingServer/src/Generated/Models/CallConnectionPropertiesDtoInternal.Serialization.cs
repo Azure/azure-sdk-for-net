@@ -23,6 +23,7 @@ namespace Azure.Communication.CallingServer
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> subject = default;
             Optional<string> callbackUri = default;
+            Optional<string> mediaSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
@@ -80,8 +81,13 @@ namespace Azure.Communication.CallingServer
                     callbackUri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("mediaSubscriptionId"))
+                {
+                    mediaSubscriptionId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CallConnectionPropertiesDtoInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value);
+            return new CallConnectionPropertiesDtoInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, mediaSubscriptionId.Value);
         }
     }
 }

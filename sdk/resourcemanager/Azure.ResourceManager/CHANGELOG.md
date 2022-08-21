@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.1 (2022-08-18)
+
+### Features Added
+
+- Added CanUseTagResource methods to check if the TagResource API is deployed in the current environment.
+
 ## 1.3.0 (2022-08-09)
 
 ### Other Changes
