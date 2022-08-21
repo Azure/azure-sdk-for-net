@@ -305,9 +305,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             {
                 foreach(IFileStagingProvider curProvider in filesToStage)
                 {
-                    FileToStage thisIsReal = curProvider as FileToStage;
-
-                    if (null != thisIsReal)
+                    if (curProvider is FileToStage thisIsReal)
                     {
                         return thisIsReal;
                     }
@@ -332,9 +330,8 @@ namespace Microsoft.Azure.Batch.FileStaging
                 throw new ArgumentNullException("filesStagingArtifact");
             }
 
-            SequentialFileStagingArtifact seqArtifact = fileStagingArtifact as SequentialFileStagingArtifact;
 
-            if (null == seqArtifact)
+            if (fileStagingArtifact is not SequentialFileStagingArtifact seqArtifact)
             {
                 throw new ArgumentOutOfRangeException(ErrorMessages.FileStagingIncorrectArtifact);
             }
@@ -374,9 +371,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                 // for "retry" and/or "double calls" we ignore files that have already been staged
                 if (null == currentFile.StagedFiles)
                 {
-                    FileToStage fts = currentFile as FileToStage;
-
-                    if (null != fts)
+                    if (currentFile is FileToStage fts)
                     {
                         System.Threading.Tasks.Task stageTask = StageOneFileAsync(fts, seqArtifacts);
 
