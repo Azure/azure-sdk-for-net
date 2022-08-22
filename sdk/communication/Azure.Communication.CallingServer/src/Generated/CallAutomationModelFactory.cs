@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Model factory for read-only models. </summary>
@@ -43,6 +46,16 @@ namespace Azure.Communication.CallingServer
         public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
         {
             return new ResultInformation(code, subCode, message);
+        }
+
+        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <param name="tones"></param>
+        /// <returns> A new <see cref="CallingServer.CollectTonesResult"/> instance for mocking. </returns>
+        public static CollectTonesResult CollectTonesResult(IEnumerable<string> tones = null)
+        {
+            tones ??= new List<string>();
+
+            return new CollectTonesResult(tones?.ToList());
         }
     }
 }

@@ -5,14 +5,37 @@
 
 #nullable disable
 
+using Azure.Communication.CallingServer.Models.Events;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecognizeCompleted. </summary>
-    internal partial class RecognizeCompleted
+    public partial class RecognizeCompleted
     {
         /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
         internal RecognizeCompleted()
         {
+        }
+
+        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
+        /// <param name="operationContext"> Operation context. </param>
+        /// <param name="recognitionType"> Determines the sub-type pf the recognize operation. </param>
+        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="resultInfo"> Defines the code, sub-code and message for the operation. </param>
+        /// <param name="eventType"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        internal RecognizeCompleted(string operationContext, RecognitionType? recognitionType, CollectTonesResult collectTonesResult, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        {
+            OperationContext = operationContext;
+            RecognitionType = recognitionType;
+            CollectTonesResult = collectTonesResult;
+            ResultInfo = resultInfo;
+            EventType = eventType;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
         }
 
         /// <summary> Operation context. </summary>
@@ -23,13 +46,5 @@ namespace Azure.Communication.CallingServer
         public CollectTonesResult CollectTonesResult { get; }
         /// <summary> Defines the code, sub-code and message for the operation. </summary>
         public ResultInformation ResultInfo { get; }
-        /// <summary> Gets the type. </summary>
-        public AcsEventType? Type { get; }
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
     }
 }

@@ -11,12 +11,19 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CollectTonesResult. </summary>
-    internal partial class CollectTonesResult
+    public partial class CollectTonesResult
     {
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
         internal CollectTonesResult()
         {
             Tones = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <param name="tones"></param>
+        internal CollectTonesResult(IReadOnlyList<string> tones)
+        {
+            Tones = tones;
         }
 
         /// <summary> Gets the tones. </summary>

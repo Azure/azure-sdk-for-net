@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.CallingServer
+namespace Azure.Communication.CallingServer.Models.Events
 {
     /// <summary> Determines the sub-type pf the recognize operation. </summary>
-    internal readonly partial struct RecognitionType : IEquatable<RecognitionType>
+    public readonly partial struct RecognitionType : IEquatable<RecognitionType>
     {
         private readonly string _value;
 
