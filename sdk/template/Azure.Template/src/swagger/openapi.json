@@ -42,6 +42,14 @@
         "parameters": [
           {
             "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EvolvingModel"
+            }
           }
         ],
         "responses": {

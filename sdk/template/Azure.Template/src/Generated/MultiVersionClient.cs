@@ -60,17 +60,43 @@ namespace Azure.Template
             _apiVersion = options.Version;
         }
 
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call SetEvolvingModelAsync and parse the result.
+        /// This sample shows how to call SetEvolvingModelAsync with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new MultiVersionClient(endpoint, credential);
         /// 
-        /// Response response = await client.SetEvolvingModelAsync();
+        /// var data = new {
+        ///     requiredInt = 1234,
+        ///     requiredString = "<requiredString>",
+        /// };
+        /// 
+        /// Response response = await client.SetEvolvingModelAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("requiredInt").ToString());
+        /// Console.WriteLine(result.GetProperty("requiredString").ToString());
+        /// ]]></code>
+        /// This sample shows how to call SetEvolvingModelAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new MultiVersionClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     requiredInt = 1234,
+        ///     requiredString = "<requiredString>",
+        ///     optionalInt = 1234,
+        ///     optionalString = "<optionalString>",
+        /// };
+        /// 
+        /// Response response = await client.SetEvolvingModelAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("requiredInt").ToString());
@@ -80,7 +106,18 @@ namespace Azure.Template
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the response payload.
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>EvolvingModel</c>:
+        /// <code>{
+        ///   requiredInt: number, # Required. Value type property available in 2022-01-01
+        ///   requiredString: string, # Required. Reference type property available in 2022-02-02
+        ///   optionalInt: number, # Optional. Value type property added in 2022-02-02
+        ///   optionalString: string, # Optional. Reference type property added in 2022-02-02
+        /// }
+        /// </code>
         /// 
         /// Response Body:
         /// 
@@ -94,13 +131,15 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> SetEvolvingModelAsync(RequestContext context = null)
+        public virtual async Task<Response> SetEvolvingModelAsync(RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.SetEvolvingModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetEvolvingModelRequest(context);
+                using HttpMessage message = CreateSetEvolvingModelRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -110,17 +149,43 @@ namespace Azure.Template
             }
         }
 
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call SetEvolvingModel and parse the result.
+        /// This sample shows how to call SetEvolvingModel with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new MultiVersionClient(endpoint, credential);
         /// 
-        /// Response response = client.SetEvolvingModel();
+        /// var data = new {
+        ///     requiredInt = 1234,
+        ///     requiredString = "<requiredString>",
+        /// };
+        /// 
+        /// Response response = client.SetEvolvingModel(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("requiredInt").ToString());
+        /// Console.WriteLine(result.GetProperty("requiredString").ToString());
+        /// ]]></code>
+        /// This sample shows how to call SetEvolvingModel with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new MultiVersionClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     requiredInt = 1234,
+        ///     requiredString = "<requiredString>",
+        ///     optionalInt = 1234,
+        ///     optionalString = "<optionalString>",
+        /// };
+        /// 
+        /// Response response = client.SetEvolvingModel(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("requiredInt").ToString());
@@ -130,7 +195,18 @@ namespace Azure.Template
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the response payload.
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>EvolvingModel</c>:
+        /// <code>{
+        ///   requiredInt: number, # Required. Value type property available in 2022-01-01
+        ///   requiredString: string, # Required. Reference type property available in 2022-02-02
+        ///   optionalInt: number, # Optional. Value type property added in 2022-02-02
+        ///   optionalString: string, # Optional. Reference type property added in 2022-02-02
+        /// }
+        /// </code>
         /// 
         /// Response Body:
         /// 
@@ -144,13 +220,15 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response SetEvolvingModel(RequestContext context = null)
+        public virtual Response SetEvolvingModel(RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.SetEvolvingModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetEvolvingModelRequest(context);
+                using HttpMessage message = CreateSetEvolvingModelRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -160,7 +238,7 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateSetEvolvingModelRequest(RequestContext context)
+        internal HttpMessage CreateSetEvolvingModelRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -171,6 +249,8 @@ namespace Azure.Template
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
