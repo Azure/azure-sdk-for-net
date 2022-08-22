@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // get the collection of this ComputePrivateEndpointConnectionResource
-            Compute.ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
+            ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
-            Compute.ComputePrivateEndpointConnectionData data = new ComputePrivateEndpointConnectionData()
+            ComputePrivateEndpointConnectionData data = new ComputePrivateEndpointConnectionData()
             {
                 ConnectionState = new ComputePrivateLinkServiceConnectionState()
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute
                     Description = "Approving myPrivateEndpointConnection",
                 },
             };
-            ArmOperation<Compute.ComputePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            Compute.ComputePrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<ComputePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            ComputePrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ComputePrivateEndpointConnectionData resourceData = result.Data;
+            ComputePrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -75,19 +75,19 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // get the collection of this ComputePrivateEndpointConnectionResource
-            Compute.ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
+            ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
-            Compute.ComputePrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
+            ComputePrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ComputePrivateEndpointConnectionData resourceData = result.Data;
+            ComputePrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // get the collection of this ComputePrivateEndpointConnectionResource
-            Compute.ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
+            ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // get the collection of this ComputePrivateEndpointConnectionResource
-            Compute.ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
+            ComputePrivateEndpointConnectionCollection collection = diskAccess.GetComputePrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.ComputePrivateEndpointConnectionResource item in collection.GetAllAsync())
+            await foreach (ComputePrivateEndpointConnectionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.ComputePrivateEndpointConnectionData resourceData = item.Data;
+                ComputePrivateEndpointConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

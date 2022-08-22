@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             string vmssExtensionName = "aaaa";
-            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = Compute.VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
-            Compute.VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
+            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
+            VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch()
+            VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch()
             {
                 ForceUpdateTag = "aaaaaaaaa",
                 Publisher = "{extension-Publisher}",
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Compute
 },
                 SuppressFailures = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.VirtualMachineScaleSetExtensionResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineScaleSetExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetExtensionData resourceData = result.Data;
+            VirtualMachineScaleSetExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
             string vmssExtensionName = "aa";
-            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = Compute.VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
-            Compute.VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
+            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
+            VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch();
-            ArmOperation<Compute.VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.VirtualMachineScaleSetExtensionResource result = lro.Value;
+            VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch();
+            ArmOperation<VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineScaleSetExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetExtensionData resourceData = result.Data;
+            VirtualMachineScaleSetExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = Compute.VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
-            Compute.VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
+            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
+            VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetExtension.DeleteAsync(WaitUntil.Completed);
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaa";
             string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = Compute.VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
-            Compute.VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
+            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
+            VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetExtension.DeleteAsync(WaitUntil.Completed);
@@ -169,16 +169,16 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = Compute.VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
-            Compute.VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
+            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
+            VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
             string expand = "aaaaaaa";
-            Compute.VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync(expand: expand);
+            VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync(expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetExtensionData resourceData = result.Data;
+            VirtualMachineScaleSetExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -200,15 +200,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "a";
             string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = Compute.VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
-            Compute.VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
+            ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
+            VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync();
+            VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetExtensionData resourceData = result.Data;
+            VirtualMachineScaleSetExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

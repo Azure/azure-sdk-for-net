@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -100,12 +100,12 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
                     },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -127,15 +127,15 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -193,12 +193,12 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
                     },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -220,15 +220,15 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -295,12 +295,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -322,15 +322,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -351,12 +351,12 @@ RegionalReplicaCount = 1,
                     },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -378,15 +378,15 @@ RegionalReplicaCount = 1,
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -444,12 +444,12 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
                     },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -471,15 +471,15 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -546,12 +546,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -573,15 +573,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -636,12 +636,12 @@ Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Se
 },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -663,15 +663,15 @@ Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Se
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -729,12 +729,12 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
                     },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -756,20 +756,20 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.Models.ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
-            Compute.GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName, expand: expand);
+            ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
+            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName, expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -791,15 +791,15 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.Models.ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
+            ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
             bool result = await collection.ExistsAsync(galleryImageVersionName, expand: expand);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -822,19 +822,19 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
+            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -856,11 +856,11 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
@@ -886,19 +886,19 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
+            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -920,11 +920,11 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
@@ -950,19 +950,19 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
-            Compute.GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
+            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -984,11 +984,11 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "1.0.0";
@@ -1014,18 +1014,18 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // get the collection of this GalleryImageVersionResource
-            Compute.GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.GalleryImageVersionResource item in collection.GetAllAsync())
+            await foreach (GalleryImageVersionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.GalleryImageVersionData resourceData = item.Data;
+                GalleryImageVersionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

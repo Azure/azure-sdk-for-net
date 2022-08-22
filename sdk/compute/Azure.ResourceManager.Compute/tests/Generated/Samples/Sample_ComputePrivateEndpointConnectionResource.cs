@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
-            ResourceIdentifier computePrivateEndpointConnectionResourceId = Compute.ComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName, privateEndpointConnectionName);
-            Compute.ComputePrivateEndpointConnectionResource computePrivateEndpointConnection = client.GetComputePrivateEndpointConnectionResource(computePrivateEndpointConnectionResourceId);
+            ResourceIdentifier computePrivateEndpointConnectionResourceId = ComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName, privateEndpointConnectionName);
+            ComputePrivateEndpointConnectionResource computePrivateEndpointConnection = client.GetComputePrivateEndpointConnectionResource(computePrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            Compute.ComputePrivateEndpointConnectionData data = new ComputePrivateEndpointConnectionData()
+            ComputePrivateEndpointConnectionData data = new ComputePrivateEndpointConnectionData()
             {
                 ConnectionState = new ComputePrivateLinkServiceConnectionState()
                 {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Compute
                     Description = "Approving myPrivateEndpointConnection",
                 },
             };
-            ArmOperation<Compute.ComputePrivateEndpointConnectionResource> lro = await computePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            Compute.ComputePrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<ComputePrivateEndpointConnectionResource> lro = await computePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            ComputePrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ComputePrivateEndpointConnectionData resourceData = result.Data;
+            ComputePrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
-            ResourceIdentifier computePrivateEndpointConnectionResourceId = Compute.ComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName, privateEndpointConnectionName);
-            Compute.ComputePrivateEndpointConnectionResource computePrivateEndpointConnection = client.GetComputePrivateEndpointConnectionResource(computePrivateEndpointConnectionResourceId);
+            ResourceIdentifier computePrivateEndpointConnectionResourceId = ComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName, privateEndpointConnectionName);
+            ComputePrivateEndpointConnectionResource computePrivateEndpointConnection = client.GetComputePrivateEndpointConnectionResource(computePrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            Compute.ComputePrivateEndpointConnectionResource result = await computePrivateEndpointConnection.GetAsync();
+            ComputePrivateEndpointConnectionResource result = await computePrivateEndpointConnection.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ComputePrivateEndpointConnectionData resourceData = result.Data;
+            ComputePrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
-            ResourceIdentifier computePrivateEndpointConnectionResourceId = Compute.ComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName, privateEndpointConnectionName);
-            Compute.ComputePrivateEndpointConnectionResource computePrivateEndpointConnection = client.GetComputePrivateEndpointConnectionResource(computePrivateEndpointConnectionResourceId);
+            ResourceIdentifier computePrivateEndpointConnectionResourceId = ComputePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName, privateEndpointConnectionName);
+            ComputePrivateEndpointConnectionResource computePrivateEndpointConnection = client.GetComputePrivateEndpointConnectionResource(computePrivateEndpointConnectionResourceId);
 
             // invoke the operation
             await computePrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);

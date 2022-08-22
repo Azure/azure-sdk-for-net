@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RestorePointGroupResource
-            Compute.RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
             // invoke the operation
             string restorePointGroupName = "myRpc";
-            Compute.RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
+            RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
             {
                 Source = new RestorePointGroupSource()
                 {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Compute
 ["myTag1"] = "tagValue1",
 },
             };
-            ArmOperation<Compute.RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
-            Compute.RestorePointGroupResource result = lro.Value;
+            ArmOperation<RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
+            RestorePointGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.RestorePointGroupData resourceData = result.Data;
+            RestorePointGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RestorePointGroupResource
-            Compute.RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
             // invoke the operation
             string restorePointGroupName = "myRpc";
-            Compute.RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
+            RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
             {
                 Source = new RestorePointGroupSource()
                 {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Compute
 ["myTag1"] = "tagValue1",
 },
             };
-            ArmOperation<Compute.RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
-            Compute.RestorePointGroupResource result = lro.Value;
+            ArmOperation<RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
+            RestorePointGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.RestorePointGroupData resourceData = result.Data;
+            RestorePointGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -125,15 +125,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RestorePointGroupResource
-            Compute.RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
             // invoke the operation
             string restorePointGroupName = "myRpc";
-            Compute.RestorePointGroupResource result = await collection.GetAsync(restorePointGroupName);
+            RestorePointGroupResource result = await collection.GetAsync(restorePointGroupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.RestorePointGroupData resourceData = result.Data;
+            RestorePointGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RestorePointGroupResource
-            Compute.RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
             // invoke the operation
             string restorePointGroupName = "myRpc";
@@ -185,15 +185,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RestorePointGroupResource
-            Compute.RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
             // invoke the operation
             string restorePointGroupName = "rpcName";
-            Compute.RestorePointGroupResource result = await collection.GetAsync(restorePointGroupName);
+            RestorePointGroupResource result = await collection.GetAsync(restorePointGroupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.RestorePointGroupData resourceData = result.Data;
+            RestorePointGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RestorePointGroupResource
-            Compute.RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
             // invoke the operation
             string restorePointGroupName = "rpcName";
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this RestorePointGroupResource
-            Compute.RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.RestorePointGroupResource item in collection.GetAllAsync())
+            await foreach (RestorePointGroupResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.RestorePointGroupData resourceData = item.Data;
+                RestorePointGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

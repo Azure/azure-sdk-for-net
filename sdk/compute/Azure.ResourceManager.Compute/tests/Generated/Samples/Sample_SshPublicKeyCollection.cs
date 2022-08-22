@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SshPublicKeyResource
-            Compute.SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
+            SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SshPublicKeyResource item in collection.GetAllAsync())
+            await foreach (SshPublicKeyResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SshPublicKeyData resourceData = item.Data;
+                SshPublicKeyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SshPublicKeyResource
-            Compute.SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
+            SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SshPublicKeyResource item in collection.GetAllAsync())
+            await foreach (SshPublicKeyResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SshPublicKeyData resourceData = item.Data;
+                SshPublicKeyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -104,20 +104,20 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SshPublicKeyResource
-            Compute.SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
+            SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
 
             // invoke the operation
             string sshPublicKeyName = "mySshPublicKeyName";
-            Compute.SshPublicKeyData data = new SshPublicKeyData(new AzureLocation("westus"))
+            SshPublicKeyData data = new SshPublicKeyData(new AzureLocation("westus"))
             {
                 PublicKey = "{ssh-rsa public key}",
             };
-            ArmOperation<Compute.SshPublicKeyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sshPublicKeyName, data);
-            Compute.SshPublicKeyResource result = lro.Value;
+            ArmOperation<SshPublicKeyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sshPublicKeyName, data);
+            SshPublicKeyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SshPublicKeyData resourceData = result.Data;
+            SshPublicKeyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -141,15 +141,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SshPublicKeyResource
-            Compute.SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
+            SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
 
             // invoke the operation
             string sshPublicKeyName = "mySshPublicKeyName";
-            Compute.SshPublicKeyResource result = await collection.GetAsync(sshPublicKeyName);
+            SshPublicKeyResource result = await collection.GetAsync(sshPublicKeyName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SshPublicKeyData resourceData = result.Data;
+            SshPublicKeyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SshPublicKeyResource
-            Compute.SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
+            SshPublicKeyCollection collection = resourceGroupResource.GetSshPublicKeys();
 
             // invoke the operation
             string sshPublicKeyName = "mySshPublicKeyName";

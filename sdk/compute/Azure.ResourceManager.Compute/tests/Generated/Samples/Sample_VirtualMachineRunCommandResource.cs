@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("SoutheastAsia");
-            await foreach (Compute.Models.RunCommandDocumentBase item in subscriptionResource.GetVirtualMachineRunCommandsAsync(location))
+            await foreach (RunCommandDocumentBase item in subscriptionResource.GetVirtualMachineRunCommandsAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
             // invoke the operation
             AzureLocation location = new AzureLocation("SoutheastAsia");
             string commandId = "RunPowerShellScript";
-            Compute.Models.RunCommandDocument result = await subscriptionResource.GetVirtualMachineRunCommandAsync(location, commandId);
+            RunCommandDocument result = await subscriptionResource.GetVirtualMachineRunCommandAsync(location, commandId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -87,23 +87,23 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier virtualMachineRunCommandResourceId = Compute.VirtualMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, runCommandName);
-            Compute.VirtualMachineRunCommandResource virtualMachineRunCommand = client.GetVirtualMachineRunCommandResource(virtualMachineRunCommandResourceId);
+            ResourceIdentifier virtualMachineRunCommandResourceId = VirtualMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, runCommandName);
+            VirtualMachineRunCommandResource virtualMachineRunCommand = client.GetVirtualMachineRunCommandResource(virtualMachineRunCommandResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineRunCommandUpdate runCommand = new VirtualMachineRunCommandUpdate()
+            VirtualMachineRunCommandUpdate runCommand = new VirtualMachineRunCommandUpdate()
             {
                 Source = new VirtualMachineRunCommandScriptSource()
                 {
                     Script = "Write-Host Script Source Updated!",
                 },
             };
-            ArmOperation<Compute.VirtualMachineRunCommandResource> lro = await virtualMachineRunCommand.UpdateAsync(WaitUntil.Completed, runCommand);
-            Compute.VirtualMachineRunCommandResource result = lro.Value;
+            ArmOperation<VirtualMachineRunCommandResource> lro = await virtualMachineRunCommand.UpdateAsync(WaitUntil.Completed, runCommand);
+            VirtualMachineRunCommandResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineRunCommandData resourceData = result.Data;
+            VirtualMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier virtualMachineRunCommandResourceId = Compute.VirtualMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, runCommandName);
-            Compute.VirtualMachineRunCommandResource virtualMachineRunCommand = client.GetVirtualMachineRunCommandResource(virtualMachineRunCommandResourceId);
+            ResourceIdentifier virtualMachineRunCommandResourceId = VirtualMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, runCommandName);
+            VirtualMachineRunCommandResource virtualMachineRunCommand = client.GetVirtualMachineRunCommandResource(virtualMachineRunCommandResourceId);
 
             // invoke the operation
             await virtualMachineRunCommand.DeleteAsync(WaitUntil.Completed);
@@ -151,15 +151,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier virtualMachineRunCommandResourceId = Compute.VirtualMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, runCommandName);
-            Compute.VirtualMachineRunCommandResource virtualMachineRunCommand = client.GetVirtualMachineRunCommandResource(virtualMachineRunCommandResourceId);
+            ResourceIdentifier virtualMachineRunCommandResourceId = VirtualMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, runCommandName);
+            VirtualMachineRunCommandResource virtualMachineRunCommand = client.GetVirtualMachineRunCommandResource(virtualMachineRunCommandResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineRunCommandResource result = await virtualMachineRunCommand.GetAsync();
+            VirtualMachineRunCommandResource result = await virtualMachineRunCommand.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineRunCommandData resourceData = result.Data;
+            VirtualMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

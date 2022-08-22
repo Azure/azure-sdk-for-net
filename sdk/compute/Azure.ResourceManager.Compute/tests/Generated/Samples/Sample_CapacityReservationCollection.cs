@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string capacityReservationGroupName = "myCapacityReservationGroup";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // get the collection of this CapacityReservationResource
-            Compute.CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
+            CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
 
             // invoke the operation
             string capacityReservationName = "myCapacityReservation";
-            Compute.CapacityReservationData data = new CapacityReservationData(new AzureLocation("westus"), new ComputeSku()
+            CapacityReservationData data = new CapacityReservationData(new AzureLocation("westus"), new ComputeSku()
             {
                 Name = "Standard_DS1_v2",
                 Capacity = 4,
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Compute
 ["department"] = "HR",
 },
             };
-            ArmOperation<Compute.CapacityReservationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, capacityReservationName, data);
-            Compute.CapacityReservationResource result = lro.Value;
+            ArmOperation<CapacityReservationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, capacityReservationName, data);
+            CapacityReservationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationData resourceData = result.Data;
+            CapacityReservationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string capacityReservationGroupName = "myCapacityReservationGroup";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // get the collection of this CapacityReservationResource
-            Compute.CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
+            CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
 
             // invoke the operation
             string capacityReservationName = "myCapacityReservation";
-            Compute.CapacityReservationResource result = await collection.GetAsync(capacityReservationName);
+            CapacityReservationResource result = await collection.GetAsync(capacityReservationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationData resourceData = result.Data;
+            CapacityReservationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string capacityReservationGroupName = "myCapacityReservationGroup";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // get the collection of this CapacityReservationResource
-            Compute.CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
+            CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
 
             // invoke the operation
             string capacityReservationName = "myCapacityReservation";
@@ -144,18 +144,18 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string capacityReservationGroupName = "myCapacityReservationGroup";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // get the collection of this CapacityReservationResource
-            Compute.CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
+            CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.CapacityReservationResource item in collection.GetAllAsync())
+            await foreach (CapacityReservationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CapacityReservationData resourceData = item.Data;
+                CapacityReservationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

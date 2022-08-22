@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Compute
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "1.0.0";
-            ResourceIdentifier galleryImageVersionResourceId = Compute.GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
-            Compute.GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
+            ResourceIdentifier galleryImageVersionResourceId = GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
 
             // invoke the operation
-            Compute.Models.GalleryImageVersionPatch patch = new GalleryImageVersionPatch()
+            GalleryImageVersionPatch patch = new GalleryImageVersionPatch()
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -63,12 +63,12 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
                     },
                 },
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await galleryImageVersion.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await galleryImageVersion.UpdateAsync(WaitUntil.Completed, patch);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -91,11 +91,11 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "1.0.0";
-            ResourceIdentifier galleryImageVersionResourceId = Compute.GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
-            Compute.GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
+            ResourceIdentifier galleryImageVersionResourceId = GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
 
             // invoke the operation
-            Compute.Models.GalleryImageVersionPatch patch = new GalleryImageVersionPatch()
+            GalleryImageVersionPatch patch = new GalleryImageVersionPatch()
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile()
                 {
@@ -113,12 +113,12 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile(),
             };
-            ArmOperation<Compute.GalleryImageVersionResource> lro = await galleryImageVersion.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.GalleryImageVersionResource result = lro.Value;
+            ArmOperation<GalleryImageVersionResource> lro = await galleryImageVersion.UpdateAsync(WaitUntil.Completed, patch);
+            GalleryImageVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -141,16 +141,16 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "1.0.0";
-            ResourceIdentifier galleryImageVersionResourceId = Compute.GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
-            Compute.GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
+            ResourceIdentifier galleryImageVersionResourceId = GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
 
             // invoke the operation
-            Compute.Models.ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
-            Compute.GalleryImageVersionResource result = await galleryImageVersion.GetAsync(expand: expand);
+            ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
+            GalleryImageVersionResource result = await galleryImageVersion.GetAsync(expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -173,15 +173,15 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "1.0.0";
-            ResourceIdentifier galleryImageVersionResourceId = Compute.GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
-            Compute.GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
+            ResourceIdentifier galleryImageVersionResourceId = GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
 
             // invoke the operation
-            Compute.GalleryImageVersionResource result = await galleryImageVersion.GetAsync();
+            GalleryImageVersionResource result = await galleryImageVersion.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -204,15 +204,15 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "1.0.0";
-            ResourceIdentifier galleryImageVersionResourceId = Compute.GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
-            Compute.GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
+            ResourceIdentifier galleryImageVersionResourceId = GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
 
             // invoke the operation
-            Compute.GalleryImageVersionResource result = await galleryImageVersion.GetAsync();
+            GalleryImageVersionResource result = await galleryImageVersion.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -235,15 +235,15 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "1.0.0";
-            ResourceIdentifier galleryImageVersionResourceId = Compute.GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
-            Compute.GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
+            ResourceIdentifier galleryImageVersionResourceId = GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
 
             // invoke the operation
-            Compute.GalleryImageVersionResource result = await galleryImageVersion.GetAsync();
+            GalleryImageVersionResource result = await galleryImageVersion.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageVersionData resourceData = result.Data;
+            GalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -266,8 +266,8 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "1.0.0";
-            ResourceIdentifier galleryImageVersionResourceId = Compute.GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
-            Compute.GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
+            ResourceIdentifier galleryImageVersionResourceId = GalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName);
+            GalleryImageVersionResource galleryImageVersion = client.GetGalleryImageVersionResource(galleryImageVersionResourceId);
 
             // invoke the operation
             await galleryImageVersion.DeleteAsync(WaitUntil.Completed);

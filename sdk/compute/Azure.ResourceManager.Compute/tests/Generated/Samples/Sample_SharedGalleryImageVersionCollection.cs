@@ -32,18 +32,18 @@ namespace Azure.ResourceManager.Compute
             AzureLocation location = new AzureLocation("myLocation");
             string galleryUniqueName = "galleryUniqueName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier sharedGalleryImageResourceId = Compute.SharedGalleryImageResource.CreateResourceIdentifier(subscriptionId, location, galleryUniqueName, galleryImageName);
-            Compute.SharedGalleryImageResource sharedGalleryImage = client.GetSharedGalleryImageResource(sharedGalleryImageResourceId);
+            ResourceIdentifier sharedGalleryImageResourceId = SharedGalleryImageResource.CreateResourceIdentifier(subscriptionId, location, galleryUniqueName, galleryImageName);
+            SharedGalleryImageResource sharedGalleryImage = client.GetSharedGalleryImageResource(sharedGalleryImageResourceId);
 
             // get the collection of this SharedGalleryImageVersionResource
-            Compute.SharedGalleryImageVersionCollection collection = sharedGalleryImage.GetSharedGalleryImageVersions();
+            SharedGalleryImageVersionCollection collection = sharedGalleryImage.GetSharedGalleryImageVersions();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SharedGalleryImageVersionResource item in collection.GetAllAsync())
+            await foreach (SharedGalleryImageVersionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SharedGalleryImageVersionData resourceData = item.Data;
+                SharedGalleryImageVersionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.Compute
             AzureLocation location = new AzureLocation("myLocation");
             string galleryUniqueName = "galleryUniqueName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier sharedGalleryImageResourceId = Compute.SharedGalleryImageResource.CreateResourceIdentifier(subscriptionId, location, galleryUniqueName, galleryImageName);
-            Compute.SharedGalleryImageResource sharedGalleryImage = client.GetSharedGalleryImageResource(sharedGalleryImageResourceId);
+            ResourceIdentifier sharedGalleryImageResourceId = SharedGalleryImageResource.CreateResourceIdentifier(subscriptionId, location, galleryUniqueName, galleryImageName);
+            SharedGalleryImageResource sharedGalleryImage = client.GetSharedGalleryImageResource(sharedGalleryImageResourceId);
 
             // get the collection of this SharedGalleryImageVersionResource
-            Compute.SharedGalleryImageVersionCollection collection = sharedGalleryImage.GetSharedGalleryImageVersions();
+            SharedGalleryImageVersionCollection collection = sharedGalleryImage.GetSharedGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "myGalleryImageVersionName";
-            Compute.SharedGalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
+            SharedGalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SharedGalleryImageVersionData resourceData = result.Data;
+            SharedGalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Compute
             AzureLocation location = new AzureLocation("myLocation");
             string galleryUniqueName = "galleryUniqueName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier sharedGalleryImageResourceId = Compute.SharedGalleryImageResource.CreateResourceIdentifier(subscriptionId, location, galleryUniqueName, galleryImageName);
-            Compute.SharedGalleryImageResource sharedGalleryImage = client.GetSharedGalleryImageResource(sharedGalleryImageResourceId);
+            ResourceIdentifier sharedGalleryImageResourceId = SharedGalleryImageResource.CreateResourceIdentifier(subscriptionId, location, galleryUniqueName, galleryImageName);
+            SharedGalleryImageResource sharedGalleryImage = client.GetSharedGalleryImageResource(sharedGalleryImageResourceId);
 
             // get the collection of this SharedGalleryImageVersionResource
-            Compute.SharedGalleryImageVersionCollection collection = sharedGalleryImage.GetSharedGalleryImageVersions();
+            SharedGalleryImageVersionCollection collection = sharedGalleryImage.GetSharedGalleryImageVersions();
 
             // invoke the operation
             string galleryImageVersionName = "myGalleryImageVersionName";

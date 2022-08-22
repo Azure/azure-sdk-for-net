@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation
-            Compute.Models.AvailabilitySetPatch patch = new AvailabilitySetPatch()
+            AvailabilitySetPatch patch = new AvailabilitySetPatch()
             {
                 Sku = new ComputeSku()
                 {
@@ -62,11 +62,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 ["key2574"] = "aaaaaaaa",
 },
             };
-            Compute.AvailabilitySetResource result = await availabilitySet.UpdateAsync(patch);
+            AvailabilitySetResource result = await availabilitySet.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.AvailabilitySetData resourceData = result.Data;
+            AvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -87,16 +87,16 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation
-            Compute.Models.AvailabilitySetPatch patch = new AvailabilitySetPatch();
-            Compute.AvailabilitySetResource result = await availabilitySet.UpdateAsync(patch);
+            AvailabilitySetPatch patch = new AvailabilitySetPatch();
+            AvailabilitySetResource result = await availabilitySet.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.AvailabilitySetData resourceData = result.Data;
+            AvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -117,8 +117,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation
             await availabilitySet.DeleteAsync(WaitUntil.Completed);
@@ -142,8 +142,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation
             await availabilitySet.DeleteAsync(WaitUntil.Completed);
@@ -167,15 +167,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation
-            Compute.AvailabilitySetResource result = await availabilitySet.GetAsync();
+            AvailabilitySetResource result = await availabilitySet.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.AvailabilitySetData resourceData = result.Data;
+            AvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -196,15 +196,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation
-            Compute.AvailabilitySetResource result = await availabilitySet.GetAsync();
+            AvailabilitySetResource result = await availabilitySet.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.AvailabilitySetData resourceData = result.Data;
+            AvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -228,11 +228,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // invoke the operation and iterate over the result
             string expand = "virtualMachines\\$ref";
-            await foreach (Compute.AvailabilitySetResource item in subscriptionResource.GetAvailabilitySetsAsync(expand: expand))
+            await foreach (AvailabilitySetResource item in subscriptionResource.GetAvailabilitySetsAsync(expand: expand))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.AvailabilitySetData resourceData = item.Data;
+                AvailabilitySetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -256,11 +256,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.Models.VirtualMachineSize item in availabilitySet.GetAvailableSizesAsync())
+            await foreach (VirtualMachineSize item in availabilitySet.GetAvailableSizesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -284,11 +284,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aa";
-            ResourceIdentifier availabilitySetResourceId = Compute.AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
-            Compute.AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
+            ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(availabilitySetResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.Models.VirtualMachineSize item in availabilitySet.GetAvailableSizesAsync())
+            await foreach (VirtualMachineSize item in availabilitySet.GetAvailableSizesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

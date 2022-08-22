@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaa";
             string capacityReservationName = "aaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier capacityReservationResourceId = Compute.CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
-            Compute.CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
+            ResourceIdentifier capacityReservationResourceId = CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
+            CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
 
             // invoke the operation
-            Compute.Models.CapacityReservationPatch patch = new CapacityReservationPatch()
+            CapacityReservationPatch patch = new CapacityReservationPatch()
             {
                 Sku = new ComputeSku()
                 {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Compute
 ["key4974"] = "aaaaaaaaaaaaaaaa",
 },
             };
-            ArmOperation<Compute.CapacityReservationResource> lro = await capacityReservation.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.CapacityReservationResource result = lro.Value;
+            ArmOperation<CapacityReservationResource> lro = await capacityReservation.UpdateAsync(WaitUntil.Completed, patch);
+            CapacityReservationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationData resourceData = result.Data;
+            CapacityReservationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
             string capacityReservationName = "aaa";
-            ResourceIdentifier capacityReservationResourceId = Compute.CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
-            Compute.CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
+            ResourceIdentifier capacityReservationResourceId = CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
+            CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
 
             // invoke the operation
-            Compute.Models.CapacityReservationPatch patch = new CapacityReservationPatch();
-            ArmOperation<Compute.CapacityReservationResource> lro = await capacityReservation.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.CapacityReservationResource result = lro.Value;
+            CapacityReservationPatch patch = new CapacityReservationPatch();
+            ArmOperation<CapacityReservationResource> lro = await capacityReservation.UpdateAsync(WaitUntil.Completed, patch);
+            CapacityReservationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationData resourceData = result.Data;
+            CapacityReservationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaa";
             string capacityReservationName = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier capacityReservationResourceId = Compute.CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
-            Compute.CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
+            ResourceIdentifier capacityReservationResourceId = CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
+            CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
 
             // invoke the operation
             await capacityReservation.DeleteAsync(WaitUntil.Completed);
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaa";
             string capacityReservationName = "aaaaaa";
-            ResourceIdentifier capacityReservationResourceId = Compute.CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
-            Compute.CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
+            ResourceIdentifier capacityReservationResourceId = CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
+            CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
 
             // invoke the operation
             await capacityReservation.DeleteAsync(WaitUntil.Completed);
@@ -162,15 +162,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string capacityReservationGroupName = "myCapacityReservationGroup";
             string capacityReservationName = "myCapacityReservation";
-            ResourceIdentifier capacityReservationResourceId = Compute.CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
-            Compute.CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
+            ResourceIdentifier capacityReservationResourceId = CapacityReservationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
+            CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
 
             // invoke the operation
-            Compute.CapacityReservationResource result = await capacityReservation.GetAsync();
+            CapacityReservationResource result = await capacityReservation.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationData resourceData = result.Data;
+            CapacityReservationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

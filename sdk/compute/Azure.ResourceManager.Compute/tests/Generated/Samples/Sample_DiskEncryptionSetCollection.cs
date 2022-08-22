@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation
             string diskEncryptionSetName = "myDiskEncryptionSet";
-            Compute.DiskEncryptionSetData data = new DiskEncryptionSetData(new AzureLocation("West US"))
+            DiskEncryptionSetData data = new DiskEncryptionSetData(new AzureLocation("West US"))
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 EncryptionType = DiskEncryptionSetType.EncryptionAtRestWithCustomerKey,
                 ActiveKey = new KeyForDiskEncryptionSet(new Uri("https://myvaultdifferentsub.vault-int.azure-int.net/keys/{key}")),
             };
-            ArmOperation<Compute.DiskEncryptionSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskEncryptionSetName, data);
-            Compute.DiskEncryptionSetResource result = lro.Value;
+            ArmOperation<DiskEncryptionSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskEncryptionSetName, data);
+            DiskEncryptionSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskEncryptionSetData resourceData = result.Data;
+            DiskEncryptionSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation
             string diskEncryptionSetName = "myDiskEncryptionSet";
-            Compute.DiskEncryptionSetData data = new DiskEncryptionSetData(new AzureLocation("West US"))
+            DiskEncryptionSetData data = new DiskEncryptionSetData(new AzureLocation("West US"))
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Compute
                 ActiveKey = new KeyForDiskEncryptionSet(new Uri("https://myvaultdifferenttenant.vault-int.azure-int.net/keys/{key}")),
                 FederatedClientId = "00000000-0000-0000-0000-000000000000",
             };
-            ArmOperation<Compute.DiskEncryptionSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskEncryptionSetName, data);
-            Compute.DiskEncryptionSetResource result = lro.Value;
+            ArmOperation<DiskEncryptionSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskEncryptionSetName, data);
+            DiskEncryptionSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskEncryptionSetData resourceData = result.Data;
+            DiskEncryptionSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation
             string diskEncryptionSetName = "myDiskEncryptionSet";
-            Compute.DiskEncryptionSetData data = new DiskEncryptionSetData(new AzureLocation("West US"))
+            DiskEncryptionSetData data = new DiskEncryptionSetData(new AzureLocation("West US"))
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 EncryptionType = DiskEncryptionSetType.EncryptionAtRestWithCustomerKey,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Compute
                     SourceVaultId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
                 },
             };
-            ArmOperation<Compute.DiskEncryptionSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskEncryptionSetName, data);
-            Compute.DiskEncryptionSetResource result = lro.Value;
+            ArmOperation<DiskEncryptionSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskEncryptionSetName, data);
+            DiskEncryptionSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskEncryptionSetData resourceData = result.Data;
+            DiskEncryptionSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation
             string diskEncryptionSetName = "myDiskEncryptionSet";
-            Compute.DiskEncryptionSetResource result = await collection.GetAsync(diskEncryptionSetName);
+            DiskEncryptionSetResource result = await collection.GetAsync(diskEncryptionSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskEncryptionSetData resourceData = result.Data;
+            DiskEncryptionSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation
             string diskEncryptionSetName = "myDiskEncryptionSet";
@@ -225,15 +225,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation
             string diskEncryptionSetName = "myDiskEncryptionSet";
-            Compute.DiskEncryptionSetResource result = await collection.GetAsync(diskEncryptionSetName);
+            DiskEncryptionSetResource result = await collection.GetAsync(diskEncryptionSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskEncryptionSetData resourceData = result.Data;
+            DiskEncryptionSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation
             string diskEncryptionSetName = "myDiskEncryptionSet";
@@ -285,14 +285,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskEncryptionSetResource
-            Compute.DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
+            DiskEncryptionSetCollection collection = resourceGroupResource.GetDiskEncryptionSets();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.DiskEncryptionSetResource item in collection.GetAllAsync())
+            await foreach (DiskEncryptionSetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.DiskEncryptionSetData resourceData = item.Data;
+                DiskEncryptionSetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

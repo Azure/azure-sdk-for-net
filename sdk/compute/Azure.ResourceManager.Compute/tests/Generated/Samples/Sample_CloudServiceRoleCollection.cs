@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // get the collection of this CloudServiceRoleResource
-            Compute.CloudServiceRoleCollection collection = cloudService.GetCloudServiceRoles();
+            CloudServiceRoleCollection collection = cloudService.GetCloudServiceRoles();
 
             // invoke the operation
             string roleName = "{role-name}";
-            Compute.CloudServiceRoleResource result = await collection.GetAsync(roleName);
+            CloudServiceRoleResource result = await collection.GetAsync(roleName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceRoleData resourceData = result.Data;
+            CloudServiceRoleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // get the collection of this CloudServiceRoleResource
-            Compute.CloudServiceRoleCollection collection = cloudService.GetCloudServiceRoles();
+            CloudServiceRoleCollection collection = cloudService.GetCloudServiceRoles();
 
             // invoke the operation
             string roleName = "{role-name}";
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // get the collection of this CloudServiceRoleResource
-            Compute.CloudServiceRoleCollection collection = cloudService.GetCloudServiceRoles();
+            CloudServiceRoleCollection collection = cloudService.GetCloudServiceRoles();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.CloudServiceRoleResource item in collection.GetAllAsync())
+            await foreach (CloudServiceRoleResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CloudServiceRoleData resourceData = item.Data;
+                CloudServiceRoleData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

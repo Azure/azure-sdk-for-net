@@ -36,21 +36,21 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AvailabilitySetResource
-            Compute.AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
+            AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
 
             // invoke the operation
             string availabilitySetName = "myAvailabilitySet";
-            Compute.AvailabilitySetData data = new AvailabilitySetData(new AzureLocation("westus"))
+            AvailabilitySetData data = new AvailabilitySetData(new AzureLocation("westus"))
             {
                 PlatformUpdateDomainCount = 20,
                 PlatformFaultDomainCount = 2,
             };
-            ArmOperation<Compute.AvailabilitySetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, availabilitySetName, data);
-            Compute.AvailabilitySetResource result = lro.Value;
+            ArmOperation<AvailabilitySetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, availabilitySetName, data);
+            AvailabilitySetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.AvailabilitySetData resourceData = result.Data;
+            AvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AvailabilitySetResource
-            Compute.AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
+            AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
 
             // invoke the operation
             string availabilitySetName = "aaaaaaaaaaaa";
-            Compute.AvailabilitySetResource result = await collection.GetAsync(availabilitySetName);
+            AvailabilitySetResource result = await collection.GetAsync(availabilitySetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.AvailabilitySetData resourceData = result.Data;
+            AvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AvailabilitySetResource
-            Compute.AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
+            AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
 
             // invoke the operation
             string availabilitySetName = "aaaaaaaaaaaa";
@@ -134,15 +134,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AvailabilitySetResource
-            Compute.AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
+            AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
 
             // invoke the operation
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
-            Compute.AvailabilitySetResource result = await collection.GetAsync(availabilitySetName);
+            AvailabilitySetResource result = await collection.GetAsync(availabilitySetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.AvailabilitySetData resourceData = result.Data;
+            AvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AvailabilitySetResource
-            Compute.AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
+            AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
 
             // invoke the operation
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
@@ -194,14 +194,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AvailabilitySetResource
-            Compute.AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
+            AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.AvailabilitySetResource item in collection.GetAllAsync())
+            await foreach (AvailabilitySetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.AvailabilitySetData resourceData = item.Data;
+                AvailabilitySetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this AvailabilitySetResource
-            Compute.AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
+            AvailabilitySetCollection collection = resourceGroupResource.GetAvailabilitySets();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.AvailabilitySetResource item in collection.GetAllAsync())
+            await foreach (AvailabilitySetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.AvailabilitySetData resourceData = item.Data;
+                AvailabilitySetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

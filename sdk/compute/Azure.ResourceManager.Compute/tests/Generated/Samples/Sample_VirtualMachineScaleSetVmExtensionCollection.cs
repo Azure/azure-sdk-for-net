@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // get the collection of this VirtualMachineScaleSetVmExtensionResource
-            Compute.VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
+            VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
 
             // invoke the operation
             string vmExtensionName = "myVMExtension";
-            Compute.VirtualMachineScaleSetVmExtensionData data = new VirtualMachineScaleSetVmExtensionData()
+            VirtualMachineScaleSetVmExtensionData data = new VirtualMachineScaleSetVmExtensionData()
             {
                 Publisher = "extPublisher",
                 ExtensionType = "extType",
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Compute
                     UserName = "xyz@microsoft.com"
                 }),
             };
-            ArmOperation<Compute.VirtualMachineScaleSetVmExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmExtensionName, data);
-            Compute.VirtualMachineScaleSetVmExtensionResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetVmExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmExtensionName, data);
+            VirtualMachineScaleSetVmExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetVmExtensionData resourceData = result.Data;
+            VirtualMachineScaleSetVmExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // get the collection of this VirtualMachineScaleSetVmExtensionResource
-            Compute.VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
+            VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
 
             // invoke the operation
             string vmExtensionName = "myVMExtension";
-            Compute.VirtualMachineScaleSetVmExtensionResource result = await collection.GetAsync(vmExtensionName);
+            VirtualMachineScaleSetVmExtensionResource result = await collection.GetAsync(vmExtensionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetVmExtensionData resourceData = result.Data;
+            VirtualMachineScaleSetVmExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // get the collection of this VirtualMachineScaleSetVmExtensionResource
-            Compute.VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
+            VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
 
             // invoke the operation
             string vmExtensionName = "myVMExtension";
@@ -143,18 +143,18 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // get the collection of this VirtualMachineScaleSetVmExtensionResource
-            Compute.VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
+            VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.VirtualMachineScaleSetVmExtensionResource item in collection.GetAllAsync())
+            await foreach (VirtualMachineScaleSetVmExtensionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineScaleSetVmExtensionData resourceData = item.Data;
+                VirtualMachineScaleSetVmExtensionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

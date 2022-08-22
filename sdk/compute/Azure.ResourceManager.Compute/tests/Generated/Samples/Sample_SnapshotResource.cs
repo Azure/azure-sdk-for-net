@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = Compute.SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            Compute.SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
-            Compute.Models.SnapshotPatch patch = new SnapshotPatch()
+            SnapshotPatch patch = new SnapshotPatch()
             {
                 Tags =
 {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Compute
                     AcceleratedNetwork = false,
                 },
             };
-            ArmOperation<Compute.SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.SnapshotResource result = lro.Value;
+            ArmOperation<SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
+            SnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = Compute.SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            Compute.SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
-            Compute.Models.SnapshotPatch patch = new SnapshotPatch()
+            SnapshotPatch patch = new SnapshotPatch()
             {
                 Tags =
 {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Compute
 },
                 DiskSizeGB = 20,
             };
-            ArmOperation<Compute.SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.SnapshotResource result = lro.Value;
+            ArmOperation<SnapshotResource> lro = await snapshot.UpdateAsync(WaitUntil.Completed, patch);
+            SnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = Compute.SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            Compute.SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
-            Compute.SnapshotResource result = await snapshot.GetAsync();
+            SnapshotResource result = await snapshot.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = Compute.SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            Compute.SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
             await snapshot.DeleteAsync(WaitUntil.Completed);
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SnapshotResource item in subscriptionResource.GetSnapshotsAsync())
+            await foreach (SnapshotResource item in subscriptionResource.GetSnapshotsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SnapshotData resourceData = item.Data;
+                SnapshotData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -200,13 +200,13 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = Compute.SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            Compute.SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
-            Compute.Models.GrantAccessData data = new GrantAccessData(AccessLevel.Read, 300);
-            ArmOperation<Compute.Models.AccessUri> lro = await snapshot.GrantAccessAsync(WaitUntil.Completed, data);
-            Compute.Models.AccessUri result = lro.Value;
+            GrantAccessData data = new GrantAccessData(AccessLevel.Read, 300);
+            ArmOperation<AccessUri> lro = await snapshot.GrantAccessAsync(WaitUntil.Completed, data);
+            AccessUri result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string snapshotName = "mySnapshot";
-            ResourceIdentifier snapshotResourceId = Compute.SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
-            Compute.SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
+            ResourceIdentifier snapshotResourceId = SnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, snapshotName);
+            SnapshotResource snapshot = client.GetSnapshotResource(snapshotResourceId);
 
             // invoke the operation
             await snapshot.RevokeAccessAsync(WaitUntil.Completed);

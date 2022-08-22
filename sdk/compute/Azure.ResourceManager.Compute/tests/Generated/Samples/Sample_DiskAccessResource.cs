@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // invoke the operation
-            Compute.Models.DiskAccessPatch patch = new DiskAccessPatch()
+            DiskAccessPatch patch = new DiskAccessPatch()
             {
                 Tags =
 {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Compute
 ["project"] = "PrivateEndpoints",
 },
             };
-            ArmOperation<Compute.DiskAccessResource> lro = await diskAccess.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.DiskAccessResource result = lro.Value;
+            ArmOperation<DiskAccessResource> lro = await diskAccess.UpdateAsync(WaitUntil.Completed, patch);
+            DiskAccessResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskAccessData resourceData = result.Data;
+            DiskAccessData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // invoke the operation
-            Compute.DiskAccessResource result = await diskAccess.GetAsync();
+            DiskAccessResource result = await diskAccess.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskAccessData resourceData = result.Data;
+            DiskAccessData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -101,15 +101,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // invoke the operation
-            Compute.DiskAccessResource result = await diskAccess.GetAsync();
+            DiskAccessResource result = await diskAccess.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskAccessData resourceData = result.Data;
+            DiskAccessData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // invoke the operation
             await diskAccess.DeleteAsync(WaitUntil.Completed);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.DiskAccessResource item in subscriptionResource.GetDiskAccessesAsync())
+            await foreach (DiskAccessResource item in subscriptionResource.GetDiskAccessesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.DiskAccessData resourceData = item.Data;
+                DiskAccessData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string diskAccessName = "myDiskAccess";
-            ResourceIdentifier diskAccessResourceId = Compute.DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
-            Compute.DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
+            ResourceIdentifier diskAccessResourceId = DiskAccessResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskAccessName);
+            DiskAccessResource diskAccess = client.GetDiskAccessResource(diskAccessResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.Models.ComputePrivateLinkResourceData item in diskAccess.GetPrivateLinkResourcesAsync())
+            await foreach (ComputePrivateLinkResourceData item in diskAccess.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Compute
                     ZoneResilient = true,
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.Compute
                     ZoneResilient = true,
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -272,12 +272,12 @@ namespace Azure.ResourceManager.Compute
                     ZoneResilient = false,
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -301,20 +301,20 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 SourceVirtualMachineId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -338,11 +338,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -360,12 +360,12 @@ BlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/dataimages/dat
                     ZoneResilient = false,
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -389,11 +389,11 @@ BlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/dataimages/dat
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -411,12 +411,12 @@ ManagedDiskId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceG
                     ZoneResilient = false,
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -440,11 +440,11 @@ ManagedDiskId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceG
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageData data = new DiskImageData(new AzureLocation("West US"))
+            DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
                 StorageProfile = new ImageStorageProfile()
                 {
@@ -462,12 +462,12 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
                     ZoneResilient = true,
                 },
             };
-            ArmOperation<Compute.DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
-            Compute.DiskImageResource result = lro.Value;
+            ArmOperation<DiskImageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, imageName, data);
+            DiskImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -491,15 +491,15 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
-            Compute.DiskImageResource result = await collection.GetAsync(imageName);
+            DiskImageResource result = await collection.GetAsync(imageName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskImageData resourceData = result.Data;
+            DiskImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -523,7 +523,7 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation
             string imageName = "myImage";
@@ -551,14 +551,14 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DiskImageResource
-            Compute.DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.DiskImageResource item in collection.GetAllAsync())
+            await foreach (DiskImageResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.DiskImageData resourceData = item.Data;
+                DiskImageData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

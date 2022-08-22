@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this CloudServiceOSVersionResource
             AzureLocation location = new AzureLocation("westus2");
-            Compute.CloudServiceOSVersionCollection collection = subscriptionResource.GetCloudServiceOSVersions(location);
+            CloudServiceOSVersionCollection collection = subscriptionResource.GetCloudServiceOSVersions(location);
 
             // invoke the operation
             string osVersionName = "WA-GUEST-OS-3.90_202010-02";
-            Compute.CloudServiceOSVersionResource result = await collection.GetAsync(osVersionName);
+            CloudServiceOSVersionResource result = await collection.GetAsync(osVersionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceOSVersionData resourceData = result.Data;
+            CloudServiceOSVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this CloudServiceOSVersionResource
             AzureLocation location = new AzureLocation("westus2");
-            Compute.CloudServiceOSVersionCollection collection = subscriptionResource.GetCloudServiceOSVersions(location);
+            CloudServiceOSVersionCollection collection = subscriptionResource.GetCloudServiceOSVersions(location);
 
             // invoke the operation
             string osVersionName = "WA-GUEST-OS-3.90_202010-02";
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this CloudServiceOSVersionResource
             AzureLocation location = new AzureLocation("westus2");
-            Compute.CloudServiceOSVersionCollection collection = subscriptionResource.GetCloudServiceOSVersions(location);
+            CloudServiceOSVersionCollection collection = subscriptionResource.GetCloudServiceOSVersions(location);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.CloudServiceOSVersionResource item in collection.GetAllAsync())
+            await foreach (CloudServiceOSVersionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CloudServiceOSVersionData resourceData = item.Data;
+                CloudServiceOSVersionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

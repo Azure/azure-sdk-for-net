@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string proximityPlacementGroupName = "myProximityPlacementGroup";
-            ResourceIdentifier proximityPlacementGroupResourceId = Compute.ProximityPlacementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, proximityPlacementGroupName);
-            Compute.ProximityPlacementGroupResource proximityPlacementGroup = client.GetProximityPlacementGroupResource(proximityPlacementGroupResourceId);
+            ResourceIdentifier proximityPlacementGroupResourceId = ProximityPlacementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, proximityPlacementGroupName);
+            ProximityPlacementGroupResource proximityPlacementGroup = client.GetProximityPlacementGroupResource(proximityPlacementGroupResourceId);
 
             // invoke the operation
-            Compute.Models.ProximityPlacementGroupPatch patch = new ProximityPlacementGroupPatch()
+            ProximityPlacementGroupPatch patch = new ProximityPlacementGroupPatch()
             {
                 Tags =
 {
 ["additionalProp1"] = "string",
 },
             };
-            Compute.ProximityPlacementGroupResource result = await proximityPlacementGroup.UpdateAsync(patch);
+            ProximityPlacementGroupResource result = await proximityPlacementGroup.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ProximityPlacementGroupData resourceData = result.Data;
+            ProximityPlacementGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string proximityPlacementGroupName = "myProximityPlacementGroup";
-            ResourceIdentifier proximityPlacementGroupResourceId = Compute.ProximityPlacementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, proximityPlacementGroupName);
-            Compute.ProximityPlacementGroupResource proximityPlacementGroup = client.GetProximityPlacementGroupResource(proximityPlacementGroupResourceId);
+            ResourceIdentifier proximityPlacementGroupResourceId = ProximityPlacementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, proximityPlacementGroupName);
+            ProximityPlacementGroupResource proximityPlacementGroup = client.GetProximityPlacementGroupResource(proximityPlacementGroupResourceId);
 
             // invoke the operation
             await proximityPlacementGroup.DeleteAsync(WaitUntil.Completed);
@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string proximityPlacementGroupName = "myProximityPlacementGroup";
-            ResourceIdentifier proximityPlacementGroupResourceId = Compute.ProximityPlacementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, proximityPlacementGroupName);
-            Compute.ProximityPlacementGroupResource proximityPlacementGroup = client.GetProximityPlacementGroupResource(proximityPlacementGroupResourceId);
+            ResourceIdentifier proximityPlacementGroupResourceId = ProximityPlacementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, proximityPlacementGroupName);
+            ProximityPlacementGroupResource proximityPlacementGroup = client.GetProximityPlacementGroupResource(proximityPlacementGroupResourceId);
 
             // invoke the operation
-            Compute.ProximityPlacementGroupResource result = await proximityPlacementGroup.GetAsync();
+            ProximityPlacementGroupResource result = await proximityPlacementGroup.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ProximityPlacementGroupData resourceData = result.Data;
+            ProximityPlacementGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.ProximityPlacementGroupResource item in subscriptionResource.GetProximityPlacementGroupsAsync())
+            await foreach (ProximityPlacementGroupResource item in subscriptionResource.GetProximityPlacementGroupsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.ProximityPlacementGroupData resourceData = item.Data;
+                ProximityPlacementGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

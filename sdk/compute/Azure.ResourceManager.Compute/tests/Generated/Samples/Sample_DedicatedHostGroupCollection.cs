@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation
             string hostGroupName = "myDedicatedHostGroup";
-            Compute.DedicatedHostGroupData data = new DedicatedHostGroupData(new AzureLocation("westus"))
+            DedicatedHostGroupData data = new DedicatedHostGroupData(new AzureLocation("westus"))
             {
                 Zones =
 {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Compute
 ["department"] = "finance",
 },
             };
-            ArmOperation<Compute.DedicatedHostGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostGroupName, data);
-            Compute.DedicatedHostGroupResource result = lro.Value;
+            ArmOperation<DedicatedHostGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostGroupName, data);
+            DedicatedHostGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation
             string hostGroupName = "myDedicatedHostGroup";
-            Compute.DedicatedHostGroupData data = new DedicatedHostGroupData(new AzureLocation("westus"))
+            DedicatedHostGroupData data = new DedicatedHostGroupData(new AzureLocation("westus"))
             {
                 Zones =
 {
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Compute
 ["department"] = "finance",
 },
             };
-            ArmOperation<Compute.DedicatedHostGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostGroupName, data);
-            Compute.DedicatedHostGroupResource result = lro.Value;
+            ArmOperation<DedicatedHostGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostGroupName, data);
+            DedicatedHostGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -129,15 +129,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation
             string hostGroupName = "myDedicatedHostGroup";
-            Compute.DedicatedHostGroupResource result = await collection.GetAsync(hostGroupName);
+            DedicatedHostGroupResource result = await collection.GetAsync(hostGroupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation
             string hostGroupName = "myDedicatedHostGroup";
@@ -189,15 +189,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation
             string hostGroupName = "myDedicatedHostGroup";
-            Compute.DedicatedHostGroupResource result = await collection.GetAsync(hostGroupName);
+            DedicatedHostGroupResource result = await collection.GetAsync(hostGroupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation
             string hostGroupName = "myDedicatedHostGroup";
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.DedicatedHostGroupResource item in collection.GetAllAsync())
+            await foreach (DedicatedHostGroupResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.DedicatedHostGroupData resourceData = item.Data;
+                DedicatedHostGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -283,14 +283,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this DedicatedHostGroupResource
-            Compute.DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
+            DedicatedHostGroupCollection collection = resourceGroupResource.GetDedicatedHostGroups();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.DedicatedHostGroupResource item in collection.GetAllAsync())
+            await foreach (DedicatedHostGroupResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.DedicatedHostGroupData resourceData = item.Data;
+                DedicatedHostGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

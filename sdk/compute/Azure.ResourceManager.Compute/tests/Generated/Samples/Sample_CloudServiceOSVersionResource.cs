@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             AzureLocation location = new AzureLocation("westus2");
             string osVersionName = "WA-GUEST-OS-3.90_202010-02";
-            ResourceIdentifier cloudServiceOSVersionResourceId = Compute.CloudServiceOSVersionResource.CreateResourceIdentifier(subscriptionId, location, osVersionName);
-            Compute.CloudServiceOSVersionResource cloudServiceOSVersion = client.GetCloudServiceOSVersionResource(cloudServiceOSVersionResourceId);
+            ResourceIdentifier cloudServiceOSVersionResourceId = CloudServiceOSVersionResource.CreateResourceIdentifier(subscriptionId, location, osVersionName);
+            CloudServiceOSVersionResource cloudServiceOSVersion = client.GetCloudServiceOSVersionResource(cloudServiceOSVersionResourceId);
 
             // invoke the operation
-            Compute.CloudServiceOSVersionResource result = await cloudServiceOSVersion.GetAsync();
+            CloudServiceOSVersionResource result = await cloudServiceOSVersion.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceOSVersionData resourceData = result.Data;
+            CloudServiceOSVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

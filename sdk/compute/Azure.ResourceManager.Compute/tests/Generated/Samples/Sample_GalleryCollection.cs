@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.GalleryData data = new GalleryData(new AzureLocation("West US"))
+            GalleryData data = new GalleryData(new AzureLocation("West US"))
             {
                 Description = "This is the gallery description.",
                 SharingProfile = new SharingProfile()
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
-            Compute.GalleryResource result = lro.Value;
+            ArmOperation<GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
+            GalleryResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.GalleryData data = new GalleryData(new AzureLocation("West US"))
+            GalleryData data = new GalleryData(new AzureLocation("West US"))
             {
                 Description = "This is the gallery description.",
                 SharingProfile = new SharingProfile()
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Compute
                     Permission = GallerySharingPermissionType.Groups,
                 },
             };
-            ArmOperation<Compute.GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
-            Compute.GalleryResource result = lro.Value;
+            ArmOperation<GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
+            GalleryResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -126,21 +126,21 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.GalleryData data = new GalleryData(new AzureLocation("West US"))
+            GalleryData data = new GalleryData(new AzureLocation("West US"))
             {
                 Description = "This is the gallery description.",
                 IsSoftDeleteEnabled = true,
             };
-            ArmOperation<Compute.GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
-            Compute.GalleryResource result = lro.Value;
+            ArmOperation<GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
+            GalleryResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.GalleryData data = new GalleryData(new AzureLocation("West US"))
+            GalleryData data = new GalleryData(new AzureLocation("West US"))
             {
                 Description = "This is the gallery description.",
             };
-            ArmOperation<Compute.GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
-            Compute.GalleryResource result = lro.Value;
+            ArmOperation<GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
+            GalleryResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -201,15 +201,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.GalleryResource result = await collection.GetAsync(galleryName);
+            GalleryResource result = await collection.GetAsync(galleryName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
@@ -261,16 +261,16 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.Models.GalleryExpand? expand = GalleryExpand.SharingProfileGroups;
-            Compute.GalleryResource result = await collection.GetAsync(galleryName, expand: expand);
+            GalleryExpand? expand = GalleryExpand.SharingProfileGroups;
+            GalleryResource result = await collection.GetAsync(galleryName, expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.Models.GalleryExpand? expand = GalleryExpand.SharingProfileGroups;
+            GalleryExpand? expand = GalleryExpand.SharingProfileGroups;
             bool result = await collection.ExistsAsync(galleryName, expand: expand);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -323,16 +323,16 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.Models.SelectPermission? select = SelectPermission.Permissions;
-            Compute.GalleryResource result = await collection.GetAsync(galleryName, select: select);
+            SelectPermission? select = SelectPermission.Permissions;
+            GalleryResource result = await collection.GetAsync(galleryName, select: select);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -356,11 +356,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.Models.SelectPermission? select = SelectPermission.Permissions;
+            SelectPermission? select = SelectPermission.Permissions;
             bool result = await collection.ExistsAsync(galleryName, select: select);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -385,15 +385,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
-            Compute.GalleryResource result = await collection.GetAsync(galleryName);
+            GalleryResource result = await collection.GetAsync(galleryName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryData resourceData = result.Data;
+            GalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation
             string galleryName = "myGalleryName";
@@ -445,14 +445,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GalleryResource
-            Compute.GalleryCollection collection = resourceGroupResource.GetGalleries();
+            GalleryCollection collection = resourceGroupResource.GetGalleries();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.GalleryResource item in collection.GetAllAsync())
+            await foreach (GalleryResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.GalleryData resourceData = item.Data;
+                GalleryData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

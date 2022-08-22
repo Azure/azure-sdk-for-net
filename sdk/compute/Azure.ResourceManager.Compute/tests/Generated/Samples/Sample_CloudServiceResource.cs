@@ -34,23 +34,23 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            Compute.Models.CloudServicePatch patch = new CloudServicePatch()
+            CloudServicePatch patch = new CloudServicePatch()
             {
                 Tags =
 {
 ["Documentation"] = "RestAPI",
 },
             };
-            ArmOperation<Compute.CloudServiceResource> lro = await cloudService.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.CloudServiceResource result = lro.Value;
+            ArmOperation<CloudServiceResource> lro = await cloudService.UpdateAsync(WaitUntil.Completed, patch);
+            CloudServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceData resourceData = result.Data;
+            CloudServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
             await cloudService.DeleteAsync(WaitUntil.Completed);
@@ -96,15 +96,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            Compute.CloudServiceResource result = await cloudService.GetAsync();
+            CloudServiceResource result = await cloudService.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceData resourceData = result.Data;
+            CloudServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            Compute.Models.CloudServiceInstanceView result = await cloudService.GetInstanceViewAsync();
+            CloudServiceInstanceView result = await cloudService.GetInstanceViewAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.CloudServiceResource item in subscriptionResource.GetCloudServicesAsync())
+            await foreach (CloudServiceResource item in subscriptionResource.GetCloudServicesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CloudServiceData resourceData = item.Data;
+                CloudServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -180,8 +180,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
             await cloudService.PowerOnAsync(WaitUntil.Completed);
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
             await cloudService.PowerOffAsync(WaitUntil.Completed);
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            Compute.Models.RoleInstances roleInstances = new RoleInstances(new string[]
+            RoleInstances roleInstances = new RoleInstances(new string[]
             {
 "ContosoFrontend_IN_0","ContosoBackend_IN_1"
             });
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            Compute.Models.RoleInstances roleInstances = new RoleInstances(new string[]
+            RoleInstances roleInstances = new RoleInstances(new string[]
             {
 "ContosoFrontend_IN_0","ContosoBackend_IN_1"
             });
@@ -288,11 +288,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            Compute.Models.RoleInstances roleInstances = new RoleInstances(new string[]
+            RoleInstances roleInstances = new RoleInstances(new string[]
             {
 "ContosoFrontend_IN_0","ContosoBackend_IN_1"
             });
@@ -317,11 +317,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            Compute.Models.RoleInstances roleInstances = new RoleInstances(new string[]
+            RoleInstances roleInstances = new RoleInstances(new string[]
             {
 "ContosoFrontend_IN_0","ContosoBackend_IN_1"
             });
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
             int updateDomain = 1;
@@ -372,12 +372,12 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
             int updateDomain = 1;
-            Compute.Models.UpdateDomainIdentifier result = await cloudService.GetUpdateDomainAsync(updateDomain);
+            UpdateDomainIdentifier result = await cloudService.GetUpdateDomainAsync(updateDomain);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -398,11 +398,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = Compute.CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            Compute.CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.Models.UpdateDomainIdentifier item in cloudService.GetUpdateDomainsAsync())
+            await foreach (UpdateDomainIdentifier item in cloudService.GetUpdateDomainsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

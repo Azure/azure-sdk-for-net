@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Compute
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
             string diskRestorePointName = "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745";
-            ResourceIdentifier diskRestorePointResourceId = Compute.DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
-            Compute.DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
+            ResourceIdentifier diskRestorePointResourceId = DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
+            DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
 
             // invoke the operation
-            Compute.DiskRestorePointResource result = await diskRestorePoint.GetAsync();
+            DiskRestorePointResource result = await diskRestorePoint.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskRestorePointData resourceData = result.Data;
+            DiskRestorePointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.Compute
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
             string diskRestorePointName = "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745";
-            ResourceIdentifier diskRestorePointResourceId = Compute.DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
-            Compute.DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
+            ResourceIdentifier diskRestorePointResourceId = DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
+            DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
 
             // invoke the operation
-            Compute.DiskRestorePointResource result = await diskRestorePoint.GetAsync();
+            DiskRestorePointResource result = await diskRestorePoint.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DiskRestorePointData resourceData = result.Data;
+            DiskRestorePointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.Compute
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
             string diskRestorePointName = "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745";
-            ResourceIdentifier diskRestorePointResourceId = Compute.DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
-            Compute.DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
+            ResourceIdentifier diskRestorePointResourceId = DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
+            DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
 
             // invoke the operation
-            Compute.Models.GrantAccessData data = new GrantAccessData(AccessLevel.Read, 300);
-            ArmOperation<Compute.Models.AccessUri> lro = await diskRestorePoint.GrantAccessAsync(WaitUntil.Completed, data);
-            Compute.Models.AccessUri result = lro.Value;
+            GrantAccessData data = new GrantAccessData(AccessLevel.Read, 300);
+            ArmOperation<AccessUri> lro = await diskRestorePoint.GrantAccessAsync(WaitUntil.Completed, data);
+            AccessUri result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Compute
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
             string diskRestorePointName = "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745";
-            ResourceIdentifier diskRestorePointResourceId = Compute.DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
-            Compute.DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
+            ResourceIdentifier diskRestorePointResourceId = DiskRestorePointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
+            DiskRestorePointResource diskRestorePoint = client.GetDiskRestorePointResource(diskRestorePointResourceId);
 
             // invoke the operation
             await diskRestorePoint.RevokeAccessAsync(WaitUntil.Completed);

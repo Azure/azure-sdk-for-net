@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this CloudServiceResource
-            Compute.CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
 
             // invoke the operation
             string cloudServiceName = "{cs-name}";
-            Compute.CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
+            CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
             {
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
@@ -50,18 +50,18 @@ namespace Azure.ResourceManager.Compute
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBalancerFrontendIPConfiguration[]
+new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
 {
 })
 },
                 },
             };
-            ArmOperation<Compute.CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
-            Compute.CloudServiceResource result = lro.Value;
+            ArmOperation<CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
+            CloudServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceData resourceData = result.Data;
+            CloudServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -85,11 +85,11 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this CloudServiceResource
-            Compute.CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
 
             // invoke the operation
             string cloudServiceName = "{cs-name}";
-            Compute.CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
+            CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
             {
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
@@ -98,18 +98,18 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new Compute.Models.LoadBalancerFrontendIPConfiguration[]
+new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new LoadBalancerFrontendIPConfiguration[]
 {
 })
 },
                 },
             };
-            ArmOperation<Compute.CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
-            Compute.CloudServiceResource result = lro.Value;
+            ArmOperation<CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
+            CloudServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceData resourceData = result.Data;
+            CloudServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -133,11 +133,11 @@ new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new Compute.Models.Lo
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this CloudServiceResource
-            Compute.CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
 
             // invoke the operation
             string cloudServiceName = "{cs-name}";
-            Compute.CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
+            CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
             {
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
@@ -146,18 +146,18 @@ new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new Compute.Models.Lo
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBalancerFrontendIPConfiguration[]
+new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
 {
 })
 },
                 },
             };
-            ArmOperation<Compute.CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
-            Compute.CloudServiceResource result = lro.Value;
+            ArmOperation<CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
+            CloudServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceData resourceData = result.Data;
+            CloudServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -181,11 +181,11 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this CloudServiceResource
-            Compute.CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
 
             // invoke the operation
             string cloudServiceName = "{cs-name}";
-            Compute.CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
+            CloudServiceData data = new CloudServiceData(new AzureLocation("westus"))
             {
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
@@ -194,18 +194,18 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBalancerFrontendIPConfiguration[]
+new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
 {
 })
 },
                 },
             };
-            ArmOperation<Compute.CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
-            Compute.CloudServiceResource result = lro.Value;
+            ArmOperation<CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
+            CloudServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceData resourceData = result.Data;
+            CloudServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -229,15 +229,15 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this CloudServiceResource
-            Compute.CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
 
             // invoke the operation
             string cloudServiceName = "{cs-name}";
-            Compute.CloudServiceResource result = await collection.GetAsync(cloudServiceName);
+            CloudServiceResource result = await collection.GetAsync(cloudServiceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceData resourceData = result.Data;
+            CloudServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -261,7 +261,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this CloudServiceResource
-            Compute.CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
 
             // invoke the operation
             string cloudServiceName = "{cs-name}";
@@ -289,14 +289,14 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this CloudServiceResource
-            Compute.CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
+            CloudServiceCollection collection = resourceGroupResource.GetCloudServices();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.CloudServiceResource item in collection.GetAllAsync())
+            await foreach (CloudServiceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CloudServiceData resourceData = item.Data;
+                CloudServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

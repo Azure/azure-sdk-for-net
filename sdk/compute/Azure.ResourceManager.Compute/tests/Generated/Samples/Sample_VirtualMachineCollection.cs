@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -92,12 +92,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -121,11 +121,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -178,12 +178,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -207,11 +207,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -262,12 +262,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -291,11 +291,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -347,12 +347,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -376,11 +376,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -420,12 +420,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -449,11 +449,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -493,12 +493,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -522,11 +522,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "{vm-name}";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("eastus2euap"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("eastus2euap"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -578,12 +578,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -607,11 +607,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -663,12 +663,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     SecurityType = SecurityType.TrustedLaunch,
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -692,11 +692,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "{vm-name}";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -745,12 +745,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 },
                 UserData = "RXhhbXBsZSBVc2VyRGF0YQ==",
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -774,11 +774,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -832,12 +832,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 },
                 UserData = "U29tZSBDdXN0b20gRGF0YQ==",
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -861,11 +861,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -926,12 +926,12 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -955,11 +955,11 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1016,12 +1016,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     SecurityType = SecurityType.ConfidentialVm,
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1045,11 +1045,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1105,12 +1105,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     SecurityType = SecurityType.ConfidentialVm,
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1134,11 +1134,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1190,12 +1190,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1219,11 +1219,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1275,12 +1275,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1304,11 +1304,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1362,12 +1362,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1391,11 +1391,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1448,12 +1448,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1477,11 +1477,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1533,12 +1533,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1562,11 +1562,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1619,12 +1619,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1648,11 +1648,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "{vm-name}";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1687,12 +1687,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1716,11 +1716,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "{vm-name}";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1772,12 +1772,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1801,11 +1801,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1845,12 +1845,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1874,11 +1874,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1918,12 +1918,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1947,11 +1947,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -1985,12 +1985,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2014,11 +2014,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2063,12 +2063,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 VirtualMachineScaleSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{existing-flex-vmss-name-with-platformFaultDomainCount-greater-than-1}"),
                 PlatformFaultDomain = 1,
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2092,11 +2092,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2140,12 +2140,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 },
                 AvailabilitySetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/{existing-availability-set-name}"),
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2169,11 +2169,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2216,12 +2216,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2245,11 +2245,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2313,12 +2313,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2342,11 +2342,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 Plan = new ComputePlan()
                 {
@@ -2399,12 +2399,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     EncryptionAtHost = true,
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2428,11 +2428,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2485,12 +2485,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     Enable = true,
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2514,11 +2514,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 Plan = new ComputePlan()
                 {
@@ -2567,12 +2567,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2596,11 +2596,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2649,12 +2649,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 },
                 ExtensionsTimeBudget = "PT30M",
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2678,11 +2678,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2730,12 +2730,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2759,11 +2759,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -2816,12 +2816,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2845,11 +2845,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 Plan = new ComputePlan()
                 {
@@ -2903,12 +2903,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2932,11 +2932,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 Plan = new ComputePlan()
                 {
@@ -2990,12 +2990,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3019,11 +3019,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 Plan = new ComputePlan()
                 {
@@ -3076,12 +3076,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3105,11 +3105,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -3156,12 +3156,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     Enabled = true,
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3185,11 +3185,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -3232,12 +3232,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3261,11 +3261,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -3308,12 +3308,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3337,11 +3337,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -3387,12 +3387,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3416,11 +3416,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
                 Plan = new ComputePlan()
                 {
@@ -3470,12 +3470,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 },
                 CapacityReservationGroupId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/CapacityReservationGroups/{crgName}"),
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3499,15 +3499,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineResource result = await collection.GetAsync(vmName);
+            VirtualMachineResource result = await collection.GetAsync(vmName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3531,7 +3531,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
@@ -3559,15 +3559,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineResource result = await collection.GetAsync(vmName);
+            VirtualMachineResource result = await collection.GetAsync(vmName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3591,7 +3591,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
@@ -3619,15 +3619,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
-            Compute.VirtualMachineResource result = await collection.GetAsync(vmName);
+            VirtualMachineResource result = await collection.GetAsync(vmName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3651,7 +3651,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation
             string vmName = "myVM";
@@ -3679,15 +3679,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation and iterate over the result
             string filter = "aaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (Compute.VirtualMachineResource item in collection.GetAllAsync(filter: filter))
+            await foreach (VirtualMachineResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineData resourceData = item.Data;
+                VirtualMachineData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -3714,14 +3714,14 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineResource
-            Compute.VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.VirtualMachineResource item in collection.GetAllAsync())
+            await foreach (VirtualMachineResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineData resourceData = item.Data;
+                VirtualMachineData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             AzureLocation location = new AzureLocation("westus2");
             string osFamilyName = "3";
-            ResourceIdentifier cloudServiceOSFamilyResourceId = Compute.CloudServiceOSFamilyResource.CreateResourceIdentifier(subscriptionId, location, osFamilyName);
-            Compute.CloudServiceOSFamilyResource cloudServiceOSFamily = client.GetCloudServiceOSFamilyResource(cloudServiceOSFamilyResourceId);
+            ResourceIdentifier cloudServiceOSFamilyResourceId = CloudServiceOSFamilyResource.CreateResourceIdentifier(subscriptionId, location, osFamilyName);
+            CloudServiceOSFamilyResource cloudServiceOSFamily = client.GetCloudServiceOSFamilyResource(cloudServiceOSFamilyResourceId);
 
             // invoke the operation
-            Compute.CloudServiceOSFamilyResource result = await cloudServiceOSFamily.GetAsync();
+            CloudServiceOSFamilyResource result = await cloudServiceOSFamily.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceOSFamilyData resourceData = result.Data;
+            CloudServiceOSFamilyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

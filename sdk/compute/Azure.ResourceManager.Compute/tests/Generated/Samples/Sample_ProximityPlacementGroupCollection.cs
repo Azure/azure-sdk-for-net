@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ProximityPlacementGroupResource
-            Compute.ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
+            ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
 
             // invoke the operation
             string proximityPlacementGroupName = "myProximityPlacementGroup";
-            Compute.ProximityPlacementGroupData data = new ProximityPlacementGroupData(new AzureLocation("westus"))
+            ProximityPlacementGroupData data = new ProximityPlacementGroupData(new AzureLocation("westus"))
             {
                 Zones =
 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute
 },
                 ProximityPlacementGroupType = ProximityPlacementGroupType.Standard,
             };
-            ArmOperation<Compute.ProximityPlacementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, proximityPlacementGroupName, data);
-            Compute.ProximityPlacementGroupResource result = lro.Value;
+            ArmOperation<ProximityPlacementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, proximityPlacementGroupName, data);
+            ProximityPlacementGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ProximityPlacementGroupData resourceData = result.Data;
+            ProximityPlacementGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ProximityPlacementGroupResource
-            Compute.ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
+            ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
 
             // invoke the operation
             string proximityPlacementGroupName = "myProximityPlacementGroup";
-            Compute.ProximityPlacementGroupResource result = await collection.GetAsync(proximityPlacementGroupName);
+            ProximityPlacementGroupResource result = await collection.GetAsync(proximityPlacementGroupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ProximityPlacementGroupData resourceData = result.Data;
+            ProximityPlacementGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ProximityPlacementGroupResource
-            Compute.ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
+            ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
 
             // invoke the operation
             string proximityPlacementGroupName = "myProximityPlacementGroup";
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ProximityPlacementGroupResource
-            Compute.ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
+            ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.ProximityPlacementGroupResource item in collection.GetAllAsync())
+            await foreach (ProximityPlacementGroupResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.ProximityPlacementGroupData resourceData = item.Data;
+                ProximityPlacementGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

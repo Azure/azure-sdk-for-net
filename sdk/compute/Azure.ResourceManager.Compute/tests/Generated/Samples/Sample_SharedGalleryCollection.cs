@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this SharedGalleryResource
             AzureLocation location = new AzureLocation("myLocation");
-            Compute.SharedGalleryCollection collection = subscriptionResource.GetSharedGalleries(location);
+            SharedGalleryCollection collection = subscriptionResource.GetSharedGalleries(location);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SharedGalleryResource item in collection.GetAllAsync())
+            await foreach (SharedGalleryResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SharedGalleryData resourceData = item.Data;
+                SharedGalleryData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this SharedGalleryResource
             AzureLocation location = new AzureLocation("myLocation");
-            Compute.SharedGalleryCollection collection = subscriptionResource.GetSharedGalleries(location);
+            SharedGalleryCollection collection = subscriptionResource.GetSharedGalleries(location);
 
             // invoke the operation
             string galleryUniqueName = "galleryUniqueName";
-            Compute.SharedGalleryResource result = await collection.GetAsync(galleryUniqueName);
+            SharedGalleryResource result = await collection.GetAsync(galleryUniqueName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SharedGalleryData resourceData = result.Data;
+            SharedGalleryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this SharedGalleryResource
             AzureLocation location = new AzureLocation("myLocation");
-            Compute.SharedGalleryCollection collection = subscriptionResource.GetSharedGalleries(location);
+            SharedGalleryCollection collection = subscriptionResource.GetSharedGalleries(location);
 
             // invoke the operation
             string galleryUniqueName = "galleryUniqueName";

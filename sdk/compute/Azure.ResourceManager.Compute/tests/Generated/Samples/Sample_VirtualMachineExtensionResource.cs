@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             string vmExtensionName = "myVMExtension";
-            ResourceIdentifier virtualMachineExtensionResourceId = Compute.VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
-            Compute.VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
+            ResourceIdentifier virtualMachineExtensionResourceId = VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
+            VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineExtensionPatch patch = new VirtualMachineExtensionPatch()
+            VirtualMachineExtensionPatch patch = new VirtualMachineExtensionPatch()
             {
                 Publisher = "extPublisher",
                 ExtensionType = "extType",
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Compute
                     }
                 }),
             };
-            ArmOperation<Compute.VirtualMachineExtensionResource> lro = await virtualMachineExtension.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.VirtualMachineExtensionResource result = lro.Value;
+            ArmOperation<VirtualMachineExtensionResource> lro = await virtualMachineExtension.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineExtensionData resourceData = result.Data;
+            VirtualMachineExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaa";
             string vmExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineExtensionResourceId = Compute.VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
-            Compute.VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
+            ResourceIdentifier virtualMachineExtensionResourceId = VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
+            VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
 
             // invoke the operation
             await virtualMachineExtension.DeleteAsync(WaitUntil.Completed);
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaa";
             string vmExtensionName = "aa";
-            ResourceIdentifier virtualMachineExtensionResourceId = Compute.VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
-            Compute.VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
+            ResourceIdentifier virtualMachineExtensionResourceId = VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
+            VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
 
             // invoke the operation
             await virtualMachineExtension.DeleteAsync(WaitUntil.Completed);
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             string vmExtensionName = "aaaaaaa";
-            ResourceIdentifier virtualMachineExtensionResourceId = Compute.VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
-            Compute.VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
+            ResourceIdentifier virtualMachineExtensionResourceId = VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
+            VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
 
             // invoke the operation
             string expand = "aaaaaa";
-            Compute.VirtualMachineExtensionResource result = await virtualMachineExtension.GetAsync(expand: expand);
+            VirtualMachineExtensionResource result = await virtualMachineExtension.GetAsync(expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineExtensionData resourceData = result.Data;
+            VirtualMachineExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string vmName = "a";
             string vmExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineExtensionResourceId = Compute.VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
-            Compute.VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
+            ResourceIdentifier virtualMachineExtensionResourceId = VirtualMachineExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, vmExtensionName);
+            VirtualMachineExtensionResource virtualMachineExtension = client.GetVirtualMachineExtensionResource(virtualMachineExtensionResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineExtensionResource result = await virtualMachineExtension.GetAsync();
+            VirtualMachineExtensionResource result = await virtualMachineExtension.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineExtensionData resourceData = result.Data;
+            VirtualMachineExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -123,12 +123,12 @@ SuppressFailures = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -152,11 +152,11 @@ SuppressFailures = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -242,12 +242,12 @@ id = "/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResou
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -271,11 +271,11 @@ id = "/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResou
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -325,12 +325,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -354,11 +354,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -418,12 +418,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -447,11 +447,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -507,12 +507,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -536,11 +536,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -596,12 +596,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -625,11 +625,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -679,12 +679,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -708,11 +708,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -771,12 +771,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -800,11 +800,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -874,12 +874,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -903,11 +903,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -978,12 +978,12 @@ EnableIPForwarding = false,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1007,11 +1007,11 @@ EnableIPForwarding = false,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1080,12 +1080,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1109,11 +1109,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1185,12 +1185,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1214,11 +1214,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1286,12 +1286,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1315,11 +1315,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1384,12 +1384,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1413,11 +1413,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1483,12 +1483,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1512,11 +1512,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1593,12 +1593,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1622,11 +1622,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1690,12 +1690,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1719,11 +1719,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1787,12 +1787,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1816,11 +1816,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1890,12 +1890,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -1919,11 +1919,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -1993,12 +1993,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2022,11 +2022,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2095,12 +2095,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2124,11 +2124,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2209,12 +2209,12 @@ Settings = BinaryData.FromObjectAsJson(new
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2238,11 +2238,11 @@ Settings = BinaryData.FromObjectAsJson(new
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2305,12 +2305,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2334,11 +2334,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2397,12 +2397,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2426,11 +2426,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2489,12 +2489,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2518,11 +2518,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2589,12 +2589,12 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                     ForceDeletion = true,
                 },
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2618,11 +2618,11 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2689,12 +2689,12 @@ EnableIPForwarding = true,
                     RestoreTimeout = "PT1H",
                 },
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2718,11 +2718,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2784,12 +2784,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2813,11 +2813,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2881,12 +2881,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -2910,11 +2910,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -2974,12 +2974,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3003,11 +3003,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("centralus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("centralus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -3081,12 +3081,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3110,11 +3110,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -3179,12 +3179,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3208,11 +3208,11 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "{vmss-name}";
-            Compute.VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
+            VirtualMachineScaleSetData data = new VirtualMachineScaleSetData(new AzureLocation("westus"))
             {
                 Sku = new ComputeSku()
                 {
@@ -3272,12 +3272,12 @@ EnableIPForwarding = true,
                 },
                 Overprovision = true,
             };
-            ArmOperation<Compute.VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
-            Compute.VirtualMachineScaleSetResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
+            VirtualMachineScaleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3301,15 +3301,15 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
-            Compute.VirtualMachineScaleSetResource result = await collection.GetAsync(virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource result = await collection.GetAsync(virtualMachineScaleSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3333,7 +3333,7 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
@@ -3361,15 +3361,15 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
-            Compute.VirtualMachineScaleSetResource result = await collection.GetAsync(virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource result = await collection.GetAsync(virtualMachineScaleSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3393,7 +3393,7 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
@@ -3421,15 +3421,15 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
-            Compute.VirtualMachineScaleSetResource result = await collection.GetAsync(virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource result = await collection.GetAsync(virtualMachineScaleSetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetData resourceData = result.Data;
+            VirtualMachineScaleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -3453,7 +3453,7 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
@@ -3481,14 +3481,14 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.VirtualMachineScaleSetResource item in collection.GetAllAsync())
+            await foreach (VirtualMachineScaleSetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineScaleSetData resourceData = item.Data;
+                VirtualMachineScaleSetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -3515,14 +3515,14 @@ EnableIPForwarding = true,
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this VirtualMachineScaleSetResource
-            Compute.VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
+            VirtualMachineScaleSetCollection collection = resourceGroupResource.GetVirtualMachineScaleSets();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.VirtualMachineScaleSetResource item in collection.GetAllAsync())
+            await foreach (VirtualMachineScaleSetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineScaleSetData resourceData = item.Data;
+                VirtualMachineScaleSetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

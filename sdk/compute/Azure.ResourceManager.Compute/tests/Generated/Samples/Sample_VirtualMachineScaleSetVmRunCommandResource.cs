@@ -35,23 +35,23 @@ namespace Azure.ResourceManager.Compute
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier virtualMachineScaleSetVmRunCommandResourceId = Compute.VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
-            Compute.VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmRunCommandResourceId = VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
+            VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineRunCommandUpdate runCommand = new VirtualMachineRunCommandUpdate()
+            VirtualMachineRunCommandUpdate runCommand = new VirtualMachineRunCommandUpdate()
             {
                 Source = new VirtualMachineRunCommandScriptSource()
                 {
                     Script = "Write-Host Script Source Updated!",
                 },
             };
-            ArmOperation<Compute.VirtualMachineScaleSetVmRunCommandResource> lro = await virtualMachineScaleSetVmRunCommand.UpdateAsync(WaitUntil.Completed, runCommand);
-            Compute.VirtualMachineScaleSetVmRunCommandResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetVmRunCommandResource> lro = await virtualMachineScaleSetVmRunCommand.UpdateAsync(WaitUntil.Completed, runCommand);
+            VirtualMachineScaleSetVmRunCommandResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineRunCommandData resourceData = result.Data;
+            VirtualMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier virtualMachineScaleSetVmRunCommandResourceId = Compute.VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
-            Compute.VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmRunCommandResourceId = VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
+            VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVmRunCommand.DeleteAsync(WaitUntil.Completed);
@@ -101,15 +101,15 @@ namespace Azure.ResourceManager.Compute
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
             string runCommandName = "myRunCommand";
-            ResourceIdentifier virtualMachineScaleSetVmRunCommandResourceId = Compute.VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
-            Compute.VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmRunCommandResourceId = VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
+            VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetVmRunCommandResource result = await virtualMachineScaleSetVmRunCommand.GetAsync();
+            VirtualMachineScaleSetVmRunCommandResource result = await virtualMachineScaleSetVmRunCommand.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineRunCommandData resourceData = result.Data;
+            VirtualMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = Compute.CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            Compute.CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
 
             // invoke the operation
             await cloudServiceRoleInstance.DeleteAsync(WaitUntil.Completed);
@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = Compute.CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            Compute.CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
 
             // invoke the operation
-            Compute.CloudServiceRoleInstanceResource result = await cloudServiceRoleInstance.GetAsync();
+            CloudServiceRoleInstanceResource result = await cloudServiceRoleInstance.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceRoleInstanceData resourceData = result.Data;
+            CloudServiceRoleInstanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = Compute.CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            Compute.CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
 
             // invoke the operation
-            Compute.Models.RoleInstanceView result = await cloudServiceRoleInstance.GetInstanceViewAsync();
+            RoleInstanceView result = await cloudServiceRoleInstance.GetInstanceViewAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = Compute.CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            Compute.CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
 
             // invoke the operation
             await cloudServiceRoleInstance.RestartAsync(WaitUntil.Completed);
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = Compute.CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            Compute.CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
 
             // invoke the operation
             await cloudServiceRoleInstance.ReimageAsync(WaitUntil.Completed);
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = Compute.CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            Compute.CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
 
             // invoke the operation
             await cloudServiceRoleInstance.RebuildAsync(WaitUntil.Completed);
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcloudService";
             string cloudServiceName = "aaaa";
             string roleInstanceName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = Compute.CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            Compute.CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
 
             // invoke the operation
             Stream result = await cloudServiceRoleInstance.GetRemoteDesktopFileAsync();

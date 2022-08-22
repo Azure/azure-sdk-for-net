@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SshPublicKeyResource item in subscriptionResource.GetSshPublicKeysAsync())
+            await foreach (SshPublicKeyResource item in subscriptionResource.GetSshPublicKeysAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SshPublicKeyData resourceData = item.Data;
+                SshPublicKeyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SshPublicKeyResource item in subscriptionResource.GetSshPublicKeysAsync())
+            await foreach (SshPublicKeyResource item in subscriptionResource.GetSshPublicKeysAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SshPublicKeyData resourceData = item.Data;
+                SshPublicKeyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string sshPublicKeyName = "aaaaaaaaaaaa";
-            ResourceIdentifier sshPublicKeyResourceId = Compute.SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
-            Compute.SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
+            ResourceIdentifier sshPublicKeyResourceId = SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
+            SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
 
             // invoke the operation
-            Compute.Models.SshPublicKeyPatch patch = new SshPublicKeyPatch()
+            SshPublicKeyPatch patch = new SshPublicKeyPatch()
             {
                 PublicKey = "{ssh-rsa public key}",
                 Tags =
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Compute
 ["key2854"] = "a",
 },
             };
-            Compute.SshPublicKeyResource result = await sshPublicKey.UpdateAsync(patch);
+            SshPublicKeyResource result = await sshPublicKey.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SshPublicKeyData resourceData = result.Data;
+            SshPublicKeyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string sshPublicKeyName = "aaaaaaaaaaa";
-            ResourceIdentifier sshPublicKeyResourceId = Compute.SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
-            Compute.SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
+            ResourceIdentifier sshPublicKeyResourceId = SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
+            SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
 
             // invoke the operation
-            Compute.Models.SshPublicKeyPatch patch = new SshPublicKeyPatch();
-            Compute.SshPublicKeyResource result = await sshPublicKey.UpdateAsync(patch);
+            SshPublicKeyPatch patch = new SshPublicKeyPatch();
+            SshPublicKeyResource result = await sshPublicKey.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SshPublicKeyData resourceData = result.Data;
+            SshPublicKeyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -161,8 +161,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string sshPublicKeyName = "aaaaaaaaaa";
-            ResourceIdentifier sshPublicKeyResourceId = Compute.SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
-            Compute.SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
+            ResourceIdentifier sshPublicKeyResourceId = SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
+            SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
 
             // invoke the operation
             await sshPublicKey.DeleteAsync(WaitUntil.Completed);
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string sshPublicKeyName = "aaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier sshPublicKeyResourceId = Compute.SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
-            Compute.SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
+            ResourceIdentifier sshPublicKeyResourceId = SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
+            SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
 
             // invoke the operation
             await sshPublicKey.DeleteAsync(WaitUntil.Completed);
@@ -211,15 +211,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string sshPublicKeyName = "mySshPublicKeyName";
-            ResourceIdentifier sshPublicKeyResourceId = Compute.SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
-            Compute.SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
+            ResourceIdentifier sshPublicKeyResourceId = SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
+            SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
 
             // invoke the operation
-            Compute.SshPublicKeyResource result = await sshPublicKey.GetAsync();
+            SshPublicKeyResource result = await sshPublicKey.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SshPublicKeyData resourceData = result.Data;
+            SshPublicKeyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string sshPublicKeyName = "mySshPublicKeyName";
-            ResourceIdentifier sshPublicKeyResourceId = Compute.SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
-            Compute.SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
+            ResourceIdentifier sshPublicKeyResourceId = SshPublicKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sshPublicKeyName);
+            SshPublicKeyResource sshPublicKey = client.GetSshPublicKeyResource(sshPublicKeyResourceId);
 
             // invoke the operation
-            Compute.Models.SshPublicKeyGenerateKeyPairResult result = await sshPublicKey.GenerateKeyPairAsync();
+            SshPublicKeyGenerateKeyPairResult result = await sshPublicKey.GenerateKeyPairAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

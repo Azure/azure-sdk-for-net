@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aaaa";
-            ResourceIdentifier dedicatedHostGroupResourceId = Compute.DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
-            Compute.DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
+            ResourceIdentifier dedicatedHostGroupResourceId = DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
+            DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
 
             // invoke the operation
-            Compute.Models.DedicatedHostGroupPatch patch = new DedicatedHostGroupPatch()
+            DedicatedHostGroupPatch patch = new DedicatedHostGroupPatch()
             {
                 Zones =
 {
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Compute
 ["key9921"] = "aaaaaaaaaa",
 },
             };
-            Compute.DedicatedHostGroupResource result = await dedicatedHostGroup.UpdateAsync(patch);
+            DedicatedHostGroupResource result = await dedicatedHostGroup.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aaaaaaaaaaa";
-            ResourceIdentifier dedicatedHostGroupResourceId = Compute.DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
-            Compute.DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
+            ResourceIdentifier dedicatedHostGroupResourceId = DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
+            DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
 
             // invoke the operation
-            Compute.Models.DedicatedHostGroupPatch patch = new DedicatedHostGroupPatch();
-            Compute.DedicatedHostGroupResource result = await dedicatedHostGroup.UpdateAsync(patch);
+            DedicatedHostGroupPatch patch = new DedicatedHostGroupPatch();
+            DedicatedHostGroupResource result = await dedicatedHostGroup.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "a";
-            ResourceIdentifier dedicatedHostGroupResourceId = Compute.DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
-            Compute.DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
+            ResourceIdentifier dedicatedHostGroupResourceId = DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
+            DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
 
             // invoke the operation
             await dedicatedHostGroup.DeleteAsync(WaitUntil.Completed);
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aaaa";
-            ResourceIdentifier dedicatedHostGroupResourceId = Compute.DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
-            Compute.DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
+            ResourceIdentifier dedicatedHostGroupResourceId = DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
+            DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
 
             // invoke the operation
             await dedicatedHostGroup.DeleteAsync(WaitUntil.Completed);
@@ -156,15 +156,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string hostGroupName = "myDedicatedHostGroup";
-            ResourceIdentifier dedicatedHostGroupResourceId = Compute.DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
-            Compute.DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
+            ResourceIdentifier dedicatedHostGroupResourceId = DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
+            DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
 
             // invoke the operation
-            Compute.DedicatedHostGroupResource result = await dedicatedHostGroup.GetAsync();
+            DedicatedHostGroupResource result = await dedicatedHostGroup.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -185,15 +185,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string hostGroupName = "myDedicatedHostGroup";
-            ResourceIdentifier dedicatedHostGroupResourceId = Compute.DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
-            Compute.DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
+            ResourceIdentifier dedicatedHostGroupResourceId = DedicatedHostGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostGroupName);
+            DedicatedHostGroupResource dedicatedHostGroup = client.GetDedicatedHostGroupResource(dedicatedHostGroupResourceId);
 
             // invoke the operation
-            Compute.DedicatedHostGroupResource result = await dedicatedHostGroup.GetAsync();
+            DedicatedHostGroupResource result = await dedicatedHostGroup.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.DedicatedHostGroupData resourceData = result.Data;
+            DedicatedHostGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.DedicatedHostGroupResource item in subscriptionResource.GetDedicatedHostGroupsAsync())
+            await foreach (DedicatedHostGroupResource item in subscriptionResource.GetDedicatedHostGroupsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.DedicatedHostGroupData resourceData = item.Data;
+                DedicatedHostGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.DedicatedHostGroupResource item in subscriptionResource.GetDedicatedHostGroupsAsync())
+            await foreach (DedicatedHostGroupResource item in subscriptionResource.GetDedicatedHostGroupsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.DedicatedHostGroupData resourceData = item.Data;
+                DedicatedHostGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

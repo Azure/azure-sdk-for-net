@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Compute
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("eastus");
-            await foreach (Compute.VirtualMachineResource item in subscriptionResource.GetVirtualMachinesByLocationAsync(location))
+            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesByLocationAsync(location))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineData resourceData = item.Data;
+                VirtualMachineData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
-            ArmOperation<Compute.Models.VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
-            Compute.Models.VirtualMachineCaptureResult result = lro.Value;
+            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
+            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
+            VirtualMachineCaptureResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
-            ArmOperation<Compute.Models.VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
-            Compute.Models.VirtualMachineCaptureResult result = lro.Value;
+            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
+            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
+            VirtualMachineCaptureResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachinePatch patch = new VirtualMachinePatch()
+            VirtualMachinePatch patch = new VirtualMachinePatch()
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -179,12 +179,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -205,11 +205,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachinePatch patch = new VirtualMachinePatch()
+            VirtualMachinePatch patch = new VirtualMachinePatch()
             {
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
@@ -265,12 +265,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 },
                 },
             };
-            ArmOperation<Compute.VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.VirtualMachineResource result = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -291,8 +291,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             bool? forceDeletion = true;
@@ -317,15 +317,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineResource result = await virtualMachine.GetAsync();
+            VirtualMachineResource result = await virtualMachine.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -346,15 +346,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineResource result = await virtualMachine.GetAsync();
+            VirtualMachineResource result = await virtualMachine.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -375,15 +375,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineResource result = await virtualMachine.GetAsync();
+            VirtualMachineResource result = await virtualMachine.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineData resourceData = result.Data;
+            VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -404,11 +404,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
+            VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -429,11 +429,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
+            VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -454,8 +454,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.ConvertToManagedDisksAsync(WaitUntil.Completed);
@@ -479,8 +479,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.ConvertToManagedDisksAsync(WaitUntil.Completed);
@@ -504,8 +504,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             bool? hibernate = true;
@@ -530,8 +530,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.DeallocateAsync(WaitUntil.Completed);
@@ -555,8 +555,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVMName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.GeneralizeAsync();
@@ -584,11 +584,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             // invoke the operation and iterate over the result
             string statusOnly = "aaaaaa";
             string filter = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (Compute.VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync(statusOnly: statusOnly, filter: filter))
+            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync(statusOnly: statusOnly, filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineData resourceData = item.Data;
+                VirtualMachineData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -614,11 +614,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync())
+            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineData resourceData = item.Data;
+                VirtualMachineData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -642,11 +642,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVmName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.Models.VirtualMachineSize item in virtualMachine.GetAvailableSizesAsync())
+            await foreach (VirtualMachineSize item in virtualMachine.GetAvailableSizesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -670,8 +670,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             bool? skipShutdown = true;
@@ -696,8 +696,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.PowerOffAsync(WaitUntil.Completed);
@@ -721,8 +721,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ResourceGroup";
             string vmName = "VMName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.ReapplyAsync(WaitUntil.Completed);
@@ -746,8 +746,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.RestartAsync(WaitUntil.Completed);
@@ -771,8 +771,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.RestartAsync(WaitUntil.Completed);
@@ -796,8 +796,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.PowerOnAsync(WaitUntil.Completed);
@@ -821,8 +821,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.PowerOnAsync(WaitUntil.Completed);
@@ -846,8 +846,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "a";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.RedeployAsync(WaitUntil.Completed);
@@ -871,8 +871,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.RedeployAsync(WaitUntil.Completed);
@@ -896,11 +896,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVMName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineReimageContent content = new VirtualMachineReimageContent()
+            VirtualMachineReimageContent content = new VirtualMachineReimageContent()
             {
                 TempDisk = true,
             };
@@ -925,12 +925,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ResourceGroup";
             string vmName = "VMName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             int? sasUriExpirationTimeInMinutes = 60;
-            Compute.Models.RetrieveBootDiagnosticsDataResult result = await virtualMachine.RetrieveBootDiagnosticsDataAsync(sasUriExpirationTimeInMinutes: sasUriExpirationTimeInMinutes);
+            RetrieveBootDiagnosticsDataResult result = await virtualMachine.RetrieveBootDiagnosticsDataAsync(sasUriExpirationTimeInMinutes: sasUriExpirationTimeInMinutes);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -951,8 +951,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
@@ -976,8 +976,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
@@ -1001,8 +1001,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "ResourceGroup";
             string vmName = "VMName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
             await virtualMachine.SimulateEvictionAsync();
@@ -1026,12 +1026,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            ArmOperation<Compute.Models.VirtualMachineAssessPatchesResult> lro = await virtualMachine.AssessPatchesAsync(WaitUntil.Completed);
-            Compute.Models.VirtualMachineAssessPatchesResult result = lro.Value;
+            ArmOperation<VirtualMachineAssessPatchesResult> lro = await virtualMachine.AssessPatchesAsync(WaitUntil.Completed);
+            VirtualMachineAssessPatchesResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -1052,11 +1052,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineInstallPatchesContent content = new VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting.IfRequired)
+            VirtualMachineInstallPatchesContent content = new VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting.IfRequired)
             {
                 MaximumDuration = XmlConvert.ToTimeSpan("PT4H"),
                 WindowsParameters = new WindowsParameters()
@@ -1068,8 +1068,8 @@ VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindo
                     MaxPatchPublishOn = DateTimeOffset.Parse("2020-11-19T02:36:43.0539904+00:00"),
                 },
             };
-            ArmOperation<Compute.Models.VirtualMachineInstallPatchesResult> lro = await virtualMachine.InstallPatchesAsync(WaitUntil.Completed, content);
-            Compute.Models.VirtualMachineInstallPatchesResult result = lro.Value;
+            ArmOperation<VirtualMachineInstallPatchesResult> lro = await virtualMachine.InstallPatchesAsync(WaitUntil.Completed, content);
+            VirtualMachineInstallPatchesResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -1090,13 +1090,13 @@ VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindo
             string subscriptionId = "24fb23e3-6ba3-41f0-9b6e-e41131d5d61e";
             string resourceGroupName = "crptestar98131";
             string vmName = "vm3036";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            Compute.Models.RunCommandInput input = new RunCommandInput("RunPowerShellScript");
-            ArmOperation<Compute.Models.VirtualMachineRunCommandResult> lro = await virtualMachine.RunCommandAsync(WaitUntil.Completed, input);
-            Compute.Models.VirtualMachineRunCommandResult result = lro.Value;
+            RunCommandInput input = new RunCommandInput("RunPowerShellScript");
+            ArmOperation<VirtualMachineRunCommandResult> lro = await virtualMachine.RunCommandAsync(WaitUntil.Completed, input);
+            VirtualMachineRunCommandResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

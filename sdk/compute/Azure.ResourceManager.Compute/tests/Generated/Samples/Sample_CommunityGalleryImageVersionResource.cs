@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Compute
             string publicGalleryName = "publicGalleryName";
             string galleryImageName = "myGalleryImageName";
             string galleryImageVersionName = "myGalleryImageVersionName";
-            ResourceIdentifier communityGalleryImageVersionResourceId = Compute.CommunityGalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName);
-            Compute.CommunityGalleryImageVersionResource communityGalleryImageVersion = client.GetCommunityGalleryImageVersionResource(communityGalleryImageVersionResourceId);
+            ResourceIdentifier communityGalleryImageVersionResourceId = CommunityGalleryImageVersionResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName);
+            CommunityGalleryImageVersionResource communityGalleryImageVersion = client.GetCommunityGalleryImageVersionResource(communityGalleryImageVersionResourceId);
 
             // invoke the operation
-            Compute.CommunityGalleryImageVersionResource result = await communityGalleryImageVersion.GetAsync();
+            CommunityGalleryImageVersionResource result = await communityGalleryImageVersion.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CommunityGalleryImageVersionData resourceData = result.Data;
+            CommunityGalleryImageVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

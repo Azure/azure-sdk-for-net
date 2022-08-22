@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
-            ResourceIdentifier galleryResourceId = Compute.GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
-            Compute.GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
+            ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
+            GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
 
             // get the collection of this GalleryApplicationResource
-            Compute.GalleryApplicationCollection collection = gallery.GetGalleryApplications();
+            GalleryApplicationCollection collection = gallery.GetGalleryApplications();
 
             // invoke the operation
             string galleryApplicationName = "myGalleryApplicationName";
-            Compute.GalleryApplicationData data = new GalleryApplicationData(new AzureLocation("West US"))
+            GalleryApplicationData data = new GalleryApplicationData(new AzureLocation("West US"))
             {
                 Description = "This is the gallery application description.",
                 Eula = "This is the gallery application EULA.",
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute
                 ReleaseNoteUri = new Uri("myReleaseNoteUri"),
                 SupportedOSType = SupportedOperatingSystemType.Windows,
             };
-            ArmOperation<Compute.GalleryApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryApplicationName, data);
-            Compute.GalleryApplicationResource result = lro.Value;
+            ArmOperation<GalleryApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryApplicationName, data);
+            GalleryApplicationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryApplicationData resourceData = result.Data;
+            GalleryApplicationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -75,19 +75,19 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
-            ResourceIdentifier galleryResourceId = Compute.GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
-            Compute.GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
+            ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
+            GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
 
             // get the collection of this GalleryApplicationResource
-            Compute.GalleryApplicationCollection collection = gallery.GetGalleryApplications();
+            GalleryApplicationCollection collection = gallery.GetGalleryApplications();
 
             // invoke the operation
             string galleryApplicationName = "myGalleryApplicationName";
-            Compute.GalleryApplicationResource result = await collection.GetAsync(galleryApplicationName);
+            GalleryApplicationResource result = await collection.GetAsync(galleryApplicationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryApplicationData resourceData = result.Data;
+            GalleryApplicationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
-            ResourceIdentifier galleryResourceId = Compute.GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
-            Compute.GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
+            ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
+            GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
 
             // get the collection of this GalleryApplicationResource
-            Compute.GalleryApplicationCollection collection = gallery.GetGalleryApplications();
+            GalleryApplicationCollection collection = gallery.GetGalleryApplications();
 
             // invoke the operation
             string galleryApplicationName = "myGalleryApplicationName";
@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
-            ResourceIdentifier galleryResourceId = Compute.GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
-            Compute.GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
+            ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
+            GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
 
             // get the collection of this GalleryApplicationResource
-            Compute.GalleryApplicationCollection collection = gallery.GetGalleryApplications();
+            GalleryApplicationCollection collection = gallery.GetGalleryApplications();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.GalleryApplicationResource item in collection.GetAllAsync())
+            await foreach (GalleryApplicationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.GalleryApplicationData resourceData = item.Data;
+                GalleryApplicationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

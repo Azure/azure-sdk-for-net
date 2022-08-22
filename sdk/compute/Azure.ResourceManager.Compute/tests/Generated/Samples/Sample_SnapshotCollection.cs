@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SnapshotResource
-            Compute.SnapshotCollection collection = resourceGroupResource.GetSnapshots();
+            SnapshotCollection collection = resourceGroupResource.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot1";
-            Compute.SnapshotData data = new SnapshotData(new AzureLocation("West US"))
+            SnapshotData data = new SnapshotData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Import)
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute
                     SourceUri = new Uri("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
                 },
             };
-            ArmOperation<Compute.SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
-            Compute.SnapshotResource result = lro.Value;
+            ArmOperation<SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
+            SnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -78,23 +78,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SnapshotResource
-            Compute.SnapshotCollection collection = resourceGroupResource.GetSnapshots();
+            SnapshotCollection collection = resourceGroupResource.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot1";
-            Compute.SnapshotData data = new SnapshotData(new AzureLocation("West US"))
+            SnapshotData data = new SnapshotData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Import)
                 {
                     SourceUri = new Uri("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
                 },
             };
-            ArmOperation<Compute.SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
-            Compute.SnapshotResource result = lro.Value;
+            ArmOperation<SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
+            SnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -118,23 +118,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SnapshotResource
-            Compute.SnapshotCollection collection = resourceGroupResource.GetSnapshots();
+            SnapshotCollection collection = resourceGroupResource.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot2";
-            Compute.SnapshotData data = new SnapshotData(new AzureLocation("West US"))
+            SnapshotData data = new SnapshotData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.CopyStart)
                 {
                     SourceResourceId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
                 },
             };
-            ArmOperation<Compute.SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
-            Compute.SnapshotResource result = lro.Value;
+            ArmOperation<SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
+            SnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -158,23 +158,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SnapshotResource
-            Compute.SnapshotCollection collection = resourceGroupResource.GetSnapshots();
+            SnapshotCollection collection = resourceGroupResource.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot2";
-            Compute.SnapshotData data = new SnapshotData(new AzureLocation("West US"))
+            SnapshotData data = new SnapshotData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Copy)
                 {
                     SourceResourceId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
                 },
             };
-            ArmOperation<Compute.SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
-            Compute.SnapshotResource result = lro.Value;
+            ArmOperation<SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
+            SnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SnapshotResource
-            Compute.SnapshotCollection collection = resourceGroupResource.GetSnapshots();
+            SnapshotCollection collection = resourceGroupResource.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
-            Compute.SnapshotResource result = await collection.GetAsync(snapshotName);
+            SnapshotResource result = await collection.GetAsync(snapshotName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.SnapshotData resourceData = result.Data;
+            SnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SnapshotResource
-            Compute.SnapshotCollection collection = resourceGroupResource.GetSnapshots();
+            SnapshotCollection collection = resourceGroupResource.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this SnapshotResource
-            Compute.SnapshotCollection collection = resourceGroupResource.GetSnapshots();
+            SnapshotCollection collection = resourceGroupResource.GetSnapshots();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.SnapshotResource item in collection.GetAllAsync())
+            await foreach (SnapshotResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.SnapshotData resourceData = item.Data;
+                SnapshotData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

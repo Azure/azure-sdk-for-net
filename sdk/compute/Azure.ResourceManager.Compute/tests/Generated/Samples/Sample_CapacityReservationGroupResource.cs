@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // invoke the operation
-            Compute.Models.CapacityReservationGroupPatch patch = new CapacityReservationGroupPatch()
+            CapacityReservationGroupPatch patch = new CapacityReservationGroupPatch()
             {
                 Tags =
 {
 ["key5355"] = "aaa",
 },
             };
-            Compute.CapacityReservationGroupResource result = await capacityReservationGroup.UpdateAsync(patch);
+            CapacityReservationGroupResource result = await capacityReservationGroup.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationGroupData resourceData = result.Data;
+            CapacityReservationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // invoke the operation
-            Compute.Models.CapacityReservationGroupPatch patch = new CapacityReservationGroupPatch();
-            Compute.CapacityReservationGroupResource result = await capacityReservationGroup.UpdateAsync(patch);
+            CapacityReservationGroupPatch patch = new CapacityReservationGroupPatch();
+            CapacityReservationGroupResource result = await capacityReservationGroup.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationGroupData resourceData = result.Data;
+            CapacityReservationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "a";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // invoke the operation
             await capacityReservationGroup.DeleteAsync(WaitUntil.Completed);
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // invoke the operation
             await capacityReservationGroup.DeleteAsync(WaitUntil.Completed);
@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string capacityReservationGroupName = "myCapacityReservationGroup";
-            ResourceIdentifier capacityReservationGroupResourceId = Compute.CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
-            Compute.CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
+            ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            CapacityReservationGroupResource capacityReservationGroup = client.GetCapacityReservationGroupResource(capacityReservationGroupResourceId);
 
             // invoke the operation
-            Compute.CapacityReservationGroupResource result = await capacityReservationGroup.GetAsync();
+            CapacityReservationGroupResource result = await capacityReservationGroup.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CapacityReservationGroupData resourceData = result.Data;
+            CapacityReservationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.Compute
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            Compute.Models.CapacityReservationGroupGetExpand? expand = CapacityReservationGroupGetExpand.VirtualMachinesRef;
-            await foreach (Compute.CapacityReservationGroupResource item in subscriptionResource.GetCapacityReservationGroupsAsync(expand: expand))
+            CapacityReservationGroupGetExpand? expand = CapacityReservationGroupGetExpand.VirtualMachinesRef;
+            await foreach (CapacityReservationGroupResource item in subscriptionResource.GetCapacityReservationGroupsAsync(expand: expand))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CapacityReservationGroupData resourceData = item.Data;
+                CapacityReservationGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

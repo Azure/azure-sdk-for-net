@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetRollingUpgradeResourceId = Compute.VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            Compute.VirtualMachineScaleSetRollingUpgradeResource virtualMachineScaleSetRollingUpgrade = client.GetVirtualMachineScaleSetRollingUpgradeResource(virtualMachineScaleSetRollingUpgradeResourceId);
+            ResourceIdentifier virtualMachineScaleSetRollingUpgradeResourceId = VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetRollingUpgradeResource virtualMachineScaleSetRollingUpgrade = client.GetVirtualMachineScaleSetRollingUpgradeResource(virtualMachineScaleSetRollingUpgradeResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetRollingUpgradeResource result = await virtualMachineScaleSetRollingUpgrade.GetAsync();
+            VirtualMachineScaleSetRollingUpgradeResource result = await virtualMachineScaleSetRollingUpgrade.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetRollingUpgradeData resourceData = result.Data;
+            VirtualMachineScaleSetRollingUpgradeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetRollingUpgradeResourceId = Compute.VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            Compute.VirtualMachineScaleSetRollingUpgradeResource virtualMachineScaleSetRollingUpgrade = client.GetVirtualMachineScaleSetRollingUpgradeResource(virtualMachineScaleSetRollingUpgradeResourceId);
+            ResourceIdentifier virtualMachineScaleSetRollingUpgradeResourceId = VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetRollingUpgradeResource virtualMachineScaleSetRollingUpgrade = client.GetVirtualMachineScaleSetRollingUpgradeResource(virtualMachineScaleSetRollingUpgradeResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetRollingUpgradeResource result = await virtualMachineScaleSetRollingUpgrade.GetAsync();
+            VirtualMachineScaleSetRollingUpgradeResource result = await virtualMachineScaleSetRollingUpgrade.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetRollingUpgradeData resourceData = result.Data;
+            VirtualMachineScaleSetRollingUpgradeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

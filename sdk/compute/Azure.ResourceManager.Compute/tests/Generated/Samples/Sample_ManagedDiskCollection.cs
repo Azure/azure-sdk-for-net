@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Compute
                     SecureVmDiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"),
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -87,23 +87,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
                 NetworkAccessPolicy = NetworkAccessPolicy.AllowPrivate,
                 DiskAccessId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/{existing-diskAccess-name}"),
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.Compute
                     DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -169,23 +169,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Copy)
                 {
                     SourceResourceId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Import)
                 {
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.Compute
                     SourceUri = new Uri("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -250,23 +250,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Import)
                 {
                     SourceUri = new Uri("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -290,11 +290,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.ImportSecure)
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.Compute
                     SecurityType = DiskSecurityType.ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey,
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.UploadPreparedSecure)
@@ -353,12 +353,12 @@ namespace Azure.ResourceManager.Compute
                     SecurityType = DiskSecurityType.TrustedLaunch,
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -382,11 +382,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
@@ -397,12 +397,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -426,11 +426,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
@@ -441,12 +441,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -470,11 +470,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
@@ -485,12 +485,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -514,11 +514,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
@@ -529,12 +529,12 @@ namespace Azure.ResourceManager.Compute
                     },
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -558,23 +558,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk2";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Copy)
                 {
                     SourceResourceId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk1"),
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -598,22 +598,22 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
                 DataAccessAuthMode = DataAccessAuthMode.AzureActiveDirectory,
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -637,11 +637,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myPremiumV2Disk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 Sku = new DiskSku()
                 {
@@ -652,12 +652,12 @@ namespace Azure.ResourceManager.Compute
                 DiskIopsReadWrite = 125,
                 DiskMBpsReadWrite = 3000,
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -681,11 +681,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("North Central US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("North Central US"))
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
@@ -700,12 +700,12 @@ namespace Azure.ResourceManager.Compute
                     SecurityType = DiskSecurityType.TrustedLaunch,
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -729,11 +729,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 Sku = new DiskSku()
                 {
@@ -742,12 +742,12 @@ namespace Azure.ResourceManager.Compute
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -771,23 +771,23 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Upload)
                 {
                     UploadSizeBytes = 10737418752,
                 },
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -811,11 +811,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 ExtendedLocation = new ExtendedLocation()
                 {
@@ -824,12 +824,12 @@ namespace Azure.ResourceManager.Compute
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -853,21 +853,21 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -891,11 +891,11 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myDisk";
-            Compute.ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
+            ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
                 Sku = new DiskSku()
                 {
@@ -907,12 +907,12 @@ namespace Azure.ResourceManager.Compute
                 },
                 DiskSizeGB = 200,
             };
-            ArmOperation<Compute.ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
-            Compute.ManagedDiskResource result = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
+            ManagedDiskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -936,15 +936,15 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myManagedDisk";
-            Compute.ManagedDiskResource result = await collection.GetAsync(diskName);
+            ManagedDiskResource result = await collection.GetAsync(diskName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.ManagedDiskData resourceData = result.Data;
+            ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation
             string diskName = "myManagedDisk";
@@ -996,14 +996,14 @@ namespace Azure.ResourceManager.Compute
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this ManagedDiskResource
-            Compute.ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.ManagedDiskResource item in collection.GetAllAsync())
+            await foreach (ManagedDiskResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.ManagedDiskData resourceData = item.Data;
+                ManagedDiskData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

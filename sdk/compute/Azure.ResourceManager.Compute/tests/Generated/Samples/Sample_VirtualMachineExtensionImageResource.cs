@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Compute
             string publisherName = "aaaaaaaaaaaaaaaaaaaa";
             string type = "aaaaaaaaaaaaaaaaaa";
             string version = "aaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineExtensionImageResourceId = Compute.VirtualMachineExtensionImageResource.CreateResourceIdentifier(subscriptionId, location, publisherName, type, version);
-            Compute.VirtualMachineExtensionImageResource virtualMachineExtensionImage = client.GetVirtualMachineExtensionImageResource(virtualMachineExtensionImageResourceId);
+            ResourceIdentifier virtualMachineExtensionImageResourceId = VirtualMachineExtensionImageResource.CreateResourceIdentifier(subscriptionId, location, publisherName, type, version);
+            VirtualMachineExtensionImageResource virtualMachineExtensionImage = client.GetVirtualMachineExtensionImageResource(virtualMachineExtensionImageResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineExtensionImageResource result = await virtualMachineExtensionImage.GetAsync();
+            VirtualMachineExtensionImageResource result = await virtualMachineExtensionImage.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineExtensionImageData resourceData = result.Data;
+            VirtualMachineExtensionImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.Compute
             string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
             string type = "aa";
             string version = "aaa";
-            ResourceIdentifier virtualMachineExtensionImageResourceId = Compute.VirtualMachineExtensionImageResource.CreateResourceIdentifier(subscriptionId, location, publisherName, type, version);
-            Compute.VirtualMachineExtensionImageResource virtualMachineExtensionImage = client.GetVirtualMachineExtensionImageResource(virtualMachineExtensionImageResourceId);
+            ResourceIdentifier virtualMachineExtensionImageResourceId = VirtualMachineExtensionImageResource.CreateResourceIdentifier(subscriptionId, location, publisherName, type, version);
+            VirtualMachineExtensionImageResource virtualMachineExtensionImage = client.GetVirtualMachineExtensionImageResource(virtualMachineExtensionImageResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineExtensionImageResource result = await virtualMachineExtensionImage.GetAsync();
+            VirtualMachineExtensionImageResource result = await virtualMachineExtensionImage.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineExtensionImageData resourceData = result.Data;
+            VirtualMachineExtensionImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

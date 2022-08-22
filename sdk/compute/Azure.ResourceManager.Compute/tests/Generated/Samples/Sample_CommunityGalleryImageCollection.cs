@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             AzureLocation location = new AzureLocation("myLocation");
             string publicGalleryName = "publicGalleryName";
-            ResourceIdentifier communityGalleryResourceId = Compute.CommunityGalleryResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName);
-            Compute.CommunityGalleryResource communityGallery = client.GetCommunityGalleryResource(communityGalleryResourceId);
+            ResourceIdentifier communityGalleryResourceId = CommunityGalleryResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName);
+            CommunityGalleryResource communityGallery = client.GetCommunityGalleryResource(communityGalleryResourceId);
 
             // get the collection of this CommunityGalleryImageResource
-            Compute.CommunityGalleryImageCollection collection = communityGallery.GetCommunityGalleryImages();
+            CommunityGalleryImageCollection collection = communityGallery.GetCommunityGalleryImages();
 
             // invoke the operation
             string galleryImageName = "myGalleryImageName";
-            Compute.CommunityGalleryImageResource result = await collection.GetAsync(galleryImageName);
+            CommunityGalleryImageResource result = await collection.GetAsync(galleryImageName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CommunityGalleryImageData resourceData = result.Data;
+            CommunityGalleryImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             AzureLocation location = new AzureLocation("myLocation");
             string publicGalleryName = "publicGalleryName";
-            ResourceIdentifier communityGalleryResourceId = Compute.CommunityGalleryResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName);
-            Compute.CommunityGalleryResource communityGallery = client.GetCommunityGalleryResource(communityGalleryResourceId);
+            ResourceIdentifier communityGalleryResourceId = CommunityGalleryResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName);
+            CommunityGalleryResource communityGallery = client.GetCommunityGalleryResource(communityGalleryResourceId);
 
             // get the collection of this CommunityGalleryImageResource
-            Compute.CommunityGalleryImageCollection collection = communityGallery.GetCommunityGalleryImages();
+            CommunityGalleryImageCollection collection = communityGallery.GetCommunityGalleryImages();
 
             // invoke the operation
             string galleryImageName = "myGalleryImageName";
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             AzureLocation location = new AzureLocation("myLocation");
             string publicGalleryName = "publicGalleryName";
-            ResourceIdentifier communityGalleryResourceId = Compute.CommunityGalleryResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName);
-            Compute.CommunityGalleryResource communityGallery = client.GetCommunityGalleryResource(communityGalleryResourceId);
+            ResourceIdentifier communityGalleryResourceId = CommunityGalleryResource.CreateResourceIdentifier(subscriptionId, location, publicGalleryName);
+            CommunityGalleryResource communityGallery = client.GetCommunityGalleryResource(communityGalleryResourceId);
 
             // get the collection of this CommunityGalleryImageResource
-            Compute.CommunityGalleryImageCollection collection = communityGallery.GetCommunityGalleryImages();
+            CommunityGalleryImageCollection collection = communityGallery.GetCommunityGalleryImages();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.CommunityGalleryImageResource item in collection.GetAllAsync())
+            await foreach (CommunityGalleryImageResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CommunityGalleryImageData resourceData = item.Data;
+                CommunityGalleryImageData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

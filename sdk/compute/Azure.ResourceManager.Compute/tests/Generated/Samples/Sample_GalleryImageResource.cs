@@ -34,23 +34,23 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // invoke the operation
-            Compute.Models.GalleryImagePatch patch = new GalleryImagePatch()
+            GalleryImagePatch patch = new GalleryImagePatch()
             {
                 OSType = SupportedOperatingSystemType.Windows,
                 OSState = OperatingSystemStateType.Generalized,
                 HyperVGeneration = HyperVGeneration.V1,
                 Identifier = new GalleryImageIdentifier("myPublisherName", "myOfferName", "mySkuName"),
             };
-            ArmOperation<Compute.GalleryImageResource> lro = await galleryImage.UpdateAsync(WaitUntil.Completed, patch);
-            Compute.GalleryImageResource result = lro.Value;
+            ArmOperation<GalleryImageResource> lro = await galleryImage.UpdateAsync(WaitUntil.Completed, patch);
+            GalleryImageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageData resourceData = result.Data;
+            GalleryImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // invoke the operation
-            Compute.GalleryImageResource result = await galleryImage.GetAsync();
+            GalleryImageResource result = await galleryImage.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryImageData resourceData = result.Data;
+            GalleryImageData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = Compute.GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            Compute.GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
 
             // invoke the operation
             await galleryImage.DeleteAsync(WaitUntil.Completed);

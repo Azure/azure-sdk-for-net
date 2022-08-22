@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Compute
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // get the collection of this VirtualMachineRunCommandResource
-            Compute.VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
+            VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
 
             // invoke the operation
             string runCommandName = "myRunCommand";
-            Compute.VirtualMachineRunCommandData data = new VirtualMachineRunCommandData(new AzureLocation("West US"))
+            VirtualMachineRunCommandData data = new VirtualMachineRunCommandData(new AzureLocation("West US"))
             {
                 Source = new VirtualMachineRunCommandScriptSource()
                 {
@@ -56,12 +56,12 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
                 RunAsPassword = "<runAsPassword>",
                 TimeoutInSeconds = 3600,
             };
-            ArmOperation<Compute.VirtualMachineRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
-            Compute.VirtualMachineRunCommandResource result = lro.Value;
+            ArmOperation<VirtualMachineRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
+            VirtualMachineRunCommandResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineRunCommandData resourceData = result.Data;
+            VirtualMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -82,19 +82,19 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // get the collection of this VirtualMachineRunCommandResource
-            Compute.VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
+            VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
 
             // invoke the operation
             string runCommandName = "myRunCommand";
-            Compute.VirtualMachineRunCommandResource result = await collection.GetAsync(runCommandName);
+            VirtualMachineRunCommandResource result = await collection.GetAsync(runCommandName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineRunCommandData resourceData = result.Data;
+            VirtualMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -115,11 +115,11 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // get the collection of this VirtualMachineRunCommandResource
-            Compute.VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
+            VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
 
             // invoke the operation
             string runCommandName = "myRunCommand";
@@ -144,18 +144,18 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = Compute.VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            Compute.VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // get the collection of this VirtualMachineRunCommandResource
-            Compute.VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
+            VirtualMachineRunCommandCollection collection = virtualMachine.GetVirtualMachineRunCommands();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.VirtualMachineRunCommandResource item in collection.GetAllAsync())
+            await foreach (VirtualMachineRunCommandResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.VirtualMachineRunCommandData resourceData = item.Data;
+                VirtualMachineRunCommandData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

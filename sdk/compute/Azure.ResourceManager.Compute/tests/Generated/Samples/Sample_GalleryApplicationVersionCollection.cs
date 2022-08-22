@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
 
             // get the collection of this GalleryApplicationVersionResource
-            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
 
             // invoke the operation
             string galleryApplicationVersionName = "1.0.0";
-            Compute.GalleryApplicationVersionData data = new GalleryApplicationVersionData(new AzureLocation("West US"))
+            GalleryApplicationVersionData data = new GalleryApplicationVersionData(new AzureLocation("West US"))
             {
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile(new UserArtifactSource("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"))
                 {
@@ -60,12 +60,12 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
                     StorageAccountType = ImageStorageAccountType.StandardLrs,
                 },
             };
-            ArmOperation<Compute.GalleryApplicationVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryApplicationVersionName, data);
-            Compute.GalleryApplicationVersionResource result = lro.Value;
+            ArmOperation<GalleryApplicationVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryApplicationVersionName, data);
+            GalleryApplicationVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryApplicationVersionData resourceData = result.Data;
+            GalleryApplicationVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -87,20 +87,20 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
 
             // get the collection of this GalleryApplicationVersionResource
-            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
 
             // invoke the operation
             string galleryApplicationVersionName = "1.0.0";
-            Compute.Models.ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
-            Compute.GalleryApplicationVersionResource result = await collection.GetAsync(galleryApplicationVersionName, expand: expand);
+            ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
+            GalleryApplicationVersionResource result = await collection.GetAsync(galleryApplicationVersionName, expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryApplicationVersionData resourceData = result.Data;
+            GalleryApplicationVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -122,15 +122,15 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
 
             // get the collection of this GalleryApplicationVersionResource
-            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
 
             // invoke the operation
             string galleryApplicationVersionName = "1.0.0";
-            Compute.Models.ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
+            ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
             bool result = await collection.ExistsAsync(galleryApplicationVersionName, expand: expand);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -153,19 +153,19 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
 
             // get the collection of this GalleryApplicationVersionResource
-            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
 
             // invoke the operation
             string galleryApplicationVersionName = "1.0.0";
-            Compute.GalleryApplicationVersionResource result = await collection.GetAsync(galleryApplicationVersionName);
+            GalleryApplicationVersionResource result = await collection.GetAsync(galleryApplicationVersionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.GalleryApplicationVersionData resourceData = result.Data;
+            GalleryApplicationVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -187,11 +187,11 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
 
             // get the collection of this GalleryApplicationVersionResource
-            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
 
             // invoke the operation
             string galleryApplicationVersionName = "1.0.0";
@@ -217,18 +217,18 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = Compute.GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            Compute.GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
 
             // get the collection of this GalleryApplicationVersionResource
-            Compute.GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.GalleryApplicationVersionResource item in collection.GetAllAsync())
+            await foreach (GalleryApplicationVersionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.GalleryApplicationVersionData resourceData = item.Data;
+                GalleryApplicationVersionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

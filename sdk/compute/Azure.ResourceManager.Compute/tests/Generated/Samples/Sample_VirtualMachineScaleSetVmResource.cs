@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineScaleSetVmReimageContent content = new VirtualMachineScaleSetVmReimageContent()
+            VirtualMachineScaleSetVmReimageContent content = new VirtualMachineScaleSetVmReimageContent()
             {
                 TempDisk = true,
             };
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaa";
             string instanceId = "aaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.ReimageAsync(WaitUntil.Completed);
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.ReimageAllAsync(WaitUntil.Completed);
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.ReimageAllAsync(WaitUntil.Completed);
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.DeallocateAsync(WaitUntil.Completed);
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.DeallocateAsync(WaitUntil.Completed);
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.Compute
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetVmData data = new VirtualMachineScaleSetVmData(new AzureLocation("westus"))
+            VirtualMachineScaleSetVmData data = new VirtualMachineScaleSetVmData(new AzureLocation("westus"))
             {
                 Plan = new ComputePlan()
                 {
@@ -438,12 +438,12 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 {
 },
             };
-            ArmOperation<Compute.VirtualMachineScaleSetVmResource> lro = await virtualMachineScaleSetVm.UpdateAsync(WaitUntil.Completed, data);
-            Compute.VirtualMachineScaleSetVmResource result = lro.Value;
+            ArmOperation<VirtualMachineScaleSetVmResource> lro = await virtualMachineScaleSetVm.UpdateAsync(WaitUntil.Completed, data);
+            VirtualMachineScaleSetVmResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetVmData resourceData = result.Data;
+            VirtualMachineScaleSetVmData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -465,17 +465,17 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetVmData data = new VirtualMachineScaleSetVmData(new AzureLocation("westus"));
-            ArmOperation<Compute.VirtualMachineScaleSetVmResource> lro = await virtualMachineScaleSetVm.UpdateAsync(WaitUntil.Completed, data);
-            Compute.VirtualMachineScaleSetVmResource result = lro.Value;
+            VirtualMachineScaleSetVmData data = new VirtualMachineScaleSetVmData(new AzureLocation("westus"));
+            ArmOperation<VirtualMachineScaleSetVmResource> lro = await virtualMachineScaleSetVm.UpdateAsync(WaitUntil.Completed, data);
+            VirtualMachineScaleSetVmResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetVmData resourceData = result.Data;
+            VirtualMachineScaleSetVmData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -497,8 +497,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             bool? forceDeletion = true;
@@ -524,15 +524,15 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "{vmss-name}";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetVmResource result = await virtualMachineScaleSetVm.GetAsync();
+            VirtualMachineScaleSetVmResource result = await virtualMachineScaleSetVm.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetVmData resourceData = result.Data;
+            VirtualMachineScaleSetVmData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -554,15 +554,15 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "{vmss-name}";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
-            Compute.VirtualMachineScaleSetVmResource result = await virtualMachineScaleSetVm.GetAsync();
+            VirtualMachineScaleSetVmResource result = await virtualMachineScaleSetVm.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.VirtualMachineScaleSetVmData resourceData = result.Data;
+            VirtualMachineScaleSetVmData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -584,11 +584,11 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
-            Compute.Models.VirtualMachineScaleSetVmInstanceView result = await virtualMachineScaleSetVm.GetInstanceViewAsync();
+            VirtualMachineScaleSetVmInstanceView result = await virtualMachineScaleSetVm.GetInstanceViewAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -610,8 +610,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaa";
             string instanceId = "aaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             bool? skipShutdown = true;
@@ -637,8 +637,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.PowerOffAsync(WaitUntil.Completed);
@@ -663,8 +663,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aa";
             string instanceId = "aaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.RestartAsync(WaitUntil.Completed);
@@ -689,8 +689,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaa";
             string instanceId = "aaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.RestartAsync(WaitUntil.Completed);
@@ -715,8 +715,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.PowerOnAsync(WaitUntil.Completed);
@@ -741,8 +741,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.PowerOnAsync(WaitUntil.Completed);
@@ -767,8 +767,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.RedeployAsync(WaitUntil.Completed);
@@ -793,8 +793,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.RedeployAsync(WaitUntil.Completed);
@@ -819,12 +819,12 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "ResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             int? sasUriExpirationTimeInMinutes = 60;
-            Compute.Models.RetrieveBootDiagnosticsDataResult result = await virtualMachineScaleSetVm.RetrieveBootDiagnosticsDataAsync(sasUriExpirationTimeInMinutes: sasUriExpirationTimeInMinutes);
+            RetrieveBootDiagnosticsDataResult result = await virtualMachineScaleSetVm.RetrieveBootDiagnosticsDataAsync(sasUriExpirationTimeInMinutes: sasUriExpirationTimeInMinutes);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -846,8 +846,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.PerformMaintenanceAsync(WaitUntil.Completed);
@@ -872,8 +872,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaa";
             string instanceId = "aaaa";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.PerformMaintenanceAsync(WaitUntil.Completed);
@@ -898,8 +898,8 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "ResourceGroup";
             string virtualMachineScaleSetName = "VmScaleSetName";
             string instanceId = "InstanceId";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
             await virtualMachineScaleSetVm.SimulateEvictionAsync();
@@ -924,19 +924,19 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             string instanceId = "0";
-            ResourceIdentifier virtualMachineScaleSetVmResourceId = Compute.VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
-            Compute.VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
+            ResourceIdentifier virtualMachineScaleSetVmResourceId = VirtualMachineScaleSetVmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId);
+            VirtualMachineScaleSetVmResource virtualMachineScaleSetVm = client.GetVirtualMachineScaleSetVmResource(virtualMachineScaleSetVmResourceId);
 
             // invoke the operation
-            Compute.Models.RunCommandInput input = new RunCommandInput("RunPowerShellScript")
+            RunCommandInput input = new RunCommandInput("RunPowerShellScript")
             {
                 Script =
 {
 "Write-Host Hello World!"
 },
             };
-            ArmOperation<Compute.Models.VirtualMachineRunCommandResult> lro = await virtualMachineScaleSetVm.RunCommandAsync(WaitUntil.Completed, input);
-            Compute.Models.VirtualMachineRunCommandResult result = lro.Value;
+            ArmOperation<VirtualMachineRunCommandResult> lro = await virtualMachineScaleSetVm.RunCommandAsync(WaitUntil.Completed, input);
+            VirtualMachineRunCommandResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

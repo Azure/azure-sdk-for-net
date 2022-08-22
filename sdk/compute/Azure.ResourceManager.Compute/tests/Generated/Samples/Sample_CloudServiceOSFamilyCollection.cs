@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this CloudServiceOSFamilyResource
             AzureLocation location = new AzureLocation("westus2");
-            Compute.CloudServiceOSFamilyCollection collection = subscriptionResource.GetCloudServiceOSFamilies(location);
+            CloudServiceOSFamilyCollection collection = subscriptionResource.GetCloudServiceOSFamilies(location);
 
             // invoke the operation
             string osFamilyName = "3";
-            Compute.CloudServiceOSFamilyResource result = await collection.GetAsync(osFamilyName);
+            CloudServiceOSFamilyResource result = await collection.GetAsync(osFamilyName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            Compute.CloudServiceOSFamilyData resourceData = result.Data;
+            CloudServiceOSFamilyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this CloudServiceOSFamilyResource
             AzureLocation location = new AzureLocation("westus2");
-            Compute.CloudServiceOSFamilyCollection collection = subscriptionResource.GetCloudServiceOSFamilies(location);
+            CloudServiceOSFamilyCollection collection = subscriptionResource.GetCloudServiceOSFamilies(location);
 
             // invoke the operation
             string osFamilyName = "3";
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Compute
 
             // get the collection of this CloudServiceOSFamilyResource
             AzureLocation location = new AzureLocation("westus2");
-            Compute.CloudServiceOSFamilyCollection collection = subscriptionResource.GetCloudServiceOSFamilies(location);
+            CloudServiceOSFamilyCollection collection = subscriptionResource.GetCloudServiceOSFamilies(location);
 
             // invoke the operation and iterate over the result
-            await foreach (Compute.CloudServiceOSFamilyResource item in collection.GetAllAsync())
+            await foreach (CloudServiceOSFamilyResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                Compute.CloudServiceOSFamilyData resourceData = item.Data;
+                CloudServiceOSFamilyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
