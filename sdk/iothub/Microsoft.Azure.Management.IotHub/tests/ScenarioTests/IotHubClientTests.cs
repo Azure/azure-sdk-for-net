@@ -96,6 +96,54 @@ namespace IotHub.Tests.ScenarioTests
                 iotHub.Tags.Count().Should().Be(tags.Count);
                 iotHub.Tags.Should().BeEquivalentTo(tags);
 
+                // Migrate RootCertificate to G2
+                properties.RootCertificate = new RootCertificateProperties()
+                {
+                    EnableRootCertificateV2 = true
+                };
+
+                iotHub = await _iotHubClient.IotHubResource
+                                    .CreateOrUpdateAsync(
+                                        resourceGroup.Name,
+                                        IotHubTestUtilities.DefaultIotHubName,
+                                        new IotHubDescription
+                                        {
+                                            Location = IotHubTestUtilities.DefaultLocation,
+                                            Sku = new IotHubSkuInfo
+                                            {
+                                                Name = IotHubSku.S1,
+                                                Capacity = 1,
+                                            },
+                                            Properties = properties,
+                                        })
+                                    .ConfigureAwait(false);
+
+                iotHub.Properties.RootCertificate.EnableRootCertificateV2.Should().BeTrue();
+
+                properties.RootCertificate = new RootCertificateProperties()
+                {
+                    EnableRootCertificateV2 = false
+                };
+
+                // Migrate RootCertificate to Baltimore
+                iotHub = await _iotHubClient.IotHubResource
+                    .CreateOrUpdateAsync(
+                        resourceGroup.Name,
+                        IotHubTestUtilities.DefaultIotHubName,
+                        new IotHubDescription
+                        {
+                            Location = IotHubTestUtilities.DefaultLocation,
+                            Sku = new IotHubSkuInfo
+                            {
+                                Name = IotHubSku.S1,
+                                Capacity = 1,
+                            },
+                            Properties = properties,
+                        })
+                    .ConfigureAwait(false);
+
+                iotHub.Properties.RootCertificate.EnableRootCertificateV2.Should().BeFalse();
+
                 UserSubscriptionQuotaListResult subscriptionQuota = await _iotHubClient.ResourceProviderCommon
                     .GetSubscriptionQuotaAsync()
                     .ConfigureAwait(false);
@@ -242,12 +290,21 @@ namespace IotHub.Tests.ScenarioTests
                         IotHubTestUtilities.DefaultResourceGroupName,
                         IotHubTestUtilities.DefaultIotHubName)
                     .ConfigureAwait(false);
-                await _iotHubClient.IotHub
-                    .ManualFailoverAsync(
-                        IotHubTestUtilities.DefaultIotHubName,
-                        IotHubTestUtilities.DefaultResourceGroupName,
-                        IotHubTestUtilities.DefaultFailoverLocation)
-                    .ConfigureAwait(false);
+                try
+                {
+                    await _iotHubClient.IotHub
+                        .ManualFailoverAsync(
+                            IotHubTestUtilities.DefaultIotHubName,
+                            IotHubTestUtilities.DefaultResourceGroupName,
+                            IotHubTestUtilities.DefaultFailoverLocation)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    throw;
+                }
+
                 var iotHubAfterFailover = await _iotHubClient.IotHubResource
                     .GetAsync(
                         IotHubTestUtilities.DefaultResourceGroupName,
