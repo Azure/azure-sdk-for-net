@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.12.0-beta.1 (Unreleased)
-- This release contains bug fixes to improve quality.
+- Added support for receiving queue messages with bugged client-side encryption metadata from previous library versions.
 
 ## 12.11.0 (2022-07-07)
 - Includes all features from 12.10.1-beta.1.
