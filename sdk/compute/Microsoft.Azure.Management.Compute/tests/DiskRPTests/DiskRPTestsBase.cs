@@ -1717,7 +1717,6 @@ namespace Compute.Tests.DiskRPTests
                 Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
                 disk.OptimizedForFrequentAttach = true;
 
-
                 try
                 {
                     // **********
@@ -1742,7 +1741,6 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.True(diskOut.OptimizedForFrequentAttach);
 
-
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
                     Assert.NotNull(accessUri.AccessSAS);
@@ -1765,7 +1763,6 @@ namespace Compute.Tests.DiskRPTests
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.False(diskOut.OptimizedForFrequentAttach);
-
 
                     // End disk access
                     m_CrpClient.Disks.RevokeAccess(rgName, diskName);

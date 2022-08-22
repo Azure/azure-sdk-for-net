@@ -47,6 +47,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Disk_CRUD_StandardSSDZRSDisk()
         {
+            //
             SSDZRSDisk_CRUD_Execute(DiskCreateOption.Empty, StorageAccountTypes.StandardSSDZRS, "Disk_CRUD_StandardSSDZRSDisk", diskSizeGB: 32, location: "eastus2euap");
         }
         
@@ -136,7 +137,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Disk_OptimizeFrequentAttach()
         {
-            Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Import, "Disk_OptimizeFrequentAttach", diskSizeGB: 150, location: "eastus2euap");
+            Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Empty, "Disk_OptimizeFrequentAttach", diskSizeGB: 150, location: "eastus2euap");
         }
     }
 }
