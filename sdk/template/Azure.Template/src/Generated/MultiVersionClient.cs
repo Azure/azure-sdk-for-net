@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -236,6 +237,48 @@ namespace Azure.Template
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<EvolvingModel>> SetEvolvingModelAsync(EvolvingModel value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            RequestContent content = value.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await SetEvolvingModelAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(EvolvingModel.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<EvolvingModel> SetEvolvingModel(EvolvingModel value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            RequestContent content = value.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = SetEvolvingModel(content, context);
+            return Response.FromValue(EvolvingModel.FromResponse(response), response);
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken)
+        {
+            if (cancellationToken == CancellationToken.None)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         internal HttpMessage CreateSetEvolvingModelRequest(RequestContent content, RequestContext context)

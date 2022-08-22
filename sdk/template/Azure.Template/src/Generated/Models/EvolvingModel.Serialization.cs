@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Template.Models
+namespace Azure.Template
 {
     public partial class EvolvingModel : IUtf8JsonSerializable
     {
@@ -67,6 +67,19 @@ namespace Azure.Template.Models
                 }
             }
             return new EvolvingModel(requiredInt, requiredString, Optional.ToNullable(optionalInt), optionalString.Value);
+        }
+
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
+        internal static EvolvingModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEvolvingModel(document.RootElement);
         }
     }
 }

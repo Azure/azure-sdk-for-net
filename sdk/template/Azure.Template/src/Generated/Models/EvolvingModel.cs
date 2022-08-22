@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Template.Models
+namespace Azure.Template
 {
     /// <summary> The EvolvingModel. </summary>
     public partial class EvolvingModel
