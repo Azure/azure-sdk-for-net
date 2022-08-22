@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer
             MediaSubscriptionId = mediaSubscriptionId;
         }
 
-        internal CallConnectionProperties(CallConnectionPropertiesDtoInternal callConnectionPropertiesDtoInternal)
+        internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
         {
             CallConnectionId = callConnectionPropertiesDtoInternal.CallConnectionId;
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;

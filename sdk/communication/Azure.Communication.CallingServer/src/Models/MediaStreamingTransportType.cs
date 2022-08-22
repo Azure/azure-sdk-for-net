@@ -8,7 +8,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The states of a call.
     /// </summary>
-    [CodeGenModel("MediaStreamingTransportTypeDto", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
+    [CodeGenModel("MediaStreamingTransportType", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
     public readonly partial struct MediaStreamingTransportType
     {
     }

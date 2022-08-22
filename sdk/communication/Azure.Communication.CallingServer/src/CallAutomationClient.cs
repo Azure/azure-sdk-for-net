@@ -392,7 +392,7 @@ namespace Azure.Communication.CallingServer
             {
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
-                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(options.Source.Identifier));
+                CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.Source.Identifier));
                 sourceDto.CallerId = options.Source.CallerId == null ? null : new PhoneNumberIdentifierModel(options.Source.CallerId.PhoneNumber);
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
@@ -414,7 +414,7 @@ namespace Azure.Communication.CallingServer
 
         private static CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
-            CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(options.Source.Identifier));
+            CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.Source.Identifier));
             sourceDto.CallerId = options.Source.CallerId == null ? null : new PhoneNumberIdentifierModel(options.Source.CallerId.PhoneNumber);
 
             CreateCallRequestInternal request = new CreateCallRequestInternal(
@@ -427,17 +427,12 @@ namespace Azure.Communication.CallingServer
             return request;
         }
 
-        private static MediaStreamingConfigurationDtoInternal CreateMediaStreamingConfigurationInternal(MediaStreamingConfiguration configuration)
+        private static MediaStreamingConfigurationInternal CreateMediaStreamingConfigurationInternal(MediaStreamingConfiguration configuration)
         {
             return configuration == default
                 ? default
-                : new MediaStreamingConfigurationDtoInternal()
-                {
-                    AudioChannelType = configuration.AudioChannelType,
-                    ContentType = configuration.ContentType,
-                    TransportType = configuration.TransportType,
-                    TransportUrl = configuration.TransportUrl.AbsoluteUri
-                };
+                : new MediaStreamingConfigurationInternal(configuration.TransportUrl.AbsoluteUri, configuration.TransportType, configuration.ContentType,
+                configuration.AudioChannelType);
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>
