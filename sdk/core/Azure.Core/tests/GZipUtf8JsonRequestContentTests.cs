@@ -51,27 +51,20 @@ namespace Azure.Core.Tests
         [Test]
         public void GZipRequestContent_BufferCopy_TryComputeLength()
         {
-            BinaryData data = BinaryData.FromObjectAsJson(
-                // Use an anonymous type to create the payload
-                new[] {
-                    new
-                    {
-                        Time = DateTime.Now,
-                        Computer = "Computer1",
-                        AdditionalContext = 2,
-                    },
-                    new
-                    {
-                        Time = DateTime.Now,
-                        Computer = "Computer2",
-                        AdditionalContext = 3
-                    },
-                });
-            RequestContent rc = RequestContent.Create(data);
+            object payload = GetObj();
+            RequestContent rc = RequestContent.Create(payload);
             GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent(rc);
             long length = 0;
             gzContent.TryComputeLength(out length);
-            Assert.Greater(length, 110);
+            Assert.Greater(length, 10);
+
+            string deserialized = UncompressAndDeserialize(gzContent);
+            Assert.IsNotEmpty(deserialized);
+            Console.WriteLine(deserialized);
+
+            deserialized = UncompressAndDeserialize(gzContent);
+            Assert.IsNotEmpty(deserialized);
+            Console.WriteLine(deserialized);
         }
 
         [Test]

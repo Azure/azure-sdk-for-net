@@ -29,7 +29,8 @@ namespace Azure.Monitor.Ingestion.Tests
 
         private LogsIngestionClient CreateClient()
         {
-            return new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential);
+            var clientOptions = InstrumentClientOptions(new LogsIngestionClientOptions());
+            return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential, clientOptions));
         }
 
         [LiveOnly]
@@ -117,6 +118,7 @@ namespace Azure.Monitor.Ingestion.Tests
             IEnumerable<Tuple<List<IEnumerable>, BinaryData>> x = LogsIngestionClient.Batch(entries);
             Assert.Greater(x.Count(), 1);
         }
+
         [LiveOnly]
         [Test]
         public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()

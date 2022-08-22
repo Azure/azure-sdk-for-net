@@ -15,7 +15,7 @@ namespace Azure.Core
     {
 #pragma warning disable CA2213 // Disposable fields should be disposed
         private GZipStream _gzip;
-        private readonly MemoryStream _stream;
+        private MemoryStream _stream;
 #pragma warning restore CA2213 // Disposable fields should be disposed
         private readonly RequestContent _content;
 
@@ -41,8 +41,20 @@ namespace Azure.Core
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
+#if NETFRAMEWORK
+            MemoryStream tempStream = new MemoryStream();
+            await JsonWriter.FlushAsync(cancellation).ConfigureAwait(false);
+            _gzip.Dispose();
+            await _content.WriteToAsync(tempStream, cancellation).ConfigureAwait(false);
+            tempStream.Position = 0;
+            tempStream.CopyTo(stream);
+            _stream = tempStream;
+            _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
+            JsonWriter.Reset(_gzip);
+#else
             await FlushAsync().ConfigureAwait(false);
             await _content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+#endif
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
@@ -54,6 +66,7 @@ namespace Azure.Core
             _content.WriteTo(tempStream, cancellation);
             tempStream.Position = 0;
             tempStream.CopyTo(stream);
+            _stream = tempStream;
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             JsonWriter.Reset(_gzip);
 #else
@@ -65,12 +78,6 @@ namespace Azure.Core
         public override bool TryComputeLength(out long length)
         {
             Flush();
-#if NETFRAMEWORK
-            _gzip.Dispose();
-            _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
-            JsonWriter.Reset(_gzip);
-#else
-#endif
             length = _stream.Length;
             return true;
         }
@@ -78,19 +85,31 @@ namespace Azure.Core
         public override void Dispose()
         {
             JsonWriter.Dispose();
+            _gzip.Dispose();
             _content.Dispose();
+            _stream.Dispose();
         }
 
         private void Flush()
         {
             JsonWriter.Flush();
             _gzip.Flush();
+#if NETFRAMEWORK
+            _gzip.Dispose();
+            _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
+            JsonWriter.Reset(_gzip);
+#endif
         }
 
         private async Task FlushAsync()
         {
             await JsonWriter.FlushAsync().ConfigureAwait(false);
             await _gzip.FlushAsync().ConfigureAwait(false);
+#if NETFRAMEWORK
+            _gzip.Dispose();
+            _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
+            JsonWriter.Reset(_gzip);
+#endif
         }
     }
 }

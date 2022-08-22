@@ -174,7 +174,8 @@ namespace Azure.Monitor.Ingestion
                 foreach (Tuple<List<T>, BinaryData> result in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-                    response = Upload(ruleId, streamName, result.Item2, "gzip", requestContext);
+                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, result.Item2, "gzip", requestContext);
+                    response = _pipeline.ProcessMessage(message, requestContext, cancellationToken);
                     if (response.Status != 204) //and response.Content == 500)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
@@ -245,7 +246,9 @@ namespace Azure.Monitor.Ingestion
                 foreach (Tuple<List<T>, BinaryData> result in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-                    response = await UploadAsync(ruleId, streamName, result.Item2, "gzip", requestContext).ConfigureAwait(false);
+
+                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, result.Item2, "gzip", requestContext);
+                    response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
                     if (response.Status != 204) //and response.Content == 500)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
