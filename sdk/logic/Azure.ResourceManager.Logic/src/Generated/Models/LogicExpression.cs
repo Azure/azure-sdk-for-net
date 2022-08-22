@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The text. </summary>
         public string Text { get; }
         /// <summary>
-        /// Anything.
+        /// Anything
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

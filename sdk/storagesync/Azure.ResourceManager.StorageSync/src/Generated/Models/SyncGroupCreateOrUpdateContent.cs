@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary>
-        /// The parameters used to create the sync group.
+        /// The parameters used to create the sync group
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The write behavior for the operation. </summary>
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
         /// <summary>
-        /// The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean)..
+        /// The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData IgnoreNullValues { get; set; }
         /// <summary>
-        /// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string)..
+        /// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

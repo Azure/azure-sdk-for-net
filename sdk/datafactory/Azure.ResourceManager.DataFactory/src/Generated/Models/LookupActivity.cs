@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Lookup activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary>
-        /// Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean)..
+        /// Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

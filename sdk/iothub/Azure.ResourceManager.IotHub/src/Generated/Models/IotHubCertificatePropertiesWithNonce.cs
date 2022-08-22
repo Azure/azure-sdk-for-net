@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The certificate&apos;s expiration date and time. </summary>
         public DateTimeOffset? ExpireOn { get; }
         /// <summary>
-        /// The certificate&apos;s thumbprint..
+        /// The certificate&apos;s thumbprint.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The certificate&apos;s verification code that will be used for proof of possession. </summary>
         public string VerificationCode { get; }
         /// <summary>
-        /// The certificate content.
+        /// The certificate content
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

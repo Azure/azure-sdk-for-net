@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
         public string ThumbprintAlgorithm { get; set; }
         /// <summary>
-        /// This must match the thumbprint from the name..
+        /// This must match the thumbprint from the name.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </summary>
         public BatchAccountCertificateFormat? Format { get; set; }
         /// <summary>
-        /// The maximum size is 10KB..
+        /// The maximum size is 10KB.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

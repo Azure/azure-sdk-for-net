@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The time that the operation finished. </summary>
         public string EndTime { get; }
         /// <summary>
-        /// Additional properties of the operation result..
+        /// Additional properties of the operation result.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

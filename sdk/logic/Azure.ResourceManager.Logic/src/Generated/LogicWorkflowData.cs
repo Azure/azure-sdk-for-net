@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The integration service environment. </summary>
         public LogicResourceReference IntegrationServiceEnvironment { get; set; }
         /// <summary>
-        /// The definition..
+        /// The definition.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

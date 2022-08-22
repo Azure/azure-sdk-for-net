@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetLocation DataLocation { get; set; }
         /// <summary>
-        /// The sheet name of excel file. Type: string (or Expression with resultType string)..
+        /// The sheet name of excel file. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SheetName { get; set; }
         /// <summary>
-        /// The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer).
+        /// The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SheetIndex { get; set; }
         /// <summary>
-        /// The partial data of one sheet. Type: string (or Expression with resultType string)..
+        /// The partial data of one sheet. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Range { get; set; }
         /// <summary>
-        /// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean)..
+        /// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The data compression method used for the json dataset. </summary>
         public DatasetCompression Compression { get; set; }
         /// <summary>
-        /// The null value string. Type: string (or Expression with resultType string)..
+        /// The null value string. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

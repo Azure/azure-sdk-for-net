@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// HDInsight cluster URI. Type: string (or Expression with resultType string)..
+        /// HDInsight cluster URI. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ClusterUri { get; set; }
         /// <summary>
-        /// HDInsight cluster user name. Type: string (or Expression with resultType string)..
+        /// HDInsight cluster user name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> A reference to the Azure SQL linked service that points to the HCatalog database. </summary>
         public FactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EncryptedCredential { get; set; }
         /// <summary>
-        /// Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean..
+        /// Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData IsEspEnabled { get; set; }
         /// <summary>
-        /// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string)..
+        /// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

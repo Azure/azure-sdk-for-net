@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType string)..
+        /// The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FolderPath { get; set; }
         /// <summary>
-        /// The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string)..
+        /// The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of dataset storage location. </summary>
         internal string DatasetLocationType { get; set; }
         /// <summary>
-        /// Specify the folder path of dataset. Type: string (or Expression with resultType string).
+        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FolderPath { get; set; }
         /// <summary>
-        /// Specify the file name of dataset. Type: string (or Expression with resultType string)..
+        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

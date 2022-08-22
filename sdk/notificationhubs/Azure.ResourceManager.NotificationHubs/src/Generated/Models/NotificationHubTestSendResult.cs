@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> send failure. </summary>
         public int? Failure { get; set; }
         /// <summary>
-        /// actual failure description.
+        /// actual failure description
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string)..
+        /// Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FolderPath { get; set; }
         /// <summary>
-        /// The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string)..
+        /// The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

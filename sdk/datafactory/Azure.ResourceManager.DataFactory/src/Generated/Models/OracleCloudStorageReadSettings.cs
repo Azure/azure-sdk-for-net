@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean)..
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Recursive { get; set; }
         /// <summary>
-        /// Oracle Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string)..
+        /// Oracle Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData WildcardFolderPath { get; set; }
         /// <summary>
-        /// Oracle Cloud Storage wildcardFileName. Type: string (or Expression with resultType string)..
+        /// Oracle Cloud Storage wildcardFileName. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData WildcardFileName { get; set; }
         /// <summary>
-        /// The prefix filter for the Oracle Cloud Storage object name. Type: string (or Expression with resultType string)..
+        /// The prefix filter for the Oracle Cloud Storage object name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Prefix { get; set; }
         /// <summary>
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string)..
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
         /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string)..
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PartitionRootPath { get; set; }
         /// <summary>
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean)..
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
         /// <summary>
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary>
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

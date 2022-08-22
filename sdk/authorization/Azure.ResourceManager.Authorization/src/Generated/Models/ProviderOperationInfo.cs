@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> The operation origin. </summary>
         public string Origin { get; }
         /// <summary>
-        /// The operation properties..
+        /// The operation properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Time for the job stage in UTC ISO 8601 format. </summary>
         public DateTimeOffset? StageOn { get; }
         /// <summary>
-        /// Job Stage Details.
+        /// Job Stage Details
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

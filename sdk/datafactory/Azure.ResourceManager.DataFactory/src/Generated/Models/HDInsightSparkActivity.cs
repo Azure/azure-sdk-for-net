@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The root path in &apos;sparkJobLinkedService&apos; for all the job’s files. Type: string (or Expression with resultType string)..
+        /// The root path in &apos;sparkJobLinkedService&apos; for all the job’s files. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RootPath { get; set; }
         /// <summary>
-        /// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string)..
+        /// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The application&apos;s Java/Spark main class. </summary>
         public string ClassName { get; set; }
         /// <summary>
-        /// The user to impersonate that will execute the job. Type: string (or Expression with resultType string)..
+        /// The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

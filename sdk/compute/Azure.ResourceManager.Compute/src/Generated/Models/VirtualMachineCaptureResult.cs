@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> the version of the content. </summary>
         public string ContentVersion { get; }
         /// <summary>
-        /// parameters of the captured virtual machine.
+        /// parameters of the captured virtual machine
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
