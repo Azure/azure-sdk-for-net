@@ -21,9 +21,7 @@ namespace Azure.Template
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
-        // TODO: yuck
-        private readonly MultiVersionClientOptions.ServiceVersion _serviceVersion;
+        //private readonly MultiVersionClientOptions.ServiceVersion _serviceVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -60,32 +58,49 @@ namespace Azure.Template
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
-            _serviceVersion = options.TargetVersion;
         }
 
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call ServiceV1OperationAsync and parse the result.
+        /// This sample shows how to call SetEvolvingModelAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new MultiVersionClient(endpoint, credential);
         /// 
-        /// Response response = await client.ServiceV1OperationAsync();
+        /// Response response = await client.SetEvolvingModelAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// Console.WriteLine(result.GetProperty("requiredInt").ToString());
+        /// Console.WriteLine(result.GetProperty("requiredString").ToString());
+        /// Console.WriteLine(result.GetProperty("optionalInt").ToString());
+        /// Console.WriteLine(result.GetProperty("optionalString").ToString());
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> ServiceV1OperationAsync(RequestContext context = null)
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EvolvingModel</c>:
+        /// <code>{
+        ///   requiredInt: number, # Required. Value type property available in 2022-01-01
+        ///   requiredString: string, # Required. Reference type property available in 2022-02-02
+        ///   optionalInt: number, # Optional. Value type property added in 2022-02-02
+        ///   optionalString: string, # Optional. Reference type property added in 2022-02-02
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> SetEvolvingModelAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.ServiceV1Operation");
+            using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.SetEvolvingModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateServiceV1OperationRequest(context);
+                using HttpMessage message = CreateSetEvolvingModelRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -97,27 +112,45 @@ namespace Azure.Template
 
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call ServiceV1Operation and parse the result.
+        /// This sample shows how to call SetEvolvingModel and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new MultiVersionClient(endpoint, credential);
         /// 
-        /// Response response = client.ServiceV1Operation();
+        /// Response response = client.SetEvolvingModel();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
+        /// Console.WriteLine(result.GetProperty("requiredInt").ToString());
+        /// Console.WriteLine(result.GetProperty("requiredString").ToString());
+        /// Console.WriteLine(result.GetProperty("optionalInt").ToString());
+        /// Console.WriteLine(result.GetProperty("optionalString").ToString());
         /// ]]></code>
         /// </example>
-        public virtual Response ServiceV1Operation(RequestContext context = null)
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EvolvingModel</c>:
+        /// <code>{
+        ///   requiredInt: number, # Required. Value type property available in 2022-01-01
+        ///   requiredString: string, # Required. Reference type property available in 2022-02-02
+        ///   optionalInt: number, # Optional. Value type property added in 2022-02-02
+        ///   optionalString: string, # Optional. Reference type property added in 2022-02-02
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response SetEvolvingModel(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.ServiceV1Operation");
+            using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.SetEvolvingModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateServiceV1OperationRequest(context);
+                using HttpMessage message = CreateSetEvolvingModelRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -127,104 +160,14 @@ namespace Azure.Template
             }
         }
 
-        /// <summary>Servicev2Operation method. Added in service version 2022-02-02. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call ServiceV2OperationAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new MultiVersionClient(endpoint, credential);
-        /// 
-        /// Response response = await client.ServiceV2OperationAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// </example>
-        public virtual async Task<Response> ServiceV2OperationAsync(RequestContext context = null)
-        {
-            // Generator knows from Cadl @added decorator which version an operation was added in.
-            if (_serviceVersion < MultiVersionClientOptions.ServiceVersion.V2022_02_02)
-            {
-                throw new NotSupportedException($"Operation not available in service version {_serviceVersion}");
-            }
-
-            using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.ServiceV2Operation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateServiceV2OperationRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call ServiceV2Operation and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new MultiVersionClient(endpoint, credential);
-        /// 
-        /// Response response = client.ServiceV2Operation();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// </example>
-        public virtual Response ServiceV2Operation(RequestContext context = null)
-        {
-            if (_serviceVersion < MultiVersionClientOptions.ServiceVersion.V2022_02_02)
-            {
-                throw new NotSupportedException($"Operation not available in service version {_serviceVersion}");
-            }
-
-            using var scope = ClientDiagnostics.CreateScope("MultiVersionClient.ServiceV2Operation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateServiceV2OperationRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateServiceV1OperationRequest(RequestContext context)
+        internal HttpMessage CreateSetEvolvingModelRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/ops/v1op", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateServiceV2OperationRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/ops/v2op", false);
+            uri.AppendPath("/ops/evolve", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

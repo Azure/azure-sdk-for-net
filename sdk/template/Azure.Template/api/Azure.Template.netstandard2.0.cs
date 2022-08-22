@@ -6,10 +6,8 @@ namespace Azure.Template
         public MultiVersionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MultiVersionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.MultiVersionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response ServiceV1Operation(Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ServiceV1OperationAsync(Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response ServiceV2Operation(Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ServiceV2OperationAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SetEvolvingModel(Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetEvolvingModelAsync(Azure.RequestContext context = null) { throw null; }
     }
     public partial class MultiVersionClientOptions : Azure.Core.ClientOptions
     {
