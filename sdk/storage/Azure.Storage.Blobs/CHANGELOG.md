@@ -1,5 +1,8 @@
 # Release History
 
+## 12.13.1 (Unreleased)
+- Added support for downloading blobs with bugged client-side encryption metadata from previous library versions.
+
 ## 12.13.0 (2022-07-07)
 - Includes all features from 12.13.0-beta.1.
 
