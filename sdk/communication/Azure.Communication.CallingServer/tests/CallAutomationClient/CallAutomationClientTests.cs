@@ -14,26 +14,6 @@ namespace Azure.Communication.CallingServer
 {
     public class CallAutomationClientTests : CallAutomationTestBase
     {
-        private const string NoneMediaSubscriptionId = "null";
-        private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
-        private const string SuccessfulCallConnectionProperties = "{{"
-                + "\"callConnectionId\": \"callConnectionId\","
-                + "\"serverCallId\": \"serverCallId\","
-                + "\"source\": {{"
-                + "\"identifier\": {{"
-                + "\"rawId\": \"dummySourceUser\","
-                + "\"kind\": \"communicationUser\""
-                + "}}"
-                + "}},"
-                + "\"targets\": [{{"
-                + "\"rawId\": \"dummyTargetUser\","
-                + "\"kind\": \"communicationUser\""
-                + "}}],"
-                + "\"callConnectionState\": \"connecting\","
-                + "\"subject\": \"subject\","
-                + "\"callbackUri\": \"https://localhost\","
-                + "\"mediaSubscriptionId\": {0}"
-                + "}}";
         private readonly MediaStreamingConfiguration _mediaStreamingConfiguration = new MediaStreamingConfiguration()
         {
             AudioChannelType = MediaStreamingAudioChannelType.Unmixed,
@@ -71,7 +51,7 @@ namespace Azure.Communication.CallingServer
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallWithOptionsAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext)
             {
                 CallbackEndpoint = callbackUri,
@@ -82,14 +62,14 @@ namespace Azure.Communication.CallingServer
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
-            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCallWithOptions_200OK(string incomingCallContext, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext)
             {
                 CallbackEndpoint = callbackUri,
@@ -100,8 +80,8 @@ namespace Azure.Communication.CallingServer
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
-            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -235,7 +215,7 @@ namespace Azure.Communication.CallingServer
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallWithOptionsAsync_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
                 source: source,
                 targets: targets,
@@ -250,14 +230,14 @@ namespace Azure.Communication.CallingServer
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
             verifyCallConnectionProperties(result.CallConnectionProperties);
-            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCallWithOptions_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
                 source: source,
                 targets: targets,
@@ -272,8 +252,8 @@ namespace Azure.Communication.CallingServer
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
             verifyCallConnectionProperties(result.CallConnectionProperties);
-            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
             Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
