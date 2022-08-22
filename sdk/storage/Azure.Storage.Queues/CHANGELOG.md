@@ -1,6 +1,6 @@
 # Release History
 
-## 12.11.1 (Unreleased)
+## 12.11.1 (2022-08-22)
 - Added support for receiving queue messages with bugged client-side encryption metadata from previous library versions.
 
 ## 12.11.0 (2022-07-07)
