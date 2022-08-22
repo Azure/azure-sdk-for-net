@@ -15,6 +15,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Script.Abstractions.Description.Binding;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners;
@@ -104,6 +105,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             // BindToStream will also handle the custom Stream-->T converters.
             rule.BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
 
+            // Bind to generic reference type
+            rule.BindToInput<RichBindingReferenceType>((attr) => CreateReference(attr));
+
             // Normal blob
             // These are not converters because Blob/Page/Append affects how we *create* the blob.
             rule.BindToInput<BlockBlobClient>((attr, cts) => CreateBlobReference<BlockBlobClient>(attr, cts));
@@ -111,7 +115,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             rule.BindToInput<AppendBlobClient>((attr, cts) => CreateBlobReference<AppendBlobClient>(attr, cts));
             rule.BindToInput<BlobClient>((attr, cts) => CreateBlobReference<BlobClient>(attr, cts));
             rule.BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
-            rule.BindToInput<RichBindingReferenceType>((attr, cts) => CreateBlobReference<RichBindingReferenceType>(attr, cts));
 
             // If caching is enabled, create a binding for that
             if (_functionDataCache != null && _functionDataCache.IsEnabled)
@@ -129,6 +132,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             RegisterCommonConverters(rule);
             rule.AddConverter(new StorageBlobConverter<BlobClient>());
+            rule.AddConverter<BlobBaseClient, RichBindingReferenceType>(blob => CreateReferenceConverter(blob));
+        }
+
+        private static RichBindingReferenceType CreateReferenceConverter(BlobBaseClient input)
+        {
+            // figure out connection string
+            var referenceType = new RichBindingReferenceType();
+            referenceType.Properties.Add("account_name", input.AccountName);
+            referenceType.Properties.Add("blob_container", input.BlobContainerName);
+            referenceType.Properties.Add("blob_name", input.Name);
+            return referenceType;
         }
 
         private void InitializeBlobTriggerBindings(ExtensionConfigContext context)
@@ -147,13 +161,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private void RegisterCommonConverters<T>(FluentBindingRule<T> rule) where T : Attribute
 #pragma warning restore CS0618 // Type or member is obsolete
         {
-            //  Converter manager already has Stream-->Byte[],String,TextReader
+            // Converter manager already has Stream-->Byte[],String,TextReader
             rule.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
             // Blob type is a property of an existing blob.
             rule.AddConverter(new StorageBlobConverter<AppendBlobClient>());
             rule.AddConverter(new StorageBlobConverter<BlockBlobClient>());
             rule.AddConverter(new StorageBlobConverter<PageBlobClient>());
-            rule.AddConverter(new StorageBlobConverter<RichBindingReferenceType>());
         }
 
         #region Container rules
@@ -194,11 +207,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         #region CloudBlob rules
 
         // Produce a write only stream.
-        private async Task<Stream> ConvertToCloudBlobStreamAsync(
-           BlobAttribute blobAttribute, ValueBindingContext context)
+        private async Task<Stream> ConvertToCloudBlobStreamAsync(BlobAttribute blobAttribute, ValueBindingContext context)
         {
             var stream = await CreateStreamAsync(blobAttribute, context).ConfigureAwait(false);
             return stream;
+        }
+
+        private static RichBindingReferenceType CreateReference(BlobAttribute blobAttribute)
+        {
+            var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
+
+            var referenceType = new RichBindingReferenceType();
+            referenceType.Properties.Add("connection_string", blobAttribute.Connection);
+            referenceType.Properties.Add("blob_container", blobPath.ContainerName);
+            referenceType.Properties.Add("blob_name", blobPath.BlobName);
+
+            return referenceType;
         }
 
         private async Task<T> CreateBlobReference<T>(BlobAttribute blobAttribute, CancellationToken cancellationToken) where T : BlobBaseClient
@@ -228,6 +252,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 typeof(TextReader),
                 typeof(Stream),
                 typeof(BinaryData),
+                typeof(RichBindingReferenceType),
                 typeof(string)
             };
 
