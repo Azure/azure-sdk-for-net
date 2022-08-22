@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,6 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Each <see cref="ManagementGroupRemediationResource" /> in the collection will belong to the same instance of <see cref="ManagementGroupResource" />.
     /// To get a <see cref="ManagementGroupRemediationCollection" /> instance call the GetManagementGroupRemediations method from an instance of <see cref="ManagementGroupResource" />.
     /// </summary>
-    public partial class ManagementGroupRemediationCollection : ArmCollection
+    public partial class ManagementGroupRemediationCollection : ArmCollection, IEnumerable<ManagementGroupRemediationResource>, IAsyncEnumerable<ManagementGroupRemediationResource>
     {
         private readonly ClientDiagnostics _managementGroupRemediationRemediationsClientDiagnostics;
         private readonly RemediationsRestOperations _managementGroupRemediationRemediationsRestClient;
@@ -176,6 +180,92 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
+        /// Gets all remediations for the management group.
+        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations
+        /// Operation Id: Remediations_ListForManagementGroup
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagementGroupRemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroupRemediationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ManagementGroupRemediationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("ManagementGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managementGroupRemediationRemediationsRestClient.ListForManagementGroupAsync(Id.Name, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ManagementGroupRemediationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("ManagementGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managementGroupRemediationRemediationsRestClient.ListForManagementGroupNextPageAsync(nextLink, Id.Name, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all remediations for the management group.
+        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations
+        /// Operation Id: Remediations_ListForManagementGroup
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagementGroupRemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroupRemediationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            Page<ManagementGroupRemediationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("ManagementGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managementGroupRemediationRemediationsRestClient.ListForManagementGroup(Id.Name, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ManagementGroupRemediationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("ManagementGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managementGroupRemediationRemediationsRestClient.ListForManagementGroupNextPage(nextLink, Id.Name, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
         /// Operation Id: Remediations_GetAtManagementGroup
@@ -227,6 +317,21 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ManagementGroupRemediationResource> IEnumerable<ManagementGroupRemediationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ManagementGroupRemediationResource> IAsyncEnumerable<ManagementGroupRemediationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

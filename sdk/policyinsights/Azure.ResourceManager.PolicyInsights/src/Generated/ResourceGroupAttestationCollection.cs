@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Each <see cref="ResourceGroupAttestationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
     /// To get a <see cref="ResourceGroupAttestationCollection" /> instance call the GetResourceGroupAttestations method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class ResourceGroupAttestationCollection : ArmCollection
+    public partial class ResourceGroupAttestationCollection : ArmCollection, IEnumerable<ResourceGroupAttestationResource>, IAsyncEnumerable<ResourceGroupAttestationResource>
     {
         private readonly ClientDiagnostics _resourceGroupAttestationAttestationsClientDiagnostics;
         private readonly AttestationsRestOperations _resourceGroupAttestationAttestationsRestClient;
@@ -176,6 +180,92 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
+        /// Gets all attestations for the resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations
+        /// Operation Id: Attestations_ListForResourceGroup
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceGroupAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGroupAttestationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ResourceGroupAttestationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceGroupAttestationAttestationsClientDiagnostics.CreateScope("ResourceGroupAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceGroupAttestationAttestationsRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ResourceGroupAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceGroupAttestationAttestationsClientDiagnostics.CreateScope("ResourceGroupAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceGroupAttestationAttestationsRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all attestations for the resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations
+        /// Operation Id: Attestations_ListForResourceGroup
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGroupAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroupAttestationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            Page<ResourceGroupAttestationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceGroupAttestationAttestationsClientDiagnostics.CreateScope("ResourceGroupAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupAttestationAttestationsRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ResourceGroupAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceGroupAttestationAttestationsClientDiagnostics.CreateScope("ResourceGroupAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupAttestationAttestationsRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
         /// Operation Id: Attestations_GetAtResourceGroup
@@ -227,6 +317,21 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ResourceGroupAttestationResource> IEnumerable<ResourceGroupAttestationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ResourceGroupAttestationResource> IAsyncEnumerable<ResourceGroupAttestationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

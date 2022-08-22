@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Each <see cref="SubscriptionAttestationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
     /// To get a <see cref="SubscriptionAttestationCollection" /> instance call the GetSubscriptionAttestations method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class SubscriptionAttestationCollection : ArmCollection
+    public partial class SubscriptionAttestationCollection : ArmCollection, IEnumerable<SubscriptionAttestationResource>, IAsyncEnumerable<SubscriptionAttestationResource>
     {
         private readonly ClientDiagnostics _subscriptionAttestationAttestationsClientDiagnostics;
         private readonly AttestationsRestOperations _subscriptionAttestationAttestationsRestClient;
@@ -176,6 +180,92 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
+        /// Gets all attestations for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations
+        /// Operation Id: Attestations_ListForSubscription
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SubscriptionAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionAttestationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SubscriptionAttestationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("SubscriptionAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionAttestationAttestationsRestClient.ListForSubscriptionAsync(Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SubscriptionAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("SubscriptionAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionAttestationAttestationsRestClient.ListForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all attestations for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations
+        /// Operation Id: Attestations_ListForSubscription
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionAttestationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            Page<SubscriptionAttestationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("SubscriptionAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _subscriptionAttestationAttestationsRestClient.ListForSubscription(Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SubscriptionAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("SubscriptionAttestationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _subscriptionAttestationAttestationsRestClient.ListForSubscriptionNextPage(nextLink, Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
         /// Operation Id: Attestations_GetAtSubscription
@@ -227,6 +317,21 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SubscriptionAttestationResource> IEnumerable<SubscriptionAttestationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SubscriptionAttestationResource> IAsyncEnumerable<SubscriptionAttestationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

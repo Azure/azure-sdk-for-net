@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Each <see cref="PolicyMetadataResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
     /// To get a <see cref="PolicyMetadataCollection" /> instance call the GetPolicyMetadata method from an instance of <see cref="TenantResource" />.
     /// </summary>
-    public partial class PolicyMetadataCollection : ArmCollection
+    public partial class PolicyMetadataCollection : ArmCollection, IEnumerable<SlimPolicyMetadata>, IAsyncEnumerable<SlimPolicyMetadata>
     {
         private readonly ClientDiagnostics _policyMetadataPolicyMetadataClientDiagnostics;
         private readonly PolicyMetadataRestOperations _policyMetadataPolicyMetadataRestClient;
@@ -108,6 +111,92 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
+        /// Get a list of the policy metadata resources.
+        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
+        /// Operation Id: PolicyMetadata_List
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SlimPolicyMetadata> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SlimPolicyMetadata>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _policyMetadataPolicyMetadataRestClient.ListAsync(queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SlimPolicyMetadata>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _policyMetadataPolicyMetadataRestClient.ListNextPageAsync(nextLink, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Get a list of the policy metadata resources.
+        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
+        /// Operation Id: PolicyMetadata_List
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SlimPolicyMetadata> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            Page<SlimPolicyMetadata> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _policyMetadataPolicyMetadataRestClient.List(queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SlimPolicyMetadata> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _policyMetadataPolicyMetadataRestClient.ListNextPage(nextLink, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
         /// Operation Id: PolicyMetadata_GetResource
@@ -157,6 +246,21 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SlimPolicyMetadata> IEnumerable<SlimPolicyMetadata>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SlimPolicyMetadata> IAsyncEnumerable<SlimPolicyMetadata>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
@@ -25,12 +24,10 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Each <see cref="AttestationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
     /// To get an <see cref="AttestationCollection" /> instance call the GetAttestations method from an instance of <see cref="ArmResource" />.
     /// </summary>
-    public partial class AttestationCollection : ArmCollection, IEnumerable<SubscriptionAttestationResource>, IAsyncEnumerable<SubscriptionAttestationResource>
+    public partial class AttestationCollection : ArmCollection, IEnumerable<AttestationResource>, IAsyncEnumerable<AttestationResource>
     {
         private readonly ClientDiagnostics _attestationClientDiagnostics;
         private readonly AttestationsRestOperations _attestationRestClient;
-        private readonly ClientDiagnostics _subscriptionAttestationAttestationsClientDiagnostics;
-        private readonly AttestationsRestOperations _subscriptionAttestationAttestationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AttestationCollection"/> class for mocking. </summary>
         protected AttestationCollection()
@@ -45,9 +42,6 @@ namespace Azure.ResourceManager.PolicyInsights
             _attestationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", AttestationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AttestationResource.ResourceType, out string attestationApiVersion);
             _attestationRestClient = new AttestationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, attestationApiVersion);
-            _subscriptionAttestationAttestationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", SubscriptionAttestationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SubscriptionAttestationResource.ResourceType, out string subscriptionAttestationAttestationsApiVersion);
-            _subscriptionAttestationAttestationsRestClient = new AttestationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionAttestationAttestationsApiVersion);
         }
 
         /// <summary>
@@ -175,247 +169,89 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Gets all attestations for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations
-        /// Operation Id: Attestations_ListForSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations
-        /// Operation Id: Attestations_ListForResourceGroup
+        /// Gets all attestations for a resource.
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations
         /// Operation Id: Attestations_ListForResource
         /// </summary>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionAttestationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionAttestationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AttestationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == SubscriptionResource.ResourceType)
+            async Task<Page<AttestationResource>> FirstPageFunc(int? pageSizeHint)
             {
-                async Task<Page<SubscriptionAttestationResource>> FirstPageFunc(int? pageSizeHint)
+                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _subscriptionAttestationAttestationsRestClient.ListForSubscriptionAsync(Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = await _attestationRestClient.ListForResourceAsync(Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                async Task<Page<SubscriptionAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _subscriptionAttestationAttestationsRestClient.ListForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            async Task<Page<AttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                async Task<Page<SubscriptionAttestationResource>> FirstPageFunc(int? pageSizeHint)
+                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _resourceGroupAttestationAttestationsRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = await _attestationRestClient.ListForResourceNextPageAsync(nextLink, Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                async Task<Page<SubscriptionAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _resourceGroupAttestationAttestationsRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == "")
-            {
-                async Task<Page<SubscriptionAttestationResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _attestationRestClient.ListForResourceAsync(Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<SubscriptionAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _attestationRestClient.ListForResourceNextPageAsync(nextLink, Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            else
-            {
-                throw new InvalidOperationException($"{Id.ResourceType} is not supported here");
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
-        /// Gets all attestations for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations
-        /// Operation Id: Attestations_ListForSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations
-        /// Operation Id: Attestations_ListForResourceGroup
+        /// Gets all attestations for a resource.
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations
         /// Operation Id: Attestations_ListForResource
         /// </summary>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionAttestationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionAttestationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AttestationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == SubscriptionResource.ResourceType)
+            Page<AttestationResource> FirstPageFunc(int? pageSizeHint)
             {
-                Page<SubscriptionAttestationResource> FirstPageFunc(int? pageSizeHint)
+                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _subscriptionAttestationAttestationsRestClient.ListForSubscription(Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = _attestationRestClient.ListForResource(Id, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                Page<SubscriptionAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _subscriptionAttestationAttestationsRestClient.ListForSubscriptionNextPage(nextLink, Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            Page<AttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                Page<SubscriptionAttestationResource> FirstPageFunc(int? pageSizeHint)
+                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _resourceGroupAttestationAttestationsRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = _attestationRestClient.ListForResourceNextPage(nextLink, Id, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                Page<SubscriptionAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _resourceGroupAttestationAttestationsRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == "")
-            {
-                Page<SubscriptionAttestationResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _attestationRestClient.ListForResource(Id, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<SubscriptionAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _subscriptionAttestationAttestationsClientDiagnostics.CreateScope("AttestationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _attestationRestClient.ListForResourceNextPage(nextLink, Id, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SubscriptionAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            else
-            {
-                throw new InvalidOperationException($"{Id.ResourceType} is not supported here");
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -472,7 +308,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        IEnumerator<SubscriptionAttestationResource> IEnumerable<SubscriptionAttestationResource>.GetEnumerator()
+        IEnumerator<AttestationResource> IEnumerable<AttestationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -482,7 +318,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SubscriptionAttestationResource> IAsyncEnumerable<SubscriptionAttestationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AttestationResource> IAsyncEnumerable<AttestationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

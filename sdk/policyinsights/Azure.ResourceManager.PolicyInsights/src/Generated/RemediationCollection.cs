@@ -15,9 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.PolicyInsights.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
@@ -26,12 +24,10 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Each <see cref="RemediationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
     /// To get a <see cref="RemediationCollection" /> instance call the GetRemediations method from an instance of <see cref="ArmResource" />.
     /// </summary>
-    public partial class RemediationCollection : ArmCollection, IEnumerable<ManagementGroupRemediationResource>, IAsyncEnumerable<ManagementGroupRemediationResource>
+    public partial class RemediationCollection : ArmCollection, IEnumerable<RemediationResource>, IAsyncEnumerable<RemediationResource>
     {
         private readonly ClientDiagnostics _remediationClientDiagnostics;
         private readonly RemediationsRestOperations _remediationRestClient;
-        private readonly ClientDiagnostics _managementGroupRemediationRemediationsClientDiagnostics;
-        private readonly RemediationsRestOperations _managementGroupRemediationRemediationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RemediationCollection"/> class for mocking. </summary>
         protected RemediationCollection()
@@ -46,9 +42,6 @@ namespace Azure.ResourceManager.PolicyInsights
             _remediationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", RemediationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RemediationResource.ResourceType, out string remediationApiVersion);
             _remediationRestClient = new RemediationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, remediationApiVersion);
-            _managementGroupRemediationRemediationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ManagementGroupRemediationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagementGroupRemediationResource.ResourceType, out string managementGroupRemediationRemediationsApiVersion);
-            _managementGroupRemediationRemediationsRestClient = new RemediationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupRemediationRemediationsApiVersion);
         }
 
         /// <summary>
@@ -176,319 +169,89 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Gets all remediations for the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations
-        /// Operation Id: Remediations_ListForManagementGroup
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations
-        /// Operation Id: Remediations_ListForSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations
-        /// Operation Id: Remediations_ListForResourceGroup
+        /// Gets all remediations for a resource.
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations
         /// Operation Id: Remediations_ListForResource
         /// </summary>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroupRemediationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroupRemediationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RemediationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ManagementGroupResource.ResourceType)
+            async Task<Page<RemediationResource>> FirstPageFunc(int? pageSizeHint)
             {
-                async Task<Page<ManagementGroupRemediationResource>> FirstPageFunc(int? pageSizeHint)
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _managementGroupRemediationRemediationsRestClient.ListForManagementGroupAsync(Id.Name, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = await _remediationRestClient.ListForResourceAsync(Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                async Task<Page<ManagementGroupRemediationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _managementGroupRemediationRemediationsRestClient.ListForManagementGroupNextPageAsync(nextLink, Id.Name, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == SubscriptionResource.ResourceType)
+            async Task<Page<RemediationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                async Task<Page<ManagementGroupRemediationResource>> FirstPageFunc(int? pageSizeHint)
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _subscriptionRemediationRemediationsRestClient.ListForSubscriptionAsync(Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = await _remediationRestClient.ListForResourceNextPageAsync(nextLink, Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                async Task<Page<ManagementGroupRemediationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _subscriptionRemediationRemediationsRestClient.ListForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
-            {
-                async Task<Page<ManagementGroupRemediationResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _resourceGroupRemediationRemediationsRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<ManagementGroupRemediationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _resourceGroupRemediationRemediationsRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            else if (Id.ResourceType == "")
-            {
-                async Task<Page<ManagementGroupRemediationResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _remediationRestClient.ListForResourceAsync(Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<ManagementGroupRemediationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _remediationRestClient.ListForResourceNextPageAsync(nextLink, Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            else
-            {
-                throw new InvalidOperationException($"{Id.ResourceType} is not supported here");
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
-        /// Gets all remediations for the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations
-        /// Operation Id: Remediations_ListForManagementGroup
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations
-        /// Operation Id: Remediations_ListForSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations
-        /// Operation Id: Remediations_ListForResourceGroup
+        /// Gets all remediations for a resource.
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations
         /// Operation Id: Remediations_ListForResource
         /// </summary>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroupRemediationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroupRemediationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RemediationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ManagementGroupResource.ResourceType)
+            Page<RemediationResource> FirstPageFunc(int? pageSizeHint)
             {
-                Page<ManagementGroupRemediationResource> FirstPageFunc(int? pageSizeHint)
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _managementGroupRemediationRemediationsRestClient.ListForManagementGroup(Id.Name, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = _remediationRestClient.ListForResource(Id, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                Page<ManagementGroupRemediationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _managementGroupRemediationRemediationsRestClient.ListForManagementGroupNextPage(nextLink, Id.Name, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == SubscriptionResource.ResourceType)
+            Page<RemediationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                Page<ManagementGroupRemediationResource> FirstPageFunc(int? pageSizeHint)
+                using var scope = _remediationClientDiagnostics.CreateScope("RemediationCollection.GetAll");
+                scope.Start();
+                try
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _subscriptionRemediationRemediationsRestClient.ListForSubscription(Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    var response = _remediationRestClient.ListForResourceNextPage(nextLink, Id, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
-                Page<ManagementGroupRemediationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+                catch (Exception e)
                 {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _subscriptionRemediationRemediationsRestClient.ListForSubscriptionNextPage(nextLink, Id.SubscriptionId, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
+                    scope.Failed(e);
+                    throw;
                 }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
-            {
-                Page<ManagementGroupRemediationResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _resourceGroupRemediationRemediationsRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<ManagementGroupRemediationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _resourceGroupRemediationRemediationsRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            else if (Id.ResourceType == "")
-            {
-                Page<ManagementGroupRemediationResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _remediationRestClient.ListForResource(Id, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<ManagementGroupRemediationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _managementGroupRemediationRemediationsClientDiagnostics.CreateScope("RemediationCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _remediationRestClient.ListForResourceNextPage(nextLink, Id, queryOptions, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            else
-            {
-                throw new InvalidOperationException($"{Id.ResourceType} is not supported here");
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -545,7 +308,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        IEnumerator<ManagementGroupRemediationResource> IEnumerable<ManagementGroupRemediationResource>.GetEnumerator()
+        IEnumerator<RemediationResource> IEnumerable<RemediationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -555,7 +318,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagementGroupRemediationResource> IAsyncEnumerable<ManagementGroupRemediationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RemediationResource> IAsyncEnumerable<RemediationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

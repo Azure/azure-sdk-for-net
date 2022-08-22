@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// Each <see cref="ResourceGroupRemediationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
     /// To get a <see cref="ResourceGroupRemediationCollection" /> instance call the GetResourceGroupRemediations method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class ResourceGroupRemediationCollection : ArmCollection
+    public partial class ResourceGroupRemediationCollection : ArmCollection, IEnumerable<ResourceGroupRemediationResource>, IAsyncEnumerable<ResourceGroupRemediationResource>
     {
         private readonly ClientDiagnostics _resourceGroupRemediationRemediationsClientDiagnostics;
         private readonly RemediationsRestOperations _resourceGroupRemediationRemediationsRestClient;
@@ -176,6 +180,92 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
+        /// Gets all remediations for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations
+        /// Operation Id: Remediations_ListForResourceGroup
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceGroupRemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGroupRemediationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ResourceGroupRemediationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceGroupRemediationRemediationsClientDiagnostics.CreateScope("ResourceGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceGroupRemediationRemediationsRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ResourceGroupRemediationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceGroupRemediationRemediationsClientDiagnostics.CreateScope("ResourceGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceGroupRemediationRemediationsRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all remediations for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations
+        /// Operation Id: Remediations_ListForResourceGroup
+        /// </summary>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGroupRemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroupRemediationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            Page<ResourceGroupRemediationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceGroupRemediationRemediationsClientDiagnostics.CreateScope("ResourceGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupRemediationRemediationsRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ResourceGroupRemediationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceGroupRemediationRemediationsClientDiagnostics.CreateScope("ResourceGroupRemediationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupRemediationRemediationsRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupRemediationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
         /// Operation Id: Remediations_GetAtResourceGroup
@@ -227,6 +317,21 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ResourceGroupRemediationResource> IEnumerable<ResourceGroupRemediationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ResourceGroupRemediationResource> IAsyncEnumerable<ResourceGroupRemediationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

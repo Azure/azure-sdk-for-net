@@ -5,23 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _policyMetadataPolicyMetadataClientDiagnostics;
-        private PolicyMetadataRestOperations _policyMetadataPolicyMetadataRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
         {
@@ -34,9 +25,6 @@ namespace Azure.ResourceManager.PolicyInsights
         {
         }
 
-        private ClientDiagnostics PolicyMetadataPolicyMetadataClientDiagnostics => _policyMetadataPolicyMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyMetadataResource.ResourceType.Namespace, Diagnostics);
-        private PolicyMetadataRestOperations PolicyMetadataPolicyMetadataRestClient => _policyMetadataPolicyMetadataRestClient ??= new PolicyMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PolicyMetadataResource.ResourceType));
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -48,92 +36,6 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual PolicyMetadataCollection GetAllPolicyMetadata()
         {
             return GetCachedClient(Client => new PolicyMetadataCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a list of the policy metadata resources.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
-        /// Operation Id: PolicyMetadata_List
-        /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SlimPolicyMetadata> GetAllPolicyMetadataAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SlimPolicyMetadata>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyMetadataPolicyMetadataClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAllPolicyMetadata");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyMetadataPolicyMetadataRestClient.ListAsync(queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SlimPolicyMetadata>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyMetadataPolicyMetadataClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAllPolicyMetadata");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyMetadataPolicyMetadataRestClient.ListNextPageAsync(nextLink, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get a list of the policy metadata resources.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
-        /// Operation Id: PolicyMetadata_List
-        /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SlimPolicyMetadata> GetAllPolicyMetadata(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Page<SlimPolicyMetadata> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyMetadataPolicyMetadataClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAllPolicyMetadata");
-                scope.Start();
-                try
-                {
-                    var response = PolicyMetadataPolicyMetadataRestClient.List(queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SlimPolicyMetadata> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyMetadataPolicyMetadataClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAllPolicyMetadata");
-                scope.Start();
-                try
-                {
-                    var response = PolicyMetadataPolicyMetadataRestClient.ListNextPage(nextLink, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

@@ -67,34 +67,6 @@ namespace Azure.ResourceManager.PolicyInsights
             return tenantResource.GetAllPolicyMetadata().Get(resourceName, cancellationToken);
         }
 
-        /// <summary>
-        /// Get a list of the policy metadata resources.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
-        /// Operation Id: PolicyMetadata_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SlimPolicyMetadata> GetAllPolicyMetadataAsync(this TenantResource tenantResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetAllPolicyMetadataAsync(queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of the policy metadata resources.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
-        /// Operation Id: PolicyMetadata_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SlimPolicyMetadata> GetAllPolicyMetadata(this TenantResource tenantResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetAllPolicyMetadata(queryOptions, cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>

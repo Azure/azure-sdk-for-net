@@ -16,13 +16,18 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-list-exception:
-  - /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-  - /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-  - /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-  - /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
+request-path-to-parent:
+  /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
+  /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
+  /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
+  /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
+
+override-operation-name:
+  PolicyMetadata_List: GetAll
+operation-positions:
+  PolicyMetadata_List: collection
 
 format-by-name-rules:
   'tenantId': 'uuid'
