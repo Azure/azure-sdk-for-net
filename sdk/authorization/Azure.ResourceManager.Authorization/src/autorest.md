@@ -81,11 +81,10 @@ directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'
   - remove-operation: 'RoleManagementPolicyAssignments_Delete'
-  # TODO: remove this once the https://github.com/Azure/autorest.csharp/issues/2629 was fixed
-  - from: authorization-RoleAssignmentsCalls.json
-    where: $.paths['/{scope}/providers/Microsoft.Authorization/roleAssignments'].get
-    transform: >
-      $.parameters = $.parameters.filter(param => (param['$ref'] != '#/parameters/PaginationSkipToken'));
+  # TODO: remove dup methods with scope method, here is another issue logged https://github.com/Azure/autorest.csharp/issues/2629
+  - remove-operation: 'RoleAssignments_ListForSubscription'
+  - remove-operation: 'RoleAssignments_ListForResourceGroup'
+  - remove-operation: 'RoleAssignments_ListForResource'
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
     where: $.paths['/{roleAssignmentId}']
