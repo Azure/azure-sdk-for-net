@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     public class CallRecordingTests : CallAutomationTestBase
     {
         private const string RecordingId = "sampleRecordingId";
-        private const string ServerCallId = "sampleServerCallId";
+        private new const string ServerCallId = "sampleServerCallId";
         private const string DummyRecordingStatusResponse = "{" +
                                         "\"recordingId\": \"dummyRecordingId\"," +
                                         "\"recordingState\": \"active\"" +

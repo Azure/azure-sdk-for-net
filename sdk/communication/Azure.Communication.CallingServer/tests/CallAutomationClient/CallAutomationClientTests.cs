@@ -13,30 +13,6 @@ namespace Azure.Communication.CallingServer.Tests
 {
     public class CallAutomationClientTests : CallAutomationTestBase
     {
-        private const string CreateOrAnswerCallOrGetCallConnectionPayload ="{" +
-                                                "\"callConnectionId\": \"af50dd7b-37e7-4cdb-a176-a7c37b71098a\"," +
-                                                "\"serverCallId\": \"bf50dd7b-37e7-4cdb-a176-a7c37b71098a\"," +
-                                                "\"targets\": [" +
-                                                   "{" +
-                                                       "\"rawId\":\"rawId2\"," +
-                                                       "\"kind\":\"communicationUser\"," +
-                                                       "\"communicationUser\":{\"id\":\"a795d01f-f9ad-45e6-99c4-14bf8449ad4b\"}" +
-                                                    "}" +
-                                                "]," +
-                                                "\"source\": {" +
-                                                     "\"identifier\":{" +
-                                                          "\"rawId\":\"rawId1\"," +
-                                                          "\"kind\":\"communicationUser\"," +
-                                                          "\"communicationUser\":{\"id\":\"0000000d-5a5f-2db9-ccd7-44482200049a\"}" +
-                                                                    "}" +
-                                                            "}," +
-                                                "\"callConnectionState\": \"connecting\"," +
-                                                "\"subject\": \"dummySubject\"," +
-                                                "\"callbackUri\": \"https://bot.contoso.com/callback\"" +
-                                                "}";
-
-        private const string serverCallId = "bf50dd7b-37e7-4cdb-a176-a7c37b71098a";
-        private const string callConnectionId = "af50dd7b-37e7-4cdb-a176-a7c37b71098a";
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
@@ -44,11 +20,9 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false);
             Assert.NotNull(response);
-            var callConnectionProperties = response.Value.CallConnectionProperties;
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(serverCallId, callConnectionProperties.ServerCallId);
-            Assert.AreEqual(callConnectionId, response.Value.CallConnection.CallConnectionId);
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -58,11 +32,9 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callAutomationClient.AnswerCall(incomingCallContext, callbackUri);
             Assert.NotNull(response);
-            var callConnectionProperties = response.Value.CallConnectionProperties;
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(serverCallId, callConnectionProperties.ServerCallId);
-            Assert.AreEqual(callConnectionId, response.Value.CallConnection.CallConnectionId);
+            verifyCallConnectionProperties(response.Value.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -174,9 +146,8 @@ namespace Azure.Communication.CallingServer.Tests
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
-            Assert.AreEqual(CallConnectionState.Connecting, result.CallConnectionProperties.CallConnectionState);
-            Assert.AreEqual(serverCallId, result.CallConnectionProperties.ServerCallId);
-            Assert.AreEqual(callConnectionId, result.CallConnection.CallConnectionId);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -188,9 +159,8 @@ namespace Azure.Communication.CallingServer.Tests
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
-            Assert.AreEqual(CallConnectionState.Connecting, result.CallConnectionProperties.CallConnectionState);
-            Assert.AreEqual(serverCallId, result.CallConnectionProperties.ServerCallId);
-            Assert.AreEqual(callConnectionId, result.CallConnection.CallConnectionId);
+            verifyCallConnectionProperties(result.CallConnectionProperties);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -216,7 +186,7 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_GetCallConnection))]
         public void GetCallConnection(string callConnectionId)
         {
-            var response = new CallAutomationClient(connectionString).GetCallConnection(callConnectionId);
+            var response = new CallAutomationClient(ConnectionString).GetCallConnection(callConnectionId);
             CallConnection result = (CallConnection)response;
             Assert.NotNull(result);
             Assert.AreEqual(callConnectionId, result.CallConnectionId);
@@ -225,7 +195,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public void GetCallRecording()
         {
-            var response = new CallAutomationClient(connectionString).GetCallRecording();
+            var response = new CallAutomationClient(ConnectionString).GetCallRecording();
             Assert.NotNull(response);
         }
 
