@@ -136,7 +136,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Disk_OptimizeFrequentAttach()
         {
-            Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Empty, "Disk_OptimizeFrequentAttach", diskSizeGB: 5, location: "eastus2euap");
+            Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Import, "Disk_OptimizeFrequentAttach", diskSizeGB: 150, location: "eastus2euap");
         }
     }
 }

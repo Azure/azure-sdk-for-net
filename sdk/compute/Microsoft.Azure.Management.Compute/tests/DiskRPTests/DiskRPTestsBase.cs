@@ -1703,7 +1703,7 @@ namespace Compute.Tests.DiskRPTests
             }
         }
        
-        protected void Disk_OptimizeFrequentAttach_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, bool? burstingEnabled = null, string location = null, IList<string> zones = null)
+        protected void Disk_OptimizeFrequentAttach_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -1713,27 +1713,27 @@ namespace Compute.Tests.DiskRPTests
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage);
-                disk.Location = location;
-                disk.OsType = OperatingSystemTypes.Linux;
+                IList<string> zones = null;
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
                 disk.OptimizedForFrequentAttach = true;
-                disk.CreationData.ImageReference = new ImageDiskReference
-                {
-                    Id = "/Subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/Providers/Microsoft.Compute/Locations/EASTUS2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-lts-gen2/Versions/latest"
-                };
+
 
                 try
                 {
                     // **********
                     // SETUP
                     // **********
-
-                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which case the resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
 
                     // **********
                     // TEST
                     // **********
-                    // Put
+                    // Put disk with SCSI diskControllerTypes
                     Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
                     Validate(disk, diskOut, DiskRPLocation);
 
@@ -1741,6 +1741,7 @@ namespace Compute.Tests.DiskRPTests
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.True(diskOut.OptimizedForFrequentAttach);
+
 
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
@@ -1751,22 +1752,20 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
 
                     // Patch
-                    // TODO: Bug 9865640 - DiskRP doesn't follow patch semantics for zones: skip this for zones
-                    if (zones == null)
+                    const string tagKey = "tagKey";
+                    var updatedisk = new DiskUpdate
                     {
-                        const string tagKey = "tageKey";
-                        var updatedisk = new DiskUpdate();
-                        updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
-                        updatedisk.OptimizedForFrequentAttach = false;
-                        diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
-                        Validate(disk, diskOut, DiskRPLocation);
-                        Assert.Equal(tier, disk.Tier);
-                    }
+                        Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } },
+                        OptimizedForFrequentAttach = false
+                };
+                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                    Validate(disk, diskOut, DiskRPLocation);
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.False(diskOut.OptimizedForFrequentAttach);
+
 
                     // End disk access
                     m_CrpClient.Disks.RevokeAccess(rgName, diskName);
@@ -1790,7 +1789,7 @@ namespace Compute.Tests.DiskRPTests
                     // Delete resource group
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
-            }
+            }       
         }
         
         #endregion
