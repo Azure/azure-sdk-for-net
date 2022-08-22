@@ -139,7 +139,7 @@ namespace Azure.Communication.CallingServer
         internal CallConnectionProperties() { }
         public System.Uri CallbackEndpoint { get { throw null; } }
         public string CallConnectionId { get { throw null; } }
-        public Azure.Communication.CallingServer.CallConnectionState? CallConnectionState { get { throw null; } }
+        public Azure.Communication.CallingServer.CallConnectionState CallConnectionState { get { throw null; } }
         public Azure.Communication.CallingServer.CallSource CallSource { get { throw null; } }
         public string MediaSubscriptionId { get { throw null; } }
         public string ServerCallId { get { throw null; } }

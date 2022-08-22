@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(GrafanaIntegrations))
+            {
+                writer.WritePropertyName("grafanaIntegrations");
+                writer.WriteObjectValue(GrafanaIntegrations);
+            }
             writer.WriteEndObject();
         }
     }

@@ -37,3 +37,5 @@ extends:
       safeName: AzureAnalyticsPurviewCatalog
     - name: Azure.Analytics.Purview.Scanning
       safeName: AzureAnalyticsPurviewScanning
+    - name: Azure.ResourceManager.Purview
+      safeName: AzureResourceManagerPurview
