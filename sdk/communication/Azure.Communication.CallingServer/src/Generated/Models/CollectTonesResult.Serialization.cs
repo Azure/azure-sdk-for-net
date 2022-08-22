@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         internal static CollectTonesResult DeserializeCollectTonesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> tones = default;
+            Optional<IList<string>> tones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tones"))

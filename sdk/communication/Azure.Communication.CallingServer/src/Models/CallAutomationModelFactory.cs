@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -168,6 +167,22 @@ namespace Azure.Communication.CallingServer
                 recordingId,
                 state,
                 startDateTime,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Recognize Completed event.
+        /// </summary>
+        public static RecognizeCompleted RecognizeCompleted(string operationContext = default, RecognitionType recognitionType = default, CollectTonesResult collectTonesResult = default, ResultInformation resultInfo = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new RecognizeCompleted(
+                operationContext,
+                recognitionType,
+                collectTonesResult,
+                resultInfo,
+                AcsEventType.RecognizeCompleted,
                 callConnectionId,
                 serverCallId,
                 correlationId);

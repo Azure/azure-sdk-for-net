@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.CallingServer.Models.Events;
-
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecognizeCompleted. </summary>

@@ -21,12 +21,9 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
         /// <param name="tones"></param>
-        internal CollectTonesResult(IReadOnlyList<string> tones)
+        internal CollectTonesResult(IList<string> tones)
         {
             Tones = tones;
         }
-
-        /// <summary> Gets the tones. </summary>
-        public IReadOnlyList<string> Tones { get; }
     }
 }
