@@ -51,7 +51,7 @@ namespace Azure.Data.AppConfiguration
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.Data.AppConfiguration
             _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)), _syncTokenPolicy);
             _apiVersion = options.Version;
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of ConfigurationClient. </summary>
