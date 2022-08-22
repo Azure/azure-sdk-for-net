@@ -94,7 +94,7 @@ namespace Azure.Core
         {
             JsonWriter.Flush();
             _gzip.Flush();
-#if NETFRAMEWORK // .NETFramework 4.6.1 Flush() behavior Flushes the stream and Disposes it. As a result with this Framework we must recreate the Stream after
+#if NETFRAMEWORK // .NETFramework 4.6.1 The stream can only be properly flushed via Dispose().  As a result, we must recreate the Stream after Flush/Dispose. See https://github.com/dotnet/runtime/issues/15371 for details.
             _gzip.Dispose();
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             JsonWriter.Reset(_gzip);
@@ -105,7 +105,7 @@ namespace Azure.Core
         {
             await JsonWriter.FlushAsync().ConfigureAwait(false);
             await _gzip.FlushAsync().ConfigureAwait(false);
-#if NETFRAMEWORK // .NETFramework 4.6.1 Flush() behavior Flushes the stream and Disposes it. As a result with this Framework we must recreate the Stream after
+#if NETFRAMEWORK // .NETFramework 4.6.1 The stream can only be properly flushed via Dispose().  As a result, we must recreate the Stream after Flush/Dispose. See https://github.com/dotnet/runtime/issues/15371 for details.
             _gzip.Dispose();
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             JsonWriter.Reset(_gzip);

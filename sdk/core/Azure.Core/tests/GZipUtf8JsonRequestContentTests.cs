@@ -25,11 +25,9 @@ namespace Azure.Core.Tests
 
             string deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
 
             deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
         }
 
         [Test]
@@ -41,11 +39,9 @@ namespace Azure.Core.Tests
 
             string deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
 
             deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
         }
 
         [Test]
@@ -60,11 +56,9 @@ namespace Azure.Core.Tests
 
             string deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
 
             deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
         }
 
         [Test]
@@ -85,12 +79,11 @@ namespace Azure.Core.Tests
             Assert.Greater(length, 1000);
             string deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
+
             gzContent.TryComputeLength(out length);
             Assert.Greater(length, 1000);
             deserialized = UncompressAndDeserialize(gzContent);
             Assert.IsNotEmpty(deserialized);
-            Console.WriteLine(deserialized);
         }
 
         private static string UncompressAndDeserialize(RequestContent gzContent)

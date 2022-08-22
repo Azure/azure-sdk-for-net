@@ -161,12 +161,7 @@ namespace Azure.Monitor.Ingestion
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             scope.Start();
 
-            var requestContext = new RequestContext() { CancellationToken = cancellationToken };
-            requestContext.AddClassifier(500, false);
-            requestContext.AddClassifier(403, false);
-            requestContext.AddClassifier(413, false);
-            requestContext.AddClassifier(429, false);
-            requestContext.AddClassifier(503, false);
+            RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
             List<UploadLogsError> errors = new List<UploadLogsError>();
             try
@@ -176,15 +171,16 @@ namespace Azure.Monitor.Ingestion
                     //TODO: catch errors and correlate with Batch.start
                     using HttpMessage message = CreateUploadRequest(ruleId, streamName, result.Item2, "gzip", requestContext);
                     response = _pipeline.ProcessMessage(message, requestContext, cancellationToken);
-                    if (response.Status != 204) //and response.Content == 500)
+                    if (response.IsError)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
-                        List<Object> objectLogs = new List<Object>();
-                        foreach (var log in result.Item1)
-                        {
-                            objectLogs.Add(log);
-                        }
+                        //List<Object> objectLogs = new List<Object>();
+                        //foreach (var log in result.Item1)
+                        //{
+                        //    objectLogs.Add(log);
+                        //}
+                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)result.Item1);
                         errors.Add(new UploadLogsError(responseError, objectLogs));
                     }
                 }
@@ -233,12 +229,7 @@ namespace Azure.Monitor.Ingestion
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             scope.Start();
 
-            var requestContext = new RequestContext() { CancellationToken = cancellationToken };
-            requestContext.AddClassifier(500, false);
-            requestContext.AddClassifier(403, false);
-            requestContext.AddClassifier(413, false);
-            requestContext.AddClassifier(429, false);
-            requestContext.AddClassifier(503, false);
+            RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
             List<UploadLogsError> errors = new List<UploadLogsError>();
             try
@@ -249,7 +240,7 @@ namespace Azure.Monitor.Ingestion
 
                     using HttpMessage message = CreateUploadRequest(ruleId, streamName, result.Item2, "gzip", requestContext);
                     response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
-                    if (response.Status != 204) //and response.Content == 500)
+                    if (response.IsError)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
@@ -270,6 +261,17 @@ namespace Azure.Monitor.Ingestion
 
             UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logEntries, errors));
             return Response.FromValue(finalResult, response);
+        }
+
+        private static RequestContext GenerateRequestContext(CancellationToken cancellationToken)
+        {
+            var requestContext = new RequestContext() { CancellationToken = cancellationToken };
+            requestContext.AddClassifier(500, false);
+            requestContext.AddClassifier(403, false);
+            requestContext.AddClassifier(413, false);
+            requestContext.AddClassifier(429, false);
+            requestContext.AddClassifier(503, false);
+            return requestContext;
         }
 
         private static UploadLogsStatus Status<T>(IEnumerable<T> logEntries, List<UploadLogsError> errors)
