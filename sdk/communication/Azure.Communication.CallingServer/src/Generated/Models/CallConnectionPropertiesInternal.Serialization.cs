@@ -12,13 +12,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CallConnectionPropertiesDtoInternal
+    internal partial class CallConnectionPropertiesInternal
     {
-        internal static CallConnectionPropertiesDtoInternal DeserializeCallConnectionPropertiesDtoInternal(JsonElement element)
+        internal static CallConnectionPropertiesInternal DeserializeCallConnectionPropertiesInternal(JsonElement element)
         {
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
-            Optional<CallSourceDto> source = default;
+            Optional<CallSourceInternal> source = default;
             Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> subject = default;
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    source = CallSourceDto.DeserializeCallSourceDto(property.Value);
+                    source = CallSourceInternal.DeserializeCallSourceInternal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targets"))
@@ -87,7 +87,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnectionPropertiesDtoInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, mediaSubscriptionId.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, mediaSubscriptionId.Value);
         }
     }
 }

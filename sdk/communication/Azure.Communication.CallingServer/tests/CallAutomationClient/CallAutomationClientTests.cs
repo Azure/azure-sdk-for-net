@@ -3,24 +3,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.CodeDom;
-using System.Drawing;
 using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
 namespace Azure.Communication.CallingServer
 {
     public class CallAutomationClientTests : CallAutomationTestBase
     {
-        private readonly MediaStreamingConfiguration _mediaStreamingConfiguration = new MediaStreamingConfiguration()
-        {
-            AudioChannelType = MediaStreamingAudioChannelType.Unmixed,
-            ContentType = MediaStreamingContentType.Audio,
-            TransportType = MediaStreamingTransportType.Websocket,
-            TransportUrl = new Uri("https://websocket")
-        };
+        private readonly MediaStreamingConfiguration _mediaStreamingConfiguration = new MediaStreamingConfiguration(
+            new Uri("https://websocket"),
+            MediaStreamingTransportType.Websocket,
+            MediaStreamingContentType.Audio,
+            MediaStreamingAudioChannelType.Mixed);
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
