@@ -276,5 +276,29 @@ namespace Azure.Communication.CallingServer.Tests.Events
                 Assert.Fail("Event parsed wrongfully");
             }
         }
+
+        [Test]
+        public void RecognizeFailedEventParsed_Test()
+        {
+            RecognizeFailed @event = CallAutomationModelFactory.RecognizeFailed(
+                "operationContext",
+                new ResultInformation(code: 400, subCode: 8510, message: "Action failed, initial silence timeout reached."),
+                "callConnectionId",
+                "serverCallId",
+                "correlationId");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeFailed");
+            if (parsedEvent is RecognizeFailed recognizeFailed)
+            {
+                Assert.AreEqual("correlationId", recognizeFailed.CorrelationId);
+                Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
+                Assert.AreEqual(400, recognizeFailed.ResultInfo.Code);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
     }
 }

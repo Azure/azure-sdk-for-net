@@ -85,7 +85,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new RecognizeCompleted(operationContext.Value, Optional.ToNullable(recognitionType), collectTonesResult.Value, resultInfo.Value, type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new RecognizeCompleted(operationContext.Value, recognitionType, collectTonesResult.Value, resultInfo.Value, type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

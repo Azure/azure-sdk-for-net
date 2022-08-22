@@ -187,5 +187,19 @@ namespace Azure.Communication.CallingServer
                 serverCallId,
                 correlationId);
         }
+
+        /// <summary>
+        /// Initializes a new instance of Recognize Failed event
+        /// </summary>
+        public static RecognizeFailed RecognizeFailed(string operationContext = default, ResultInformation resultInfo = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new RecognizeFailed(
+                operationContext,
+                resultInfo,
+                AcsEventType.RecognizeFailed,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
     }
 }

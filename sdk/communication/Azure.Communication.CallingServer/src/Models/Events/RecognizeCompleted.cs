@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using Azure.Communication.CallingServer.Converters;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -12,6 +14,13 @@ namespace Azure.Communication.CallingServer
     [CodeGenModel("RecognizeCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class RecognizeCompleted : CallAutomationEventBase
     {
+        /// <summary>
+        /// The recognition type.
+        /// </summary>
+        [CodeGenMember("RecognitionType")]
+        [JsonConverter(typeof(EquatableEnumJsonConverter<RecognitionType>))]
+        public RecognitionType RecognitionType { get; set; }
+
         /// <summary>
         /// Deserialize <see cref="RecognizeCompleted"/> event.
         /// </summary>
