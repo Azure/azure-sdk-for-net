@@ -46,6 +46,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+generate-arm-resource-extensions:
+- /{scope}/providers/Microsoft.ManagedIdentity/identities/default
+
 rename-mapping:
   Identity: UserAssignedIdentity
 ```

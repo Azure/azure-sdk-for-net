@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+generate-arm-resource-extensions:
+- /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
+
 rename-mapping:
   TargetServiceBase: TargetServiceBaseInfo
   AzureResource: AzureResourceInfo
