@@ -16,7 +16,37 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
-            writer.WriteObjectValue(Properties);
+            writer.WriteStartObject();
+            writer.WritePropertyName("roleDefinitionId");
+            writer.WriteStringValue(RoleDefinitionId);
+            writer.WritePropertyName("principalId");
+            writer.WriteStringValue(PrincipalId);
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType");
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition");
+                writer.WriteStringValue(Condition);
+            }
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                writer.WritePropertyName("conditionVersion");
+                writer.WriteStringValue(ConditionVersion);
+            }
+            if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
+            {
+                writer.WritePropertyName("delegatedManagedIdentityResourceId");
+                writer.WriteStringValue(DelegatedManagedIdentityResourceId);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }
