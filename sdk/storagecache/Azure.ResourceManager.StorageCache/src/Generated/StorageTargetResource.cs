@@ -33,8 +33,6 @@ namespace Azure.ResourceManager.StorageCache
 
         private readonly ClientDiagnostics _storageTargetClientDiagnostics;
         private readonly StorageTargetsRestOperations _storageTargetRestClient;
-        private readonly ClientDiagnostics _storageTargetClientDiagnostics0;
-        private readonly StorageTargetRestOperations _storageTargetRestClient0;
         private readonly StorageTargetData _data;
 
         /// <summary> Initializes a new instance of the <see cref="StorageTargetResource"/> class for mocking. </summary>
@@ -59,8 +57,6 @@ namespace Azure.ResourceManager.StorageCache
             _storageTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string storageTargetApiVersion);
             _storageTargetRestClient = new StorageTargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageTargetApiVersion);
-            _storageTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _storageTargetRestClient = new StorageTargetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -307,13 +303,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Tells the cache to write all dirty data to the Storage Target&apos;s backend storage. Client requests to this storage target&apos;s namespace will return errors until the flush operation completes.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/flush
-        /// Operation Id: StorageTarget_Flush
+        /// Operation Id: StorageTargets_Flush
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> FlushStorageTargetAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.FlushStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Flush");
             scope.Start();
             try
             {
@@ -333,13 +329,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Tells the cache to write all dirty data to the Storage Target&apos;s backend storage. Client requests to this storage target&apos;s namespace will return errors until the flush operation completes.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/flush
-        /// Operation Id: StorageTarget_Flush
+        /// Operation Id: StorageTargets_Flush
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation FlushStorageTarget(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Flush(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.FlushStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Flush");
             scope.Start();
             try
             {
@@ -359,13 +355,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Suspends client access to a storage target.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/suspend
-        /// Operation Id: StorageTarget_Suspend
+        /// Operation Id: StorageTargets_Suspend
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> SuspendStorageTargetAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SuspendAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.SuspendStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Suspend");
             scope.Start();
             try
             {
@@ -385,13 +381,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Suspends client access to a storage target.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/suspend
-        /// Operation Id: StorageTarget_Suspend
+        /// Operation Id: StorageTargets_Suspend
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation SuspendStorageTarget(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Suspend(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.SuspendStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Suspend");
             scope.Start();
             try
             {
@@ -411,13 +407,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Resumes client access to a previously suspended storage target.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/resume
-        /// Operation Id: StorageTarget_Resume
+        /// Operation Id: StorageTargets_Resume
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ResumeStorageTargetAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ResumeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.ResumeStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Resume");
             scope.Start();
             try
             {
@@ -437,13 +433,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Resumes client access to a previously suspended storage target.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/resume
-        /// Operation Id: StorageTarget_Resume
+        /// Operation Id: StorageTargets_Resume
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation ResumeStorageTarget(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Resume(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.ResumeStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Resume");
             scope.Start();
             try
             {
@@ -463,13 +459,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Invalidate all cached data for a storage target. Cached files are discarded and fetched from the back end on the next request.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/invalidate
-        /// Operation Id: StorageTarget_Invalidate
+        /// Operation Id: StorageTargets_Invalidate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> InvalidateStorageTargetAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> InvalidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.InvalidateStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Invalidate");
             scope.Start();
             try
             {
@@ -489,13 +485,13 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary>
         /// Invalidate all cached data for a storage target. Cached files are discarded and fetched from the back end on the next request.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/invalidate
-        /// Operation Id: StorageTarget_Invalidate
+        /// Operation Id: StorageTargets_Invalidate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation InvalidateStorageTarget(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Invalidate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.InvalidateStorageTarget");
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.Invalidate");
             scope.Start();
             try
             {

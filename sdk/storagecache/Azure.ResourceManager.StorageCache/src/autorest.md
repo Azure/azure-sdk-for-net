@@ -48,4 +48,17 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - rename-operation:
+      from: StorageTarget_Flush
+      to: StorageTargets_Flush
+  - rename-operation:
+      from: StorageTarget_Suspend
+      to: StorageTargets_Suspend
+  - rename-operation:
+      from: StorageTarget_Resume
+      to: StorageTargets_Resume
+  - rename-operation:
+      from: StorageTarget_Invalidate
+      to: StorageTargets_Invalidate
 ```
