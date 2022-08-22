@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithMultipleRoles()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudService_Create_WithMultiRole.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithMultiRole.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -71,7 +71,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRole()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudService_Create_WithSingleRole.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithSingleRole.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -119,7 +119,7 @@ new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new Compute.Models.Lo
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRoleAndCertificateFromKeyVault()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudService_Create_WithSingleRoleAndCertificate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithSingleRoleAndCertificate.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -167,7 +167,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRoleAndRDPExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudService_Create_WithSingleRoleAndRDP.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Create_WithSingleRoleAndRDP.json
             // this example is just showing the usage of "CloudServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -215,7 +215,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudService_Get_WithMultiRoleAndRDP.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
             // this example is just showing the usage of "CloudServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -247,7 +247,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudService_Get_WithMultiRoleAndRDP.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
             // this example is just showing the usage of "CloudServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -275,7 +275,7 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new Compute.Models.LoadBal
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListCloudServicesInAResourceGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-04-04/CloudServiceRP/examples/CloudService_List_ByResourceGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-04-04/examples/CloudService_List_ByResourceGroup.json
             // this example is just showing the usage of "CloudServices_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

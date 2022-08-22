@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAProximityPlacementGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_Patch.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_Patch.json
             // this example is just showing the usage of "ProximityPlacementGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CreateAProximityPlacementGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_Delete.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_Delete.json
             // this example is just showing the usage of "ProximityPlacementGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CreateAProximityPlacementGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_Get.json
             // this example is just showing the usage of "ProximityPlacementGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProximityPlacementGroups_CreateAProximityPlacementGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-03-01/ComputeRP/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_ListBySubscription.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_ListBySubscription.json
             // this example is just showing the usage of "ProximityPlacementGroups_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

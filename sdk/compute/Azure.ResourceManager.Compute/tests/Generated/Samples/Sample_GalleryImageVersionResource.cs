@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateASimpleGalleryImageVersionManagedImageAsSource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImageVersion_Update.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Update.json
             // this example is just showing the usage of "GalleryImageVersions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -78,7 +78,7 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateASimpleGalleryImageVersionWithoutSourceId()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImageVersion_Update_WithoutSourceId.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Update_WithoutSourceId.json
             // this example is just showing the usage of "GalleryImageVersions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -128,7 +128,7 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -160,7 +160,7 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersionWithSnapshotsAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -191,7 +191,7 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersionWithVhdAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -222,7 +222,7 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImageVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -253,7 +253,7 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAGalleryImageVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/stable/2022-01-03/GalleryRP/examples/galleryExamples/GalleryImageVersion_Delete.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Delete.json
             // this example is just showing the usage of "GalleryImageVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
