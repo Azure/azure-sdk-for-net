@@ -12,17 +12,17 @@ using Azure.ResourceManager.MySql;
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> A list of server configurations. </summary>
-    public partial class MySqlConfigurationList
+    public partial class MySqlConfigurationListResult
     {
-        /// <summary> Initializes a new instance of MySqlConfigurationList. </summary>
-        public MySqlConfigurationList()
+        /// <summary> Initializes a new instance of MySqlConfigurationListResult. </summary>
+        public MySqlConfigurationListResult()
         {
             Values = new ChangeTrackingList<MySqlConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlConfigurationList. </summary>
+        /// <summary> Initializes a new instance of MySqlConfigurationListResult. </summary>
         /// <param name="values"> The list of server configurations. </param>
-        internal MySqlConfigurationList(IList<MySqlConfigurationData> values)
+        internal MySqlConfigurationListResult(IList<MySqlConfigurationData> values)
         {
             Values = values;
         }
