@@ -14,7 +14,6 @@ description: Samples for the Azure.Maps.Geolocation client library.
 
 ```C# Snippet:GeolocationImportNamespace
 using Azure.Maps.Geolocation;
-using Azure.Maps.Geolocation.Models;
 ```
 
 ## Create Geolocation Client

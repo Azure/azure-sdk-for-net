@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Maps.Geolocation.Models;
+using Azure.Maps.Geolocation;
 using NUnit.Framework;
 
 namespace Azure.Maps.Geolocation.Tests
