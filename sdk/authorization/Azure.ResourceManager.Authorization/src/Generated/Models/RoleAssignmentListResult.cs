@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         /// <param name="value"> Role assignment list. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="nextLink"> The skipToken to use for getting the next set of results. </param>
         internal RoleAssignmentListResult(IReadOnlyList<RoleAssignmentData> value, string nextLink)
         {
             Value = value;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Role assignment list. </summary>
         public IReadOnlyList<RoleAssignmentData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary> The skipToken to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
 }

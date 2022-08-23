@@ -23,13 +23,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="description"> The operation description. </param>
         /// <param name="origin"> The operation origin. </param>
         /// <param name="properties"> The operation properties. </param>
-        internal ProviderOperationInfo(string name, string displayName, string description, string origin, BinaryData properties)
+        /// <param name="isDataAction"> The dataAction flag to specify the operation type. </param>
+        internal ProviderOperationInfo(string name, string displayName, string description, string origin, BinaryData properties, bool? isDataAction)
         {
             Name = name;
             DisplayName = displayName;
             Description = description;
             Origin = origin;
             Properties = properties;
+            IsDataAction = isDataAction;
         }
 
         /// <summary> The operation name. </summary>
@@ -71,5 +73,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// </para>
         /// </summary>
         public BinaryData Properties { get; }
+        /// <summary> The dataAction flag to specify the operation type. </summary>
+        public bool? IsDataAction { get; }
     }
 }
