@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             string type,
             IDictionary<string, string> tags,
             string provisioningState,
-            ReplicationStatus replicationStatus)
+            ReplicationStatus replicationStatus = default(ReplicationStatus))
         : base(id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
