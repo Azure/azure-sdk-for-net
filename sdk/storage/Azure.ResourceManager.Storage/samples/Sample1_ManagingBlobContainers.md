@@ -94,4 +94,4 @@ await blobContainer.DeleteAsync(WaitUntil.Completed);
 
 ## Next steps
 
-Take a look at the [Managing File Shares](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md) samples.
+Take a look at the [Managing File Shares](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample3_ManagingFileShares.md) samples.
