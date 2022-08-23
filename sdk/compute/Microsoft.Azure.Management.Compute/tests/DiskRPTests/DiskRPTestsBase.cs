@@ -1713,6 +1713,7 @@ namespace Compute.Tests.DiskRPTests
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+               // m_CrpClient.Disks.RevokeAccess(rgName, diskName);
                 IList<string> zones = null;
                 Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
                 disk.OptimizedForFrequentAttach = true;
@@ -1741,10 +1742,11 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.True(diskOut.OptimizedForFrequentAttach);
 
-                    // Get disk access
-                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
-                    Assert.NotNull(accessUri.AccessSAS);
+                    //// Get disk access
+                    //AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
+                    //Assert.NotNull(accessUri.AccessSAS);
 
+                    /*
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
@@ -1758,7 +1760,8 @@ namespace Compute.Tests.DiskRPTests
                 };
                     diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
                     Validate(disk, diskOut, DiskRPLocation);
-
+                    */
+                    /*
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
@@ -1766,7 +1769,7 @@ namespace Compute.Tests.DiskRPTests
 
                     // End disk access
                     m_CrpClient.Disks.RevokeAccess(rgName, diskName);
-
+                    */
                     // Delete
                     m_CrpClient.Disks.Delete(rgName, diskName);
 
