@@ -94,4 +94,4 @@ await fileShare.DeleteAsync(WaitUntil.Completed);
 
 ## Next steps
 
-Take a look at the [Managing Storage Accounts](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md) samples.
+Take a look at the [Managing Blob Containers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingBlobContainers.md) samples.
