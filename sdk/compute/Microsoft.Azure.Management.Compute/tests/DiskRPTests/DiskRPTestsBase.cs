@@ -1742,6 +1742,22 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.True(diskOut.OptimizedForFrequentAttach);
 
+
+                    // Patch
+                    const string tagKey = "tagKey";
+                    var updatedisk = new DiskUpdate
+                    {
+                        OptimizedForFrequentAttach = false
+                    };
+                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.False(diskOut.OptimizedForFrequentAttach);
+
                     // Delete
                     m_CrpClient.Disks.Delete(rgName, diskName);
 
