@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer.Tests.Streaming
         [Test]
         public void ParseFormat_Test()
         {
-            StreamingFormat? streamingFormat = JsonSerializer.Deserialize<StreamingFormat>(FormatJson);
+            MediaStreamingFormat? streamingFormat = JsonSerializer.Deserialize<MediaStreamingFormat>(FormatJson);
             ValidateFormat(streamingFormat);
         }
 
@@ -31,14 +31,14 @@ namespace Azure.Communication.CallingServer.Tests.Streaming
                 + "\"format\": {0}"
                 + "}}";
 
-            StreamingMetadata? streamingMetadata = JsonSerializer.Deserialize<StreamingMetadata>(string.Format(metadataJson, FormatJson));
+            MediaStreamingMetadata? streamingMetadata = JsonSerializer.Deserialize<MediaStreamingMetadata>(string.Format(metadataJson, FormatJson));
             Assert.IsNotNull(streamingMetadata);
             Assert.AreEqual("subscriptionId", streamingMetadata?.SubscriptionId);
 
             ValidateFormat(streamingMetadata?.Format);
         }
 
-        private static void ValidateFormat(StreamingFormat? streamingFormat)
+        private static void ValidateFormat(MediaStreamingFormat? streamingFormat)
         {
             Assert.IsNotNull(streamingFormat);
             Assert.AreEqual("encodingType", streamingFormat?.Encoding);
@@ -57,7 +57,7 @@ namespace Azure.Communication.CallingServer.Tests.Streaming
                 + "\"isSilence\": false"
                 + "}";
 
-            StreamingAudio? streamingAudio = JsonSerializer.Deserialize<StreamingAudio>(audioJson);
+            MediaStreamingAudio? streamingAudio = JsonSerializer.Deserialize<MediaStreamingAudio>(audioJson);
             Assert.IsNotNull(streamingAudio);
             Assert.AreEqual(5, streamingAudio?.Data.Length);
             Assert.AreEqual(2022, streamingAudio?.Timestamp.Year);

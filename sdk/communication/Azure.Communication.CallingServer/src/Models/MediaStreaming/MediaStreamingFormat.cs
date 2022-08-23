@@ -8,7 +8,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The Streaming Format model.
     /// </summary>
-    public class StreamingFormat
+    public class MediaStreamingFormat
     {
         /// <summary>
         /// The Encoding.

@@ -370,6 +370,18 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.MediaStreamingContentType left, Azure.Communication.CallingServer.MediaStreamingContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MediaStreamingFormat
+    {
+        public MediaStreamingFormat() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
+        public int Channels { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
+        public string Encoding { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
+        public double Length { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
+        public int SampleRate { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingTransportType : System.IEquatable<Azure.Communication.CallingServer.MediaStreamingTransportType>
     {
@@ -624,18 +636,6 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.StopTones left, Azure.Communication.CallingServer.StopTones right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StreamingFormat
-    {
-        public StreamingFormat() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
-        public int Channels { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
-        public string Encoding { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
-        public double Length { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
-        public int SampleRate { get { throw null; } set { } }
-    }
     public partial class TransferCallToParticipantResult
     {
         internal TransferCallToParticipantResult() { }
@@ -644,9 +644,9 @@ namespace Azure.Communication.CallingServer
 }
 namespace Azure.Communication.CallingServer.Models.Streaming
 {
-    public partial class StreamingAudio
+    public partial class MediaStreamingAudio
     {
-        public StreamingAudio() { }
+        public MediaStreamingAudio() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
         public byte[] Data { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("isSilence")]
@@ -656,11 +656,11 @@ namespace Azure.Communication.CallingServer.Models.Streaming
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("timestamp")]
         public System.DateTime Timestamp { get { throw null; } set { } }
     }
-    public partial class StreamingMetadata
+    public partial class MediaStreamingMetadata
     {
-        public StreamingMetadata() { }
+        public MediaStreamingMetadata() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("format")]
-        public Azure.Communication.CallingServer.StreamingFormat Format { get { throw null; } set { } }
+        public Azure.Communication.CallingServer.MediaStreamingFormat Format { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
         public string SubscriptionId { get { throw null; } set { } }
     }

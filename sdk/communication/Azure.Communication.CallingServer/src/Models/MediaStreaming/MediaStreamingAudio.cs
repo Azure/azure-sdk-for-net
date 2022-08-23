@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer.Models.Streaming
     /// <summary>
     /// Streaming audio.
     /// </summary>
-    public class StreamingAudio
+    public class MediaStreamingAudio
     {
         /// <summary>
         /// Base64 Encoded audio buffer data .

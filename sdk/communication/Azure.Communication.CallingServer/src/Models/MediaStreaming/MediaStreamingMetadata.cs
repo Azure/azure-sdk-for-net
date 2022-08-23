@@ -8,7 +8,7 @@ namespace Azure.Communication.CallingServer.Models.Streaming
     /// <summary>
     /// Streaming metadata
     /// </summary>
-    public class StreamingMetadata
+    public class MediaStreamingMetadata
     {
         /// <summary>
         /// Subscription Id
@@ -20,6 +20,6 @@ namespace Azure.Communication.CallingServer.Models.Streaming
         /// Format.
         /// </summary>
         [JsonPropertyName("format")]
-        public StreamingFormat Format { get; set; }
+        public MediaStreamingFormat Format { get; set; }
     }
 }
