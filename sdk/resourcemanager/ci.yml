@@ -31,4 +31,6 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager
       safeName: AzureResourceManager
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml
     TestDependsOnDependency: Azure.ResourceManager
