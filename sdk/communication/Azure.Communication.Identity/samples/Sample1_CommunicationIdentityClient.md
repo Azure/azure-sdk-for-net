@@ -66,8 +66,8 @@ Console.WriteLine($"Expires On: {expiresOn}");
 It's also possible to create a Communication Identity access token by customizing the expiration time. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
 
 ```C# Snippet:CreateCommunicationTokenWithCustomExpiration
-TimeSpan expiresAfter = new TimeSpan(0, 60, 0);
-Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat }, expiresAfter);
+TimeSpan tokenExpiresAfter = new TimeSpan(0, 60, 0);
+Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter);
 string token = tokenResponse.Value.Token;
 DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");
@@ -79,8 +79,8 @@ Console.WriteLine($"Expires On: {expiresOn}");
 You can create user and token in the same request. You can specify expiration time for the token. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
 
 ```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
-TimeSpan expiresAfter = new TimeSpan(0, 60, 0);
-Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, expiresAfter);
+TimeSpan tokenExpiresAfter = new TimeSpan(0, 60, 0);
+Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter);
 var (user, token) = response.Value;
 Console.WriteLine($"User id: {user.Id}");
 Console.WriteLine($"Token: {token.Token}");
