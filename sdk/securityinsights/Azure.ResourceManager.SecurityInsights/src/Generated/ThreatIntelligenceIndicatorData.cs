@@ -10,15 +10,15 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
+using Azure.ResourceManager.SecurityInsights.Models;
 
-namespace Azure.ResourceManager.SecurityInsights.Models
+namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> Threat intelligence indicator entity. </summary>
-    public partial class ThreatIntelligenceIndicatorModel : ThreatIntelligenceInformationData
+    /// <summary> A class representing the ThreatIntelligenceIndicator data model. </summary>
+    public partial class ThreatIntelligenceIndicatorData : ThreatIntelligenceInformation
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceIndicatorModel. </summary>
-        public ThreatIntelligenceIndicatorModel()
+        /// <summary> Initializes a new instance of ThreatIntelligenceIndicatorData. </summary>
+        public ThreatIntelligenceIndicatorData()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             ThreatIntelligenceTags = new ChangeTrackingList<string>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = ThreatIntelligenceResourceKindEnum.Indicator;
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceIndicatorModel. </summary>
+        /// <summary> Initializes a new instance of ThreatIntelligenceIndicatorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="created"> Created by. </param>
         /// <param name="modified"> Modified by. </param>
         /// <param name="extensions"> Extensions map. </param>
-        internal ThreatIntelligenceIndicatorModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceKindEnum kind, ETag? etag, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, string lastUpdatedTimeUtc, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? defanged, string externalLastUpdatedTimeUtc, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingModel> granularMarkings, IList<string> labels, bool? revoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, string validFrom, string validUntil, string created, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag)
+        internal ThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceKindEnum kind, ETag? etag, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, string lastUpdatedTimeUtc, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? defanged, string externalLastUpdatedTimeUtc, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingModel> granularMarkings, IList<string> labels, bool? revoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, string validFrom, string validUntil, string created, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

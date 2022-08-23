@@ -733,23 +733,18 @@ namespace Azure.ResourceManager.SecurityInsights
             return resourceGroupResource.GetSourceControls(workspaceName).Get(sourceControlId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ThreatIntelligenceInformationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ThreatIntelligenceIndicatorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of ThreatIntelligenceInformationResources and their operations over a ThreatIntelligenceInformationResource. </returns>
-        public static ThreatIntelligenceInformationCollection GetAllThreatIntelligenceInformation(this ResourceGroupResource resourceGroupResource, string workspaceName)
+        /// <returns> An object representing collection of ThreatIntelligenceIndicatorResources and their operations over a ThreatIntelligenceIndicatorResource. </returns>
+        public static ThreatIntelligenceIndicatorCollection GetThreatIntelligenceIndicators(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            return GetExtensionClient(resourceGroupResource).GetAllThreatIntelligenceInformation(workspaceName);
+            return GetExtensionClient(resourceGroupResource).GetThreatIntelligenceIndicators();
         }
 
         /// <summary>
         /// View a threat intelligence indicator by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Get
+        /// Operation Id: ThreatIntelligenceIndicators_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -758,15 +753,15 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ThreatIntelligenceInformationResource>> GetThreatIntelligenceInformationAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<ThreatIntelligenceInformation>> GetThreatIntelligenceIndicatorAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAllThreatIntelligenceInformation(workspaceName).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetThreatIntelligenceIndicators().GetAsync(workspaceName, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// View a threat intelligence indicator by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Get
+        /// Operation Id: ThreatIntelligenceIndicators_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -775,9 +770,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ThreatIntelligenceInformationResource> GetThreatIntelligenceInformation(this ResourceGroupResource resourceGroupResource, string workspaceName, string name, CancellationToken cancellationToken = default)
+        public static Response<ThreatIntelligenceInformation> GetThreatIntelligenceIndicator(this ResourceGroupResource resourceGroupResource, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAllThreatIntelligenceInformation(workspaceName).Get(name, cancellationToken);
+            return resourceGroupResource.GetThreatIntelligenceIndicators().Get(workspaceName, name, cancellationToken);
         }
 
         /// <summary> Gets a collection of WatchlistResources in the ResourceGroupResource. </summary>
@@ -979,73 +974,85 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Create a new threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/createIndicator
-        /// Operation Id: ThreatIntelligenceIndicator_CreateIndicator
+        /// Operation Id: ThreatIntelligenceIndicators_Create
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="threatIntelligenceProperties"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceProperties"/> is null. </exception>
-        public static async Task<Response<ThreatIntelligenceInformationResource>> CreateIndicatorThreatIntelligenceIndicatorAsync(this ResourceGroupResource resourceGroupResource, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response<ThreatIntelligenceInformation>> CreateThreatIntelligenceIndicatorAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, ThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceProperties, nameof(threatIntelligenceProperties));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            return await GetExtensionClient(resourceGroupResource).CreateIndicatorThreatIntelligenceIndicatorAsync(threatIntelligenceProperties, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).CreateThreatIntelligenceIndicatorAsync(workspaceName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Create a new threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/createIndicator
-        /// Operation Id: ThreatIntelligenceIndicator_CreateIndicator
+        /// Operation Id: ThreatIntelligenceIndicators_Create
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="threatIntelligenceProperties"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceProperties"/> is null. </exception>
-        public static Response<ThreatIntelligenceInformationResource> CreateIndicatorThreatIntelligenceIndicator(this ResourceGroupResource resourceGroupResource, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
+        public static Response<ThreatIntelligenceInformation> CreateThreatIntelligenceIndicator(this ResourceGroupResource resourceGroupResource, string workspaceName, ThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceProperties, nameof(threatIntelligenceProperties));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            return GetExtensionClient(resourceGroupResource).CreateIndicatorThreatIntelligenceIndicator(threatIntelligenceProperties, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).CreateThreatIntelligenceIndicator(workspaceName, data, cancellationToken);
         }
 
         /// <summary>
         /// Query threat intelligence indicators as per filtering criteria.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators
-        /// Operation Id: ThreatIntelligenceIndicator_QueryIndicators
+        /// Operation Id: ThreatIntelligenceIndicators_Query
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="threatIntelligenceFilteringCriteria"> Filtering criteria for querying threat intelligence indicators. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ThreatIntelligenceInformationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ThreatIntelligenceInformationResource> GetAllThreatIntelligenceInformationByQueryIndicatorAsync(this ResourceGroupResource resourceGroupResource, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ThreatIntelligenceInformation" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ThreatIntelligenceInformation> QueryThreatIntelligenceIndicatorsAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
 
-            return GetExtensionClient(resourceGroupResource).GetAllThreatIntelligenceInformationByQueryIndicatorAsync(threatIntelligenceFilteringCriteria, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).QueryThreatIntelligenceIndicatorsAsync(workspaceName, threatIntelligenceFilteringCriteria, cancellationToken);
         }
 
         /// <summary>
         /// Query threat intelligence indicators as per filtering criteria.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators
-        /// Operation Id: ThreatIntelligenceIndicator_QueryIndicators
+        /// Operation Id: ThreatIntelligenceIndicators_Query
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="threatIntelligenceFilteringCriteria"> Filtering criteria for querying threat intelligence indicators. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
-        /// <returns> A collection of <see cref="ThreatIntelligenceInformationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ThreatIntelligenceInformationResource> GetAllThreatIntelligenceInformationByQueryIndicator(this ResourceGroupResource resourceGroupResource, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
+        /// <returns> A collection of <see cref="ThreatIntelligenceInformation" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ThreatIntelligenceInformation> QueryThreatIntelligenceIndicators(this ResourceGroupResource resourceGroupResource, string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
 
-            return GetExtensionClient(resourceGroupResource).GetAllThreatIntelligenceInformationByQueryIndicator(threatIntelligenceFilteringCriteria, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).QueryThreatIntelligenceIndicators(workspaceName, threatIntelligenceFilteringCriteria, cancellationToken);
         }
 
         /// <summary>
         /// Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics
-        /// Operation Id: ThreatIntelligenceIndicatorMetrics_List
+        /// Operation Id: ThreatIntelligenceIndicators_ListMetrics
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -1053,17 +1060,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="ThreatIntelligenceMetrics" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ThreatIntelligenceMetrics> GetThreatIntelligenceIndicatorMetricsAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ThreatIntelligenceMetrics> GetMetricsThreatIntelligenceIndicatorsAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetExtensionClient(resourceGroupResource).GetThreatIntelligenceIndicatorMetricsAsync(workspaceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetMetricsThreatIntelligenceIndicatorsAsync(workspaceName, cancellationToken);
         }
 
         /// <summary>
         /// Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics
-        /// Operation Id: ThreatIntelligenceIndicatorMetrics_List
+        /// Operation Id: ThreatIntelligenceIndicators_ListMetrics
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -1071,11 +1078,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <returns> A collection of <see cref="ThreatIntelligenceMetrics" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ThreatIntelligenceMetrics> GetThreatIntelligenceIndicatorMetrics(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Pageable<ThreatIntelligenceMetrics> GetMetricsThreatIntelligenceIndicators(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetExtensionClient(resourceGroupResource).GetThreatIntelligenceIndicatorMetrics(workspaceName, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetMetricsThreatIntelligenceIndicators(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -1496,20 +1503,20 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region ThreatIntelligenceInformationResource
+        #region ThreatIntelligenceIndicatorResource
         /// <summary>
-        /// Gets an object representing a <see cref="ThreatIntelligenceInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ThreatIntelligenceInformationResource.CreateResourceIdentifier" /> to create a <see cref="ThreatIntelligenceInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ThreatIntelligenceIndicatorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ThreatIntelligenceIndicatorResource.CreateResourceIdentifier" /> to create a <see cref="ThreatIntelligenceIndicatorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ThreatIntelligenceInformationResource" /> object. </returns>
-        public static ThreatIntelligenceInformationResource GetThreatIntelligenceInformationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ThreatIntelligenceIndicatorResource" /> object. </returns>
+        public static ThreatIntelligenceIndicatorResource GetThreatIntelligenceIndicatorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ThreatIntelligenceInformationResource.ValidateResourceId(id);
-                return new ThreatIntelligenceInformationResource(client, id);
+                ThreatIntelligenceIndicatorResource.ValidateResourceId(id);
+                return new ThreatIntelligenceIndicatorResource(client, id);
             }
             );
         }

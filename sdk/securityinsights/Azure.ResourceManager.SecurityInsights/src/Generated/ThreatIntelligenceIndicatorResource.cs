@@ -19,46 +19,46 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a ThreatIntelligenceInformation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ThreatIntelligenceInformationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetThreatIntelligenceInformationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetThreatIntelligenceInformation method.
+    /// A Class representing a ThreatIntelligenceIndicator along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ThreatIntelligenceIndicatorResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetThreatIntelligenceIndicatorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetThreatIntelligenceIndicator method.
     /// </summary>
-    public partial class ThreatIntelligenceInformationResource : ArmResource
+    public partial class ThreatIntelligenceIndicatorResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ThreatIntelligenceInformationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ThreatIntelligenceIndicatorResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics;
-        private readonly ThreatIntelligenceIndicatorRestOperations _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient;
-        private readonly ThreatIntelligenceInformationData _data;
+        private readonly ClientDiagnostics _threatIntelligenceIndicatorClientDiagnostics;
+        private readonly ThreatIntelligenceIndicatorsRestOperations _threatIntelligenceIndicatorRestClient;
+        private readonly ThreatIntelligenceIndicatorData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ThreatIntelligenceInformationResource"/> class for mocking. </summary>
-        protected ThreatIntelligenceInformationResource()
+        /// <summary> Initializes a new instance of the <see cref="ThreatIntelligenceIndicatorResource"/> class for mocking. </summary>
+        protected ThreatIntelligenceIndicatorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ThreatIntelligenceInformationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ThreatIntelligenceIndicatorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ThreatIntelligenceInformationResource(ArmClient client, ThreatIntelligenceInformationData data) : this(client, data.Id)
+        internal ThreatIntelligenceIndicatorResource(ArmClient client, ThreatIntelligenceIndicatorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ThreatIntelligenceInformationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ThreatIntelligenceIndicatorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ThreatIntelligenceInformationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ThreatIntelligenceIndicatorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string threatIntelligenceInformationThreatIntelligenceIndicatorApiVersion);
-            _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicatorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, threatIntelligenceInformationThreatIntelligenceIndicatorApiVersion);
+            _threatIntelligenceIndicatorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string threatIntelligenceIndicatorApiVersion);
+            _threatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicatorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, threatIntelligenceIndicatorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ThreatIntelligenceInformationData Data
+        public virtual ThreatIntelligenceIndicatorData Data
         {
             get
             {
@@ -91,19 +91,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// View a threat intelligence indicator by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Get
+        /// Operation Id: ThreatIntelligenceIndicators_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ThreatIntelligenceInformationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreatIntelligenceInformation>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.Get");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.Get");
             scope.Start();
             try
             {
-                var response = await _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ThreatIntelligenceInformationResource(Client, response.Value), response.GetRawResponse());
+                var response = await _threatIntelligenceIndicatorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -115,19 +113,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// View a threat intelligence indicator by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Get
+        /// Operation Id: ThreatIntelligenceIndicators_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ThreatIntelligenceInformationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ThreatIntelligenceInformation> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.Get");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.Get");
             scope.Start();
             try
             {
-                var response = _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ThreatIntelligenceInformationResource(Client, response.Value), response.GetRawResponse());
+                var response = _threatIntelligenceIndicatorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -139,17 +135,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Delete a threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Delete
+        /// Operation Id: ThreatIntelligenceIndicators_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.Delete");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.Delete");
             scope.Start();
             try
             {
-                var response = await _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _threatIntelligenceIndicatorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -165,17 +161,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Delete a threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Delete
+        /// Operation Id: ThreatIntelligenceIndicators_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.Delete");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.Delete");
             scope.Start();
             try
             {
-                var response = _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                var response = _threatIntelligenceIndicatorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 var operation = new SecurityInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -191,22 +187,22 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Update a threat Intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Create
+        /// Operation Id: ThreatIntelligenceIndicators_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="threatIntelligenceProperties"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceProperties"/> is null. </exception>
-        public virtual async Task<ArmOperation<ThreatIntelligenceInformationResource>> UpdateAsync(WaitUntil waitUntil, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ThreatIntelligenceInformation>> UpdateAsync(WaitUntil waitUntil, ThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceProperties, nameof(threatIntelligenceProperties));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.Update");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.Update");
             scope.Start();
             try
             {
-                var response = await _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<ThreatIntelligenceInformationResource>(Response.FromValue(new ThreatIntelligenceInformationResource(Client, response), response.GetRawResponse()));
+                var response = await _threatIntelligenceIndicatorRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityInsightsArmOperation<ThreatIntelligenceInformation>(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,22 +217,22 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Update a threat Intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicator_Create
+        /// Operation Id: ThreatIntelligenceIndicators_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="threatIntelligenceProperties"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceProperties"/> is null. </exception>
-        public virtual ArmOperation<ThreatIntelligenceInformationResource> Update(WaitUntil waitUntil, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ThreatIntelligenceInformation> Update(WaitUntil waitUntil, ThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceProperties, nameof(threatIntelligenceProperties));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.Update");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.Update");
             scope.Start();
             try
             {
-                var response = _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceProperties, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<ThreatIntelligenceInformationResource>(Response.FromValue(new ThreatIntelligenceInformationResource(Client, response), response.GetRawResponse()));
+                var response = _threatIntelligenceIndicatorRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SecurityInsightsArmOperation<ThreatIntelligenceInformation>(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -251,7 +247,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Append tags to a threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}/appendTags
-        /// Operation Id: ThreatIntelligenceIndicator_AppendTags
+        /// Operation Id: ThreatIntelligenceIndicators_AppendTags
         /// </summary>
         /// <param name="threatIntelligenceAppendTags"> The threat intelligence append tags request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -260,11 +256,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
 
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.AppendTags");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();
             try
             {
-                var response = await _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.AppendTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceAppendTags, cancellationToken).ConfigureAwait(false);
+                var response = await _threatIntelligenceIndicatorRestClient.AppendTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceAppendTags, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -277,7 +273,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Append tags to a threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}/appendTags
-        /// Operation Id: ThreatIntelligenceIndicator_AppendTags
+        /// Operation Id: ThreatIntelligenceIndicators_AppendTags
         /// </summary>
         /// <param name="threatIntelligenceAppendTags"> The threat intelligence append tags request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -286,11 +282,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
 
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.AppendTags");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();
             try
             {
-                var response = _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.AppendTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceAppendTags, cancellationToken);
+                var response = _threatIntelligenceIndicatorRestClient.AppendTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceAppendTags, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -303,21 +299,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Replace tags added to a threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}/replaceTags
-        /// Operation Id: ThreatIntelligenceIndicator_ReplaceTags
+        /// Operation Id: ThreatIntelligenceIndicators_ReplaceTags
         /// </summary>
-        /// <param name="threatIntelligenceReplaceTags"> Tags in the threat intelligence indicator to be replaced. </param>
+        /// <param name="data"> Tags in the threat intelligence indicator to be replaced. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceReplaceTags"/> is null. </exception>
-        public virtual async Task<Response<ThreatIntelligenceInformationResource>> ReplaceTagsAsync(ThreatIntelligenceIndicatorModel threatIntelligenceReplaceTags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<ThreatIntelligenceInformation>> ReplaceTagsAsync(ThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceReplaceTags, nameof(threatIntelligenceReplaceTags));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.ReplaceTags");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.ReplaceTags");
             scope.Start();
             try
             {
-                var response = await _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.ReplaceTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceReplaceTags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ThreatIntelligenceInformationResource(Client, response.Value), response.GetRawResponse());
+                var response = await _threatIntelligenceIndicatorRestClient.ReplaceTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -329,21 +325,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Replace tags added to a threat intelligence indicator.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}/replaceTags
-        /// Operation Id: ThreatIntelligenceIndicator_ReplaceTags
+        /// Operation Id: ThreatIntelligenceIndicators_ReplaceTags
         /// </summary>
-        /// <param name="threatIntelligenceReplaceTags"> Tags in the threat intelligence indicator to be replaced. </param>
+        /// <param name="data"> Tags in the threat intelligence indicator to be replaced. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceReplaceTags"/> is null. </exception>
-        public virtual Response<ThreatIntelligenceInformationResource> ReplaceTags(ThreatIntelligenceIndicatorModel threatIntelligenceReplaceTags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ThreatIntelligenceInformation> ReplaceTags(ThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceReplaceTags, nameof(threatIntelligenceReplaceTags));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _threatIntelligenceInformationThreatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceInformationResource.ReplaceTags");
+            using var scope = _threatIntelligenceIndicatorClientDiagnostics.CreateScope("ThreatIntelligenceIndicatorResource.ReplaceTags");
             scope.Start();
             try
             {
-                var response = _threatIntelligenceInformationThreatIntelligenceIndicatorRestClient.ReplaceTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, threatIntelligenceReplaceTags, cancellationToken);
-                return Response.FromValue(new ThreatIntelligenceInformationResource(Client, response.Value), response.GetRawResponse());
+                var response = _threatIntelligenceIndicatorRestClient.ReplaceTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

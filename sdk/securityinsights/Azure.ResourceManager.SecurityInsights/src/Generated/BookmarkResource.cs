@@ -35,8 +35,6 @@ namespace Azure.ResourceManager.SecurityInsights
 
         private readonly ClientDiagnostics _bookmarkClientDiagnostics;
         private readonly BookmarksRestOperations _bookmarkRestClient;
-        private readonly ClientDiagnostics _bookmarkClientDiagnostics0;
-        private readonly BookmarkRestOperations _bookmarkRestClient0;
         private readonly BookmarkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="BookmarkResource"/> class for mocking. </summary>
@@ -61,8 +59,6 @@ namespace Azure.ResourceManager.SecurityInsights
             _bookmarkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string bookmarkApiVersion);
             _bookmarkRestClient = new BookmarksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bookmarkApiVersion);
-            _bookmarkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _bookmarkRestClient = new BookmarkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -292,16 +288,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Expand an bookmark
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand
-        /// Operation Id: Bookmark_Expand
+        /// Operation Id: Bookmarks_Expand
         /// </summary>
         /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BookmarkExpandResponse>> ExpandBookmarkAsync(BookmarkExpandContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BookmarkExpandResponse>> ExpandAsync(BookmarkExpandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _bookmarkClientDiagnostics.CreateScope("BookmarkResource.ExpandBookmark");
+            using var scope = _bookmarkClientDiagnostics.CreateScope("BookmarkResource.Expand");
             scope.Start();
             try
             {
@@ -318,16 +314,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Expand an bookmark
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand
-        /// Operation Id: Bookmark_Expand
+        /// Operation Id: Bookmarks_Expand
         /// </summary>
         /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BookmarkExpandResponse> ExpandBookmark(BookmarkExpandContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BookmarkExpandResponse> Expand(BookmarkExpandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _bookmarkClientDiagnostics.CreateScope("BookmarkResource.ExpandBookmark");
+            using var scope = _bookmarkClientDiagnostics.CreateScope("BookmarkResource.Expand");
             scope.Start();
             try
             {

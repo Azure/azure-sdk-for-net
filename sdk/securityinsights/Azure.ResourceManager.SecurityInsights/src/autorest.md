@@ -16,7 +16,17 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+request-path-to-parent:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
+
+request-path-to-resource-data:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}: ThreatIntelligenceIndicatorModel
+
+operation-positions:
+  ThreatIntelligenceIndicators_List: collection
+
+rename-mapping:
+  ThreatIntelligenceIndicatorModel: ThreatIntelligenceIndicator
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -49,6 +59,33 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  - rename-operation:
+      from: ThreatIntelligenceIndicator_Get
+      to: ThreatIntelligenceIndicators_Get
+  - rename-operation:
+      from: ThreatIntelligenceIndicator_Create
+      to: ThreatIntelligenceIndicators_Update
+  - rename-operation:
+      from: ThreatIntelligenceIndicator_Delete
+      to: ThreatIntelligenceIndicators_Delete
+  - rename-operation:
+      from: ThreatIntelligenceIndicator_AppendTags
+      to: ThreatIntelligenceIndicators_AppendTags
+  - rename-operation:
+      from: ThreatIntelligenceIndicator_ReplaceTags
+      to: ThreatIntelligenceIndicators_ReplaceTags
+  - rename-operation:
+      from: ThreatIntelligenceIndicator_CreateIndicator
+      to: ThreatIntelligenceIndicators_Create
+  - rename-operation:
+      from: ThreatIntelligenceIndicatorMetrics_List
+      to: ThreatIntelligenceIndicators_ListMetrics
+  - rename-operation:
+      from: ThreatIntelligenceIndicator_QueryIndicators
+      to: ThreatIntelligenceIndicators_Query
+  - rename-operation:
+      from: Bookmark_Expand
+      to: Bookmarks_Expand
   - from: dataConnectors.json
     where: $.definitions
     transform: >

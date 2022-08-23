@@ -11,10 +11,11 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights.Models;
 
-namespace Azure.ResourceManager.SecurityInsights.Models
+namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class ThreatIntelligenceIndicatorModel : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceIndicatorData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static ThreatIntelligenceIndicatorModel DeserializeThreatIntelligenceIndicatorModel(JsonElement element)
+        internal static ThreatIntelligenceIndicatorData DeserializeThreatIntelligenceIndicatorData(JsonElement element)
         {
             ThreatIntelligenceResourceKindEnum kind = default;
             Optional<ETag> etag = default;
@@ -595,7 +596,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ThreatIntelligenceIndicatorModel(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(threatIntelligenceTags), lastUpdatedTimeUtc.Value, source.Value, displayName.Value, description.Value, Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Optional.ToList(killChainPhases), Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), externalLastUpdatedTimeUtc.Value, Optional.ToList(externalReferences), Optional.ToList(granularMarkings), Optional.ToList(labels), Optional.ToNullable(revoked), Optional.ToNullable(confidence), Optional.ToList(objectMarkingRefs), language.Value, Optional.ToList(threatTypes), validFrom.Value, validUntil.Value, created.Value, modified.Value, Optional.ToDictionary(extensions));
+            return new ThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(threatIntelligenceTags), lastUpdatedTimeUtc.Value, source.Value, displayName.Value, description.Value, Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Optional.ToList(killChainPhases), Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), externalLastUpdatedTimeUtc.Value, Optional.ToList(externalReferences), Optional.ToList(granularMarkings), Optional.ToList(labels), Optional.ToNullable(revoked), Optional.ToNullable(confidence), Optional.ToList(objectMarkingRefs), language.Value, Optional.ToList(threatTypes), validFrom.Value, validUntil.Value, created.Value, modified.Value, Optional.ToDictionary(extensions));
         }
     }
 }

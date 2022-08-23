@@ -9,11 +9,11 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights.Models;
+using Azure.ResourceManager.SecurityInsights;
 
-namespace Azure.ResourceManager.SecurityInsights
+namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceInformationData : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceInformation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        internal static ThreatIntelligenceInformationData DeserializeThreatIntelligenceInformationData(JsonElement element)
+        internal static ThreatIntelligenceInformation DeserializeThreatIntelligenceInformation(JsonElement element)
         {
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "indicator": return ThreatIntelligenceIndicatorModel.DeserializeThreatIntelligenceIndicatorModel(element);
+                    case "indicator": return ThreatIntelligenceIndicatorData.DeserializeThreatIntelligenceIndicatorData(element);
                 }
             }
             ThreatIntelligenceResourceKindEnum kind = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new ThreatIntelligenceInformationData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new ThreatIntelligenceInformation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
         }
     }
 }

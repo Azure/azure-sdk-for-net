@@ -82,7 +82,36 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IList<string> Techniques { get; }
         /// <summary> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </summary>
         public string AnomalyVersion { get; set; }
-        /// <summary> The customizable observations of the AnomalySecurityMLAnalyticsSettings. </summary>
+        /// <summary>
+        /// The customizable observations of the AnomalySecurityMLAnalyticsSettings.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData CustomizableObservations { get; set; }
         /// <summary> The frequency that this SecurityMLAnalyticsSettings will be run. </summary>
         public TimeSpan? Frequency { get; set; }
