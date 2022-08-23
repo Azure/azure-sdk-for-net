@@ -104,7 +104,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. Acquired tokens
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code to authenticate. Acquired tokens
         /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. Acquired tokens
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code to authenticate. Acquired tokens
         /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
