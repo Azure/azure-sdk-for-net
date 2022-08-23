@@ -1354,6 +1354,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [LiveOnly]
         public async Task InsertOverPartitionLimit()
         {
+            if (UseCosmos)
+            {
+                Assert.Ignore("Hits the rate limit");
+            }
             await CallAsync<InsertOverPartitionLimitProgram>(arguments: new Dictionary<string, object> { { "test", this } });
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
             Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Count);
