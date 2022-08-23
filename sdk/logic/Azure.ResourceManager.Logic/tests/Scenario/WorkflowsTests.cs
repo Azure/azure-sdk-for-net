@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Tests
         private ResourceIdentifier _resourceGroupIdentifier;
         private ResourceGroupResource _resourceGroup;
 
-        private IntegrationServiceEnvironmentCollection _integrationServiceEnvironmentCollection => _resourceGroup.GetIntegrationServiceEnvironments();
+        private LogicWorkflowCollection _workflowCollection => _resourceGroup.GetLogicWorkflows();
 
         public WorkflowsTests(bool isAsync) : base(isAsync)
         {
@@ -35,6 +36,18 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task SetUp()
         {
             _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+        }
+
+        [Test]
+        public async Task CreateOrUpdate()
+        {
+            string workflowName = SessionRecording.GenerateAssetName("workflow");
+            byte[] definition = File.ReadAllBytes(@"..\..\..\..\..\sdk\logic\Azure.ResourceManager.Logic\tests\TestData\WorkflowDefinition.json");
+            LogicWorkflowData data = new LogicWorkflowData(_resourceGroup.Data.Location)
+            {
+                Definition = new BinaryData(definition),
+            };
+            var workflow = await _workflowCollection.CreateOrUpdateAsync(WaitUntil.Completed,workflowName,data);
         }
     }
 }

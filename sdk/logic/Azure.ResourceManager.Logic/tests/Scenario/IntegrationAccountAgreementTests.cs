@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic.Tests
         private ResourceIdentifier _integrationAccountIdentifier;
         private IntegrationAccountResource _integrationAccount;
 
-        private IntegrationAccountAgreementCollection _AgreementCollection => _integrationAccount.GetIntegrationAccountAgreements();
+        private IntegrationAccountAgreementCollection _agreementCollection => _integrationAccount.GetIntegrationAccountAgreements();
 
         public IntegrationAccountAgreementTests(bool isAsync) : base(isAsync)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Tests
             IntegrationAccountAgreementData data = new IntegrationAccountAgreementData(_integrationAccount.Data.Location, type, hostPartner, guestPartner, hostIdentity, guestIdentity, content)
             {
             };
-            var agreement = await _AgreementCollection.CreateOrUpdateAsync(WaitUntil.Completed, agreementName, data);
+            var agreement = await _agreementCollection.CreateOrUpdateAsync(WaitUntil.Completed, agreementName, data);
             return agreement.Value;
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await Create_Agreement_AS2(agreementName);
-            bool flag = await _AgreementCollection.ExistsAsync(agreementName);
+            bool flag = await _agreementCollection.ExistsAsync(agreementName);
             Assert.IsTrue(flag);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await Create_Agreement_AS2(agreementName);
-            var agreement = await _AgreementCollection.GetAsync(agreementName);
+            var agreement = await _agreementCollection.GetAsync(agreementName);
             Assert.IsNotNull(agreement);
             Assert.AreEqual(agreementName, agreement.Value.Data.Name);
         }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             await Create_Agreement_AS2(agreementName);
-            var list = await _AgreementCollection.GetAllAsync().ToEnumerableAsync();
+            var list = await _agreementCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
 
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             string agreementName = SessionRecording.GenerateAssetName("agreement");
             var agreement = await Create_Agreement_AS2(agreementName);
-            bool flag = await _AgreementCollection.ExistsAsync(agreementName);
+            bool flag = await _agreementCollection.ExistsAsync(agreementName);
             Assert.IsTrue(flag);
 
             await agreement.DeleteAsync(WaitUntil.Completed);
-            flag = await _AgreementCollection.ExistsAsync(agreementName);
+            flag = await _agreementCollection.ExistsAsync(agreementName);
             Assert.IsFalse(flag);
         }
     }
