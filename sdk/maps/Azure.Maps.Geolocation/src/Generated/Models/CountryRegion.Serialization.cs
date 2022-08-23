@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Maps.Geolocation.Models
+namespace Azure.Maps.Geolocation
 {
     internal partial class CountryRegion
     {

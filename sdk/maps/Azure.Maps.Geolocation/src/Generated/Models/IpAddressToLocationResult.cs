@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Maps.Geolocation.Models;
-
 namespace Azure.Maps.Geolocation
 {
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>

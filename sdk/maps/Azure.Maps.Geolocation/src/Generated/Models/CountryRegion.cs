@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Geolocation.Models
+namespace Azure.Maps.Geolocation
 {
     /// <summary> The object containing the country/region information. </summary>
     internal partial class CountryRegion
