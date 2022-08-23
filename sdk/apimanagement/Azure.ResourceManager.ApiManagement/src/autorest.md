@@ -332,6 +332,8 @@ directive:
     where: $.parameters
     transform: >
       $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
+      $.IfMatchOptionalParameter['x-ms-format'] = 'etag';
+      $.IfMatchRequiredParameter['x-ms-format'] = 'etag';
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy' 
