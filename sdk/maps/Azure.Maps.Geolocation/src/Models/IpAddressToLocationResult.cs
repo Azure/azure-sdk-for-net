@@ -4,7 +4,7 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.Maps.Geolocation.Models;
+using Azure.Maps.Geolocation;
 
 namespace Azure.Maps.Geolocation
 {

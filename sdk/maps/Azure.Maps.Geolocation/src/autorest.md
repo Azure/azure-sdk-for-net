@@ -26,4 +26,5 @@ public-clients: false
 clear-output-folder: true
 data-plane: true
 skip-csproj: true
+model-namespace: false
 ```

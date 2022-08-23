@@ -77,22 +77,6 @@
         }
     ],
     "outputs": {
-        "RESOURCE_GROUP_NAME": {
-            "type": "string",
-            "value": "[resourceGroup().Name]"
-        },
-        "TENANT_ID": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "CLIENT_ID": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
         "SUBSCRIPTION_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Maps/accounts',variables('mapsAccountName')), '2021-12-01-preview').primaryKey]"

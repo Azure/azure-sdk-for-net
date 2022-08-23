@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.Maps.Geolocation.Models
+namespace Azure.Maps.Geolocation
 {
     /// <summary> The resource management error additional info. </summary>
     [CodeGenModel("ErrorAdditionalInfo")]
