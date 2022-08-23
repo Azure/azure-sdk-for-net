@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="wanParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
-        public virtual async Task<Response<VirtualWanResource>> UpdateAsync(TagsObject wanParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanResource>> UpdateAsync(NetworkTagsObject wanParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(wanParameters, nameof(wanParameters));
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="wanParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
-        public virtual Response<VirtualWanResource> Update(TagsObject wanParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWanResource> Update(NetworkTagsObject wanParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(wanParameters, nameof(wanParameters));
 

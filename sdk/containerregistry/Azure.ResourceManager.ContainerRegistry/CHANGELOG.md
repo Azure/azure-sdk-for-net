@@ -1,6 +1,30 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2022-08-12)
+
+### Breaking Changes
+
+- General renaming and formatting due to requirements of .NET Azure SDK guidelines.
+
+## 1.0.0-beta.1 (2022-07-12)
+
+### Breaking Changes
+
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.ContainerRegistry` to `Azure.ResourceManager.ContainerRegistry`.
 
 ### General New Features
 

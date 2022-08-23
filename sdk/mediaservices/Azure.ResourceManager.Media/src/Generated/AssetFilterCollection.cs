@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A class representing a collection of <see cref="AssetFilterResource" /> and their operations.
-    /// Each <see cref="AssetFilterResource" /> in the collection will belong to the same instance of <see cref="AssetResource" />.
-    /// To get an <see cref="AssetFilterCollection" /> instance call the GetAssetFilters method from an instance of <see cref="AssetResource" />.
+    /// Each <see cref="AssetFilterResource" /> in the collection will belong to the same instance of <see cref="MediaAssetResource" />.
+    /// To get an <see cref="AssetFilterCollection" /> instance call the GetAssetFilters method from an instance of <see cref="MediaAssetResource" />.
     /// </summary>
     public partial class AssetFilterCollection : ArmCollection, IEnumerable<AssetFilterResource>, IAsyncEnumerable<AssetFilterResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Media
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AssetResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AssetResource.ResourceType), nameof(id));
+            if (id.ResourceType != MediaAssetResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MediaAssetResource.ResourceType), nameof(id));
         }
 
         /// <summary>

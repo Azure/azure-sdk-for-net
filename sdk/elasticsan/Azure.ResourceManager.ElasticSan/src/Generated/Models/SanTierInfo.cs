@@ -21,17 +21,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="minIncrementSizeTiB"> Increment the San capacity in TiB. </param>
         /// <param name="iopsPerBaseTiB"> Maximum IOPS per BaseTiB. </param>
         /// <param name="mbpsPerBaseTiB"> Maximum MBps per BaseTiB. </param>
-        /// <param name="maxIops"> Maximum IOPS. </param>
         /// <param name="maxMbps"> Maximum MBps. </param>
         /// <param name="maxElasticSanVolumeGroupCount"> Maximum number of volume groups per San account. </param>
-        internal SanTierInfo(long? maxSizeTiB, long? minSizeTiB, long? minIncrementSizeTiB, long? iopsPerBaseTiB, long? mbpsPerBaseTiB, long? maxIops, long? maxMbps, long? maxElasticSanVolumeGroupCount)
+        internal SanTierInfo(long? maxSizeTiB, long? minSizeTiB, long? minIncrementSizeTiB, long? iopsPerBaseTiB, long? mbpsPerBaseTiB, long? maxMbps, long? maxElasticSanVolumeGroupCount)
         {
             MaxSizeTiB = maxSizeTiB;
             MinSizeTiB = minSizeTiB;
             MinIncrementSizeTiB = minIncrementSizeTiB;
             IopsPerBaseTiB = iopsPerBaseTiB;
             MbpsPerBaseTiB = mbpsPerBaseTiB;
-            MaxIops = maxIops;
             MaxMbps = maxMbps;
             MaxElasticSanVolumeGroupCount = maxElasticSanVolumeGroupCount;
         }
@@ -46,8 +44,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? IopsPerBaseTiB { get; }
         /// <summary> Maximum MBps per BaseTiB. </summary>
         public long? MbpsPerBaseTiB { get; }
-        /// <summary> Maximum IOPS. </summary>
-        public long? MaxIops { get; }
         /// <summary> Maximum MBps. </summary>
         public long? MaxMbps { get; }
         /// <summary> Maximum number of volume groups per San account. </summary>

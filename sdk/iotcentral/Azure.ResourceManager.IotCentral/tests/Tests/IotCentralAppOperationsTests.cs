@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appsCollection = rg.GetIotCentralApps();
 
             // Create IoT Central application.
-            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new IotCentralAppSkuInfo(IotCentralAppSku.ST0))
             {
                 DisplayName = appName,
                 Subdomain = appName,
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
             // Update IoT Central application.
             var iotCentralAppPatch = new IotCentralAppPatch()
             {
-                Sku = new AppSkuInfo(AppSku.ST1),
-                Identity = new SystemAssignedServiceIdentity(ResourceManager.Models.SystemAssignedServiceIdentityType.SystemAssigned),
+                Sku = new IotCentralAppSkuInfo(IotCentralAppSku.ST1),
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
             };
             await iotCentralApp.UpdateAsync(WaitUntil.Completed, iotCentralAppPatch, CancellationToken.None);
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appsCollection = rg.GetIotCentralApps();
 
             // Create IoT Central application.
-            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new IotCentralAppSkuInfo(IotCentralAppSku.ST0))
             {
                 DisplayName = appName,
                 Subdomain = appName,
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var appsCollection = rg.GetIotCentralApps();
 
             // Create IoT Central application.
-            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new IotCentralAppSkuInfo(IotCentralAppSku.ST0))
             {
                 DisplayName = appName,
                 Subdomain = appName,

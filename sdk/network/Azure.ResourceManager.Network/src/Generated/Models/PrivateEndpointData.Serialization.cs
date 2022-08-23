@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Network
             Optional<SubnetData> subnet = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<PrivateLinkServiceConnection>> privateLinkServiceConnections = default;
-            Optional<IList<PrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
+            Optional<IList<NetworkPrivateLinkServiceConnection>> privateLinkServiceConnections = default;
+            Optional<IList<NetworkPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
             Optional<IList<CustomDnsConfigProperties>> customDnsConfigs = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                            List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
                             }
                             privateLinkServiceConnections = array;
                             continue;
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateLinkServiceConnection> array = new List<PrivateLinkServiceConnection>();
+                            List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkServiceConnection.DeserializePrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
                             }
                             manualPrivateLinkServiceConnections = array;
                             continue;

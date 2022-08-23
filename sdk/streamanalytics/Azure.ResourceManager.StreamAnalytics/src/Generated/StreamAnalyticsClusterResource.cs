@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// Operation Id: Clusters_ListStreamingJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterJob> GetStreamingJobsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StreamAnalyticsClusterJob> GetStreamingJobsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ClusterJob>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StreamAnalyticsClusterJob>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
                 scope.Start();
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     throw;
                 }
             }
-            async Task<Page<ClusterJob>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StreamAnalyticsClusterJob>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
                 scope.Start();
@@ -336,10 +336,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// Operation Id: Clusters_ListStreamingJobs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterJob> GetStreamingJobs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StreamAnalyticsClusterJob> GetStreamingJobs(CancellationToken cancellationToken = default)
         {
-            Page<ClusterJob> FirstPageFunc(int? pageSizeHint)
+            Page<StreamAnalyticsClusterJob> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
                 scope.Start();
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     throw;
                 }
             }
-            Page<ClusterJob> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StreamAnalyticsClusterJob> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
                 scope.Start();

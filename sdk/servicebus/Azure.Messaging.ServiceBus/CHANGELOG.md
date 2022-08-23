@@ -1,6 +1,6 @@
 # Release History
 
-## 7.9.0-beta.2 (Unreleased)
+## 7.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.10.0 (2022-08-11)
+
+### Features Added
+
+- Added the ability to set the a custom Identifier on the various client options types.
+- The processor Identifier will now be included in the underlying receiver logs when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
+- Added the ability to set a custom endpoint that will be used when connecting to the service, via the `ServiceBusClientOptions.CustomEndpointAddress` property.
+- Added the `ReleaseSession` and `RenewSessionLockAsync` methods to the `ProcessSessionEventArgs` class to allow the user to manage the session in the `SessionInitializingAsync` and the `SessionClosingAsync` event handlers.
+
+### Bugs Fixed
+
+- Fixed issue where the AMQP footer would not be populated on received messages.
+- Fixed issue where the client timeout was not respected when establishing the AMQP connection and the AMQP session.
+- Fixed issue where closing the rule manager link could result in the AMQP session being closed even when `EnableCrossEntityTransactions` is set to `true` in the `ServiceBusClientOptions`.
+
+### Other Changes
+
+- Reduced memory allocations when converting messages into the underlying AMQP primitives. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 7.9.0 (2022-07-11)
+
+### Features Added
+
+- Stable release of `ServiceBusRuleManager`.
+- `EntityPath` and `FullyQualifiedNamespace` are now included on the various processor event args.
 
 ## 7.9.0-beta.1 (2022-06-06)
 

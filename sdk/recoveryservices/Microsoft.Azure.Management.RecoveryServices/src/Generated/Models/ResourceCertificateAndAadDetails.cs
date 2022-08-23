@@ -52,7 +52,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// time.</param>
         /// <param name="validTo">Certificate Validity End Date time.</param>
         /// <param name="serviceResourceId">Service Resource Id.</param>
-        public ResourceCertificateAndAadDetails(string aadAuthority, string aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, byte[] certificate = default(byte[]), string friendlyName = default(string), string issuer = default(string), long? resourceId = default(long?), string subject = default(string), string thumbprint = default(string), System.DateTime? validFrom = default(System.DateTime?), System.DateTime? validTo = default(System.DateTime?), string serviceResourceId = default(string))
+        /// <param name="aadAudience">AAD audience for the resource</param>
+        public ResourceCertificateAndAadDetails(string aadAuthority, string aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, byte[] certificate = default(byte[]), string friendlyName = default(string), string issuer = default(string), long? resourceId = default(long?), string subject = default(string), string thumbprint = default(string), System.DateTime? validFrom = default(System.DateTime?), System.DateTime? validTo = default(System.DateTime?), string serviceResourceId = default(string), string aadAudience = default(string))
             : base(certificate, friendlyName, issuer, resourceId, subject, thumbprint, validFrom, validTo)
         {
             AadAuthority = aadAuthority;
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
             ServicePrincipalObjectId = servicePrincipalObjectId;
             AzureManagementEndpointAudience = azureManagementEndpointAudience;
             ServiceResourceId = serviceResourceId;
+            AadAudience = aadAudience;
             CustomInit();
         }
 
@@ -104,6 +106,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "serviceResourceId")]
         public string ServiceResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets AAD audience for the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "aadAudience")]
+        public string AadAudience { get; set; }
 
         /// <summary>
         /// Validate the object.

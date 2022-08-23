@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Network
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<int>> markings = default;
-            Optional<IList<QosIPRange>> sourceIpRanges = default;
-            Optional<IList<QosIPRange>> destinationIpRanges = default;
+            Optional<IList<QosIPRange>> sourceIPRanges = default;
+            Optional<IList<QosIPRange>> destinationIPRanges = default;
             Optional<IList<QosPortRange>> sourcePortRanges = default;
             Optional<IList<QosPortRange>> destinationPortRanges = default;
             Optional<ProtocolType> protocol = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(QosIPRange.DeserializeQosIPRange(item));
                             }
-                            sourceIpRanges = array;
+                            sourceIPRanges = array;
                             continue;
                         }
                         if (property0.NameEquals("destinationIpRanges"))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(QosIPRange.DeserializeQosIPRange(item));
                             }
-                            destinationIpRanges = array;
+                            destinationIPRanges = array;
                             continue;
                         }
                         if (property0.NameEquals("sourcePortRanges"))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(markings), Optional.ToList(sourceIpRanges), Optional.ToList(destinationIpRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

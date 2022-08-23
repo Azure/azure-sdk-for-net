@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
-            Optional<StatusLevelType> level = default;
+            Optional<ComputeStatusLevelType> level = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetString().ToStatusLevelType();
+                    level = property.Value.GetString().ToComputeStatusLevelType();
                     continue;
                 }
             }

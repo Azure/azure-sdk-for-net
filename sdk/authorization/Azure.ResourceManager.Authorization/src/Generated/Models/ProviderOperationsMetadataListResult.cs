@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of ProviderOperationsMetadataListResult. </summary>
         internal ProviderOperationsMetadataListResult()
         {
-            Value = new ChangeTrackingList<ProviderOperationsData>();
+            Value = new ChangeTrackingList<ProviderOperationsMetadataData>();
         }
 
         /// <summary> Initializes a new instance of ProviderOperationsMetadataListResult. </summary>
         /// <param name="value"> The list of providers. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ProviderOperationsMetadataListResult(IReadOnlyList<ProviderOperationsData> value, string nextLink)
+        internal ProviderOperationsMetadataListResult(IReadOnlyList<ProviderOperationsMetadataData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of providers. </summary>
-        public IReadOnlyList<ProviderOperationsData> Value { get; }
+        public IReadOnlyList<ProviderOperationsMetadataData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

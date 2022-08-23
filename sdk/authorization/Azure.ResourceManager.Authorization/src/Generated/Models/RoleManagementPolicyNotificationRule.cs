@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="recipientType"> The recipient type. </param>
         /// <param name="notificationRecipients"> The list of notification recipients. </param>
         /// <param name="isDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
-        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, NotificationDeliveryMechanism? notificationType, NotificationLevel? notificationLevel, RecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target)
+        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, NotificationDeliveryMechanism? notificationType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target)
         {
             NotificationType = notificationType;
             NotificationLevel = notificationLevel;
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> The type of notification. </summary>
         public NotificationDeliveryMechanism? NotificationType { get; set; }
         /// <summary> The notification level. </summary>
-        public NotificationLevel? NotificationLevel { get; set; }
+        public RoleManagementPolicyNotificationLevel? NotificationLevel { get; set; }
         /// <summary> The recipient type. </summary>
-        public RecipientType? RecipientType { get; set; }
+        public RoleManagementPolicyRecipientType? RecipientType { get; set; }
         /// <summary> The list of notification recipients. </summary>
         public IList<string> NotificationRecipients { get; }
         /// <summary> Determines if the notification will be sent to the recipient type specified in the policy rule. </summary>

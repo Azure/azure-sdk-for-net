@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
-        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, OSType osType)
+        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, ContainerServiceOSType osType)
         {
             if (kubernetesVersion == null)
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="name"> The Agent Pool name. </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
-        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, OSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades)
+        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades)
         {
             KubernetesVersion = kubernetesVersion;
             Name = name;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The Agent Pool name. </summary>
         public string Name { get; }
         /// <summary> The operating system type. The default is Linux. </summary>
-        public OSType OSType { get; }
+        public ContainerServiceOSType OSType { get; }
         /// <summary> List of orchestrator types and versions available for upgrade. </summary>
         public IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> Upgrades { get; }
     }

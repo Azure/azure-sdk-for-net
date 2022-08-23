@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             LocationInfo = new ChangeTrackingList<ComputeResourceSkuLocationInfo>();
             ApiVersions = new ChangeTrackingList<string>();
             Costs = new ChangeTrackingList<ResourceSkuCosts>();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
+            Capabilities = new ChangeTrackingList<ComputeResourceSkuCapabilities>();
             Restrictions = new ChangeTrackingList<ComputeResourceSkuRestrictions>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ComputeResourceSkuRestrictions> restrictions)
+        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, IReadOnlyList<ComputeResourceSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Metadata for retrieving price info. </summary>
         public IReadOnlyList<ResourceSkuCosts> Costs { get; }
         /// <summary> A name value pair to describe the capability. </summary>
-        public IReadOnlyList<ResourceSkuCapabilities> Capabilities { get; }
+        public IReadOnlyList<ComputeResourceSkuCapabilities> Capabilities { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
         public IReadOnlyList<ComputeResourceSkuRestrictions> Restrictions { get; }
     }

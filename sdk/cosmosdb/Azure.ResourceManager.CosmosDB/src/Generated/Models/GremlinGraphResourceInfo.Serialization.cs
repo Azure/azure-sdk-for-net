@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(GraphName);
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy");
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             string id = default;
             Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Optional<ContainerPartitionKey> partitionKey = default;
+            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
             Optional<int> defaultTtl = default;
             Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionKey = ContainerPartitionKey.DeserializeContainerPartitionKey(property.Value);
+                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"))

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
 
             //if single CA, primary flag will be set
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
             Assert.AreEqual(2, getNicResponse.Value.Data.IPConfigurations.Count);
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
@@ -1216,6 +1216,39 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete VirtualNetwork
             await putVnetResponseOperation.Value.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [RecordedTest]
+        public async Task ExpandResourceTest()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
+
+            // Create Vnet
+            string vnetName = Recording.GenerateAssetName("azsmnet");
+            string subnetName = Recording.GenerateAssetName("azsmnet");
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+
+            // Create Nics
+            string nicName = Recording.GenerateAssetName("azsmnet");
+
+            NetworkInterfaceResource nic = await CreateNetworkInterface(
+                nicName,
+                null,
+                vnet.Data.Subnets[0].Id,
+                location,
+                "ipconfig",
+                resourceGroup.GetNetworkInterfaces());
+
+            // Get NIC with expanded subnet
+            nic = await nic.GetAsync("IPConfigurations/Subnet");
+            await foreach (NetworkInterfaceIPConfigurationResource ipconfig in nic.GetNetworkInterfaceIPConfigurations())
+            {
+                Assert.NotNull(ipconfig.Data.Subnet);
+                Assert.NotNull(ipconfig.Data.Subnet.Id);
+            }
         }
     }
 }

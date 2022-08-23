@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("createSource");
-            writer.WriteStringValue(CreateSource.ToSerialString());
+            writer.WriteStringValue(CreateSource.ToString());
             if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri");
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 if (property.NameEquals("createSource"))
                 {
-                    createSource = property.Value.GetString().ToElasticSanVolumeCreateOption();
+                    createSource = new ElasticSanVolumeCreateOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceUri"))

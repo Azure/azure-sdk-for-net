@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
         internal ConnectionStateSnapshot()
         {
-            Hops = new ChangeTrackingList<ConnectivityHop>();
+            Hops = new ChangeTrackingList<ConnectivityHopInfo>();
         }
 
         /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probesSent"> The number of sent probes. </param>
         /// <param name="probesFailed"> The number of failed probes. </param>
         /// <param name="hops"> List of hops between the source and the destination. </param>
-        internal ConnectionStateSnapshot(ConnectionState? networkConnectionState, DateTimeOffset? startOn, DateTimeOffset? endOn, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHop> hops)
+        internal ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState, DateTimeOffset? startOn, DateTimeOffset? endOn, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHopInfo> hops)
         {
             NetworkConnectionState = networkConnectionState;
             StartOn = startOn;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The connection state. </summary>
-        public ConnectionState? NetworkConnectionState { get; }
+        public NetworkConnectionState? NetworkConnectionState { get; }
         /// <summary> The start time of the connection snapshot. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the connection snapshot. </summary>
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The number of failed probes. </summary>
         public long? ProbesFailed { get; }
         /// <summary> List of hops between the source and the destination. </summary>
-        public IReadOnlyList<ConnectivityHop> Hops { get; }
+        public IReadOnlyList<ConnectivityHopInfo> Hops { get; }
     }
 }

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrustedServiceAccessEnabled))
+            if (Optional.IsDefined(IsTrustedServiceAccessEnabled))
             {
                 writer.WritePropertyName("trustedServiceAccessEnabled");
-                writer.WriteBooleanValue(TrustedServiceAccessEnabled.Value);
+                writer.WriteBooleanValue(IsTrustedServiceAccessEnabled.Value);
             }
             if (Optional.IsDefined(DefaultAction))
             {

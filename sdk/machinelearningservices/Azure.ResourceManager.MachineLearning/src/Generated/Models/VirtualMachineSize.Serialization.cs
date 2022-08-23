@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<double> memoryGB = default;
             Optional<bool> lowPriorityCapable = default;
             Optional<bool> premiumIO = default;
-            Optional<EstimatedVmPrices> estimatedVMPrices = default;
+            Optional<EstimatedVmPrices> estimatedVmPrices = default;
             Optional<IReadOnlyList<string>> supportedComputeTypes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    estimatedVMPrices = EstimatedVmPrices.DeserializeEstimatedVmPrices(property.Value);
+                    estimatedVmPrices = EstimatedVmPrices.DeserializeEstimatedVmPrices(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedComputeTypes"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new VirtualMachineSize(name.Value, family.Value, Optional.ToNullable(vcpUs), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVMPrices.Value, Optional.ToList(supportedComputeTypes));
+            return new VirtualMachineSize(name.Value, family.Value, Optional.ToNullable(vcpUs), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes));
         }
     }
 }

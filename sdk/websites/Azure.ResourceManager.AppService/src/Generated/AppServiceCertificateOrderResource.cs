@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of AppServiceCertificateResources in the AppServiceCertificateOrder. </summary>
         /// <returns> An object representing collection of AppServiceCertificateResources and their operations over a AppServiceCertificateResource. </returns>
-        public virtual AppServiceCertificateResourceCollection GetAppServiceCertificateResources()
+        public virtual AppServiceCertificateCollection GetAppServiceCertificates()
         {
-            return GetCachedClient(Client => new AppServiceCertificateResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppServiceCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AppServiceCertificateResource>> GetAppServiceCertificateResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceCertificateResource>> GetAppServiceCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceCertificateResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AppServiceCertificateResource> GetAppServiceCertificateResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceCertificateResource> GetAppServiceCertificate(string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceCertificateResources().Get(name, cancellationToken);
+            return GetAppServiceCertificates().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of CertificateOrderDetectorResources in the AppServiceCertificateOrder. </summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        public virtual async Task<Response> ResendRequestEmailsAsync(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResendRequestEmailsAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        public virtual Response ResendRequestEmails(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        public virtual Response ResendRequestEmails(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 

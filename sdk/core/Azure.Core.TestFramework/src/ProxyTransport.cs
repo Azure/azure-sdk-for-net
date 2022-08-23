@@ -66,6 +66,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ProcessAsyncInternalAsync(HttpMessage message, bool async)
         {
+            if (_recording.Mode == RecordedTestMode.Playback && _filter() == EntryRecordModel.DoNotRecord)
+            {
+                throw new InvalidOperationException(
+                    "Operations that are enclosed in a 'TestRecording.DisableRecordingScope' created with the 'DisableRecording' method should not be executed in Playback mode." +
+                    "Instead, update the test to skip the operation when in Playback mode by checking the 'Mode' property of 'RecordedTestBase'.");
+            }
             try
             {
                 RedirectToTestProxy(message);

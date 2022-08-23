@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string schemaGroupName = Recording.GenerateAssetName("schemagroup");
             EventHubsSchemaGroupData parameters = new EventHubsSchemaGroupData()
             {
-                SchemaType = SchemaType.Avro
+                SchemaType = EventHubsSchemaType.Avro
             };
             EventHubsSchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
             Assert.NotNull(schemaGroup);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string schemaGroupName1 = Recording.GenerateAssetName("schemagroup1");
             EventHubsSchemaGroupData parameters = new EventHubsSchemaGroupData()
             {
-                SchemaType = SchemaType.Avro
+                SchemaType = EventHubsSchemaType.Avro
             };
             _ = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName1, parameters)).Value;
 

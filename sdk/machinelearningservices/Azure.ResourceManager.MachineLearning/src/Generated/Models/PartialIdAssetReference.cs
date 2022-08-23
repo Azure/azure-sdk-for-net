@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Reference to an asset via its ARM resource ID. </summary>
-    internal partial class PartialIdAssetReference : PartialAssetReferenceBase
+    public partial class PartialIdAssetReference : PartialAssetReferenceBase
     {
         /// <summary> Initializes a new instance of PartialIdAssetReference. </summary>
         public PartialIdAssetReference()

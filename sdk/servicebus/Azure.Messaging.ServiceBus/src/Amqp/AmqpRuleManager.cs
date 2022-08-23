@@ -11,6 +11,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -19,20 +20,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>
-        /// The path of the Service Bus subscription to which the rule manager is bound.
-        /// </summary>
-        ///
-        private readonly string _subscriptionPath;
-
-        /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         private readonly ServiceBusRetryPolicy _retryPolicy;
-
-        /// <summary>
-        /// The identifier for the rule manager.
-        /// </summary>
-        private readonly string _identifier;
 
         /// <summary>
         /// The AMQP connection scope responsible for managing transport constructs for this instance.
@@ -94,22 +84,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            _subscriptionPath = subscriptionPath;
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
-            _identifier = identifier;
-
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
-                    _subscriptionPath,
-                    _identifier,
+                    subscriptionPath,
+                    identifier,
                     timeout,
                     CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
         }
 
         /// <summary>
@@ -160,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                      timeout,
                      null);
             amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = description.Name;
-            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = AmqpMessageConverter.GetRuleDescriptionMap(description);
+            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = GetRuleDescriptionMap(description);
 
             AmqpResponseMessage response = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _connectionScope,
@@ -233,10 +216,172 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>Returns a list of rules description</returns>
         public override async Task<List<RuleProperties>> GetRulesAsync(int skip, int top, CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
-                async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false),
-                this,
+                static async (value, timeout, token) =>
+                {
+                    var (manager, skip, top) = value;
+                    return await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false);
+                },
+                (this, skip, top),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
+
+        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
+        {
+            var ruleDescriptionMap = new AmqpMap();
+
+            switch (description.Filter)
+            {
+                case SqlRuleFilter sqlRuleFilter:
+                    var filterMap = GetSqlRuleFilterMap(sqlRuleFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.SqlRuleFilter] = filterMap;
+                    break;
+                case CorrelationRuleFilter correlationFilter:
+                    var correlationFilterMap = GetCorrelationRuleFilterMap(correlationFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationRuleFilter] = correlationFilterMap;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Resources.RuleFilterNotSupported.FormatForUser(
+                            description.Filter.GetType(),
+                            nameof(SqlRuleFilter),
+                            nameof(CorrelationRuleFilter)));
+            }
+
+            var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
+            ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
+            ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
+
+            return ruleDescriptionMap;
+        }
+
+        public virtual RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        {
+            var filter = GetFilter(amqpDescription.Filter);
+            var ruleAction = GetRuleAction(amqpDescription.Action);
+
+            var ruleDescription = new RuleProperties(amqpDescription.RuleName, filter)
+            {
+                Action = ruleAction
+            };
+
+            return ruleDescription;
+        }
+
+        internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
+        {
+            var amqpFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.Expression] = sqlRuleFilter.SqlExpression
+            };
+            return amqpFilterMap;
+        }
+
+        internal static AmqpMap GetCorrelationRuleFilterMap(CorrelationRuleFilter correlationRuleFilter)
+        {
+            var correlationRuleFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.CorrelationId] = correlationRuleFilter.CorrelationId,
+                [ManagementConstants.Properties.MessageId] = correlationRuleFilter.MessageId,
+                [ManagementConstants.Properties.To] = correlationRuleFilter.To,
+                [ManagementConstants.Properties.ReplyTo] = correlationRuleFilter.ReplyTo,
+                [ManagementConstants.Properties.Label] = correlationRuleFilter.Subject,
+                [ManagementConstants.Properties.SessionId] = correlationRuleFilter.SessionId,
+                [ManagementConstants.Properties.ReplyToSessionId] = correlationRuleFilter.ReplyToSessionId,
+                [ManagementConstants.Properties.ContentType] = correlationRuleFilter.ContentType
+            };
+
+            var propertiesMap = new AmqpMap();
+            foreach (var property in correlationRuleFilter.ApplicationProperties)
+            {
+                propertiesMap[new MapKey(property.Key)] = property.Value;
+            }
+
+            correlationRuleFilterMap[ManagementConstants.Properties.CorrelationRuleFilterProperties] = propertiesMap;
+
+            return correlationRuleFilterMap;
+        }
+
+        internal static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
+        {
+            AmqpMap ruleActionMap = null;
+            if (sqlRuleAction != null)
+            {
+                ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
+            }
+
+            return ruleActionMap;
+        }
+
+        private static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
+        {
+            RuleAction action;
+
+            if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
+            {
+                action = null;
+            }
+            else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
+            {
+                var amqpSqlRuleAction = (AmqpSqlRuleActionCodec)amqpAction;
+                var sqlRuleAction = new SqlRuleAction(amqpSqlRuleAction.SqlExpression);
+
+                action = sqlRuleAction;
+            }
+            else
+            {
+                throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
+            }
+
+            return action;
+        }
+
+        public virtual RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
+        {
+            RuleFilter filter;
+
+            switch (amqpFilter.DescriptorCode)
+            {
+                case AmqpSqlRuleFilterCodec.Code:
+                    var amqpSqlFilter = (AmqpSqlRuleFilterCodec)amqpFilter;
+                    filter = new SqlRuleFilter(amqpSqlFilter.Expression);
+                    break;
+
+                case AmqpTrueRuleFilterCodec.Code:
+                    filter = new TrueRuleFilter();
+                    break;
+
+                case AmqpFalseRuleFilterCodec.Code:
+                    filter = new FalseRuleFilter();
+                    break;
+
+                case AmqpCorrelationRuleFilterCodec.Code:
+                    var amqpCorrelationFilter = (AmqpCorrelationRuleFilterCodec)amqpFilter;
+                    var correlationFilter = new CorrelationRuleFilter
+                    {
+                        CorrelationId = amqpCorrelationFilter.CorrelationId,
+                        MessageId = amqpCorrelationFilter.MessageId,
+                        To = amqpCorrelationFilter.To,
+                        ReplyTo = amqpCorrelationFilter.ReplyTo,
+                        Subject = amqpCorrelationFilter.Subject,
+                        SessionId = amqpCorrelationFilter.SessionId,
+                        ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
+                        ContentType = amqpCorrelationFilter.ContentType
+                    };
+
+                    foreach (var property in amqpCorrelationFilter.Properties)
+                    {
+                        correlationFilter.ApplicationProperties.Add(property.Key.Key.ToString(), property.Value);
+                    }
+
+                    filter = correlationFilter;
+                    break;
+
+                default:
+                    throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
+            }
+
+            return filter;
+        }
 
         /// <summary>
         /// Get rules associated with the subscription.
@@ -259,14 +404,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _managementLink,
                 amqpRequestMessage,
                 timeout).ConfigureAwait(false);
-            var ruleDescriptions = new List<RuleProperties>();
+            List<RuleProperties> ruleDescriptions = null;
             if (response.StatusCode == AmqpResponseStatusCode.OK)
             {
                 var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);
+                ruleDescriptions = new List<RuleProperties>(ruleList.Count);
                 foreach (var entry in ruleList)
                 {
                     var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
-                    var ruleDescription = AmqpMessageConverter.GetRuleDescription(amqpRule);
+                    var ruleDescription = GetRuleDescription(amqpRule);
                     ruleDescriptions.Add(ruleDescription);
                 }
             }
@@ -279,7 +425,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw response.ToMessagingContractException();
             }
 
-            return ruleDescriptions;
+            return ruleDescriptions ?? new List<RuleProperties>(0);
         }
 
         /// <summary>

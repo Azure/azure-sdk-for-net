@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,10 +20,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(HostnameType.ToString());
             writer.WritePropertyName("hostName");
             writer.WriteStringValue(HostName);
-            if (Optional.IsDefined(KeyVaultId))
+            if (Optional.IsDefined(KeyVaultSecretUri))
             {
                 writer.WritePropertyName("keyVaultId");
-                writer.WriteStringValue(KeyVaultId);
+                writer.WriteStringValue(KeyVaultSecretUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IdentityClientId))
             {
@@ -39,15 +40,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("certificatePassword");
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (Optional.IsDefined(DefaultSslBinding))
+            if (Optional.IsDefined(IsDefaultSslBindingEnabled))
             {
                 writer.WritePropertyName("defaultSslBinding");
-                writer.WriteBooleanValue(DefaultSslBinding.Value);
+                writer.WriteBooleanValue(IsDefaultSslBindingEnabled.Value);
             }
-            if (Optional.IsDefined(NegotiateClientCertificate))
+            if (Optional.IsDefined(IsClientCertificateNegotiationEnabled))
             {
                 writer.WritePropertyName("negotiateClientCertificate");
-                writer.WriteBooleanValue(NegotiateClientCertificate.Value);
+                writer.WriteBooleanValue(IsClientCertificateNegotiationEnabled.Value);
             }
             if (Optional.IsDefined(Certificate))
             {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             HostnameType type = default;
             string hostName = default;
-            Optional<string> keyVaultId = default;
+            Optional<Uri> keyVaultId = default;
             Optional<string> identityClientId = default;
             Optional<string> encodedCertificate = default;
             Optional<string> certificatePassword = default;
@@ -94,7 +95,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("keyVaultId"))
                 {
-                    keyVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyVaultId = null;
+                        continue;
+                    }
+                    keyVaultId = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityClientId"))

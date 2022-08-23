@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -55,10 +56,10 @@ namespace Azure.ResourceManager.EventHubs
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> updatedAtUtc = default;
             Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<Guid> eTag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> groupProperties = default;
-            Optional<SchemaCompatibility> schemaCompatibility = default;
-            Optional<SchemaType> schemaType = default;
+            Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
+            Optional<EventHubsSchemaType> schemaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            eTag = property0.Value.GetGuid();
+                            eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("groupProperties"))
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            schemaCompatibility = new SchemaCompatibility(property0.Value.GetString());
+                            schemaCompatibility = new EventHubsSchemaCompatibility(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("schemaType"))
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            schemaType = new SchemaType(property0.Value.GetString());
+                            schemaType = new EventHubsSchemaType(property0.Value.GetString());
                             continue;
                         }
                     }

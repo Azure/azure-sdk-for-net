@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Batch
         /// <param name="privateEndpoint"> The private endpoint of the private endpoint connection. </param>
         /// <param name="groupIds"> The value has one and only one group id. </param>
         /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
-        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        internal BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             ConnectionState = connectionState;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The provisioning state of the private endpoint connection. </summary>

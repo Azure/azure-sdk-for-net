@@ -84,5 +84,10 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// </summary>
         IUserAssignedIdentitiesOperations UserAssignedIdentities { get; }
 
+        /// <summary>
+        /// Gets the IFederatedIdentityCredentialsOperations.
+        /// </summary>
+        IFederatedIdentityCredentialsOperations FederatedIdentityCredentials { get; }
+
     }
 }

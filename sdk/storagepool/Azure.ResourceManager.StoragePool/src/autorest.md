@@ -20,15 +20,44 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
+  'locations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'SubnetId': 'arm-id'
+  'IPAddress': 'ip-address'
+  'managedDiskAzureResourceId': 'arm-id'
+
+rename-mapping:
+  Acl: DiskPoolIscsiTargetPortalGroupAcl
+  EndpointDependency: OutboundEndpointDependency
+  EndpointDetail: OutboundEndpointDetail
+  EndpointDetail.latency: LatencyInMs
+  IscsiLun: ManagedDiskIscsiLun
+  IscsiTarget: DiskPoolIscsiTarget
+  IscsiTargetList: DiskPoolIscsiTargetList
+  IscsiTargetAclMode: DiskPoolIscsiTargetAclMode
+  OperationalStatus: StoragePoolOperationalStatus
+  OutboundEnvironmentEndpoint: StoragePoolOutboundEnvironment
+  OutboundEnvironmentEndpointList: StoragePoolOutboundEnvironmentList
+  ProvisioningStates: DiskPoolIscsiTargetProvisioningState
+  ResourceSkuCapability: StoragePoolSkuCapability
+  ResourceSkuInfo: StoragePoolSkuInfo
+  ResourceSkuListResult: StoragePoolSkuListResult
+  ResourceSkuLocationInfo: StoragePoolSkuLocationInfo
+  ResourceSkuRestrictions: StoragePoolSkuRestrictions
+  ResourceSkuRestrictionsType: StoragePoolSkuRestrictionsType
+  ResourceSkuRestrictionInfo: StoragePoolSkuRestrictionInfo
+  ResourceSkuRestrictionsReasonCode: StoragePoolSkuRestrictionsReasonCode
+  ResourceSkuZoneDetails: StoragePoolSkuZoneDetails
+
+# prepend-rp-prefix:
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -39,15 +68,14 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
+
 directive:
-  - rename-model:
-      from: Configuration
-      to: ProductConfiguration
   - from: swagger-document
     where: "$.definitions.DiskPool.properties.sku"
     transform: >

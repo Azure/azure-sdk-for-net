@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,27 +19,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WritePropertyName("type");
             writer.WriteStringValue(AzureResourceType.ToString());
             writer.WriteEndObject();
-        }
-
-        internal static AzureResourceBaseProperties DeserializeAzureResourceBaseProperties(JsonElement element)
-        {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element);
-                }
-            }
-            AzureResourceType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new AzureResourceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new AzureResourceBaseProperties(type);
         }
     }
 }

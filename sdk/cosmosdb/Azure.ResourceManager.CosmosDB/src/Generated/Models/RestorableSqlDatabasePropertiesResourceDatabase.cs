@@ -14,30 +14,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class RestorableSqlDatabasePropertiesResourceDatabase : CosmosDBSqlDatabaseResourceInfo
     {
         /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public RestorableSqlDatabasePropertiesResourceDatabase(string id) : base(id)
+        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public RestorableSqlDatabasePropertiesResourceDatabase(string databaseName) : base(databaseName)
         {
-            if (id == null)
+            if (databaseName == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(databaseName));
             }
         }
 
         /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
+        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the database resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal RestorableSqlDatabasePropertiesResourceDatabase(string id, string colls, string users, string self, string rid, float? timestamp, ETag? eTag) : base(id)
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, string colls, string users, string self, string rid, float? timestamp, ETag? etag) : base(databaseName)
         {
-            if (id == null)
+            if (databaseName == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(databaseName));
             }
 
             Colls = colls;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Self = self;
             Rid = rid;
             Timestamp = timestamp;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>

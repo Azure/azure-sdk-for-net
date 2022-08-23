@@ -1,8 +1,16 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.3 (2022-07-12)
 
 ### Breaking Changes
 
@@ -129,10 +137,6 @@
 - Base type of `WebAppStack` changed to `Azure.ResourceManager.Models.ResourceData`.
 - Type `AppServiceResource` was removed.
 - Type `ProxyOnlyResource` was removed.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2022-04-08)
 

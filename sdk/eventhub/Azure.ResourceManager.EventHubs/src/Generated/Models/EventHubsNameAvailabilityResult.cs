@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
         /// <param name="nameAvailable"> Value indicating Namespace is availability, true if the Namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a Namespace. </param>
-        internal EventHubsNameAvailabilityResult(string message, bool? nameAvailable, UnavailableReason? reason)
+        internal EventHubsNameAvailabilityResult(string message, bool? nameAvailable, EventHubsNameUnavailableReason? reason)
         {
             Message = message;
             NameAvailable = nameAvailable;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Value indicating Namespace is availability, true if the Namespace is available; otherwise, false. </summary>
         public bool? NameAvailable { get; }
         /// <summary> The reason for unavailability of a Namespace. </summary>
-        public UnavailableReason? Reason { get; }
+        public EventHubsNameUnavailableReason? Reason { get; }
     }
 }

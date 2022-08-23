@@ -37,37 +37,37 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
             }
             writer.WritePropertyName("digitalVideoOnlyContentRestriction");
-            writer.WriteBooleanValue(DigitalVideoOnlyContentRestriction);
+            writer.WriteBooleanValue(HasDigitalVideoOnlyContentRestriction);
             writer.WritePropertyName("imageConstraintForAnalogComponentVideoRestriction");
-            writer.WriteBooleanValue(ImageConstraintForAnalogComponentVideoRestriction);
+            writer.WriteBooleanValue(HasImageConstraintForAnalogComponentVideoRestriction);
             writer.WritePropertyName("imageConstraintForAnalogComputerMonitorRestriction");
-            writer.WriteBooleanValue(ImageConstraintForAnalogComputerMonitorRestriction);
+            writer.WriteBooleanValue(HasImageConstraintForAnalogComputerMonitorRestriction);
             writer.WritePropertyName("allowPassingVideoContentToUnknownOutput");
             writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToString());
-            if (Optional.IsDefined(UncompressedDigitalVideoOpl))
+            if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("uncompressedDigitalVideoOpl");
-                writer.WriteNumberValue(UncompressedDigitalVideoOpl.Value);
+                writer.WriteNumberValue(UncompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(CompressedDigitalVideoOpl))
+            if (Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("compressedDigitalVideoOpl");
-                writer.WriteNumberValue(CompressedDigitalVideoOpl.Value);
+                writer.WriteNumberValue(CompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(AnalogVideoOpl))
+            if (Optional.IsDefined(AnalogVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("analogVideoOpl");
-                writer.WriteNumberValue(AnalogVideoOpl.Value);
+                writer.WriteNumberValue(AnalogVideoOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(CompressedDigitalAudioOpl))
+            if (Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
             {
                 writer.WritePropertyName("compressedDigitalAudioOpl");
-                writer.WriteNumberValue(CompressedDigitalAudioOpl.Value);
+                writer.WriteNumberValue(CompressedDigitalAudioOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(UncompressedDigitalAudioOpl))
+            if (Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
             {
                 writer.WritePropertyName("uncompressedDigitalAudioOpl");
-                writer.WriteNumberValue(UncompressedDigitalAudioOpl.Value);
+                writer.WriteNumberValue(UncompressedDigitalAudioOutputProtectionLevel.Value);
             }
             writer.WriteEndObject();
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
             bool digitalVideoOnlyContentRestriction = default;
             bool imageConstraintForAnalogComponentVideoRestriction = default;
             bool imageConstraintForAnalogComputerMonitorRestriction = default;
-            ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput = default;
+            ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput = default;
             Optional<int> uncompressedDigitalVideoOpl = default;
             Optional<int> compressedDigitalVideoOpl = default;
             Optional<int> analogVideoOpl = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("allowPassingVideoContentToUnknownOutput"))
                 {
-                    allowPassingVideoContentToUnknownOutput = new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(property.Value.GetString());
+                    allowPassingVideoContentToUnknownOutput = new ContentKeyPolicyPlayReadyUnknownOutputPassingSetting(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("uncompressedDigitalVideoOpl"))

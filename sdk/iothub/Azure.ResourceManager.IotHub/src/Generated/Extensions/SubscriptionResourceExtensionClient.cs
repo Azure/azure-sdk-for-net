@@ -141,15 +141,15 @@ namespace Azure.ResourceManager.IotHub
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IotHubNameAvailabilityInfo>> CheckNameAvailabilityIotHubResourceAsync(OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityIotHubResource");
+            using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotHubNameAvailability");
             scope.Start();
             try
             {
-                var response = await IotHubResourceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, operationInputs, cancellationToken).ConfigureAwait(false);
+                var response = await IotHubResourceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -164,15 +164,15 @@ namespace Azure.ResourceManager.IotHub
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IotHubNameAvailabilityInfo> CheckNameAvailabilityIotHubResource(OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public virtual Response<IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityIotHubResource");
+            using var scope = IotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotHubNameAvailability");
             scope.Start();
             try
             {
-                var response = IotHubResourceRestClient.CheckNameAvailability(Id.SubscriptionId, operationInputs, cancellationToken);
+                var response = IotHubResourceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<UserSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotHubUserSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionQuotaResourceProviderCommons");
+                using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota");
                 scope.Start();
                 try
                 {
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(CancellationToken cancellationToken = default)
         {
-            Page<UserSubscriptionQuota> FirstPageFunc(int? pageSizeHint)
+            Page<IotHubUserSubscriptionQuota> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionQuotaResourceProviderCommons");
+                using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota");
                 scope.Start();
                 try
                 {

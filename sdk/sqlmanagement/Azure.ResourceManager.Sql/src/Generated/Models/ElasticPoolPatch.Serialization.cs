@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("perDatabaseSettings");
                 writer.WriteObjectValue(PerDatabaseSettings);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {

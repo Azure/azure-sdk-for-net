@@ -253,7 +253,7 @@ function CheckDependencies()
         },
         @{
             Command = "az";
-            Help = "Azure CLI must be installed: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli";
+            Help = "Azure CLI must be installed: https://docs.microsoft.com/cli/azure/install-azure-cli";
         }
     )
 

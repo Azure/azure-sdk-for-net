@@ -124,8 +124,7 @@ namespace Azure.Identity
                           clientId,
                           certificateProvider,
                           options.SendCertificateChain,
-                          options,
-                          options.RegionalAuthority);
+                          options);
         }
 
         internal OnBehalfOfCredential(

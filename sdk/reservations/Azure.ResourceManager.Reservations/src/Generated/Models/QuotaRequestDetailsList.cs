@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of QuotaRequestDetailsList. </summary>
         internal QuotaRequestDetailsList()
         {
-            Value = new ChangeTrackingList<QuotaRequestDetailsData>();
+            Value = new ChangeTrackingList<QuotaRequestDetailData>();
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailsList. </summary>
         /// <param name="value"> The quota requests. </param>
         /// <param name="nextLink"> The URI to fetch the next page of quota limits. When there are no more pages, this is null. </param>
-        internal QuotaRequestDetailsList(IReadOnlyList<QuotaRequestDetailsData> value, string nextLink)
+        internal QuotaRequestDetailsList(IReadOnlyList<QuotaRequestDetailData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The quota requests. </summary>
-        public IReadOnlyList<QuotaRequestDetailsData> Value { get; }
+        public IReadOnlyList<QuotaRequestDetailData> Value { get; }
         /// <summary> The URI to fetch the next page of quota limits. When there are no more pages, this is null. </summary>
         public string NextLink { get; }
     }

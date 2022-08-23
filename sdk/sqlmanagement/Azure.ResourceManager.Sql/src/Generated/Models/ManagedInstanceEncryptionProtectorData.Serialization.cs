@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("serverKeyType");
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(AutoRotationEnabled))
+            if (Optional.IsDefined(IsAutoRotationEnabled))
             {
                 writer.WritePropertyName("autoRotationEnabled");
-                writer.WriteBooleanValue(AutoRotationEnabled.Value);
+                writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> serverKeyName = default;
-            Optional<ServerKeyType> serverKeyType = default;
+            Optional<SqlServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
             Optional<string> thumbprint = default;
             Optional<bool> autoRotationEnabled = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverKeyType = new ServerKeyType(property0.Value.GetString());
+                            serverKeyType = new SqlServerKeyType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("uri"))

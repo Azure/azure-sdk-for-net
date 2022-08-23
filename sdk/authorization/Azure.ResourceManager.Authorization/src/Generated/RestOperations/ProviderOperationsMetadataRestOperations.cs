@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2015-07-01";
+            _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Authorization/providerOperations/", false);
-            uri.AppendPath(resourceProviderNamespace, true);
+            uri.AppendPath(resourceProviderNamespace, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
@@ -62,10 +62,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderOperationsData>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderOperationsMetadataData>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var message = CreateGetRequest(resourceProviderNamespace, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -73,13 +72,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsData value = default;
+                        ProviderOperationsMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderOperationsData.DeserializeProviderOperationsData(document.RootElement);
+                        value = ProviderOperationsMetadataData.DeserializeProviderOperationsMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProviderOperationsData)null, message.Response);
+                    return Response.FromValue((ProviderOperationsMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -90,10 +89,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderOperationsData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ProviderOperationsMetadataData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var message = CreateGetRequest(resourceProviderNamespace, expand);
             _pipeline.Send(message, cancellationToken);
@@ -101,13 +99,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsData value = default;
+                        ProviderOperationsMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderOperationsData.DeserializeProviderOperationsData(document.RootElement);
+                        value = ProviderOperationsMetadataData.DeserializeProviderOperationsMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProviderOperationsData)null, message.Response);
+                    return Response.FromValue((ProviderOperationsMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

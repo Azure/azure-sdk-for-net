@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -90,11 +89,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServerfarmHybridConnectionNamespaceRelayResources in the AppServicePlan. </summary>
-        /// <returns> An object representing collection of ServerfarmHybridConnectionNamespaceRelayResources and their operations over a ServerfarmHybridConnectionNamespaceRelayResource. </returns>
-        public virtual ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
+        /// <summary> Gets a collection of AppServicePlanHybridConnectionNamespaceRelayResources in the AppServicePlan. </summary>
+        /// <returns> An object representing collection of AppServicePlanHybridConnectionNamespaceRelayResources and their operations over a AppServicePlanHybridConnectionNamespaceRelayResource. </returns>
+        public virtual AppServicePlanHybridConnectionNamespaceRelayCollection GetAppServicePlanHybridConnectionNamespaceRelays()
         {
-            return GetCachedClient(Client => new ServerfarmHybridConnectionNamespaceRelayCollection(Client, Id));
+            return GetCachedClient(Client => new AppServicePlanHybridConnectionNamespaceRelayCollection(Client, Id));
         }
 
         /// <summary>
@@ -108,9 +107,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelayResource>> GetServerfarmHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlanHybridConnectionNamespaceRelayResource>> GetAppServicePlanHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            return await GetServerfarmHybridConnectionNamespaceRelays().GetAsync(namespaceName, relayName, cancellationToken).ConfigureAwait(false);
+            return await GetAppServicePlanHybridConnectionNamespaceRelays().GetAsync(namespaceName, relayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -124,38 +123,23 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerfarmHybridConnectionNamespaceRelayResource> GetServerfarmHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual Response<AppServicePlanHybridConnectionNamespaceRelayResource> GetAppServicePlanHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            return GetServerfarmHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
+            return GetAppServicePlanHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a HybridConnectionLimitsResource along with the instance operations that can be performed on it in the AppServicePlan. </summary>
-        /// <returns> Returns a <see cref="HybridConnectionLimitsResource" /> object. </returns>
-        public virtual HybridConnectionLimitsResource GetHybridConnectionLimits()
+        /// <summary> Gets an object representing a HybridConnectionLimitResource along with the instance operations that can be performed on it in the AppServicePlan. </summary>
+        /// <returns> Returns a <see cref="HybridConnectionLimitResource" /> object. </returns>
+        public virtual HybridConnectionLimitResource GetHybridConnectionLimit()
         {
-            return new HybridConnectionLimitsResource(Client, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
+            return new HybridConnectionLimitResource(Client, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
 
-        /// <summary> Gets a collection of ServerfarmVirtualNetworkConnectionResources in the AppServicePlan. </summary>
-        /// <returns> An object representing collection of ServerfarmVirtualNetworkConnectionResources and their operations over a ServerfarmVirtualNetworkConnectionResource. </returns>
-        public virtual ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
+        /// <summary> Gets a collection of AppServicePlanVirtualNetworkConnectionResources in the AppServicePlan. </summary>
+        /// <returns> An object representing collection of AppServicePlanVirtualNetworkConnectionResources and their operations over a AppServicePlanVirtualNetworkConnectionResource. </returns>
+        public virtual AppServicePlanVirtualNetworkConnectionCollection GetAppServicePlanVirtualNetworkConnections()
         {
-            return GetCachedClient(Client => new ServerfarmVirtualNetworkConnectionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Description for Get a Virtual Network associated with an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
-        /// </summary>
-        /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerfarmVirtualNetworkConnectionResource>> GetServerfarmVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerfarmVirtualNetworkConnections().GetAsync(vnetName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new AppServicePlanVirtualNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -168,9 +152,24 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerfarmVirtualNetworkConnectionResource> GetServerfarmVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlanVirtualNetworkConnectionResource>> GetAppServicePlanVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            return GetServerfarmVirtualNetworkConnections().Get(vnetName, cancellationToken);
+            return await GetAppServicePlanVirtualNetworkConnections().GetAsync(vnetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// </summary>
+        /// <param name="vnetName"> Name of the Virtual Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppServicePlanVirtualNetworkConnectionResource> GetAppServicePlanVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
+        {
+            return GetAppServicePlanVirtualNetworkConnections().Get(vnetName, cancellationToken);
         }
 
         /// <summary>
@@ -385,17 +384,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridConnectionData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectionData> GetHybridConnectionRelaysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerfarmHybridConnectionNamespaceRelayResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridConnectionData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {
                     var response = await _appServicePlanRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerfarmHybridConnectionNamespaceRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -403,14 +402,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<ServerfarmHybridConnectionNamespaceRelayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridConnectionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {
                     var response = await _appServicePlanRestClient.ListHybridConnectionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerfarmHybridConnectionNamespaceRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -427,17 +426,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerfarmHybridConnectionNamespaceRelayResource> GetHybridConnections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridConnectionData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectionData> GetHybridConnectionRelays(CancellationToken cancellationToken = default)
         {
-            Page<ServerfarmHybridConnectionNamespaceRelayResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridConnectionData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {
                     var response = _appServicePlanRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerfarmHybridConnectionNamespaceRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -445,14 +444,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<ServerfarmHybridConnectionNamespaceRelayResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HybridConnectionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetHybridConnectionRelays");
                 scope.Start();
                 try
                 {
                     var response = _appServicePlanRestClient.ListHybridConnectionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerfarmHybridConnectionNamespaceRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -518,17 +517,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteResource> GetWebAppsAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = await _appServicePlanRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -536,14 +535,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = await _appServicePlanRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -563,17 +562,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
         /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteResource> GetWebApps(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteData> GetWebApps(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
-            Page<WebSiteResource> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = _appServicePlanRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -581,14 +580,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = _appServicePlanRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

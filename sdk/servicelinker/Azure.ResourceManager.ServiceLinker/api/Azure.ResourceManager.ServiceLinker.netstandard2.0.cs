@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ServiceLinker
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult>> GetConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.LinkerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.LinkerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.ValidateOperationResult> Validate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.ValidateOperationResult>> ValidateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.LinkerValidateOperationResult> Validate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.LinkerValidateOperationResult>> ValidateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LinkerResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceLinker.LinkerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.LinkerResource>, System.Collections.IEnumerable
     {
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.ServiceLinker
 }
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AuthBaseInfo
+    public abstract partial class AuthBaseInfo
     {
         public AuthBaseInfo() { }
     }
     public partial class AzureKeyVaultProperties : Azure.ResourceManager.ServiceLinker.Models.AzureResourceBaseProperties
     {
         public AzureKeyVaultProperties() { }
-        public bool? ConnectAsKubernetesCsiDriver { get { throw null; } set { } }
+        public bool? DoesConnectAsKubernetesCsiDriver { get { throw null; } set { } }
     }
-    public partial class AzureResourceBaseProperties
+    public abstract partial class AzureResourceBaseProperties
     {
         public AzureResourceBaseProperties() { }
     }
@@ -152,6 +152,48 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType? SolutionType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo TargetService { get { throw null; } set { } }
     }
+    public partial class LinkerValidateOperationResult
+    {
+        internal LinkerValidateOperationResult() { }
+        public Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? AuthType { get { throw null; } }
+        public bool? IsConnectionAvailable { get { throw null; } }
+        public string LinkerName { get { throw null; } }
+        public System.DateTimeOffset? ReportEndOn { get { throw null; } }
+        public System.DateTimeOffset? ReportStartOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
+        public string Status { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultItemInfo> ValidationDetail { get { throw null; } }
+    }
+    public partial class LinkerValidationResultItemInfo
+    {
+        internal LinkerValidationResultItemInfo() { }
+        public string Description { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus? Result { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LinkerValidationResultStatus : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LinkerValidationResultStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus Failure { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus Success { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus left, Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus left, Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RawValueSecretInfo : Azure.ResourceManager.ServiceLinker.Models.SecretBaseInfo
     {
         public RawValueSecretInfo() { }
@@ -163,22 +205,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.SecretBaseInfo SecretInfo { get { throw null; } set { } }
     }
-    public partial class SecretBaseInfo
+    public abstract partial class SecretBaseInfo
     {
         public SecretBaseInfo() { }
     }
     public partial class ServicePrincipalCertificateAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo
     {
-        public ServicePrincipalCertificateAuthInfo(string clientId, string principalId, string certificate) { }
+        public ServicePrincipalCertificateAuthInfo(string clientId, System.Guid principalId, string certificate) { }
         public string Certificate { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } set { } }
+        public System.Guid PrincipalId { get { throw null; } set { } }
     }
     public partial class ServicePrincipalSecretAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo
     {
-        public ServicePrincipalSecretAuthInfo(string clientId, string principalId, string secret) { }
+        public ServicePrincipalSecretAuthInfo(string clientId, System.Guid principalId, string secret) { }
         public string ClientId { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } set { } }
+        public System.Guid PrincipalId { get { throw null; } set { } }
         public string Secret { get { throw null; } set { } }
     }
     public partial class SourceConfiguration
@@ -196,7 +238,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         public SystemAssignedIdentityAuthInfo() { }
     }
-    public partial class TargetServiceBaseInfo
+    public abstract partial class TargetServiceBaseInfo
     {
         public TargetServiceBaseInfo() { }
     }
@@ -205,48 +247,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public UserAssignedIdentityAuthInfo() { }
         public string ClientId { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-    }
-    public partial class ValidateOperationResult
-    {
-        internal ValidateOperationResult() { }
-        public Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? AuthType { get { throw null; } }
-        public bool? IsConnectionAvailable { get { throw null; } }
-        public string LinkerName { get { throw null; } }
-        public System.DateTimeOffset? ReportEndOn { get { throw null; } }
-        public System.DateTimeOffset? ReportStartOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
-        public string Status { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.ValidationResultItemData> ValidationDetail { get { throw null; } }
-    }
-    public partial class ValidationResultItemData
-    {
-        internal ValidationResultItemData() { }
-        public string Description { get { throw null; } }
-        public string ErrorCode { get { throw null; } }
-        public string ErrorMessage { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus? Result { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ValidationResultStatus : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ValidationResultStatus(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus Failure { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus Success { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus left, Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus left, Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VnetSolutionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType>

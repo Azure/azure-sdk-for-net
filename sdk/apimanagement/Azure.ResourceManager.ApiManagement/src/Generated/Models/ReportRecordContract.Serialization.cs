@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> apiId = default;
             Optional<string> operationId = default;
             Optional<string> apiRegion = default;
-            Optional<string> subscriptionId = default;
+            Optional<ResourceIdentifier> subscriptionId = default;
             Optional<int> callCountSuccess = default;
             Optional<int> callCountBlocked = default;
             Optional<int> callCountFailed = default;
@@ -105,7 +105,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("subscriptionId"))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("callCountSuccess"))

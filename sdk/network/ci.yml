@@ -21,6 +21,8 @@ pr:
     include:
     - sdk/network/
     - sdk/resourcemanager/
+    # remove after we change to depend on storage nuget package
+    - sdk/storage/Azure.ResourceManager.Storage
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

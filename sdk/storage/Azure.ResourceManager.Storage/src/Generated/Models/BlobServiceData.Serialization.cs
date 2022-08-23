@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("isVersioningEnabled");
                 writer.WriteBooleanValue(IsVersioningEnabled.Value);
             }
-            if (Optional.IsDefined(AutomaticSnapshotPolicyEnabled))
+            if (Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
             {
                 writer.WritePropertyName("automaticSnapshotPolicyEnabled");
-                writer.WriteBooleanValue(AutomaticSnapshotPolicyEnabled.Value);
+                writer.WriteBooleanValue(IsAutomaticSnapshotPolicyEnabled.Value);
             }
             if (Optional.IsDefined(ChangeFeed))
             {
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CorsRules> cors = default;
+            Optional<StorageCorsRules> cors = default;
             Optional<string> defaultServiceVersion = default;
             Optional<DeleteRetentionPolicy> deleteRetentionPolicy = default;
             Optional<bool> isVersioningEnabled = default;
             Optional<bool> automaticSnapshotPolicyEnabled = default;
-            Optional<ChangeFeed> changeFeed = default;
-            Optional<RestorePolicyProperties> restorePolicy = default;
+            Optional<BlobServiceChangeFeed> changeFeed = default;
+            Optional<RestorePolicy> restorePolicy = default;
             Optional<DeleteRetentionPolicy> containerDeleteRetentionPolicy = default;
             Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultServiceVersion"))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            changeFeed = ChangeFeed.DeserializeChangeFeed(property0.Value);
+                            changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("restorePolicy"))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            restorePolicy = RestorePolicyProperties.DeserializeRestorePolicyProperties(property0.Value);
+                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("containerDeleteRetentionPolicy"))

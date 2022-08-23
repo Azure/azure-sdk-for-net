@@ -9,5 +9,8 @@ namespace Azure.Communication.MediaComposition.Models
     [CodeGenModel("Layout")]
     public partial class MediaCompositionLayout
     {
+        internal MediaCompositionLayout()
+        {
+        }
     }
 }

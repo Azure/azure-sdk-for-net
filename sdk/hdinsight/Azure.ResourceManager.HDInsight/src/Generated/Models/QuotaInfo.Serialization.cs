@@ -10,8 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    internal partial class QuotaInfo
+    internal partial class QuotaInfo : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CoresUsed))
+            {
+                writer.WritePropertyName("coresUsed");
+                writer.WriteNumberValue(CoresUsed.Value);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static QuotaInfo DeserializeQuotaInfo(JsonElement element)
         {
             Optional<int> coresUsed = default;

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> destinationPorts = default;
             Optional<string> translatedAddress = default;
             Optional<string> translatedPort = default;
-            Optional<IList<string>> sourceIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
             Optional<string> translatedFqdn = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("translatedFqdn"))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NatRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Optional.ToList(sourceIpGroups), translatedFqdn.Value);
+            return new NatRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Optional.ToList(sourceIPGroups), translatedFqdn.Value);
         }
     }
 }

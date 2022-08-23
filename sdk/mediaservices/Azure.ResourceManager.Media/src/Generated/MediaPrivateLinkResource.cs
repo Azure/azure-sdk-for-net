@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a MediaPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMediaPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaserviceResource" /> using the GetMediaPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServiceResource" /> using the GetMediaPrivateLinkResource method.
     /// </summary>
     public partial class MediaPrivateLinkResource : ArmResource
     {

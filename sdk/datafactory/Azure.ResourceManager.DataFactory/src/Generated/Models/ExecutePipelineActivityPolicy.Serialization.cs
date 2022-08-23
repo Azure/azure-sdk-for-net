@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecureInput))
+            if (Optional.IsDefined(EnableSecureInput))
             {
                 writer.WritePropertyName("secureInput");
-                writer.WriteBooleanValue(SecureInput.Value);
+                writer.WriteBooleanValue(EnableSecureInput.Value);
             }
             foreach (var item in AdditionalProperties)
             {

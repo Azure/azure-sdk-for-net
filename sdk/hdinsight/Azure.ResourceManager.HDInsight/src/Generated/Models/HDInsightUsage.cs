@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The maximum allowed usage. </param>
         /// <param name="name"> The details about the localizable name of the used resource. </param>
-        internal HDInsightUsage(string unit, long? currentValue, long? limit, LocalizedName name)
+        internal HDInsightUsage(string unit, long? currentValue, long? limit, HDInsightLocalizedName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The maximum allowed usage. </summary>
         public long? Limit { get; }
         /// <summary> The details about the localizable name of the used resource. </summary>
-        public LocalizedName Name { get; }
+        public HDInsightLocalizedName Name { get; }
     }
 }

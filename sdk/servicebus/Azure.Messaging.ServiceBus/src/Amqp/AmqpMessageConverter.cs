@@ -8,11 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
-using Azure.Messaging.ServiceBus.Amqp.Framing;
-using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -20,7 +17,7 @@ using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    internal static class AmqpMessageConverter
+    internal class AmqpMessageConverter
     {
         /// <summary>
         /// The size, in bytes, to use for extracting the delivery tag bytes into <see cref="Guid"/>.
@@ -30,21 +27,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
+        public static AmqpMessageConverter Default = new AmqpMessageConverter();
+
+        public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             var batchMessages = new List<AmqpMessage>(1) { SBMessageToAmqpMessage(source) };
-            return BuildAmqpBatchFromMessages(batchMessages, source, forceBatch);
+            return BuildAmqpBatchFromMessages(batchMessages, forceBatch);
         }
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch = false)
+        public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             return BuildAmqpBatchFromMessage(source, forceBatch);
         }
 
         /// <summary>
-        ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="ServiceBusMessage" />
+        ///   Builds a batch of <see cref="AmqpMessage" /> from a set of <see cref="ServiceBusMessage" />
         ///   optionally propagating the custom properties.
         /// </summary>
         ///
@@ -53,54 +52,49 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
+        private AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
         {
-            AmqpMessage firstAmqpMessage = null;
-            ServiceBusMessage firstMessage = null;
-
             var batchMessages = new List<AmqpMessage>(source.Count);
             foreach (ServiceBusMessage sbMessage in source)
             {
-                if (firstAmqpMessage == null)
-                {
-                    firstAmqpMessage = SBMessageToAmqpMessage(sbMessage);
-                    firstMessage = sbMessage;
-                    batchMessages.Add(firstAmqpMessage);
-                }
-                else
-                {
-                    batchMessages.Add(SBMessageToAmqpMessage(sbMessage));
-                }
+                 batchMessages.Add(SBMessageToAmqpMessage(sbMessage));
             }
-
-            return BuildAmqpBatchFromMessages(batchMessages, firstMessage, forceBatch);
+            return BuildAmqpBatchFromMessages(batchMessages, forceBatch);
         }
 
         /// <summary>
         ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
         /// </summary>
         ///
-        /// <param name="batchMessages">The set of messages to use as the body of the batch message.</param>
-        /// <param name="firstMessage">The first message being sent in the batch.</param>
+        /// <param name="source">The set of messages to use as the body of the batch message.</param>
         /// <param name="forceBatch">Set to true to force creating as a batch even when only one message.</param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessages(
-            List<AmqpMessage> batchMessages,
-            ServiceBusMessage firstMessage,
+        public virtual AmqpMessage BuildAmqpBatchFromMessages(
+            IReadOnlyCollection<AmqpMessage> source,
             bool forceBatch)
         {
             AmqpMessage batchEnvelope;
+            AmqpMessage firstMessage = null;
 
-            if (batchMessages.Count == 1 && !forceBatch)
+            var batchMessages = source.GetEnumerator();
+            batchMessages.MoveNext();
+
+            if (source.Count > 0)
             {
-                batchEnvelope = batchMessages[0];
+                firstMessage = batchMessages.Current;
+            }
+
+            if (source.Count == 1 && !forceBatch)
+            {
+                batchEnvelope = batchMessages.Current.Clone();
             }
             else
             {
-                var data = new List<Data>(batchMessages.Count);
-                foreach (var message in batchMessages)
+                var data = new List<Data>(source.Count);
+
+                foreach (var message in source)
                 {
                     message.Batchable = true;
                     using var messageStream = message.ToStream();
@@ -110,25 +104,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
             }
 
-            if (firstMessage?.MessageId != null)
+            if (firstMessage?.Properties.MessageId != null)
             {
-                batchEnvelope.Properties.MessageId = firstMessage.MessageId;
+                batchEnvelope.Properties.MessageId = firstMessage.Properties.MessageId;
             }
-            if (firstMessage?.SessionId != null)
+            if (firstMessage?.Properties.GroupId != null)
             {
-                batchEnvelope.Properties.GroupId = firstMessage.SessionId;
+                batchEnvelope.Properties.GroupId = firstMessage.Properties.GroupId;
             }
 
-            if (firstMessage?.PartitionKey != null)
+            if (firstMessage?.MessageAnnotations.Map[AmqpMessageConstants.PartitionKeyName] != null)
             {
                 batchEnvelope.MessageAnnotations.Map[AmqpMessageConstants.PartitionKeyName] =
-                    firstMessage.PartitionKey;
+                    firstMessage.MessageAnnotations.Map[AmqpMessageConstants.PartitionKeyName];
             }
 
-            if (firstMessage?.TransactionPartitionKey != null)
+            if (firstMessage?.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName] != null)
             {
                 batchEnvelope.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName] =
-                    firstMessage.TransactionPartitionKey;
+                    firstMessage.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName];
             }
 
             batchEnvelope.Batchable = true;
@@ -145,13 +139,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
-            if (stream == null)
-            {
-                return new ArraySegment<byte>();
-            }
-
             switch (stream)
             {
+                case { Length: < 1 }:
+                    return default;
+
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
 
@@ -159,19 +151,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
                     memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStreamCopy.ToArray());
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
 
                 default:
                 {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
+                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
             }
         }
 
-        public static AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
+        public virtual AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
         {
             // body
             var amqpMessage = sbMessage.ToAmqpMessage();
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
+        public virtual ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
             AmqpAnnotatedMessage annotatedMessage;
@@ -498,7 +498,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // delivery annotations
 
-            if (amqpMessage.DeliveryAnnotations != null)
+            if ((sections & SectionFlag.DeliveryAnnotations) != 0)
             {
                 foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.DeliveryAnnotations.Map)
                 {
@@ -529,6 +529,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // footer
 
+            if ((sections & SectionFlag.Footer) != 0)
+            {
+                foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.Footer.Map)
+                {
+                    if (TryGetNetObjectFromAmqpObject(kvp.Value, MappingType.ApplicationProperty, out var netObject))
+                    {
+                        annotatedMessage.Footer[kvp.Key.ToString()] = netObject;
+                    }
+                }
+            }
+
+            // lock token
+
             if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
             {
                 Span<byte> guidBytes = stackalloc byte[GuidSizeInBytes];
@@ -543,119 +556,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             amqpMessage.Dispose();
 
             return sbMessage;
-        }
-
-        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
-        {
-            var ruleDescriptionMap = new AmqpMap();
-
-            switch (description.Filter)
-            {
-                case SqlRuleFilter sqlRuleFilter:
-                    var filterMap = GetSqlRuleFilterMap(sqlRuleFilter);
-                    ruleDescriptionMap[ManagementConstants.Properties.SqlRuleFilter] = filterMap;
-                    break;
-                case CorrelationRuleFilter correlationFilter:
-                    var correlationFilterMap = GetCorrelationRuleFilterMap(correlationFilter);
-                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationRuleFilter] = correlationFilterMap;
-                    break;
-                default:
-                    throw new NotSupportedException(
-                        Resources.RuleFilterNotSupported.FormatForUser(
-                            description.Filter.GetType(),
-                            nameof(SqlRuleFilter),
-                            nameof(CorrelationRuleFilter)));
-            }
-
-            var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
-            ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
-            ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
-
-            return ruleDescriptionMap;
-        }
-
-        public static RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
-        {
-            var filter = GetFilter(amqpDescription.Filter);
-            var ruleAction = GetRuleAction(amqpDescription.Action);
-
-            var ruleDescription = new RuleProperties(amqpDescription.RuleName, filter)
-            {
-                Action = ruleAction
-            };
-
-            return ruleDescription;
-        }
-
-        public static RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
-        {
-            RuleFilter filter;
-
-            switch (amqpFilter.DescriptorCode)
-            {
-                case AmqpSqlRuleFilterCodec.Code:
-                    var amqpSqlFilter = (AmqpSqlRuleFilterCodec)amqpFilter;
-                    filter = new SqlRuleFilter(amqpSqlFilter.Expression);
-                    break;
-
-                case AmqpTrueRuleFilterCodec.Code:
-                    filter = new TrueRuleFilter();
-                    break;
-
-                case AmqpFalseRuleFilterCodec.Code:
-                    filter = new FalseRuleFilter();
-                    break;
-
-                case AmqpCorrelationRuleFilterCodec.Code:
-                    var amqpCorrelationFilter = (AmqpCorrelationRuleFilterCodec)amqpFilter;
-                    var correlationFilter = new CorrelationRuleFilter
-                    {
-                        CorrelationId = amqpCorrelationFilter.CorrelationId,
-                        MessageId = amqpCorrelationFilter.MessageId,
-                        To = amqpCorrelationFilter.To,
-                        ReplyTo = amqpCorrelationFilter.ReplyTo,
-                        Subject = amqpCorrelationFilter.Subject,
-                        SessionId = amqpCorrelationFilter.SessionId,
-                        ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
-                        ContentType = amqpCorrelationFilter.ContentType
-                    };
-
-                    foreach (var property in amqpCorrelationFilter.Properties)
-                    {
-                        correlationFilter.ApplicationProperties.Add(property.Key.Key.ToString(), property.Value);
-                    }
-
-                    filter = correlationFilter;
-                    break;
-
-                default:
-                    throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
-            }
-
-            return filter;
-        }
-
-        private static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
-        {
-            RuleAction action;
-
-            if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
-            {
-                action = null;
-            }
-            else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
-            {
-                var amqpSqlRuleAction = (AmqpSqlRuleActionCodec)amqpAction;
-                var sqlRuleAction = new SqlRuleAction(amqpSqlRuleAction.SqlExpression);
-
-                action = sqlRuleAction;
-            }
-            else
-            {
-                throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
-            }
-
-            return action;
         }
 
         internal static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
@@ -689,7 +589,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case PropertyValueType.Stream:
                     if (mappingType == MappingType.ApplicationProperty)
                     {
-                        amqpObject = StreamToBytes((Stream)netObject);
+                        amqpObject = ReadStreamToArraySegment((Stream)netObject);
                     }
                     break;
                 case PropertyValueType.Uri:
@@ -706,7 +606,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         if (mappingType == MappingType.ApplicationProperty)
                         {
-                            amqpObject = StreamToBytes(netObjectAsStream);
+                            amqpObject = ReadStreamToArraySegment(netObjectAsStream);
                         }
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
@@ -820,78 +720,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return netObject != null;
-        }
-
-        private static ArraySegment<byte> StreamToBytes(Stream stream)
-        {
-            ArraySegment<byte> buffer;
-            if (stream == null || stream.Length < 1)
-            {
-                buffer = default;
-            }
-            else
-            {
-                using (var memoryStream = new MemoryStream(512))
-                {
-                    stream.CopyTo(memoryStream, 512);
-                    buffer = new ArraySegment<byte>(memoryStream.ToArray());
-                }
-            }
-
-            return buffer;
-        }
-
-        private static Data ToData(AmqpMessage message)
-        {
-            ArraySegment<byte>[] payload = message.GetPayload();
-            var buffer = new BufferListStream(payload);
-            ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
-            return new Data { Value = value };
-        }
-
-        internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
-        {
-            var amqpFilterMap = new AmqpMap
-            {
-                [ManagementConstants.Properties.Expression] = sqlRuleFilter.SqlExpression
-            };
-            return amqpFilterMap;
-        }
-
-        internal static AmqpMap GetCorrelationRuleFilterMap(CorrelationRuleFilter correlationRuleFilter)
-        {
-            var correlationRuleFilterMap = new AmqpMap
-            {
-                [ManagementConstants.Properties.CorrelationId] = correlationRuleFilter.CorrelationId,
-                [ManagementConstants.Properties.MessageId] = correlationRuleFilter.MessageId,
-                [ManagementConstants.Properties.To] = correlationRuleFilter.To,
-                [ManagementConstants.Properties.ReplyTo] = correlationRuleFilter.ReplyTo,
-                [ManagementConstants.Properties.Label] = correlationRuleFilter.Subject,
-                [ManagementConstants.Properties.SessionId] = correlationRuleFilter.SessionId,
-                [ManagementConstants.Properties.ReplyToSessionId] = correlationRuleFilter.ReplyToSessionId,
-                [ManagementConstants.Properties.ContentType] = correlationRuleFilter.ContentType
-            };
-
-            var propertiesMap = new AmqpMap();
-            foreach (var property in correlationRuleFilter.ApplicationProperties)
-            {
-                propertiesMap[new MapKey(property.Key)] = property.Value;
-            }
-
-            correlationRuleFilterMap[ManagementConstants.Properties.CorrelationRuleFilterProperties] = propertiesMap;
-
-            return correlationRuleFilterMap;
-        }
-
-        internal static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
-        {
-            AmqpMap ruleActionMap = null;
-            if (sqlRuleAction != null)
-            {
-                ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
-            }
-
-            return ruleActionMap;
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ResourceSkuRestrictions DeserializeResourceSkuRestrictions(JsonElement element)
         {
-            Optional<ResourceSkuRestrictionsType> type = default;
+            Optional<AppPlatformResourceSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<ResourceSkuRestrictionInfo> restrictionInfo = default;
-            Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
+            Optional<AppPlatformResourceSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ResourceSkuRestrictionsType(property.Value.GetString());
+                    type = new AppPlatformResourceSkuRestrictionsType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("values"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reasonCode = new ResourceSkuRestrictionsReasonCode(property.Value.GetString());
+                    reasonCode = new AppPlatformResourceSkuRestrictionsReasonCode(property.Value.GetString());
                     continue;
                 }
             }

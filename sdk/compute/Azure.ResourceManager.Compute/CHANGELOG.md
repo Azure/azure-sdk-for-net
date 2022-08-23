@@ -1,30 +1,59 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Base type of `VirtualMachineScaleSetVmExtensionData` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryApplicationPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryImagePatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Type `GalleryUpdateResourceData` was removed.
-- Base type of `VirtualMachineScaleSetExtensionPatch ` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `VirtualMachineScaleSetVmExtensionPatch  ` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Type `ApiError` renamed to `ComputeApiError`.
-- Type `ApiErrorBase` renamed to `ComputeApiErrorBase`.
-- Type `DeleteOption` renamed to `ComputeDeleteOption`.
-- Type `UsageName` renamed to `ComputeUsageName`.
-- Type `UsageUnit` renamed to `ComputeUsageUnit`.
-- Type `UserArtifactManage` renamed to `UserArtifactManagement`.
-- Method `CloudServiceCollection.CreateOrUpdate` and `CloudServiceCollection.CreateOrUpdateAsync` now required the parameter `data`.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-07-11)
+
+This is the first stable release of the Compute Management client library.
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Compute` / `VirtualMachine` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+- Correct inherits
+  - Base type of `VirtualMachineScaleSetVmExtensionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryApplicationPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryImagePatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Type `GalleryUpdateResourceData` was removed.
+  - Base type of `VirtualMachineScaleSetExtensionPatch ` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `VirtualMachineScaleSetVmExtensionPatch  ` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Type `ApiError` renamed to `ComputeApiError`.
+  - Type `ApiErrorBase` renamed to `ComputeApiErrorBase`.
+  - Type `DeleteOption` renamed to `ComputeDeleteOption`.
+  - Type `UsageName` renamed to `ComputeUsageName`.
+  - Type `UsageUnit` renamed to `ComputeUsageUnit`.
+  - Type `UserArtifactManage` renamed to `UserArtifactManagement`.
+- Method `CloudServiceCollection.CreateOrUpdate` and `CloudServiceCollection.CreateOrUpdateAsync` now required the parameter `data`.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.9 (2022-06-13)
 
@@ -256,16 +285,16 @@ using Azure.Core;
 using System;
 using System.Linq;
 
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 
-var location = AzureLocation.WestUS;
+AzureLocation location = AzureLocation.WestUS;
 // Create ResourceGroupResource
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ArmOperation<ResourceGroupResource> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, "myResourceGroup", new ResourceGroupData(location));
 ResourceGroupResource resourceGroup = rgOperation.Value;
 
 // Create AvailabilitySet
-var availabilitySetData = new AvailabilitySetData(location)
+AvailabilitySetData availabilitySetData = new AvailabilitySetData(location)
 {
     PlatformUpdateDomainCount = 5,
     PlatformFaultDomainCount = 2,
@@ -275,7 +304,7 @@ ArmOperation<AvailabilitySetResource> asetOperation = await resourceGroup.GetAva
 AvailabilitySetResource availabilitySet = asetOperation.Value;
 
 // Create VNet
-var vnetData = new VirtualNetworkData()
+VirtualNetworkData vnetData = new VirtualNetworkData()
 {
     Location = location,
     Subnets =
@@ -286,13 +315,16 @@ var vnetData = new VirtualNetworkData()
             AddressPrefix = "10.0.0.0/24",
         }
     },
+    AddressPrefixes =
+    {
+        "10.0.0.0/16"
+    }
 };
-vnetData.AddressPrefixes.Add("10.0.0.0/16");
 ArmOperation<VirtualNetworkResource> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualNetwork", vnetData);
 VirtualNetworkResource vnet = vnetOperation.Value;
 
 // Create Network interface
-var nicData = new NetworkInterfaceData()
+NetworkInterfaceData nicData = new NetworkInterfaceData()
 {
     Location = location,
     IPConfigurations =
@@ -309,18 +341,21 @@ var nicData = new NetworkInterfaceData()
 ArmOperation<NetworkInterfaceResource> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, "myNetworkInterface", nicData);
 NetworkInterfaceResource nic = nicOperation.Value;
 
-var vmData = new VirtualMachineData(location)
+VirtualMachineData vmData = new VirtualMachineData(location)
 {
     AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
-    NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
-    OSProfile = new OSProfile
+    NetworkProfile = new VirtualMachineNetworkProfile
+    {
+        NetworkInterfaces = { new VirtualMachineNetworkInterfaceReference() { Id = nic.Id } }
+    },
+    OSProfile = new VirtualMachineOSProfile()
     {
         ComputerName = "testVM",
         AdminUsername = "username",
         AdminPassword = "(YourPassword)",
         LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
     },
-    StorageProfile = new StorageProfile()
+    StorageProfile = new VirtualMachineStorageProfile()
     {
         ImageReference = new ImageReference()
         {
@@ -330,7 +365,7 @@ var vmData = new VirtualMachineData(location)
             Version = "latest"
         }
     },
-    HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
+    HardwareProfile = new VirtualMachineHardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
 };
 ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
 VirtualMachineResource vm = vmOperation.Value;

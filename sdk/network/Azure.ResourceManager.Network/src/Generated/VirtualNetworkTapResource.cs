@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
-        public virtual async Task<Response<VirtualNetworkTapResource>> UpdateAsync(TagsObject tapParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkTapResource>> UpdateAsync(NetworkTagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tapParameters, nameof(tapParameters));
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapParameters"/> is null. </exception>
-        public virtual Response<VirtualNetworkTapResource> Update(TagsObject tapParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetworkTapResource> Update(NetworkTagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tapParameters, nameof(tapParameters));
 

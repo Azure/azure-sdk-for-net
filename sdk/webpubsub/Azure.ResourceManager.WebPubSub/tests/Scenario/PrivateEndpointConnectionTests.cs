@@ -79,40 +79,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             }
         }
 
-        public async Task<WebPubSubResource> CreateWebPubSub(string webPubSubName)
-        {
-            // Create WebPubSub ConfigData
-            IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
-            categories.Add(new LiveTraceCategory("category-01", "true"));
-
-            AclAction aclAction = new AclAction("Deny");
-            IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
-            IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
-            //allow.Add(new WebPubSubRequestType("ClientConnectionValue"));
-            deny.Add(new WebPubSubRequestType("RESTAPI"));
-            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny);
-            IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
-
-            List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
-            {
-                new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
-            };
-
-            WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
-            {
-                Sku = new BillingInfoSku("Standard_S1"),
-                LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
-                //EventHandler = new EventHandlerSettings(items),
-                NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints),
-                ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
-            };
-
-            // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(WaitUntil.Completed, webPubSubName, data)).WaitForCompletionAsync();
-
-            return webPubSub.Value;
-        }
-
         public async Task CreatePrivateEndpointConnection(string privateEndPointName)
         {
             //create private endpoint (privateEndpoint of WebPubSUb will be generated automatically)
@@ -122,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 Location = "westus2",
                 PrivateLinkServiceConnections =
                 {
-                    new PrivateLinkServiceConnection()
+                    new NetworkPrivateLinkServiceConnection()
                     {
                         Name = privateEndPointName,
                         PrivateLinkServiceId = _webPubSub.Data.Id,
@@ -139,7 +105,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task Get()
         {
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateWebPubSub(webPubSubName);
+            _webPubSub = await CreateDefaultWebPubSub(webPubSubName,AzureLocation.WestUS2, _resourceGroup);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             var PrivateEndpointConnection = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAsync(list[0].Data.Name);
@@ -152,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GetAll()
         {
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateWebPubSub(webPubSubName);
+            _webPubSub = await CreateDefaultWebPubSub(webPubSubName,AzureLocation.WestUS2, _resourceGroup);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
             await CreatePrivateEndpointConnection(_privateEndPointName);
@@ -165,7 +131,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task CheckIfExist()
         {
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateWebPubSub(webPubSubName);
+            _webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.True(await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name));
@@ -177,7 +143,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task Delete()
         {
             string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateWebPubSub(webPubSubName);
+            _webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);

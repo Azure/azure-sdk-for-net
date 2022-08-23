@@ -70,10 +70,17 @@ rename-mapping:
   VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
   ConnectivityIssue.type: ConnectivityIssueType
-  HTTPHeader: NetworkWatcherHTTPHeader
+  HttpHeader: NetworkWatcherHttpHeader
+  HttpMethod: NetworkWatcherHttpMethod
+  HttpConfiguration: NetworkHttpConfiguration
+  HttpConfigurationMethod: NetworkHttpConfigurationMethod
   IPVersion: NetworkIPVersion
   IPConfiguration: NetworkIPConfiguration
+  IPConfigurationProfile: NetworkIPConfigurationProfile
+  IPConfigurationBgpPeeringAddress: NetworkIPConfigurationBgpPeeringAddress
   IPAllocationMethod: NetworkIPAllocationMethod
+  IpAllocationType: NetworkIPAllocationType
+  IpAllocationListResult: NetworkIPAllocationListResult
   AuthenticationMethod: NetworkAuthenticationMethod
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
@@ -81,7 +88,16 @@ rename-mapping:
   CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
   ProtocolCustomSettingsFormat: ProtocolCustomSettings
   ServiceEndpointPropertiesFormat: ServiceEndpointProperties
-
+  ConnectionStatus: NetworkConnectionStatus
+  IssueType: ConnectivityIssueType
+  PrivateLinkServiceConnection: NetworkPrivateLinkServiceConnection
+  ConnectivityHop: ConnectivityHopInfo
+  ConnectivityIssue: ConnectivityIssueInfo
+  PreferredIPVersion: TestEvalPreferredIPVersion
+  InboundNatPool: LoadBalancerInboundNatPool
+  TagsObject: NetworkTagsObject
+  EndpointType: ConnectionMonitorEndpointType
+  ConnectionState: NetworkConnectionState
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -116,7 +132,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -127,22 +143,22 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
   BGP: Bgp
   TCP: Tcp
   UDP: Udp
   ANY: Any
   LOA: Loa
+  P2S: P2S|p2s
   IKEv1: IkeV1
   IKEv2: IkeV2
   IkeV2: IkeV2
-  Stag: STag
-  VirtualMachine: Vm
+  Stag: STag|stag
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -156,6 +172,8 @@ request-path-to-resource-name:
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
+  VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
+  VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection
 
 directive:
   - remove-operation: 'PutBastionShareableLink'
@@ -357,7 +375,6 @@ directive:
     transform: >
       $.ResourceNavigationLinkFormat.properties.link['x-ms-format'] = 'arm-id';
       $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
-
 ```
 
 ### Tag: package-track2-preview

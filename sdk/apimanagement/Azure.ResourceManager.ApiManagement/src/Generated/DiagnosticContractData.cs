@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sampling"> Sampling settings for Diagnostic. </param>
         /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
         /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
-        /// <param name="logClientIP"> Log the ClientIP. Default is false. </param>
+        /// <param name="isLogClientIPEnabled"> Log the ClientIP. Default is false. </param>
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
-        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? logClientIP, HttpCorrelationProtocol? httpCorrelationProtocol, Verbosity? verbosity, OperationNameFormat? operationNameFormat) : base(id, name, resourceType, systemData)
+        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat) : base(id, name, resourceType, systemData)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
             Sampling = sampling;
             Frontend = frontend;
             Backend = backend;
-            LogClientIP = logClientIP;
+            IsLogClientIPEnabled = isLogClientIPEnabled;
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
             OperationNameFormat = operationNameFormat;
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </summary>
         public PipelineDiagnosticSettings Backend { get; set; }
         /// <summary> Log the ClientIP. Default is false. </summary>
-        public bool? LogClientIP { get; set; }
+        public bool? IsLogClientIPEnabled { get; set; }
         /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
         public HttpCorrelationProtocol? HttpCorrelationProtocol { get; set; }
         /// <summary> The verbosity level applied to traces emitted by trace policies. </summary>
-        public Verbosity? Verbosity { get; set; }
+        public TraceVerbosityLevel? Verbosity { get; set; }
         /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
         public OperationNameFormat? OperationNameFormat { get; set; }
     }

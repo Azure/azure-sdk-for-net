@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             CacheExpirationActionType typeName = default;
             CacheBehaviorSetting cacheBehavior = default;
-            CacheLevel cacheType = default;
+            CdnCacheLevel cacheType = default;
             Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("cacheType"))
                 {
-                    cacheType = new CacheLevel(property.Value.GetString());
+                    cacheType = new CdnCacheLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheDuration"))

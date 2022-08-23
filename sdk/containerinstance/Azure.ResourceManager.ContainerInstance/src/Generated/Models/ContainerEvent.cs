@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
         /// <param name="name"> The event name. </param>
         /// <param name="message"> The event message. </param>
-        /// <param name="containerEventType"> The event type. </param>
-        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string containerEventType)
+        /// <param name="eventType"> The event type. </param>
+        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string eventType)
         {
             Count = count;
             FirstTimestamp = firstTimestamp;
             LastTimestamp = lastTimestamp;
             Name = name;
             Message = message;
-            ContainerEventType = containerEventType;
+            EventType = eventType;
         }
 
         /// <summary> The count of the event. </summary>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The event message. </summary>
         public string Message { get; }
         /// <summary> The event type. </summary>
-        public string ContainerEventType { get; }
+        public string EventType { get; }
     }
 }

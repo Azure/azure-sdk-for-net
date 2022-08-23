@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Network
             Optional<string> cidr = default;
             Optional<string> signedMessage = default;
             Optional<string> authorizationMessage = default;
-            Optional<CustomIPPrefixData> customIpPrefixParent = default;
-            Optional<IReadOnlyList<CustomIPPrefixData>> childCustomIpPrefixes = default;
+            Optional<CustomIPPrefixData> customIPPrefixParent = default;
+            Optional<IReadOnlyList<CustomIPPrefixData>> childCustomIPPrefixes = default;
             Optional<CommissionedState> commissionedState = default;
-            Optional<IReadOnlyList<WritableSubResource>> publicIpPrefixes = default;
+            Optional<IReadOnlyList<WritableSubResource>> publicIPPrefixes = default;
             Optional<Guid> resourceGuid = default;
             Optional<string> failedReason = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customIpPrefixParent = DeserializeCustomIPPrefixData(property0.Value);
+                            customIPPrefixParent = DeserializeCustomIPPrefixData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("childCustomIpPrefixes"))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(DeserializeCustomIPPrefixData(item));
                             }
-                            childCustomIpPrefixes = array;
+                            childCustomIPPrefixes = array;
                             continue;
                         }
                         if (property0.NameEquals("commissionedState"))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
-                            publicIpPrefixes = array;
+                            publicIPPrefixes = array;
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new CustomIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), Optional.ToList(zones), cidr.Value, signedMessage.Value, authorizationMessage.Value, customIpPrefixParent.Value, Optional.ToList(childCustomIpPrefixes), Optional.ToNullable(commissionedState), Optional.ToList(publicIpPrefixes), Optional.ToNullable(resourceGuid), failedReason.Value, Optional.ToNullable(provisioningState));
+            return new CustomIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), Optional.ToList(zones), cidr.Value, signedMessage.Value, authorizationMessage.Value, customIPPrefixParent.Value, Optional.ToList(childCustomIPPrefixes), Optional.ToNullable(commissionedState), Optional.ToList(publicIPPrefixes), Optional.ToNullable(resourceGuid), failedReason.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

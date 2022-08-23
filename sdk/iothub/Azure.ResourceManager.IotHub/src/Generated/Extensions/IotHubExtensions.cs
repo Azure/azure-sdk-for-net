@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static async Task<Response<IotHubNameAvailabilityInfo>> CheckNameAvailabilityIotHubResourceAsync(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityIotHubResourceAsync(operationInputs, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckIotHubNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.IotHub
         /// Operation Id: IotHubResource_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationInputs"/> is null. </exception>
-        public static Response<IotHubNameAvailabilityInfo> CheckNameAvailabilityIotHubResource(this SubscriptionResource subscriptionResource, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(this SubscriptionResource subscriptionResource, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityIotHubResource(operationInputs, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckIotHubNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommonsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommonsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotHubUserSubscriptionQuotaAsync(cancellationToken);
         }
 
         /// <summary>
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UserSubscriptionQuota> GetSubscriptionQuotaResourceProviderCommons(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaResourceProviderCommons(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotHubUserSubscriptionQuota(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -199,39 +199,39 @@ namespace Azure.ResourceManager.IotHub
         }
         #endregion
 
-        #region CertificateDescriptionResource
+        #region IotHubCertificateDescriptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateDescriptionResource.CreateResourceIdentifier" /> to create a <see cref="CertificateDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotHubCertificateDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotHubCertificateDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubCertificateDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateDescriptionResource" /> object. </returns>
-        public static CertificateDescriptionResource GetCertificateDescriptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotHubCertificateDescriptionResource" /> object. </returns>
+        public static IotHubCertificateDescriptionResource GetIotHubCertificateDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CertificateDescriptionResource.ValidateResourceId(id);
-                return new CertificateDescriptionResource(client, id);
+                IotHubCertificateDescriptionResource.ValidateResourceId(id);
+                return new IotHubCertificateDescriptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GroupIdInformationResource
+        #region IotHubPrivateEndpointGroupInformationResource
         /// <summary>
-        /// Gets an object representing a <see cref="GroupIdInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupIdInformationResource.CreateResourceIdentifier" /> to create a <see cref="GroupIdInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotHubPrivateEndpointGroupInformationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotHubPrivateEndpointGroupInformationResource.CreateResourceIdentifier" /> to create an <see cref="IotHubPrivateEndpointGroupInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupIdInformationResource" /> object. </returns>
-        public static GroupIdInformationResource GetGroupIdInformationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotHubPrivateEndpointGroupInformationResource" /> object. </returns>
+        public static IotHubPrivateEndpointGroupInformationResource GetIotHubPrivateEndpointGroupInformationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GroupIdInformationResource.ValidateResourceId(id);
-                return new GroupIdInformationResource(client, id);
+                IotHubPrivateEndpointGroupInformationResource.ValidateResourceId(id);
+                return new IotHubPrivateEndpointGroupInformationResource(client, id);
             }
             );
         }

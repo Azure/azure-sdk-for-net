@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Virtual Network ACL Rule object. </summary>
@@ -17,16 +19,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of CosmosDBVirtualNetworkRule. </summary>
         /// <param name="id"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
-        /// <param name="ignoreMissingVNetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
-        internal CosmosDBVirtualNetworkRule(string id, bool? ignoreMissingVNetServiceEndpoint)
+        /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
+        internal CosmosDBVirtualNetworkRule(ResourceIdentifier id, bool? ignoreMissingVnetServiceEndpoint)
         {
             Id = id;
-            IgnoreMissingVNetServiceEndpoint = ignoreMissingVNetServiceEndpoint;
+            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
         }
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
-        public bool? IgnoreMissingVNetServiceEndpoint { get; set; }
+        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }
 }

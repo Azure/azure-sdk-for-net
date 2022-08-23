@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Location = Location,
                 Subnet = vnetResource.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network

@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("prometheusEndpoint");
                 writer.WriteObjectValue(PrometheusEndpoint);
             }
-            if (Optional.IsDefined(RepairEnabled))
+            if (Optional.IsDefined(IsRepairEnabled))
             {
                 writer.WritePropertyName("repairEnabled");
-                writer.WriteBooleanValue(RepairEnabled.Value);
+                writer.WriteBooleanValue(IsRepairEnabled.Value);
             }
             if (Optional.IsCollectionDefined(ClientCertificates))
             {
@@ -96,22 +96,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("hoursBetweenBackups");
                 writer.WriteNumberValue(HoursBetweenBackups.Value);
             }
-            if (Optional.IsDefined(Deallocated))
+            if (Optional.IsDefined(IsDeallocated))
             {
                 writer.WritePropertyName("deallocated");
-                writer.WriteBooleanValue(Deallocated.Value);
+                writer.WriteBooleanValue(IsDeallocated.Value);
             }
-            if (Optional.IsDefined(CassandraAuditLoggingEnabled))
+            if (Optional.IsDefined(IsCassandraAuditLoggingEnabled))
             {
                 writer.WritePropertyName("cassandraAuditLoggingEnabled");
-                writer.WriteBooleanValue(CassandraAuditLoggingEnabled.Value);
+                writer.WriteBooleanValue(IsCassandraAuditLoggingEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element)
         {
-            Optional<ManagedCassandraProvisioningState> provisioningState = default;
+            Optional<CassandraProvisioningState> provisioningState = default;
             Optional<string> restoreFromBackupId = default;
             Optional<ResourceIdentifier> delegatedManagementSubnetId = default;
             Optional<string> cassandraVersion = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ManagedCassandraProvisioningState(property.Value.GetString());
+                    provisioningState = new CassandraProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("restoreFromBackupId"))

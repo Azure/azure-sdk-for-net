@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         private readonly ClientDiagnostics _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics;
         private readonly SqlResourcesRestOperations _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient;
-        private readonly ThroughputSettingsData _data;
+        private readonly ThroughputSettingData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlContainerThroughputSettingResource"/> class for mocking. </summary>
         protected CosmosDBSqlContainerThroughputSettingResource()
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of the <see cref = "CosmosDBSqlContainerThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosDBSqlContainerThroughputSettingResource(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
+        internal CosmosDBSqlContainerThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ThroughputSettingsData Data
+        public virtual ThroughputSettingData Data
         {
             get
             {

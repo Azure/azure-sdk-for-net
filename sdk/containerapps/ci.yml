@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: containerapps
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Applications.Containers
-      safeName: AzureResourceManagerApplicationsContainers
+    - name: Azure.ResourceManager.AppContainers
+      safeName: AzureResourceManagerAppContainers

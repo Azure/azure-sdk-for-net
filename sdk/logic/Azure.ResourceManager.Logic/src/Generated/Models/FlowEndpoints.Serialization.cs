@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element)
         {
-            Optional<IList<IPAddress>> outgoingIpAddresses = default;
-            Optional<IList<IPAddress>> accessEndpointIpAddresses = default;
+            Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
+            Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outgoingIpAddresses"))
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.DeserializeIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
                     }
-                    outgoingIpAddresses = array;
+                    outgoingIPAddresses = array;
                     continue;
                 }
                 if (property.NameEquals("accessEndpointIpAddresses"))
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.DeserializeIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
                     }
-                    accessEndpointIpAddresses = array;
+                    accessEndpointIPAddresses = array;
                     continue;
                 }
             }
-            return new FlowEndpoints(Optional.ToList(outgoingIpAddresses), Optional.ToList(accessEndpointIpAddresses));
+            return new FlowEndpoints(Optional.ToList(outgoingIPAddresses), Optional.ToList(accessEndpointIPAddresses));
         }
     }
 }

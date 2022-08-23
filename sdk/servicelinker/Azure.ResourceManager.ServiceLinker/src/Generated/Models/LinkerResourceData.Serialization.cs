@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceLinker
             Optional<AuthBaseInfo> authInfo = default;
             Optional<LinkerClientType> clientType = default;
             Optional<string> provisioningState = default;
-            Optional<VnetSolution> vNetSolution = default;
+            Optional<VnetSolution> vnetSolution = default;
             Optional<LinkerSecretStore> secretStore = default;
             Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.ServiceLinker
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                vNetSolution = null;
+                                vnetSolution = null;
                                 continue;
                             }
-                            vNetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
+                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     continue;
                 }
             }
-            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vNetSolution.Value, secretStore.Value, scope.Value);
+            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value);
         }
     }
 }

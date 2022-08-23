@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ExtendedCosmosDBSqlTriggerResourceInfo : CosmosDBSqlTriggerResourceInfo
     {
         /// <summary> Initializes a new instance of ExtendedCosmosDBSqlTriggerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL trigger. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ExtendedCosmosDBSqlTriggerResourceInfo(string id) : base(id)
+        /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName) : base(triggerName)
         {
-            if (id == null)
+            if (triggerName == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(triggerName));
             }
         }
 
         /// <summary> Initializes a new instance of ExtendedCosmosDBSqlTriggerResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL trigger. </param>
+        /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
         /// <param name="body"> Body of the Trigger. </param>
         /// <param name="triggerType"> Type of the Trigger. </param>
         /// <param name="triggerOperation"> The operation the trigger is associated with. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlTriggerResourceInfo(string id, string body, CosmosDBSqlTriggerType? triggerType, CosmosDBSqlTriggerOperation? triggerOperation, string rid, float? timestamp, ETag? eTag) : base(id, body, triggerType, triggerOperation)
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName, string body, CosmosDBSqlTriggerType? triggerType, CosmosDBSqlTriggerOperation? triggerOperation, string rid, float? timestamp, ETag? etag) : base(triggerName, body, triggerType, triggerOperation)
         {
             Rid = rid;
             Timestamp = timestamp;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

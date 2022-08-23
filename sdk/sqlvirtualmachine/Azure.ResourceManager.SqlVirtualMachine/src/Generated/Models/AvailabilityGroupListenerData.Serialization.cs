@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> availabilityGroupName = default;
-            Optional<IList<LoadBalancerConfiguration>> loadBalancerConfigurations = default;
-            Optional<IList<MultiSubnetIPConfiguration>> multiSubnetIpConfigurations = default;
+            Optional<IList<AvailabilityGroupListenerLoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Optional<IList<MultiSubnetIPConfiguration>> multiSubnetIPConfigurations = default;
             Optional<bool> createDefaultAvailabilityGroupIfNotExist = default;
             Optional<int> port = default;
-            Optional<AgConfiguration> availabilityGroupConfiguration = default;
+            Optional<AvailabilityGroupConfiguration> availabilityGroupConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LoadBalancerConfiguration> array = new List<LoadBalancerConfiguration>();
+                            List<AvailabilityGroupListenerLoadBalancerConfiguration> array = new List<AvailabilityGroupListenerLoadBalancerConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancerConfiguration.DeserializeLoadBalancerConfiguration(item));
+                                array.Add(AvailabilityGroupListenerLoadBalancerConfiguration.DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(item));
                             }
                             loadBalancerConfigurations = array;
                             continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 array.Add(MultiSubnetIPConfiguration.DeserializeMultiSubnetIPConfiguration(item));
                             }
-                            multiSubnetIpConfigurations = array;
+                            multiSubnetIPConfigurations = array;
                             continue;
                         }
                         if (property0.NameEquals("createDefaultAvailabilityGroupIfNotExist"))
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityGroupConfiguration = AgConfiguration.DeserializeAgConfiguration(property0.Value);
+                            availabilityGroupConfiguration = AvailabilityGroupConfiguration.DeserializeAvailabilityGroupConfiguration(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, Optional.ToList(loadBalancerConfigurations), Optional.ToList(multiSubnetIpConfigurations), Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Optional.ToNullable(port), availabilityGroupConfiguration.Value);
+            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, Optional.ToList(loadBalancerConfigurations), Optional.ToList(multiSubnetIPConfigurations), Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Optional.ToNullable(port), availabilityGroupConfiguration.Value);
         }
     }
 }

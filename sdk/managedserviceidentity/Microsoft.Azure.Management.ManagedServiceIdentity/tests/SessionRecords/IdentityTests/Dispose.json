@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/1e7c6daf-aa6b-43dc-955d-3876d0a5e008/resourceGroups/SDKTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testIdentity1?api-version=2021-09-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU3YzZkYWYtYWE2Yi00M2RjLTk1NWQtMzg3NmQwYTVlMDA4L3Jlc291cmNlR3JvdXBzL1NES1Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy90ZXN0SWRlbnRpdHkxP2FwaS12ZXJzaW9uPTIwMjEtMDktMzAtcHJldmlldw==",
+      "RequestUri": "/subscriptions/5570b16b-2d97-44ca-a957-6366996e1fbc/resourceGroups/SDKTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testIdentity1?api-version=2022-01-31-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU3MGIxNmItMmQ5Ny00NGNhLWE5NTctNjM2Njk5NmUxZmJjL3Jlc291cmNlR3JvdXBzL1NES1Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy90ZXN0SWRlbnRpdHkxP2FwaS12ZXJzaW9uPTIwMjItMDEtMzEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2fc4167b-4013-426b-b785-806f36e45ed8"
+          "626250c7-9e05-40a9-8a24-eb430e5b09e3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.11601",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22581",
-          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,13 +30,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "c908fa91-fb8b-47eb-99d1-a27b55d7125c"
+          "35f62ee7-32f4-4287-aec5-b0540888cce2"
         ],
         "x-ms-correlation-request-id": [
-          "c908fa91-fb8b-47eb-99d1-a27b55d7125c"
+          "35f62ee7-32f4-4287-aec5-b0540888cce2"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20220330T145451Z:c908fa91-fb8b-47eb-99d1-a27b55d7125c"
+          "NORTHEUROPE:20220629T174213Z:35f62ee7-32f4-4287-aec5-b0540888cce2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Mar 2022 14:54:51 GMT"
+          "Wed, 29 Jun 2022 17:42:12 GMT"
         ],
         "Expires": [
           "-1"
@@ -55,22 +55,22 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/1e7c6daf-aa6b-43dc-955d-3876d0a5e008/resourceGroups/SDKTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testIdentity2?api-version=2021-09-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU3YzZkYWYtYWE2Yi00M2RjLTk1NWQtMzg3NmQwYTVlMDA4L3Jlc291cmNlR3JvdXBzL1NES1Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy90ZXN0SWRlbnRpdHkyP2FwaS12ZXJzaW9uPTIwMjEtMDktMzAtcHJldmlldw==",
+      "RequestUri": "/subscriptions/5570b16b-2d97-44ca-a957-6366996e1fbc/resourceGroups/SDKTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testIdentity2?api-version=2022-01-31-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU3MGIxNmItMmQ5Ny00NGNhLWE5NTctNjM2Njk5NmUxZmJjL3Jlc291cmNlR3JvdXBzL1NES1Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy90ZXN0SWRlbnRpdHkyP2FwaS12ZXJzaW9uPTIwMjItMDEtMzEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e0d662e3-6a9f-41cc-af44-0a777ff46058"
+          "4b4070e6-4eb7-402e-8674-c81efbf2a5f1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.11601",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22581",
-          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -84,13 +84,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "71221851-bb71-444f-bbad-b93a71149957"
+          "ded4b4a8-cba1-4862-ab18-1644ec1d1fc2"
         ],
         "x-ms-correlation-request-id": [
-          "71221851-bb71-444f-bbad-b93a71149957"
+          "ded4b4a8-cba1-4862-ab18-1644ec1d1fc2"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20220330T145452Z:71221851-bb71-444f-bbad-b93a71149957"
+          "NORTHEUROPE:20220629T174213Z:ded4b4a8-cba1-4862-ab18-1644ec1d1fc2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -99,7 +99,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Mar 2022 14:54:51 GMT"
+          "Wed, 29 Jun 2022 17:42:12 GMT"
         ],
         "Expires": [
           "-1"
@@ -111,6 +111,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "1e7c6daf-aa6b-43dc-955d-3876d0a5e008"
+    "SubscriptionId": "5570b16b-2d97-44ca-a957-6366996e1fbc"
   }
 }

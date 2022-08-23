@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServerUsageListResult(IEnumerable<ServerUsage> value)
+        internal ServerUsageListResult(IEnumerable<SqlServerUsage> value)
         {
             if (value == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
-        internal ServerUsageListResult(IReadOnlyList<ServerUsage> value)
+        internal ServerUsageListResult(IReadOnlyList<SqlServerUsage> value)
         {
             Value = value;
         }
 
         /// <summary> The list of server metrics for the server. </summary>
-        public IReadOnlyList<ServerUsage> Value { get; }
+        public IReadOnlyList<SqlServerUsage> Value { get; }
     }
 }

@@ -33,6 +33,7 @@ namespace Azure.Storage
                 clientDiagnostics: clientConfiguration.ClientDiagnostics,
                 version: clientConfiguration.Version,
                 customerProvidedKey: null,
+                transferValidation: clientConfiguration.TransferValidation,
                 encryptionScope: encryptionScope);
 
         private static BlobClientConfiguration BuildClientConfigurationWithCpk(
@@ -44,6 +45,7 @@ namespace Azure.Storage
                 clientDiagnostics: clientConfiguration.ClientDiagnostics,
                 version: clientConfiguration.Version,
                 customerProvidedKey: customerProvidedKey,
+                transferValidation: clientConfiguration.TransferValidation,
                 encryptionScope: null);
 
         /// <summary>

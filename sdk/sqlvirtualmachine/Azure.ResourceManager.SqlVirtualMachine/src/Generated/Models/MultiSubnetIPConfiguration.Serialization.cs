@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WritePropertyName("privateIpAddress");
             writer.WriteObjectValue(PrivateIPAddress);
             writer.WritePropertyName("sqlVirtualMachineInstance");
-            writer.WriteStringValue(SqlVirtualMachineInstance);
+            writer.WriteStringValue(SqlVmInstance);
             writer.WriteEndObject();
         }
 
         internal static MultiSubnetIPConfiguration DeserializeMultiSubnetIPConfiguration(JsonElement element)
         {
-            PrivateIPAddress privateIpAddress = default;
-            string sqlVirtualMachineInstance = default;
+            AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default;
+            string sqlVmInstance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIpAddress = PrivateIPAddress.DeserializePrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlVirtualMachineInstance"))
                 {
-                    sqlVirtualMachineInstance = property.Value.GetString();
+                    sqlVmInstance = property.Value.GetString();
                     continue;
                 }
             }
-            return new MultiSubnetIPConfiguration(privateIpAddress, sqlVirtualMachineInstance);
+            return new MultiSubnetIPConfiguration(privateIPAddress, sqlVmInstance);
         }
     }
 }

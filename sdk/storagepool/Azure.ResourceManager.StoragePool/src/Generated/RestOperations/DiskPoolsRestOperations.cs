@@ -272,9 +272,9 @@ namespace Azure.ResourceManager.StoragePool
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointList>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<StoragePoolOutboundEnvironmentList>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -527,9 +527,9 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointList value = default;
+                        StoragePoolOutboundEnvironmentList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointList.DeserializeOutboundEnvironmentEndpointList(document.RootElement);
+                        value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointList> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
+        public Response<StoragePoolOutboundEnvironmentList> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -556,9 +556,9 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointList value = default;
+                        StoragePoolOutboundEnvironmentList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointList.DeserializeOutboundEnvironmentEndpointList(document.RootElement);
+                        value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointList>> ListOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<StoragePoolOutboundEnvironmentList>> ListOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -954,9 +954,9 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointList value = default;
+                        StoragePoolOutboundEnvironmentList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointList.DeserializeOutboundEnvironmentEndpointList(document.RootElement);
+                        value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointList> ListOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
+        public Response<StoragePoolOutboundEnvironmentList> ListOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -985,9 +985,9 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointList value = default;
+                        StoragePoolOutboundEnvironmentList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointList.DeserializeOutboundEnvironmentEndpointList(document.RootElement);
+                        value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

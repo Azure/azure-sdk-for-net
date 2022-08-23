@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
     /// A Class representing a ManagedClusterUpgradeProfile along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedClusterUpgradeProfileResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetManagedClusterUpgradeProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedClusterResource" /> using the GetManagedClusterUpgradeProfile method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource" /> using the GetManagedClusterUpgradeProfile method.
     /// </summary>
     public partial class ManagedClusterUpgradeProfileResource : ArmResource
     {

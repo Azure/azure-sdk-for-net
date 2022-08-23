@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Initializes a new instance of the <see cref = "StreamingJobFunctionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StreamingJobFunctionResource(ArmClient client, StreamingJobFunctionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal StreamingJobFunctionResource(ArmClient client, StreamingJobFunctionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> If the function specified does not already exist, this parameter must contain the full function definition intended to be tested. If the function specified already exists, this parameter can be left null to test the existing function as is or if specified, the properties specified will overwrite the corresponding properties in the existing function (exactly like a PATCH operation) and the resulting function will be tested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ResourceTestStatus>> TestAsync(WaitUntil waitUntil, StreamingJobFunctionData data = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StreamAnalyticsResourceTestStatus>> TestAsync(WaitUntil waitUntil, StreamingJobFunctionData data = null, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingJobFunctionFunctionsClientDiagnostics.CreateScope("StreamingJobFunctionResource.Test");
             scope.Start();
             try
             {
                 var response = await _streamingJobFunctionFunctionsRestClient.TestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<ResourceTestStatus>(new ResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsResourceTestStatus>(new StreamAnalyticsResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> If the function specified does not already exist, this parameter must contain the full function definition intended to be tested. If the function specified already exists, this parameter can be left null to test the existing function as is or if specified, the properties specified will overwrite the corresponding properties in the existing function (exactly like a PATCH operation) and the resulting function will be tested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ResourceTestStatus> Test(WaitUntil waitUntil, StreamingJobFunctionData data = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StreamAnalyticsResourceTestStatus> Test(WaitUntil waitUntil, StreamingJobFunctionData data = null, CancellationToken cancellationToken = default)
         {
             using var scope = _streamingJobFunctionFunctionsClientDiagnostics.CreateScope("StreamingJobFunctionResource.Test");
             scope.Start();
             try
             {
                 var response = _streamingJobFunctionFunctionsRestClient.Test(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<ResourceTestStatus>(new ResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsResourceTestStatus>(new StreamAnalyticsResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

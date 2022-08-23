@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteSlotNetworkConfig along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotNetworkConfigResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotNetworkConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotNetworkConfig method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotNetworkConfig method.
     /// </summary>
     public partial class SiteSlotNetworkConfigResource : ArmResource
     {

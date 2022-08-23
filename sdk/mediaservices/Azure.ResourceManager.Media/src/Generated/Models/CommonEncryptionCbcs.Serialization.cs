@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CommonEncryptionCbcs DeserializeCommonEncryptionCbcs(JsonElement element)
         {
-            Optional<EnabledProtocols> enabledProtocols = default;
-            Optional<IList<TrackSelection>> clearTracks = default;
+            Optional<MediaEnabledProtocols> enabledProtocols = default;
+            Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
             Optional<CbcsDrmConfiguration> drm = default;
             foreach (var property in element.EnumerateObject())
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enabledProtocols = EnabledProtocols.DeserializeEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"))
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TrackSelection> array = new List<TrackSelection>();
+                    List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackSelection.DeserializeTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
                     }
                     clearTracks = array;
                     continue;

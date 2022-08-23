@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
@@ -16,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         public void QuestionAnswerClientEndpointNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringClient(null, null));
+                () => new QuestionAnsweringClient(null, (AzureKeyCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -26,7 +27,25 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Uri endpoint = new Uri("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringClient(endpoint, null));
+                () => new QuestionAnsweringClient(endpoint, (AzureKeyCredential)null));
+            Assert.AreEqual("credential", ex.ParamName);
+        }
+
+        [Test]
+        public void QuestionAnsweringClientEndpointNullUsingTokenCredential()
+        {
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => new QuestionAnsweringClient(null, (TokenCredential)null));
+            Assert.AreEqual("endpoint", ex.ParamName);
+        }
+
+        [Test]
+        public void QuestionAnsweringClientCredentialNullUsingTokenCredential()
+        {
+            Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
+
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => new QuestionAnsweringClient(endpoint, (TokenCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
 

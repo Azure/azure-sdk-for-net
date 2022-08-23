@@ -34,13 +34,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
-                writer.WritePropertyName("vmssVMList");
-                writer.WriteStartArray();
-                foreach (var item in VmssVmList)
+                if (VmssVmList != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("vmssVMList");
+                    writer.WriteStartArray();
+                    foreach (var item in VmssVmList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vmssVMList");
+                }
             }
             writer.WriteEndObject();
         }
@@ -58,7 +65,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<string> assignmentHash = default;
             Optional<ProvisioningState?> provisioningState = default;
             Optional<string> resourceType = default;
-            Optional<IList<VmssVmInfo>> vmssVMList = default;
+            Optional<IList<VmssVmInfo>> vmssVmList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"))
@@ -170,7 +177,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        vmssVmList = null;
                         continue;
                     }
                     List<VmssVmInfo> array = new List<VmssVmInfo>();
@@ -178,11 +185,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         array.Add(VmssVmInfo.DeserializeVmssVmInfo(item));
                     }
-                    vmssVMList = array;
+                    vmssVmList = array;
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, Optional.ToList(vmssVMList));
+            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, Optional.ToList(vmssVmList));
         }
     }
 }

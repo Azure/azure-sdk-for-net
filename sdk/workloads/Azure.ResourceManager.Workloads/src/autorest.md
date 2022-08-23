@@ -30,30 +30,32 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   SAP: Sap
   PHP: Php
   ERS: Ers
-  Db: DB
+  Db: DB|db
   LRS: Lrs
   GRS: Grs
   ZRS: Zrs
   SSD: Ssd
-  Ha: HA
+  Ha: HA|ha
   ECC: Ecc
   Wordpress: WordPress
 

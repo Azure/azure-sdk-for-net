@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element)
         {
             Optional<NotificationDeliveryMechanism> notificationType = default;
-            Optional<NotificationLevel> notificationLevel = default;
-            Optional<RecipientType> recipientType = default;
+            Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
+            Optional<RoleManagementPolicyRecipientType> recipientType = default;
             Optional<IList<string>> notificationRecipients = default;
             Optional<bool> isDefaultRecipientsEnabled = default;
             Optional<string> id = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    notificationLevel = new NotificationLevel(property.Value.GetString());
+                    notificationLevel = new RoleManagementPolicyNotificationLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recipientType"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recipientType = new RecipientType(property.Value.GetString());
+                    recipientType = new RoleManagementPolicyRecipientType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("notificationRecipients"))

@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.RecoveryServices</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices</AssemblyName>
-		<Version>4.3.2-preview</Version>
+		<Version>4.3.3-preview</Version>
 		<PackageTags>Management.RecoveryServices;Azure RecoveryServices;</PackageTags>
-		<PackageReleaseNotes>Adding support for User Assigned Identity and Customer Managed Keys for Microsoft.RecoveryServices/Vaults</PackageReleaseNotes>
+		<PackageReleaseNotes>Use verified AppId URI format for Microsoft.RecoveryServices/Vaults</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

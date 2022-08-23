@@ -49,5 +49,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string ModelId { get; }
         /// <summary> Model description. </summary>
         public string Description { get; }
+        /// <summary> List of key-value tag attributes associated with the model. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }
