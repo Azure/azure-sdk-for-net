@@ -89,7 +89,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.AreEqual(sendActivities[msgIndex].ParentId, completeScope.LinkedActivities.First().ParentId);
 
                 var deferred = receivedMsgs[++msgIndex];
-                int deferredIndex = msgIndex;
                 await receiver.DeferMessageAsync(deferred);
                 var deferredScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeferActivityName);
                 AssertCommonTags(deferredScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
@@ -110,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var receiveDeferMsg = await receiver.ReceiveDeferredMessageAsync(deferred.SequenceNumber);
                 var receiveDeferScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveDeferredActivityName);
                 AssertCommonTags(receiveDeferScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-                Assert.AreEqual(sendActivities[deferredIndex].ParentId, receiveDeferScope.LinkedActivities.First().ParentId);
+
                 // renew lock
                 if (useSessions)
                 {
