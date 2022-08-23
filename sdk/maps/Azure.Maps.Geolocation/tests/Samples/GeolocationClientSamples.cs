@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 #region Snippet:GeolocationImportNamespace
 using Azure.Maps.Geolocation;
-using Azure.Maps.Geolocation.Models;
 #endregion
 using Azure.Core.TestFramework;
 using NUnit.Framework;
