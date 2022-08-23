@@ -493,7 +493,13 @@
         "mbps"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/policyinsights/**/*.cs",
+      "words": [
+        "remediations"
+      ]
+    },
+    {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
         "byok",
