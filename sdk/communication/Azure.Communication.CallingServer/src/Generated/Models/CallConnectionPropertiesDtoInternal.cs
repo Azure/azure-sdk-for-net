@@ -28,7 +28,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <param name="subject"> The subject. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        internal CallConnectionPropertiesDtoInternal(string callConnectionId, string serverCallId, CallSourceDto source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri)
+        /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
+        internal CallConnectionPropertiesDtoInternal(string callConnectionId, string serverCallId, CallSourceDto source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, string mediaSubscriptionId)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -37,6 +38,7 @@ namespace Azure.Communication.CallingServer
             CallConnectionState = callConnectionState;
             Subject = subject;
             CallbackUri = callbackUri;
+            MediaSubscriptionId = mediaSubscriptionId;
         }
 
         /// <summary> The call connection id. </summary>
@@ -53,5 +55,7 @@ namespace Azure.Communication.CallingServer
         public string Subject { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
+        /// <summary> SubscriptionId for media streaming. </summary>
+        public string MediaSubscriptionId { get; }
     }
 }

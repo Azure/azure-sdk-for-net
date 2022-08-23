@@ -31,15 +31,12 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The Id of this policy.
         /// </summary>
-        public string ExceptionPolicyId { get; set; }
+        public string ExceptionPolicyId { get; }
 
         /// <summary>
         /// A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, ExceptionRule> ExceptionRules { get; set; } =
-#pragma warning restore CA2227 // Collection properties should be read only
-            new Dictionary<string, ExceptionRule>();
+        public IDictionary<string, ExceptionRule> ExceptionRules { get; }
 
         /// <summary> (Optional) The name of the exception policy. </summary>
         public string Name { get; set; }

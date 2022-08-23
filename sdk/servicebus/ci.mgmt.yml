@@ -24,7 +24,6 @@ pr:
     - sdk/servicebus/ci.mgmt.yml
     - sdk/eventhub/service.projects
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
-    - sdk/resourcemanager/
     - sdk/network/
 
 extends:

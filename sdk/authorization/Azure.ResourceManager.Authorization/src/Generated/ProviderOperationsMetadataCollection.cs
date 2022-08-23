@@ -62,11 +62,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<Response<ProviderOperationsMetadataResource>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Get");
             scope.Start();
@@ -92,11 +91,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual Response<ProviderOperationsMetadataResource> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Get");
             scope.Start();
@@ -208,11 +206,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Exists");
             scope.Start();
@@ -236,11 +233,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Exists");
             scope.Start();
