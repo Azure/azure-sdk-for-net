@@ -42,23 +42,51 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startDate");
-                writer.WriteStringValue(StartOn.Value, "O");
+                if (StartOn != null)
+                {
+                    writer.WritePropertyName("startDate");
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startDate");
+                }
             }
             if (Optional.IsDefined(ExpiresOn))
             {
-                writer.WritePropertyName("expirationDate");
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                if (ExpiresOn != null)
+                {
+                    writer.WritePropertyName("expirationDate");
+                    writer.WriteStringValue(ExpiresOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("expirationDate");
+                }
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endDate");
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endDate");
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endDate");
+                }
             }
             if (Optional.IsDefined(NotifiesOn))
             {
-                writer.WritePropertyName("notificationDate");
-                writer.WriteStringValue(NotifiesOn.Value, "O");
+                if (NotifiesOn != null)
+                {
+                    writer.WritePropertyName("notificationDate");
+                    writer.WriteStringValue(NotifiesOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("notificationDate");
+                }
             }
             if (Optional.IsDefined(PrimaryKey))
             {
@@ -95,10 +123,10 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> displayName = default;
             Optional<SubscriptionState> state = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> endDate = default;
-            Optional<DateTimeOffset> notificationDate = default;
+            Optional<DateTimeOffset?> startDate = default;
+            Optional<DateTimeOffset?> expirationDate = default;
+            Optional<DateTimeOffset?> endDate = default;
+            Optional<DateTimeOffset?> notificationDate = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> stateComment = default;
@@ -178,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                startDate = null;
                                 continue;
                             }
                             startDate = property0.Value.GetDateTimeOffset("O");
@@ -188,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                expirationDate = null;
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
@@ -198,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                endDate = null;
                                 continue;
                             }
                             endDate = property0.Value.GetDateTimeOffset("O");
@@ -208,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                notificationDate = null;
                                 continue;
                             }
                             notificationDate = property0.Value.GetDateTimeOffset("O");

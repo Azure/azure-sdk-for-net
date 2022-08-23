@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class SignInSettingTests : ApiManagementManagementTestBase
     {
         public SignInSettingTests(bool isAsync)
-                       : base(isAsync, RecordedTestMode.Record)
+                       : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the existing settings on the service
             var portalSignInSettings = ApiServiceResource.GetApiManagementPortalSignInSetting();
             portalSignInSettings = await portalSignInSettings.GetAsync();
-            //Assert.NotNull(portalSignInSettings);
+            Assert.NotNull(portalSignInSettings);
 
             // disable portal signIn
             portalSignInSettings.Data.IsRedirectEnabled = false;
             portalSignInSettings = (await portalSignInSettings.CreateOrUpdateAsync(WaitUntil.Completed, portalSignInSettings.Data)).Value;
 
-            //Assert.NotNull(portalSignInSettings);
-            //Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
+            Assert.NotNull(portalSignInSettings);
+            Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
 
             portalSignInSettings = await portalSignInSettings.GetAsync();
-            //Assert.NotNull(portalSignInSettings);
-            //Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
+            Assert.NotNull(portalSignInSettings);
+            Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
         }
     }
 }

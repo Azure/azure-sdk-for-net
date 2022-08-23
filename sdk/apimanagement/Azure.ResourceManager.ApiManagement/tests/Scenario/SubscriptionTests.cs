@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class SubscriptionTests : ApiManagementManagementTestBase
     {
         public SubscriptionTests(bool isAsync)
-                       : base(isAsync, RecordedTestMode.Record)
+                       : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -51,30 +51,30 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list subscriptions: there should be two by default
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
 
-            //Assert.NotNull(listResponse);
-            //Assert.GreaterOrEqual(listResponse.Count, 3);
+            Assert.NotNull(listResponse);
+            Assert.GreaterOrEqual(listResponse.Count, 3);
 
             // get first subscription
             var firstSubscription = listResponse.FirstOrDefault();
 
             var getResponse = (await collection.GetAsync(firstSubscription.Data.Name)).Value;
 
-            //Assert.NotNull(getResponse);
-            //Assert.AreEqual(firstSubscription.Data.Name, getResponse.Data.Name);
-            //Assert.AreEqual(firstSubscription.Data.NotifiesOn, getResponse.Data.NotifiesOn);
-            //Assert.AreEqual(firstSubscription.Data.PrimaryKey, getResponse.Data.PrimaryKey);
-            //Assert.AreEqual(firstSubscription.Data.Scope, getResponse.Data.Scope);
-            //Assert.AreEqual(firstSubscription.Data.SecondaryKey, getResponse.Data.SecondaryKey);
-            //Assert.AreEqual(firstSubscription.Data.StartOn, getResponse.Data.StartOn);
-            //Assert.AreEqual(firstSubscription.Data.State, getResponse.Data.State);
-            //Assert.AreEqual(firstSubscription.Data.StateComment, getResponse.Data.StateComment);
-            //Assert.AreEqual(firstSubscription.Data.OwnerId, getResponse.Data.OwnerId);
-            //Assert.AreEqual(firstSubscription.Data.CreatedOn, getResponse.Data.CreatedOn);
-            //Assert.AreEqual(firstSubscription.Data.EndOn, getResponse.Data.EndOn);
-            //Assert.AreEqual(firstSubscription.Data.ExpiresOn, getResponse.Data.ExpiresOn);
+            Assert.NotNull(getResponse);
+            Assert.AreEqual(firstSubscription.Data.Name, getResponse.Data.Name);
+            Assert.AreEqual(firstSubscription.Data.NotifiesOn, getResponse.Data.NotifiesOn);
+            Assert.AreEqual(firstSubscription.Data.PrimaryKey, getResponse.Data.PrimaryKey);
+            Assert.AreEqual(firstSubscription.Data.Scope, getResponse.Data.Scope);
+            Assert.AreEqual(firstSubscription.Data.SecondaryKey, getResponse.Data.SecondaryKey);
+            Assert.AreEqual(firstSubscription.Data.StartOn, getResponse.Data.StartOn);
+            Assert.AreEqual(firstSubscription.Data.State, getResponse.Data.State);
+            Assert.AreEqual(firstSubscription.Data.StateComment, getResponse.Data.StateComment);
+            Assert.AreEqual(firstSubscription.Data.OwnerId, getResponse.Data.OwnerId);
+            Assert.AreEqual(firstSubscription.Data.CreatedOn, getResponse.Data.CreatedOn);
+            Assert.AreEqual(firstSubscription.Data.EndOn, getResponse.Data.EndOn);
+            Assert.AreEqual(firstSubscription.Data.ExpiresOn, getResponse.Data.ExpiresOn);
 
             // update product to accept unlimited number or subscriptions
-            var product = (await ApiServiceResource.GetApiManagementProducts().GetAsync(firstSubscription.Data.Scope)).Value;
+            var product = (await ApiServiceResource.GetApiManagementProducts().GetAsync("starter")).Value;
             await product.UpdateAsync("*",
                 new ApiManagementProductPatch
                 {
@@ -105,22 +105,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 newSubscriptionId,
                 newSubscriptionCreate)).Value;
 
-            //Assert.NotNull(subscriptionContract);
-            //Assert.AreEqual(firstSubscription.Data.Scope, subscriptionContract.Data.Scope);
-            //Assert.AreEqual(firstSubscription.Data.OwnerId, subscriptionContract.Data.OwnerId);
-            //Assert.AreEqual(newSubscriptionState, subscriptionContract.Data.State);
-            //Assert.AreEqual(newSubscriptionSk, subscriptionContract.Data.SecondaryKey);
-            //Assert.AreEqual(newSubscriptionName, subscriptionContract.Data.DisplayName);
+            Assert.NotNull(subscriptionContract);
+            Assert.AreEqual(firstSubscription.Data.Scope, subscriptionContract.Data.Scope);
+            Assert.AreEqual(firstSubscription.Data.OwnerId, subscriptionContract.Data.OwnerId);
+            Assert.AreEqual(newSubscriptionState, subscriptionContract.Data.State);
+            Assert.AreEqual(newSubscriptionName, subscriptionContract.Data.DisplayName);
 
             var subscriptionResponse = (await collection.GetAsync(newSubscriptionId)).Value;
 
-            //Assert.NotNull(subscriptionResponse);
-            //Assert.NotNull(subscriptionResponse.Data.DisplayName);
+            Assert.NotNull(subscriptionResponse);
+            Assert.NotNull(subscriptionResponse.Data.DisplayName);
 
             // list product subscriptions
             var productSubscriptions = await product.GetProductSubscriptionsAsync().ToEnumerableAsync();
-            //Assert.NotNull(productSubscriptions);
-            //Assert.AreEqual(2, productSubscriptions.Count);
+            Assert.NotNull(productSubscriptions);
+            Assert.AreEqual(2, productSubscriptions.Count);
 
             // patch the subscription
             string patchedName = Recording.GenerateAssetName("patched1");
@@ -141,13 +140,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get patched subscription to check it was actually patched
             getResponse = (await collection.GetAsync(newSubscriptionId)).Value;
 
-            //Assert.NotNull(getResponse);
-            //Assert.AreEqual(newSubscriptionId, getResponse.Data.Name);
-            //Assert.AreEqual(patchedName, getResponse.Data.DisplayName);
-            //Assert.IsNull(getResponse.Data.PrimaryKey);
-            //Assert.IsNull(getResponse.Data.SecondaryKey);
-            //Assert.AreEqual(newSubscriptionState, getResponse.Data.State);
-            //Assert.AreEqual(patchedExpirationDate, getResponse.Data.ExpiresOn);
+            Assert.NotNull(getResponse);
+            Assert.AreEqual(newSubscriptionId, getResponse.Data.Name);
+            Assert.AreEqual(patchedName, getResponse.Data.DisplayName);
+            Assert.IsNull(getResponse.Data.PrimaryKey);
+            Assert.IsNull(getResponse.Data.SecondaryKey);
+            Assert.AreEqual(newSubscriptionState, getResponse.Data.State);
 
             // regenerate primary key
             await getResponse.RegeneratePrimaryKeyAsync();
@@ -155,9 +153,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the subscription to check the key
             var keysResponse = (await collection.GetAsync(newSubscriptionId)).Value;
 
-            //Assert.NotNull(keysResponse);
-            //Assert.AreNotEqual(patchedPk, keysResponse.Data.PrimaryKey);
-            //Assert.AreEqual(patchedSk, keysResponse.Data.SecondaryKey);
+            Assert.NotNull(keysResponse);
+            Assert.AreNotEqual(patchedPk, keysResponse.Data.PrimaryKey);
 
             // regenerate secondary key
             await getResponse.RegenerateSecondaryKeyAsync();
@@ -165,14 +162,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the subscription to check the key
             var keysHttpResponse = (await getResponse.GetAsync()).Value;
 
-            //Assert.NotNull(keysHttpResponse);
-            //Assert.AreNotEqual(patchedPk, keysHttpResponse.Data.PrimaryKey);
-            //Assert.AreNotEqual(patchedSk, keysHttpResponse.Data.SecondaryKey);
+            Assert.NotNull(keysHttpResponse);
+            Assert.AreNotEqual(patchedPk, keysHttpResponse.Data.PrimaryKey);
+            Assert.AreNotEqual(patchedSk, keysHttpResponse.Data.SecondaryKey);
 
             // delete the subscription
             await getResponse.DeleteAsync(WaitUntil.Completed, "*");
             var falseResult = (await collection.ExistsAsync(newSubscriptionId)).Value;
-            //Assert.IsFalse(falseResult);
+            Assert.IsFalse(falseResult);
 
             // create a subscription with global scope on all apis
             var globalSubscriptionDisplayName = Recording.GenerateAssetName("global");
@@ -184,20 +181,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Scope = "/apis",
                     DisplayName = globalSubscriptionDisplayName
                 })).Value;
-            //Assert.NotNull(globalSubscriptionCreateResponse);
-            //Assert.AreEqual("apis", globalSubscriptionCreateResponse.Data.Scope);
-            //Assert.IsNull(globalSubscriptionCreateResponse.Data.OwnerId);
-            //Assert.AreEqual(SubscriptionState.Active, globalSubscriptionCreateResponse.Data.State);
-            //Assert.NotNull(globalSubscriptionCreateResponse.Data.SecondaryKey);
-            //Assert.NotNull(globalSubscriptionCreateResponse.Data.PrimaryKey);
-            //Assert.AreEqual(globalSubscriptionDisplayName, globalSubscriptionCreateResponse.Data.DisplayName);
+            Assert.NotNull(globalSubscriptionCreateResponse);
+            Assert.IsNull(globalSubscriptionCreateResponse.Data.OwnerId);
+            Assert.AreEqual(SubscriptionState.Active, globalSubscriptionCreateResponse.Data.State);
+            Assert.NotNull(globalSubscriptionCreateResponse.Data.SecondaryKey);
+            Assert.NotNull(globalSubscriptionCreateResponse.Data.PrimaryKey);
+            Assert.AreEqual(globalSubscriptionDisplayName, globalSubscriptionCreateResponse.Data.DisplayName);
 
             // delete the global subscription
             await globalSubscriptionCreateResponse.DeleteAsync(WaitUntil.Completed, "*");
 
             // get the deleted subscription to make sure it was deleted
             falseResult = (await collection.ExistsAsync(globalSubscriptionId)).Value;
-            //Assert.IsFalse(falseResult);
+            Assert.IsFalse(falseResult);
         }
     }
 }

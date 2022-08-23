@@ -318,6 +318,10 @@ directive:
       $.ApiTagResourceContractProperties.properties.protocols["x-nullable"] = true;
       $.ApiContractUpdateProperties.properties.protocols["x-nullable"] = true;
       $.NamedValueEntityBaseParameters.properties.tags["x-nullable"] = true;
+      $.SubscriptionContractProperties.properties.startDate["x-nullable"] = true;
+      $.SubscriptionContractProperties.properties.expirationDate["x-nullable"] = true;
+      $.SubscriptionContractProperties.properties.endDate["x-nullable"] = true;
+      $.SubscriptionContractProperties.properties.notificationDate["x-nullable"] = true;
       $.PolicyDescriptionContractProperties.properties.scope = {
           "description": "Binary OR value of the Snippet scope.",
           "readOnly": true

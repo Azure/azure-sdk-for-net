@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class PropertiesTests : ApiManagementManagementTestBase
     {
         public PropertiesTests(bool isAsync)
-                       : base(isAsync, RecordedTestMode.Record)
+                       : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 propertyId,
                 createParameters)).Value;
 
-            //ValidateProperty(propertyResponse, propertyId, propertyDisplayName, propertyValue, false);
+            ValidateProperty(propertyResponse, propertyId, propertyDisplayName, propertyValue, false);
 
             // get the property
             var getResponse = (await collection.GetAsync(propertyId)).Value;
 
-            //ValidateProperty(propertyResponse, propertyId, propertyDisplayName, propertyValue, false);
+            ValidateProperty(propertyResponse, propertyId, propertyDisplayName, propertyValue, false);
 
             // create secret property
             string secretPropertyDisplayName = Recording.GenerateAssetName("secretPropertydisplay");
@@ -89,11 +89,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 secretPropertyId,
                 secretCreateParameters)).Value;
 
-            //ValidateProperty(secretPropertyResponse, secretPropertyId, secretPropertyDisplayName, secretPropertyValue, true);
+            ValidateProperty(secretPropertyResponse, secretPropertyId, secretPropertyDisplayName, secretPropertyValue, true);
 
             var secretValueResponse = (await collection.GetAsync(secretPropertyId)).Value;
-
-            //Assert.AreEqual(secretPropertyValue, secretValueResponse.Data.Value);
 
             //create key vault namedvalue
             // Need to assign identity access
@@ -123,14 +121,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // list the properties
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
-            //Assert.NotNull(listResponse);
+            Assert.NotNull(listResponse);
 
-            //Assert.AreEqual(2, listResponse.Count);
+            Assert.AreEqual(2, listResponse.Count);
 
             // delete a property
             await getResponse.DeleteAsync(WaitUntil.Completed, "*");
             var resultFalse = (await collection.ExistsAsync(propertyId)).Value;
-            //Assert.IsFalse(resultFalse);
+            Assert.IsFalse(resultFalse);
 
             // patch the secret property
             var updateProperty = new ApiManagementNamedValuePatch()
@@ -142,12 +140,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // check it is patched
             var secretResponse = (await secretValueResponse.GetAsync()).Value;
 
-            //ValidateProperty(
-            //    secretResponse,
-            //    secretPropertyId,
-            //    secretPropertyDisplayName,
-            //    secretPropertyValue,
-            //    false);
+            ValidateProperty(
+                secretResponse,
+                secretPropertyId,
+                secretPropertyDisplayName,
+                secretPropertyValue,
+                false);
         }
 
         public void ValidateProperty(

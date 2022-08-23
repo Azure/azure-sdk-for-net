@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class SignUpSettingTests : ApiManagementManagementTestBase
     {
         public SignUpSettingTests(bool isAsync)
-                       : base(isAsync, RecordedTestMode.Record)
+                       : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get the existing settings on the service
             var defaultSignupSettings = ApiServiceResource.GetApiManagementPortalSignUpSetting();
             defaultSignupSettings = await defaultSignupSettings.GetAsync();
-            //Assert.NotNull(defaultSignupSettings);
+            Assert.NotNull(defaultSignupSettings);
 
             // disable portal signup
             defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled = false;
             defaultSignupSettings = (await defaultSignupSettings.CreateOrUpdateAsync(WaitUntil.Completed, defaultSignupSettings.Data)).Value;
 
-            //Assert.NotNull(defaultSignupSettings);
-            //Assert.IsFalse(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled);
+            Assert.NotNull(defaultSignupSettings);
+            Assert.IsFalse(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled);
 
             defaultSignupSettings = await defaultSignupSettings.GetAsync();
-            //Assert.NotNull(defaultSignupSettings);
-            //Assert.IsFalse(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled);
+            Assert.NotNull(defaultSignupSettings);
+            Assert.IsFalse(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled);
         }
     }
 }
