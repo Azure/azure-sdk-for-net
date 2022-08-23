@@ -103,20 +103,20 @@ namespace IotHub.Tests.ScenarioTests
                 };
 
                 iotHub = await _iotHubClient.IotHubResource
-                                    .CreateOrUpdateAsync(
-                                        resourceGroup.Name,
-                                        IotHubTestUtilities.DefaultIotHubName,
-                                        new IotHubDescription
-                                        {
-                                            Location = IotHubTestUtilities.DefaultLocation,
-                                            Sku = new IotHubSkuInfo
-                                            {
-                                                Name = IotHubSku.S1,
-                                                Capacity = 1,
-                                            },
-                                            Properties = properties,
-                                        })
-                                    .ConfigureAwait(false);
+                    .CreateOrUpdateAsync(
+                        resourceGroup.Name,
+                        IotHubTestUtilities.DefaultIotHubName,
+                        new IotHubDescription
+                        {
+                            Location = IotHubTestUtilities.DefaultLocation,
+                            Sku = new IotHubSkuInfo
+                            {
+                                Name = IotHubSku.S1,
+                                Capacity = 1,
+                            },
+                            Properties = properties,
+                        })
+                    .ConfigureAwait(false);
 
                 iotHub.Properties.RootCertificate.EnableRootCertificateV2.Should().BeTrue();
 
