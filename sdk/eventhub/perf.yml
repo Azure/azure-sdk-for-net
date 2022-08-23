@@ -23,7 +23,7 @@ parameters:
 extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
-    ServiceDirectory: storage/Azure.Storage.Blobs
+    ServiceDirectory: eventhub
     Services: "^(eventhubs)$"
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
