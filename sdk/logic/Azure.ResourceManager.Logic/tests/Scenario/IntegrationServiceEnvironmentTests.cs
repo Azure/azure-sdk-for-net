@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Logic.Tests
         }
 
         [RecordedTest]
+        [Ignore("build cost over 240 minutes")]
         public async Task GetAll()
         {
             var _vnet =await  CreateDefaultNetwork(_resourceGroup,"vnet5951");
