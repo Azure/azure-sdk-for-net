@@ -624,9 +624,44 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.StopTones left, Azure.Communication.CallingServer.StopTones right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StreamingFormat
+    {
+        public StreamingFormat() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
+        public int Channels { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
+        public string Encoding { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
+        public double Length { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
+        public int SampleRate { get { throw null; } set { } }
+    }
     public partial class TransferCallToParticipantResult
     {
         internal TransferCallToParticipantResult() { }
         public string OperationContext { get { throw null; } }
+    }
+}
+namespace Azure.Communication.CallingServer.Models.Streaming
+{
+    public partial class StreamingAudio
+    {
+        public StreamingAudio() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
+        public byte[] Data { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("isSilence")]
+        public bool IsSilence { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("participantId")]
+        public string ParticipantId { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("timestamp")]
+        public System.DateTime Timestamp { get { throw null; } set { } }
+    }
+    public partial class StreamingMetadata
+    {
+        public StreamingMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("format")]
+        public Azure.Communication.CallingServer.StreamingFormat Format { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
+        public string SubscriptionId { get { throw null; } set { } }
     }
 }
