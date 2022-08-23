@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Property path if the expression is a field or an alias. </summary>
         public string Path { get; }
         /// <summary>
-        /// Value of the expression..
+        /// Value of the expression.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// </summary>
         public BinaryData ExpressionValue { get; }
         /// <summary>
-        /// Target value to be compared with the expression value..
+        /// Target value to be compared with the expression value.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

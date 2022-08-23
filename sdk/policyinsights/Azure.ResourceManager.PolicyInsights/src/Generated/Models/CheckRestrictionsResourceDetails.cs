@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary>
-        /// The resource content. This should include whatever properties are already known and can be a partial set of all resource properties..
+        /// The resource content. This should include whatever properties are already known and can be a partial set of all resource properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

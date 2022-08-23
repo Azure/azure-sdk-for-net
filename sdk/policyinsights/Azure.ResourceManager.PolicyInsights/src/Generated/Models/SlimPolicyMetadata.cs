@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Url for getting additional content about the resource metadata. </summary>
         public Uri AdditionalContentUri { get; }
         /// <summary>
-        /// Additional metadata..
+        /// Additional metadata.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
