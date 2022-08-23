@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the end time of the schedule. </summary>
         public DateTimeOffset? ExpiryOn { get; set; }
         /// <summary>
-        /// Gets or sets the interval of the schedule..
+        /// Gets or sets the interval of the schedule.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

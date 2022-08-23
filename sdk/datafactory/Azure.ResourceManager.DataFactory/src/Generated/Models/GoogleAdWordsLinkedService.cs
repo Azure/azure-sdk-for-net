@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object..
+        /// Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ConnectionProperties { get; set; }
         /// <summary>
-        /// The Client customer ID of the AdWords account that you want to fetch report data for..
+        /// The Client customer ID of the AdWords account that you want to fetch report data for.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition RefreshToken { get; set; }
         /// <summary>
-        /// The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string)..
+        /// The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary>
-        /// The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR..
+        /// The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Email { get; set; }
         /// <summary>
-        /// The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR..
+        /// The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData KeyFilePath { get; set; }
         /// <summary>
-        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR..
+        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TrustedCertPath { get; set; }
         /// <summary>
-        /// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false..
+        /// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData UseSystemTrustStore { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

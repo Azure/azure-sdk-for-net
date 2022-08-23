@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;. </summary>
         public Uri Endpoint { get; set; }
         /// <summary>
-        /// The APNS certificate thumbprint. Specify if using Certificate Authentication Mode..
+        /// The APNS certificate thumbprint. Specify if using Certificate Authentication Mode.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

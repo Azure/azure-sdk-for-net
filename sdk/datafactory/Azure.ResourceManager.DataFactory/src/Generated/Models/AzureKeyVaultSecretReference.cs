@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Azure Key Vault linked service reference. </summary>
         public FactoryLinkedServiceReference Store { get; set; }
         /// <summary>
-        /// The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string)..
+        /// The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SecretName { get; set; }
         /// <summary>
-        /// The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string)..
+        /// The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

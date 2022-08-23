@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI. </summary>
         public string Value { get; set; }
         /// <summary>
-        /// Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise..
+        /// Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         public BinaryData Definitions { get; set; }
         /// <summary>
-        /// Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise..
+        /// Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

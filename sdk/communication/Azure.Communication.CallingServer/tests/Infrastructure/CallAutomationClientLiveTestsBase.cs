@@ -61,7 +61,7 @@ namespace Azure.Communication.CallingServer
         protected async Task WaitForOperationCompletion(int milliSeconds = 10000)
         {
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
-                await Task.Delay(10000);
+                await Task.Delay(milliSeconds);
         }
 
         protected string GetResourceId()

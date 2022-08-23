@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string).
+        /// Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData BucketName { get; set; }
         /// <summary>
-        /// Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string)..
+        /// Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

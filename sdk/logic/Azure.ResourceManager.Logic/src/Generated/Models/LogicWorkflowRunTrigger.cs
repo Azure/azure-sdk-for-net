@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary>
-        /// Gets the inputs..
+        /// Gets the inputs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Gets the link to inputs. </summary>
         public LogicContentLink InputsLink { get; }
         /// <summary>
-        /// Gets the outputs..
+        /// Gets the outputs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Gets the status. </summary>
         public LogicWorkflowStatus? Status { get; }
         /// <summary>
-        /// Gets the error..
+        /// Gets the error.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// </summary>
         public BinaryData Error { get; }
         /// <summary>
-        /// Gets the tracked properties..
+        /// Gets the tracked properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

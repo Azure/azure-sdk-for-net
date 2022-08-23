@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The path of the Azure Blob storage. Type: string (or Expression with resultType string)..
+        /// The path of the Azure Blob storage. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FolderPath { get; set; }
         /// <summary>
-        /// The root of blob path. Type: string (or Expression with resultType string)..
+        /// The root of blob path. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TableRootLocation { get; set; }
         /// <summary>
-        /// The name of the Azure Blob. Type: string (or Expression with resultType string)..
+        /// The name of the Azure Blob. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FileName { get; set; }
         /// <summary>
-        /// The start of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The start of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary>
-        /// The end of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The end of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

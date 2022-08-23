@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </summary>
         public bool IsAdmin { get; set; }
         /// <summary>
-        /// The thumbprint of the client certificate..
+        /// The thumbprint of the client certificate.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

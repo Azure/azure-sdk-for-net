@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
         /// <summary>
-        /// The session content..
+        /// The session content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

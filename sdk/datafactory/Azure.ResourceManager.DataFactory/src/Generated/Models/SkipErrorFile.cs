@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean)..
+        /// Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FileMissing { get; set; }
         /// <summary>
-        /// Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean)..
+        /// Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

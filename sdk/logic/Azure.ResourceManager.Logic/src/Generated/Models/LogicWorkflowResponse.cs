@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary>
-        /// A list of all the headers attached to the response..
+        /// A list of all the headers attached to the response.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

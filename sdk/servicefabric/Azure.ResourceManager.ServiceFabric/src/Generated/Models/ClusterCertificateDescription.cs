@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary>
-        /// Thumbprint of the primary certificate..
+        /// Thumbprint of the primary certificate.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

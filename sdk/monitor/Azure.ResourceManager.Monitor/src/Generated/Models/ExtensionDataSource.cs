@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The name of the VM extension. </summary>
         public string ExtensionName { get; set; }
         /// <summary>
-        /// The extension settings. The format is specific for particular extension..
+        /// The extension settings. The format is specific for particular extension.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

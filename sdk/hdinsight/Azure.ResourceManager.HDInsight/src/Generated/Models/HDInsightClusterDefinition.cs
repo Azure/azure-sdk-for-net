@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The versions of different services in the cluster. </summary>
         public IDictionary<string, string> ComponentVersion { get; }
         /// <summary>
-        /// The cluster configurations..
+        /// The cluster configurations.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

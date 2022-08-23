@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The certificate name. </summary>
         public string Name { get; set; }
         /// <summary>
-        /// The certificate public data..
+        /// The certificate public data.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

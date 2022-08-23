@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The path of the on-premises file system. Type: string (or Expression with resultType string)..
+        /// The path of the on-premises file system. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FolderPath { get; set; }
         /// <summary>
-        /// The name of the on-premises file system. Type: string (or Expression with resultType string)..
+        /// The name of the on-premises file system. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FileName { get; set; }
         /// <summary>
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
         /// <summary>
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string)..
+        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary>
-        /// Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string)..
+        /// Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

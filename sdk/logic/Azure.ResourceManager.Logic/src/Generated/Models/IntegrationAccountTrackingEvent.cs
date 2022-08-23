@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The record type. </summary>
         public IntegrationAccountTrackingRecordType RecordType { get; }
         /// <summary>
-        /// The record..
+        /// The record.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

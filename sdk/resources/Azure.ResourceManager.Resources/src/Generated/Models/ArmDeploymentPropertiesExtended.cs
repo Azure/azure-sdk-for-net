@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The duration of the template deployment. </summary>
         public TimeSpan? Duration { get; }
         /// <summary>
-        /// Key/value pairs that represent deployment output..
+        /// Key/value pairs that represent deployment output.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The URI referencing the template. </summary>
         public ArmDeploymentTemplateLink TemplateLink { get; }
         /// <summary>
-        /// Deployment parameters. .
+        /// Deployment parameters. 
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

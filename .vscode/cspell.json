@@ -598,6 +598,12 @@
       ]
     },
     {
+      "filename": "**/sdk/storagecache/**/*.cs",
+      "words": [
+        "Clfs"
+      ]
+    },
+    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"

@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// THe recording state
         /// </summary>
-        [JsonConverter(typeof(RecordingStateJsonConverter))]
+        [JsonConverter(typeof(EquatableEnumJsonConverter<RecordingState>))]
         public RecordingState State { get; set; }
 
         /// <summary>

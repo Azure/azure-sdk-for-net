@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The allowed values for the parameter. </summary>
         public IList<BinaryData> AllowedValues { get; }
         /// <summary>
-        /// The default value for the parameter if no value is provided..
+        /// The default value for the parameter if no value is provided.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

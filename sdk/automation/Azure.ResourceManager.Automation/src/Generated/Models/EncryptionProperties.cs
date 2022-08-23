@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> User identity used for CMK. </summary>
         internal EncryptionPropertiesIdentity Identity { get; set; }
         /// <summary>
-        /// The user identity used for CMK. It will be an ARM resource id in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;..
+        /// The user identity used for CMK. It will be an ARM resource id in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

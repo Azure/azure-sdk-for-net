@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean)..
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Recursive { get; set; }
         /// <summary>
-        /// Ftp wildcardFolderPath. Type: string (or Expression with resultType string)..
+        /// Ftp wildcardFolderPath. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData WildcardFolderPath { get; set; }
         /// <summary>
-        /// Ftp wildcardFileName. Type: string (or Expression with resultType string)..
+        /// Ftp wildcardFileName. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
         /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string)..
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PartitionRootPath { get; set; }
         /// <summary>
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean)..
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
         /// <summary>
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string)..
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Specify whether to use binary transfer mode for FTP stores. </summary>
         public bool? UseBinaryTransfer { get; set; }
         /// <summary>
-        /// If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean)..
+        /// If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

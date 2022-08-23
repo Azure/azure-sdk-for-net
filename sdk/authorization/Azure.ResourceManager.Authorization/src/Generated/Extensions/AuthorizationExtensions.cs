@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ProviderOperationsMetadataResource>> GetProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ProviderOperationsMetadataResource> GetProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
@@ -175,12 +173,12 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
             Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -199,12 +197,12 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
             Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -219,6 +217,86 @@ namespace Azure.ResourceManager.Authorization
                 return new ArmResourceExtensionClient(client, armResource.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of DenyAssignmentResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
+        public static DenyAssignmentCollection GetDenyAssignments(this ArmResource armResource)
+        {
+            return GetExtensionClient(armResource).GetDenyAssignments();
+        }
+
+        /// <summary>
+        /// Get the specified deny assignment.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}
+        /// Operation Id: DenyAssignments_Get
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(this ArmResource armResource, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            return await armResource.GetDenyAssignments().GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified deny assignment.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}
+        /// Operation Id: DenyAssignments_Get
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DenyAssignmentResource> GetDenyAssignment(this ArmResource armResource, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            return armResource.GetDenyAssignments().Get(denyAssignmentId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
+        public static RoleAssignmentCollection GetRoleAssignments(this ArmResource armResource)
+        {
+            return GetExtensionClient(armResource).GetRoleAssignments();
+        }
+
+        /// <summary>
+        /// Get a role assignment by scope and name.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
+        /// Operation Id: RoleAssignments_Get
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(this ArmResource armResource, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
+        {
+            return await armResource.GetRoleAssignments().GetAsync(roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a role assignment by scope and name.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
+        /// Operation Id: RoleAssignments_Get
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentResource> GetRoleAssignment(this ArmResource armResource, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
+        {
+            return armResource.GetRoleAssignments().Get(roleAssignmentName, tenantId, cancellationToken);
         }
 
         /// <summary> Gets a collection of RoleDefinitionResources in the ArmResource. </summary>
@@ -257,46 +335,6 @@ namespace Azure.ResourceManager.Authorization
         public static Response<RoleDefinitionResource> GetRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             return armResource.GetRoleDefinitions().Get(roleDefinitionId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
-        public static RoleAssignmentCollection GetRoleAssignments(this ArmResource armResource)
-        {
-            return GetExtensionClient(armResource).GetRoleAssignments();
-        }
-
-        /// <summary>
-        /// Get the specified role assignment.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Get
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(this ArmResource armResource, string roleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleAssignments().GetAsync(roleAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Get
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleAssignmentResource> GetRoleAssignment(this ArmResource armResource, string roleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleAssignments().Get(roleAssignmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>
@@ -619,20 +657,20 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleManagementPolicyAssignments().Get(roleManagementPolicyAssignmentName, cancellationToken);
         }
 
-        #region RoleDefinitionResource
+        #region DenyAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="RoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="RoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DenyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DenyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DenyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleDefinitionResource" /> object. </returns>
-        public static RoleDefinitionResource GetRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DenyAssignmentResource" /> object. </returns>
+        public static DenyAssignmentResource GetDenyAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RoleDefinitionResource.ValidateResourceId(id);
-                return new RoleDefinitionResource(client, id);
+                DenyAssignmentResource.ValidateResourceId(id);
+                return new DenyAssignmentResource(client, id);
             }
             );
         }
@@ -671,6 +709,25 @@ namespace Azure.ResourceManager.Authorization
             {
                 RoleAssignmentResource.ValidateResourceId(id);
                 return new RoleAssignmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RoleDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="RoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RoleDefinitionResource" /> object. </returns>
+        public static RoleDefinitionResource GetRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RoleDefinitionResource.ValidateResourceId(id);
+                return new RoleDefinitionResource(client, id);
             }
             );
         }
