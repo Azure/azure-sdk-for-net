@@ -3,6 +3,8 @@
 ## 12.14.0-beta.1 (Unreleased)
 - Added support for service version 2021-10-04.
 - Added support for SDK-calculated transactional checksums on data transfer.
+
+## 12.13.1 (2022-08-22)
 - Added support for downloading blobs with bugged client-side encryption metadata from previous library versions.
 
 ## 12.13.0 (2022-07-07)
