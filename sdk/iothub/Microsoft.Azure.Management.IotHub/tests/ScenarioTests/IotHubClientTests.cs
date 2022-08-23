@@ -290,20 +290,13 @@ namespace IotHub.Tests.ScenarioTests
                         IotHubTestUtilities.DefaultResourceGroupName,
                         IotHubTestUtilities.DefaultIotHubName)
                     .ConfigureAwait(false);
-                try
-                {
-                    await _iotHubClient.IotHub
-                        .ManualFailoverAsync(
-                            IotHubTestUtilities.DefaultIotHubName,
-                            IotHubTestUtilities.DefaultResourceGroupName,
-                            IotHubTestUtilities.DefaultFailoverLocation)
-                        .ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    throw;
-                }
+
+                await _iotHubClient.IotHub
+                    .ManualFailoverAsync(
+                        IotHubTestUtilities.DefaultIotHubName,
+                        IotHubTestUtilities.DefaultResourceGroupName,
+                        IotHubTestUtilities.DefaultFailoverLocation)
+                    .ConfigureAwait(false);
 
                 var iotHubAfterFailover = await _iotHubClient.IotHubResource
                     .GetAsync(
@@ -367,6 +360,10 @@ namespace IotHub.Tests.ScenarioTests
 
                 // Update capacity
                 iotHub.Sku.Capacity += 1;
+                iotHub.Properties.RootCertificate = new RootCertificateProperties()
+                {
+                    EnableRootCertificateV2 = true
+                };
                 var retIotHub = await UpdateIotHubAsync(resourceGroup, iotHub, IotHubTestUtilities.DefaultUpdateIotHubName)
                     .ConfigureAwait(false);
 
@@ -381,6 +378,7 @@ namespace IotHub.Tests.ScenarioTests
                 retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count.Should().Be(1);
                 retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count.Should().Be(1);
                 retIotHub.Properties.Routing.Routes[0].Name.Should().Be("route1");
+                retIotHub.Properties.RootCertificate.EnableRootCertificateV2.Should().BeTrue();
 
                 // Get an IoT Hub
                 var iotHubDesc = await _iotHubClient.IotHubResource
@@ -397,6 +395,10 @@ namespace IotHub.Tests.ScenarioTests
                 // Update again
                 // Perform a fake update
                 iotHubDesc.Properties.Routing.Endpoints.EventHubs[0].ResourceGroup = "1";
+                iotHubDesc.Properties.RootCertificate = new RootCertificateProperties()
+                {
+                    EnableRootCertificateV2 = false
+                };
                 retIotHub = await UpdateIotHubAsync(resourceGroup, iotHubDesc, IotHubTestUtilities.DefaultUpdateIotHubName).ConfigureAwait(false);
 
                 retIotHub.Should().NotBeNull();
@@ -406,6 +408,7 @@ namespace IotHub.Tests.ScenarioTests
                 retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count.Should().Be(1);
                 retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count.Should().Be(1);
                 retIotHub.Properties.Routing.Routes[0].Name.Should().Be("route1");
+                retIotHub.Properties.RootCertificate.EnableRootCertificateV2.Should().BeFalse();
             }
             catch (ErrorDetailsException ex)
             {

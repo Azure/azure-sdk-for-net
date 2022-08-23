@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.IotHub
             IotHub = new IotHubOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
-            BaseUri = new System.Uri("https://centraluseuap.management.azure.com");
+            BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2022-04-30-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

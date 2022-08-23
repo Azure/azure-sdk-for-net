@@ -36,7 +36,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         GraphUri = new Uri("https://graph.windows.net/");
                         IbizaPortalUri = new Uri("https://portal.azure.com/");
                         RdfePortalUri = new Uri("http://go.microsoft.com/fwlink/?LinkId=254433");
-                        ResourceManagementUri = new Uri("https://centraluseuap.management.azure.com/");
+                        ResourceManagementUri = new Uri("https://management.azure.com/");
                         ServiceManagementUri = new Uri("https://management.core.windows.net");
                         AADTokenAudienceUri = new Uri(_defaultAADTokenAudienceUri);
                         GraphTokenAudienceUri = new Uri(_defaultGraphTokenAudienceUri);
