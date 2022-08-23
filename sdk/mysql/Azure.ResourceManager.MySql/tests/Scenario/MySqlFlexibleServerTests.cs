@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Tests
     public class MySqlFlexibleServerTests: MySqlManagementTestBase
     {
         public MySqlFlexibleServerTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
