@@ -139,6 +139,38 @@ namespace Azure.Maps.Render
         public static bool operator !=(Azure.Maps.Render.MapTileStyle left, Azure.Maps.Render.MapTileStyle right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PathStyle
+    {
+        public PathStyle(System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> pathPositions) { }
+        public PathStyle(string dataStorageId) { }
+        public int? CircleRadiusInMeters { get { throw null; } set { } }
+        public string DataStorageId { get { throw null; } }
+        public System.Drawing.Color? FillColor { get { throw null; } set { } }
+        public System.Drawing.Color? LineColor { get { throw null; } set { } }
+        public int? LineWidthInPixels { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> PathPositions { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+    public partial class PinPosition
+    {
+        public PinPosition(double longitude, double latitude, string? label = null) { }
+        public PinPosition(string dataStorageId, string? label = null) { }
+        public override string ToString() { throw null; }
+    }
+    public partial class PushpinStyle
+    {
+        public PushpinStyle(System.Collections.Generic.IList<Azure.Maps.Render.PinPosition> pinPositions, System.Drawing.Point? pinAnchorShift = default(System.Drawing.Point?), System.Drawing.Color? pinColor = default(System.Drawing.Color?), double? pinScale = default(double?), System.Uri? customPinImage = null, System.Drawing.Point? labelAnchorShift = default(System.Drawing.Point?), System.Drawing.Color? labelColor = default(System.Drawing.Color?), double? labelScale = default(double?), int? rotation = default(int?)) { }
+        public System.Uri? CustomPinImage { get { throw null; } set { } }
+        public System.Drawing.Point? LabelAnchorShiftInPixels { get { throw null; } set { } }
+        public System.Drawing.Color? LabelColor { get { throw null; } set { } }
+        public double? LabelScale { get { throw null; } set { } }
+        public System.Drawing.Point? PinAnchorShiftInPixels { get { throw null; } set { } }
+        public System.Drawing.Color? PinColor { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Render.PinPosition> PinPositions { get { throw null; } }
+        public double? PinScale { get { throw null; } set { } }
+        public int? RotationInDegrees { get { throw null; } set { } }
+        public override string ToString() { throw null; }
+    }
     public partial class RegionCopyrights
     {
         internal RegionCopyrights() { }
@@ -160,17 +192,18 @@ namespace Azure.Maps.Render
     }
     public partial class RenderStaticImageOptions
     {
-        public RenderStaticImageOptions() { }
-        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
-        public Azure.Core.GeoJson.GeoPosition? CenterCoordinate { get { throw null; } set { } }
-        public int? HeightInPixels { get { throw null; } set { } }
+        public RenderStaticImageOptions(Azure.Core.GeoJson.GeoBoundingBox boundingBox) { }
+        public RenderStaticImageOptions(Azure.Core.GeoJson.GeoPosition centerCoordinate, int widthInPixels, int heightInPixels) { }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition? CenterCoordinate { get { throw null; } }
+        public int? HeightInPixels { get { throw null; } }
         public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Path { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Pins { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Render.PathStyle> Paths { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Render.PushpinStyle> Pins { get { throw null; } set { } }
         public string RenderLanguage { get { throw null; } set { } }
         public Azure.Maps.Render.MapImageLayer? TileLayer { get { throw null; } set { } }
         public Azure.Maps.Render.MapImageStyle? TileStyle { get { throw null; } set { } }
-        public int? WidthInPixels { get { throw null; } set { } }
+        public int? WidthInPixels { get { throw null; } }
         public int? ZoomLevel { get { throw null; } set { } }
     }
     public partial class RenderTileOptions
@@ -208,5 +241,11 @@ namespace Azure.Maps.Render
         public int X { get { throw null; } }
         public int Y { get { throw null; } }
         public int Z { get { throw null; } }
+    }
+    public static partial class TileMath
+    {
+        public static void BestMapView(Azure.Core.GeoJson.GeoBoundingBox boundingBox, double mapWidth, double mapHeight, int padding, int tileSize, out double centerLat, out double centerLon, out double zoom) { throw null; }
+        public static void PositionToTileXY(Azure.Core.GeoJson.GeoPosition position, int zoom, int tileSize, out int tileX, out int tileY) { throw null; }
+        public static Azure.Core.GeoJson.GeoBoundingBox TileXYToBoundingBox(int tileX, int tileY, double zoom, int tileSize) { throw null; }
     }
 }

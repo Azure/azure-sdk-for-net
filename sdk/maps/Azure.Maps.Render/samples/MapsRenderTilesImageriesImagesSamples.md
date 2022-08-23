@@ -1,20 +1,10 @@
-# Get secret
+# Render Tiles, Imageries, and Images
 
-To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md#getting-started) for details.
-
-## Render Tiles, Imageries, and Images
-
-### Get correct tile index
+## Get correct tile index
 
 Rendering map tiles requires the knowledge about [zoom levels and tile grid system](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid). We provide very convenient APIs for user to find out the correct tile index and zoom level they need.
 
-For example, if a user wants to render a tile in Germany with a specific bounding box range, one can import `Azure.Maps` namepace and use `PositionToTileXY` method from `TileMath`:
-
-```C# Snippet:ImportTileMath
-using Azure.Maps;
-```
-
-With the desired coordinate, zoom level and tile size, one can get tile X and Y index:
+For example, if a user wants to render a tile in Germany with a specific bounding box range, one can use utility function `PositionToTileXY` method from `TileMath`. With the desired coordinate, zoom level and tile size, one can get tile X and Y index:
 
 ```C# Snippet:GetTileXY
 int zoom = 10, tileSize = 300;
@@ -26,7 +16,7 @@ TileMath.PositionToTileXY(
 );
 ```
 
-### Render imagery tiles
+## Render imagery tiles
 
 From previous section, we get the tile X, Y index we want, we amy continue to get the satellite imagery we need. First, import `System.IO` to use `File` class so we can save image to file:
 
@@ -45,7 +35,7 @@ Assert.IsNotNull(imageryTile);
 using (var fileStream = File.Create(".\\BerlinImagery.png"))
 {
     imageryTile.Value.CopyTo(fileStream);
-    Assert.IsNotNull(fileStream.Length > 0);
+    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 
@@ -53,27 +43,28 @@ The imagery will look like:
 
 ![BerlinImagery](../tests/BerlinImagery.png)
 
-### Render static images
+## Render static images
 
 To get static image, one can assign bounding box and zoom level or coordinate and image width and height with `RenderStaticImageOptions`:
 
 ```C# Snippet:RenderStaticImages
-// Get static image
-var staticImageOptions = new RenderStaticImageOptions()
+// Prepare static image options
+var staticImageOptions = new RenderStaticImageOptions(new GeoBoundingBox(13.228,52.4559,13.5794,52.629))
 {
     TileLayer = MapImageLayer.Basic,
     TileStyle = MapImageStyle.Dark,
-    BoundingBox = new GeoBoundingBox(13.228,52.4559,13.5794,52.629),
     ZoomLevel = 10,
     RenderLanguage = "en",
 };
+
+// Get static image
 var image = client.GetMapStaticImage(staticImageOptions);
 
 // Prepare a file stream to save the imagery
 using (var fileStream = File.Create(".\\BerlinStaticImage.png"))
 {
     image.Value.CopyTo(fileStream);
-    Assert.IsNotNull(fileStream.Length > 0);
+    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 
@@ -81,7 +72,69 @@ The image will look like:
 
 ![BerlinStaticImage](../tests/BerlinStaticImage.png)
 
-### Render tiles
+In a more complex scenario, we can also add pushpins and paths on the map to make it more vivid:
+
+```C# Snippet:RenderStaticImagesWithPinsAndPaths
+// Prepare pushpin styles
+var pushpinSet1 = new PushpinStyle(
+    new List<PinPosition>() {
+        new PinPosition(13.35, 52.577, "Label start"),
+        new PinPosition(13.2988, 52.6, "Label end"),
+})
+{
+    PinScale = 0.9,
+    PinColor = Color.Red,
+    LabelColor = Color.Blue,
+    LabelScale = 18
+};
+var pushpinSet2 = new PushpinStyle(
+    new List<PinPosition>() {new PinPosition(13.495, 52.497, "Label 3")}
+)
+{
+    PinScale = 1.2,
+    PinColor = Color.Beige,
+    LabelColor = Color.White,
+    LabelScale = 18
+};
+
+// Prepare path styles
+var path1 = new PathStyle(
+    new List<GeoPosition>() {
+        new GeoPosition(13.35, 52.577),
+        new GeoPosition(13.2988, 52.6)
+})
+{
+    LineColor = Color.Beige,
+    LineWidthInPixels = 5
+};
+
+// Prepare static image options
+var staticImageOptions = new RenderStaticImageOptions(new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629))
+{
+    TileLayer = MapImageLayer.Basic,
+    TileStyle = MapImageStyle.Dark,
+    ZoomLevel = 10,
+    RenderLanguage = "en",
+    Pins = new List<PushpinStyle>() { pushpinSet1, pushpinSet2 },
+    Paths = new List<PathStyle>() { path1 },
+};
+
+// Get static image
+var image = client.GetMapStaticImage(staticImageOptions);
+
+// Prepare a file stream to save the imagery
+using (var fileStream = File.Create(".\\BerlinStaticImageWithPinsAndPaths.png"))
+{
+    image.Value.CopyTo(fileStream);
+    Assert.IsTrue(fileStream.Length > 0);
+}
+```
+
+The rendered image will look like:
+
+![RenderStaticImagesWithPinsAndPaths](../tests/BerlinStaticImageWithPinsAndPaths.png)
+
+## Render tiles
 
 To render map tiles, one can decide map tile X, Y index and zoom level and then decide the tile style in `RenderTileOptions`:
 
@@ -108,7 +161,7 @@ var mapTile = client.GetMapTile(renderTileOptions);
 using (var fileStream = File.Create(".\\BerlinMapTile.png"))
 {
     mapTile.Value.CopyTo(fileStream);
-    Assert.IsNotNull(fileStream.Length > 0);
+    Assert.IsTrue(fileStream.Length > 0);
 }
 ```
 

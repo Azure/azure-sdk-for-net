@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core.GeoJson;
 
-namespace Azure.Maps
+namespace Azure.Maps.Render
 {
     /// <summary> The utilities for tile index and pixel calculation. </summary>
     public static class TileMath
@@ -39,7 +39,7 @@ namespace Azure.Maps
         /// <param name="zoom">Zoom Level to calculate width at.</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>Width and height of the map in pixels</returns>
-        public static double MapSize(double zoom, int tileSize)
+        private static double MapSize(double zoom, int tileSize)
         {
             return Math.Ceiling(tileSize * Math.Pow(2, zoom));
         }
@@ -51,7 +51,7 @@ namespace Azure.Maps
         /// <param name="zoom">Zoom level to calculate resolution at.</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>Ground resolution in meters per pixels</returns>
-        public static double GroundResolution(double latitude, double zoom, int tileSize)
+        private static double GroundResolution(double latitude, double zoom, int tileSize)
         {
             latitude = Clip(latitude, MinLatitude, MaxLatitude);
             return Math.Cos(latitude * Math.PI / 180) * 2 * Math.PI * EarthRadius / MapSize(zoom, tileSize);
@@ -65,7 +65,7 @@ namespace Azure.Maps
         /// <param name="screenDpi">Resolution of the screen, in dots per inch.</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>The map scale, expressed as the denominator N of the ratio 1 : N.</returns>
-        public static double MapScale(double latitude, double zoom, int screenDpi, int tileSize)
+        private static double MapScale(double latitude, double zoom, int screenDpi, int tileSize)
         {
             return GroundResolution(latitude, zoom, tileSize) * screenDpi / 0.0254;
         }
@@ -78,7 +78,7 @@ namespace Azure.Maps
         /// <param name="zoom">Zoom level</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>A position value in the format GeoPosition.</returns>
-        public static GeoPosition GlobalPixelToPosition(GeoPosition pixel, double zoom, int tileSize)
+        private static GeoPosition GlobalPixelToPosition(GeoPosition pixel, double zoom, int tileSize)
         {
             var mapSize = MapSize(zoom, tileSize);
 
@@ -98,7 +98,7 @@ namespace Azure.Maps
         /// <param name="zoom">Zoom level.</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>A global pixel coordinate.</returns>
-        public static GeoPosition PositionToGlobalPixel(GeoPosition position, int zoom, int tileSize)
+        private static GeoPosition PositionToGlobalPixel(GeoPosition position, int zoom, int tileSize)
         {
             var latitude = Clip(position.Latitude, MinLatitude, MaxLatitude);
             var longitude = Clip(position.Longitude, MinLongitude, MaxLongitude);
@@ -122,7 +122,7 @@ namespace Azure.Maps
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <param name="tileX">Output parameter receiving the tile X coordinate.</param>
         /// <param name="tileY">Output parameter receiving the tile Y coordinate.</param>
-        public static void GlobalPixelToTileXY(GeoPosition pixel, int tileSize, out int tileX, out int tileY)
+        private static void GlobalPixelToTileXY(GeoPosition pixel, int tileSize, out int tileX, out int tileY)
         {
             tileX = (int)(pixel.Longitude / tileSize);
             tileY = (int)(pixel.Latitude / tileSize);
@@ -135,7 +135,7 @@ namespace Azure.Maps
         /// <param name="oldZoom">The zoom level in which the input global pixel value is from.</param>
         /// <param name="newZoom">The new zoom level in which the output global pixel values should be aligned with.</param>
         /// <returns>A scale pixel coordinate.</returns>
-        public static GeoPosition ScaleGlobalPixel(GeoPosition pixel, double oldZoom, double newZoom)
+        private static GeoPosition ScaleGlobalPixel(GeoPosition pixel, double oldZoom, double newZoom)
         {
             var scale = Math.Pow(2, oldZoom - newZoom);
 
@@ -148,7 +148,7 @@ namespace Azure.Maps
         /// <param name="tileX">Tile X coordinate.</param>
         /// <param name="tileY">Tile Y coordinate.</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
-        public static GeoPosition TileXYToGlobalPixel(int tileX, int tileY, int tileSize)
+        private static GeoPosition TileXYToGlobalPixel(int tileX, int tileY, int tileSize)
         {
             return new GeoPosition(tileX * tileSize, tileY * tileSize);
         }
@@ -160,7 +160,7 @@ namespace Azure.Maps
         /// <param name="tileY">Tile Y coordinate.</param>
         /// <param name="zoom">Zoom level</param>
         /// <returns>A string containing the quadkey.</returns>
-        public static string TileXYToQuadKey(int tileX, int tileY, int zoom)
+        private static string TileXYToQuadKey(int tileX, int tileY, int zoom)
         {
             var quadKey = new StringBuilder();
             for (int i = zoom; i > 0; i--)
@@ -188,7 +188,7 @@ namespace Azure.Maps
         /// <param name="tileX">Output parameter receiving the tile X coordinate.</param>
         /// <param name="tileY">Output parameter receiving the tile Y coordinate.</param>
         /// <param name="zoom">Output parameter receiving the zoom level.</param>
-        public static void QuadKeyToTileXY(string quadKey, out int tileX, out int tileY, out int zoom)
+        private static void QuadKeyToTileXY(string quadKey, out int tileX, out int tileY, out int zoom)
         {
             tileX = tileY = 0;
             zoom = quadKey.Length;
@@ -251,7 +251,7 @@ namespace Azure.Maps
         /// <param name="height">The height of the map viewport in pixels.</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>A list of quadkey strings that are within the specified viewport.</returns>
-        public static string[] GetQuadkeysInView(GeoPosition position, int zoom, int width, int height, int tileSize)
+        private static string[] GetQuadkeysInView(GeoPosition position, int zoom, int width, int height, int tileSize)
         {
             var p = PositionToGlobalPixel(position, zoom, tileSize);
 
@@ -276,7 +276,7 @@ namespace Azure.Maps
         /// <param name="zoom">Zoom level to calculate tiles for.</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>A list of quadkey strings.</returns>
-        public static string[] GetQuadkeysInBoundingBox(GeoBoundingBox boundingBox, int zoom, int tileSize)
+        private static string[] GetQuadkeysInBoundingBox(GeoBoundingBox boundingBox, int zoom, int tileSize)
         {
             var keys = new List<string>();
 

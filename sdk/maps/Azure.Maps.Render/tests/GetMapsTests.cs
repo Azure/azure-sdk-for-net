@@ -32,14 +32,11 @@ namespace Azure.Maps.Render.Tests
         public async Task CanGetMapStaticImage()
         {
             var client = CreateClient();
-            var options = new RenderStaticImageOptions()
+            var options = new RenderStaticImageOptions(new GeoPosition(10.176, 25.0524), 100, 100)
             {
                 TileLayer = MapImageLayer.Basic,
                 TileStyle = MapImageStyle.Dark,
-                CenterCoordinate = new GeoPosition(10.176, 25.0524),
                 RenderLanguage = "en",
-                HeightInPixels = 100,
-                WidthInPixels = 100,
             };
             var imageStream = new MemoryStream();
             var image = await client.GetMapStaticImageAsync(options);
@@ -53,7 +50,7 @@ namespace Azure.Maps.Render.Tests
         public void GetMapStaticImageWithEmptyOptions()
         {
             var client = CreateClient();
-            var options = new RenderStaticImageOptions();
+            var options = new RenderStaticImageOptions(null);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetMapStaticImageAsync(options));
             Assert.AreEqual(400, ex.Status);
         }

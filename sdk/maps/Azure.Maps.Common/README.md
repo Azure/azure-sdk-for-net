@@ -53,7 +53,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Please see the examples for [Search](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search).
+Please see the examples for [Search](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search) and [Render](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Render).
 
 ## Troubleshooting
 
@@ -61,7 +61,7 @@ If instantiate a `null` `LocalizedMapView`, the program will throw a `ArgumentNu
 
 ## Next steps
 
-Get started with our [Common samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/samples) and then continue on with our [Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/tests/Samples/SearchClientSamples.HelloWorld.cs) samples.
+Get started with our [Common samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/samples) and then continue on with our [Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Search/tests/Samples/SearchClientSamples.HelloWorld.cs) and [Render](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Render/samples) samples.
 
 ## Contributing
 

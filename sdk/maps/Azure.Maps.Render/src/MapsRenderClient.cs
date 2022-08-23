@@ -140,6 +140,24 @@ namespace Azure.Maps.Render
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
+                List<string> pins = null;
+                if (options?.Pins != null)
+                {
+                    pins = new List<string>();
+                    foreach (var pin in options?.Pins)
+                    {
+                        pins.Add(pin.ToString());
+                    }
+                }
+                List<string> paths = null;
+                if (options?.Paths != null)
+                {
+                    pins = new List<string>();
+                    foreach (var path in options?.Paths)
+                    {
+                        paths.Add(path.ToString());
+                    }
+                }
                 var response = await restClient.GetMapStaticImageAsync(
                     RasterTileFormat.Png,
                     options?.TileLayer,
@@ -151,8 +169,8 @@ namespace Azure.Maps.Render
                     options?.WidthInPixels,
                     options?.RenderLanguage,
                     localizedMapView,
-                    options?.Pins,
-                    options?.Path,
+                    pins,
+                    paths,
                     cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
@@ -196,6 +214,24 @@ namespace Azure.Maps.Render
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
+                List<string> pins = null;
+                if (options?.Pins != null)
+                {
+                    pins = new List<string>();
+                    foreach (var pin in options?.Pins)
+                    {
+                        pins.Add(pin.ToString());
+                    }
+                }
+                List<string> paths = null;
+                if (options?.Paths != null)
+                {
+                    paths = new List<string>();
+                    foreach (var path in options?.Paths)
+                    {
+                        paths.Add(path.ToString());
+                    }
+                }
                 var response = restClient.GetMapStaticImage(
                     RasterTileFormat.Png,
                     options?.TileLayer,
@@ -207,8 +243,8 @@ namespace Azure.Maps.Render
                     options?.WidthInPixels,
                     options?.RenderLanguage,
                     localizedMapView,
-                    options?.Pins,
-                    options?.Path,
+                    pins,
+                    paths,
                     cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
