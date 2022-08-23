@@ -32,14 +32,14 @@ namespace Azure.Monitor.Ingestion
 
         internal readonly struct BatchedLogs <T>
         {
-            public BatchedLogs(List<T> X, BinaryData Y)
+            public BatchedLogs(List<T> logsList, BinaryData logsData)
             {
-                LogList = X;
-                LogData = Y;
+                LogsList = logsList;
+                LogsData = logsData;
             }
 
-            public List<T> LogList { get; }
-            public BinaryData LogData { get; }
+            public List<T> LogsList { get; }
+            public BinaryData LogsData { get; }
         }
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
@@ -181,13 +181,13 @@ namespace Azure.Monitor.Ingestion
                 foreach (BatchedLogs<T> batch in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogData, "gzip", requestContext);
+                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, "gzip", requestContext);
                     response = _pipeline.ProcessMessage(message, requestContext, cancellationToken);
                     if (response.IsError)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
-                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogList);
+                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogsList);
                         errors.Add(new UploadLogsError(responseError, objectLogs));
                     }
                 }
@@ -244,13 +244,13 @@ namespace Azure.Monitor.Ingestion
                 foreach (BatchedLogs<T> batch in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogData, "gzip", requestContext);
+                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, "gzip", requestContext);
                     response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
                     if (response.IsError)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
-                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogList);
+                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogsList);
                         errors.Add(new UploadLogsError(responseError, objectLogs));
                     }
                 }
