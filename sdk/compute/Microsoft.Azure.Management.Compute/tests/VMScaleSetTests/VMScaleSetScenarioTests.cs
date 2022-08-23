@@ -407,8 +407,8 @@ namespace Compute.Tests
                     
                     Assert.NotNull(getVmss);
                     Assert.NotNull(getVmss.PriorityMixPolicy);
-                    Assert.True(getVmss.PriorityMixPolicy.BaseRegularPriorityCount == 2);
-                    Assert.True(getVmss.PriorityMixPolicy.RegularPriorityPercentageAboveBase == 50);
+                    Assert.Equal(2, getVmss.PriorityMixPolicy.BaseRegularPriorityCount);
+                    Assert.Equal(50, getVmss.PriorityMixPolicy.RegularPriorityPercentageAboveBase);
 
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                 }
