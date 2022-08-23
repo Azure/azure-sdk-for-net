@@ -55,7 +55,7 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  # TODO: Autorest.csharp should combine these redundancy methods into the scope one
+  # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.
   - from: remediations.json
     where: $.paths
     transform: >
@@ -71,6 +71,7 @@ directive:
       delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}'];
       delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments'];
       delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel'];
+  # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.
   - from: attestations.json
     where: $.paths
     transform: >
