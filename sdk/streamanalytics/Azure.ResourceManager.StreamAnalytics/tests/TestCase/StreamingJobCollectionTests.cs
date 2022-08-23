@@ -14,33 +14,33 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
 {
-    public  class StreamAnalyticsClusterCollectionTests : StreamAnalyticsManagementTestBase
+    public class StreamingJobCollectionTests : StreamAnalyticsManagementTestBase
     {
-        public StreamAnalyticsClusterCollectionTests(bool isAsync)
+        public StreamingJobCollectionTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
 
-        private async Task<StreamAnalyticsClusterCollection> GetStreamAnalyticsClusterCollectionAsync()
+        private async Task<StreamingJobCollection> GetStreamingJobCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetStreamAnalyticsClusters();
+            return resourceGroup.GetStreamingJobs();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task StreamAnalyticsCluserApiTests()
+        public async Task StreamingJobApiTests()
         {
             //1.CreateorUpdate
-            var container = await GetStreamAnalyticsClusterCollectionAsync();
-            var name = Recording.GenerateAssetName("StreamAnalyticsCluster-");
-            var input = ResourceDataHelpers.GetClusterData(DefaultLocation);
+            var container = await GetStreamingJobCollectionAsync();
+            var name = Recording.GenerateAssetName("StreamingJob-");
+            var input = ResourceDataHelpers.GetStreamingJobData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            StreamAnalyticsClusterResource account1 = lro.Value;
-            Assert.AreEqual(name, account1.Data.Name);
+            StreamingJobResource job1 = lro.Value;
+            Assert.AreEqual(name, job1.Data.Name);
             //2.Get
-            StreamAnalyticsClusterResource account2 = await container.GetAsync(name);
-            ResourceDataHelpers.AssertCluster(account1.Data, account2.Data);
+            StreamingJobResource job2 = await container.GetAsync(name);
+            ResourceDataHelpers.AssertJob(job1.Data, job2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.GreaterOrEqual(count, 2);
             //4Exists
             Assert.IsTrue(await container.ExistsAsync(name));
             Assert.IsFalse(await container.ExistsAsync(name + "1"));

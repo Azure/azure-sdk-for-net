@@ -14,33 +14,36 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
 {
-    public  class StreamAnalyticsClusterCollectionTests : StreamAnalyticsManagementTestBase
+    public class StreamingJobFunctionCollectionTests : StreamAnalyticsManagementTestBase
     {
-        public StreamAnalyticsClusterCollectionTests(bool isAsync)
+        public StreamingJobFunctionCollectionTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
 
-        private async Task<StreamAnalyticsClusterCollection> GetStreamAnalyticsClusterCollectionAsync()
+        private async Task<StreamingJobFunctionCollection> GetStreamingJobFunctionCollectionAsync()
         {
-            var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetStreamAnalyticsClusters();
+            var container = (await CreateResourceGroupAsync()).GetStreamingJobs();
+            var input = ResourceDataHelpers.GetStreamingJobData(DefaultLocation);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, "testJob-", input);
+            var job = lro.Value;
+            return job.GetStreamingJobFunctions();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task StreamAnalyticsCluserApiTests()
+        public async Task StreamingJobFunctionApiTests()
         {
             //1.CreateorUpdate
-            var container = await GetStreamAnalyticsClusterCollectionAsync();
-            var name = Recording.GenerateAssetName("StreamAnalyticsCluster-");
-            var input = ResourceDataHelpers.GetClusterData(DefaultLocation);
+            var container = await GetStreamingJobFunctionCollectionAsync();
+            var name = Recording.GenerateAssetName("streamingFunction-");
+            var input = ResourceDataHelpers.GetStreamingJobFunctionData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            StreamAnalyticsClusterResource account1 = lro.Value;
-            Assert.AreEqual(name, account1.Data.Name);
+            StreamingJobFunctionResource function1 = lro.Value;
+            Assert.AreEqual(name, function1.Data.Name);
             //2.Get
-            StreamAnalyticsClusterResource account2 = await container.GetAsync(name);
-            ResourceDataHelpers.AssertCluster(account1.Data, account2.Data);
+            StreamingJobFunctionResource function2 = await container.GetAsync(name);
+            ResourceDataHelpers.AssertFunction(function1.Data, function2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.GreaterOrEqual(count, 2);
             //4Exists
             Assert.IsTrue(await container.ExistsAsync(name));
             Assert.IsFalse(await container.ExistsAsync(name + "1"));

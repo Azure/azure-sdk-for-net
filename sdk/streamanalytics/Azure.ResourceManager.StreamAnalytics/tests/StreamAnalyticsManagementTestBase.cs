@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests
         }
 
         [SetUp]
-        public async void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
