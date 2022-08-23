@@ -47,7 +47,6 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void Disk_CRUD_StandardSSDZRSDisk()
         {
-            //
             SSDZRSDisk_CRUD_Execute(DiskCreateOption.Empty, StorageAccountTypes.StandardSSDZRS, "Disk_CRUD_StandardSSDZRSDisk", diskSizeGB: 32, location: "eastus2euap");
         }
         
