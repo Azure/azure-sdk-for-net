@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaServiceOperationStatus
+    public partial class MediaServicesOperationStatus
     {
-        internal static MediaServiceOperationStatus DeserializeMediaServiceOperationStatus(JsonElement element)
+        internal static MediaServicesOperationStatus DeserializeMediaServicesOperationStatus(JsonElement element)
         {
             string name = default;
             Optional<ResourceIdentifier> id = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaServiceOperationStatus(name, id.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status, error.Value);
+            return new MediaServicesOperationStatus(name, id.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status, error.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaServiceData : IUtf8JsonSerializable
+    public partial class MediaServicesAccountData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Media
             writer.WriteEndObject();
         }
 
-        internal static MediaServiceData DeserializeMediaServiceData(JsonElement element)
+        internal static MediaServicesAccountData DeserializeMediaServicesAccountData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.Media
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> mediaServiceId = default;
-            Optional<IList<MediaServiceStorageAccount>> storageAccounts = default;
+            Optional<IList<MediaServicesStorageAccount>> storageAccounts = default;
             Optional<MediaStorageAuthentication?> storageAuthentication = default;
             Optional<AccountEncryption> encryption = default;
             Optional<MediaKeyDelivery> keyDelivery = default;
             Optional<MediaPublicNetworkAccessStatus?> publicNetworkAccess = default;
             Optional<MediaProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<MediaPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MediaServiceStorageAccount> array = new List<MediaServiceStorageAccount>();
+                            List<MediaServicesStorageAccount> array = new List<MediaServicesStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServiceStorageAccount.DeserializeMediaServiceStorageAccount(item));
+                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item));
                             }
                             storageAccounts = array;
                             continue;
@@ -252,10 +252,10 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MediaPrivateEndpointConnectionData> array = new List<MediaPrivateEndpointConnectionData>();
+                            List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaPrivateEndpointConnectionData.DeserializeMediaPrivateEndpointConnectionData(item));
+                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections));
+            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections));
         }
     }
 }

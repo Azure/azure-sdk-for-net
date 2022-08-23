@@ -10,15 +10,15 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Tests
 {
-    public class MediaServiceTests : MediaManagementTestBase
+    public class MediaServicesTests : MediaManagementTestBase
     {
         private ResourceIdentifier _resourceGroupIdentifier;
         private ResourceIdentifier _storageAccountIdentifier;
         private ResourceGroupResource _resourceGroup;
 
-        private MediaServiceCollection mediaServiceCollection => _resourceGroup.GetMediaServices();
+        private MediaServicesAccountCollection mediaServiceCollection => _resourceGroup.GetMediaServicesAccounts();
 
-        public MediaServiceTests(bool isAsync) : base(isAsync)
+        public MediaServicesTests(bool isAsync) : base(isAsync)
         {
         }
 

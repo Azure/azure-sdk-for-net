@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class MediaServicesPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
             writer.WriteEndObject();
         }
 
-        internal static MediaPrivateLinkResourceData DeserializeMediaPrivateLinkResourceData(JsonElement element)
+        internal static MediaServicesPrivateLinkResourceData DeserializeMediaServicesPrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new MediaServicesPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

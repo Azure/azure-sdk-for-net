@@ -12,11 +12,11 @@ using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class MediaServiceListResult
+    internal partial class MediaServicesAccountListResult
     {
-        internal static MediaServiceListResult DeserializeMediaServiceListResult(JsonElement element)
+        internal static MediaServicesAccountListResult DeserializeMediaServicesAccountListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MediaServiceData>> value = default;
+            Optional<IReadOnlyList<MediaServicesAccountData>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MediaServiceData> array = new List<MediaServiceData>();
+                    List<MediaServicesAccountData> array = new List<MediaServicesAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServiceData.DeserializeMediaServiceData(item));
+                        array.Add(MediaServicesAccountData.DeserializeMediaServicesAccountData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaServiceListResult(Optional.ToList(value), odataNextLink.Value);
+            return new MediaServicesAccountListResult(Optional.ToList(value), odataNextLink.Value);
         }
     }
 }

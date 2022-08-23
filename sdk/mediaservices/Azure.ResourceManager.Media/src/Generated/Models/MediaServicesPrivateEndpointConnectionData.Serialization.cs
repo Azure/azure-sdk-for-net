@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class MediaServicesPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media
             writer.WriteEndObject();
         }
 
-        internal static MediaPrivateEndpointConnectionData DeserializeMediaPrivateEndpointConnectionData(JsonElement element)
+        internal static MediaServicesPrivateEndpointConnectionData DeserializeMediaServicesPrivateEndpointConnectionData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MediaServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

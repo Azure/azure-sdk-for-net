@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Tests
     public class StreamingEndpointTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
         private string _streamingEndpointName;  //The maximun allowed number of streaming endpoints is 2
 
         private StreamingEndpointCollection streamingEndpointCollection => _mediaService.GetStreamingEndpoints();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
         }
 
         private async Task<StreamingEndpointResource> CreateStreamingEndpoint()

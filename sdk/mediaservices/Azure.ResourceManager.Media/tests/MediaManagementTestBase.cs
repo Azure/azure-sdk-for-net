@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Media.Tests
             return vnet.Value;
         }
 
-        protected async Task<MediaServiceResource> CreateMediaService(ResourceGroupResource resourceGroup, string mediaServiceName, ResourceIdentifier storageAccountIdentifier)
+        protected async Task<MediaServicesAccountResource> CreateMediaService(ResourceGroupResource resourceGroup, string mediaServiceName, ResourceIdentifier storageAccountIdentifier)
         {
-            MediaServiceData data = new MediaServiceData(resourceGroup.Data.Location);
-            data.StorageAccounts.Add(new MediaServiceStorageAccount(MediaServiceStorageAccountType.Primary) { Id = storageAccountIdentifier });
-            var mediaService = await resourceGroup.GetMediaServices().CreateOrUpdateAsync(WaitUntil.Completed, mediaServiceName, data);
+            MediaServicesAccountData data = new MediaServicesAccountData(resourceGroup.Data.Location);
+            data.StorageAccounts.Add(new MediaServicesStorageAccount(MediaServicesStorageAccountType.Primary) { Id = storageAccountIdentifier });
+            var mediaService = await resourceGroup.GetMediaServicesAccounts().CreateOrUpdateAsync(WaitUntil.Completed, mediaServiceName, data);
             return mediaService.Value;
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media.Tests
             return mediaTransfer.Value;
         }
 
-        protected async Task<LiveEventResource> CreateLiveEvent(MediaServiceResource mediaService, string liveEventName)
+        protected async Task<LiveEventResource> CreateLiveEvent(MediaServicesAccountResource mediaService, string liveEventName)
         {
             LiveEventData data = new LiveEventData(mediaService.Data.Location)
             {

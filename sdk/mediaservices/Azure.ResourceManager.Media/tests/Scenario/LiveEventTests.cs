@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Tests
     public class LiveEventTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
 
         private LiveEventCollection liveEventCollection => _mediaService.GetLiveEvents();
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
         }
 
         [Test]

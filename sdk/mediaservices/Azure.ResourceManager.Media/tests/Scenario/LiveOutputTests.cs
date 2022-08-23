@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Tests
     {
         private ResourceIdentifier _mediaServiceIdentifier;
         private ResourceIdentifier _liveEventIdentifier;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
         private LiveEventResource _liveEvent;
         private string _liveOutPutName; // The maximum allowed number of liveOutputs per liveEvent has been reached, maximum number is 3
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
             _liveEvent = await Client.GetLiveEventResource(_liveEventIdentifier).GetAsync();
         }
 

@@ -11,17 +11,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaPrivateLinkResource data model. </summary>
-    public partial class MediaPrivateLinkResourceData : ResourceData
+    /// <summary> A class representing the MediaServicesPrivateLinkResource data model. </summary>
+    public partial class MediaServicesPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaPrivateLinkResourceData. </summary>
-        public MediaPrivateLinkResourceData()
+        /// <summary> Initializes a new instance of MediaServicesPrivateLinkResourceData. </summary>
+        public MediaServicesPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MediaPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of MediaServicesPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal MediaPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        internal MediaServicesPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

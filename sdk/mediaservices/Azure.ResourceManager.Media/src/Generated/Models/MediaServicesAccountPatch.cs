@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> A Media Services account update. </summary>
-    public partial class MediaServicePatch
+    public partial class MediaServicesAccountPatch
     {
-        /// <summary> Initializes a new instance of MediaServicePatch. </summary>
-        public MediaServicePatch()
+        /// <summary> Initializes a new instance of MediaServicesAccountPatch. </summary>
+        public MediaServicesAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            StorageAccounts = new ChangeTrackingList<MediaServiceStorageAccount>();
-            PrivateEndpointConnections = new ChangeTrackingList<MediaPrivateEndpointConnectionData>();
+            StorageAccounts = new ChangeTrackingList<MediaServicesStorageAccount>();
+            PrivateEndpointConnections = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The Media Services account ID. </summary>
         public Guid? MediaServiceId { get; }
         /// <summary> The storage accounts for this resource. </summary>
-        public IList<MediaServiceStorageAccount> StorageAccounts { get; }
+        public IList<MediaServicesStorageAccount> StorageAccounts { get; }
         /// <summary> Gets or sets the storage authentication. </summary>
         public MediaStorageAuthentication? StorageAuthentication { get; set; }
         /// <summary> The account encryption properties. </summary>
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Provisioning state of the Media Services account. </summary>
         public MediaProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>
-        public IReadOnlyList<MediaPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }
