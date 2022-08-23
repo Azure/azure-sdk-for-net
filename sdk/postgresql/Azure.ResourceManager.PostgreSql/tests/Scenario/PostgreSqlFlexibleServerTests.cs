@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "13",
                 Storage = new PostgreSqlFlexibleServerStorage() {StorageSizeInGB = 128},
-                //AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         public async Task CreateUpdateGetDelete()
         {
             // Create
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
             PostgreSqlFlexibleServerCollection serverCollection = rg.GetPostgreSqlFlexibleServers();
             string serverName = Recording.GenerateAssetName("pgflexserver");
             var data = new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -69,8 +68,15 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D4s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = "12",
-                Storage = new PostgreSqlFlexibleServerStorage() {StorageSizeInGB = 128},
+                Version = "13",
+                Storage = new PostgreSqlFlexibleServerStorage() { StorageSizeInGB = 128 },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    BackupRetentionDays = 7
+                },
+                Network = new PostgreSqlFlexibleServerNetwork(),
+                HighAvailability = new PostgreSqlFlexibleServerHighAvailability() { Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled },
             };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
             PostgreSqlFlexibleServerResource server = lro.Value;
