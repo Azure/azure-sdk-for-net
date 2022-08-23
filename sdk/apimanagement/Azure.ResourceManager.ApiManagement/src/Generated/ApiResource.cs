@@ -94,12 +94,6 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
         /// <summary> Gets a collection of ApiReleaseResources in the Api. </summary>
         /// <returns> An object representing collection of ApiReleaseResources and their operations over a ApiReleaseResource. </returns>
         public virtual ApiReleaseCollection GetApiReleases()

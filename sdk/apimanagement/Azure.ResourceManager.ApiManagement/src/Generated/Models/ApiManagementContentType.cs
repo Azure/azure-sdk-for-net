@@ -6,30 +6,24 @@
 #nullable disable
 
 using System;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> A class representing the ApiManagementContentType data model. </summary>
-    public partial class ApiManagementContentTypeData : ResourceData
+    /// <summary> Content type contract details. </summary>
+    public partial class ApiManagementContentType
     {
-        /// <summary> Initializes a new instance of ApiManagementContentTypeData. </summary>
-        public ApiManagementContentTypeData()
+        /// <summary> Initializes a new instance of ApiManagementContentType. </summary>
+        internal ApiManagementContentType()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementContentTypeData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of ApiManagementContentType. </summary>
         /// <param name="contentTypeIdentifier"> Content type identifier. </param>
         /// <param name="contentTypeName"> Content type name. Must be 1 to 250 characters long. </param>
         /// <param name="description"> Content type description. </param>
         /// <param name="schema"> Content type schema. </param>
         /// <param name="version"> Content type version. </param>
-        internal ApiManagementContentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentTypeIdentifier, string contentTypeName, string description, BinaryData schema, string version) : base(id, name, resourceType, systemData)
+        internal ApiManagementContentType(string contentTypeIdentifier, string contentTypeName, string description, BinaryData schema, string version)
         {
             ContentTypeIdentifier = contentTypeIdentifier;
             ContentTypeName = contentTypeName;
@@ -39,11 +33,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Content type identifier. </summary>
-        public string ContentTypeIdentifier { get; set; }
+        public string ContentTypeIdentifier { get; }
         /// <summary> Content type name. Must be 1 to 250 characters long. </summary>
-        public string ContentTypeName { get; set; }
+        public string ContentTypeName { get; }
         /// <summary> Content type description. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
         /// <summary>
         /// Content type schema.
         /// <para>
@@ -74,8 +68,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Schema { get; set; }
+        public BinaryData Schema { get; }
         /// <summary> Content type version. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
     }
 }

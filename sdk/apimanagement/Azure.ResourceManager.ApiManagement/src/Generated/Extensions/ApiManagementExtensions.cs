@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiResource" /> object. </returns>
         public static ApiResource GetApiResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<ApiResource>(() =>
             {
                 ApiResource.ValidateResourceId(id);
                 return new ApiResource(client, id);
@@ -704,44 +704,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 ApiManagementCertificateResource.ValidateResourceId(id);
                 return new ApiManagementCertificateResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ApiManagementContentTypeResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementContentTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementContentTypeResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementContentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementContentTypeResource" /> object. </returns>
-        public static ApiManagementContentTypeResource GetApiManagementContentTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementContentTypeResource.ValidateResourceId(id);
-                return new ApiManagementContentTypeResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ApiManagementContentItemResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementContentItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementContentItemResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementContentItemResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementContentItemResource" /> object. </returns>
-        public static ApiManagementContentItemResource GetApiManagementContentItemResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementContentItemResource.ValidateResourceId(id);
-                return new ApiManagementContentItemResource(client, id);
             }
             );
         }
@@ -1213,7 +1175,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserResource" /> object. </returns>
         public static ApiManagementUserResource GetApiManagementUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<ApiManagementUserResource>(() =>
             {
                 ApiManagementUserResource.ValidateResourceId(id);
                 return new ApiManagementUserResource(client, id);

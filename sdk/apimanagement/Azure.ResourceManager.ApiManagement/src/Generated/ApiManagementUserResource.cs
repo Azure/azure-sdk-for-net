@@ -94,12 +94,6 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
         /// <summary> Gets a collection of ApiManagementUserSubscriptionResources in the ApiManagementUser. </summary>
         /// <returns> An object representing collection of ApiManagementUserSubscriptionResources and their operations over a ApiManagementUserSubscriptionResource. </returns>
         public virtual ApiManagementUserSubscriptionCollection GetApiManagementUserSubscriptions()

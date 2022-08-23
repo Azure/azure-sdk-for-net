@@ -20,6 +20,12 @@ skip-serialization-format-xml: true
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
 
+request-path-is-non-resource:
+# The Id of content type does not meet the criteria of ResourceIdentifier (E.g. /contentTypes/page)
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+# The Id of content item does not meet the criteria of ResourceIdentifier (E.g. /contentTypes/page/contentItems/4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8)
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}: ApiDiagnostic
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}: ApiIssue
@@ -95,6 +101,9 @@ override-operation-name:
   ProductGroup_CheckEntityExists: CheckProductGroupEntityExists
   ApiManagementService_CheckNameAvailability: CheckApiManagementServiceNameAvailability
   ApiManagementService_GetDomainOwnershipIdentifier: GetApiManagementServiceDomainOwnershipIdentifier
+  ContentType_ListByService: GetContentTypes
+  ContentItem_ListByService: GetContentItems
+  ContentItem_GetEntityTag: GetContentItemEntityTag
 
 prepend-rp-prefix:
 - ResourceSkuCapacity
@@ -304,6 +313,8 @@ directive:
       $.PortalSettingsContractProperties.properties.subscriptions['x-ms-client-name'] = 'IsSubscriptions';
       $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
       $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
+      delete $.ContentTypeContract.allOf;
+      delete $.ContentItemContract.allOf;
   - from: apimskus.json
     where: $.definitions
     transform: >
