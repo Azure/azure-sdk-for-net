@@ -55,13 +55,6 @@ namespace Azure.ResourceManager.PolicyInsights
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ManagementGroupRemediationResources in the ManagementGroupResource. </summary>
-        /// <returns> An object representing collection of ManagementGroupRemediationResources and their operations over a ManagementGroupRemediationResource. </returns>
-        public virtual ManagementGroupRemediationCollection GetManagementGroupRemediations()
-        {
-            return GetCachedClient(Client => new ManagementGroupRemediationCollection(Client, Id));
-        }
-
         /// <summary>
         /// Queries policy tracked resources under the management group.
         /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults

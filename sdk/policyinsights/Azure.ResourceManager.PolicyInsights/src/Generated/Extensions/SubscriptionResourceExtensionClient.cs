@@ -55,20 +55,6 @@ namespace Azure.ResourceManager.PolicyInsights
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SubscriptionRemediationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionRemediationResources and their operations over a SubscriptionRemediationResource. </returns>
-        public virtual SubscriptionRemediationCollection GetSubscriptionRemediations()
-        {
-            return GetCachedClient(Client => new SubscriptionRemediationCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of SubscriptionAttestationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionAttestationResources and their operations over a SubscriptionAttestationResource. </returns>
-        public virtual SubscriptionAttestationCollection GetSubscriptionAttestations()
-        {
-            return GetCachedClient(Client => new SubscriptionAttestationCollection(Client, Id));
-        }
-
         /// <summary>
         /// Queries policy tracked resources under the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults

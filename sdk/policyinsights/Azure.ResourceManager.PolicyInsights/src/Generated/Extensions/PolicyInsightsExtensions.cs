@@ -76,86 +76,6 @@ namespace Azure.ResourceManager.PolicyInsights
             );
         }
 
-        /// <summary> Gets a collection of SubscriptionRemediationResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionRemediationResources and their operations over a SubscriptionRemediationResource. </returns>
-        public static SubscriptionRemediationCollection GetSubscriptionRemediations(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionRemediations();
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at subscription scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtSubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionRemediationResource>> GetSubscriptionRemediationAsync(this SubscriptionResource subscriptionResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSubscriptionRemediations().GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at subscription scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtSubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionRemediationResource> GetSubscriptionRemediation(this SubscriptionResource subscriptionResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSubscriptionRemediations().Get(remediationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SubscriptionAttestationResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionAttestationResources and their operations over a SubscriptionAttestationResource. </returns>
-        public static SubscriptionAttestationCollection GetSubscriptionAttestations(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionAttestations();
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at subscription scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtSubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionAttestationResource>> GetSubscriptionAttestationAsync(this SubscriptionResource subscriptionResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSubscriptionAttestations().GetAsync(attestationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at subscription scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtSubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionAttestationResource> GetSubscriptionAttestation(this SubscriptionResource subscriptionResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSubscriptionAttestations().Get(attestationName, cancellationToken);
-        }
-
         /// <summary>
         /// Queries policy tracked resources under the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults
@@ -703,86 +623,6 @@ namespace Azure.ResourceManager.PolicyInsights
             );
         }
 
-        /// <summary> Gets a collection of ResourceGroupRemediationResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ResourceGroupRemediationResources and their operations over a ResourceGroupRemediationResource. </returns>
-        public static ResourceGroupRemediationCollection GetResourceGroupRemediations(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetResourceGroupRemediations();
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at resource group scope.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupRemediationResource>> GetResourceGroupRemediationAsync(this ResourceGroupResource resourceGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetResourceGroupRemediations().GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at resource group scope.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ResourceGroupRemediationResource> GetResourceGroupRemediation(this ResourceGroupResource resourceGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetResourceGroupRemediations().Get(remediationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ResourceGroupAttestationResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ResourceGroupAttestationResources and their operations over a ResourceGroupAttestationResource. </returns>
-        public static ResourceGroupAttestationCollection GetResourceGroupAttestations(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetResourceGroupAttestations();
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at resource group scope.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ResourceGroupAttestationResource>> GetResourceGroupAttestationAsync(this ResourceGroupResource resourceGroupResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetResourceGroupAttestations().GetAsync(attestationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing attestation at resource group scope.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ResourceGroupAttestationResource> GetResourceGroupAttestation(this ResourceGroupResource resourceGroupResource, string attestationName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetResourceGroupAttestations().Get(attestationName, cancellationToken);
-        }
-
         /// <summary>
         /// Queries policy tracked resources under the resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults
@@ -1090,46 +930,6 @@ namespace Azure.ResourceManager.PolicyInsights
             );
         }
 
-        /// <summary> Gets a collection of ManagementGroupRemediationResources in the ManagementGroupResource. </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagementGroupRemediationResources and their operations over a ManagementGroupRemediationResource. </returns>
-        public static ManagementGroupRemediationCollection GetManagementGroupRemediations(this ManagementGroupResource managementGroupResource)
-        {
-            return GetExtensionClient(managementGroupResource).GetManagementGroupRemediations();
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at management group scope.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtManagementGroup
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ManagementGroupRemediationResource>> GetManagementGroupRemediationAsync(this ManagementGroupResource managementGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            return await managementGroupResource.GetManagementGroupRemediations().GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing remediation at management group scope.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtManagementGroup
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ManagementGroupRemediationResource> GetManagementGroupRemediation(this ManagementGroupResource managementGroupResource, string remediationName, CancellationToken cancellationToken = default)
-        {
-            return managementGroupResource.GetManagementGroupRemediations().Get(remediationName, cancellationToken);
-        }
-
         /// <summary>
         /// Queries policy tracked resources under the management group.
         /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults
@@ -1371,63 +1171,6 @@ namespace Azure.ResourceManager.PolicyInsights
             return armResource.GetAttestations().Get(attestationName, cancellationToken);
         }
 
-        #region ManagementGroupRemediationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagementGroupRemediationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagementGroupRemediationResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupRemediationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupRemediationResource" /> object. </returns>
-        public static ManagementGroupRemediationResource GetManagementGroupRemediationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagementGroupRemediationResource.ValidateResourceId(id);
-                return new ManagementGroupRemediationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SubscriptionRemediationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionRemediationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionRemediationResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionRemediationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionRemediationResource" /> object. </returns>
-        public static SubscriptionRemediationResource GetSubscriptionRemediationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionRemediationResource.ValidateResourceId(id);
-                return new SubscriptionRemediationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGroupRemediationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupRemediationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupRemediationResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupRemediationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupRemediationResource" /> object. </returns>
-        public static ResourceGroupRemediationResource GetResourceGroupRemediationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGroupRemediationResource.ValidateResourceId(id);
-                return new ResourceGroupRemediationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region RemediationResource
         /// <summary>
         /// Gets an object representing a <see cref="RemediationResource" /> along with the instance operations that can be performed on it but with no data.
@@ -1461,44 +1204,6 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 PolicyMetadataResource.ValidateResourceId(id);
                 return new PolicyMetadataResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SubscriptionAttestationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionAttestationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionAttestationResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAttestationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionAttestationResource" /> object. </returns>
-        public static SubscriptionAttestationResource GetSubscriptionAttestationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionAttestationResource.ValidateResourceId(id);
-                return new SubscriptionAttestationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ResourceGroupAttestationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupAttestationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupAttestationResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupAttestationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupAttestationResource" /> object. </returns>
-        public static ResourceGroupAttestationResource GetResourceGroupAttestationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGroupAttestationResource.ValidateResourceId(id);
-                return new ResourceGroupAttestationResource(client, id);
             }
             );
         }

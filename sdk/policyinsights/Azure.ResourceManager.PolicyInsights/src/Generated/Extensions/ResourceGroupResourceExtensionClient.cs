@@ -55,20 +55,6 @@ namespace Azure.ResourceManager.PolicyInsights
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ResourceGroupRemediationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ResourceGroupRemediationResources and their operations over a ResourceGroupRemediationResource. </returns>
-        public virtual ResourceGroupRemediationCollection GetResourceGroupRemediations()
-        {
-            return GetCachedClient(Client => new ResourceGroupRemediationCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of ResourceGroupAttestationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ResourceGroupAttestationResources and their operations over a ResourceGroupAttestationResource. </returns>
-        public virtual ResourceGroupAttestationCollection GetResourceGroupAttestations()
-        {
-            return GetCachedClient(Client => new ResourceGroupAttestationCollection(Client, Id));
-        }
-
         /// <summary>
         /// Queries policy tracked resources under the resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults

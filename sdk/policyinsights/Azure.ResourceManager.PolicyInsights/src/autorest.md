@@ -17,11 +17,6 @@ modelerfour:
   flatten-payloads: false
 
 request-path-to-parent:
-  /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-  /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-  /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations: /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
   /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
 
 override-operation-name:
@@ -60,10 +55,29 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  - remove-operation: Remediations_ListDeploymentsAtManagementGroup
-  - remove-operation: Remediations_CancelAtManagementGroup
-  - remove-operation: Remediations_ListDeploymentsAtResourceGroup
-  - remove-operation: Remediations_CancelAtResourceGroup
+  # TODO: Autorest.csharp should combine these redundancy methods into the scope one
+  - from: remediations.json
+    where: $.paths
+    transform: >
+      delete $['/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations'];
+      delete $['/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}'];
+      delete $['/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments'];
+      delete $['/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel'];
+      delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations'];
+      delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}'];
+      delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments'];
+      delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel'];
+      delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations'];
+      delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}'];
+      delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments'];
+      delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel'];
+  - from: attestations.json
+    where: $.paths
+    transform: >
+      delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations'];
+      delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}'];
+      delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations'];
+      delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}'];
   - from: remediations.json
     where: $.definitions
     transform: >
