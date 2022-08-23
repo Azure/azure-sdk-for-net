@@ -30,6 +30,18 @@ namespace Azure.Monitor.Ingestion
         // request or stage as multiple blocks.
         private const int SingleUploadThreshold = 1000000; // 1 Mb in byte format
 
+        internal readonly struct BatchedLogs <T>
+        {
+            public BatchedLogs(List<T> X, BinaryData Y)
+            {
+                LogList = X;
+                LogData = Y;
+            }
+
+            public List<T> LogList { get; }
+            public BinaryData LogData { get; }
+        }
+
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -67,7 +79,7 @@ namespace Azure.Monitor.Ingestion
         /// <typeparam name="T"></typeparam>
         /// <param name="logEntries"></param>
         /// <returns></returns>
-        internal static IEnumerable<Tuple<List<T>, BinaryData>> Batch<T>(IEnumerable<T> logEntries)
+        internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries)
         {
             //TODO: use Array pool instead
             MemoryStream stream = new MemoryStream(SingleUploadThreshold);
@@ -87,13 +99,13 @@ namespace Azure.Monitor.Ingestion
                     WriteMemory(tempStream, memory);
                     WriteMemory(tempStream, BinaryData.FromString("]").ToMemory());
                     tempStream.Position = 0;
-                    yield return Tuple.Create(new List<T>{log}, BinaryData.FromStream(tempStream));
+                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(tempStream));
                 }
                 else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
                     WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                     stream.Position = 0; // set Position to 0 to return everything from beginning of stream
-                    yield return Tuple.Create(currentLogList, BinaryData.FromStream(stream));
+                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
 
                     // reset stream and currentLogList
                     stream = new MemoryStream(SingleUploadThreshold); // reset stream
@@ -110,7 +122,7 @@ namespace Azure.Monitor.Ingestion
                         WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                         stream.Position = 0;
                         currentLogList.Add(log);
-                        yield return Tuple.Create(currentLogList, BinaryData.FromStream(stream));
+                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
                     }
                     else
                     {
@@ -166,21 +178,16 @@ namespace Azure.Monitor.Ingestion
             List<UploadLogsError> errors = new List<UploadLogsError>();
             try
             {
-                foreach (Tuple<List<T>, BinaryData> result in Batch(logEntries))
+                foreach (BatchedLogs<T> batch in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, result.Item2, "gzip", requestContext);
+                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogData, "gzip", requestContext);
                     response = _pipeline.ProcessMessage(message, requestContext, cancellationToken);
                     if (response.IsError)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
-                        //List<Object> objectLogs = new List<Object>();
-                        //foreach (var log in result.Item1)
-                        //{
-                        //    objectLogs.Add(log);
-                        //}
-                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)result.Item1);
+                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogList);
                         errors.Add(new UploadLogsError(responseError, objectLogs));
                     }
                 }
@@ -234,21 +241,16 @@ namespace Azure.Monitor.Ingestion
             List<UploadLogsError> errors = new List<UploadLogsError>();
             try
             {
-                foreach (Tuple<List<T>, BinaryData> result in Batch(logEntries))
+                foreach (BatchedLogs<T> batch in Batch(logEntries))
                 {
                     //TODO: catch errors and correlate with Batch.start
-
-                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, result.Item2, "gzip", requestContext);
+                    using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogData, "gzip", requestContext);
                     response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
                     if (response.IsError)
                     {
                         RequestFailedException requestFailedException = new RequestFailedException(response);
                         ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
-                        List<Object> objectLogs = new List<Object>();
-                        foreach (var log in result.Item1)
-                        {
-                            objectLogs.Add(log);
-                        }
+                        List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogList);
                         errors.Add(new UploadLogsError(responseError, objectLogs));
                     }
                 }

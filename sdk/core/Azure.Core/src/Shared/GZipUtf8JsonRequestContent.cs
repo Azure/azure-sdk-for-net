@@ -59,6 +59,7 @@ namespace Azure.Core
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
+            //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30691
 #if NETFRAMEWORK
             MemoryStream tempStream = new MemoryStream();
             JsonWriter.Flush();
@@ -77,6 +78,7 @@ namespace Azure.Core
 
         public override bool TryComputeLength(out long length)
         {
+            //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30691
             Flush();
             length = _stream.Length;
             return true;

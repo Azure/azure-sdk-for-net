@@ -96,7 +96,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<Tuple<List<IEnumerable>, BinaryData>> x = LogsIngestionClient.Batch(entries);
+            IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
             Assert.AreEqual(1, x.Count());
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<Tuple<List<IEnumerable>, BinaryData>> x = LogsIngestionClient.Batch(entries);
+            IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
             Assert.Greater(x.Count(), 1);
         }
 
