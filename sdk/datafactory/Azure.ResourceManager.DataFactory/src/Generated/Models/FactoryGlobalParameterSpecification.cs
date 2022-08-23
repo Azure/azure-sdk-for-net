@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Global Parameter type. </summary>
         public FactoryGlobalParameterType ParameterType { get; set; }
         /// <summary>
-        /// Value of parameter..
+        /// Value of parameter.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

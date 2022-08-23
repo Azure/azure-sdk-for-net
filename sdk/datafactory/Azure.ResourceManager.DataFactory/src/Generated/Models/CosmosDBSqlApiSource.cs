@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// SQL API query. Type: string (or Expression with resultType string)..
+        /// SQL API query. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Query { get; set; }
         /// <summary>
-        /// Page size of the result. Type: integer (or Expression with resultType integer)..
+        /// Page size of the result. Type: integer (or Expression with resultType integer).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PageSize { get; set; }
         /// <summary>
-        /// Preferred regions. Type: array of strings (or Expression with resultType array of strings)..
+        /// Preferred regions. Type: array of strings (or Expression with resultType array of strings).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PreferredRegions { get; set; }
         /// <summary>
-        /// Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean)..
+        /// Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DetectDatetime { get; set; }
         /// <summary>
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects)..
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

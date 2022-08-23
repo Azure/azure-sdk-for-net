@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean)..
+        /// Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The deployment type of the Dynamics CRM instance. &apos;Online&apos; for Dynamics CRM Online and &apos;OnPremisesWithIfd&apos; for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string)..
+        /// The deployment type of the Dynamics CRM instance. &apos;Online&apos; for Dynamics CRM Online and &apos;OnPremisesWithIfd&apos; for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DeploymentType { get; set; }
         /// <summary>
-        /// The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string)..
+        /// The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData HostName { get; set; }
         /// <summary>
-        /// The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0..
+        /// The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Port { get; set; }
         /// <summary>
-        /// The URL to the Microsoft Dynamics CRM server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string)..
+        /// The URL to the Microsoft Dynamics CRM server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ServiceUri { get; set; }
         /// <summary>
-        /// The organization name of the Dynamics CRM instance. The property is required for on-prem and required for online when there are more than one Dynamics CRM instances associated with the user. Type: string (or Expression with resultType string)..
+        /// The organization name of the Dynamics CRM instance. The property is required for on-prem and required for online when there are more than one Dynamics CRM instances associated with the user. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData OrganizationName { get; set; }
         /// <summary>
-        /// The authentication type to connect to Dynamics CRM server. &apos;Office365&apos; for online scenario, &apos;Ifd&apos; for on-premises with Ifd scenario, &apos;AADServicePrincipal&apos; for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string)..
+        /// The authentication type to connect to Dynamics CRM server. &apos;Office365&apos; for online scenario, &apos;Ifd&apos; for on-premises with Ifd scenario, &apos;AADServicePrincipal&apos; for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AuthenticationType { get; set; }
         /// <summary>
-        /// User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string)..
+        /// User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string)..
+        /// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
-        /// The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string)..
+        /// The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalCredential { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

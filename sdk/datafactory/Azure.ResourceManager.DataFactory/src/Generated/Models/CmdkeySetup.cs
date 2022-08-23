@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The server name of data source access..
+        /// The server name of data source access.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TargetName { get; set; }
         /// <summary>
-        /// The user name of data source access..
+        /// The user name of data source access.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

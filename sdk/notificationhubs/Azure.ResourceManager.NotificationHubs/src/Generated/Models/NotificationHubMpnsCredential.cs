@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> The certificate key for this credential. </summary>
         public string CertificateKey { get; set; }
         /// <summary>
-        /// The MPNS certificate Thumbprint.
+        /// The MPNS certificate Thumbprint
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

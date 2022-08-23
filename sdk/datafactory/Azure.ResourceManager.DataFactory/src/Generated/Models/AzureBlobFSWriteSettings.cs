@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer)..
+        /// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

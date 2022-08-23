@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string..
+        /// A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData IngestionMappingName { get; set; }
         /// <summary>
-        /// An explicit column mapping description provided in a json format. Type: string..
+        /// An explicit column mapping description provided in a json format. Type: string.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData IngestionMappingAsJson { get; set; }
         /// <summary>
-        /// If set to true, any aggregation will be skipped. Default is false. Type: boolean..
+        /// If set to true, any aggregation will be skipped. Default is false. Type: boolean.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

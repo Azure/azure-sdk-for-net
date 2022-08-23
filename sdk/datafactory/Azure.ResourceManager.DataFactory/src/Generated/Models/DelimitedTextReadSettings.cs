@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer)..
+        /// Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

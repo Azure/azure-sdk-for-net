@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer)..
+        /// Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

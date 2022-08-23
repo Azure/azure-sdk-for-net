@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string)..
+        /// Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </summary>
         public FactoryLinkedServiceReference TrainedModelLinkedServiceName { get; set; }
         /// <summary>
-        /// The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string)..
+        /// The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

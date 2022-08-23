@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference..
+        /// SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ConnectionString { get; set; }
         /// <summary>
-        /// Host name of the SAP HANA server. Type: string (or Expression with resultType string)..
+        /// Host name of the SAP HANA server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The authentication type to be used to connect to the SAP HANA server. </summary>
         public SapHanaAuthenticationType? AuthenticationType { get; set; }
         /// <summary>
-        /// Username to access the SAP HANA server. Type: string (or Expression with resultType string)..
+        /// Username to access the SAP HANA server. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

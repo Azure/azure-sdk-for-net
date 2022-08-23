@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary>
-        /// Pipeline settings, for things like ContinueRunOnStepFailure etc..
+        /// Pipeline settings, for things like ContinueRunOnStepFailure etc.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Compute properties for data flow activity. </summary>
         public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
         /// <summary>
-        /// Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string).
+        /// Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TraceLevel { get; set; }
         /// <summary>
-        /// Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean).
+        /// Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ContinueOnError { get; set; }
         /// <summary>
-        /// Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean).
+        /// Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RunConcurrently { get; set; }
         /// <summary>
-        /// Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer).
+        /// Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

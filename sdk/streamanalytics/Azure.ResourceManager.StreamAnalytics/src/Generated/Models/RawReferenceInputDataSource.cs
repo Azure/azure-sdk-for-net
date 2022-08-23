@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary>
-        /// The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. .
+        /// The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. 
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

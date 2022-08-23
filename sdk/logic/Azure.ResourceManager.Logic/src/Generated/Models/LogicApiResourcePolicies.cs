@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary>
-        /// The API level only policies XML as embedded content..
+        /// The API level only policies XML as embedded content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

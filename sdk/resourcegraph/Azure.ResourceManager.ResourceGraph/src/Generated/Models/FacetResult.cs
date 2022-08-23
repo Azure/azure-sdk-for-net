@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <summary> Number of records returned in the facet response. </summary>
         public int Count { get; }
         /// <summary>
-        /// A JObject array or Table containing the desired facets. Only present if the facet is valid..
+        /// A JObject array or Table containing the desired facets. Only present if the facet is valid.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The authentication type to use. </summary>
         public ZendeskAuthenticationType AuthenticationType { get; set; }
         /// <summary>
-        /// The url to connect Zendesk source. Type: string (or Expression with resultType string)..
+        /// The url to connect Zendesk source. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Uri { get; set; }
         /// <summary>
-        /// The username of the Zendesk source. Type: string (or Expression with resultType string)..
+        /// The username of the Zendesk source. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition ApiToken { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

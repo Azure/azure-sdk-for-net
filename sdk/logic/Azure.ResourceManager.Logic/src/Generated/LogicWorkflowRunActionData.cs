@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Gets the code. </summary>
         public string Code { get; }
         /// <summary>
-        /// Gets the error..
+        /// Gets the error.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Gets the link to outputs. </summary>
         public LogicContentLink OutputsLink { get; }
         /// <summary>
-        /// Gets the tracked properties..
+        /// Gets the tracked properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

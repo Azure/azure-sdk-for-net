@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the next run time&apos;s offset in minutes. </summary>
         public double? NextRunOffsetMinutes { get; set; }
         /// <summary>
-        /// Gets or sets the interval of the schedule..
+        /// Gets or sets the interval of the schedule.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

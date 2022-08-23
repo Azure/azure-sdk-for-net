@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string)..
+        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestMethod { get; set; }
         /// <summary>
-        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string)..
+        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestBody { get; set; }
         /// <summary>
-        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string)..
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AdditionalHeaders { get; set; }
         /// <summary>
-        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string)..
+        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PaginationRules { get; set; }
         /// <summary>
-        /// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
+        /// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData HttpRequestTimeout { get; set; }
         /// <summary>
-        /// The time to await before sending next page request. .
+        /// The time to await before sending next page request. 
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestInterval { get; set; }
         /// <summary>
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects)..
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

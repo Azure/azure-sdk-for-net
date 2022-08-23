@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> An array of linked template artifacts. </summary>
         public IList<LinkedTemplateArtifact> LinkedTemplates { get; }
         /// <summary>
-        /// The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs..
+        /// The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         public BinaryData Metadata { get; set; }
         /// <summary>
-        /// The main Azure Resource Manager template content..
+        /// The main Azure Resource Manager template content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         public BinaryData MainTemplate { get; set; }
         /// <summary>
-        /// The Azure Resource Manager template UI definition content..
+        /// The Azure Resource Manager template UI definition content.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

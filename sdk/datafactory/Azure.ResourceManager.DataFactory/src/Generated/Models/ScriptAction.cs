@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The URI for the script action. </summary>
         public Uri Uri { get; set; }
         /// <summary>
-        /// The node types on which the script action should be executed..
+        /// The node types on which the script action should be executed.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

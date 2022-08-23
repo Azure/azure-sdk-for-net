@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The workflow scope repetition code. </summary>
         public string Code { get; set; }
         /// <summary>
-        /// Anything.
+        /// Anything
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Gets the tracking id. </summary>
         public Guid? TrackingId { get; }
         /// <summary>
-        /// Gets the inputs..
+        /// Gets the inputs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Gets the link to inputs. </summary>
         public LogicContentLink InputsLink { get; }
         /// <summary>
-        /// Gets the outputs..
+        /// Gets the outputs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Gets the link to outputs. </summary>
         public LogicContentLink OutputsLink { get; }
         /// <summary>
-        /// Gets the tracked properties..
+        /// Gets the tracked properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

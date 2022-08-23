@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </summary>
         public string SelectedItemValuePath { get; set; }
         /// <summary>
-        /// The parameter value..
+        /// The parameter value.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

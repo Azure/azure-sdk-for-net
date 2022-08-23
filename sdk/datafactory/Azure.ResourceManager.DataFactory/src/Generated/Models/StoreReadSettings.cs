@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The read setting type. </summary>
         internal string StoreReadSettingsType { get; set; }
         /// <summary>
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer)..
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData MaxConcurrentConnections { get; set; }
         /// <summary>
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean)..
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary>
-        /// Mapper executable name. Type: string (or Expression with resultType string)..
+        /// Mapper executable name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Mapper { get; set; }
         /// <summary>
-        /// Reducer executable name. Type: string (or Expression with resultType string)..
+        /// Reducer executable name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Reducer { get; set; }
         /// <summary>
-        /// Input blob path. Type: string (or Expression with resultType string)..
+        /// Input blob path. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Input { get; set; }
         /// <summary>
-        /// Output blob path. Type: string (or Expression with resultType string)..
+        /// Output blob path. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Linked service reference where the files are located. </summary>
         public FactoryLinkedServiceReference FileLinkedService { get; set; }
         /// <summary>
-        /// Combiner executable name. Type: string (or Expression with resultType string)..
+        /// Combiner executable name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

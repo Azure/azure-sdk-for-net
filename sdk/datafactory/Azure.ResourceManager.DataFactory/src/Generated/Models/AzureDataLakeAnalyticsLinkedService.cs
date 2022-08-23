@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string)..
+        /// The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData AccountName { get; set; }
         /// <summary>
-        /// The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string)..
+        /// The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
-        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string)..
+        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Tenant { get; set; }
         /// <summary>
-        /// Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string)..
+        /// Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SubscriptionId { get; set; }
         /// <summary>
-        /// Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string)..
+        /// Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ResourceGroupName { get; set; }
         /// <summary>
-        /// Azure Data Lake Analytics URI Type: string (or Expression with resultType string)..
+        /// Azure Data Lake Analytics URI Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DataLakeAnalyticsUri { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

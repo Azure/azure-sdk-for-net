@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string)..
+        /// The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RelativeUri { get; set; }
         /// <summary>
-        /// The HTTP method for the HTTP request. Type: string (or Expression with resultType string)..
+        /// The HTTP method for the HTTP request. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RequestMethod { get; set; }
         /// <summary>
-        /// The body for the HTTP request. Type: string (or Expression with resultType string)..
+        /// The body for the HTTP request. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
         /// ...
-        /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string)..
+        /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

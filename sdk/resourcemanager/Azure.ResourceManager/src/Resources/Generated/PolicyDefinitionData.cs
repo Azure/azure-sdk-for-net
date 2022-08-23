@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The policy definition description. </summary>
         public string Description { get; set; }
         /// <summary>
-        /// The policy rule..
+        /// The policy rule.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         public BinaryData PolicyRule { get; set; }
         /// <summary>
-        /// The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs..
+        /// The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
