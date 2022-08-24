@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -39,6 +34,84 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task SetUp()
         {
             _integrationAccount = await Client.GetIntegrationAccountResource(_integrationAccountIdentifier).GetAsync();
+        }
+
+        private string Xslt30MapContent
+        {
+            get
+            {
+                return @"<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='3.0'>
+	                        <xsl:output method='text'/>
+	                        <xsl:template match='/'>
+		                        <xsl:value-of select='company/employee/name'/>
+		                        <xsl:variable name='test'>
+			                        <xsl:text>company/employee/name</xsl:text>
+		                        </xsl:variable>
+		                        <xsl:evaluate xpath='$test'/>
+	                        </xsl:template>
+                        </xsl:stylesheet>";
+            }
+        }
+
+        private async Task<IntegrationAccountMapResource> CreateMap(string mapName)
+        {
+            IntegrationAccountMapData data = new IntegrationAccountMapData(_integrationAccount.Data.Location, IntegrationAccountMapType.Xslt30)
+            {
+                Content = Xslt30MapContent,
+                ContentType = "application/xml"
+            };
+            var map = await _mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, data);
+            return map.Value;
+        }
+
+        [RecordedTest]
+        public async Task CreateOrUpdate()
+        {
+            string mapName = Recording.GenerateAssetName("map");
+            var map = await CreateMap(mapName);
+            Assert.IsNotNull(map);
+            Assert.AreEqual(mapName, map.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task Exist()
+        {
+            string mapName = Recording.GenerateAssetName("map");
+            await CreateMap(mapName);
+            bool flag = await _mapCollection.ExistsAsync(mapName);
+            Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task Get()
+        {
+            string mapName = Recording.GenerateAssetName("map");
+            await CreateMap(mapName);
+            var map = await _mapCollection.GetAsync(mapName);
+            Assert.IsNotNull(map);
+            Assert.AreEqual(mapName, map.Value.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            string mapName = Recording.GenerateAssetName("map");
+            await CreateMap(mapName);
+            var list = await _mapCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+        }
+
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string mapName = Recording.GenerateAssetName("map");
+            var map = await CreateMap(mapName);
+            bool flag = await _mapCollection.ExistsAsync(mapName);
+            Assert.IsTrue(flag);
+
+            await map.DeleteAsync(WaitUntil.Completed);
+            flag = await _mapCollection.ExistsAsync(mapName);
+            Assert.IsFalse(flag);
         }
     }
 }

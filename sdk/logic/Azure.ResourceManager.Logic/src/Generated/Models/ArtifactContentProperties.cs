@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="content"> Anything. </param>
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
-        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(createdOn, changedOn, metadata)
+        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicContentLink contentLink) : base(createdOn, changedOn, metadata)
         {
             Content = content;
             ContentType = contentType;
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// </summary>
         public BinaryData Content { get; set; }
         /// <summary> The content type. </summary>
-        public ContentType? ContentType { get; set; }
+        public string ContentType { get; set; }
         /// <summary> The content link. </summary>
         public LogicContentLink ContentLink { get; set; }
     }

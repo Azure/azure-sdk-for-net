@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The API resource policies. </summary>
@@ -20,43 +18,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicApiResourcePolicies. </summary>
         /// <param name="content"> The API level only policies XML as embedded content. </param>
         /// <param name="contentLink"> The content link to the policies. </param>
-        internal LogicApiResourcePolicies(BinaryData content, string contentLink)
+        internal LogicApiResourcePolicies(string content, string contentLink)
         {
             Content = content;
             ContentLink = contentLink;
         }
 
-        /// <summary>
-        /// The API level only policies XML as embedded content.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Content { get; }
+        /// <summary> The API level only policies XML as embedded content. </summary>
+        public string Content { get; }
         /// <summary> The content link to the policies. </summary>
         public string ContentLink { get; }
     }

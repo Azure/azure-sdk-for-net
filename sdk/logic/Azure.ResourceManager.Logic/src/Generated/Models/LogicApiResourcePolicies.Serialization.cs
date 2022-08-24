@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,18 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourcePolicies DeserializeLogicApiResourcePolicies(JsonElement element)
         {
-            Optional<BinaryData> content = default;
+            Optional<string> content = default;
             Optional<string> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    content = BinaryData.FromString(property.Value.GetRawText());
+                    content = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentLink"))

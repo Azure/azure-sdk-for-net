@@ -63,16 +63,12 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Content);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(Content);
             }
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType.Value.ToString());
+                writer.WriteStringValue(ContentType);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -93,8 +89,8 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
-            Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
+            Optional<string> content = default;
+            Optional<string> contentType = default;
             Optional<LogicContentLink> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -204,22 +200,12 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("content"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            content = BinaryData.FromString(property0.Value.GetRawText());
+                            content = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("contentType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            contentType = new ContentType(property0.Value.GetString());
+                            contentType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("contentLink"))
@@ -236,7 +222,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value);
+            return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, contentType.Value, contentLink.Value);
         }
     }
 }

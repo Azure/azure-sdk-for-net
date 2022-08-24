@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
         internal static LogicJsonSchema DeserializeLogicJsonSchema(JsonElement element)
         {
             Optional<string> title = default;
-            Optional<BinaryData> content = default;
+            Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"))
@@ -26,12 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("content"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    content = BinaryData.FromString(property.Value.GetRawText());
+                    content = property.Value.GetString();
                     continue;
                 }
             }

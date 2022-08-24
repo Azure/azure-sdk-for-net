@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType.Value.ToString());
+                writer.WriteStringValue(ContentType);
             }
             if (Optional.IsDefined(ContentLink))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> assemblyCulture = default;
             Optional<string> assemblyPublicKeyToken = default;
             Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
+            Optional<string> contentType = default;
             Optional<LogicContentLink> contentLink = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
@@ -120,12 +120,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("contentType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    contentType = new ContentType(property.Value.GetString());
+                    contentType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentLink"))
@@ -169,7 +164,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationAccountAssemblyProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value, assemblyName, assemblyVersion.Value, assemblyCulture.Value, assemblyPublicKeyToken.Value);
+            return new IntegrationAccountAssemblyProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, contentType.Value, contentLink.Value, assemblyName, assemblyVersion.Value, assemblyCulture.Value, assemblyPublicKeyToken.Value);
         }
     }
 }

@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -39,6 +35,66 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task SetUp()
         {
             _integrationAccount = await Client.GetIntegrationAccountResource(_integrationAccountIdentifier).GetAsync();
+        }
+
+        private async Task<IntegrationAccountSessionResource> CreateSession(string sessionName)
+        {
+            IntegrationAccountSessionData data = new IntegrationAccountSessionData(_integrationAccount.Data.Location)
+            {
+                Content = new BinaryData("456")
+            };
+            var session = await _sessionCollection.CreateOrUpdateAsync(WaitUntil.Completed, sessionName, data);
+            return session.Value;
+        }
+
+        [RecordedTest]
+        public async Task CreateOrUpdate()
+        {
+            string sessionName = Recording.GenerateAssetName("session");
+            var session = await CreateSession(sessionName);
+            Assert.IsNotNull(session);
+            Assert.AreEqual(sessionName, session.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task Exist()
+        {
+            string sessionName = Recording.GenerateAssetName("session");
+            await CreateSession(sessionName);
+            bool flag = await _sessionCollection.ExistsAsync(sessionName);
+            Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task Get()
+        {
+            string sessionName = Recording.GenerateAssetName("session");
+            await CreateSession(sessionName);
+            var session = await _sessionCollection.GetAsync(sessionName);
+            Assert.IsNotNull(session);
+            Assert.AreEqual(sessionName, session.Value.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            string sessionName = Recording.GenerateAssetName("session");
+            await CreateSession(sessionName);
+            var list = await _sessionCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+        }
+
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string sessionName = Recording.GenerateAssetName("session");
+            var session = await CreateSession(sessionName);
+            bool flag = await _sessionCollection.ExistsAsync(sessionName);
+            Assert.IsTrue(flag);
+
+            await session.DeleteAsync(WaitUntil.Completed);
+            flag = await _sessionCollection.ExistsAsync(sessionName);
+            Assert.IsFalse(flag);
         }
     }
 }

@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -48,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Tests
             IntegrationAccountAssemblyProperties properties = new IntegrationAccountAssemblyProperties(assemblyDefinitionName)
             {
                 Content = BinaryData.FromObjectAsJson(dllDate),
-                ContentType = ContentType.ApplicationOctetStream,
+                ContentType = "application/octet-stream",
             };
             IntegrationAccountAssemblyDefinitionData data = new IntegrationAccountAssemblyDefinitionData(_integrationAccount.Data.Location, properties);
             var assemblyDefinition = await _assemblyDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, assemblyDefinitionName, data);

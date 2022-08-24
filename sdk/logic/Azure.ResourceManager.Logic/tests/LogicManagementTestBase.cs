@@ -10,6 +10,9 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Logic.Models;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.KeyVault;
+using System;
 
 namespace Azure.ResourceManager.Logic.Tests
 {
@@ -33,9 +36,10 @@ namespace Azure.ResourceManager.Logic.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(AzureLocation location)
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
@@ -63,9 +67,18 @@ namespace Azure.ResourceManager.Logic.Tests
             data.Subnets.Add(new SubnetData() { Name = "subnet3", AddressPrefix = "10.10.3.0/24" });
             data.Subnets.Add(new SubnetData() { Name = "subnet4", AddressPrefix = "10.10.4.0/24" });
             data.Subnets.Add(new SubnetData() { Name = "subnet5", AddressPrefix = "10.10.5.0/24" });
-            data.Subnets[0].Delegations.Add(new ServiceDelegation() {Name  = "integrationServiceEnvironments", ServiceName = "Microsoft.Logic/integrationServiceEnvironments" });
+            data.Subnets[0].Delegations.Add(new ServiceDelegation() { Name = "integrationServiceEnvironments", ServiceName = "Microsoft.Logic/integrationServiceEnvironments" });
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
             return vnet.Value;
+        }
+
+        protected async Task<KeyVaultResource> CreateDefaultKeyVault(ResourceGroupResource resourceGroup, string keyvaultName)
+        {
+            KeyVaultSku sku = new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard);
+            KeyVaultProperties properties = new KeyVaultProperties(new Guid(Environment.GetEnvironmentVariable("CLIENT_ID")), sku);
+            KeyVaultCreateOrUpdateContent data = new KeyVaultCreateOrUpdateContent(resourceGroup.Data.Location, properties);
+            var keyvault = await resourceGroup.GetKeyVaults().CreateOrUpdateAsync(WaitUntil.Completed, keyvaultName, data);
+            return keyvault.Value;
         }
     }
 }

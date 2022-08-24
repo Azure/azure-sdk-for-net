@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fe8e847ae3cf4f4c80cf606ead84a36f-a46cb3d11e14ac49-00",
+        "traceparent": "00-ecbe2255ec57724ca29b58758c006098-b5c009972ff7d849-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "71802a4ef732e39a77fa0207a6fd1e10",
+        "x-ms-client-request-id": "f804198c4f16a93a54ea9671c5541adb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Aug 2022 06:37:04 GMT",
+        "Date": "Wed, 24 Aug 2022 09:26:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "006a5b89-b6f7-4c27-86ec-e6406ce59d65",
+        "x-ms-correlation-request-id": "d68d7c85-7d4f-43af-ab46-b6bd60e9d4df",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "006a5b89-b6f7-4c27-86ec-e6406ce59d65",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220823T063705Z:006a5b89-b6f7-4c27-86ec-e6406ce59d65"
+        "x-ms-request-id": "d68d7c85-7d4f-43af-ab46-b6bd60e9d4df",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T092654Z:d68d7c85-7d4f-43af-ab46-b6bd60e9d4df"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/LogicAppRG-2065?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/LogicAppRG-1804?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "24",
         "Content-Type": "application/json",
-        "traceparent": "00-49632e39ffe666478e0283ed234cb52b-f9b49866c1e6714f-00",
+        "traceparent": "00-f91a1ef37e5e784fa8e5b94008d92a31-7b485dde59c14f4f-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a9b0f3bda6997972ce9edba455bad5d6",
+        "x-ms-client-request-id": "fef0da4157520f8d25f8eb4875ab6f40",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -76,19 +76,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "230",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 23 Aug 2022 06:37:10 GMT",
+        "Date": "Wed, 24 Aug 2022 09:26:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f68347c6-d20a-4aff-9087-3d5d7a83c3c0",
+        "x-ms-correlation-request-id": "319d86b9-5b70-4965-b4bd-c5302951289f",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "f68347c6-d20a-4aff-9087-3d5d7a83c3c0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220823T063710Z:f68347c6-d20a-4aff-9087-3d5d7a83c3c0"
+        "x-ms-request-id": "319d86b9-5b70-4965-b4bd-c5302951289f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220824T092659Z:319d86b9-5b70-4965-b4bd-c5302951289f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-2065",
-        "name": "LogicAppRG-2065",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-1804",
+        "name": "LogicAppRG-1804",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "centralus",
         "properties": {
@@ -99,7 +99,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1346537978",
+    "RandomSeed": "394457520",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

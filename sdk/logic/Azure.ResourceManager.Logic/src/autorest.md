@@ -168,8 +168,6 @@ format-by-name-rules:
   'trackingId': 'uuid'
   'actionTrackingId': 'uuid'
   'PublicCertificate': 'any'
-  'content': 'any'
-  'contentType': 'content-type'
   'MessageContentType': 'content-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'

@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Logic.Tests
 {
     internal class IntegrationServiceEnvironmentTests : LogicManagementTestBase
     {
-        private ResourceIdentifier _resourceGroupIdentifier;
         private ResourceGroupResource _resourceGroup;
 
         private IntegrationServiceEnvironmentCollection _integrationServiceEnvironmentCollection => _resourceGroup.GetIntegrationServiceEnvironments();
@@ -21,24 +20,16 @@ namespace Azure.ResourceManager.Logic.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.CentralUS));
-            _resourceGroupIdentifier = rgLro.Value.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
-        public async Task SetUp()
+        public async Task TestSetup()
         {
-            _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await CreateResourceGroup(AzureLocation.CentralUS);
         }
 
         [RecordedTest]
         public async Task IntegrationServiceEnvironment_E2E()
         {
-            var _vnet = await CreateDefaultNetwork(_resourceGroup, "vnet5951");
+            var _vnet = await CreateDefaultNetwork(_resourceGroup, Recording.GenerateAssetName("vnet"));
 
             // Create - It will take 6 hours to create
             string serviceEnviromentName = "serviceEnviroment0000";
