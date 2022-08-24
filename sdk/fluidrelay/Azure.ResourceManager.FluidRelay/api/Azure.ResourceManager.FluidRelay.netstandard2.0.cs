@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FluidRelay
         public System.Guid? FrsContainerId { get { throw null; } }
         public System.Guid? FrsTenantId { get { throw null; } }
         public System.DateTimeOffset? LastAccessOn { get { throw null; } }
-        public Azure.ResourceManager.FluidRelay.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class FluidRelayContainerResource : Azure.ResourceManager.ArmResource
     {
@@ -37,8 +37,6 @@ namespace Azure.ResourceManager.FluidRelay
     public static partial class FluidRelayExtensions
     {
         public static Azure.ResourceManager.FluidRelay.FluidRelayContainerResource GetFluidRelayContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.FluidRelay.Models.OperationResult> GetFluidRelayOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.FluidRelay.Models.OperationResult> GetFluidRelayOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> GetFluidRelayServer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string fluidRelayServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> GetFluidRelayServerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string fluidRelayServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.FluidRelay.FluidRelayServerResource GetFluidRelayServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -64,12 +62,12 @@ namespace Azure.ResourceManager.FluidRelay
     public partial class FluidRelayServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public FluidRelayServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.FluidRelay.Models.CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints FluidRelayEndpoints { get { throw null; } }
         public System.Guid? FrsTenantId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.FluidRelay.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public Azure.ResourceManager.FluidRelay.Models.StorageSku? StorageSku { get { throw null; } set { } }
+        public Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku? StorageSku { get { throw null; } set { } }
     }
     public partial class FluidRelayServerResource : Azure.ResourceManager.ArmResource
     {
@@ -89,8 +87,8 @@ namespace Azure.ResourceManager.FluidRelay
         public virtual Azure.ResourceManager.FluidRelay.FluidRelayContainerCollection GetFluidRelayContainers() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys> RegenerateKey(Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys>> RegenerateKeyAsync(Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys> RegenerateKeys(Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.Models.FluidRelayServerKeys>> RegenerateKeysAsync(Azure.ResourceManager.FluidRelay.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -101,22 +99,22 @@ namespace Azure.ResourceManager.FluidRelay
 }
 namespace Azure.ResourceManager.FluidRelay.Models
 {
+    public partial class CmkEncryptionProperties
+    {
+        public CmkEncryptionProperties() { }
+        public Azure.ResourceManager.FluidRelay.Models.CmkIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
+        public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
+    }
+    public partial class CmkIdentity
+    {
+        public CmkIdentity() { }
+        public Azure.ResourceManager.FluidRelay.Models.CmkIdentityType? IdentityType { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
+    }
     public enum CmkIdentityType
     {
         SystemAssigned = 0,
         UserAssigned = 1,
-    }
-    public partial class CustomerManagedKeyEncryptionProperties
-    {
-        public CustomerManagedKeyEncryptionProperties() { }
-        public Azure.ResourceManager.FluidRelay.Models.CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
-        public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
-    }
-    public partial class CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity
-    {
-        public CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity() { }
-        public Azure.ResourceManager.FluidRelay.Models.CmkIdentityType? IdentityType { get { throw null; } set { } }
-        public string UserAssignedIdentityResourceId { get { throw null; } set { } }
     }
     public partial class FluidRelayEndpoints
     {
@@ -124,6 +122,30 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public System.Collections.Generic.IReadOnlyList<string> OrdererEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ServiceEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> StorageEndpoints { get { throw null; } }
+    }
+    public enum FluidRelayKeyName
+    {
+        Key1 = 0,
+        Key2 = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FluidRelayProvisioningState : System.IEquatable<Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FluidRelayProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState left, Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState left, Azure.ResourceManager.FluidRelay.Models.FluidRelayProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class FluidRelayServerKeys
     {
@@ -134,71 +156,32 @@ namespace Azure.ResourceManager.FluidRelay.Models
     public partial class FluidRelayServerPatch
     {
         public FluidRelayServerPatch() { }
-        public Azure.ResourceManager.FluidRelay.Models.CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public enum KeyName
-    {
-        Key1 = 0,
-        Key2 = 1,
-    }
-    public partial class OperationDisplay
-    {
-        internal OperationDisplay() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-    }
-    public partial class OperationResult
-    {
-        internal OperationResult() { }
-        public Azure.ResourceManager.FluidRelay.Models.OperationDisplay Display { get { throw null; } }
-        public bool? IsDataAction { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.FluidRelay.Models.ProvisioningState>
+    public readonly partial struct FluidRelayStorageSku : System.IEquatable<Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.FluidRelay.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.FluidRelay.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.FluidRelay.Models.ProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FluidRelay.Models.ProvisioningState other) { throw null; }
+        public FluidRelayStorageSku(string value) { throw null; }
+        public static Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku Basic { get { throw null; } }
+        public static Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FluidRelay.Models.ProvisioningState left, Azure.ResourceManager.FluidRelay.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FluidRelay.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FluidRelay.Models.ProvisioningState left, Azure.ResourceManager.FluidRelay.Models.ProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku left, Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku left, Azure.ResourceManager.FluidRelay.Models.FluidRelayStorageSku right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RegenerateKeyContent
     {
-        public RegenerateKeyContent(Azure.ResourceManager.FluidRelay.Models.KeyName keyName) { }
-        public Azure.ResourceManager.FluidRelay.Models.KeyName KeyName { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageSku : System.IEquatable<Azure.ResourceManager.FluidRelay.Models.StorageSku>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageSku(string value) { throw null; }
-        public static Azure.ResourceManager.FluidRelay.Models.StorageSku Basic { get { throw null; } }
-        public static Azure.ResourceManager.FluidRelay.Models.StorageSku Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FluidRelay.Models.StorageSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FluidRelay.Models.StorageSku left, Azure.ResourceManager.FluidRelay.Models.StorageSku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FluidRelay.Models.StorageSku (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FluidRelay.Models.StorageSku left, Azure.ResourceManager.FluidRelay.Models.StorageSku right) { throw null; }
-        public override string ToString() { throw null; }
+        public RegenerateKeyContent(Azure.ResourceManager.FluidRelay.Models.FluidRelayKeyName keyName) { }
+        public Azure.ResourceManager.FluidRelay.Models.FluidRelayKeyName KeyName { get { throw null; } }
     }
 }

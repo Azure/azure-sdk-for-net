@@ -19,7 +19,6 @@ pr:
   paths:
     include:
     - sdk/webpubsub/
-    - sdk/resourcemanager/
     - sdk/network/
 
 extends:
