@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The MediaStreamingConfiguration. </summary>
-    internal partial class MediaStreamingConfigurationInternal
+    internal partial class MediaStreamingOptionsInternal
     {
         /// <summary> Initializes a new instance of MediaStreamingConfigurationInternal. </summary>
         /// <param name="transportUrl"> Transport URL for media streaming. </param>
@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
         /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
-        public MediaStreamingConfigurationInternal(string transportUrl, MediaStreamingTransportType transportType, MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType)
+        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransportType transportType, MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType)
         {
             if (transportUrl == null)
             {

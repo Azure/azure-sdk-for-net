@@ -202,7 +202,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> RecognizeAsync(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RecognizeAsync(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response Recognize(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        public virtual Response Recognize(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
             scope.Start();
@@ -240,7 +240,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        private static RecognizeRequestInternal CreateRecognizeRequest(RecognizeOptions recognizeOptions)
+        private static RecognizeRequestInternal CreateRecognizeRequest(CallMediaRecognizeOptions recognizeOptions)
         {
             if (recognizeOptions == null)
                 throw new ArgumentNullException(nameof(recognizeOptions));

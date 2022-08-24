@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Communication.CallingServer
 {
@@ -16,29 +15,29 @@ namespace Azure.Communication.CallingServer
         /// Creates a new CreateCallOptions object.
         /// </summary>
         /// <param name="targets"></param>
-        /// <param name="source"></param>
-        /// <param name="callbackEndpoint"></param>
-        public CreateCallOptions(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackEndpoint)
+        /// <param name="callSource"></param>
+        /// <param name="callbackUri"></param>
+        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
         {
-            Targets = targets;
-            Source = source;
-            CallbackEndpoint = callbackEndpoint;
+            Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
+            CallSource = callSource;
+            CallbackUri = callbackUri;
         }
 
         /// <summary>
         /// The targets of the call.
         /// </summary>
-        public IEnumerable<CommunicationIdentifier> Targets { get; }
+        public IReadOnlyList<CommunicationIdentifier> Targets { get; }
 
         /// <summary>
         /// The source of the call.
         /// </summary>
-        public CallSource Source { get; }
+        public CallSource CallSource { get; }
 
         /// <summary>
-        /// The callback URI.
+        /// The callback Uri.
         /// </summary>
-        public Uri CallbackEndpoint { get; }
+        public Uri CallbackUri { get; }
 
         /// <summary>
         /// The subject.
@@ -48,6 +47,6 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Media Streaming Configuration.
         /// </summary>
-        public MediaStreamingConfiguration MediaStreamingConfiguration { get; set; }
+        public MediaStreamingOptions MediaStreamingOptions { get; set; }
     }
 }

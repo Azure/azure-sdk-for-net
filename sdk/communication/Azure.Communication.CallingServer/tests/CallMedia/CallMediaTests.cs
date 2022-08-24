@@ -110,7 +110,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.RecognizeAsync(new RecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
+                   callMedia => callMedia.RecognizeAsync(new CallMediaRecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
                 }
             };
         }
@@ -133,7 +133,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.Recognize(new RecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
+                   callMedia => callMedia.Recognize(new CallMediaRecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
                 }
             };
         }
