@@ -77,7 +77,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set</param>
         /// <param name="extendedLocation">The extended location of the Virtual
         /// Machine Scale Set.</param>
-        /// 
+        /// <param name="orchestrationMode">Specifies the orchestration mode
+        /// for the virtual machine scale set. Possible values include:
+        /// 'Uniform', 'Flexible'</param>
+        /// <param name="spotRestorePolicy">Specifies the Spot Restore
+        /// properties for the virtual machine scale set.</param>
+        /// <param name="priorityMixPolicy">Specifies the desired targets for
+        /// mixing Spot and Regular priority VMs within the same VMSS Flex
+        /// instance.</param>
+
         public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, string orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, PriorityMixPolicy priorityMixPolicy = default(PriorityMixPolicy))
             : base(location, id, name, type, tags)
         {
