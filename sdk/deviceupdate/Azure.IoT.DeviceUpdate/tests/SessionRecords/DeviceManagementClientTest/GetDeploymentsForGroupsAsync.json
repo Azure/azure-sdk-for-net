@@ -6,19 +6,19 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a1571ad818b268049ea79d5f029d5c0d-a30571ac99a07ee2-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0adbe207a89b32e7135fe584644a898f",
+        "traceparent": "00-45b16d9a737bc6439404e61234c0fee8-52900f7b8648cf4a-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220824.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1c335d6d139962ee78991cb6f1d7649c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "3786",
+        "Content-Length": "5677",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 10 Aug 2022 00:41:04 GMT",
-        "mise-correlation-id": "942caf43-a3b2-4746-a2ba-0532e851603b",
-        "traceparent": "00-a1571ad818b268049ea79d5f029d5c0d-a30571ac99a07ee2-00"
+        "Date": "Wed, 24 Aug 2022 17:57:26 GMT",
+        "mise-correlation-id": "407171ce-6f80-4aa9-a9bd-7d4b6b4d15b8",
+        "traceparent": "00-45b16d9a737bc6439404e61234c0fee8-52900f7b8648cf4a-00"
       },
       "ResponseBody": {
         "value": [
@@ -149,6 +149,70 @@
             "deviceClassSubgroups": [
               "0919e3ae422a2bfa8c84ff905813e60351e456d1"
             ]
+          },
+          {
+            "deploymentId": "8b39b9d00ec3436a95fa116b1e39cdd8",
+            "groupId": "dpokluda-test",
+            "startDateTime": "2022-08-12T21:52:42.516456\u002B00:00",
+            "update": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.812.237.5"
+              }
+            },
+            "isCloudInitiatedRollback": false,
+            "deviceClassSubgroups": [
+              "0919e3ae422a2bfa8c84ff905813e60351e456d1"
+            ]
+          },
+          {
+            "deploymentId": "ede0551c962f4ebf9a7593d6675f599f",
+            "groupId": "dpokluda-test",
+            "startDateTime": "2022-08-12T21:53:45.502374\u002B00:00",
+            "update": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.812.237.5"
+              }
+            },
+            "isCloudInitiatedRollback": false,
+            "deviceClassSubgroups": [
+              "0919e3ae422a2bfa8c84ff905813e60351e456d1"
+            ]
+          },
+          {
+            "deploymentId": "f1a03cd9-320f-4db0-b99d-a7a8f9ea6039",
+            "groupId": "dpokluda-test",
+            "startDateTime": "2022-08-13T00:17:46.4322917\u002B00:00",
+            "update": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.809.131.21"
+              }
+            },
+            "isCloudInitiatedRollback": false,
+            "deviceClassSubgroups": [
+              "0919e3ae422a2bfa8c84ff905813e60351e456d1"
+            ]
+          },
+          {
+            "deploymentId": "3706728501f54ef4b4d6574eaef7fb6c",
+            "groupId": "dpokluda-test",
+            "startDateTime": "2022-08-13T00:21:37.385494\u002B00:00",
+            "update": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.809.131.21"
+              }
+            },
+            "isCloudInitiatedRollback": false,
+            "deviceClassSubgroups": [
+              "0919e3ae422a2bfa8c84ff905813e60351e456d1"
+            ]
           }
         ]
       }
@@ -158,6 +222,6 @@
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "191301268"
+    "RandomSeed": "567548132"
   }
 }
