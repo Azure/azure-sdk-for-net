@@ -38,6 +38,30 @@ namespace Azure.Communication.Email.Models
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmailRecipients"/> class.
+        /// </summary>
+        /// <param name="to">Email to recipient.</param>
+        /// <param name="cc">Email cc recipients. </param>
+        /// <param name="bcc">Email bcc recipients. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        public EmailRecipients(
+            EmailAddress to,
+            IEnumerable<EmailAddress> cc = null,
+            IEnumerable<EmailAddress> bcc = null)
+            :this(new List<EmailAddress>() { to })
+        {
+            if (cc != null)
+            {
+                CC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(cc.ToList()));
+            }
+
+            if (cc != null)
+            {
+                BCC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(bcc.ToList()));
+            }
+        }
+
         internal void Validate()
         {
             if (To.Count == 0)
