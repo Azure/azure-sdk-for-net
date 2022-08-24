@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/sqlvirtualmachine/
-    - sdk/resourcemanager/
     - sdk/storage/Azure.ResourceManager.Storage
 
 extends:

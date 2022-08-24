@@ -24,7 +24,6 @@ pr:
     - sdk/webpubsub/
     - sdk/websites/
     - sdk/network/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

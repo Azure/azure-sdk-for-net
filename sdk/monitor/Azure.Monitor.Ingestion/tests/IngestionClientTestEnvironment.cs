@@ -9,18 +9,16 @@ namespace Azure.Monitor.Ingestion.Tests
 {
     public class IngestionClientTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("Ingestion_ENDPOINT");
+        public string DCRImmutableId => GetRecordedVariable("AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID");
 
-        public string DCRImmutableId => GetRecordedVariable("DCRImmutableId");
+        public string DCREndpoint => GetRecordedVariable("AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT");
 
-        public string DCREndpoint => GetRecordedVariable("DCREndpoint");
+        public string Ingestion_WorkspaceId => GetRecordedVariable("AZURE_MONITOR_INGESTION_INGESTION_WORKSPACE_ID");
 
-        public string Ingestion_WorkspaceId => GetRecordedVariable("Ingestion_WorkspaceId");
+        public string StreamName => GetRecordedVariable("AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME");
 
-        public string StreamName => GetRecordedVariable("StreamName");
+        public string TableName => GetRecordedVariable("AZURE_MONITOR_INGESTION_LOGS_TABLE_NAME");
 
-        public string TableName => GetRecordedVariable("TableName");
-
-        public ClientSecretCredential ClientSecretCredential => new ClientSecretCredential(TenantId, ClientId, ClientSecret);
+        public ClientSecretCredential ClientSecretCredential => new ClientSecretCredential(GetRecordedVariable("AZURE_TENANT_ID"), GetRecordedVariable("AZURE_CLIENT_ID"), GetRecordedVariable("AZURE_CLIENT_SECRET"));
     }
 }

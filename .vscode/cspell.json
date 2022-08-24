@@ -493,7 +493,13 @@
         "mbps"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/policyinsights/**/*.cs",
+      "words": [
+        "remediations"
+      ]
+    },
+    {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
         "byok",
@@ -589,6 +595,12 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagecache/**/*.cs",
+      "words": [
+        "Clfs"
       ]
     },
     {
