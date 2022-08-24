@@ -6,24 +6,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2062262e9dc79d563b950f759fd94f28-cfc0b906a518eb68-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-bde15e88f2516bbca69a69e9b241932b-840dce22eff6c38b-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220824.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "35244549d6d726fdfb921989fea7a1b1",
+        "x-ms-client-request-id": "548a721fc2d0b0cc619adb5e04498895",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "8509",
+        "Content-Length": "8508",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Aug 2022 21:51:33 GMT",
+        "Date": "Wed, 24 Aug 2022 23:37:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 2BA05F7658E64B9EA6E7688BF42819D8 Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:33Z"
+        "X-MSEdge-Ref": "Ref A: 38C9CD5A572E41D89776ACADFE68F747 Ref B: PAOEDGE0521 Ref C: 2022-08-24T23:37:29Z"
       },
       "ResponseBody": {
         "summary": {
@@ -32,13 +32,13 @@
           "queryTime": 6,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 125,
+          "totalResults": 108,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2395",
+            "id": "NZ/GEO/p0/1482",
             "score": 2.3825688362,
             "entityType": "Municipality",
             "address": {
@@ -83,7 +83,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1772",
+            "id": "NZ/GEO/p0/783",
             "score": 2.358474493,
             "entityType": "Municipality",
             "address": {
@@ -128,7 +128,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2642",
+            "id": "NZ/GEO/p0/4317",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "address": {
@@ -171,6 +171,70 @@
                 "id": "00005831-3200-1200-0000-00007d32922b"
               }
             }
+          },
+          {
+            "type": "POI",
+            "id": "554008000023622",
+            "score": 2.1244060993,
+            "info": "search:ta:554008000023622-NZ",
+            "poi": {
+              "name": "Milford Sound",
+              "categorySet": [
+                {
+                  "id": 7376
+                }
+              ],
+              "categories": [
+                "important tourist attraction"
+              ],
+              "classifications": [
+                {
+                  "code": "IMPORTANT_TOURIST_ATTRACTION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "important tourist attraction"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Bowen Falls Walking Track",
+              "municipality": "Fiordland National Park",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "postalCode": "9679",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Bowen Falls Walking Track, Fiordland National Park, Fiordland National Park 9679",
+              "localName": "Fiordland National Park"
+            },
+            "position": {
+              "lat": -44.6669,
+              "lon": 167.92566
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.66502,
+                "lon": 167.92302
+              },
+              "btmRightPoint": {
+                "lat": -44.66878,
+                "lon": 167.9283
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -44.66543,
+                  "lon": 167.92401
+                }
+              }
+            ]
           },
           {
             "type": "POI",
@@ -298,70 +362,6 @@
                 "position": {
                   "lat": -44.86049,
                   "lon": 167.82468
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "554008000023622",
-            "score": 2.1244060993,
-            "info": "search:ta:554008000023622-NZ",
-            "poi": {
-              "name": "Milford Sound",
-              "categorySet": [
-                {
-                  "id": 7376
-                }
-              ],
-              "categories": [
-                "important tourist attraction"
-              ],
-              "classifications": [
-                {
-                  "code": "IMPORTANT_TOURIST_ATTRACTION",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "important tourist attraction"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetName": "Bowen Falls Walking Track",
-              "municipality": "Fiordland National Park",
-              "countrySecondarySubdivision": "Southland",
-              "countryTertiarySubdivision": "Southland",
-              "countrySubdivision": "South Island",
-              "postalCode": "9679",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "Bowen Falls Walking Track, Fiordland National Park, Fiordland National Park 9679",
-              "localName": "Fiordland National Park"
-            },
-            "position": {
-              "lat": -44.6669,
-              "lon": 167.92566
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -44.66502,
-                "lon": 167.92302
-              },
-              "btmRightPoint": {
-                "lat": -44.66878,
-                "lon": 167.9283
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": -44.66543,
-                  "lon": 167.92401
                 }
               }
             ]
@@ -509,7 +509,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/33885",
+            "id": "NZ/STR/p0/90215",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -542,7 +542,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/33888",
+            "id": "NZ/STR/p0/90218",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -580,6 +580,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "957105104"
+    "RandomSeed": "1318209"
   }
 }

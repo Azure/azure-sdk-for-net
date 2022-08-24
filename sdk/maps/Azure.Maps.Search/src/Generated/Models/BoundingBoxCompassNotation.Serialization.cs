@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class BoundingBoxCompassNotation
+    internal partial class BoundingBoxCompassNotation
     {
         internal static BoundingBoxCompassNotation DeserializeBoundingBoxCompassNotation(JsonElement element)
         {

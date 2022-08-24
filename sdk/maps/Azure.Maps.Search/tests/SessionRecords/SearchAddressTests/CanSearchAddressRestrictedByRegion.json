@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-902de4fc4e1932db5256fb1f5864770e-b7a5d08ab5732486-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-f7c819b8142bc7135f0de9dc3f854c98-236441b1b2257d05-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220824.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "62280a317af0efbcf6ab30289ba2e13a",
+        "x-ms-client-request-id": "1e245945a03031d795ee15cb1f13225f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "4855",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Aug 2022 21:51:51 GMT",
+        "Date": "Wed, 24 Aug 2022 23:37:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: EBA5877983D74172BF51F94F56EDEFDB Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:51Z"
+        "X-MSEdge-Ref": "Ref A: 2B29CC5266AC4852B705BFC29157C347 Ref B: PAOEDGE0521 Ref C: 2022-08-24T23:37:50Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 7,
           "numResults": 10,
           "offset": 0,
           "totalResults": 386,
@@ -355,24 +355,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a3a2d46314496641a0c4917af3437323-fed90bcb118cedef-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-47f5cf7eb5091b438cde64540a833c9f-104a02886cfcc1de-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220824.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "081d2c57426309441c9593f46235cb89",
+        "x-ms-client-request-id": "cbf96dea76205e47221e0fb4e6e6f642",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6851",
+        "Content-Length": "6666",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Aug 2022 21:51:51 GMT",
+        "Date": "Wed, 24 Aug 2022 23:37:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 0A52E564F73B4D9AA2142690E7E80B4F Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:52Z"
+        "X-MSEdge-Ref": "Ref A: 6DA71B4CEFAA4C7986642AD1DCAC4D79 Ref B: PAOEDGE0521 Ref C: 2022-08-24T23:37:50Z"
       },
       "ResponseBody": {
         "summary": {
@@ -387,11 +387,11 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2205",
+            "id": "NZ/GEO/p0/795",
             "score": 2.3589038849,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8778740281854135
+              "score": 0.8778741556780475
             },
             "address": {
               "municipality": "Gorge Road",
@@ -435,11 +435,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1152",
+            "id": "NZ/GEO/p0/3871",
             "score": 2.3587200642,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8651108290649066
+              "score": 0.8651104317926912
             },
             "address": {
               "municipality": "Mill Road",
@@ -483,11 +483,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3309",
+            "id": "NZ/GEO/p0/1903",
             "score": 2.3586893082,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8596350221373878
+              "score": 0.8596344333488454
             },
             "address": {
               "municipality": "Inland Road",
@@ -531,11 +531,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/319",
+            "id": "NZ/GEO/p0/2076",
             "score": 2.3585665226,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8596350221373878
+              "score": 0.8596344333488454
             },
             "address": {
               "municipality": "Desert Road",
@@ -579,11 +579,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/206",
+            "id": "NZ/GEO/p0/3063",
             "score": 2.3584132195,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8596350221373878
+              "score": 0.8596344333488454
             },
             "address": {
               "municipality": "Bird Road",
@@ -627,11 +627,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2928",
+            "id": "NZ/GEO/p0/1637",
             "score": 2.0992157459,
             "entityType": "Neighbourhood",
             "matchConfidence": {
-              "score": 0.8596350221373878
+              "score": 0.8596344333488454
             },
             "address": {
               "municipalitySubdivision": "K\u0027Road",
@@ -676,133 +676,127 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/5591",
+            "id": "NZ/STR/p0/7058",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7853940127931861
+              "score": 0.7747879955854364
             },
             "address": {
-              "streetName": "Tui Road",
-              "municipality": "Auckland",
-              "countrySecondarySubdivision": "Auckland",
-              "countryTertiarySubdivision": "Auckland",
+              "streetName": "Mataikona Road",
+              "countrySecondarySubdivision": "Wellington",
+              "countryTertiarySubdivision": "Masterton",
               "countrySubdivision": "North Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Tui Road, Auckland, Auckland",
-              "localName": "Auckland"
+              "freeformAddress": "Mataikona Road, Masterton"
             },
             "position": {
-              "lat": -36.97336,
-              "lon": 174.87161
+              "lat": -40.82083,
+              "lon": 176.25621
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -36.96475,
-                "lon": 174.86096
+                "lat": -40.81311,
+                "lon": 176.23241
               },
               "btmRightPoint": {
-                "lat": -36.98273,
-                "lon": 174.88347
+                "lat": -40.83109,
+                "lon": 176.25618
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/5594",
+            "id": "NZ/STR/p0/7070",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7853940127931861
+              "score": 0.7790466922474246
             },
             "address": {
-              "streetName": "Tui Road",
-              "municipality": "Te Aroha",
-              "countrySecondarySubdivision": "Waikato",
-              "countryTertiarySubdivision": "Matamata-Piako",
-              "countrySubdivision": "North Island",
-              "postalCode": "3320, 3392",
+              "streetName": "Yeomans Road",
+              "countrySecondarySubdivision": "Canterbury",
+              "countryTertiarySubdivision": "Selwyn",
+              "countrySubdivision": "South Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Tui Road, Te Aroha, Te Aroha 3320, 3392",
-              "localName": "Te Aroha"
+              "freeformAddress": "Yeomans Road, Selwyn"
             },
             "position": {
-              "lat": -37.523,
-              "lon": 175.71633
+              "lat": -43.49031,
+              "lon": 172.00612
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -37.51342,
-                "lon": 175.70489
+                "lat": -43.48125,
+                "lon": 171.99649
               },
               "btmRightPoint": {
-                "lat": -37.5314,
-                "lon": 175.72757
+                "lat": -43.49924,
+                "lon": 172.02129
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/5599",
+            "id": "NZ/STR/p0/7077",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7770288380809972
+              "score": 0.7790466922474246
             },
             "address": {
-              "streetName": "Tiromoana Road",
-              "countrySecondarySubdivision": "Taranaki",
-              "countryTertiarySubdivision": "South Taranaki",
+              "streetName": "Yeomans Road",
               "countrySubdivision": "North Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Tiromoana Road, South Taranaki"
+              "freeformAddress": "Yeomans Road, North Island"
             },
             "position": {
-              "lat": -39.48999,
-              "lon": 174.35096
+              "lat": -39.71012,
+              "lon": 176.27647
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -39.48091,
-                "lon": 174.32723
+                "lat": -39.70987,
+                "lon": 176.2719
               },
               "btmRightPoint": {
-                "lat": -39.4989,
-                "lon": 174.35054
+                "lat": -39.71159,
+                "lon": 176.28063
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/5610",
+            "id": "NZ/STR/p0/7092",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7796675594422944
+              "score": 0.7775963824799986
             },
             "address": {
-              "streetName": "Omana Road",
+              "streetName": "Opouteke Road",
               "countrySecondarySubdivision": "Northland",
+              "countryTertiarySubdivision": "Kaipara",
               "countrySubdivision": "North Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Omana Road, Northland"
+              "freeformAddress": "Opouteke Road, Kaipara"
             },
             "position": {
-              "lat": -35.89911,
-              "lon": 174.1154
+              "lat": -35.71723,
+              "lon": 173.721
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -35.88066,
-                "lon": 174.11369
+                "lat": -35.7213,
+                "lon": 173.70537
               },
               "btmRightPoint": {
-                "lat": -35.89865,
-                "lon": 174.1359
+                "lat": -35.73929,
+                "lon": 173.72752
               }
             }
           }
@@ -814,6 +808,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1375137260"
+    "RandomSeed": "704918805"
   }
 }

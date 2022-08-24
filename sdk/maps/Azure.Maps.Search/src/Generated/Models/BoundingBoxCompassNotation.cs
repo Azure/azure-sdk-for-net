@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The bounding box of the location. </summary>
-    public partial class BoundingBoxCompassNotation
+    internal partial class BoundingBoxCompassNotation
     {
         /// <summary> Initializes a new instance of BoundingBoxCompassNotation. </summary>
         internal BoundingBoxCompassNotation()

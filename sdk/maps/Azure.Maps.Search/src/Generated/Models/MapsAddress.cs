@@ -40,8 +40,8 @@ namespace Azure.Maps.Search.Models
         /// <param name="freeformAddress"> An address line formatted according to the formatting rules of a Result&apos;s country of origin, or in the case of a country, its full country name. </param>
         /// <param name="countrySubdivisionName"> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </param>
         /// <param name="localName"> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </param>
-        /// <param name="boundingBox"> The bounding box of the location. </param>
-        internal MapsAddress(string buildingNumber, string street, string crossStreet, string streetNumber, IReadOnlyList<string> routeNumbers, string streetName, string streetNameAndNumber, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, string extendedPostalCode, string countryCode, string country, string countryCodeIso3, string freeformAddress, string countrySubdivisionName, string localName, BoundingBoxCompassNotation boundingBox)
+        /// <param name="boundingBoxInternal"> The bounding box of the location. </param>
+        internal MapsAddress(string buildingNumber, string street, string crossStreet, string streetNumber, IReadOnlyList<string> routeNumbers, string streetName, string streetNameAndNumber, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, string extendedPostalCode, string countryCode, string country, string countryCodeIso3, string freeformAddress, string countrySubdivisionName, string localName, BoundingBoxCompassNotation boundingBoxInternal)
         {
             BuildingNumber = buildingNumber;
             Street = street;
@@ -63,7 +63,7 @@ namespace Azure.Maps.Search.Models
             FreeformAddress = freeformAddress;
             CountrySubdivisionName = countrySubdivisionName;
             LocalName = localName;
-            BoundingBox = boundingBox;
+            BoundingBoxInternal = boundingBoxInternal;
         }
 
         /// <summary> The building number on the street. DEPRECATED, use streetNumber instead. </summary>
@@ -104,7 +104,5 @@ namespace Azure.Maps.Search.Models
         public string CountrySubdivisionName { get; }
         /// <summary> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </summary>
         public string LocalName { get; }
-        /// <summary> The bounding box of the location. </summary>
-        public BoundingBoxCompassNotation BoundingBox { get; }
     }
 }
