@@ -471,7 +471,7 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticScope.ActivityKind.Client);
 
             IReadOnlyList<ServiceBusReceivedMessage> messages;
-            var startTime = DateTime.UtcNow;;
+            var startTime = DateTime.UtcNow;
 
             try
             {
