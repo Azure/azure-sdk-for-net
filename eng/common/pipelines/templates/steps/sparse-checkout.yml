@@ -62,8 +62,10 @@ steps:
             # sparse-checkout commands after initial checkout will auto-checkout again
             if (!$hasInitialized) {
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
+                Write-Host "git fetch origin $($repository.Commitish):$($repository.Commitish)"
                 git fetch origin $($repository.Commitish):$($repository.Commitish)
               }
+
               Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
               # This will use the default branch if repo.Commitish is empty
               git -c advice.detachedHead=false checkout $($repository.Commitish)
