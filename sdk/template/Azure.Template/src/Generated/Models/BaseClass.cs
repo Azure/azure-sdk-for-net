@@ -10,12 +10,12 @@ using System;
 namespace Azure.Template.Models
 {
     /// <summary> Example base type. </summary>
-    public partial class BaseClass
+    public abstract partial class BaseClass
     {
         /// <summary> Initializes a new instance of BaseClass. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        public BaseClass(string baseClassProperty)
+        internal BaseClass(string baseClassProperty)
         {
             if (baseClassProperty == null)
             {

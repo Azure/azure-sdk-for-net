@@ -20,18 +20,20 @@ namespace Azure.Template.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseClass DeserializeBaseClass(JsonElement element)
-        {
-            string baseClassProperty = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("baseClassProperty"))
-                {
-                    baseClassProperty = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new BaseClass(baseClassProperty);
-        }
+        //internal static BaseClass DeserializeBaseClass(JsonElement element)
+        //{
+        //    string baseClassProperty = default;
+        //    foreach (var property in element.EnumerateObject())
+        //    {
+        //        if (property.NameEquals("baseClassProperty"))
+        //        {
+        //            baseClassProperty = property.Value.GetString();
+        //            continue;
+        //        }
+        //    }
+
+        //    // TODO: Cannot instantiate derived type because we don't have a discriminator
+        //    return new BaseClass(baseClassProperty);
+        //}
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> The DerivedFromBaseClassWithDiscriminatorB. </summary>
-    public partial class DerivedFromBaseClassWithDiscriminatorB : BaseClassWithDiscriminator
+    /// <summary> The DerivedFromBaseClassWithUnknownDiscriminator. </summary>
+    public partial class DerivedFromBaseClassWithUnknownDiscriminator : BaseClassWithDiscriminator
     {
-        /// <summary> Initializes a new instance of DerivedFromBaseClassWithDiscriminatorB. </summary>
+        /// <summary> Initializes a new instance of DerivedFromBaseClassWithUnknownDiscriminator. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        public DerivedFromBaseClassWithDiscriminatorB(string baseClassProperty) : base(baseClassProperty, "B")
+        public DerivedFromBaseClassWithUnknownDiscriminator(string baseClassProperty) : base(baseClassProperty, "A")
         {
             Argument.AssertNotNull(baseClassProperty, nameof(baseClassProperty));
         }
 
-        /// <summary> Initializes a new instance of DerivedFromBaseClassWithDiscriminatorB. </summary>
+        /// <summary> Initializes a new instance of DerivedFromBaseClassWithUnknownDiscriminator. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <param name="discriminatorProperty"> Discriminator property for BaseClassWithDiscriminator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        internal DerivedFromBaseClassWithDiscriminatorB(string baseClassProperty, string discriminatorProperty) : base(baseClassProperty, discriminatorProperty ?? "A")
+        internal DerivedFromBaseClassWithUnknownDiscriminator(string baseClassProperty, string discriminatorProperty) : base(baseClassProperty, discriminatorProperty)
         {
             Argument.AssertNotNull(baseClassProperty, nameof(baseClassProperty));
         }

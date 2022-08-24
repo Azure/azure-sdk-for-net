@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
@@ -15,28 +16,18 @@ namespace Azure.Template.Models
         /// <summary> Initializes a new instance of DerivedFromBaseClassWithDiscriminatorA. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        public DerivedFromBaseClassWithDiscriminatorA(string baseClassProperty) : base(baseClassProperty)
+        public DerivedFromBaseClassWithDiscriminatorA(string baseClassProperty) : base(baseClassProperty, "A")
         {
-            if (baseClassProperty == null)
-            {
-                throw new ArgumentNullException(nameof(baseClassProperty));
-            }
-
-            DiscriminatorProperty = "A";
+            Argument.AssertNotNull(baseClassProperty, nameof(baseClassProperty));
         }
 
         /// <summary> Initializes a new instance of DerivedFromBaseClassWithDiscriminatorA. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <param name="discriminatorProperty"> Discriminator property for BaseClassWithDiscriminator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        internal DerivedFromBaseClassWithDiscriminatorA(string baseClassProperty, string discriminatorProperty) : base(baseClassProperty, discriminatorProperty)
+        internal DerivedFromBaseClassWithDiscriminatorA(string baseClassProperty, string discriminatorProperty) : base(baseClassProperty, discriminatorProperty ?? "A")
         {
-            if (baseClassProperty == null)
-            {
-                throw new ArgumentNullException(nameof(baseClassProperty));
-            }
-
-            DiscriminatorProperty = discriminatorProperty ?? "A";
+            Argument.AssertNotNull(baseClassProperty, nameof(baseClassProperty));
         }
     }
 }

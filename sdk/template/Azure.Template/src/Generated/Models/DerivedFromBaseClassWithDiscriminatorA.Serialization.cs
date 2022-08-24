@@ -6,13 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class DerivedFromBaseClassWithDiscriminatorA : IUtf8JsonSerializable
+    public partial class DerivedFromBaseClassWithDiscriminatorA
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal override void WriteCore(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("discriminatorProperty");

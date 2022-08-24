@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Template.Models
 {
-    public partial class DerivedFromBaseClassWithDiscriminatorB
+    public partial class DerivedFromBaseClassWithUnknownDiscriminator
     {
         internal override void WriteCore(Utf8JsonWriter writer)
         {
@@ -21,7 +21,7 @@ namespace Azure.Template.Models
             writer.WriteEndObject();
         }
 
-        internal static DerivedFromBaseClassWithDiscriminatorB DeserializeDerivedFromBaseClassWithDiscriminatorB(JsonElement element)
+        internal static DerivedFromBaseClassWithUnknownDiscriminator DeserializeDerivedFromBaseClassWithDiscriminatorUnknown(JsonElement element)
         {
             string discriminatorProperty = default;
             string baseClassProperty = default;
@@ -38,7 +38,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new DerivedFromBaseClassWithDiscriminatorB(baseClassProperty, discriminatorProperty);
+            return new DerivedFromBaseClassWithUnknownDiscriminator(baseClassProperty, discriminatorProperty);
         }
     }
 }

@@ -10,17 +10,18 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class BaseClassWithDiscriminator : IUtf8JsonSerializable
+    public abstract partial class BaseClassWithDiscriminator : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("discriminatorProperty");
-            writer.WriteStringValue(DiscriminatorProperty);
-            writer.WritePropertyName("baseClassProperty");
-            writer.WriteStringValue(BaseClassProperty);
-            writer.WriteEndObject();
+            // Note: we have to use this approach in order to implement the IUtf8Serializble
+            // interface, which we have to implement so BaseClassWithDiscriminator can be cast
+            // to IUtf8Serializable. Serialization moves to the derived type, since the base
+            // type is now abstract.
+            WriteCore(writer);
         }
+
+        internal abstract void WriteCore(Utf8JsonWriter writer);
 
         internal static BaseClassWithDiscriminator DeserializeBaseClassWithDiscriminator(JsonElement element)
         {
@@ -32,22 +33,8 @@ namespace Azure.Template.Models
                     case "B": return DerivedFromBaseClassWithDiscriminatorB.DeserializeDerivedFromBaseClassWithDiscriminatorB(element);
                 }
             }
-            string discriminatorProperty = default;
-            string baseClassProperty = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("discriminatorProperty"))
-                {
-                    discriminatorProperty = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("baseClassProperty"))
-                {
-                    baseClassProperty = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new BaseClassWithDiscriminator(baseClassProperty, discriminatorProperty);
+
+            return DerivedFromBaseClassWithUnknownDiscriminator.DeserializeDerivedFromBaseClassWithDiscriminatorUnknown(element);
         }
     }
 }

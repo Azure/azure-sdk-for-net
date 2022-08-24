@@ -6,29 +6,25 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
     /// <summary> Example base class that has a discriminator property. </summary>
-    public partial class BaseClassWithDiscriminator : BaseClass
+    // Note: base classes are abstract for polymorphic types
+    public abstract partial class BaseClassWithDiscriminator : BaseClass
     {
-        /// <summary> Initializes a new instance of BaseClassWithDiscriminator. </summary>
-        /// <param name="baseClassProperty"> An example property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        public BaseClassWithDiscriminator(string baseClassProperty) : base(baseClassProperty)
-        {
-            if (baseClassProperty == null)
-            {
-                throw new ArgumentNullException(nameof(baseClassProperty));
-            }
-        }
-
         /// <summary> Initializes a new instance of BaseClassWithDiscriminator. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <param name="discriminatorProperty"> Discriminator property for BaseClassWithDiscriminator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
+        // Note: internal constructor to prevent end-user derived types
+        // Note: When we add discriminator to internal initialization constructor, it becomes the serialization constructor.
         internal BaseClassWithDiscriminator(string baseClassProperty, string discriminatorProperty) : base(baseClassProperty)
         {
+            Argument.AssertNotNull(baseClassProperty, nameof(baseClassProperty));
+            Argument.AssertNotNullOrEmpty(discriminatorProperty, nameof(discriminatorProperty));
+
             if (baseClassProperty == null)
             {
                 throw new ArgumentNullException(nameof(baseClassProperty));
@@ -38,6 +34,7 @@ namespace Azure.Template.Models
         }
 
         /// <summary> Discriminator property for BaseClassWithDiscriminator. </summary>
-        internal string DiscriminatorProperty { get; set; }
+        /// Note: remove setter from property
+        internal string DiscriminatorProperty { get; }
     }
 }

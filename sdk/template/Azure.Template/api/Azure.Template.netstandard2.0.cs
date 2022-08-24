@@ -1,31 +1,35 @@
 namespace Azure.Template.Models
 {
-    public partial class BaseClass
+    public abstract partial class BaseClass
     {
-        public BaseClass(string baseClassProperty) { }
+        internal BaseClass() { }
         public string BaseClassProperty { get { throw null; } set { } }
     }
-    public partial class BaseClassWithDiscriminator : Azure.Template.Models.BaseClass
+    public abstract partial class BaseClassWithDiscriminator : Azure.Template.Models.BaseClass
     {
-        public BaseClassWithDiscriminator(string baseClassProperty) : base (default(string)) { }
+        internal BaseClassWithDiscriminator() { }
     }
     public partial class DerivedFromBaseClassA : Azure.Template.Models.BaseClass
     {
-        public DerivedFromBaseClassA(string baseClassProperty, string derivedClassAProperty) : base (default(string)) { }
+        public DerivedFromBaseClassA(string baseClassProperty, string derivedClassAProperty) { }
         public string DerivedClassAProperty { get { throw null; } set { } }
     }
     public partial class DerivedFromBaseClassB : Azure.Template.Models.BaseClass
     {
-        public DerivedFromBaseClassB(string baseClassProperty, string derivedClassBProperty) : base (default(string)) { }
+        public DerivedFromBaseClassB(string baseClassProperty, string derivedClassBProperty) { }
         public string DerivedClassBProperty { get { throw null; } set { } }
     }
     public partial class DerivedFromBaseClassWithDiscriminatorA : Azure.Template.Models.BaseClassWithDiscriminator
     {
-        public DerivedFromBaseClassWithDiscriminatorA(string baseClassProperty) : base (default(string)) { }
+        public DerivedFromBaseClassWithDiscriminatorA(string baseClassProperty) { }
     }
     public partial class DerivedFromBaseClassWithDiscriminatorB : Azure.Template.Models.BaseClassWithDiscriminator
     {
-        public DerivedFromBaseClassWithDiscriminatorB(string baseClassProperty) : base (default(string)) { }
+        public DerivedFromBaseClassWithDiscriminatorB(string baseClassProperty) { }
+    }
+    public partial class DerivedFromBaseClassWithUnknownDiscriminator : Azure.Template.Models.BaseClassWithDiscriminator
+    {
+        public DerivedFromBaseClassWithUnknownDiscriminator(string baseClassProperty) { }
     }
     public partial class ModelWithPolymorphicProperty
     {

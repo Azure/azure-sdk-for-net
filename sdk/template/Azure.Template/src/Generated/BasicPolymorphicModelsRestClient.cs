@@ -53,57 +53,60 @@ namespace Azure.Template
             return message;
         }
 
-        /// <param name="input"> The BaseClass to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<BaseClass>> SetValueAsync(BaseClass input, CancellationToken cancellationToken = default)
-        {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+        // Note: To make BaseClass abstract, we need to implement the InternalUknown pattern, because we
+        // Cannot Deserialize the abstract class (b/c can't create an instance of it)
 
-            using var message = CreateSetValueRequest(input);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BaseClass value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BaseClass.DeserializeBaseClass(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
+        ///// <param name="input"> The BaseClass to use. </param>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        ///// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        //public async Task<Response<BaseClass>> SetValueAsync(BaseClass input, CancellationToken cancellationToken = default)
+        //{
+        //    if (input == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(input));
+        //    }
 
-        /// <param name="input"> The BaseClass to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<BaseClass> SetValue(BaseClass input, CancellationToken cancellationToken = default)
-        {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+        //    using var message = CreateSetValueRequest(input);
+        //    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        //    switch (message.Response.Status)
+        //    {
+        //        case 200:
+        //            {
+        //                BaseClass value = default;
+        //                using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+        //                value = BaseClass.DeserializeBaseClass(document.RootElement);
+        //                return Response.FromValue(value, message.Response);
+        //            }
+        //        default:
+        //            throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+        //    }
+        //}
 
-            using var message = CreateSetValueRequest(input);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BaseClass value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BaseClass.DeserializeBaseClass(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
+        ///// <param name="input"> The BaseClass to use. </param>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        ///// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        //public Response<BaseClass> SetValue(BaseClass input, CancellationToken cancellationToken = default)
+        //{
+        //    if (input == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(input));
+        //    }
+
+        //    using var message = CreateSetValueRequest(input);
+        //    _pipeline.Send(message, cancellationToken);
+        //    switch (message.Response.Status)
+        //    {
+        //        case 200:
+        //            {
+        //                BaseClass value = default;
+        //                using var document = JsonDocument.Parse(message.Response.ContentStream);
+        //                value = BaseClass.DeserializeBaseClass(document.RootElement);
+        //                return Response.FromValue(value, message.Response);
+        //            }
+        //        default:
+        //            throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+        //    }
+        //}
 
         internal HttpMessage CreateSetValueWithPolymorphicPropertyRequest(ModelWithPolymorphicProperty input)
         {
