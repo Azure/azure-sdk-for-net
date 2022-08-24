@@ -18,9 +18,25 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             SipSignalingPort = sipSignalingPort;
         }
 
+        /// <summary> Initializes a new instance of SipTrunk. </summary>
+        /// <param name="fqdn">Name of the trunk</param>
+        /// <param name="sipSignalingPort"> SIP signaling port for the gateway. </param>
+        /// <param name="enabled"> Enabled flag </param>
+        public SipTrunk(string fqdn, int sipSignalingPort, bool enabled)
+        {
+            Fqdn = fqdn;
+            SipSignalingPort = sipSignalingPort;
+            Enabled = enabled;
+        }
+
         private SipTrunk(int sipSignalingPort)
         {
             SipSignalingPort = sipSignalingPort;
+        }
+
+        private SipTrunk(bool enabled)
+        {
+            Enabled = enabled;
         }
 
         /// <summary> Name of the trunk. </summary>

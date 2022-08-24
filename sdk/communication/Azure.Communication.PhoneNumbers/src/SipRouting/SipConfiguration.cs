@@ -116,7 +116,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     Dictionary<string, SipDomain> dictionary = new Dictionary<string, SipDomain>();
                     foreach (var child in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(child.Name, SipDomain.DeserializeSipDomain(child.Value));
+                        var domain = SipDomain.DeserializeSipDomain(child.Value);
+                        domain.DomainUri = child.Name;
+                        dictionary.Add(child.Name, domain);
                     }
                     domains = dictionary;
                     continue;

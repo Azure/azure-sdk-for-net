@@ -16,20 +16,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// Initializes a new instance of SipDomain.
         /// </summary>
         /// <param name="domain"></param>
-        /// <param name="domainType"></param>
-        public SipDomain(string domain, string domainType)
+        /// <param name="enabled"></param>
+        public SipDomain(string domain, bool enabled)
         {
             DomainUri = domain;
-            Type = domainType;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of SipDomain.
-        /// </summary>
-        /// <param name="domainType"></param>
-        public SipDomain(DomainType domainType)
-        {
-            Type = domainType;
+            Enabled = enabled;
         }
 
         /// <summary>
