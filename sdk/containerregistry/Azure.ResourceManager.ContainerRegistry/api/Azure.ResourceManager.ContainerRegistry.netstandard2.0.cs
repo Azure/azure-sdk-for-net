@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public int? AgentCpu { get { throw null; } set { } }
         public string AgentPoolName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunCredentials Credentials { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsSystemTask { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
@@ -583,12 +583,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryCredentialRegenerateContent(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPasswordName name) { }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPasswordName Name { get { throw null; } }
     }
+    public partial class ContainerRegistryCredentials
+    {
+        public ContainerRegistryCredentials() { }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials> CustomRegistries { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode? SourceRegistryLoginMode { get { throw null; } set { } }
+    }
     public partial class ContainerRegistryDockerBuildContent : Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent
     {
         public ContainerRegistryDockerBuildContent(string dockerFilePath, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties platform) { }
         public int? AgentCpu { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunArgument> Arguments { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunCredentials Credentials { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
         public string DockerFilePath { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ImageNames { get { throw null; } }
         public bool? IsPushEnabled { get { throw null; } set { } }
@@ -618,11 +624,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public bool? NoCache { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryEncodedTaskRunRequest : Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent
+    public partial class ContainerRegistryEncodedTaskRunContent : Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent
     {
-        public ContainerRegistryEncodedTaskRunRequest(string encodedTaskContent, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties platform) { }
+        public ContainerRegistryEncodedTaskRunContent(string encodedTaskContent, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties platform) { }
         public int? AgentCpu { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunCredentials Credentials { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
         public string EncodedTaskContent { get { throw null; } set { } }
         public string EncodedValuesContent { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
@@ -690,7 +696,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ContainerRegistryFileTaskRunContent(string taskFilePath, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties platform) { }
         public int? AgentCpu { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunCredentials Credentials { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
         public string SourceLocation { get { throw null; } set { } }
         public string TaskFilePath { get { throw null; } set { } }
@@ -1092,12 +1098,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public bool? IsArchiveEnabled { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryRunCredentials
-    {
-        public ContainerRegistryRunCredentials() { }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials> CustomRegistries { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode? SourceRegistryLoginMode { get { throw null; } set { } }
-    }
     public partial class ContainerRegistryRunGetLogResult
     {
         internal ContainerRegistryRunGetLogResult() { }
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryTaskPatch() { }
         public int? AgentCpu { get { throw null; } set { } }
         public string AgentPoolName { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunCredentials Credentials { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformUpdateContent Platform { get { throw null; } set { } }
@@ -1292,9 +1292,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     }
     public partial class ContainerRegistryTaskRunContent : Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent
     {
-        public ContainerRegistryTaskRunContent(string taskId) { }
+        public ContainerRegistryTaskRunContent(Azure.Core.ResourceIdentifier taskId) { }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOverrideTaskStepProperties OverrideTaskStepProperties { get { throw null; } set { } }
-        public string TaskId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TaskId { get { throw null; } set { } }
     }
     public partial class ContainerRegistryTaskRunPatch
     {

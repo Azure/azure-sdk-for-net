@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableRedirect))
+            if (Optional.IsDefined(IsRedirectEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(EnableRedirect.Value);
+                writer.WriteBooleanValue(IsRedirectEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -236,7 +236,7 @@ directive:
   - from: streamingservice.json
     where: $.definitions
     transform: >
-      $.LiveEventInput.properties.keyFrameIntervalDuration['format'] = 'duration';
+      $.LiveEventInput.properties.keyFrameIntervalDuration["format"] = 'duration';
       $.ArmStreamingEndpointSkuInfo.properties.resourceType['x-ms-format'] = 'resource-type';
   - from: Encoding.json
     where: $.definitions
@@ -261,4 +261,14 @@ directive:
           "itemName": "contentKeys",
           "nextLinkName": null
         };
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.StreamingEndpointProperties.properties.maxCacheAge["x-nullable"] = true;
+      $.StreamingEndpointProperties.properties.crossSiteAccessPolicies["x-nullable"] = true;
+      $.StreamingEndpointProperties.properties.accessControl["x-nullable"] = true;
+      $.LiveEventEncoding.properties.stretchMode["x-nullable"] = true;
+      $.LiveEventEncoding.properties.keyFrameInterval["x-nullable"] = true;
+      $.LiveEventPreview.properties.accessControl["x-nullable"] = true;
+      $.LiveEventInput.properties.accessControl["x-nullable"] = true;
 ```

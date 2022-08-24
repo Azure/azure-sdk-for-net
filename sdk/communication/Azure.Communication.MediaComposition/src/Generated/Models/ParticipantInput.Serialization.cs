@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Communication.MediaComposition;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteObjectValue(Id);
+            writer.WriteObjectValue(ServiceId);
             writer.WritePropertyName("call");
             writer.WriteStringValue(Call);
             writer.WritePropertyName("kind");

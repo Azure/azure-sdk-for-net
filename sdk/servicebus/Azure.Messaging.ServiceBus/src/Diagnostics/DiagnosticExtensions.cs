@@ -5,6 +5,8 @@ using System;
 using System.Text;
 using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -30,6 +32,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             scope.AddLinkedDiagnostics(messages);
         }
 
+        public static void SetMessageData(this DiagnosticScope scope, IReadOnlyCollection<AmqpMessage> messages)
+        {
+            scope.AddLinkedDiagnostics(messages);
+        }
+
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusReceivedMessage> messages)
         {
             if (scope.IsEnabled)
@@ -37,6 +44,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
+                }
+            }
+        }
+
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<AmqpMessage> messages)
+        {
+            if (scope.IsEnabled)
+            {
+                foreach (AmqpMessage message in messages)
+                {
+                    AddLinkedDiagnostics(scope, message.ApplicationProperties.Map);
                 }
             }
         }
@@ -61,6 +79,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyDictionary<string, object> properties)
+        {
+            if (EntityScopeFactory.TryExtractDiagnosticId(
+                    properties,
+                    out string diagnosticId))
+            {
+                scope.AddLink(diagnosticId, null);
+            }
+        }
+
+        private static void AddLinkedDiagnostics(this DiagnosticScope scope, PropertiesMap properties)
         {
             if (EntityScopeFactory.TryExtractDiagnosticId(
                     properties,
