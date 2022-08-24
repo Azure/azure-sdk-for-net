@@ -16,16 +16,13 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-request-path-to-resource-type:
-  /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}: Microsoft.EventGrid/EventSubscriptions
-  /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getFullUrl: Microsoft.EventGrid/EventSubscriptionUri
-  /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes: Microsoft.EventGrid/EventSubscriptionDeliveryAttributes
-
-request-path-to-scope-resource-types:
-  /{scope}/providers/Microsoft.EventGrid/extensionTopics/default:
-    - subscriptions
-    - resourceGroups
-    - "*"
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}|Microsoft.EventGrid/topics/privateEndpointConnections: EventGridTopicPrivateEndpointConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}|Microsoft.EventGrid/domains/privateEndpointConnections: EventGridDomainPrivateEndpointConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}|Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections: EventGridPartnerNamespacePrivateEndpointConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}|Microsoft.EventGrid/topics/privateLinkResources: EventGridTopicPrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}|Microsoft.EventGrid/domains/privateLinkResources: EventGridDomainPrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}|Microsoft.EventGrid/partnerNamespaces/privateLinkResources: PartnerNamespacePrivateLinkResource
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -57,4 +54,23 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - from: EventGrid.json
+    where: $.paths..parameters[?(@.name=='scope')]
+    transform: >
+      $['x-ms-skip-url-encoding'] = true;
+  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger 
+  - from: EventGrid.json
+    where: $.paths..parameters[?(@.name=='parentType')]
+    transform: >
+      $['enum'] = [
+              'topics',
+              'domains',
+              'partnerNamespaces'
+            ];
+      $['x-ms-enum'] = {
+              'name': 'ParentType',
+              'modelAsString': true
+            };
+  
 ```
