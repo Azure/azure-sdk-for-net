@@ -132,17 +132,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             RegisterCommonConverters(rule);
             rule.AddConverter(new StorageBlobConverter<BlobClient>());
-            rule.AddConverter<BlobBaseClient, RichBindingReferenceType>(blob => CreateReferenceConverter(blob));
-        }
-
-        private static RichBindingReferenceType CreateReferenceConverter(BlobBaseClient input)
-        {
-            // figure out connection string
-            var referenceType = new RichBindingReferenceType();
-            referenceType.Properties.Add("account_name", input.AccountName);
-            referenceType.Properties.Add("blob_container", input.BlobContainerName);
-            referenceType.Properties.Add("blob_name", input.Name);
-            return referenceType;
         }
 
         private void InitializeBlobTriggerBindings(ExtensionConfigContext context)
@@ -163,6 +152,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         {
             // Converter manager already has Stream-->Byte[],String,TextReader
             rule.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
+            rule.AddConverter<BlobBaseClient, RichBindingReferenceType>(ConvertToReferenceType);
+
             // Blob type is a property of an existing blob.
             rule.AddConverter(new StorageBlobConverter<AppendBlobClient>());
             rule.AddConverter(new StorageBlobConverter<BlockBlobClient>());
@@ -244,6 +235,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         {
             private static readonly Type[] _types = new Type[]
             {
+                typeof(RichBindingReferenceType),
                 typeof(BlobBaseClient),
                 typeof(BlobClient),
                 typeof(BlockBlobClient),
@@ -252,7 +244,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 typeof(TextReader),
                 typeof(Stream),
                 typeof(BinaryData),
-                typeof(RichBindingReferenceType),
                 typeof(string)
             };
 
@@ -359,6 +350,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private async Task<Stream> ConvertToStreamAsync(BlobBaseClient input, CancellationToken cancellationToken)
         {
             return await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
+        }
+
+        private RichBindingReferenceType ConvertToReferenceType(BlobBaseClient input)
+        {
+            var referenceType = new RichBindingReferenceType();
+            if (input is not null)
+            {
+                referenceType.Properties.Add("account_name", input.AccountName);
+                referenceType.Properties.Add("blob_container", input.BlobContainerName);
+                referenceType.Properties.Add("blob_name", input.Name);
+            }
+            return referenceType;
         }
 
         // For describing InvokeStrings.
