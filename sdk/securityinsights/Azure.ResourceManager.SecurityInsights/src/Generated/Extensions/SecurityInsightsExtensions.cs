@@ -910,11 +910,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="domain"> Domain name to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public static async Task<Response<EnrichmentDomainWhois>> GetDomainWhoiAsync(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
+        public static async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(domain, nameof(domain));
 
-            return await GetExtensionClient(resourceGroupResource).GetDomainWhoiAsync(domain, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).GetDomainWhoisInformationAsync(domain, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -926,11 +926,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="domain"> Domain name to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public static Response<EnrichmentDomainWhois> GetDomainWhoi(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
+        public static Response<EnrichmentDomainWhois> GetDomainWhoisInformation(this ResourceGroupResource resourceGroupResource, string domain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(domain, nameof(domain));
 
-            return GetExtensionClient(resourceGroupResource).GetDomainWhoi(domain, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetDomainWhoisInformation(domain, cancellationToken);
         }
 
         /// <summary>

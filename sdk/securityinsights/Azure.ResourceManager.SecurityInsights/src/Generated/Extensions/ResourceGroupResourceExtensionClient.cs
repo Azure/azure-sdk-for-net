@@ -255,9 +255,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="domain"> Domain name to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnrichmentDomainWhois>> GetDomainWhoiAsync(string domain, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(string domain, CancellationToken cancellationToken = default)
         {
-            using var scope = DomainWhoisClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomainWhoi");
+            using var scope = DomainWhoisClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomainWhoisInformation");
             scope.Start();
             try
             {
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="domain"> Domain name to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnrichmentDomainWhois> GetDomainWhoi(string domain, CancellationToken cancellationToken = default)
+        public virtual Response<EnrichmentDomainWhois> GetDomainWhoisInformation(string domain, CancellationToken cancellationToken = default)
         {
-            using var scope = DomainWhoisClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomainWhoi");
+            using var scope = DomainWhoisClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomainWhoisInformation");
             scope.Start();
             try
             {

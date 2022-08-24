@@ -543,7 +543,12 @@
         "Hkey",
         "Taxii",
         "Ueba",
-        "Signin"
+        "Signin",
+        "Defanged",
+        "Aatp",
+        "Puid",
+        "Stix",
+        "Whois"
       ]
     },
     {

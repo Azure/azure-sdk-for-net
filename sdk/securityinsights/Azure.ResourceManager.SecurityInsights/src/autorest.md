@@ -28,6 +28,9 @@ operation-positions:
 rename-mapping:
   ThreatIntelligenceIndicatorModel: ThreatIntelligenceIndicator
 
+override-operation-name:
+  DomainWhois_Get: GetDomainWhoisInformation
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
