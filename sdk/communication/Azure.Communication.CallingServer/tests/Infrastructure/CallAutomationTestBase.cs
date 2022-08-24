@@ -11,34 +11,40 @@ namespace Azure.Communication.CallingServer
     public class CallAutomationTestBase
     {
         protected const string ConnectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
-        protected const string CreateOrAnswerCallOrGetCallConnectionPayload = "{" +
+        protected const string DummyPayload = "{{" +
                                         "\"callConnectionId\": \"someCallConnectionId\"," +
                                         "\"serverCallId\": \"someServerCallId\"," +
                                         "\"targets\": [" +
-                                           "{" +
+                                           "{{" +
                                                "\"rawId\":\"targetId\"," +
                                                "\"kind\":\"communicationUser\"," +
-                                               "\"communicationUser\":{\"id\":\"targetId\"}" +
-                                            "}" +
+                                               "\"communicationUser\":{{\"id\":\"targetId\"}}" +
+                                            "}}" +
                                         "]," +
-                                        "\"source\": {" +
-                                             "\"identifier\":{" +
+                                        "\"source\": {{" +
+                                             "\"identifier\":{{" +
                                                   "\"rawId\":\"sourceId\"," +
                                                   "\"kind\":\"communicationUser\"," +
-                                                  "\"communicationUser\":{\"id\":\"sourceId\"}" +
-                                                            "}" +
-                                                    "}," +
+                                                  "\"communicationUser\":{{\"id\":\"sourceId\"}}" +
+                                                            "}}" +
+                                                    "}}," +
                                         "\"callConnectionState\": \"connecting\"," +
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
-                                        "\"mediaSubscriptionId\": \"someMediaSubscriptionId\"" +
-                                        "}";
+                                        "\"mediaSubscriptionId\": {0}" +
+                                        "}}";
         protected const string SourceId = "sourceId";
         protected const string TargetId = "targetId";
         protected const string ServerCallId = "someServerCallId";
         protected const string CallConnectionId = "someCallConnectionId";
         protected const string Subject = "dummySubject";
         protected const string CallBackUri = "https://bot.contoso.com/callback";
+
+        private const string NoneMediaSubscriptionId = "null";
+        private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
+        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
+        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
+
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {
             var mockResponse = new MockResponse(responseCode);

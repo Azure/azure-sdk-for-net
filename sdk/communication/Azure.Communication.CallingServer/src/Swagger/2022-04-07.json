@@ -40,7 +40,7 @@
           "201": {
             "description": "Returns the create call response.",
             "schema": {
-              "$ref": "#/definitions/CallConnectionPropertiesDto"
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -77,7 +77,7 @@
           "200": {
             "description": "Returns the answer call response.",
             "schema": {
-              "$ref": "#/definitions/CallConnectionPropertiesDto"
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -179,7 +179,7 @@
           "200": {
             "description": "Returns the get call response.",
             "schema": {
-              "$ref": "#/definitions/CallConnectionPropertiesDto"
+              "$ref": "#/definitions/CallConnectionProperties"
             }
           }
         },
@@ -564,7 +564,7 @@
           "200": {
             "description": "Returns the get participant response.",
             "schema": {
-              "$ref": "#/definitions/AcsCallParticipantDto"
+              "$ref": "#/definitions/AcsCallParticipant"
             }
           }
         },
@@ -754,7 +754,7 @@
           }
         },
         "source": {
-          "$ref": "#/definitions/CallSourceDto",
+          "$ref": "#/definitions/CallSource",
           "description": "The source of the call."
         },
         "subject": {
@@ -766,7 +766,7 @@
           "type": "string"
         },
         "mediaStreamingConfiguration": {
-          "$ref": "#/definitions/MediaStreamingConfigurationDto",
+          "$ref": "#/definitions/MediaStreamingConfiguration",
           "description": "Media Streaming Configuration."
         }
       }
@@ -809,7 +809,7 @@
         }
       }
     },
-    "CallSourceDto": {
+    "CallSource": {
       "required": [
         "identifier"
       ],
@@ -825,29 +825,29 @@
         }
       }
     },
-    "MediaStreamingTransportTypeDto": {
+    "MediaStreamingTransportType": {
       "description": "The type of tranport to be used for media streaming, eg. Websocket",
       "enum": [
         "websocket"
       ],
       "type": "string",
       "x-ms-enum": {
-        "name": "MediaStreamingTransportTypeDto",
+        "name": "MediaStreamingTransportType",
         "modelAsString": true
       }
     },
-    "MediaStreamingContentTypeDto": {
+    "MediaStreamingContentType": {
       "description": "Content type to stream, eg. audio, audio/video",
       "enum": [
         "audio"
       ],
       "type": "string",
       "x-ms-enum": {
-        "name": "MediaStreamingContentTypeDto",
+        "name": "MediaStreamingContentType",
         "modelAsString": true
       }
     },
-    "MediaStreamingAudioChannelTypeDto": {
+    "MediaStreamingAudioChannelType": {
       "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
       "enum": [
         "mixed",
@@ -855,11 +855,17 @@
       ],
       "type": "string",
       "x-ms-enum": {
-        "name": "MediaStreamingAudioChannelTypeDto",
+        "name": "MediaStreamingAudioChannelType",
         "modelAsString": true
       }
     },
-    "MediaStreamingConfigurationDto": {
+    "MediaStreamingConfiguration": {
+      "required": [
+        "transportUrl",
+        "transportType",
+        "contentType",
+        "audioChannelType"
+      ],
       "type": "object",
       "properties": {
         "transportUrl": {
@@ -867,13 +873,13 @@
           "type": "string"
         },
         "transportType": {
-          "$ref": "#/definitions/MediaStreamingTransportTypeDto"
+          "$ref": "#/definitions/MediaStreamingTransportType"
         },
         "contentType": {
-          "$ref": "#/definitions/MediaStreamingContentTypeDto"
+          "$ref": "#/definitions/MediaStreamingContentType"
         },
         "audioChannelType": {
-          "$ref": "#/definitions/MediaStreamingAudioChannelTypeDto"
+          "$ref": "#/definitions/MediaStreamingAudioChannelType"
         }
       }
     },
@@ -939,7 +945,7 @@
         "modelAsString": true
       }
     },
-    "CallConnectionPropertiesDto": {
+    "CallConnectionProperties": {
       "type": "object",
       "properties": {
         "callConnectionId": {
@@ -951,7 +957,7 @@
           "type": "string"
         },
         "source": {
-          "$ref": "#/definitions/CallSourceDto",
+          "$ref": "#/definitions/CallSource",
           "description": "The source of the call."
         },
         "targets": {
@@ -994,7 +1000,7 @@
           "type": "string"
         },
         "mediaStreamingConfiguration": {
-          "$ref": "#/definitions/MediaStreamingConfigurationDto",
+          "$ref": "#/definitions/MediaStreamingConfiguration",
           "description": "Media Streaming Configuration."
         }
       }
@@ -1276,7 +1282,7 @@
         "values": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AcsCallParticipantDto"
+            "$ref": "#/definitions/AcsCallParticipant"
           }
         },
         "nextLink": {
@@ -1284,7 +1290,7 @@
         }
       }
     },
-    "AcsCallParticipantDto": {
+    "AcsCallParticipant": {
       "type": "object",
       "properties": {
         "identifier": {
@@ -1331,7 +1337,7 @@
         "participants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AcsCallParticipantDto"
+            "$ref": "#/definitions/AcsCallParticipant"
           }
         },
         "operationContext": {
@@ -1517,7 +1523,9 @@
         "participantsUpdated",
         "recordingStateChanged",
         "playCompleted",
-        "playFailed"
+        "playFailed",
+        "recognizeCompleted",
+        "recognizeFailed"
       ],
       "type": "string",
       "x-ms-enum": {
@@ -1798,6 +1806,91 @@
         },
         "resultInfo": {
           "$ref": "#/definitions/ResultInformation"
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "RecognitionType": {
+      "description": "Determines the sub-type pf the recognize operation",
+      "enum": [
+        "dtmf"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecognitionType",
+        "modelAsString": true
+      }
+    },
+    "RecognizeCompleted": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "recognitionType": {
+          "$ref": "#/definitions/RecognitionType"
+        },
+        "collectTonesResult": {
+          "$ref": "#/definitions/CollectTonesResult",
+          "description": "Defines the result for RecognitionType = Dtmf"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Defines the code, sub-code and message for the operation"
+        },
+        "type": {
+          "$ref": "#/definitions/AcsEventType"
+        },
+        "callConnectionId": {
+          "description": "Call connection ID.",
+          "type": "string"
+        },
+        "serverCallId": {
+          "description": "Server call ID.",
+          "type": "string"
+        },
+        "correlationId": {
+          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+          "type": "string"
+        }
+      }
+    },
+    "CollectTonesResult": {
+      "type": "object",
+      "properties": {
+        "tones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RecognizeFailed": {
+      "type": "object",
+      "properties": {
+        "operationContext": {
+          "description": "Operation context",
+          "type": "string"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInformation",
+          "description": "Defines the code, sub-code and message for the operation"
         },
         "type": {
           "$ref": "#/definitions/AcsEventType"
