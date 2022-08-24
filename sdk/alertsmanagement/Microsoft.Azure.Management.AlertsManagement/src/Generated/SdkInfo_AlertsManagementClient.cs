@@ -33,11 +33,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
       public static readonly String GithubCommidId = "e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28";
-      public static readonly String CodeGenerationErrors = "npm notice 
-npm notice New minor version of npm available! 8.1.2 -> 8.17.0
-npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.17.0>
-npm notice Run `npm install -g npm@8.17.0` to update!
-npm notice"
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
