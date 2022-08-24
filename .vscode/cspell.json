@@ -533,6 +533,20 @@
       ]
     },
     {
+      "filename": "**/sdk/securityinsights/**/*.cs",
+      "words": [
+        "Exfiltration",
+        "Mcas",
+        "Mdatp",
+        "Msti",
+        "Aadiam",
+        "Hkey",
+        "Taxii",
+        "Ueba",
+        "Signin"
+      ]
+    },
+    {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
         "CIAS",
