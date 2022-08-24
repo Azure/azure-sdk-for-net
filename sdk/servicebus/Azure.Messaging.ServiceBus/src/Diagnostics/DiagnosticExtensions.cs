@@ -37,6 +37,19 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             scope.AddLinkedDiagnostics(messages);
         }
 
+        /// <summary>
+        /// For operations like receive and peek, we are not able to add the message links before the operation is performed, as we don't
+        /// have the messages yet. Instead, we need to start the scope after the messages are returned, and backdate the start time to
+        /// right before the operation occurred.
+        /// </summary>
+        /// <param name="scope">The scope to start.</param>
+        /// <param name="startTime">The Utc instant associated with the start of the operation that the scope is intended to wrap.</param>
+        public static void BackdateStart(this DiagnosticScope scope, DateTime startTime)
+        {
+            scope.SetStartTime(startTime);
+            scope.Start();
+        }
+
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusReceivedMessage> messages)
         {
             if (scope.IsEnabled)

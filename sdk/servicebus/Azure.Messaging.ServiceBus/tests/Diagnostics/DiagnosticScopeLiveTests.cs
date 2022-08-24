@@ -62,6 +62,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     receiver = client.CreateReceiver(scope.QueueName);
                 }
 
+                var peeked = await receiver.PeekMessageAsync();
+                var peekScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PeekActivityName);
+                AssertCommonTags(peekScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[0].ParentId, peekScope.LinkedActivities.First().ParentId);
+
                 var remaining = numMessages;
                 List<ServiceBusReceivedMessage> receivedMsgs = new List<ServiceBusReceivedMessage>();
                 while (remaining > 0)
@@ -73,6 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(receiveScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                     var receiveLinkedActivities = receiveScope.LinkedActivities;
+                    Assert.Greater(receiveLinkedActivities.Count, 0);
                     for (int i = 0; i < receiveLinkedActivities.Count; i++)
                     {
                         Assert.AreEqual(sendActivities[i].ParentId, receiveLinkedActivities[i].ParentId);
