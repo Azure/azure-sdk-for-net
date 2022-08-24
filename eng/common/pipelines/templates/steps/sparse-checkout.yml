@@ -39,7 +39,7 @@ steps:
               Write-Host "Repository $($repository.Name) is being initialized."
 
               Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-              git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/pull/*' https://github.com/$($repository.Name) .
+              git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
 
               Write-Host "git sparse-checkout init"
               git sparse-checkout init
@@ -61,6 +61,9 @@ steps:
 
             # sparse-checkout commands after initial checkout will auto-checkout again
             if (!$hasInitialized) {
+              if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
+                git fetch origin $($repository.Commitish):$($repository.Commitish)
+              }
               Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
               # This will use the default branch if repo.Commitish is empty
               git -c advice.detachedHead=false checkout $($repository.Commitish)
