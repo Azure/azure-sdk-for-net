@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Monitor
         private MetricAlertsRestOperations _metricAlertRestClient;
         private ClientDiagnostics _logSearchRuleScheduledQueryRulesClientDiagnostics;
         private ScheduledQueryRulesRestOperations _logSearchRuleScheduledQueryRulesRestClient;
-        private ClientDiagnostics _privateLinkScopeClientDiagnostics;
-        private PrivateLinkScopesRestOperations _privateLinkScopeRestClient;
+        private ClientDiagnostics _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics;
+        private PrivateLinkScopesRestOperations _monitorPrivateLinkScopePrivateLinkScopesRestClient;
         private ClientDiagnostics _activityLogAlertClientDiagnostics;
         private ActivityLogAlertsRestOperations _activityLogAlertRestClient;
         private ClientDiagnostics _dataCollectionEndpointClientDiagnostics;
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Monitor
         private MetricAlertsRestOperations MetricAlertRestClient => _metricAlertRestClient ??= new MetricAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MetricAlertResource.ResourceType));
         private ClientDiagnostics LogSearchRuleScheduledQueryRulesClientDiagnostics => _logSearchRuleScheduledQueryRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", LogSearchRuleResource.ResourceType.Namespace, Diagnostics);
         private ScheduledQueryRulesRestOperations LogSearchRuleScheduledQueryRulesRestClient => _logSearchRuleScheduledQueryRulesRestClient ??= new ScheduledQueryRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogSearchRuleResource.ResourceType));
-        private ClientDiagnostics PrivateLinkScopeClientDiagnostics => _privateLinkScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", PrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-        private PrivateLinkScopesRestOperations PrivateLinkScopeRestClient => _privateLinkScopeRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateLinkScopeResource.ResourceType));
+        private ClientDiagnostics MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics => _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
+        private PrivateLinkScopesRestOperations MonitorPrivateLinkScopePrivateLinkScopesRestClient => _monitorPrivateLinkScopePrivateLinkScopesRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorPrivateLinkScopeResource.ResourceType));
         private ClientDiagnostics ActivityLogAlertClientDiagnostics => _activityLogAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
         private ActivityLogAlertsRestOperations ActivityLogAlertRestClient => _activityLogAlertRestClient ??= new ActivityLogAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActivityLogAlertResource.ResourceType));
         private ClientDiagnostics DataCollectionEndpointClientDiagnostics => _dataCollectionEndpointClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionEndpointResource.ResourceType.Namespace, Diagnostics);
@@ -583,17 +583,17 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkScopeResource> GetPrivateLinkScopesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkScopeResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MonitorPrivateLinkScopeResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateLinkScopeRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await MonitorPrivateLinkScopePrivateLinkScopesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -601,14 +601,14 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            async Task<Page<PrivateLinkScopeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MonitorPrivateLinkScopeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateLinkScopeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await MonitorPrivateLinkScopePrivateLinkScopesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -625,17 +625,17 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkScopeResource> GetPrivateLinkScopes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkScopeResource> FirstPageFunc(int? pageSizeHint)
+            Page<MonitorPrivateLinkScopeResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = PrivateLinkScopeRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = MonitorPrivateLinkScopePrivateLinkScopesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -643,14 +643,14 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            Page<PrivateLinkScopeResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MonitorPrivateLinkScopeResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = PrivateLinkScopeRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = MonitorPrivateLinkScopePrivateLinkScopesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

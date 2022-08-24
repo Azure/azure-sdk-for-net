@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -21,16 +22,16 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
         /// <param name="accessModes"> The list of access modes for the application. </param>
-        /// <param name="location"> The location of the endpoint. </param>
+        /// <param name="endpointLocation"> The location of the endpoint. </param>
         /// <param name="destinationPort"> The destination port to connect to. </param>
         /// <param name="publicPort"> The public port to connect to. </param>
         /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
         /// <param name="subDomainSuffix"> The subdomain suffix of the application. </param>
         /// <param name="disableGatewayAuth"> The value indicates whether to disable GatewayAuth. </param>
-        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, AzureLocation? location, int? destinationPort, int? publicPort, string privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth)
+        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth)
         {
             AccessModes = accessModes;
-            Location = location;
+            EndpointLocation = endpointLocation;
             DestinationPort = destinationPort;
             PublicPort = publicPort;
             PrivateIPAddress = privateIPAddress;
@@ -41,13 +42,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The list of access modes for the application. </summary>
         public IList<string> AccessModes { get; }
         /// <summary> The location of the endpoint. </summary>
-        public AzureLocation? Location { get; }
+        public string EndpointLocation { get; }
         /// <summary> The destination port to connect to. </summary>
         public int? DestinationPort { get; set; }
         /// <summary> The public port to connect to. </summary>
         public int? PublicPort { get; }
         /// <summary> The private ip address of the endpoint. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
         /// <summary> The subdomain suffix of the application. </summary>
         public string SubDomainSuffix { get; set; }
         /// <summary> The value indicates whether to disable GatewayAuth. </summary>

@@ -4,17 +4,17 @@
       "RequestUri": "https://login.microsoftonline.com/common/discovery/instance?api-version=1.1\u0026authorization_endpoint=https%3A%2F%2Flogin.microsoftonline.com%2Fc54fac88-3dd3-461f-a7c4-8a368e0340b3%2Foauth2%2Fv2.0%2Fauthorize",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "client-request-id": "f16bdfc7-a6d5-440f-a75a-6a0e17f5c175",
+        "client-request-id": "cb1ffe61-7c41-4c6d-b1c3-60f50dc777a4",
         "return-client-request-id": "true",
-        "traceparent": "00-4c062133e57c5b49a7737be47147d9c5-b473e1922e310d45-00",
-        "User-Agent": "azsdk-net-Identity/1.6.0-alpha.20220204.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-b2d4e416508069468e2f0f31273bcd3b-aff657bb5a81334e-00",
+        "User-Agent": "azsdk-net-Identity/1.7.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
         "x-client-CPU": "x64",
         "x-client-OS": "Windows 10 Enterprise",
         "x-client-SKU": "MSAL.Desktop",
-        "x-client-Ver": "4.39.0.0",
-        "x-ms-client-request-id": "8900118d79716352b1cad0eed28e7099",
+        "x-client-Ver": "4.46.0.0",
+        "x-ms-client-request-id": "10e74c96a773de291452d3fb29f2476d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23,20 +23,21 @@
         "Access-Control-Allow-Methods": "GET, OPTIONS",
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "max-age=86400, private",
-        "client-request-id": "f16bdfc7-a6d5-440f-a75a-6a0e17f5c175",
+        "client-request-id": "cb1ffe61-7c41-4c6d-b1c3-60f50dc777a4",
         "Content-Length": "980",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 05 Feb 2022 00:53:51 GMT",
+        "Date": "Mon, 08 Aug 2022 20:45:17 GMT",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Set-Cookie": [
-          "fpc=AgWYrX0dq1NEtObKsrAG3RFKXQmMBgAAAJzBj9kOAAAA; expires=Mon, 07-Mar-2022 00:53:51 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "fpc=Avyz2RmDMTZFjnSvH8GEHgpKXQmMBgAAANtsg9oOAAAA; expires=Wed, 07-Sep-2022 20:45:17 GMT; path=/; secure; HttpOnly; SameSite=None",
           "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
           "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ests-server": "2.1.12381.24 - NCUS ProdSlices",
-        "x-ms-request-id": "46a5f13f-dcbe-45ba-bfb0-ef35f7049500"
+        "x-ms-ests-server": "2.1.13418.10 - SCUS ProdSlices",
+        "x-ms-request-id": "97304d60-0acb-4006-b0a9-e34eb32a0c00",
+        "X-XSS-Protection": "0"
       },
       "ResponseBody": {
         "tenant_discovery_endpoint": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/v2.0/.well-known/openid-configuration",
@@ -89,12 +90,12 @@
       "RequestUri": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/oauth2/v2.0/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "client-request-id": "f16bdfc7-a6d5-440f-a75a-6a0e17f5c175",
-        "Content-Length": "137",
+        "client-request-id": "cb1ffe61-7c41-4c6d-b1c3-60f50dc777a4",
+        "Content-Length": "115",
         "Content-Type": "application/x-www-form-urlencoded",
         "return-client-request-id": "true",
-        "traceparent": "00-4c062133e57c5b49a7737be47147d9c5-8cf137209407da4e-00",
-        "User-Agent": "azsdk-net-Identity/1.6.0-alpha.20220204.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-b2d4e416508069468e2f0f31273bcd3b-576b6bb289e4c141-00",
+        "User-Agent": "azsdk-net-Identity/1.7.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
         "x-client-CPU": "x64",
@@ -102,32 +103,33 @@
         "x-client-last-telemetry": "5|0|||",
         "x-client-OS": "Windows 10 Enterprise",
         "x-client-SKU": "MSAL.Desktop",
-        "x-client-Ver": "4.39.0.0",
-        "x-ms-client-request-id": "ee701c8e2e492169812f6ae5d1b1557c",
+        "x-client-Ver": "4.46.0.0",
+        "x-ms-client-request-id": "8f2e433488ca505297c8009d1e0ad71d",
         "x-ms-lib-capability": "retry-after, h429",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "client_id=Sanitized\u0026client_info=Sanitized\u0026client_assertion_type=Sanitized\u0026client_assertion=Sanitized\u0026scope=Sanitized\u0026grant_type=Sanitized",
+      "RequestBody": "client_id=Sanitized\u0026client_assertion_type=Sanitized\u0026client_assertion=Sanitized\u0026scope=Sanitized\u0026grant_type=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "client-request-id": "f16bdfc7-a6d5-440f-a75a-6a0e17f5c175",
+        "client-request-id": "cb1ffe61-7c41-4c6d-b1c3-60f50dc777a4",
         "Content-Length": "90",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 05 Feb 2022 00:53:51 GMT",
+        "Date": "Mon, 08 Aug 2022 20:45:17 GMT",
         "Expires": "-1",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Pragma": "no-cache",
         "Set-Cookie": [
-          "fpc=AgWYrX0dq1NEtObKsrAG3RFKXQmMBwAAAJzBj9kOAAAA; expires=Mon, 07-Mar-2022 00:53:52 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "fpc=Avyz2RmDMTZFjnSvH8GEHgpKXQmMBwAAANtsg9oOAAAA; expires=Wed, 07-Sep-2022 20:45:18 GMT; path=/; secure; HttpOnly; SameSite=None",
           "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
           "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-clitelem": "1,0,0,,",
-        "x-ms-ests-server": "2.1.12381.24 - SCUS ProdSlices",
-        "x-ms-request-id": "103ae9b3-eb4c-4dce-a881-de6fe9d69201"
+        "x-ms-ests-server": "2.1.13418.10 - WUS2 ProdSlices",
+        "x-ms-request-id": "eddbe025-ddd3-4e8e-9539-2460f44ea200",
+        "X-XSS-Protection": "0"
       },
       "ResponseBody": {
         "token_type": "Bearer",
@@ -140,11 +142,11 @@
       "RequestUri": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/oauth2/v2.0/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "client-request-id": "f49ad5f2-7068-4cfd-9a60-1195413fdf63",
-        "Content-Length": "137",
+        "client-request-id": "d4ed66e8-0157-4a01-a704-56e7861b3855",
+        "Content-Length": "115",
         "Content-Type": "application/x-www-form-urlencoded",
         "return-client-request-id": "true",
-        "User-Agent": "azsdk-net-Identity/1.6.0-alpha.20220204.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-Identity/1.7.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
         "x-client-CPU": "x64",
@@ -152,32 +154,33 @@
         "x-client-last-telemetry": "5|0|||",
         "x-client-OS": "Windows 10 Enterprise",
         "x-client-SKU": "MSAL.Desktop",
-        "x-client-Ver": "4.39.0.0",
-        "x-ms-client-request-id": "049f6a4decd672f2a3148361e93822cf",
+        "x-client-Ver": "4.46.0.0",
+        "x-ms-client-request-id": "42387b229d1b25fe02a508fb45dc8670",
         "x-ms-lib-capability": "retry-after, h429",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "client_id=Sanitized\u0026client_info=Sanitized\u0026client_assertion_type=Sanitized\u0026client_assertion=Sanitized\u0026scope=Sanitized\u0026grant_type=Sanitized",
+      "RequestBody": "client_id=Sanitized\u0026client_assertion_type=Sanitized\u0026client_assertion=Sanitized\u0026scope=Sanitized\u0026grant_type=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "client-request-id": "f49ad5f2-7068-4cfd-9a60-1195413fdf63",
+        "client-request-id": "d4ed66e8-0157-4a01-a704-56e7861b3855",
         "Content-Length": "90",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 05 Feb 2022 00:53:52 GMT",
+        "Date": "Mon, 08 Aug 2022 20:45:17 GMT",
         "Expires": "-1",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Pragma": "no-cache",
         "Set-Cookie": [
-          "fpc=AgWYrX0dq1NEtObKsrAG3RFKXQmMCAAAAJzBj9kOAAAA; expires=Mon, 07-Mar-2022 00:53:52 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "fpc=Avyz2RmDMTZFjnSvH8GEHgpKXQmMCAAAANtsg9oOAAAA; expires=Wed, 07-Sep-2022 20:45:18 GMT; path=/; secure; HttpOnly; SameSite=None",
           "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
           "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-clitelem": "1,0,0,,",
-        "x-ms-ests-server": "2.1.12470.9 - WUS2 ProdSlices",
-        "x-ms-request-id": "34ce72c9-675a-4db5-b61f-79511de71100"
+        "x-ms-ests-server": "2.1.13418.10 - WUS2 ProdSlices",
+        "x-ms-request-id": "50157854-9744-4fbc-a0fa-201944d48d00",
+        "X-XSS-Protection": "0"
       },
       "ResponseBody": {
         "token_type": "Bearer",
@@ -191,6 +194,6 @@
     "AZURE_AUTHORITY_HOST": null,
     "IDENTITY_SP_CLIENT_ID": "26790ce1-d05c-4de7-ba73-51837152f0bc",
     "IDENTITY_SP_TENANT_ID": "c54fac88-3dd3-461f-a7c4-8a368e0340b3",
-    "RandomSeed": "2052586744"
+    "RandomSeed": "1699630914"
   }
 }

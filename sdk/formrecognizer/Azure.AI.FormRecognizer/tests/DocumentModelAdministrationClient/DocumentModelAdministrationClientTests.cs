@@ -98,7 +98,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartBuildModelArgumentValidation()
+        public void BuildModelArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 
@@ -127,7 +127,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartCopyModelArgumentValidation()
+        public void CopyModelToArgumentValidation()
         {
             var fakeUri = new Uri("https://fake.uri");
             var copyAuth = new CopyAuthorization("<resourceId>", "<region>", "<modelId>", fakeUri, "<accesstoken>", default);
@@ -139,7 +139,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartCreateComposedModelArgumentValidation()
+        public void ComposeModelArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 

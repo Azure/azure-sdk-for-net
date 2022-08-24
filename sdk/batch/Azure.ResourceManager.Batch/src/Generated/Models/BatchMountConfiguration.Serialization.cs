@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureBlobFileSystemConfiguration))
+            if (Optional.IsDefined(BlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration");
-                writer.WriteObjectValue(AzureBlobFileSystemConfiguration);
+                writer.WriteObjectValue(BlobFileSystemConfiguration);
             }
             if (Optional.IsDefined(NfsMountConfiguration))
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("cifsMountConfiguration");
                 writer.WriteObjectValue(CifsMountConfiguration);
             }
-            if (Optional.IsDefined(AzureFileShareConfiguration))
+            if (Optional.IsDefined(FileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration");
-                writer.WriteObjectValue(AzureFileShareConfiguration);
+                writer.WriteObjectValue(FileShareConfiguration);
             }
             writer.WriteEndObject();
         }

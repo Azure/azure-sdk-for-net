@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new LogSearchRuleCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateLinkScopeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateLinkScopeResources and their operations over a PrivateLinkScopeResource. </returns>
-        public virtual PrivateLinkScopeCollection GetPrivateLinkScopes()
+        /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
+        public virtual MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes()
         {
-            return GetCachedClient(Client => new PrivateLinkScopeCollection(Client, Id));
+            return GetCachedClient(Client => new MonitorPrivateLinkScopeCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationStatus>> GetTestNotificationsAtResourceGroupLevelActionGroupAsync(string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTestNotificationsAtResourceGroupLevelActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationStatus> GetTestNotificationsAtResourceGroupLevelActionGroup(string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTestNotificationsAtResourceGroupLevelActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {

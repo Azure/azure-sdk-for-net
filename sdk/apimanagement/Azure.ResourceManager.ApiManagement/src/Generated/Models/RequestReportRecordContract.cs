@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
         /// <param name="requestId"> Request Identifier. </param>
         /// <param name="requestSize"> The size of this request.. </param>
-        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, string method, Uri uri, string ipAddress, string backendResponseCode, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize)
+        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, RequestMethod? method, Uri uri, IPAddress ipAddress, string backendResponseCode, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize)
         {
             ApiId = apiId;
             OperationId = operationId;
@@ -68,11 +69,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> User identifier path. /users/{userId}. </summary>
         public string UserId { get; }
         /// <summary> The HTTP method associated with this request.. </summary>
-        public string Method { get; }
+        public RequestMethod? Method { get; }
         /// <summary> The full URL associated with this request. </summary>
         public Uri Uri { get; }
         /// <summary> The client IP address associated with this request. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
         public string BackendResponseCode { get; }
         /// <summary> The HTTP status code returned by the gateway. </summary>

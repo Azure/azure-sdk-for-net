@@ -274,10 +274,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class ConnectivityEndpoint
     {
         public ConnectivityEndpoint() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string EndpointLocation { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string Protocol { get { throw null; } set { } }
     }
     public partial class ExcludedServicesConfig
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightApplicationEndpoint() { }
         public int? DestinationPort { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public string EndpointLocation { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } set { } }
     }
     public partial class HDInsightApplicationHttpsEndpoint
@@ -306,8 +306,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IList<string> AccessModes { get { throw null; } }
         public int? DestinationPort { get { throw null; } set { } }
         public bool? DisableGatewayAuth { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public string EndpointLocation { get { throw null; } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } }
         public string SubDomainSuffix { get { throw null; } set { } }
     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterGatewaySettings
     {
         internal HDInsightClusterGatewaySettings() { }
-        public string IsCredentialEnabled { get { throw null; } }
+        public bool? IsCredentialEnabled { get { throw null; } }
         public string Password { get { throw null; } }
         public string UserName { get { throw null; } }
     }
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public bool? IsPrimary { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateIPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceType { get { throw null; } }
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HDInsightPrivateLinkConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState>
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightSecurityProfile
     {
         public HDInsightSecurityProfile() { }
-        public string AaddsResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AaddsResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ClusterUsersGroupDNs { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType? DirectoryType { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }

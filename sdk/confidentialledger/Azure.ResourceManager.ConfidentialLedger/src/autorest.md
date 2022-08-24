@@ -25,6 +25,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'principalId': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -49,15 +50,12 @@ rename-rules:
   Etag: ETag|etag
   AAD: Aad
 
-directive:
-  - from: confidentialledger.json
-    where: $.definitions
-    transform: >
-      $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
-  - from: types.json
-    where: $.definitions
-    transform: >
-      $.CheckNameAvailabilityRequest['x-ms-client-name'] = 'LedgerNameAvailabilityRequest';
-      $.CheckNameAvailabilityResponse['x-ms-client-name'] = 'LedgerNameAvailabilityResult';
+rename-mapping:
+  ProvisioningState: LedgerProvisioningState
+  CheckNameAvailabilityRequest: LedgerNameAvailabilityContent
+  CheckNameAvailabilityRequest.type: -|resource-type
+  CheckNameAvailabilityResponse: LedgerNameAvailabilityResult
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityReason: LegerNameUnavailableReason
 
 ```
