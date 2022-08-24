@@ -304,10 +304,8 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.ReceiveActivityName,
                 DiagnosticScope.ActivityKind.Client);
 
-            scope.Start();
-
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-
+            var startTime = DateTime.UtcNow;
             try
             {
                 messages = await InnerReceiver.ReceiveMessagesAsync(
@@ -318,19 +316,23 @@ namespace Azure.Messaging.ServiceBus
             catch (OperationCanceledException ex)
                 when (isProcessor && cancellationToken.IsCancellationRequested)
             {
+                scope.BackdateStart(startTime);
                 Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
                 scope.Failed(ex);
                 throw;
             }
             catch (Exception exception)
             {
+                scope.BackdateStart(startTime);
                 Logger.ReceiveMessageException(Identifier, exception.ToString());
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.ReceiveMessageComplete(Identifier, messages);
             scope.SetMessageData(messages);
+            scope.BackdateStart(startTime);
+
+            Logger.ReceiveMessageComplete(Identifier, messages);
 
             return messages;
         }
@@ -467,9 +469,10 @@ namespace Azure.Messaging.ServiceBus
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.PeekActivityName,
                 DiagnosticScope.ActivityKind.Client);
-            scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> messages;
+            var startTime = DateTime.UtcNow;
+
             try
             {
                 messages = await InnerReceiver.PeekMessagesAsync(
@@ -480,6 +483,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
+                scope.BackdateStart(startTime);
                 Logger.PeekMessageException(Identifier, exception.ToString());
                 scope.Failed(exception);
                 throw;
@@ -487,6 +491,7 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.PeekMessageComplete(Identifier, messages.Count);
             scope.SetMessageData(messages);
+            scope.BackdateStart(startTime);
             return messages;
         }
 
