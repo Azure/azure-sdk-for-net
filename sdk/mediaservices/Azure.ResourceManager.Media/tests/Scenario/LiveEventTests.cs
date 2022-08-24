@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class LiveEventTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaServiceIdentifier;
         private MediaServiceResource _mediaService;
 
         private LiveEventCollection liveEventCollection => _mediaService.GetLiveEvents();
@@ -21,28 +20,20 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
-            _mediaServiceIdentifier = mediaService.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
+            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
+            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaservice"), storage.Id);
         }
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
+        //[PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Create()
         {
-            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            string liveEventName = Recording.GenerateAssetName("liveEventName");
             var liveEvent = await CreateLiveEvent(_mediaService, liveEventName);
             Assert.IsNotNull(liveEvent);
             Assert.AreEqual(liveEventName, liveEvent.Data.Name);
@@ -50,10 +41,9 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Exist()
         {
-            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            string liveEventName = Recording.GenerateAssetName("liveEventName");
             await CreateLiveEvent(_mediaService, liveEventName);
             bool flag = await liveEventCollection.ExistsAsync(liveEventName);
             Assert.IsTrue(flag);
@@ -61,10 +51,9 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Get()
         {
-            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            string liveEventName = Recording.GenerateAssetName("liveEventName");
             await CreateLiveEvent(_mediaService, liveEventName);
             var liveEvent = await liveEventCollection.GetAsync(liveEventName);
             Assert.IsNotNull(liveEvent);
@@ -73,19 +62,19 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task GetAll()
         {
+            string liveEventName = Recording.GenerateAssetName("liveEventName");
+            await CreateLiveEvent(_mediaService, liveEventName);
             var list = await liveEventCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Make sure [AccessToken] is not in the recording file during the re-recording process")]
         public async Task Delete()
         {
-            string liveEventName = SessionRecording.GenerateAssetName("liveEventName");
+            string liveEventName = Recording.GenerateAssetName("liveEventName");
             var liveEvent = await CreateLiveEvent(_mediaService, liveEventName);
             bool flag = await liveEventCollection.ExistsAsync(liveEventName);
             Assert.IsTrue(flag);
