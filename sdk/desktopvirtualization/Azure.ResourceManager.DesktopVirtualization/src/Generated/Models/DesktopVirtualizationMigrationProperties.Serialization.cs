@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MigrationRequestProperties : IUtf8JsonSerializable
+    public partial class DesktopVirtualizationMigrationProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteEndObject();
         }
 
-        internal static MigrationRequestProperties DeserializeMigrationRequestProperties(JsonElement element)
+        internal static DesktopVirtualizationMigrationProperties DeserializeDesktopVirtualizationMigrationProperties(JsonElement element)
         {
             Optional<MigrationOperation> operation = default;
             Optional<string> migrationPath = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new MigrationRequestProperties(Optional.ToNullable(operation), migrationPath.Value);
+            return new DesktopVirtualizationMigrationProperties(Optional.ToNullable(operation), migrationPath.Value);
         }
     }
 }

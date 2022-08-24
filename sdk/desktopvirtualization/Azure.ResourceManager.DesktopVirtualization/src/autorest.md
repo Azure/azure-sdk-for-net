@@ -46,28 +46,53 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  Application: VirtualApplication
+  ApplicationType: VirtualApplicationType
+  ApplicationGroup: VirtualApplicationGroup
+  ApplicationGroup.properties.cloudPcResource: IsCloudPcResource
+  ApplicationGroup.properties.hostPoolArmPath: HostPoolId|arm-id
+  ApplicationGroup.properties.workspaceArmPath: WorkspaceId|arm-id
+  ApplicationGroupType: VirtualApplicationGroupType
+  CommandLineSetting: VirtualApplicationCommandLineSetting
+  Desktop: VirtualDesktop
+  DesktopGroup: VirtualDesktopGroup
+  Workspace: VirtualWorkspace
+  HostPool.properties.ssoadfsAuthority: SsoAdfsAuthority
+  HostPool.properties.validationEnvironment: IsValidationEnvironment
+  HostPoolPatch.properties.ssoadfsAuthority: SsoAdfsAuthority
+  MsixPackage.properties.lastUpdated: LastUpdatedOn
+  ResourceModelWithAllowedPropertySet.managedBy: -|arm-id
+  SessionHost.properties.lastUpdateTime: LastUpdatedOn
+  SessionHost.properties.lastHeartBeat: LastHeartBeatOn
+  SessionHost.properties.resourceId: -|arm-id
+  SessionHost.properties.virtualMachineId: VmId
+  Workspace.properties.cloudPcResource: IsCloudPcResource
+  Status: SessionHostStatus
+  Operation: MigrationOperation
+  ExpandMsixImage.properties.lastUpdated: LastUpdatedOn
+  HealthCheckName: SessionHostHealthCheckName
+  HealthCheckResult: SessionHostHealthCheckResult
+  SSOSecretType: HostPoolSSOSecretType
+  LoadBalancerType: HostPoolLoadBalancerType
+  MigrationRequestProperties: DesktopVirtualizationMigrationProperties
+  RegistrationInfo: HostPoolRegistrationInfo
+  RegistrationInfoPatch: HostPoolRegistrationInfoPatch
+  RegistrationTokenOperation: HostPoolRegistrationTokenOperation
+  ScalingHostPoolReference.hostPoolArmPath: HostPoolId|arm-id
+  ScalingHostPoolReference.scalingPlanEnabled: IsScalingPlanEnabled
+  SendMessage: UserSessionMessage
+  SessionState: UserSessionState
+  StartMenuItem: DesktopVirtualizationStartMenuItem
+  StopHostsWhen: DesktopVirtualizationStopHostsWhen
+  UpdateState: SessionHostUpdateState
+
 directive:
-  - rename-model:
-      from: Application
-      to: VirtualApplication
-  - rename-model:
-      from: ApplicationGroup
-      to: VirtualApplicationGroup
-  - rename-model:
-      from: Desktop
-      to: VirtualDesktop
-  - rename-model:
-      from: DesktopGroup
-      to: VirtualDesktopGroup
-  - rename-model:
-      from: Workspace
-      to: VirtualWorkspace
+# remove this useless allOf so that we will not have a `ResourceModelWithAllowedPropertySetSku` type
   - from: swagger-document
-    where: "$.definitions.MigrationRequestProperties.properties.operation"
+    where: $.definitions.ResourceModelWithAllowedPropertySet.properties.sku
     transform: >
-      $["x-ms-enum"]["name"] = "MigrationOperation"
-  - from: swagger-document
-    where: "$.definitions.SessionHostProperties.properties.status"
-    transform: >
-      $["x-ms-enum"]["name"] = "SessionHostStatus"
+      return {
+          "$ref": "#/definitions/Sku"
+        }
 ```

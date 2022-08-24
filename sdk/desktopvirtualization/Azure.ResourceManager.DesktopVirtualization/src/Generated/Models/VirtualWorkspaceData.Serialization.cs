@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static VirtualWorkspaceData DeserializeVirtualWorkspaceData(JsonElement element)
         {
-            Optional<string> managedBy = default;
+            Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
+            Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -106,7 +106,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 if (property.NameEquals("managedBy"))
                 {
-                    managedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceModelWithAllowedPropertySetSku.DeserializeResourceModelWithAllowedPropertySetSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"))

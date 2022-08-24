@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastHeartBeat))
+            if (Optional.IsDefined(LastHeartBeatOn))
             {
                 writer.WritePropertyName("lastHeartBeat");
-                writer.WriteStringValue(LastHeartBeat.Value, "O");
+                writer.WriteStringValue(LastHeartBeatOn.Value, "O");
             }
             if (Optional.IsDefined(Sessions))
             {
@@ -87,13 +87,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> agentVersion = default;
             Optional<bool> allowNewSession = default;
             Optional<string> virtualMachineId = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> assignedUser = default;
             Optional<SessionHostStatus> status = default;
             Optional<DateTimeOffset> statusTimestamp = default;
             Optional<string> osVersion = default;
             Optional<string> sxSStackVersion = default;
-            Optional<UpdateState> updateState = default;
+            Optional<SessionHostUpdateState> updateState = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<string> updateErrorMessage = default;
             Optional<IReadOnlyList<SessionHostHealthCheckReport>> sessionHostHealthCheckResults = default;
@@ -180,7 +180,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("assignedUser"))
@@ -225,7 +230,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updateState = new UpdateState(property0.Value.GetString());
+                            updateState = new SessionHostUpdateState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastUpdateTime"))

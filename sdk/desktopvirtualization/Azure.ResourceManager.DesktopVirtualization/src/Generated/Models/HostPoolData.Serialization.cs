@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("ring");
                 writer.WriteNumberValue(Ring.Value);
             }
-            if (Optional.IsDefined(ValidationEnvironment))
+            if (Optional.IsDefined(IsValidationEnvironment))
             {
                 writer.WritePropertyName("validationEnvironment");
-                writer.WriteBooleanValue(ValidationEnvironment.Value);
+                writer.WriteBooleanValue(IsValidationEnvironment.Value);
             }
             if (Optional.IsDefined(RegistrationInfo))
             {
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("vmTemplate");
                 writer.WriteStringValue(VmTemplate);
             }
-            if (Optional.IsDefined(SsoadfsAuthority))
+            if (Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority");
-                writer.WriteStringValue(SsoadfsAuthority);
+                writer.WriteStringValue(SsoAdfsAuthority);
             }
             if (Optional.IsDefined(SsoClientId))
             {
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static HostPoolData DeserializeHostPoolData(JsonElement element)
         {
-            Optional<string> managedBy = default;
+            Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
+            Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -165,25 +165,30 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<PersonalDesktopAssignmentType> personalDesktopAssignmentType = default;
             Optional<string> customRdpProperty = default;
             Optional<int> maxSessionLimit = default;
-            LoadBalancerType loadBalancerType = default;
+            HostPoolLoadBalancerType loadBalancerType = default;
             Optional<int> ring = default;
             Optional<bool> validationEnvironment = default;
-            Optional<RegistrationInfo> registrationInfo = default;
+            Optional<HostPoolRegistrationInfo> registrationInfo = default;
             Optional<string> vmTemplate = default;
             Optional<IReadOnlyList<string>> applicationGroupReferences = default;
             Optional<string> ssoadfsAuthority = default;
             Optional<string> ssoClientId = default;
             Optional<string> ssoClientSecretKeyVaultPath = default;
-            Optional<SsoSecretType> ssoSecretType = default;
+            Optional<HostPoolSsoSecretType> ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
-            Optional<MigrationRequestProperties> migrationRequest = default;
+            Optional<DesktopVirtualizationMigrationProperties> migrationRequest = default;
             Optional<bool> cloudPcResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"))
                 {
-                    managedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -218,7 +223,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceModelWithAllowedPropertySetSku.DeserializeResourceModelWithAllowedPropertySetSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"))
@@ -332,7 +337,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("loadBalancerType"))
                         {
-                            loadBalancerType = new LoadBalancerType(property0.Value.GetString());
+                            loadBalancerType = new HostPoolLoadBalancerType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ring"))
@@ -362,7 +367,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            registrationInfo = RegistrationInfo.DeserializeRegistrationInfo(property0.Value);
+                            registrationInfo = HostPoolRegistrationInfo.DeserializeHostPoolRegistrationInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmTemplate"))
@@ -407,7 +412,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ssoSecretType = new SsoSecretType(property0.Value.GetString());
+                            ssoSecretType = new HostPoolSsoSecretType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("preferredAppGroupType"))
@@ -432,7 +437,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            migrationRequest = MigrationRequestProperties.DeserializeMigrationRequestProperties(property0.Value);
+                            migrationRequest = DesktopVirtualizationMigrationProperties.DeserializeDesktopVirtualizationMigrationProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudPcResource"))

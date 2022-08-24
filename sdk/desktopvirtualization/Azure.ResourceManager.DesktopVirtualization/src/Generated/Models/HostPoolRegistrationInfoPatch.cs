@@ -10,29 +10,25 @@ using System;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents a RegistrationInfo definition. </summary>
-    public partial class RegistrationInfo
+    public partial class HostPoolRegistrationInfoPatch
     {
-        /// <summary> Initializes a new instance of RegistrationInfo. </summary>
-        public RegistrationInfo()
+        /// <summary> Initializes a new instance of HostPoolRegistrationInfoPatch. </summary>
+        public HostPoolRegistrationInfoPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistrationInfo. </summary>
+        /// <summary> Initializes a new instance of HostPoolRegistrationInfoPatch. </summary>
         /// <param name="expireOn"> Expiration time of registration token. </param>
-        /// <param name="token"> The registration token base64 encoded string. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
-        internal RegistrationInfo(DateTimeOffset? expireOn, string token, RegistrationTokenOperation? registrationTokenOperation)
+        internal HostPoolRegistrationInfoPatch(DateTimeOffset? expireOn, HostPoolRegistrationTokenOperation? registrationTokenOperation)
         {
             ExpireOn = expireOn;
-            Token = token;
             RegistrationTokenOperation = registrationTokenOperation;
         }
 
         /// <summary> Expiration time of registration token. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> The registration token base64 encoded string. </summary>
-        public string Token { get; set; }
         /// <summary> The type of resetting the token. </summary>
-        public RegistrationTokenOperation? RegistrationTokenOperation { get; set; }
+        public HostPoolRegistrationTokenOperation? RegistrationTokenOperation { get; set; }
     }
 }

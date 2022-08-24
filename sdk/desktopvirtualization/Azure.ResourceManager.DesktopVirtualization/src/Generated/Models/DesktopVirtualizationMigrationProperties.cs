@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Properties for arm migration. </summary>
-    public partial class MigrationRequestProperties
+    public partial class DesktopVirtualizationMigrationProperties
     {
-        /// <summary> Initializes a new instance of MigrationRequestProperties. </summary>
-        public MigrationRequestProperties()
+        /// <summary> Initializes a new instance of DesktopVirtualizationMigrationProperties. </summary>
+        public DesktopVirtualizationMigrationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationRequestProperties. </summary>
+        /// <summary> Initializes a new instance of DesktopVirtualizationMigrationProperties. </summary>
         /// <param name="operation"> The type of operation for migration. </param>
         /// <param name="migrationPath"> The path to the legacy object to migrate. </param>
-        internal MigrationRequestProperties(MigrationOperation? operation, string migrationPath)
+        internal DesktopVirtualizationMigrationProperties(MigrationOperation? operation, string migrationPath)
         {
             Operation = operation;
             MigrationPath = migrationPath;
