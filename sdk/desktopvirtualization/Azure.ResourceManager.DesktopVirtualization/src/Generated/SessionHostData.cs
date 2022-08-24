@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="status"> Status for a SessionHost. </param>
         /// <param name="statusTimestamp"> The timestamp of the status. </param>
         /// <param name="osVersion"> The version of the OS on the session host. </param>
-        /// <param name="sxSStackVersion"> The version of the side by side stack on the session host. </param>
+        /// <param name="sxsStackVersion"> The version of the side by side stack on the session host. </param>
         /// <param name="updateState"> Update state of a SessionHost. </param>
         /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             LastHeartBeatOn = lastHeartBeatOn;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Status = status;
             StatusTimestamp = statusTimestamp;
             OSVersion = osVersion;
-            SxSStackVersion = sxSStackVersion;
+            SxsStackVersion = sxsStackVersion;
             UpdateState = updateState;
             LastUpdatedOn = lastUpdatedOn;
             UpdateErrorMessage = updateErrorMessage;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> The version of the OS on the session host. </summary>
         public string OSVersion { get; set; }
         /// <summary> The version of the side by side stack on the session host. </summary>
-        public string SxSStackVersion { get; set; }
+        public string SxsStackVersion { get; set; }
         /// <summary> Update state of a SessionHost. </summary>
         public SessionHostUpdateState? UpdateState { get; set; }
         /// <summary> The timestamp of the last update. </summary>

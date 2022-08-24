@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         public HostPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<string> ApplicationGroupReferences { get { throw null; } }
-        public bool? CloudPcResource { get { throw null; } }
+        public bool? CloudPCResource { get { throw null; } }
         public string CustomRdpProperty { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public int? Sessions { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? StatusTimestamp { get { throw null; } }
-        public string SxSStackVersion { get { throw null; } set { } }
+        public string SxsStackVersion { get { throw null; } set { } }
         public string UpdateErrorMessage { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostUpdateState? UpdateState { get { throw null; } set { } }
         public string VmId { get { throw null; } }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public string FriendlyName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier HostPoolId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public bool? IsCloudPcResource { get { throw null; } }
+        public bool? IsCloudPCResource { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationMigrationProperties MigrationRequest { get { throw null; } set { } }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public Azure.ETag? ETag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public bool? IsCloudPcResource { get { throw null; } }
+        public bool? IsCloudPCResource { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedBy { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
@@ -860,9 +860,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName MetaDataServiceCheck { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName MonitoringAgentCheck { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName SupportedEncryptionCheck { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName SxSStackListenerCheck { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName SxsStackListenerCheck { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName UrlsAccessibleCheck { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName WebRTCRedirectorCheck { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName WebRtcRedirectorCheck { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostHealthCheckName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus NoHeartbeat { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus NotJoinedToDomain { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus Shutdown { get { throw null; } }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus SxSStackListenerNotReady { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus SxsStackListenerNotReady { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus Unavailable { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus UpgradeFailed { get { throw null; } }
         public static Azure.ResourceManager.DesktopVirtualization.Models.SessionHostStatus Upgrading { get { throw null; } }

@@ -45,6 +45,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Pc: PC|pc
+  SxS: Sxs
+  RTC: Rtc
 
 rename-mapping:
   Application: VirtualApplication
@@ -73,7 +76,7 @@ rename-mapping:
   ExpandMsixImage.properties.lastUpdated: LastUpdatedOn
   HealthCheckName: SessionHostHealthCheckName
   HealthCheckResult: SessionHostHealthCheckResult
-  SSOSecretType: HostPoolSSOSecretType
+  SSOSecretType: HostPoolSsoSecretType
   LoadBalancerType: HostPoolLoadBalancerType
   MigrationRequestProperties: DesktopVirtualizationMigrationProperties
   RegistrationInfo: HostPoolRegistrationInfo

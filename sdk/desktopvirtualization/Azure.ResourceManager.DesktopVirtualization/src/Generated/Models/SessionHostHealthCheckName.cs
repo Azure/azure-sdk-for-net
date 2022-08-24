@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         private const string DomainJoinedCheckValue = "DomainJoinedCheck";
         private const string DomainTrustCheckValue = "DomainTrustCheck";
         private const string FSLogixHealthCheckValue = "FSLogixHealthCheck";
-        private const string SxSStackListenerCheckValue = "SxSStackListenerCheck";
+        private const string SxsStackListenerCheckValue = "SxSStackListenerCheck";
         private const string UrlsAccessibleCheckValue = "UrlsAccessibleCheck";
         private const string MonitoringAgentCheckValue = "MonitoringAgentCheck";
         private const string DomainReachableValue = "DomainReachable";
-        private const string WebRTCRedirectorCheckValue = "WebRTCRedirectorCheck";
+        private const string WebRtcRedirectorCheckValue = "WebRTCRedirectorCheck";
         private const string SupportedEncryptionCheckValue = "SupportedEncryptionCheck";
         private const string MetaDataServiceCheckValue = "MetaDataServiceCheck";
         private const string AppAttachHealthCheckValue = "AppAttachHealthCheck";
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Verifies the FSLogix service is up and running to make sure users&apos; profiles are loaded in the session. If this check fails is classified as fatal as even if the connection can succeed, user experience is bad as the user profile cannot be loaded and user will get a temporary profile in the session. </summary>
         public static SessionHostHealthCheckName FSLogixHealthCheck { get; } = new SessionHostHealthCheckName(FSLogixHealthCheckValue);
         /// <summary> Verifies that the SxS stack is up and running so connections can succeed. If this check fails is classified as fatal as no connection can succeed if the SxS stack is not ready. </summary>
-        public static SessionHostHealthCheckName SxSStackListenerCheck { get; } = new SessionHostHealthCheckName(SxSStackListenerCheckValue);
+        public static SessionHostHealthCheckName SxsStackListenerCheck { get; } = new SessionHostHealthCheckName(SxsStackListenerCheckValue);
         /// <summary> Verifies that the required WVD service and Geneva URLs are reachable from the SessionHost. These URLs are: RdTokenUri, RdBrokerURI, RdDiagnosticsUri and storage blob URLs for agent monitoring (geneva). If this check fails, it is non fatal and the machine still can service connections, main issue may be that monitoring agent is unable to store warm path data (logs, operations ...). </summary>
         public static SessionHostHealthCheckName UrlsAccessibleCheck { get; } = new SessionHostHealthCheckName(UrlsAccessibleCheckValue);
         /// <summary> Verifies that the required Geneva agent is running. If this check fails, it is non fatal and the machine still can service connections, main issue may be that monitoring agent is missing or running (possibly) older version. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Verifies the domain the SessionHost is joined to is still reachable. If this check fails is classified as fatal as no connection can succeed if the domain the SessionHost is joined is not reachable at the time of connection. </summary>
         public static SessionHostHealthCheckName DomainReachable { get; } = new SessionHostHealthCheckName(DomainReachableValue);
         /// <summary> Verifies whether the WebRTCRedirector component is healthy. The WebRTCRedirector component is used to optimize video and audio performance in Microsoft Teams. This checks whether the component is still running, and whether there is a higher version available. If this check fails, it is non fatal and the machine still can service connections, main issue may be the WebRTCRedirector component has to be restarted or updated. </summary>
-        public static SessionHostHealthCheckName WebRTCRedirectorCheck { get; } = new SessionHostHealthCheckName(WebRTCRedirectorCheckValue);
+        public static SessionHostHealthCheckName WebRtcRedirectorCheck { get; } = new SessionHostHealthCheckName(WebRtcRedirectorCheckValue);
         /// <summary> Verifies the value of SecurityLayer registration key. If the value is 0 (SecurityLayer.RDP) this check fails with Error code = NativeMethodErrorCode.E_FAIL and is fatal. If the value is 1 (SecurityLayer.Negotiate) this check fails with Error code = NativeMethodErrorCode.ERROR_SUCCESS and is non fatal. </summary>
         public static SessionHostHealthCheckName SupportedEncryptionCheck { get; } = new SessionHostHealthCheckName(SupportedEncryptionCheckValue);
         /// <summary> Verifies the metadata service is accessible and return compute properties. </summary>
