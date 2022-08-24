@@ -65,6 +65,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task AuthWithClientCert()
         {
+            //These asserts are for testing
+            Assert.That(TestEnvironment.ClientPEM, Does.StartWith("-----BEGIN CERTIFICATE-----");
+            Assert.That(TestEnvironment.ClientPEMPk, Does.StartWith("-----BEGIN PRIVATE KEY-----");
             await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, Certificates = { new ProxyOptionsTransportCertificatesItem { PemValue = TestEnvironment.ClientPEM, PemKey = TestEnvironment.ClientPEMPk } } } });
             var _cert = X509Certificate2.CreateFromPem(TestEnvironment.ClientPEM, TestEnvironment.ClientPEMPk);
             _cert = new X509Certificate2(_cert.Export(X509ContentType.Pfx));
