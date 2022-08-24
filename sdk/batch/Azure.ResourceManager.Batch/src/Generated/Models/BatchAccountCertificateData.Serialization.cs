@@ -29,7 +29,11 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint");
-                writer.WriteStringValue(Thumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Format))
             {
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.Batch
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> thumbprintAlgorithm = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<BatchAccountCertificateFormat> format = default;
             Optional<BatchAccountCertificateProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> provisioningStateTransitionTime = default;
@@ -109,7 +113,12 @@ namespace Azure.ResourceManager.Batch
                         }
                         if (property0.NameEquals("thumbprint"))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("format"))

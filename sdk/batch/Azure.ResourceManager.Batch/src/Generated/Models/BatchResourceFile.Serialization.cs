@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoStorageContainerName))
+            if (Optional.IsDefined(AutoBlobContainerName))
             {
                 writer.WritePropertyName("autoStorageContainerName");
-                writer.WriteStringValue(AutoStorageContainerName);
+                writer.WriteStringValue(AutoBlobContainerName);
             }
-            if (Optional.IsDefined(StorageContainerUri))
+            if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("storageContainerUrl");
-                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
+                writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(HttpUri))
             {

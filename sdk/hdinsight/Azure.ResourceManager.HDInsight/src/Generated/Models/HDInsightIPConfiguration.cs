@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateIPAddress"> The IP address. </param>
         /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
         /// <param name="subnet"> The subnet resource id. </param>
-        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceIdentifier resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, string privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
+        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceIdentifier resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
         {
             Id = id;
             Name = name;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Indicates whether this IP configuration is primary for the corresponding NIC. </summary>
         public bool? IsPrimary { get; set; }
         /// <summary> The IP address. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
         /// <summary> The method that private IP address is allocated. </summary>
         public HDInsightPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The subnet resource id. </summary>

@@ -22,6 +22,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'privateIPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -147,6 +148,11 @@ rename-mapping:
   DaysOfWeek: HDInsightDayOfWeek
   DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
   DirectoryType: AuthenticationDirectoryType
+  ConnectivityEndpoint.location: EndpointLocation
+  ApplicationGetEndpoint.location: EndpointLocation
+  ApplicationGetHttpsEndpoint.location: EndpointLocation
+  SecurityProfile.aaddsResourceId: -|arm-id
+  PrivateLinkConfiguration.type: ResourceType|resource-type
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
@@ -171,46 +177,47 @@ directive:
   - from: cluster.json
     where: $.definitions
     transform: >
-      $.Resource["x-ms-client-name"] = 'HDInsightClusterResponseData';
+      $.Resource['x-ms-client-name'] = 'HDInsightClusterResponseData';
+      $.GatewaySettings.properties['restAuthCredential.isEnabled']['type'] = 'boolean';
 # this model has an extra property which prevents the generator to replace it with the type provided by resourcemanager
   - from: swagger-document
     where: $.definitions.UserAssignedIdentity.properties
-    transform: $["tenantId"] = undefined
+    transform: $['tenantId'] = undefined
 # mark it as input so that the getter of its properties will still preseve the setter
   - from: swagger-document
     where: $.definitions.Cluster
-    transform: $["x-csharp-usage"] = "model,input,output"
+    transform: $['x-csharp-usage'] = 'model,input,output'
 # fix some attributes in Errors so that it could be replaced by Azure.ResponseError
   - from: swagger-document
     where: $.definitions.Errors.properties
     transform: >
       return {
-        "code": {
-          "readOnly": true,
-          "type": "string",
-          "description": "The error code."
+        'code': {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'The error code.'
         },
-        "message": {
-          "readOnly": true,
-          "type": "string",
-          "description": "The error message."
+        'message': {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'The error message.'
         },
-        "target": {
-          "readOnly": true,
-          "type": "string",
-          "description": "The error target."
+        'target': {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'The error target.'
         },
-        "details": {
-          "readOnly": true,
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Errors"
+        'details': {
+          'readOnly': true,
+          'type': 'array',
+          'items': {
+            '$ref': '#/definitions/Errors'
           },
-          "x-ms-identifiers": [
-            "message",
-            "target"
+          'x-ms-identifiers': [
+            'message',
+            'target'
           ],
-          "description": "The error details."
+          'description': 'The error details.'
         }
       };
 ```

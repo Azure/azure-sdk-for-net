@@ -60,9 +60,9 @@ prepend-rp-prefix:
   - OperatingSystemTypes
   - AzureFileVolume
   - GitRepoVolume
+  - Container
 
 rename-mapping:
-  Container: ContainerInstance
   Logs: ContainerLogs
   Event: ContainerEvent
   AzureFileVolume.readOnly: IsReadOnly
