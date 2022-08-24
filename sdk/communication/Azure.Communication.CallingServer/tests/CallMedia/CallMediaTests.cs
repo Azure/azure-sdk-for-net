@@ -21,18 +21,15 @@ namespace Azure.Communication.CallingServer
             Loop = false,
             OperationContext = "context"
         };
-        private static readonly RecognizeConfigurations _recognizeConfigurations = new RecognizeConfigurations()
+        private static readonly CallMediaRecognizeOptions _recognizeConfigurations = new CallMediaRecognizeDtmfOptions()
         {
             InterruptPromptAndStartRecognition = true,
-                DtmfConfigurations = new DtmfConfigurations()
-                {
-                    InterToneTimeoutInSeconds = TimeSpan.FromSeconds(10),
-                    MaxTonesToCollect = 5,
-                    StopTones = new StopTones[] { StopTones.Pound }
-                },
-                InitialSilenceTimeoutInSeconds = TimeSpan.FromSeconds(5),
-                TargetParticipant = new CommunicationUserIdentifier("targetUserId")
-            };
+            InterToneTimeoutInSeconds = TimeSpan.FromSeconds(10),
+            MaxTonesToCollect = 5,
+            StopTones = new StopTones[] { StopTones.Pound },
+            InitialSilenceTimeoutInSeconds = TimeSpan.FromSeconds(5),
+            TargetParticipant = new CommunicationUserIdentifier("targetUserId")
+        };
 
         private static CallMedia? _callMedia;
 
@@ -110,7 +107,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.RecognizeAsync(new CallMediaRecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
+                   callMedia => callMedia.RecognizeAsync(_recognizeConfigurations)
                 }
             };
         }
@@ -133,7 +130,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.Recognize(new CallMediaRecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
+                   callMedia => callMedia.Recognize(_recognizeConfigurations)
                 }
             };
         }

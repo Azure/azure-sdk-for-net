@@ -244,50 +244,49 @@ namespace Azure.Communication.CallingServer
         {
             if (recognizeOptions == null)
                 throw new ArgumentNullException(nameof(recognizeOptions));
-            RecognizeConfigurations recognizeConfigurations = recognizeOptions.RecognizeConfigurations;
 
-            if (recognizeConfigurations == null)
-                throw new ArgumentException(nameof(recognizeConfigurations));
-
-            DtmfConfigurationsInternal dtmfConfigurations = null;
-            if (recognizeConfigurations.DtmfConfigurations != null)
+            if (recognizeOptions is CallMediaRecognizeDtmfOptions recognizeDtmfOptions)
             {
-                dtmfConfigurations = new DtmfConfigurationsInternal()
+                DtmfConfigurationsInternal dtmfConfigurations = new DtmfConfigurationsInternal();
+                if (recognizeDtmfOptions.InterToneTimeoutInSeconds != null)
+                    dtmfConfigurations.InterToneTimeoutInSeconds = (int)recognizeDtmfOptions.InterToneTimeoutInSeconds.TotalSeconds;
+                if (recognizeDtmfOptions.MaxTonesToCollect > 0)
+                    dtmfConfigurations.MaxTonesToCollect = recognizeDtmfOptions.MaxTonesToCollect;
+                dtmfConfigurations.StopTones = (IList<StopTones>)recognizeDtmfOptions.StopTones;
+
+                RecognizeConfigurationsInternal recognizeConfigurationsInternal = new RecognizeConfigurationsInternal()
                 {
-                    InterToneTimeoutInSeconds = (int)recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds?.TotalSeconds,
-                    MaxTonesToCollect = recognizeConfigurations.DtmfConfigurations.MaxTonesToCollect,
-                    StopTones = (IList<StopTones>)recognizeConfigurations.DtmfConfigurations.StopTones
+                    DtmfConfigurations = dtmfConfigurations,
+                    InterruptPromptAndStartRecognition = recognizeDtmfOptions.InterruptPromptAndStartRecognition,
+                    TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant),
                 };
+                if (recognizeDtmfOptions.InitialSilenceTimeoutInSeconds != null)
+                    recognizeConfigurationsInternal.InitialSilenceTimeoutInSeconds = (int)recognizeDtmfOptions.InitialSilenceTimeoutInSeconds.TotalSeconds;
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.RecognizeInputType, recognizeConfigurationsInternal);
+
+                if (recognizeDtmfOptions.Prompt != null && recognizeDtmfOptions.Prompt is FileSource fileSource)
+                {
+                    PlaySourceInternal sourceInternal;
+                    sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                    sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                    sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
+
+                    request.PlayPrompt = sourceInternal;
+                }
+                else if (recognizeOptions.Prompt != null)
+                {
+                    throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
+                }
+                request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
+                request.OperationContext = recognizeOptions.OperationContext;
+
+                return request;
             }
-
-            RecognizeConfigurationsInternal recognizeConfigurationsInternal = new RecognizeConfigurationsInternal()
+            else
             {
-                DtmfConfigurations = dtmfConfigurations,
-                InterruptPromptAndStartRecognition = recognizeConfigurations.InterruptPromptAndStartRecognition,
-                InitialSilenceTimeoutInSeconds = (int)recognizeConfigurations.InitialSilenceTimeoutInSeconds?.TotalSeconds,
-                TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeConfigurations.TargetParticipant)
-            };
-
-            RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeOptions.RecognizeInputType, recognizeConfigurationsInternal);
-
-            if (recognizeOptions.Prompt != null && recognizeOptions.Prompt is FileSource fileSource)
-            {
-                PlaySourceInternal sourceInternal;
-                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
-
-                request.PlayPrompt = sourceInternal;
+                throw new NotSupportedException(recognizeOptions.GetType().Name);
             }
-            else if (recognizeOptions.Prompt != null)
-            {
-                throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
-            }
-
-            request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
-            request.OperationContext = recognizeOptions.OperationContext;
-
-            return request;
         }
     }
 }
