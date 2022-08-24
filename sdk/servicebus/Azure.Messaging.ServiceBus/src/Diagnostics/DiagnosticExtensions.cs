@@ -40,8 +40,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>
         /// For operations like receive and peek, we are not able to add the message links to the scope before the operation is performed, as we don't
         /// have the messages yet. However, links must be present in the scope before the scope is started, so we need to defer starting the scope until
-        /// after the messages the messages are returned, and backdate the start time to
-        /// right before the operation started.
+        /// after the messages are returned, and backdate the start time to right before the operation started.
         /// </summary>
         /// <param name="scope">The scope to start.</param>
         /// <param name="startTime">The Utc instant associated with the start of the operation that the scope is intended to wrap.</param>
