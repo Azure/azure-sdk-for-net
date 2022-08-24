@@ -11,7 +11,10 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The collection of Dicom Services. </summary>
+    /// <summary>
+    /// The collection of Dicom Services.
+    /// Serialized Name: DicomServiceCollection
+    /// </summary>
     internal partial class DicomServiceCollection
     {
         /// <summary> Initializes a new instance of DicomServiceCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of DicomServiceCollection. </summary>
-        /// <param name="nextLink"> The link used to get the next page of Dicom Services. </param>
-        /// <param name="value"> The list of Dicom Services. </param>
+        /// <param name="nextLink">
+        /// The link used to get the next page of Dicom Services.
+        /// Serialized Name: DicomServiceCollection.nextLink
+        /// </param>
+        /// <param name="value">
+        /// The list of Dicom Services.
+        /// Serialized Name: DicomServiceCollection.value
+        /// </param>
         internal DicomServiceCollection(string nextLink, IReadOnlyList<DicomServiceData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link used to get the next page of Dicom Services. </summary>
+        /// <summary>
+        /// The link used to get the next page of Dicom Services.
+        /// Serialized Name: DicomServiceCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> The list of Dicom Services. </summary>
+        /// <summary>
+        /// The list of Dicom Services.
+        /// Serialized Name: DicomServiceCollection.value
+        /// </summary>
         public IReadOnlyList<DicomServiceData> Value { get; }
     }
 }

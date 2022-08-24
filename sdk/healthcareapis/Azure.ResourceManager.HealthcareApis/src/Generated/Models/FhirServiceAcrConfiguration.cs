@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Azure container registry configuration information. </summary>
+    /// <summary>
+    /// Azure container registry configuration information
+    /// Serialized Name: FhirServiceAcrConfiguration
+    /// </summary>
     public partial class FhirServiceAcrConfiguration
     {
         /// <summary> Initializes a new instance of FhirServiceAcrConfiguration. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of FhirServiceAcrConfiguration. </summary>
-        /// <param name="loginServers"> The list of the Azure container registry login servers. </param>
-        /// <param name="ociArtifacts"> The list of Open Container Initiative (OCI) artifacts. </param>
+        /// <param name="loginServers">
+        /// The list of the Azure container registry login servers.
+        /// Serialized Name: FhirServiceAcrConfiguration.loginServers
+        /// </param>
+        /// <param name="ociArtifacts">
+        /// The list of Open Container Initiative (OCI) artifacts.
+        /// Serialized Name: FhirServiceAcrConfiguration.ociArtifacts
+        /// </param>
         internal FhirServiceAcrConfiguration(IList<string> loginServers, IList<ServiceOciArtifactEntry> ociArtifacts)
         {
             LoginServers = loginServers;
             OciArtifacts = ociArtifacts;
         }
 
-        /// <summary> The list of the Azure container registry login servers. </summary>
+        /// <summary>
+        /// The list of the Azure container registry login servers.
+        /// Serialized Name: FhirServiceAcrConfiguration.loginServers
+        /// </summary>
         public IList<string> LoginServers { get; }
-        /// <summary> The list of Open Container Initiative (OCI) artifacts. </summary>
+        /// <summary>
+        /// The list of Open Container Initiative (OCI) artifacts.
+        /// Serialized Name: FhirServiceAcrConfiguration.ociArtifacts
+        /// </summary>
         public IList<ServiceOciArtifactEntry> OciArtifacts { get; }
     }
 }

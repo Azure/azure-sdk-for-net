@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class WorkspacePatch : IUtf8JsonSerializable
+    public partial class HealthcareApisWorkspacePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteEndObject();
         }
 
-        internal static WorkspacePatch DeserializeWorkspacePatch(JsonElement element)
+        internal static HealthcareApisWorkspacePatch DeserializeHealthcareApisWorkspacePatch(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new WorkspacePatch(Optional.ToDictionary(tags));
+            return new HealthcareApisWorkspacePatch(Optional.ToDictionary(tags));
         }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> An Open Container Initiative (OCI) artifact. </summary>
+    /// <summary>
+    /// An Open Container Initiative (OCI) artifact.
+    /// Serialized Name: ServiceOciArtifactEntry
+    /// </summary>
     public partial class ServiceOciArtifactEntry
     {
         /// <summary> Initializes a new instance of ServiceOciArtifactEntry. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of ServiceOciArtifactEntry. </summary>
-        /// <param name="loginServer"> The Azure Container Registry login server. </param>
-        /// <param name="imageName"> The artifact name. </param>
-        /// <param name="digest"> The artifact digest. </param>
+        /// <param name="loginServer">
+        /// The Azure Container Registry login server.
+        /// Serialized Name: ServiceOciArtifactEntry.loginServer
+        /// </param>
+        /// <param name="imageName">
+        /// The artifact name.
+        /// Serialized Name: ServiceOciArtifactEntry.imageName
+        /// </param>
+        /// <param name="digest">
+        /// The artifact digest.
+        /// Serialized Name: ServiceOciArtifactEntry.digest
+        /// </param>
         internal ServiceOciArtifactEntry(string loginServer, string imageName, string digest)
         {
             LoginServer = loginServer;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Digest = digest;
         }
 
-        /// <summary> The Azure Container Registry login server. </summary>
+        /// <summary>
+        /// The Azure Container Registry login server.
+        /// Serialized Name: ServiceOciArtifactEntry.loginServer
+        /// </summary>
         public string LoginServer { get; set; }
-        /// <summary> The artifact name. </summary>
+        /// <summary>
+        /// The artifact name.
+        /// Serialized Name: ServiceOciArtifactEntry.imageName
+        /// </summary>
         public string ImageName { get; set; }
-        /// <summary> The artifact digest. </summary>
+        /// <summary>
+        /// The artifact digest.
+        /// Serialized Name: ServiceOciArtifactEntry.digest
+        /// </summary>
         public string Digest { get; set; }
     }
 }

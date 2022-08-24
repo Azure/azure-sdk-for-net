@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The properties indicating whether a given service name is available. </summary>
+    /// <summary>
+    /// The properties indicating whether a given service name is available.
+    /// Serialized Name: ServicesNameAvailabilityInfo
+    /// </summary>
     public partial class ServicesNameAvailabilityInfo
     {
         /// <summary> Initializes a new instance of ServicesNameAvailabilityInfo. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of ServicesNameAvailabilityInfo. </summary>
-        /// <param name="nameAvailable"> The value which indicates whether the provided name is available. </param>
-        /// <param name="reason"> The reason for unavailability. </param>
-        /// <param name="message"> The detailed reason message. </param>
+        /// <param name="nameAvailable">
+        /// The value which indicates whether the provided name is available.
+        /// Serialized Name: ServicesNameAvailabilityInfo.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason for unavailability.
+        /// Serialized Name: ServicesNameAvailabilityInfo.reason
+        /// </param>
+        /// <param name="message">
+        /// The detailed reason message.
+        /// Serialized Name: ServicesNameAvailabilityInfo.message
+        /// </param>
         internal ServicesNameAvailabilityInfo(bool? nameAvailable, ServiceNameUnavailabilityReason? reason, string message)
         {
             NameAvailable = nameAvailable;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Message = message;
         }
 
-        /// <summary> The value which indicates whether the provided name is available. </summary>
+        /// <summary>
+        /// The value which indicates whether the provided name is available.
+        /// Serialized Name: ServicesNameAvailabilityInfo.nameAvailable
+        /// </summary>
         public bool? NameAvailable { get; }
-        /// <summary> The reason for unavailability. </summary>
+        /// <summary>
+        /// The reason for unavailability.
+        /// Serialized Name: ServicesNameAvailabilityInfo.reason
+        /// </summary>
         public ServiceNameUnavailabilityReason? Reason { get; }
-        /// <summary> The detailed reason message. </summary>
+        /// <summary>
+        /// The detailed reason message.
+        /// Serialized Name: ServicesNameAvailabilityInfo.message
+        /// </summary>
         public string Message { get; }
     }
 }

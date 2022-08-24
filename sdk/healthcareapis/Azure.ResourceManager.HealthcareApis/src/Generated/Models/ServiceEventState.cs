@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Indicates the current status of event support for the resource. </summary>
+    /// <summary>
+    /// Indicates the current status of event support for the resource.
+    /// Serialized Name: ServiceEventState
+    /// </summary>
     public readonly partial struct ServiceEventState : IEquatable<ServiceEventState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string EnabledValue = "Enabled";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ServiceEventState.Disabled
+        /// </summary>
         public static ServiceEventState Disabled { get; } = new ServiceEventState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ServiceEventState.Enabled
+        /// </summary>
         public static ServiceEventState Enabled { get; } = new ServiceEventState(EnabledValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ServiceEventState.Updating
+        /// </summary>
         public static ServiceEventState Updating { get; } = new ServiceEventState(UpdatingValue);
         /// <summary> Determines if two <see cref="ServiceEventState"/> values are the same. </summary>
         public static bool operator ==(ServiceEventState left, ServiceEventState right) => left.Equals(right);

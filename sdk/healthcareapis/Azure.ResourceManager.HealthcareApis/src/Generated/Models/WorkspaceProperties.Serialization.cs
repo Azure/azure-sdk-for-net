@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         internal static WorkspaceProperties DeserializeWorkspaceProperties(JsonElement element)
         {
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,10 +49,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServicePrivateEndpointConnectionCreateOrUpdateContent> array = new List<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+                    List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServicePrivateEndpointConnectionCreateOrUpdateContent.DeserializeServicePrivateEndpointConnectionCreateOrUpdateContent(item));
+                        array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
                     }
                     privateEndpointConnections = array;
                     continue;

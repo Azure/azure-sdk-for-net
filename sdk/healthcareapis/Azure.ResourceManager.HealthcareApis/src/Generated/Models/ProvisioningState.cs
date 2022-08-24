@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary>
+    /// The provisioning state.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
@@ -36,31 +39,70 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string WarnedValue = "Warned";
         private const string SystemMaintenanceValue = "SystemMaintenance";
 
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProvisioningState.Creating
+        /// </summary>
         public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: ProvisioningState.Accepted
+        /// </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
-        /// <summary> Verifying. </summary>
+        /// <summary>
+        /// Verifying
+        /// Serialized Name: ProvisioningState.Verifying
+        /// </summary>
         public static ProvisioningState Verifying { get; } = new ProvisioningState(VerifyingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ProvisioningState.Updating
+        /// </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ProvisioningState.Canceled
+        /// </summary>
         public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
-        /// <summary> Deprovisioned. </summary>
+        /// <summary>
+        /// Deprovisioned
+        /// Serialized Name: ProvisioningState.Deprovisioned
+        /// </summary>
         public static ProvisioningState Deprovisioned { get; } = new ProvisioningState(DeprovisionedValue);
-        /// <summary> Moving. </summary>
+        /// <summary>
+        /// Moving
+        /// Serialized Name: ProvisioningState.Moving
+        /// </summary>
         public static ProvisioningState Moving { get; } = new ProvisioningState(MovingValue);
-        /// <summary> Suspended. </summary>
+        /// <summary>
+        /// Suspended
+        /// Serialized Name: ProvisioningState.Suspended
+        /// </summary>
         public static ProvisioningState Suspended { get; } = new ProvisioningState(SuspendedValue);
-        /// <summary> Warned. </summary>
+        /// <summary>
+        /// Warned
+        /// Serialized Name: ProvisioningState.Warned
+        /// </summary>
         public static ProvisioningState Warned { get; } = new ProvisioningState(WarnedValue);
-        /// <summary> SystemMaintenance. </summary>
+        /// <summary>
+        /// SystemMaintenance
+        /// Serialized Name: ProvisioningState.SystemMaintenance
+        /// </summary>
         public static ProvisioningState SystemMaintenance { get; } = new ProvisioningState(SystemMaintenanceValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);

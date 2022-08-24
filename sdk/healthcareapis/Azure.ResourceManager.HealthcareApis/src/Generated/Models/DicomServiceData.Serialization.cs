@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HealthcareApis
             Optional<DicomServiceAuthenticationConfiguration> authenticationConfiguration = default;
             Optional<CorsConfiguration> corsConfiguration = default;
             Optional<Uri> serviceUrl = default;
-            Optional<IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServicePrivateEndpointConnectionCreateOrUpdateContent> array = new List<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+                            List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServicePrivateEndpointConnectionCreateOrUpdateContent.DeserializeServicePrivateEndpointConnectionCreateOrUpdateContent(item));
+                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

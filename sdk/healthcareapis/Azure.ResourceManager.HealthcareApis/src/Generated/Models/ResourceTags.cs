@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>
+    /// <summary>
+    /// List of key value pairs that describe the resource. This will overwrite the existing tags.
+    /// Serialized Name: ResourceTags
+    /// </summary>
     public partial class ResourceTags
     {
         /// <summary> Initializes a new instance of ResourceTags. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: ResourceTags.tags
+        /// </param>
         internal ResourceTags(IDictionary<string, string> tags)
         {
             Tags = tags;
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags.
+        /// Serialized Name: ResourceTags.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

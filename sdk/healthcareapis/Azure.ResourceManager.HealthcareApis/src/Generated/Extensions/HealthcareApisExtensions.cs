@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServicesDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServicesDescriptionResource> GetServicesDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HealthcareApisServiceResource> GetHealthcareApisServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServicesDescriptionsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServicesDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServicesDescriptionResource> GetServicesDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HealthcareApisServiceResource> GetHealthcareApisServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServicesDescriptions(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHealthcareApisServices(cancellationToken);
         }
 
         /// <summary>
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspacesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspaces(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.HealthcareApis
             );
         }
 
-        /// <summary> Gets a collection of ServicesDescriptionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of HealthcareApisServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServicesDescriptionResources and their operations over a ServicesDescriptionResource. </returns>
-        public static ServicesDescriptionCollection GetServicesDescriptions(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HealthcareApisServiceResources and their operations over a HealthcareApisServiceResource. </returns>
+        public static HealthcareApisServiceCollection GetHealthcareApisServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetServicesDescriptions();
+            return GetExtensionClient(resourceGroupResource).GetHealthcareApisServices();
         }
 
         /// <summary>
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServicesDescriptionResource>> GetServicesDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HealthcareApisServiceResource>> GetHealthcareApisServiceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServicesDescriptions().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHealthcareApisServices().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -194,17 +194,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServicesDescriptionResource> GetServicesDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<HealthcareApisServiceResource> GetHealthcareApisService(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServicesDescriptions().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetHealthcareApisServices().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
+        public static HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetWorkspaces();
+            return GetExtensionClient(resourceGroupResource).GetHealthcareApisWorkspaces();
         }
 
         /// <summary>
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HealthcareApisWorkspaceResource>> GetHealthcareApisWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHealthcareApisWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -234,120 +234,120 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkspaces().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetHealthcareApisWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        #region ServicesDescriptionResource
+        #region HealthcareApisServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServicesDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicesDescriptionResource.CreateResourceIdentifier" /> to create a <see cref="ServicesDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisServiceResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicesDescriptionResource" /> object. </returns>
-        public static ServicesDescriptionResource GetServicesDescriptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisServiceResource" /> object. </returns>
+        public static HealthcareApisServiceResource GetHealthcareApisServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServicesDescriptionResource.ValidateResourceId(id);
-                return new ServicesDescriptionResource(client, id);
+                HealthcareApisServiceResource.ValidateResourceId(id);
+                return new HealthcareApisServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServicePrivateEndpointConnectionResource
+        #region HealthcareApisServicePrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServicePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePrivateEndpointConnectionResource" /> object. </returns>
-        public static ServicePrivateEndpointConnectionResource GetServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> object. </returns>
+        public static HealthcareApisServicePrivateEndpointConnectionResource GetHealthcareApisServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServicePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new ServicePrivateEndpointConnectionResource(client, id);
+                HealthcareApisServicePrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new HealthcareApisServicePrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkspacePrivateEndpointConnectionResource
+        #region HealthcareApisWorkspacePrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource" /> object. </returns>
-        public static WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> object. </returns>
+        public static HealthcareApisWorkspacePrivateEndpointConnectionResource GetHealthcareApisWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new WorkspacePrivateEndpointConnectionResource(client, id);
+                HealthcareApisWorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new HealthcareApisWorkspacePrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServicePrivateLinkResource
+        #region HealthcareApisServicePrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServicePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisServicePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePrivateLinkResource" /> object. </returns>
-        public static ServicePrivateLinkResource GetServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisServicePrivateLinkResource" /> object. </returns>
+        public static HealthcareApisServicePrivateLinkResource GetHealthcareApisServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServicePrivateLinkResource.ValidateResourceId(id);
-                return new ServicePrivateLinkResource(client, id);
+                HealthcareApisServicePrivateLinkResource.ValidateResourceId(id);
+                return new HealthcareApisServicePrivateLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkspacePrivateLinkResource
+        #region HealthcareApisWorkspacePrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="WorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspacePrivateLinkResource" /> object. </returns>
-        public static WorkspacePrivateLinkResource GetWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> object. </returns>
+        public static HealthcareApisWorkspacePrivateLinkResource GetHealthcareApisWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspacePrivateLinkResource.ValidateResourceId(id);
-                return new WorkspacePrivateLinkResource(client, id);
+                HealthcareApisWorkspacePrivateLinkResource.ValidateResourceId(id);
+                return new HealthcareApisWorkspacePrivateLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkspaceResource
+        #region HealthcareApisWorkspaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource" /> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisWorkspaceResource" /> object. </returns>
+        public static HealthcareApisWorkspaceResource GetHealthcareApisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceResource.ValidateResourceId(id);
-                return new WorkspaceResource(client, id);
+                HealthcareApisWorkspaceResource.ValidateResourceId(id);
+                return new HealthcareApisWorkspaceResource(client, id);
             }
             );
         }

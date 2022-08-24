@@ -16,8 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -48,4 +46,41 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}: HealthcareApisServicePrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}: HealthcareApisWorkspacePrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}: HealthcareApisServicePrivateEndpointConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}: HealthcareApisWorkspacePrivateEndpointConnection
+
+rename-mapping:
+  ServicesDescription: HealthcareApisService
+  Workspace: HealthcareApisWorkspace
+  PrivateEndpointConnectionDescription: HealthcareApisPrivateEndpointConnection
+
+mgmt-debug:
+  show-serialized-names: true
+
+directive:
+# here we override the put body parameter of the private endpoint connection APIs with the PrivateEndpointConnection defined in this RP, because the previous value (from common-types) is exactly the same as this one
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}"].put.parameters
+    transform: >
+      $[5].schema["$ref"] = "#/definitions/PrivateEndpointConnectionDescription";
+# override all the occurrence of this type
+  - from: swagger-document
+    where: $.definitions.ServicesProperties.properties.privateEndpointConnections.items["$ref"]
+    transform: return "#/definitions/PrivateEndpointConnectionDescription"
+  - from: swagger-document
+    where: $.definitions.Workspace.properties.properties.properties.privateEndpointConnections.items["$ref"]
+    transform: return "#/definitions/PrivateEndpointConnectionDescription"
+  - from: swagger-document
+    where: $.definitions.DicomServiceProperties.properties.privateEndpointConnections.items["$ref"]
+    transform: return "#/definitions/PrivateEndpointConnectionDescription"
+  - from: swagger-document
+    where: $.definitions.FhirServiceProperties.properties.privateEndpointConnections.items["$ref"]
+    transform: return "#/definitions/PrivateEndpointConnectionDescription"
+# rename the original PrivateEndpointConnection to avoid duplicate schema. This type should never be generated.
+  - from: swagger-document
+    where: $.definitions.PrivateEndpointConnection
+    transform: $["x-ms-client-name"] = "DummyPrivateEndpointConnection"
 ```

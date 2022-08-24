@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HealthcareApis
             Optional<FhirServiceAuthenticationConfiguration> authenticationConfiguration = default;
             Optional<FhirServiceCorsConfiguration> corsConfiguration = default;
             Optional<FhirServiceExportConfiguration> exportConfiguration = default;
-            Optional<IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<ServiceEventState> eventState = default;
             Optional<ResourceVersionPolicyConfiguration> resourceVersionPolicyConfiguration = default;
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServicePrivateEndpointConnectionCreateOrUpdateContent> array = new List<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+                            List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServicePrivateEndpointConnectionCreateOrUpdateContent.DeserializeServicePrivateEndpointConnectionCreateOrUpdateContent(item));
+                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

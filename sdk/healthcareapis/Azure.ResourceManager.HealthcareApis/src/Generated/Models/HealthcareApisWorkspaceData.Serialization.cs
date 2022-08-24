@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    public partial class ServicesDescriptionData : IUtf8JsonSerializable
+    public partial class HealthcareApisWorkspaceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,17 +24,10 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("properties");
                 writer.WriteObjectValue(Properties);
             }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -52,12 +45,10 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteEndObject();
         }
 
-        internal static ServicesDescriptionData DeserializeServicesDescriptionData(JsonElement element)
+        internal static HealthcareApisWorkspaceData DeserializeHealthcareApisWorkspaceData(JsonElement element)
         {
-            Optional<ServicesProperties> properties = default;
-            HealthcareApisKind kind = default;
+            Optional<WorkspaceProperties> properties = default;
             Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -73,12 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ServicesProperties.DeserializeServicesProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString().ToHealthcareApisKind();
+                    properties = WorkspaceProperties.DeserializeWorkspaceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -89,16 +75,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -147,7 +123,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     continue;
                 }
             }
-            return new ServicesDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, kind, Optional.ToNullable(etag), identity);
+            return new HealthcareApisWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(etag));
         }
     }
 }

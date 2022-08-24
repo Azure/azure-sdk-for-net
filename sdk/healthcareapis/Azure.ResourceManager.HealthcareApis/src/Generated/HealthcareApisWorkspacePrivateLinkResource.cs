@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A Class representing a WorkspacePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkspacePrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkspacePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetWorkspacePrivateLinkResource method.
+    /// A Class representing a HealthcareApisWorkspacePrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthcareApisWorkspacePrivateLinkResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisWorkspacePrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource" /> using the GetHealthcareApisWorkspacePrivateLinkResource method.
     /// </summary>
-    public partial class WorkspacePrivateLinkResource : ArmResource
+    public partial class HealthcareApisWorkspacePrivateLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WorkspacePrivateLinkResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="HealthcareApisWorkspacePrivateLinkResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _workspacePrivateLinkResourceClientDiagnostics;
-        private readonly WorkspacePrivateLinkResourcesRestOperations _workspacePrivateLinkResourceRestClient;
+        private readonly ClientDiagnostics _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics;
+        private readonly WorkspacePrivateLinkResourcesRestOperations _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient;
         private readonly PrivateLinkResourceDescriptionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspacePrivateLinkResource"/> class for mocking. </summary>
-        protected WorkspacePrivateLinkResource()
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateLinkResource"/> class for mocking. </summary>
+        protected HealthcareApisWorkspacePrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkspacePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "HealthcareApisWorkspacePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WorkspacePrivateLinkResource(ArmClient client, PrivateLinkResourceDescriptionData data) : this(client, data.Id)
+        internal HealthcareApisWorkspacePrivateLinkResource(ArmClient client, PrivateLinkResourceDescriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspacePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WorkspacePrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HealthcareApisWorkspacePrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspacePrivateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string workspacePrivateLinkResourceApiVersion);
-            _workspacePrivateLinkResourceRestClient = new WorkspacePrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspacePrivateLinkResourceApiVersion);
+            _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesApiVersion);
+            _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient = new WorkspacePrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: WorkspacePrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkspacePrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthcareApisWorkspacePrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _workspacePrivateLinkResourceClientDiagnostics.CreateScope("WorkspacePrivateLinkResource.Get");
+            using var scope = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _workspacePrivateLinkResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: WorkspacePrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WorkspacePrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HealthcareApisWorkspacePrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _workspacePrivateLinkResourceClientDiagnostics.CreateScope("WorkspacePrivateLinkResource.Get");
+            using var scope = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _workspacePrivateLinkResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

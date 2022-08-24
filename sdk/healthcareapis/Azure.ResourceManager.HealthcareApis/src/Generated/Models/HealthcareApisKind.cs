@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The kind of the service. </summary>
+    /// <summary>
+    /// The kind of the service.
+    /// Serialized Name: Kind
+    /// </summary>
     public enum HealthcareApisKind
     {
-        /// <summary> fhir. </summary>
+        /// <summary>
+        /// fhir
+        /// Serialized Name: Kind.fhir
+        /// </summary>
         Fhir,
-        /// <summary> fhir-Stu3. </summary>
+        /// <summary>
+        /// fhir-Stu3
+        /// Serialized Name: Kind.fhir-Stu3
+        /// </summary>
         FhirStu3,
-        /// <summary> fhir-R4. </summary>
+        /// <summary>
+        /// fhir-R4
+        /// Serialized Name: Kind.fhir-R4
+        /// </summary>
         FhirR4
     }
 }

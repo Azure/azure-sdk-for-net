@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The private endpoint connection status. </summary>
+    /// <summary>
+    /// The private endpoint connection status.
+    /// Serialized Name: PrivateEndpointServiceConnectionStatus
+    /// </summary>
     public readonly partial struct HealthcareApisPrivateEndpointServiceConnectionStatus : IEquatable<HealthcareApisPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Pending
+        /// </summary>
         public static HealthcareApisPrivateEndpointServiceConnectionStatus Pending { get; } = new HealthcareApisPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Approved
+        /// </summary>
         public static HealthcareApisPrivateEndpointServiceConnectionStatus Approved { get; } = new HealthcareApisPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Rejected
+        /// </summary>
         public static HealthcareApisPrivateEndpointServiceConnectionStatus Rejected { get; } = new HealthcareApisPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="HealthcareApisPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisPrivateEndpointServiceConnectionStatus left, HealthcareApisPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

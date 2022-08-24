@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<ServiceAuthenticationConfigurationInfo> authenticationConfiguration = default;
             Optional<ServiceCorsConfigurationInfo> corsConfiguration = default;
             Optional<ServiceExportConfigurationInfo> exportConfiguration = default;
-            Optional<IList<ServicePrivateEndpointConnectionCreateOrUpdateContent>> privateEndpointConnections = default;
+            Optional<IList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<ServiceAcrConfigurationInfo> acrConfiguration = default;
             Optional<ServiceImportConfigurationInfo> importConfiguration = default;
@@ -160,10 +161,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServicePrivateEndpointConnectionCreateOrUpdateContent> array = new List<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+                    List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServicePrivateEndpointConnectionCreateOrUpdateContent.DeserializeServicePrivateEndpointConnectionCreateOrUpdateContent(item));
+                        array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
                     }
                     privateEndpointConnections = array;
                     continue;

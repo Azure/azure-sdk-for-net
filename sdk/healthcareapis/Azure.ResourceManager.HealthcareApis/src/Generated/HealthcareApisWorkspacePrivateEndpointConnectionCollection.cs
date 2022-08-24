@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkspacePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="WorkspacePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
-    /// To get a <see cref="WorkspacePrivateEndpointConnectionCollection" /> instance call the GetWorkspacePrivateEndpointConnections method from an instance of <see cref="WorkspaceResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource" />.
+    /// To get a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionCollection" /> instance call the GetHealthcareApisWorkspacePrivateEndpointConnections method from an instance of <see cref="HealthcareApisWorkspaceResource" />.
     /// </summary>
-    public partial class WorkspacePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<WorkspacePrivateEndpointConnectionResource>, IAsyncEnumerable<WorkspacePrivateEndpointConnectionResource>
+    public partial class HealthcareApisWorkspacePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>, IAsyncEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _workspacePrivateEndpointConnectionClientDiagnostics;
-        private readonly WorkspacePrivateEndpointConnectionsRestOperations _workspacePrivateEndpointConnectionRestClient;
+        private readonly ClientDiagnostics _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics;
+        private readonly WorkspacePrivateEndpointConnectionsRestOperations _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspacePrivateEndpointConnectionCollection"/> class for mocking. </summary>
-        protected WorkspacePrivateEndpointConnectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateEndpointConnectionCollection"/> class for mocking. </summary>
+        protected HealthcareApisWorkspacePrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspacePrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkspacePrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HealthcareApisWorkspacePrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspacePrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", WorkspacePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WorkspacePrivateEndpointConnectionResource.ResourceType, out string workspacePrivateEndpointConnectionApiVersion);
-            _workspacePrivateEndpointConnectionRestClient = new WorkspacePrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspacePrivateEndpointConnectionApiVersion);
+            _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspacePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HealthcareApisWorkspacePrivateEndpointConnectionResource.ResourceType, out string healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsApiVersion);
+            _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient = new WorkspacePrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != HealthcareApisWorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthcareApisWorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionDescriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workspacePrivateEndpointConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<WorkspacePrivateEndpointConnectionResource>(new WorkspacePrivateEndpointConnectionOperationSource(Client), _workspacePrivateEndpointConnectionClientDiagnostics, Pipeline, _workspacePrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisWorkspacePrivateEndpointConnectionOperationSource(Client), _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionDescriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workspacePrivateEndpointConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<WorkspacePrivateEndpointConnectionResource>(new WorkspacePrivateEndpointConnectionOperationSource(Client), _workspacePrivateEndpointConnectionClientDiagnostics, Pipeline, _workspacePrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(new HealthcareApisWorkspacePrivateEndpointConnectionOperationSource(Client), _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<WorkspacePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthcareApisWorkspacePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Get");
+            using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workspacePrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<WorkspacePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthcareApisWorkspacePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Get");
+            using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _workspacePrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: WorkspacePrivateEndpointConnections_ListByWorkspace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspacePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspacePrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HealthcareApisWorkspacePrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.GetAll");
+                using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workspacePrivateEndpointConnectionRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspacePrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -210,17 +210,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: WorkspacePrivateEndpointConnections_ListByWorkspace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspacePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkspacePrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
+            Page<HealthcareApisWorkspacePrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.GetAll");
+                using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workspacePrivateEndpointConnectionRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspacePrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
+                    var response = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Exists");
+            using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workspacePrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _workspacePrivateEndpointConnectionClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Exists");
+            using var scope = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workspacePrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _healthcareApisWorkspacePrivateEndpointConnectionWorkspacePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        IEnumerator<WorkspacePrivateEndpointConnectionResource> IEnumerable<WorkspacePrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<HealthcareApisWorkspacePrivateEndpointConnectionResource> IEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HealthcareApis
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WorkspacePrivateEndpointConnectionResource> IAsyncEnumerable<WorkspacePrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HealthcareApisWorkspacePrivateEndpointConnectionResource> IAsyncEnumerable<HealthcareApisWorkspacePrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

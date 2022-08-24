@@ -7,31 +7,65 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The properties of a service instance. </summary>
+    /// <summary>
+    /// The properties of a service instance.
+    /// Serialized Name: ServicesProperties
+    /// </summary>
     public partial class ServicesProperties
     {
         /// <summary> Initializes a new instance of ServicesProperties. </summary>
         public ServicesProperties()
         {
             AccessPolicies = new ChangeTrackingList<ServiceAccessPolicyEntry>();
-            PrivateEndpointConnections = new ChangeTrackingList<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ServicesProperties. </summary>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="accessPolicies"> The access policies of the service instance. </param>
-        /// <param name="cosmosDbConfiguration"> The settings for the Cosmos DB database backing the service. </param>
-        /// <param name="authenticationConfiguration"> The authentication configuration for the service instance. </param>
-        /// <param name="corsConfiguration"> The settings for the CORS configuration of the service instance. </param>
-        /// <param name="exportConfiguration"> The settings for the export operation of the service instance. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        /// <param name="acrConfiguration"> The azure container registry settings used for convert data operation of the service instance. </param>
-        /// <param name="importConfiguration"> The settings for the import operation of the service instance. </param>
-        internal ServicesProperties(ProvisioningState? provisioningState, IList<ServiceAccessPolicyEntry> accessPolicies, ServiceCosmosDbConfigurationInfo cosmosDbConfiguration, ServiceAuthenticationConfigurationInfo authenticationConfiguration, ServiceCorsConfigurationInfo corsConfiguration, ServiceExportConfigurationInfo exportConfiguration, IList<ServicePrivateEndpointConnectionCreateOrUpdateContent> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ServiceAcrConfigurationInfo acrConfiguration, ServiceImportConfigurationInfo importConfiguration)
+        /// <param name="provisioningState">
+        /// The provisioning state.
+        /// Serialized Name: ServicesProperties.provisioningState
+        /// </param>
+        /// <param name="accessPolicies">
+        /// The access policies of the service instance.
+        /// Serialized Name: ServicesProperties.accessPolicies
+        /// </param>
+        /// <param name="cosmosDbConfiguration">
+        /// The settings for the Cosmos DB database backing the service.
+        /// Serialized Name: ServicesProperties.cosmosDbConfiguration
+        /// </param>
+        /// <param name="authenticationConfiguration">
+        /// The authentication configuration for the service instance.
+        /// Serialized Name: ServicesProperties.authenticationConfiguration
+        /// </param>
+        /// <param name="corsConfiguration">
+        /// The settings for the CORS configuration of the service instance.
+        /// Serialized Name: ServicesProperties.corsConfiguration
+        /// </param>
+        /// <param name="exportConfiguration">
+        /// The settings for the export operation of the service instance.
+        /// Serialized Name: ServicesProperties.exportConfiguration
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// The list of private endpoint connections that are set up for this resource.
+        /// Serialized Name: ServicesProperties.privateEndpointConnections
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+        /// Serialized Name: ServicesProperties.publicNetworkAccess
+        /// </param>
+        /// <param name="acrConfiguration">
+        /// The azure container registry settings used for convert data operation of the service instance.
+        /// Serialized Name: ServicesProperties.acrConfiguration
+        /// </param>
+        /// <param name="importConfiguration">
+        /// The settings for the import operation of the service instance.
+        /// Serialized Name: ServicesProperties.importConfiguration
+        /// </param>
+        internal ServicesProperties(ProvisioningState? provisioningState, IList<ServiceAccessPolicyEntry> accessPolicies, ServiceCosmosDbConfigurationInfo cosmosDbConfiguration, ServiceAuthenticationConfigurationInfo authenticationConfiguration, ServiceCorsConfigurationInfo corsConfiguration, ServiceExportConfigurationInfo exportConfiguration, IList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ServiceAcrConfigurationInfo acrConfiguration, ServiceImportConfigurationInfo importConfiguration)
         {
             ProvisioningState = provisioningState;
             AccessPolicies = accessPolicies;
@@ -45,19 +79,40 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             ImportConfiguration = importConfiguration;
         }
 
-        /// <summary> The provisioning state. </summary>
+        /// <summary>
+        /// The provisioning state.
+        /// Serialized Name: ServicesProperties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The access policies of the service instance. </summary>
+        /// <summary>
+        /// The access policies of the service instance.
+        /// Serialized Name: ServicesProperties.accessPolicies
+        /// </summary>
         public IList<ServiceAccessPolicyEntry> AccessPolicies { get; }
-        /// <summary> The settings for the Cosmos DB database backing the service. </summary>
+        /// <summary>
+        /// The settings for the Cosmos DB database backing the service.
+        /// Serialized Name: ServicesProperties.cosmosDbConfiguration
+        /// </summary>
         public ServiceCosmosDbConfigurationInfo CosmosDbConfiguration { get; set; }
-        /// <summary> The authentication configuration for the service instance. </summary>
+        /// <summary>
+        /// The authentication configuration for the service instance.
+        /// Serialized Name: ServicesProperties.authenticationConfiguration
+        /// </summary>
         public ServiceAuthenticationConfigurationInfo AuthenticationConfiguration { get; set; }
-        /// <summary> The settings for the CORS configuration of the service instance. </summary>
+        /// <summary>
+        /// The settings for the CORS configuration of the service instance.
+        /// Serialized Name: ServicesProperties.corsConfiguration
+        /// </summary>
         public ServiceCorsConfigurationInfo CorsConfiguration { get; set; }
-        /// <summary> The settings for the export operation of the service instance. </summary>
+        /// <summary>
+        /// The settings for the export operation of the service instance.
+        /// Serialized Name: ServicesProperties.exportConfiguration
+        /// </summary>
         internal ServiceExportConfigurationInfo ExportConfiguration { get; set; }
-        /// <summary> The name of the default export storage account. </summary>
+        /// <summary>
+        /// The name of the default export storage account.
+        /// Serialized Name: ServiceExportConfigurationInfo.storageAccountName
+        /// </summary>
         public string ExportStorageAccountName
         {
             get => ExportConfiguration is null ? default : ExportConfiguration.StorageAccountName;
@@ -69,13 +124,25 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
         }
 
-        /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
-        public IList<ServicePrivateEndpointConnectionCreateOrUpdateContent> PrivateEndpointConnections { get; }
-        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        /// <summary>
+        /// The list of private endpoint connections that are set up for this resource.
+        /// Serialized Name: ServicesProperties.privateEndpointConnections
+        /// </summary>
+        public IList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary>
+        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+        /// Serialized Name: ServicesProperties.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> The azure container registry settings used for convert data operation of the service instance. </summary>
+        /// <summary>
+        /// The azure container registry settings used for convert data operation of the service instance.
+        /// Serialized Name: ServicesProperties.acrConfiguration
+        /// </summary>
         public ServiceAcrConfigurationInfo AcrConfiguration { get; set; }
-        /// <summary> The settings for the import operation of the service instance. </summary>
+        /// <summary>
+        /// The settings for the import operation of the service instance.
+        /// Serialized Name: ServicesProperties.importConfiguration
+        /// </summary>
         public ServiceImportConfigurationInfo ImportConfiguration { get; set; }
     }
 }

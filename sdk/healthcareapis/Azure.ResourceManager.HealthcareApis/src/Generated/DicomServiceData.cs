@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="location"> The location. </param>
         public DicomServiceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DicomServiceData. </summary>
@@ -31,15 +31,39 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="authenticationConfiguration"> Dicom Service authentication configuration. </param>
-        /// <param name="corsConfiguration"> Dicom Service Cors configuration. </param>
-        /// <param name="serviceUri"> The url of the Dicom Services. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, CorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState">
+        /// The provisioning state.
+        /// Serialized Name: DicomService.properties.provisioningState
+        /// </param>
+        /// <param name="authenticationConfiguration">
+        /// Dicom Service authentication configuration.
+        /// Serialized Name: DicomService.properties.authenticationConfiguration
+        /// </param>
+        /// <param name="corsConfiguration">
+        /// Dicom Service Cors configuration.
+        /// Serialized Name: DicomService.properties.corsConfiguration
+        /// </param>
+        /// <param name="serviceUri">
+        /// The url of the Dicom Services.
+        /// Serialized Name: DicomService.properties.serviceUrl
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// The list of private endpoint connections that are set up for this resource.
+        /// Serialized Name: DicomService.properties.privateEndpointConnections
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+        /// Serialized Name: DicomService.properties.publicNetworkAccess
+        /// </param>
+        /// <param name="identity">
+        /// Setting indicating whether the service has a managed identity associated with it.
+        /// Serialized Name: ServiceManagedIdentity.identity
+        /// </param>
+        /// <param name="etag">
+        /// An etag associated with the resource, used for optimistic concurrency when editing it.
+        /// Serialized Name: ResourceCore.etag
+        /// </param>
+        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, CorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AuthenticationConfiguration = authenticationConfiguration;
@@ -51,21 +75,45 @@ namespace Azure.ResourceManager.HealthcareApis
             ETag = etag;
         }
 
-        /// <summary> The provisioning state. </summary>
+        /// <summary>
+        /// The provisioning state.
+        /// Serialized Name: DicomService.properties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> Dicom Service authentication configuration. </summary>
+        /// <summary>
+        /// Dicom Service authentication configuration.
+        /// Serialized Name: DicomService.properties.authenticationConfiguration
+        /// </summary>
         public DicomServiceAuthenticationConfiguration AuthenticationConfiguration { get; set; }
-        /// <summary> Dicom Service Cors configuration. </summary>
+        /// <summary>
+        /// Dicom Service Cors configuration.
+        /// Serialized Name: DicomService.properties.corsConfiguration
+        /// </summary>
         public CorsConfiguration CorsConfiguration { get; set; }
-        /// <summary> The url of the Dicom Services. </summary>
+        /// <summary>
+        /// The url of the Dicom Services.
+        /// Serialized Name: DicomService.properties.serviceUrl
+        /// </summary>
         public Uri ServiceUri { get; }
-        /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
-        public IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent> PrivateEndpointConnections { get; }
-        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        /// <summary>
+        /// The list of private endpoint connections that are set up for this resource.
+        /// Serialized Name: DicomService.properties.privateEndpointConnections
+        /// </summary>
+        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary>
+        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+        /// Serialized Name: DicomService.properties.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
+        /// <summary>
+        /// Setting indicating whether the service has a managed identity associated with it.
+        /// Serialized Name: ServiceManagedIdentity.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
+        /// <summary>
+        /// An etag associated with the resource, used for optimistic concurrency when editing it.
+        /// Serialized Name: ResourceCore.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -11,27 +11,42 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> A list of service description objects with a next link. </summary>
+    /// <summary>
+    /// A list of service description objects with a next link.
+    /// Serialized Name: ServicesDescriptionListResult
+    /// </summary>
     internal partial class ServicesDescriptionListResult
     {
         /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
         internal ServicesDescriptionListResult()
         {
-            Value = new ChangeTrackingList<ServicesDescriptionData>();
+            Value = new ChangeTrackingList<HealthcareApisServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
-        /// <param name="nextLink"> The link used to get the next page of service description objects. </param>
-        /// <param name="value"> A list of service description objects. </param>
-        internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<ServicesDescriptionData> value)
+        /// <param name="nextLink">
+        /// The link used to get the next page of service description objects.
+        /// Serialized Name: ServicesDescriptionListResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// A list of service description objects.
+        /// Serialized Name: ServicesDescriptionListResult.value
+        /// </param>
+        internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<HealthcareApisServiceData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link used to get the next page of service description objects. </summary>
+        /// <summary>
+        /// The link used to get the next page of service description objects.
+        /// Serialized Name: ServicesDescriptionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> A list of service description objects. </summary>
-        public IReadOnlyList<ServicesDescriptionData> Value { get; }
+        /// <summary>
+        /// A list of service description objects.
+        /// Serialized Name: ServicesDescriptionListResult.value
+        /// </summary>
+        public IReadOnlyList<HealthcareApisServiceData> Value { get; }
     }
 }

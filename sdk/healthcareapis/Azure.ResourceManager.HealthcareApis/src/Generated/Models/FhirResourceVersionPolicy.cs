@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Controls how resources are versioned on the FHIR service. </summary>
+    /// <summary>
+    /// Controls how resources are versioned on the FHIR service
+    /// Serialized Name: FhirResourceVersionPolicy
+    /// </summary>
     public readonly partial struct FhirResourceVersionPolicy : IEquatable<FhirResourceVersionPolicy>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string VersionedValue = "versioned";
         private const string VersionedUpdateValue = "versioned-update";
 
-        /// <summary> no-version. </summary>
+        /// <summary>
+        /// no-version
+        /// Serialized Name: FhirResourceVersionPolicy.no-version
+        /// </summary>
         public static FhirResourceVersionPolicy NoVersion { get; } = new FhirResourceVersionPolicy(NoVersionValue);
-        /// <summary> versioned. </summary>
+        /// <summary>
+        /// versioned
+        /// Serialized Name: FhirResourceVersionPolicy.versioned
+        /// </summary>
         public static FhirResourceVersionPolicy Versioned { get; } = new FhirResourceVersionPolicy(VersionedValue);
-        /// <summary> versioned-update. </summary>
+        /// <summary>
+        /// versioned-update
+        /// Serialized Name: FhirResourceVersionPolicy.versioned-update
+        /// </summary>
         public static FhirResourceVersionPolicy VersionedUpdate { get; } = new FhirResourceVersionPolicy(VersionedUpdateValue);
         /// <summary> Determines if two <see cref="FhirResourceVersionPolicy"/> values are the same. </summary>
         public static bool operator ==(FhirResourceVersionPolicy left, FhirResourceVersionPolicy right) => left.Equals(right);

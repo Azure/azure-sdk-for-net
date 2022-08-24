@@ -7,34 +7,56 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Workspaces resource specific properties. </summary>
+    /// <summary>
+    /// Workspaces resource specific properties.
+    /// Serialized Name: WorkspaceProperties
+    /// </summary>
     public partial class WorkspaceProperties
     {
         /// <summary> Initializes a new instance of WorkspaceProperties. </summary>
         public WorkspaceProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceProperties. </summary>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        internal WorkspaceProperties(ProvisioningState? provisioningState, IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess)
+        /// <param name="provisioningState">
+        /// The provisioning state.
+        /// Serialized Name: WorkspaceProperties.provisioningState
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// The list of private endpoint connections that are set up for this resource.
+        /// Serialized Name: WorkspaceProperties.privateEndpointConnections
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+        /// Serialized Name: WorkspaceProperties.publicNetworkAccess
+        /// </param>
+        internal WorkspaceProperties(ProvisioningState? provisioningState, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
         }
 
-        /// <summary> The provisioning state. </summary>
+        /// <summary>
+        /// The provisioning state.
+        /// Serialized Name: WorkspaceProperties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
-        public IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent> PrivateEndpointConnections { get; }
-        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        /// <summary>
+        /// The list of private endpoint connections that are set up for this resource.
+        /// Serialized Name: WorkspaceProperties.privateEndpointConnections
+        /// </summary>
+        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary>
+        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
+        /// Serialized Name: WorkspaceProperties.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

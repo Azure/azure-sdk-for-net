@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Input values. </summary>
+    /// <summary>
+    /// Input values.
+    /// Serialized Name: CheckNameAvailabilityParameters
+    /// </summary>
     public partial class CheckNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
-        /// <param name="name"> The name of the service instance to check. </param>
-        /// <param name="resourceType"> The fully qualified resource type which includes provider namespace. </param>
+        /// <param name="name">
+        /// The name of the service instance to check.
+        /// Serialized Name: CheckNameAvailabilityParameters.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The fully qualified resource type which includes provider namespace.
+        /// Serialized Name: CheckNameAvailabilityParameters.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>
         public CheckNameAvailabilityContent(string name, string resourceType)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> The name of the service instance to check. </summary>
+        /// <summary>
+        /// The name of the service instance to check.
+        /// Serialized Name: CheckNameAvailabilityParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The fully qualified resource type which includes provider namespace. </summary>
+        /// <summary>
+        /// The fully qualified resource type which includes provider namespace.
+        /// Serialized Name: CheckNameAvailabilityParameters.type
+        /// </summary>
         public string ResourceType { get; }
     }
 }

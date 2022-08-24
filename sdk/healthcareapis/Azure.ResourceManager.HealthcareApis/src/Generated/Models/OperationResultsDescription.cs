@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The properties indicating the operation result of an operation on a service. </summary>
+    /// <summary>
+    /// The properties indicating the operation result of an operation on a service.
+    /// Serialized Name: OperationResultsDescription
+    /// </summary>
     public partial class OperationResultsDescription
     {
         /// <summary> Initializes a new instance of OperationResultsDescription. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of OperationResultsDescription. </summary>
-        /// <param name="id"> The ID of the operation returned. </param>
-        /// <param name="name"> The name of the operation result. </param>
-        /// <param name="status"> The status of the operation being performed. </param>
-        /// <param name="startTime"> The time that the operation was started. </param>
-        /// <param name="endTime"> The time that the operation finished. </param>
-        /// <param name="properties"> Additional properties of the operation result. </param>
+        /// <param name="id">
+        /// The ID of the operation returned.
+        /// Serialized Name: OperationResultsDescription.id
+        /// </param>
+        /// <param name="name">
+        /// The name of the operation result.
+        /// Serialized Name: OperationResultsDescription.name
+        /// </param>
+        /// <param name="status">
+        /// The status of the operation being performed.
+        /// Serialized Name: OperationResultsDescription.status
+        /// </param>
+        /// <param name="startTime">
+        /// The time that the operation was started.
+        /// Serialized Name: OperationResultsDescription.startTime
+        /// </param>
+        /// <param name="endTime">
+        /// The time that the operation finished.
+        /// Serialized Name: OperationResultsDescription.endTime
+        /// </param>
+        /// <param name="properties">
+        /// Additional properties of the operation result.
+        /// Serialized Name: OperationResultsDescription.properties
+        /// </param>
         internal OperationResultsDescription(string id, string name, OperationResultStatus? status, string startTime, string endTime, BinaryData properties)
         {
             Id = id;
@@ -34,18 +55,34 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Properties = properties;
         }
 
-        /// <summary> The ID of the operation returned. </summary>
+        /// <summary>
+        /// The ID of the operation returned.
+        /// Serialized Name: OperationResultsDescription.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The name of the operation result. </summary>
+        /// <summary>
+        /// The name of the operation result.
+        /// Serialized Name: OperationResultsDescription.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The status of the operation being performed. </summary>
+        /// <summary>
+        /// The status of the operation being performed.
+        /// Serialized Name: OperationResultsDescription.status
+        /// </summary>
         public OperationResultStatus? Status { get; }
-        /// <summary> The time that the operation was started. </summary>
+        /// <summary>
+        /// The time that the operation was started.
+        /// Serialized Name: OperationResultsDescription.startTime
+        /// </summary>
         public string StartTime { get; }
-        /// <summary> The time that the operation finished. </summary>
+        /// <summary>
+        /// The time that the operation finished.
+        /// Serialized Name: OperationResultsDescription.endTime
+        /// </summary>
         public string EndTime { get; }
         /// <summary>
         /// Additional properties of the operation result.
+        /// Serialized Name: OperationResultsDescription.properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

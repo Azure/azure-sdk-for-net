@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Dicom Service patch properties. </summary>
+    /// <summary>
+    /// Dicom Service patch properties
+    /// Serialized Name: DicomServicePatchResource
+    /// </summary>
     public partial class DicomServicePatch : ResourceTags
     {
         /// <summary> Initializes a new instance of DicomServicePatch. </summary>
@@ -19,14 +22,23 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of DicomServicePatch. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: ResourceTags.tags
+        /// </param>
+        /// <param name="identity">
+        /// Setting indicating whether the service has a managed identity associated with it.
+        /// Serialized Name: ServiceManagedIdentity.identity
+        /// </param>
         internal DicomServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(tags)
         {
             Identity = identity;
         }
 
-        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
+        /// <summary>
+        /// Setting indicating whether the service has a managed identity associated with it.
+        /// Serialized Name: ServiceManagedIdentity.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

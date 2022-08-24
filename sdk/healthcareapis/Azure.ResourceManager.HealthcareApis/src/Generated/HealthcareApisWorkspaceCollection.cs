@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkspaceResource" /> and their operations.
-    /// Each <see cref="WorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="WorkspaceCollection" /> instance call the GetWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisWorkspaceResource" /> and their operations.
+    /// Each <see cref="HealthcareApisWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="HealthcareApisWorkspaceCollection" /> instance call the GetHealthcareApisWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class WorkspaceCollection : ArmCollection, IEnumerable<WorkspaceResource>, IAsyncEnumerable<WorkspaceResource>
+    public partial class HealthcareApisWorkspaceCollection : ArmCollection, IEnumerable<HealthcareApisWorkspaceResource>, IAsyncEnumerable<HealthcareApisWorkspaceResource>
     {
-        private readonly ClientDiagnostics _workspaceClientDiagnostics;
-        private readonly WorkspacesRestOperations _workspaceRestClient;
+        private readonly ClientDiagnostics _healthcareApisWorkspaceWorkspacesClientDiagnostics;
+        private readonly WorkspacesRestOperations _healthcareApisWorkspaceWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceCollection"/> class for mocking. </summary>
-        protected WorkspaceCollection()
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspaceCollection"/> class for mocking. </summary>
+        protected HealthcareApisWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HealthcareApisWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", WorkspaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WorkspaceResource.ResourceType, out string workspaceApiVersion);
-            _workspaceRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceApiVersion);
+            _healthcareApisWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HealthcareApisWorkspaceResource.ResourceType, out string healthcareApisWorkspaceWorkspacesApiVersion);
+            _healthcareApisWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspaceWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, WorkspaceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HealthcareApisWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, HealthcareApisWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.CreateOrUpdate");
+            using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _healthcareApisWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, WorkspaceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HealthcareApisWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, HealthcareApisWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.CreateOrUpdate");
+            using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _healthcareApisWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual async Task<Response<WorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthcareApisWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Get");
+            using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<WorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthcareApisWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Get");
+            using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var response = _healthcareApisWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: Workspaces_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthcareApisWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspaceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HealthcareApisWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workspaceRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _healthcareApisWorkspaceWorkspacesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.HealthcareApis
                     throw;
                 }
             }
-            async Task<Page<WorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HealthcareApisWorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workspaceRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _healthcareApisWorkspaceWorkspacesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: Workspaces_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthcareApisWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkspaceResource> FirstPageFunc(int? pageSizeHint)
+            Page<HealthcareApisWorkspaceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workspaceRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _healthcareApisWorkspaceWorkspacesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.HealthcareApis
                     throw;
                 }
             }
-            Page<WorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HealthcareApisWorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.GetAll");
+                using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workspaceRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _healthcareApisWorkspaceWorkspacesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Exists");
+            using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceClientDiagnostics.CreateScope("WorkspaceCollection.Exists");
+            using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _healthcareApisWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        IEnumerator<WorkspaceResource> IEnumerable<WorkspaceResource>.GetEnumerator()
+        IEnumerator<HealthcareApisWorkspaceResource> IEnumerable<HealthcareApisWorkspaceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.HealthcareApis
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WorkspaceResource> IAsyncEnumerable<WorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HealthcareApisWorkspaceResource> IAsyncEnumerable<HealthcareApisWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

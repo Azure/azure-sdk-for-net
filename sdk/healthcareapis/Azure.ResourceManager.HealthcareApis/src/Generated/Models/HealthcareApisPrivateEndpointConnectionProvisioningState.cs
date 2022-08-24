@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The current provisioning state. </summary>
+    /// <summary>
+    /// The current provisioning state.
+    /// Serialized Name: PrivateEndpointConnectionProvisioningState
+    /// </summary>
     public readonly partial struct HealthcareApisPrivateEndpointConnectionProvisioningState : IEquatable<HealthcareApisPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
+        /// </summary>
         public static HealthcareApisPrivateEndpointConnectionProvisioningState Succeeded { get; } = new HealthcareApisPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
+        /// </summary>
         public static HealthcareApisPrivateEndpointConnectionProvisioningState Creating { get; } = new HealthcareApisPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
+        /// </summary>
         public static HealthcareApisPrivateEndpointConnectionProvisioningState Deleting { get; } = new HealthcareApisPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
+        /// </summary>
         public static HealthcareApisPrivateEndpointConnectionProvisioningState Failed { get; } = new HealthcareApisPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="HealthcareApisPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisPrivateEndpointConnectionProvisioningState left, HealthcareApisPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

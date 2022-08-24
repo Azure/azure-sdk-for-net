@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The settings for the Cosmos DB database backing the service. </summary>
+    /// <summary>
+    /// The settings for the Cosmos DB database backing the service.
+    /// Serialized Name: ServiceCosmosDbConfigurationInfo
+    /// </summary>
     public partial class ServiceCosmosDbConfigurationInfo
     {
         /// <summary> Initializes a new instance of ServiceCosmosDbConfigurationInfo. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of ServiceCosmosDbConfigurationInfo. </summary>
-        /// <param name="offerThroughput"> The provisioned throughput for the backing database. </param>
-        /// <param name="keyVaultKeyUri"> The URI of the customer-managed key for the backing database. </param>
+        /// <param name="offerThroughput">
+        /// The provisioned throughput for the backing database.
+        /// Serialized Name: ServiceCosmosDbConfigurationInfo.offerThroughput
+        /// </param>
+        /// <param name="keyVaultKeyUri">
+        /// The URI of the customer-managed key for the backing database.
+        /// Serialized Name: ServiceCosmosDbConfigurationInfo.keyVaultKeyUri
+        /// </param>
         internal ServiceCosmosDbConfigurationInfo(int? offerThroughput, Uri keyVaultKeyUri)
         {
             OfferThroughput = offerThroughput;
             KeyVaultKeyUri = keyVaultKeyUri;
         }
 
-        /// <summary> The provisioned throughput for the backing database. </summary>
+        /// <summary>
+        /// The provisioned throughput for the backing database.
+        /// Serialized Name: ServiceCosmosDbConfigurationInfo.offerThroughput
+        /// </summary>
         public int? OfferThroughput { get; set; }
-        /// <summary> The URI of the customer-managed key for the backing database. </summary>
+        /// <summary>
+        /// The URI of the customer-managed key for the backing database.
+        /// Serialized Name: ServiceCosmosDbConfigurationInfo.keyVaultKeyUri
+        /// </summary>
         public Uri KeyVaultKeyUri { get; set; }
     }
 }

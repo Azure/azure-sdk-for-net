@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Azure container registry configuration information. </summary>
+    /// <summary>
+    /// Azure container registry configuration information
+    /// Serialized Name: ServiceAcrConfigurationInfo
+    /// </summary>
     public partial class ServiceAcrConfigurationInfo
     {
         /// <summary> Initializes a new instance of ServiceAcrConfigurationInfo. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of ServiceAcrConfigurationInfo. </summary>
-        /// <param name="loginServers"> The list of the ACR login servers. </param>
-        /// <param name="ociArtifacts"> The list of Open Container Initiative (OCI) artifacts. </param>
+        /// <param name="loginServers">
+        /// The list of the ACR login servers.
+        /// Serialized Name: ServiceAcrConfigurationInfo.loginServers
+        /// </param>
+        /// <param name="ociArtifacts">
+        /// The list of Open Container Initiative (OCI) artifacts.
+        /// Serialized Name: ServiceAcrConfigurationInfo.ociArtifacts
+        /// </param>
         internal ServiceAcrConfigurationInfo(IList<string> loginServers, IList<ServiceOciArtifactEntry> ociArtifacts)
         {
             LoginServers = loginServers;
             OciArtifacts = ociArtifacts;
         }
 
-        /// <summary> The list of the ACR login servers. </summary>
+        /// <summary>
+        /// The list of the ACR login servers.
+        /// Serialized Name: ServiceAcrConfigurationInfo.loginServers
+        /// </summary>
         public IList<string> LoginServers { get; }
-        /// <summary> The list of Open Container Initiative (OCI) artifacts. </summary>
+        /// <summary>
+        /// The list of Open Container Initiative (OCI) artifacts.
+        /// Serialized Name: ServiceAcrConfigurationInfo.ociArtifacts
+        /// </summary>
         public IList<ServiceOciArtifactEntry> OciArtifacts { get; }
     }
 }

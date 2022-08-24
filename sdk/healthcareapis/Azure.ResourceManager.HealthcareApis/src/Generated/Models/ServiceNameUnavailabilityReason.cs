@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The reason for unavailability. </summary>
+    /// <summary>
+    /// The reason for unavailability.
+    /// Serialized Name: ServiceNameUnavailabilityReason
+    /// </summary>
     public enum ServiceNameUnavailabilityReason
     {
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: ServiceNameUnavailabilityReason.Invalid
+        /// </summary>
         Invalid,
-        /// <summary> AlreadyExists. </summary>
+        /// <summary>
+        /// AlreadyExists
+        /// Serialized Name: ServiceNameUnavailabilityReason.AlreadyExists
+        /// </summary>
         AlreadyExists
     }
 }

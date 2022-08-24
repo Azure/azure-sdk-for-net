@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class ServicesDescriptionPatch : IUtf8JsonSerializable
+    public partial class HealthcareApisServicePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

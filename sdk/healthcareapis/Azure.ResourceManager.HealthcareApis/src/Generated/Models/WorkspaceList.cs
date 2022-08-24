@@ -11,27 +11,42 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Collection of workspace object with a next link. </summary>
+    /// <summary>
+    /// Collection of workspace object with a next link
+    /// Serialized Name: WorkspaceList
+    /// </summary>
     internal partial class WorkspaceList
     {
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         internal WorkspaceList()
         {
-            Value = new ChangeTrackingList<WorkspaceData>();
+            Value = new ChangeTrackingList<HealthcareApisWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
-        /// <param name="nextLink"> The link used to get the next page. </param>
-        /// <param name="value"> Collection of resources. </param>
-        internal WorkspaceList(string nextLink, IReadOnlyList<WorkspaceData> value)
+        /// <param name="nextLink">
+        /// The link used to get the next page.
+        /// Serialized Name: WorkspaceList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: WorkspaceList.value
+        /// </param>
+        internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspaceData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link used to get the next page. </summary>
+        /// <summary>
+        /// The link used to get the next page.
+        /// Serialized Name: WorkspaceList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<WorkspaceData> Value { get; }
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: WorkspaceList.value
+        /// </summary>
+        public IReadOnlyList<HealthcareApisWorkspaceData> Value { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> Authentication configuration information. </summary>
+    /// <summary>
+    /// Authentication configuration information
+    /// Serialized Name: DicomServiceAuthenticationConfiguration
+    /// </summary>
     public partial class DicomServiceAuthenticationConfiguration
     {
         /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
-        /// <param name="authority"> The authority url for the service. </param>
-        /// <param name="audiences"> The audiences for the service. </param>
+        /// <param name="authority">
+        /// The authority url for the service
+        /// Serialized Name: DicomServiceAuthenticationConfiguration.authority
+        /// </param>
+        /// <param name="audiences">
+        /// The audiences for the service
+        /// Serialized Name: DicomServiceAuthenticationConfiguration.audiences
+        /// </param>
         internal DicomServiceAuthenticationConfiguration(string authority, IReadOnlyList<string> audiences)
         {
             Authority = authority;
             Audiences = audiences;
         }
 
-        /// <summary> The authority url for the service. </summary>
+        /// <summary>
+        /// The authority url for the service
+        /// Serialized Name: DicomServiceAuthenticationConfiguration.authority
+        /// </summary>
         public string Authority { get; }
-        /// <summary> The audiences for the service. </summary>
+        /// <summary>
+        /// The audiences for the service
+        /// Serialized Name: DicomServiceAuthenticationConfiguration.audiences
+        /// </summary>
         public IReadOnlyList<string> Audiences { get; }
     }
 }

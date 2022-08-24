@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthcareApis
     /// A Class representing an IotConnector along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotConnectorResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetIotConnectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetIotConnector method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource" /> using the GetIotConnector method.
     /// </summary>
     public partial class IotConnectorResource : ArmResource
     {

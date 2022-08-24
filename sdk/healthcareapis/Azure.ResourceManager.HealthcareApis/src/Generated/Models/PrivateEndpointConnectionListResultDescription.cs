@@ -11,23 +11,32 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
+    /// <summary>
+    /// List of private endpoint connection associated with the specified storage account
+    /// Serialized Name: PrivateEndpointConnectionListResultDescription
+    /// </summary>
     internal partial class PrivateEndpointConnectionListResultDescription
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultDescription. </summary>
         internal PrivateEndpointConnectionListResultDescription()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnectionDescriptionData>();
+            Value = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultDescription. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
-        internal PrivateEndpointConnectionListResultDescription(IReadOnlyList<PrivateEndpointConnectionDescriptionData> value)
+        /// <param name="value">
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResultDescription.value
+        /// </param>
+        internal PrivateEndpointConnectionListResultDescription(IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionDescriptionData> Value { get; }
+        /// <summary>
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResultDescription.value
+        /// </summary>
+        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> Value { get; }
     }
 }

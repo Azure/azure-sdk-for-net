@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    public partial class PrivateEndpointConnectionDescriptionData : IUtf8JsonSerializable
+    public partial class HealthcareApisPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteEndObject();
         }
 
-        internal static PrivateEndpointConnectionDescriptionData DeserializePrivateEndpointConnectionDescriptionData(JsonElement element)
+        internal static HealthcareApisPrivateEndpointConnectionData DeserializeHealthcareApisPrivateEndpointConnectionData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionDescriptionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new HealthcareApisPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

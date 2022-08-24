@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> The status of the operation being performed. </summary>
+    /// <summary>
+    /// The status of the operation being performed.
+    /// Serialized Name: OperationResultStatus
+    /// </summary>
     public readonly partial struct OperationResultStatus : IEquatable<OperationResultStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string RequestedValue = "Requested";
         private const string RunningValue = "Running";
 
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: OperationResultStatus.Canceled
+        /// </summary>
         public static OperationResultStatus Canceled { get; } = new OperationResultStatus(CanceledValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: OperationResultStatus.Succeeded
+        /// </summary>
         public static OperationResultStatus Succeeded { get; } = new OperationResultStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: OperationResultStatus.Failed
+        /// </summary>
         public static OperationResultStatus Failed { get; } = new OperationResultStatus(FailedValue);
-        /// <summary> Requested. </summary>
+        /// <summary>
+        /// Requested
+        /// Serialized Name: OperationResultStatus.Requested
+        /// </summary>
         public static OperationResultStatus Requested { get; } = new OperationResultStatus(RequestedValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: OperationResultStatus.Running
+        /// </summary>
         public static OperationResultStatus Running { get; } = new OperationResultStatus(RunningValue);
         /// <summary> Determines if two <see cref="OperationResultStatus"/> values are the same. </summary>
         public static bool operator ==(OperationResultStatus left, OperationResultStatus right) => left.Equals(right);
