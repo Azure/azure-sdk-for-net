@@ -9,18 +9,18 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The AcsCallParticipantDto. </summary>
-    internal partial class AcsCallParticipantDtoInternal
+    /// <summary> The AcsCallParticipant. </summary>
+    internal partial class AcsCallParticipantInternal
     {
-        /// <summary> Initializes a new instance of AcsCallParticipantDtoInternal. </summary>
-        internal AcsCallParticipantDtoInternal()
+        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
+        internal AcsCallParticipantInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsCallParticipantDtoInternal. </summary>
+        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal AcsCallParticipantDtoInternal(CommunicationIdentifierModel identifier, bool? isMuted)
+        internal AcsCallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted)
         {
             Identifier = identifier;
             IsMuted = isMuted;

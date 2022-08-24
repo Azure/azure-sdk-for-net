@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("CallConnectionPropertiesDto")]
-    internal partial class CallConnectionPropertiesDtoInternal
+    [CodeGenModel("MediaStreamingConfiguration")]
+    internal partial class MediaStreamingConfigurationInternal
     {
     }
 }

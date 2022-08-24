@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    [CodeGenModel("CallSourceDto")]
-    internal partial class CallSourceDto
+    [CodeGenModel("CallSource")]
+    internal partial class CallSourceInternal
     {
     }
 }

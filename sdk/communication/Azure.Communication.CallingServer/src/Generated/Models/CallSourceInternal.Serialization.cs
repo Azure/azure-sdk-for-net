@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CallSourceDto : IUtf8JsonSerializable
+    internal partial class CallSourceInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndObject();
         }
 
-        internal static CallSourceDto DeserializeCallSourceDto(JsonElement element)
+        internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element)
         {
             Optional<PhoneNumberIdentifierModel> callerId = default;
             CommunicationIdentifierModel identifier = default;
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallSourceDto(callerId.Value, identifier);
+            return new CallSourceInternal(callerId.Value, identifier);
         }
     }
 }

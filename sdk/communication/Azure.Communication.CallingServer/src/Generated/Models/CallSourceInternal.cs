@@ -10,13 +10,13 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The CallSourceDto. </summary>
-    internal partial class CallSourceDto
+    /// <summary> The CallSource. </summary>
+    internal partial class CallSourceInternal
     {
-        /// <summary> Initializes a new instance of CallSourceDto. </summary>
+        /// <summary> Initializes a new instance of CallSourceInternal. </summary>
         /// <param name="identifier"> The identifier of the source of the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public CallSourceDto(CommunicationIdentifierModel identifier)
+        public CallSourceInternal(CommunicationIdentifierModel identifier)
         {
             if (identifier == null)
             {
@@ -26,10 +26,10 @@ namespace Azure.Communication.CallingServer
             Identifier = identifier;
         }
 
-        /// <summary> Initializes a new instance of CallSourceDto. </summary>
+        /// <summary> Initializes a new instance of CallSourceInternal. </summary>
         /// <param name="callerId"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
         /// <param name="identifier"> The identifier of the source of the call. </param>
-        internal CallSourceDto(PhoneNumberIdentifierModel callerId, CommunicationIdentifierModel identifier)
+        internal CallSourceInternal(PhoneNumberIdentifierModel callerId, CommunicationIdentifierModel identifier)
         {
             CallerId = callerId;
             Identifier = identifier;
