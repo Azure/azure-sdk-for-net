@@ -2,6 +2,18 @@ parameters:
 - name: JobName
   type: string
   default: 'Perf'
+- name: LinuxPool
+  type: string
+  default: 'azsdk-pool-mms-ubuntu-2004-perf'
+- name: LinuxVmImage
+  type: string
+  default: 'MMSUbuntu20.04'
+- name: WindowsPool
+  type: string
+  default: 'azsdk-pool-mms-win-2019-perf'
+- name: WindowsVmImage
+  type: string
+  default: 'MMS2019'
 - name: Language
   type: string
   default: ''
@@ -55,13 +67,13 @@ jobs:
     matrix:
       ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
         Linux:
-          Pool: 'azsdk-pool-mms-ubuntu-2004-perf'
-          OsVmImage: 'MMSUbuntu20.04'
+          Pool: ${{ parameters.LinuxPool }}
+          OsVmImage: ${{ parameters.LinuxVmImage }}
           MatrixName: 'Linux'
       ${{ if contains(parameters.OperatingSystems, 'Windows') }}:
         Windows:
-          Pool: 'azsdk-pool-mms-win-2019-perf'
-          OsVmImage: 'MMS2019'
+          Pool: ${{ parameters.WindowsPool }}
+          OsVmImage: ${{ parameters.WindowsVmImage }}
           MatrixName: 'Windows'
   variables:
   - ${{ parameters.Variables }}
