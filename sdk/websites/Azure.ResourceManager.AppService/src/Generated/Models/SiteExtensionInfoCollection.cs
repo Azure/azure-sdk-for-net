@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Kudu site extension information elements. </summary>
+    /// <summary>
+    /// Collection of Kudu site extension information elements.
+    /// Serialized Name: SiteExtensionInfoCollection
+    /// </summary>
     internal partial class SiteExtensionInfoCollection
     {
         /// <summary> Initializes a new instance of SiteExtensionInfoCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SiteExtensionInfoCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SiteExtensionInfoCollection(IEnumerable<SiteExtensionInfoData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SiteExtensionInfoCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: SiteExtensionInfoCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: SiteExtensionInfoCollection.nextLink
+        /// </param>
         internal SiteExtensionInfoCollection(IReadOnlyList<SiteExtensionInfoData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: SiteExtensionInfoCollection.value
+        /// </summary>
         public IReadOnlyList<SiteExtensionInfoData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: SiteExtensionInfoCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

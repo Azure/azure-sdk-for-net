@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="NetworkFeatureResource" /> and their operations.
-    /// Each <see cref="NetworkFeatureResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="NetworkFeatureCollection" /> instance call the GetNetworkFeatures method from an instance of <see cref="WebSiteSlotResource" />.
+    /// Each <see cref="NetworkFeatureResource" /> in the collection will belong to the same instance of <see cref="AppServiceSlotResource" />.
+    /// To get a <see cref="NetworkFeatureCollection" /> instance call the GetNetworkFeatures method from an instance of <see cref="AppServiceSlotResource" />.
     /// </summary>
     public partial class NetworkFeatureCollection : ArmCollection
     {
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSiteSlotResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppServiceSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceSlotResource.ResourceType), nameof(id));
         }
 
         /// <summary>

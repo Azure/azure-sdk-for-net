@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Describes the capabilities/features allowed for a specific SKU. </summary>
+    /// <summary>
+    /// Describes the capabilities/features allowed for a specific SKU.
+    /// Serialized Name: Capability
+    /// </summary>
     public partial class Capability
     {
         /// <summary> Initializes a new instance of Capability. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Capability. </summary>
-        /// <param name="name"> Name of the SKU capability. </param>
-        /// <param name="value"> Value of the SKU capability. </param>
-        /// <param name="reason"> Reason of the SKU capability. </param>
+        /// <param name="name">
+        /// Name of the SKU capability.
+        /// Serialized Name: Capability.name
+        /// </param>
+        /// <param name="value">
+        /// Value of the SKU capability.
+        /// Serialized Name: Capability.value
+        /// </param>
+        /// <param name="reason">
+        /// Reason of the SKU capability.
+        /// Serialized Name: Capability.reason
+        /// </param>
         internal Capability(string name, string value, string reason)
         {
             Name = name;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             Reason = reason;
         }
 
-        /// <summary> Name of the SKU capability. </summary>
+        /// <summary>
+        /// Name of the SKU capability.
+        /// Serialized Name: Capability.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Value of the SKU capability. </summary>
+        /// <summary>
+        /// Value of the SKU capability.
+        /// Serialized Name: Capability.value
+        /// </summary>
         public string Value { get; set; }
-        /// <summary> Reason of the SKU capability. </summary>
+        /// <summary>
+        /// Reason of the SKU capability.
+        /// Serialized Name: Capability.reason
+        /// </summary>
         public string Reason { get; set; }
     }
 }

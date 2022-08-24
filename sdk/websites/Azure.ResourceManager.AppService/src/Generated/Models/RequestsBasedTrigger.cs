@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Trigger based on total requests. </summary>
+    /// <summary>
+    /// Trigger based on total requests.
+    /// Serialized Name: RequestsBasedTrigger
+    /// </summary>
     public partial class RequestsBasedTrigger
     {
         /// <summary> Initializes a new instance of RequestsBasedTrigger. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of RequestsBasedTrigger. </summary>
-        /// <param name="count"> Request Count. </param>
-        /// <param name="timeInterval"> Time interval. </param>
+        /// <param name="count">
+        /// Request Count.
+        /// Serialized Name: RequestsBasedTrigger.count
+        /// </param>
+        /// <param name="timeInterval">
+        /// Time interval.
+        /// Serialized Name: RequestsBasedTrigger.timeInterval
+        /// </param>
         internal RequestsBasedTrigger(int? count, string timeInterval)
         {
             Count = count;
             TimeInterval = timeInterval;
         }
 
-        /// <summary> Request Count. </summary>
+        /// <summary>
+        /// Request Count.
+        /// Serialized Name: RequestsBasedTrigger.count
+        /// </summary>
         public int? Count { get; set; }
-        /// <summary> Time interval. </summary>
+        /// <summary>
+        /// Time interval.
+        /// Serialized Name: RequestsBasedTrigger.timeInterval
+        /// </summary>
         public string TimeInterval { get; set; }
     }
 }

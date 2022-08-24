@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Trigger based on status code. </summary>
+    /// <summary>
+    /// Trigger based on status code.
+    /// Serialized Name: StatusCodesBasedTrigger
+    /// </summary>
     public partial class StatusCodesBasedTrigger
     {
         /// <summary> Initializes a new instance of StatusCodesBasedTrigger. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of StatusCodesBasedTrigger. </summary>
-        /// <param name="status"> HTTP status code. </param>
-        /// <param name="subStatus"> Request Sub Status. </param>
-        /// <param name="win32Status"> Win32 error code. </param>
-        /// <param name="count"> Request Count. </param>
-        /// <param name="timeInterval"> Time interval. </param>
-        /// <param name="path"> Request Path. </param>
+        /// <param name="status">
+        /// HTTP status code.
+        /// Serialized Name: StatusCodesBasedTrigger.status
+        /// </param>
+        /// <param name="subStatus">
+        /// Request Sub Status.
+        /// Serialized Name: StatusCodesBasedTrigger.subStatus
+        /// </param>
+        /// <param name="win32Status">
+        /// Win32 error code.
+        /// Serialized Name: StatusCodesBasedTrigger.win32Status
+        /// </param>
+        /// <param name="count">
+        /// Request Count.
+        /// Serialized Name: StatusCodesBasedTrigger.count
+        /// </param>
+        /// <param name="timeInterval">
+        /// Time interval.
+        /// Serialized Name: StatusCodesBasedTrigger.timeInterval
+        /// </param>
+        /// <param name="path">
+        /// Request Path
+        /// Serialized Name: StatusCodesBasedTrigger.path
+        /// </param>
         internal StatusCodesBasedTrigger(int? status, int? subStatus, int? win32Status, int? count, string timeInterval, string path)
         {
             Status = status;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.AppService.Models
             Path = path;
         }
 
-        /// <summary> HTTP status code. </summary>
+        /// <summary>
+        /// HTTP status code.
+        /// Serialized Name: StatusCodesBasedTrigger.status
+        /// </summary>
         public int? Status { get; set; }
-        /// <summary> Request Sub Status. </summary>
+        /// <summary>
+        /// Request Sub Status.
+        /// Serialized Name: StatusCodesBasedTrigger.subStatus
+        /// </summary>
         public int? SubStatus { get; set; }
-        /// <summary> Win32 error code. </summary>
+        /// <summary>
+        /// Win32 error code.
+        /// Serialized Name: StatusCodesBasedTrigger.win32Status
+        /// </summary>
         public int? Win32Status { get; set; }
-        /// <summary> Request Count. </summary>
+        /// <summary>
+        /// Request Count.
+        /// Serialized Name: StatusCodesBasedTrigger.count
+        /// </summary>
         public int? Count { get; set; }
-        /// <summary> Time interval. </summary>
+        /// <summary>
+        /// Time interval.
+        /// Serialized Name: StatusCodesBasedTrigger.timeInterval
+        /// </summary>
         public string TimeInterval { get; set; }
-        /// <summary> Request Path. </summary>
+        /// <summary>
+        /// Request Path
+        /// Serialized Name: StatusCodesBasedTrigger.path
+        /// </summary>
         public string Path { get; set; }
     }
 }

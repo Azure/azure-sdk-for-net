@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteRecommendation along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecommendationResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteRecommendationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteRecommendation method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceResource" /> using the GetSiteRecommendation method.
     /// </summary>
     public partial class SiteRecommendationResource : ArmResource
     {

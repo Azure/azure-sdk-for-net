@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Description of an App Service Environment. </summary>
+    /// <summary>
+    /// Description of an App Service Environment.
+    /// Serialized Name: AppServiceEnvironment
+    /// </summary>
     public partial class AppServiceEnvironmentProperties
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
-        /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
+        /// <param name="virtualNetwork">
+        /// Description of the Virtual Network.
+        /// Serialized Name: AppServiceEnvironment.virtualNetwork
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public AppServiceEnvironmentProperties(VirtualNetworkProfile virtualNetwork)
         {
@@ -30,25 +36,71 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
-        /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
-        /// <param name="status"> Current status of the App Service Environment. </param>
-        /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
-        /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
-        /// <param name="multiSize"> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </param>
-        /// <param name="multiRoleCount"> Number of front-end instances. </param>
-        /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
-        /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
-        /// <param name="maximumNumberOfMachines"> Maximum number of VMs in the App Service Environment. </param>
-        /// <param name="frontEndScaleFactor"> Scale factor for front-ends. </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.provisioningState
+        /// </param>
+        /// <param name="status">
+        /// Current status of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.status
+        /// </param>
+        /// <param name="virtualNetwork">
+        /// Description of the Virtual Network.
+        /// Serialized Name: AppServiceEnvironment.virtualNetwork
+        /// </param>
+        /// <param name="internalLoadBalancingMode">
+        /// Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.internalLoadBalancingMode
+        /// </param>
+        /// <param name="multiSize">
+        /// Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;.
+        /// Serialized Name: AppServiceEnvironment.multiSize
+        /// </param>
+        /// <param name="multiRoleCount">
+        /// Number of front-end instances.
+        /// Serialized Name: AppServiceEnvironment.multiRoleCount
+        /// </param>
+        /// <param name="ipSslAddressCount">
+        /// Number of IP SSL addresses reserved for the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.ipsslAddressCount
+        /// </param>
+        /// <param name="dnsSuffix">
+        /// DNS suffix of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.dnsSuffix
+        /// </param>
+        /// <param name="maximumNumberOfMachines">
+        /// Maximum number of VMs in the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.maximumNumberOfMachines
+        /// </param>
+        /// <param name="frontEndScaleFactor">
+        /// Scale factor for front-ends.
+        /// Serialized Name: AppServiceEnvironment.frontEndScaleFactor
+        /// </param>
         /// <param name="suspended">
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         ///  (most likely because NSG blocked the incoming traffic).
+        /// Serialized Name: AppServiceEnvironment.suspended
         /// </param>
-        /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
-        /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
-        /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
-        /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
-        /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="clusterSettings">
+        /// Custom settings for changing the behavior of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.clusterSettings
+        /// </param>
+        /// <param name="userWhitelistedIPRanges">
+        /// User added ip ranges to whitelist on ASE db
+        /// Serialized Name: AppServiceEnvironment.userWhitelistedIpRanges
+        /// </param>
+        /// <param name="hasLinuxWorkers">
+        /// Flag that displays whether an ASE has linux workers or not
+        /// Serialized Name: AppServiceEnvironment.hasLinuxWorkers
+        /// </param>
+        /// <param name="dedicatedHostCount">
+        /// Dedicated Host Count
+        /// Serialized Name: AppServiceEnvironment.dedicatedHostCount
+        /// </param>
+        /// <param name="zoneRedundant">
+        /// Whether or not this App Service Environment is zone-redundant.
+        /// Serialized Name: AppServiceEnvironment.zoneRedundant
+        /// </param>
         internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant)
         {
             ProvisioningState = provisioningState;
@@ -69,40 +121,86 @@ namespace Azure.ResourceManager.AppService.Models
             ZoneRedundant = zoneRedundant;
         }
 
-        /// <summary> Provisioning state of the App Service Environment. </summary>
+        /// <summary>
+        /// Provisioning state of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> Current status of the App Service Environment. </summary>
+        /// <summary>
+        /// Current status of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.status
+        /// </summary>
         public HostingEnvironmentStatus? Status { get; }
-        /// <summary> Description of the Virtual Network. </summary>
+        /// <summary>
+        /// Description of the Virtual Network.
+        /// Serialized Name: AppServiceEnvironment.virtualNetwork
+        /// </summary>
         public VirtualNetworkProfile VirtualNetwork { get; set; }
-        /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
+        /// <summary>
+        /// Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.internalLoadBalancingMode
+        /// </summary>
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
-        /// <summary> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </summary>
+        /// <summary>
+        /// Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;.
+        /// Serialized Name: AppServiceEnvironment.multiSize
+        /// </summary>
         public string MultiSize { get; set; }
-        /// <summary> Number of front-end instances. </summary>
+        /// <summary>
+        /// Number of front-end instances.
+        /// Serialized Name: AppServiceEnvironment.multiRoleCount
+        /// </summary>
         public int? MultiRoleCount { get; }
-        /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
+        /// <summary>
+        /// Number of IP SSL addresses reserved for the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.ipsslAddressCount
+        /// </summary>
         public int? IPSslAddressCount { get; set; }
-        /// <summary> DNS suffix of the App Service Environment. </summary>
+        /// <summary>
+        /// DNS suffix of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.dnsSuffix
+        /// </summary>
         public string DnsSuffix { get; set; }
-        /// <summary> Maximum number of VMs in the App Service Environment. </summary>
+        /// <summary>
+        /// Maximum number of VMs in the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.maximumNumberOfMachines
+        /// </summary>
         public int? MaximumNumberOfMachines { get; }
-        /// <summary> Scale factor for front-ends. </summary>
+        /// <summary>
+        /// Scale factor for front-ends.
+        /// Serialized Name: AppServiceEnvironment.frontEndScaleFactor
+        /// </summary>
         public int? FrontEndScaleFactor { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         ///  (most likely because NSG blocked the incoming traffic).
+        /// Serialized Name: AppServiceEnvironment.suspended
         /// </summary>
         public bool? Suspended { get; }
-        /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
+        /// <summary>
+        /// Custom settings for changing the behavior of the App Service Environment.
+        /// Serialized Name: AppServiceEnvironment.clusterSettings
+        /// </summary>
         public IList<NameValuePair> ClusterSettings { get; }
-        /// <summary> User added ip ranges to whitelist on ASE db. </summary>
+        /// <summary>
+        /// User added ip ranges to whitelist on ASE db
+        /// Serialized Name: AppServiceEnvironment.userWhitelistedIpRanges
+        /// </summary>
         public IList<string> UserWhitelistedIPRanges { get; }
-        /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
+        /// <summary>
+        /// Flag that displays whether an ASE has linux workers or not
+        /// Serialized Name: AppServiceEnvironment.hasLinuxWorkers
+        /// </summary>
         public bool? HasLinuxWorkers { get; }
-        /// <summary> Dedicated Host Count. </summary>
+        /// <summary>
+        /// Dedicated Host Count
+        /// Serialized Name: AppServiceEnvironment.dedicatedHostCount
+        /// </summary>
         public int? DedicatedHostCount { get; set; }
-        /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
+        /// <summary>
+        /// Whether or not this App Service Environment is zone-redundant.
+        /// Serialized Name: AppServiceEnvironment.zoneRedundant
+        /// </summary>
         public bool? ZoneRedundant { get; set; }
     }
 }

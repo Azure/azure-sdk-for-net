@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of resource health metadata. </summary>
+    /// <summary>
+    /// Collection of resource health metadata.
+    /// Serialized Name: ResourceHealthMetadataCollection
+    /// </summary>
     internal partial class ResourceHealthMetadataCollection
     {
         /// <summary> Initializes a new instance of ResourceHealthMetadataCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ResourceHealthMetadataCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceHealthMetadataCollection(IEnumerable<ResourceHealthMetadataData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ResourceHealthMetadataCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: ResourceHealthMetadataCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: ResourceHealthMetadataCollection.nextLink
+        /// </param>
         internal ResourceHealthMetadataCollection(IReadOnlyList<ResourceHealthMetadataData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: ResourceHealthMetadataCollection.value
+        /// </summary>
         public IReadOnlyList<ResourceHealthMetadataData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: ResourceHealthMetadataCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

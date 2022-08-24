@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ContainerCpuUsage. </summary>
+    /// <summary>
+    /// The ContainerCpuUsage.
+    /// Serialized Name: ContainerCpuUsage
+    /// </summary>
     public partial class ContainerCpuUsage
     {
         /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>
@@ -20,10 +23,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>
-        /// <param name="totalUsage"></param>
-        /// <param name="perCpuUsage"></param>
-        /// <param name="kernelModeUsage"></param>
-        /// <param name="userModeUsage"></param>
+        /// <param name="totalUsage"> Serialized Name: ContainerCpuUsage.totalUsage. </param>
+        /// <param name="perCpuUsage"> Serialized Name: ContainerCpuUsage.perCpuUsage. </param>
+        /// <param name="kernelModeUsage"> Serialized Name: ContainerCpuUsage.kernelModeUsage. </param>
+        /// <param name="userModeUsage"> Serialized Name: ContainerCpuUsage.userModeUsage. </param>
         internal ContainerCpuUsage(long? totalUsage, IList<long> perCpuUsage, long? kernelModeUsage, long? userModeUsage)
         {
             TotalUsage = totalUsage;
@@ -32,13 +35,13 @@ namespace Azure.ResourceManager.AppService.Models
             UserModeUsage = userModeUsage;
         }
 
-        /// <summary> Gets or sets the total usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.totalUsage. </summary>
         public long? TotalUsage { get; set; }
-        /// <summary> Gets the per cpu usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.perCpuUsage. </summary>
         public IList<long> PerCpuUsage { get; }
-        /// <summary> Gets or sets the kernel mode usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.kernelModeUsage. </summary>
         public long? KernelModeUsage { get; set; }
-        /// <summary> Gets or sets the user mode usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.userModeUsage. </summary>
         public long? UserModeUsage { get; set; }
     }
 }

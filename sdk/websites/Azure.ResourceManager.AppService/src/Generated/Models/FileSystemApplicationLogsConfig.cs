@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application logs to file system configuration. </summary>
+    /// <summary>
+    /// Application logs to file system configuration.
+    /// Serialized Name: FileSystemApplicationLogsConfig
+    /// </summary>
     internal partial class FileSystemApplicationLogsConfig
     {
         /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
-        /// <param name="level"> Log level. </param>
+        /// <param name="level">
+        /// Log level.
+        /// Serialized Name: FileSystemApplicationLogsConfig.level
+        /// </param>
         internal FileSystemApplicationLogsConfig(LogLevel? level)
         {
             Level = level;
         }
 
-        /// <summary> Log level. </summary>
+        /// <summary>
+        /// Log level.
+        /// Serialized Name: FileSystemApplicationLogsConfig.level
+        /// </summary>
         public LogLevel? Level { get; set; }
     }
 }

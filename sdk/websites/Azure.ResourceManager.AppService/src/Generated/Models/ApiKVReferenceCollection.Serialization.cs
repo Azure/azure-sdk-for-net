@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -16,16 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ApiKVReferenceCollection DeserializeApiKVReferenceCollection(JsonElement element)
         {
-            IReadOnlyList<ApiKeyVaultReferenceData> value = default;
+            IReadOnlyList<AppServiceKeyVaultReference> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ApiKeyVaultReferenceData> array = new List<ApiKeyVaultReferenceData>();
+                    List<AppServiceKeyVaultReference> array = new List<AppServiceKeyVaultReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(item));
+                        array.Add(AppServiceKeyVaultReference.DeserializeAppServiceKeyVaultReference(item));
                     }
                     value = array;
                     continue;

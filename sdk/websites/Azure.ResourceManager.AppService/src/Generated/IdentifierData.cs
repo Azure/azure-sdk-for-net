@@ -23,17 +23,29 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> String representation of the identity. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="value">
+        /// String representation of the identity.
+        /// Serialized Name: Identifier.properties.id
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal IdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string kind) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Kind = kind;
         }
 
-        /// <summary> String representation of the identity. </summary>
+        /// <summary>
+        /// String representation of the identity.
+        /// Serialized Name: Identifier.properties.id
+        /// </summary>
         public string Value { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

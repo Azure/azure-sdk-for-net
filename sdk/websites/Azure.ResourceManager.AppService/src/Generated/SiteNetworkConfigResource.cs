@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteNetworkConfig along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteNetworkConfigResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteNetworkConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteNetworkConfig method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceResource" /> using the GetSiteNetworkConfig method.
     /// </summary>
     public partial class SiteNetworkConfigResource : ArmResource
     {

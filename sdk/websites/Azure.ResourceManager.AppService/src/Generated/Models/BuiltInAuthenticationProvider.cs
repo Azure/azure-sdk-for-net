@@ -11,20 +11,39 @@ namespace Azure.ResourceManager.AppService.Models
     /// The default authentication provider to use when multiple providers are configured.
     /// This setting is only needed if multiple providers are configured and the unauthenticated client
     /// action is set to &quot;RedirectToLoginPage&quot;.
+    /// Serialized Name: BuiltInAuthenticationProvider
     /// </summary>
     public enum BuiltInAuthenticationProvider
     {
-        /// <summary> AzureActiveDirectory. </summary>
+        /// <summary>
+        /// AzureActiveDirectory
+        /// Serialized Name: BuiltInAuthenticationProvider.AzureActiveDirectory
+        /// </summary>
         AzureActiveDirectory,
-        /// <summary> Facebook. </summary>
+        /// <summary>
+        /// Facebook
+        /// Serialized Name: BuiltInAuthenticationProvider.Facebook
+        /// </summary>
         Facebook,
-        /// <summary> Google. </summary>
+        /// <summary>
+        /// Google
+        /// Serialized Name: BuiltInAuthenticationProvider.Google
+        /// </summary>
         Google,
-        /// <summary> MicrosoftAccount. </summary>
+        /// <summary>
+        /// MicrosoftAccount
+        /// Serialized Name: BuiltInAuthenticationProvider.MicrosoftAccount
+        /// </summary>
         MicrosoftAccount,
-        /// <summary> Twitter. </summary>
+        /// <summary>
+        /// Twitter
+        /// Serialized Name: BuiltInAuthenticationProvider.Twitter
+        /// </summary>
         Twitter,
-        /// <summary> Github. </summary>
+        /// <summary>
+        /// Github
+        /// Serialized Name: BuiltInAuthenticationProvider.Github
+        /// </summary>
         Github
     }
 }

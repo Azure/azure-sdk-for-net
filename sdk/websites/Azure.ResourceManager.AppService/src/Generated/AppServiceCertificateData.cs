@@ -28,11 +28,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="keyVaultId">
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultId
+        /// </param>
+        /// <param name="keyVaultSecretName">
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultSecretName
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificateResource.properties.provisioningState
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: Resource.kind
+        /// </param>
+        internal AppServiceCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier keyVaultId, string keyVaultSecretName, AppServiceKeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
@@ -40,13 +52,25 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> Key Vault resource Id. </summary>
-        public string KeyVaultId { get; set; }
-        /// <summary> Key Vault secret name. </summary>
+        /// <summary>
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultId
+        /// </summary>
+        public ResourceIdentifier KeyVaultId { get; set; }
+        /// <summary>
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultSecretName
+        /// </summary>
         public string KeyVaultSecretName { get; set; }
-        /// <summary> Status of the Key Vault secret. </summary>
-        public KeyVaultSecretStatus? ProvisioningState { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificateResource.properties.provisioningState
+        /// </summary>
+        public AppServiceKeyVaultSecretStatus? ProvisioningState { get; }
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: Resource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

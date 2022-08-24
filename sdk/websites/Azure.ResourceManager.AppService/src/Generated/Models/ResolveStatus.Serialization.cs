@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResolveStatus.Initialized => "Initialized",
             ResolveStatus.Resolved => "Resolved",
             ResolveStatus.InvalidSyntax => "InvalidSyntax",
-            ResolveStatus.MSINotEnabled => "MSINotEnabled",
+            ResolveStatus.MsiNotEnabled => "MSINotEnabled",
             ResolveStatus.VaultNotFound => "VaultNotFound",
             ResolveStatus.SecretNotFound => "SecretNotFound",
             ResolveStatus.SecretVersionNotFound => "SecretVersionNotFound",
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (string.Equals(value, "Initialized", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.Initialized;
             if (string.Equals(value, "Resolved", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.Resolved;
             if (string.Equals(value, "InvalidSyntax", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.InvalidSyntax;
-            if (string.Equals(value, "MSINotEnabled", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.MSINotEnabled;
+            if (string.Equals(value, "MSINotEnabled", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.MsiNotEnabled;
             if (string.Equals(value, "VaultNotFound", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.VaultNotFound;
             if (string.Equals(value, "SecretNotFound", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.SecretNotFound;
             if (string.Equals(value, "SecretVersionNotFound", StringComparison.InvariantCultureIgnoreCase)) return ResolveStatus.SecretVersionNotFound;

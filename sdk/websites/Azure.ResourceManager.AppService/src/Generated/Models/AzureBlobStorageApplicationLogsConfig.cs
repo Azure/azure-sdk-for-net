@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application logs azure blob storage configuration. </summary>
+    /// <summary>
+    /// Application logs azure blob storage configuration.
+    /// Serialized Name: AzureBlobStorageApplicationLogsConfig
+    /// </summary>
     public partial class AzureBlobStorageApplicationLogsConfig
     {
         /// <summary> Initializes a new instance of AzureBlobStorageApplicationLogsConfig. </summary>
@@ -18,12 +21,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageApplicationLogsConfig. </summary>
-        /// <param name="level"> Log level. </param>
-        /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
+        /// <param name="level">
+        /// Log level.
+        /// Serialized Name: AzureBlobStorageApplicationLogsConfig.level
+        /// </param>
+        /// <param name="sasUri">
+        /// SAS url to a azure blob container with read/write/list/delete permissions.
+        /// Serialized Name: AzureBlobStorageApplicationLogsConfig.sasUrl
+        /// </param>
         /// <param name="retentionInDays">
         /// Retention in days.
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
+        /// Serialized Name: AzureBlobStorageApplicationLogsConfig.retentionInDays
         /// </param>
         internal AzureBlobStorageApplicationLogsConfig(LogLevel? level, Uri sasUri, int? retentionInDays)
         {
@@ -32,14 +42,21 @@ namespace Azure.ResourceManager.AppService.Models
             RetentionInDays = retentionInDays;
         }
 
-        /// <summary> Log level. </summary>
+        /// <summary>
+        /// Log level.
+        /// Serialized Name: AzureBlobStorageApplicationLogsConfig.level
+        /// </summary>
         public LogLevel? Level { get; set; }
-        /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
+        /// <summary>
+        /// SAS url to a azure blob container with read/write/list/delete permissions.
+        /// Serialized Name: AzureBlobStorageApplicationLogsConfig.sasUrl
+        /// </summary>
         public Uri SasUri { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
+        /// Serialized Name: AzureBlobStorageApplicationLogsConfig.retentionInDays
         /// </summary>
         public int? RetentionInDays { get; set; }
     }

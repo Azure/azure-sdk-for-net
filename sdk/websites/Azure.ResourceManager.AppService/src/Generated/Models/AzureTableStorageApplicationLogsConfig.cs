@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application logs to Azure table storage configuration. </summary>
+    /// <summary>
+    /// Application logs to Azure table storage configuration.
+    /// Serialized Name: AzureTableStorageApplicationLogsConfig
+    /// </summary>
     public partial class AzureTableStorageApplicationLogsConfig
     {
         /// <summary> Initializes a new instance of AzureTableStorageApplicationLogsConfig. </summary>
-        /// <param name="sasUri"> SAS URL to an Azure table with add/query/delete permissions. </param>
+        /// <param name="sasUri">
+        /// SAS URL to an Azure table with add/query/delete permissions.
+        /// Serialized Name: AzureTableStorageApplicationLogsConfig.sasUrl
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUri"/> is null. </exception>
         public AzureTableStorageApplicationLogsConfig(Uri sasUri)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AzureTableStorageApplicationLogsConfig. </summary>
-        /// <param name="level"> Log level. </param>
-        /// <param name="sasUri"> SAS URL to an Azure table with add/query/delete permissions. </param>
+        /// <param name="level">
+        /// Log level.
+        /// Serialized Name: AzureTableStorageApplicationLogsConfig.level
+        /// </param>
+        /// <param name="sasUri">
+        /// SAS URL to an Azure table with add/query/delete permissions.
+        /// Serialized Name: AzureTableStorageApplicationLogsConfig.sasUrl
+        /// </param>
         internal AzureTableStorageApplicationLogsConfig(LogLevel? level, Uri sasUri)
         {
             Level = level;
             SasUri = sasUri;
         }
 
-        /// <summary> Log level. </summary>
+        /// <summary>
+        /// Log level.
+        /// Serialized Name: AzureTableStorageApplicationLogsConfig.level
+        /// </summary>
         public LogLevel? Level { get; set; }
-        /// <summary> SAS URL to an Azure table with add/query/delete permissions. </summary>
+        /// <summary>
+        /// SAS URL to an Azure table with add/query/delete permissions.
+        /// Serialized Name: AzureTableStorageApplicationLogsConfig.sasUrl
+        /// </summary>
         public Uri SasUri { get; set; }
     }
 }

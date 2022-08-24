@@ -23,9 +23,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
-        /// <param name="isSignalAvailable"> Is there a health signal for the resource. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="category">
+        /// The category that the resource matches in the RHC Policy File
+        /// Serialized Name: ResourceHealthMetadata.properties.category
+        /// </param>
+        /// <param name="isSignalAvailable">
+        /// Is there a health signal for the resource
+        /// Serialized Name: ResourceHealthMetadata.properties.signalAvailability
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string category, bool? isSignalAvailable, string kind) : base(id, name, resourceType, systemData)
         {
             Category = category;
@@ -33,11 +42,20 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> The category that the resource matches in the RHC Policy File. </summary>
+        /// <summary>
+        /// The category that the resource matches in the RHC Policy File
+        /// Serialized Name: ResourceHealthMetadata.properties.category
+        /// </summary>
         public string Category { get; set; }
-        /// <summary> Is there a health signal for the resource. </summary>
+        /// <summary>
+        /// Is there a health signal for the resource
+        /// Serialized Name: ResourceHealthMetadata.properties.signalAvailability
+        /// </summary>
         public bool? IsSignalAvailable { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

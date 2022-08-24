@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
+    /// <summary>
+    /// Key Vault container for a certificate that is purchased through Azure.
+    /// Serialized Name: AppServiceCertificate
+    /// </summary>
     public partial class AppServiceCertificateProperties
     {
         /// <summary> Initializes a new instance of AppServiceCertificateProperties. </summary>
@@ -16,21 +21,39 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppServiceCertificateProperties. </summary>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        internal AppServiceCertificateProperties(string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState)
+        /// <param name="keyVaultId">
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificate.keyVaultId
+        /// </param>
+        /// <param name="keyVaultSecretName">
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificate.keyVaultSecretName
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificate.provisioningState
+        /// </param>
+        internal AppServiceCertificateProperties(ResourceIdentifier keyVaultId, string keyVaultSecretName, AppServiceKeyVaultSecretStatus? provisioningState)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Key Vault resource Id. </summary>
-        public string KeyVaultId { get; set; }
-        /// <summary> Key Vault secret name. </summary>
+        /// <summary>
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificate.keyVaultId
+        /// </summary>
+        public ResourceIdentifier KeyVaultId { get; set; }
+        /// <summary>
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificate.keyVaultSecretName
+        /// </summary>
         public string KeyVaultSecretName { get; set; }
-        /// <summary> Status of the Key Vault secret. </summary>
-        public KeyVaultSecretStatus? ProvisioningState { get; }
+        /// <summary>
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificate.provisioningState
+        /// </summary>
+        public AppServiceKeyVaultSecretStatus? ProvisioningState { get; }
     }
 }

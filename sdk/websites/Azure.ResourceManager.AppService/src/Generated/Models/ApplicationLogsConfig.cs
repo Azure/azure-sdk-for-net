@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application logs configuration. </summary>
+    /// <summary>
+    /// Application logs configuration.
+    /// Serialized Name: ApplicationLogsConfig
+    /// </summary>
     public partial class ApplicationLogsConfig
     {
         /// <summary> Initializes a new instance of ApplicationLogsConfig. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationLogsConfig. </summary>
-        /// <param name="fileSystem"> Application logs to file system configuration. </param>
-        /// <param name="azureTableStorage"> Application logs to azure table storage configuration. </param>
-        /// <param name="azureBlobStorage"> Application logs to blob storage configuration. </param>
+        /// <param name="fileSystem">
+        /// Application logs to file system configuration.
+        /// Serialized Name: ApplicationLogsConfig.fileSystem
+        /// </param>
+        /// <param name="azureTableStorage">
+        /// Application logs to azure table storage configuration.
+        /// Serialized Name: ApplicationLogsConfig.azureTableStorage
+        /// </param>
+        /// <param name="azureBlobStorage">
+        /// Application logs to blob storage configuration.
+        /// Serialized Name: ApplicationLogsConfig.azureBlobStorage
+        /// </param>
         internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AzureTableStorageApplicationLogsConfig azureTableStorage, AzureBlobStorageApplicationLogsConfig azureBlobStorage)
         {
             FileSystem = fileSystem;
@@ -26,9 +38,15 @@ namespace Azure.ResourceManager.AppService.Models
             AzureBlobStorage = azureBlobStorage;
         }
 
-        /// <summary> Application logs to file system configuration. </summary>
+        /// <summary>
+        /// Application logs to file system configuration.
+        /// Serialized Name: ApplicationLogsConfig.fileSystem
+        /// </summary>
         internal FileSystemApplicationLogsConfig FileSystem { get; set; }
-        /// <summary> Log level. </summary>
+        /// <summary>
+        /// Log level.
+        /// Serialized Name: FileSystemApplicationLogsConfig.level
+        /// </summary>
         public LogLevel? FileSystemLevel
         {
             get => FileSystem is null ? default : FileSystem.Level;
@@ -40,9 +58,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> Application logs to azure table storage configuration. </summary>
+        /// <summary>
+        /// Application logs to azure table storage configuration.
+        /// Serialized Name: ApplicationLogsConfig.azureTableStorage
+        /// </summary>
         public AzureTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
-        /// <summary> Application logs to blob storage configuration. </summary>
+        /// <summary>
+        /// Application logs to blob storage configuration.
+        /// Serialized Name: ApplicationLogsConfig.azureBlobStorage
+        /// </summary>
         public AzureBlobStorageApplicationLogsConfig AzureBlobStorage { get; set; }
     }
 }

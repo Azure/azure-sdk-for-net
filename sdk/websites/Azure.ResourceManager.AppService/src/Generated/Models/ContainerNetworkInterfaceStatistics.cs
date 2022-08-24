@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ContainerNetworkInterfaceStatistics. </summary>
+    /// <summary>
+    /// The ContainerNetworkInterfaceStatistics.
+    /// Serialized Name: ContainerNetworkInterfaceStatistics
+    /// </summary>
     public partial class ContainerNetworkInterfaceStatistics
     {
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceStatistics. </summary>
@@ -16,14 +19,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceStatistics. </summary>
-        /// <param name="rxBytes"></param>
-        /// <param name="rxPackets"></param>
-        /// <param name="rxErrors"></param>
-        /// <param name="rxDropped"></param>
-        /// <param name="txBytes"></param>
-        /// <param name="txPackets"></param>
-        /// <param name="txErrors"></param>
-        /// <param name="txDropped"></param>
+        /// <param name="rxBytes"> Serialized Name: ContainerNetworkInterfaceStatistics.rxBytes. </param>
+        /// <param name="rxPackets"> Serialized Name: ContainerNetworkInterfaceStatistics.rxPackets. </param>
+        /// <param name="rxErrors"> Serialized Name: ContainerNetworkInterfaceStatistics.rxErrors. </param>
+        /// <param name="rxDropped"> Serialized Name: ContainerNetworkInterfaceStatistics.rxDropped. </param>
+        /// <param name="txBytes"> Serialized Name: ContainerNetworkInterfaceStatistics.txBytes. </param>
+        /// <param name="txPackets"> Serialized Name: ContainerNetworkInterfaceStatistics.txPackets. </param>
+        /// <param name="txErrors"> Serialized Name: ContainerNetworkInterfaceStatistics.txErrors. </param>
+        /// <param name="txDropped"> Serialized Name: ContainerNetworkInterfaceStatistics.txDropped. </param>
         internal ContainerNetworkInterfaceStatistics(long? rxBytes, long? rxPackets, long? rxErrors, long? rxDropped, long? txBytes, long? txPackets, long? txErrors, long? txDropped)
         {
             RxBytes = rxBytes;
@@ -36,21 +39,21 @@ namespace Azure.ResourceManager.AppService.Models
             TxDropped = txDropped;
         }
 
-        /// <summary> Gets or sets the rx bytes. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxBytes. </summary>
         public long? RxBytes { get; set; }
-        /// <summary> Gets or sets the rx packets. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxPackets. </summary>
         public long? RxPackets { get; set; }
-        /// <summary> Gets or sets the rx errors. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxErrors. </summary>
         public long? RxErrors { get; set; }
-        /// <summary> Gets or sets the rx dropped. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxDropped. </summary>
         public long? RxDropped { get; set; }
-        /// <summary> Gets or sets the tx bytes. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txBytes. </summary>
         public long? TxBytes { get; set; }
-        /// <summary> Gets or sets the tx packets. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txPackets. </summary>
         public long? TxPackets { get; set; }
-        /// <summary> Gets or sets the tx errors. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txErrors. </summary>
         public long? TxErrors { get; set; }
-        /// <summary> Gets or sets the tx dropped. </summary>
+        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txDropped. </summary>
         public long? TxDropped { get; set; }
     }
 }

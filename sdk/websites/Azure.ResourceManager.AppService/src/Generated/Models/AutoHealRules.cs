@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Rules that can be defined for auto-heal. </summary>
+    /// <summary>
+    /// Rules that can be defined for auto-heal.
+    /// Serialized Name: AutoHealRules
+    /// </summary>
     public partial class AutoHealRules
     {
         /// <summary> Initializes a new instance of AutoHealRules. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AutoHealRules. </summary>
-        /// <param name="triggers"> Conditions that describe when to execute the auto-heal actions. </param>
-        /// <param name="actions"> Actions to be executed when a rule is triggered. </param>
+        /// <param name="triggers">
+        /// Conditions that describe when to execute the auto-heal actions.
+        /// Serialized Name: AutoHealRules.triggers
+        /// </param>
+        /// <param name="actions">
+        /// Actions to be executed when a rule is triggered.
+        /// Serialized Name: AutoHealRules.actions
+        /// </param>
         internal AutoHealRules(AutoHealTriggers triggers, AutoHealActions actions)
         {
             Triggers = triggers;
             Actions = actions;
         }
 
-        /// <summary> Conditions that describe when to execute the auto-heal actions. </summary>
+        /// <summary>
+        /// Conditions that describe when to execute the auto-heal actions.
+        /// Serialized Name: AutoHealRules.triggers
+        /// </summary>
         public AutoHealTriggers Triggers { get; set; }
-        /// <summary> Actions to be executed when a rule is triggered. </summary>
+        /// <summary>
+        /// Actions to be executed when a rule is triggered.
+        /// Serialized Name: AutoHealRules.actions
+        /// </summary>
         public AutoHealActions Actions { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Suggested utterances where the detector can be applicable. </summary>
+    /// <summary>
+    /// Suggested utterances where the detector can be applicable
+    /// Serialized Name: QueryUtterancesResults
+    /// </summary>
     public partial class QueryUtterancesResults
     {
         /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>
-        /// <param name="query"> Search Query. </param>
-        /// <param name="results"> Array of utterance results for search query. </param>
+        /// <param name="query">
+        /// Search Query.
+        /// Serialized Name: QueryUtterancesResults.query
+        /// </param>
+        /// <param name="results">
+        /// Array of utterance results for search query.
+        /// Serialized Name: QueryUtterancesResults.results
+        /// </param>
         internal QueryUtterancesResults(string query, IList<QueryUtterancesResult> results)
         {
             Query = query;
             Results = results;
         }
 
-        /// <summary> Search Query. </summary>
+        /// <summary>
+        /// Search Query.
+        /// Serialized Name: QueryUtterancesResults.query
+        /// </summary>
         public string Query { get; set; }
-        /// <summary> Array of utterance results for search query. </summary>
+        /// <summary>
+        /// Array of utterance results for search query.
+        /// Serialized Name: QueryUtterancesResults.results
+        /// </summary>
         public IList<QueryUtterancesResult> Results { get; }
     }
 }

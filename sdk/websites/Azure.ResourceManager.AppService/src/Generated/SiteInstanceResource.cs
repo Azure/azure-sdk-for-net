@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteInstance along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteInstanceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteInstance method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceResource" /> using the GetSiteInstance method.
     /// </summary>
     public partial class SiteInstanceResource : ArmResource
     {

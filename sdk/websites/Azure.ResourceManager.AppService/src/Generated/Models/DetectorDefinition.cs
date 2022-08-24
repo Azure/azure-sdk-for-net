@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class representing detector definition. </summary>
+    /// <summary>
+    /// Class representing detector definition
+    /// Serialized Name: DetectorDefinition
+    /// </summary>
     public partial class DetectorDefinition
     {
         /// <summary> Initializes a new instance of DetectorDefinition. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DetectorDefinition. </summary>
-        /// <param name="displayName"> Display name of the detector. </param>
-        /// <param name="description"> Description of the detector. </param>
-        /// <param name="rank"> Detector Rank. </param>
-        /// <param name="isEnabled"> Flag representing whether detector is enabled or not. </param>
+        /// <param name="displayName">
+        /// Display name of the detector
+        /// Serialized Name: DetectorDefinition.displayName
+        /// </param>
+        /// <param name="description">
+        /// Description of the detector
+        /// Serialized Name: DetectorDefinition.description
+        /// </param>
+        /// <param name="rank">
+        /// Detector Rank
+        /// Serialized Name: DetectorDefinition.rank
+        /// </param>
+        /// <param name="isEnabled">
+        /// Flag representing whether detector is enabled or not.
+        /// Serialized Name: DetectorDefinition.isEnabled
+        /// </param>
         internal DetectorDefinition(string displayName, string description, double? rank, bool? isEnabled)
         {
             DisplayName = displayName;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.AppService.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Display name of the detector. </summary>
+        /// <summary>
+        /// Display name of the detector
+        /// Serialized Name: DetectorDefinition.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Description of the detector. </summary>
+        /// <summary>
+        /// Description of the detector
+        /// Serialized Name: DetectorDefinition.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> Detector Rank. </summary>
+        /// <summary>
+        /// Detector Rank
+        /// Serialized Name: DetectorDefinition.rank
+        /// </summary>
         public double? Rank { get; }
-        /// <summary> Flag representing whether detector is enabled or not. </summary>
+        /// <summary>
+        /// Flag representing whether detector is enabled or not.
+        /// Serialized Name: DetectorDefinition.isEnabled
+        /// </summary>
         public bool? IsEnabled { get; }
     }
 }

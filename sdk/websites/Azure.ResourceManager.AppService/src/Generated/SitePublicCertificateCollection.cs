@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="SitePublicCertificateResource" /> and their operations.
-    /// Each <see cref="SitePublicCertificateResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SitePublicCertificateCollection" /> instance call the GetSitePublicCertificates method from an instance of <see cref="WebSiteResource" />.
+    /// Each <see cref="SitePublicCertificateResource" /> in the collection will belong to the same instance of <see cref="AppServiceResource" />.
+    /// To get a <see cref="SitePublicCertificateCollection" /> instance call the GetSitePublicCertificates method from an instance of <see cref="AppServiceResource" />.
     /// </summary>
     public partial class SitePublicCertificateCollection : ArmCollection, IEnumerable<SitePublicCertificateResource>, IAsyncEnumerable<SitePublicCertificateResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

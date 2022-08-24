@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.AppService
             return GetCachedClient(Client => new StaticSiteCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
-        public virtual WebSiteCollection GetWebSites()
+        /// <summary> Gets a collection of AppServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AppServiceResources and their operations over a AppServiceResource. </returns>
+        public virtual AppServiceCollection GetAppServices()
         {
-            return GetCachedClient(Client => new WebSiteCollection(Client, Id));
+            return GetCachedClient(Client => new AppServiceCollection(Client, Id));
         }
 
         /// <summary>

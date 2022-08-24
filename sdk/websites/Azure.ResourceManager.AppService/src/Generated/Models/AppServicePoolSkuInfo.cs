@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> SKU discovery information. </summary>
+    /// <summary>
+    /// SKU discovery information.
+    /// Serialized Name: SkuInfo
+    /// </summary>
     public partial class AppServicePoolSkuInfo
     {
         /// <summary> Initializes a new instance of AppServicePoolSkuInfo. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppServicePoolSkuInfo. </summary>
-        /// <param name="resourceType"> Resource type that this SKU applies to. </param>
-        /// <param name="sku"> Name and tier of the SKU. </param>
-        /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>
+        /// <param name="resourceType">
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfo.resourceType
+        /// </param>
+        /// <param name="sku">
+        /// Name and tier of the SKU.
+        /// Serialized Name: SkuInfo.sku
+        /// </param>
+        /// <param name="capacity">
+        /// Min, max, and default scale values of the SKU.
+        /// Serialized Name: SkuInfo.capacity
+        /// </param>
         internal AppServicePoolSkuInfo(ResourceType? resourceType, AppServiceSkuDescription sku, AppServiceSkuCapacity capacity)
         {
             ResourceType = resourceType;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.AppService.Models
             Capacity = capacity;
         }
 
-        /// <summary> Resource type that this SKU applies to. </summary>
+        /// <summary>
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfo.resourceType
+        /// </summary>
         public ResourceType? ResourceType { get; }
-        /// <summary> Name and tier of the SKU. </summary>
+        /// <summary>
+        /// Name and tier of the SKU.
+        /// Serialized Name: SkuInfo.sku
+        /// </summary>
         public AppServiceSkuDescription Sku { get; }
-        /// <summary> Min, max, and default scale values of the SKU. </summary>
+        /// <summary>
+        /// Min, max, and default scale values of the SKU.
+        /// Serialized Name: SkuInfo.capacity
+        /// </summary>
         public AppServiceSkuCapacity Capacity { get; }
     }
 }

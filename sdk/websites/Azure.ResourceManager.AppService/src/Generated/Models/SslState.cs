@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> SSL type. </summary>
+    /// <summary>
+    /// SSL type.
+    /// Serialized Name: SslState
+    /// </summary>
     public enum SslState
     {
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SslState.Disabled
+        /// </summary>
         Disabled,
-        /// <summary> SniEnabled. </summary>
+        /// <summary>
+        /// SniEnabled
+        /// Serialized Name: SslState.SniEnabled
+        /// </summary>
         SniEnabled,
-        /// <summary> IpBasedEnabled. </summary>
+        /// <summary>
+        /// IpBasedEnabled
+        /// Serialized Name: SslState.IpBasedEnabled
+        /// </summary>
         IPBasedEnabled
     }
 }

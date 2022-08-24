@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DiagnosticAnalysisCollection DeserializeDiagnosticAnalysisCollection(JsonElement element)
         {
-            IReadOnlyList<WebSiteAnalysisDefinitionData> value = default;
+            IReadOnlyList<AppServiceAnalysisDefinitionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<WebSiteAnalysisDefinitionData> array = new List<WebSiteAnalysisDefinitionData>();
+                    List<AppServiceAnalysisDefinitionData> array = new List<AppServiceAnalysisDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(item));
+                        array.Add(AppServiceAnalysisDefinitionData.DeserializeAppServiceAnalysisDefinitionData(item));
                     }
                     value = array;
                     continue;

@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Information needed to create resources on an App Service Environment. </summary>
+    /// <summary>
+    /// Information needed to create resources on an App Service Environment.
+    /// Serialized Name: HostingEnvironmentDeploymentInfo
+    /// </summary>
     public partial class HostingEnvironmentDeploymentInfo
     {
         /// <summary> Initializes a new instance of HostingEnvironmentDeploymentInfo. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HostingEnvironmentDeploymentInfo. </summary>
-        /// <param name="name"> Name of the App Service Environment. </param>
-        /// <param name="location"> Location of the App Service Environment. </param>
+        /// <param name="name">
+        /// Name of the App Service Environment.
+        /// Serialized Name: HostingEnvironmentDeploymentInfo.name
+        /// </param>
+        /// <param name="location">
+        /// Location of the App Service Environment.
+        /// Serialized Name: HostingEnvironmentDeploymentInfo.location
+        /// </param>
         internal HostingEnvironmentDeploymentInfo(string name, AzureLocation? location)
         {
             Name = name;
             Location = location;
         }
 
-        /// <summary> Name of the App Service Environment. </summary>
+        /// <summary>
+        /// Name of the App Service Environment.
+        /// Serialized Name: HostingEnvironmentDeploymentInfo.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Location of the App Service Environment. </summary>
+        /// <summary>
+        /// Location of the App Service Environment.
+        /// Serialized Name: HostingEnvironmentDeploymentInfo.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

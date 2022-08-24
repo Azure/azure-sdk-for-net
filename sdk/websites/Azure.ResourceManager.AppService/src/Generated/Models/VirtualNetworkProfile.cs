@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Specification for using a Virtual Network. </summary>
+    /// <summary>
+    /// Specification for using a Virtual Network.
+    /// Serialized Name: VirtualNetworkProfile
+    /// </summary>
     public partial class VirtualNetworkProfile
     {
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
-        /// <param name="id"> Resource id of the Virtual Network. </param>
+        /// <param name="id">
+        /// Resource id of the Virtual Network.
+        /// Serialized Name: VirtualNetworkProfile.id
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public VirtualNetworkProfile(ResourceIdentifier id)
         {
@@ -27,10 +33,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
-        /// <param name="id"> Resource id of the Virtual Network. </param>
-        /// <param name="name"> Name of the Virtual Network (read-only). </param>
-        /// <param name="resourceType"> Resource type of the Virtual Network (read-only). </param>
-        /// <param name="subnet"> Subnet within the Virtual Network. </param>
+        /// <param name="id">
+        /// Resource id of the Virtual Network.
+        /// Serialized Name: VirtualNetworkProfile.id
+        /// </param>
+        /// <param name="name">
+        /// Name of the Virtual Network (read-only).
+        /// Serialized Name: VirtualNetworkProfile.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type of the Virtual Network (read-only).
+        /// Serialized Name: VirtualNetworkProfile.type
+        /// </param>
+        /// <param name="subnet">
+        /// Subnet within the Virtual Network.
+        /// Serialized Name: VirtualNetworkProfile.subnet
+        /// </param>
         internal VirtualNetworkProfile(ResourceIdentifier id, string name, ResourceType? resourceType, string subnet)
         {
             Id = id;
@@ -39,13 +57,25 @@ namespace Azure.ResourceManager.AppService.Models
             Subnet = subnet;
         }
 
-        /// <summary> Resource id of the Virtual Network. </summary>
+        /// <summary>
+        /// Resource id of the Virtual Network.
+        /// Serialized Name: VirtualNetworkProfile.id
+        /// </summary>
         public ResourceIdentifier Id { get; set; }
-        /// <summary> Name of the Virtual Network (read-only). </summary>
+        /// <summary>
+        /// Name of the Virtual Network (read-only).
+        /// Serialized Name: VirtualNetworkProfile.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Resource type of the Virtual Network (read-only). </summary>
+        /// <summary>
+        /// Resource type of the Virtual Network (read-only).
+        /// Serialized Name: VirtualNetworkProfile.type
+        /// </summary>
         public ResourceType? ResourceType { get; }
-        /// <summary> Subnet within the Virtual Network. </summary>
+        /// <summary>
+        /// Subnet within the Virtual Network.
+        /// Serialized Name: VirtualNetworkProfile.subnet
+        /// </summary>
         public string Subnet { get; set; }
     }
 }

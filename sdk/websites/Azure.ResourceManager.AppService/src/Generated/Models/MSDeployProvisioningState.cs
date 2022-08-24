@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Provisioning state. </summary>
+    /// <summary>
+    /// Provisioning state
+    /// Serialized Name: MSDeployProvisioningState
+    /// </summary>
     public enum MSDeployProvisioningState
     {
-        /// <summary> accepted. </summary>
+        /// <summary>
+        /// accepted
+        /// Serialized Name: MSDeployProvisioningState.accepted
+        /// </summary>
         Accepted,
-        /// <summary> running. </summary>
+        /// <summary>
+        /// running
+        /// Serialized Name: MSDeployProvisioningState.running
+        /// </summary>
         Running,
-        /// <summary> succeeded. </summary>
+        /// <summary>
+        /// succeeded
+        /// Serialized Name: MSDeployProvisioningState.succeeded
+        /// </summary>
         Succeeded,
-        /// <summary> failed. </summary>
+        /// <summary>
+        /// failed
+        /// Serialized Name: MSDeployProvisioningState.failed
+        /// </summary>
         Failed,
-        /// <summary> canceled. </summary>
+        /// <summary>
+        /// canceled
+        /// Serialized Name: MSDeployProvisioningState.canceled
+        /// </summary>
         Canceled
     }
 }

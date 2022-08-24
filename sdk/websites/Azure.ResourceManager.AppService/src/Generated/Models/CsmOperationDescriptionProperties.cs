@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
+    /// <summary>
+    /// Properties available for a Microsoft.Web resource provider operation.
+    /// Serialized Name: CsmOperationDescriptionProperties
+    /// </summary>
     internal partial class CsmOperationDescriptionProperties
     {
         /// <summary> Initializes a new instance of CsmOperationDescriptionProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of CsmOperationDescriptionProperties. </summary>
-        /// <param name="serviceSpecification"> Resource metrics service provided by Microsoft.Insights resource provider. </param>
+        /// <param name="serviceSpecification">
+        /// Resource metrics service provided by Microsoft.Insights resource provider.
+        /// Serialized Name: CsmOperationDescriptionProperties.serviceSpecification
+        /// </param>
         internal CsmOperationDescriptionProperties(ServiceSpecification serviceSpecification)
         {
             ServiceSpecification = serviceSpecification;
         }
 
-        /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
+        /// <summary>
+        /// Resource metrics service provided by Microsoft.Insights resource provider.
+        /// Serialized Name: CsmOperationDescriptionProperties.serviceSpecification
+        /// </summary>
         public ServiceSpecification ServiceSpecification { get; }
     }
 }

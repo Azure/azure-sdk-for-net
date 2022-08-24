@@ -7,24 +7,51 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Represents the type of the Detector. </summary>
+    /// <summary>
+    /// Represents the type of the Detector
+    /// Serialized Name: IssueType
+    /// </summary>
     public enum IssueType
     {
-        /// <summary> ServiceIncident. </summary>
+        /// <summary>
+        /// ServiceIncident
+        /// Serialized Name: IssueType.ServiceIncident
+        /// </summary>
         ServiceIncident,
-        /// <summary> AppDeployment. </summary>
+        /// <summary>
+        /// AppDeployment
+        /// Serialized Name: IssueType.AppDeployment
+        /// </summary>
         AppDeployment,
-        /// <summary> AppCrash. </summary>
+        /// <summary>
+        /// AppCrash
+        /// Serialized Name: IssueType.AppCrash
+        /// </summary>
         AppCrash,
-        /// <summary> RuntimeIssueDetected. </summary>
+        /// <summary>
+        /// RuntimeIssueDetected
+        /// Serialized Name: IssueType.RuntimeIssueDetected
+        /// </summary>
         RuntimeIssueDetected,
-        /// <summary> AseDeployment. </summary>
+        /// <summary>
+        /// AseDeployment
+        /// Serialized Name: IssueType.AseDeployment
+        /// </summary>
         AseDeployment,
-        /// <summary> UserIssue. </summary>
+        /// <summary>
+        /// UserIssue
+        /// Serialized Name: IssueType.UserIssue
+        /// </summary>
         UserIssue,
-        /// <summary> PlatformIssue. </summary>
+        /// <summary>
+        /// PlatformIssue
+        /// Serialized Name: IssueType.PlatformIssue
+        /// </summary>
         PlatformIssue,
-        /// <summary> Other. </summary>
+        /// <summary>
+        /// Other
+        /// Serialized Name: IssueType.Other
+        /// </summary>
         Other
     }
 }

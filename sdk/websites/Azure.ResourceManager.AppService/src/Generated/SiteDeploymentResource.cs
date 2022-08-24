@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteDeployment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteDeploymentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteDeployment method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceResource" /> using the GetSiteDeployment method.
     /// </summary>
     public partial class SiteDeploymentResource : ArmResource
     {

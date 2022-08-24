@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Instructions for rendering the data. </summary>
+    /// <summary>
+    /// Instructions for rendering the data
+    /// Serialized Name: Rendering
+    /// </summary>
     public partial class Rendering
     {
         /// <summary> Initializes a new instance of Rendering. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Rendering. </summary>
-        /// <param name="renderingType"> Rendering Type. </param>
-        /// <param name="title"> Title of data. </param>
-        /// <param name="description"> Description of the data that will help it be interpreted. </param>
+        /// <param name="renderingType">
+        /// Rendering Type
+        /// Serialized Name: Rendering.type
+        /// </param>
+        /// <param name="title">
+        /// Title of data
+        /// Serialized Name: Rendering.title
+        /// </param>
+        /// <param name="description">
+        /// Description of the data that will help it be interpreted
+        /// Serialized Name: Rendering.description
+        /// </param>
         internal Rendering(RenderingType? renderingType, string title, string description)
         {
             RenderingType = renderingType;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             Description = description;
         }
 
-        /// <summary> Rendering Type. </summary>
+        /// <summary>
+        /// Rendering Type
+        /// Serialized Name: Rendering.type
+        /// </summary>
         public RenderingType? RenderingType { get; set; }
-        /// <summary> Title of data. </summary>
+        /// <summary>
+        /// Title of data
+        /// Serialized Name: Rendering.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> Description of the data that will help it be interpreted. </summary>
+        /// <summary>
+        /// Description of the data that will help it be interpreted
+        /// Serialized Name: Rendering.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

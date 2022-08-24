@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteHostNameBinding along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteHostNameBindingResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteHostNameBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteHostNameBinding method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceResource" /> using the GetSiteHostNameBinding method.
     /// </summary>
     public partial class SiteHostNameBindingResource : ArmResource
     {

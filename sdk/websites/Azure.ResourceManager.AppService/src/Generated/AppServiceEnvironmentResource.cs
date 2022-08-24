@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of HostingEnvironmentDetectorResources in the AppServiceEnvironment. </summary>
-        /// <returns> An object representing collection of HostingEnvironmentDetectorResources and their operations over a HostingEnvironmentDetectorResource. </returns>
-        public virtual HostingEnvironmentDetectorCollection GetHostingEnvironmentDetectors()
+        /// <summary> Gets a collection of AppServiceEnvironmentDetectorResources in the AppServiceEnvironment. </summary>
+        /// <returns> An object representing collection of AppServiceEnvironmentDetectorResources and their operations over a AppServiceEnvironmentDetectorResource. </returns>
+        public virtual AppServiceEnvironmentDetectorCollection GetAppServiceEnvironmentDetectors()
         {
-            return GetCachedClient(Client => new HostingEnvironmentDetectorCollection(Client, Id));
+            return GetCachedClient(Client => new AppServiceEnvironmentDetectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceEnvironmentDetectorResource>> GetAppServiceEnvironmentDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            return await GetHostingEnvironmentDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceEnvironmentDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,16 +137,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceEnvironmentDetectorResource> GetAppServiceEnvironmentDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            return GetHostingEnvironmentDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
-        /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource" /> object. </returns>
-        public virtual AseV3NetworkingConfigurationResource GetAseV3NetworkingConfiguration()
-        {
-            return new AseV3NetworkingConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/configurations/networking"));
+            return GetAppServiceEnvironmentDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
         }
 
         /// <summary> Gets an object representing a HostingEnvironmentMultiRolePoolResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
@@ -544,6 +537,102 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceEnvironmentRestClient.GetVipInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_GetAseV3NetworkingConfiguration
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AseV3NetworkingConfiguration>> GetAseV3NetworkingConfigurationAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetAseV3NetworkingConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _appServiceEnvironmentRestClient.GetAseV3NetworkingConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_GetAseV3NetworkingConfiguration
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AseV3NetworkingConfiguration> GetAseV3NetworkingConfiguration(CancellationToken cancellationToken = default)
+        {
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetAseV3NetworkingConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _appServiceEnvironmentRestClient.GetAseV3NetworkingConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Update networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_UpdateAseNetworkingConfiguration
+        /// </summary>
+        /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
+        public virtual async Task<Response<AseV3NetworkingConfiguration>> UpdateAseNetworkingConfigurationAsync(AseV3NetworkingConfiguration aseNetworkingConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(aseNetworkingConfiguration, nameof(aseNetworkingConfiguration));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.UpdateAseNetworkingConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _appServiceEnvironmentRestClient.UpdateAseNetworkingConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, aseNetworkingConfiguration, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Update networking configuration of an App Service Environment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
+        /// Operation Id: AppServiceEnvironments_UpdateAseNetworkingConfiguration
+        /// </summary>
+        /// <param name="aseNetworkingConfiguration"> The AseV3NetworkingConfiguration to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aseNetworkingConfiguration"/> is null. </exception>
+        public virtual Response<AseV3NetworkingConfiguration> UpdateAseNetworkingConfiguration(AseV3NetworkingConfiguration aseNetworkingConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(aseNetworkingConfiguration, nameof(aseNetworkingConfiguration));
+
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.UpdateAseNetworkingConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _appServiceEnvironmentRestClient.UpdateAseNetworkingConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, aseNetworkingConfiguration, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1072,10 +1161,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(string propertiesToInclude = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceData> GetWebAppsAsync(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();
@@ -1090,7 +1179,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();
@@ -1115,10 +1204,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteData> GetWebApps(string propertiesToInclude = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceData> GetWebApps(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();
@@ -1133,7 +1222,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();

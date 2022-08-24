@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Site load balancing. </summary>
+    /// <summary>
+    /// Site load balancing.
+    /// Serialized Name: SiteLoadBalancing
+    /// </summary>
     public enum SiteLoadBalancing
     {
-        /// <summary> WeightedRoundRobin. </summary>
+        /// <summary>
+        /// WeightedRoundRobin
+        /// Serialized Name: SiteLoadBalancing.WeightedRoundRobin
+        /// </summary>
         WeightedRoundRobin,
-        /// <summary> LeastRequests. </summary>
+        /// <summary>
+        /// LeastRequests
+        /// Serialized Name: SiteLoadBalancing.LeastRequests
+        /// </summary>
         LeastRequests,
-        /// <summary> LeastResponseTime. </summary>
+        /// <summary>
+        /// LeastResponseTime
+        /// Serialized Name: SiteLoadBalancing.LeastResponseTime
+        /// </summary>
         LeastResponseTime,
-        /// <summary> WeightedTotalTraffic. </summary>
+        /// <summary>
+        /// WeightedTotalTraffic
+        /// Serialized Name: SiteLoadBalancing.WeightedTotalTraffic
+        /// </summary>
         WeightedTotalTraffic,
-        /// <summary> RequestHash. </summary>
+        /// <summary>
+        /// RequestHash
+        /// Serialized Name: SiteLoadBalancing.RequestHash
+        /// </summary>
         RequestHash,
-        /// <summary> PerSiteRoundRobin. </summary>
+        /// <summary>
+        /// PerSiteRoundRobin
+        /// Serialized Name: SiteLoadBalancing.PerSiteRoundRobin
+        /// </summary>
         PerSiteRoundRobin
     }
 }

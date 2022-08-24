@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Cross-Origin Resource Sharing (CORS) settings for the app. </summary>
+    /// <summary>
+    /// Cross-Origin Resource Sharing (CORS) settings for the app.
+    /// Serialized Name: CorsSettings
+    /// </summary>
     public partial class CorsSettings
     {
         /// <summary> Initializes a new instance of CorsSettings. </summary>
@@ -23,11 +26,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="allowedOrigins">
         /// Gets or sets the list of origins that should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all.
+        /// Serialized Name: CorsSettings.allowedOrigins
         /// </param>
         /// <param name="isCredentialsSupported">
         /// Gets or sets whether CORS requests with credentials are allowed. See 
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
+        /// Serialized Name: CorsSettings.supportCredentials
         /// </param>
         internal CorsSettings(IList<string> allowedOrigins, bool? isCredentialsSupported)
         {
@@ -38,12 +43,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// Gets or sets the list of origins that should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all.
+        /// Serialized Name: CorsSettings.allowedOrigins
         /// </summary>
         public IList<string> AllowedOrigins { get; }
         /// <summary>
         /// Gets or sets whether CORS requests with credentials are allowed. See 
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
+        /// Serialized Name: CorsSettings.supportCredentials
         /// </summary>
         public bool? IsCredentialsSupported { get; set; }
     }

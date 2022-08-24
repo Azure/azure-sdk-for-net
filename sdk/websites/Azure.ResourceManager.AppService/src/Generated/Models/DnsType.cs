@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Current DNS type. </summary>
+    /// <summary>
+    /// Current DNS type
+    /// Serialized Name: DnsType
+    /// </summary>
     public enum DnsType
     {
-        /// <summary> AzureDns. </summary>
+        /// <summary>
+        /// AzureDns
+        /// Serialized Name: DnsType.AzureDns
+        /// </summary>
         AzureDns,
-        /// <summary> DefaultDomainRegistrarDns. </summary>
+        /// <summary>
+        /// DefaultDomainRegistrarDns
+        /// Serialized Name: DnsType.DefaultDomainRegistrarDns
+        /// </summary>
         DefaultDomainRegistrarDns
     }
 }

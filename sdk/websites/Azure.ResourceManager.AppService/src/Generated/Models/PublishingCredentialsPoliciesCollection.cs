@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Publishing Credentials Policies entity collection ARM resource. </summary>
+    /// <summary>
+    /// Publishing Credentials Policies entity collection ARM resource.
+    /// Serialized Name: PublishingCredentialsPoliciesCollection
+    /// </summary>
     internal partial class PublishingCredentialsPoliciesCollection
     {
         /// <summary> Initializes a new instance of PublishingCredentialsPoliciesCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: PublishingCredentialsPoliciesCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PublishingCredentialsPoliciesCollection(IEnumerable<CsmPublishingCredentialsPoliciesEntityData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PublishingCredentialsPoliciesCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: PublishingCredentialsPoliciesCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: PublishingCredentialsPoliciesCollection.nextLink
+        /// </param>
         internal PublishingCredentialsPoliciesCollection(IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: PublishingCredentialsPoliciesCollection.value
+        /// </summary>
         public IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: PublishingCredentialsPoliciesCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

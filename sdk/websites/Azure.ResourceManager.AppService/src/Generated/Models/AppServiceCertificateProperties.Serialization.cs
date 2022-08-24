@@ -30,14 +30,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceCertificateProperties DeserializeAppServiceCertificateProperties(JsonElement element)
         {
-            Optional<string> keyVaultId = default;
+            Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
-            Optional<KeyVaultSecretStatus> provisioningState = default;
+            Optional<AppServiceKeyVaultSecretStatus> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"))
                 {
-                    keyVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    keyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVaultSecretName"))
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToKeyVaultSecretStatus();
+                    provisioningState = property.Value.GetString().ToAppServiceKeyVaultSecretStatus();
                     continue;
                 }
             }

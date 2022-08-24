@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Functions host level keys. </summary>
+    /// <summary>
+    /// Functions host level keys.
+    /// Serialized Name: HostKeys
+    /// </summary>
     public partial class HostKeys
     {
         /// <summary> Initializes a new instance of HostKeys. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HostKeys. </summary>
-        /// <param name="masterKey"> Secret key. </param>
-        /// <param name="functionKeys"> Host level function keys. </param>
-        /// <param name="systemKeys"> System keys. </param>
+        /// <param name="masterKey">
+        /// Secret key.
+        /// Serialized Name: HostKeys.masterKey
+        /// </param>
+        /// <param name="functionKeys">
+        /// Host level function keys.
+        /// Serialized Name: HostKeys.functionKeys
+        /// </param>
+        /// <param name="systemKeys">
+        /// System keys.
+        /// Serialized Name: HostKeys.systemKeys
+        /// </param>
         internal HostKeys(string masterKey, IReadOnlyDictionary<string, string> functionKeys, IReadOnlyDictionary<string, string> systemKeys)
         {
             MasterKey = masterKey;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.AppService.Models
             SystemKeys = systemKeys;
         }
 
-        /// <summary> Secret key. </summary>
+        /// <summary>
+        /// Secret key.
+        /// Serialized Name: HostKeys.masterKey
+        /// </summary>
         public string MasterKey { get; }
-        /// <summary> Host level function keys. </summary>
+        /// <summary>
+        /// Host level function keys.
+        /// Serialized Name: HostKeys.functionKeys
+        /// </summary>
         public IReadOnlyDictionary<string, string> FunctionKeys { get; }
-        /// <summary> System keys. </summary>
+        /// <summary>
+        /// System keys.
+        /// Serialized Name: HostKeys.systemKeys
+        /// </summary>
         public IReadOnlyDictionary<string, string> SystemKeys { get; }
     }
 }

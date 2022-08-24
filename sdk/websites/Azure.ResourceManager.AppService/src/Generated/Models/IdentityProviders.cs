@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization.
+    /// Serialized Name: IdentityProviders
+    /// </summary>
     public partial class IdentityProviders
     {
         /// <summary> Initializes a new instance of IdentityProviders. </summary>
@@ -20,17 +23,42 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of IdentityProviders. </summary>
-        /// <param name="azureActiveDirectory"> The configuration settings of the Azure Active directory provider. </param>
-        /// <param name="facebook"> The configuration settings of the Facebook provider. </param>
-        /// <param name="gitHub"> The configuration settings of the GitHub provider. </param>
-        /// <param name="google"> The configuration settings of the Google provider. </param>
-        /// <param name="legacyMicrosoftAccount"> The configuration settings of the legacy Microsoft Account provider. </param>
-        /// <param name="twitter"> The configuration settings of the Twitter provider. </param>
-        /// <param name="apple"> The configuration settings of the Apple provider. </param>
-        /// <param name="azureStaticWebApps"> The configuration settings of the Azure Static Web Apps provider. </param>
+        /// <param name="azureActiveDirectory">
+        /// The configuration settings of the Azure Active directory provider.
+        /// Serialized Name: IdentityProviders.azureActiveDirectory
+        /// </param>
+        /// <param name="facebook">
+        /// The configuration settings of the Facebook provider.
+        /// Serialized Name: IdentityProviders.facebook
+        /// </param>
+        /// <param name="gitHub">
+        /// The configuration settings of the GitHub provider.
+        /// Serialized Name: IdentityProviders.gitHub
+        /// </param>
+        /// <param name="google">
+        /// The configuration settings of the Google provider.
+        /// Serialized Name: IdentityProviders.google
+        /// </param>
+        /// <param name="legacyMicrosoftAccount">
+        /// The configuration settings of the legacy Microsoft Account provider.
+        /// Serialized Name: IdentityProviders.legacyMicrosoftAccount
+        /// </param>
+        /// <param name="twitter">
+        /// The configuration settings of the Twitter provider.
+        /// Serialized Name: IdentityProviders.twitter
+        /// </param>
+        /// <param name="apple">
+        /// The configuration settings of the Apple provider.
+        /// Serialized Name: IdentityProviders.apple
+        /// </param>
+        /// <param name="azureStaticWebApps">
+        /// The configuration settings of the Azure Static Web Apps provider.
+        /// Serialized Name: IdentityProviders.azureStaticWebApps
+        /// </param>
         /// <param name="customOpenIdConnectProviders">
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
+        /// Serialized Name: IdentityProviders.customOpenIdConnectProviders
         /// </param>
         internal IdentityProviders(AzureActiveDirectory azureActiveDirectory, Facebook facebook, GitHub gitHub, Google google, LegacyMicrosoftAccount legacyMicrosoftAccount, Twitter twitter, Apple apple, AzureStaticWebApps azureStaticWebApps, IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders)
         {
@@ -45,25 +73,50 @@ namespace Azure.ResourceManager.AppService.Models
             CustomOpenIdConnectProviders = customOpenIdConnectProviders;
         }
 
-        /// <summary> The configuration settings of the Azure Active directory provider. </summary>
+        /// <summary>
+        /// The configuration settings of the Azure Active directory provider.
+        /// Serialized Name: IdentityProviders.azureActiveDirectory
+        /// </summary>
         public AzureActiveDirectory AzureActiveDirectory { get; set; }
-        /// <summary> The configuration settings of the Facebook provider. </summary>
+        /// <summary>
+        /// The configuration settings of the Facebook provider.
+        /// Serialized Name: IdentityProviders.facebook
+        /// </summary>
         public Facebook Facebook { get; set; }
-        /// <summary> The configuration settings of the GitHub provider. </summary>
+        /// <summary>
+        /// The configuration settings of the GitHub provider.
+        /// Serialized Name: IdentityProviders.gitHub
+        /// </summary>
         public GitHub GitHub { get; set; }
-        /// <summary> The configuration settings of the Google provider. </summary>
+        /// <summary>
+        /// The configuration settings of the Google provider.
+        /// Serialized Name: IdentityProviders.google
+        /// </summary>
         public Google Google { get; set; }
-        /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
+        /// <summary>
+        /// The configuration settings of the legacy Microsoft Account provider.
+        /// Serialized Name: IdentityProviders.legacyMicrosoftAccount
+        /// </summary>
         public LegacyMicrosoftAccount LegacyMicrosoftAccount { get; set; }
-        /// <summary> The configuration settings of the Twitter provider. </summary>
+        /// <summary>
+        /// The configuration settings of the Twitter provider.
+        /// Serialized Name: IdentityProviders.twitter
+        /// </summary>
         public Twitter Twitter { get; set; }
-        /// <summary> The configuration settings of the Apple provider. </summary>
+        /// <summary>
+        /// The configuration settings of the Apple provider.
+        /// Serialized Name: IdentityProviders.apple
+        /// </summary>
         public Apple Apple { get; set; }
-        /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
+        /// <summary>
+        /// The configuration settings of the Azure Static Web Apps provider.
+        /// Serialized Name: IdentityProviders.azureStaticWebApps
+        /// </summary>
         public AzureStaticWebApps AzureStaticWebApps { get; set; }
         /// <summary>
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
+        /// Serialized Name: IdentityProviders.customOpenIdConnectProviders
         /// </summary>
         public IDictionary<string, CustomOpenIdConnectProvider> CustomOpenIdConnectProviders { get; }
     }

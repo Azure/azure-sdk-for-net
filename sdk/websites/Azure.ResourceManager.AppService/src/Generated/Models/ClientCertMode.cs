@@ -12,14 +12,24 @@ namespace Azure.ResourceManager.AppService.Models
     /// - ClientCertEnabled: false means ClientCert is ignored.
     /// - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
     /// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
+    /// Serialized Name: ClientCertMode
     /// </summary>
     public enum ClientCertMode
     {
-        /// <summary> Required. </summary>
+        /// <summary>
+        /// Required
+        /// Serialized Name: ClientCertMode.Required
+        /// </summary>
         Required,
-        /// <summary> Optional. </summary>
+        /// <summary>
+        /// Optional
+        /// Serialized Name: ClientCertMode.Optional
+        /// </summary>
         Optional,
-        /// <summary> OptionalInteractiveUser. </summary>
+        /// <summary>
+        /// OptionalInteractiveUser
+        /// Serialized Name: ClientCertMode.OptionalInteractiveUser
+        /// </summary>
         OptionalInteractiveUser
     }
 }

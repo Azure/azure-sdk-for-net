@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// The IIS handler mappings used to define which handler processes HTTP requests with certain extension. 
     /// For example, it is used to configure php-cgi.exe process to handle all HTTP requests with *.php extension.
+    /// Serialized Name: HandlerMapping
     /// </summary>
     public partial class HandlerMapping
     {
@@ -19,9 +20,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of HandlerMapping. </summary>
-        /// <param name="extension"> Requests with this extension will be handled using the specified FastCGI application. </param>
-        /// <param name="scriptProcessor"> The absolute path to the FastCGI application. </param>
-        /// <param name="arguments"> Command-line arguments to be passed to the script processor. </param>
+        /// <param name="extension">
+        /// Requests with this extension will be handled using the specified FastCGI application.
+        /// Serialized Name: HandlerMapping.extension
+        /// </param>
+        /// <param name="scriptProcessor">
+        /// The absolute path to the FastCGI application.
+        /// Serialized Name: HandlerMapping.scriptProcessor
+        /// </param>
+        /// <param name="arguments">
+        /// Command-line arguments to be passed to the script processor.
+        /// Serialized Name: HandlerMapping.arguments
+        /// </param>
         internal HandlerMapping(string extension, string scriptProcessor, string arguments)
         {
             Extension = extension;
@@ -29,11 +39,20 @@ namespace Azure.ResourceManager.AppService.Models
             Arguments = arguments;
         }
 
-        /// <summary> Requests with this extension will be handled using the specified FastCGI application. </summary>
+        /// <summary>
+        /// Requests with this extension will be handled using the specified FastCGI application.
+        /// Serialized Name: HandlerMapping.extension
+        /// </summary>
         public string Extension { get; set; }
-        /// <summary> The absolute path to the FastCGI application. </summary>
+        /// <summary>
+        /// The absolute path to the FastCGI application.
+        /// Serialized Name: HandlerMapping.scriptProcessor
+        /// </summary>
         public string ScriptProcessor { get; set; }
-        /// <summary> Command-line arguments to be passed to the script processor. </summary>
+        /// <summary>
+        /// Command-line arguments to be passed to the script processor.
+        /// Serialized Name: HandlerMapping.arguments
+        /// </summary>
         public string Arguments { get; set; }
     }
 }

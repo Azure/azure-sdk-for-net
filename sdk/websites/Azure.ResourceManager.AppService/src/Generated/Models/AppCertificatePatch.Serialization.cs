@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("keyVaultSecretName");
                 writer.WriteStringValue(KeyVaultSecretName);
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (Optional.IsDefined(AppServicePlanId))
             {
                 writer.WritePropertyName("serverFarmId");
-                writer.WriteStringValue(ServerFarmId);
+                writer.WriteStringValue(AppServicePlanId);
             }
             if (Optional.IsDefined(CanonicalName))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
             Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
-            Optional<KeyVaultSecretStatus> keyVaultSecretStatus = default;
+            Optional<AppServiceKeyVaultSecretStatus> keyVaultSecretStatus = default;
             Optional<ResourceIdentifier> serverFarmId = default;
             Optional<string> canonicalName = default;
             Optional<string> domainValidationMethod = default;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyVaultSecretStatus = property0.Value.GetString().ToKeyVaultSecretStatus();
+                            keyVaultSecretStatus = property0.Value.GetString().ToAppServiceKeyVaultSecretStatus();
                             continue;
                         }
                         if (property0.NameEquals("serverFarmId"))

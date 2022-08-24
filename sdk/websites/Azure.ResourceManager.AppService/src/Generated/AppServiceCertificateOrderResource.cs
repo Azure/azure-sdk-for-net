@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.AppService
             return GetAppServiceCertificates().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateOrderDetectorResources in the AppServiceCertificateOrder. </summary>
-        /// <returns> An object representing collection of CertificateOrderDetectorResources and their operations over a CertificateOrderDetectorResource. </returns>
-        public virtual CertificateOrderDetectorCollection GetCertificateOrderDetectors()
+        /// <summary> Gets a collection of AppServiceCertificateOrderDetectorResources in the AppServiceCertificateOrder. </summary>
+        /// <returns> An object representing collection of AppServiceCertificateOrderDetectorResources and their operations over a AppServiceCertificateOrderDetectorResource. </returns>
+        public virtual AppServiceCertificateOrderDetectorCollection GetAppServiceCertificateOrderDetectors()
         {
-            return GetCachedClient(Client => new CertificateOrderDetectorCollection(Client, Id));
+            return GetCachedClient(Client => new AppServiceCertificateOrderDetectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceCertificateOrderDetectorResource>> GetAppServiceCertificateOrderDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            return await GetCertificateOrderDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceCertificateOrderDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceCertificateOrderDetectorResource> GetAppServiceCertificateOrderDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            return GetCertificateOrderDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
+            return GetAppServiceCertificateOrderDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
         }
 
         /// <summary>

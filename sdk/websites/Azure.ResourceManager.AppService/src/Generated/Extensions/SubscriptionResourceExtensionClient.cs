@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService
         private StaticSitesRestOperations _staticSitesRestClient;
         private ClientDiagnostics _staticSiteClientDiagnostics;
         private StaticSitesRestOperations _staticSiteRestClient;
-        private ClientDiagnostics _webSiteWebAppsClientDiagnostics;
-        private WebAppsRestOperations _webSiteWebAppsRestClient;
+        private ClientDiagnostics _appServiceWebAppsClientDiagnostics;
+        private WebAppsRestOperations _appServiceWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.AppService
         private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics StaticSiteClientDiagnostics => _staticSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteResource.ResourceType.Namespace, Diagnostics);
         private StaticSitesRestOperations StaticSiteRestClient => _staticSiteRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StaticSiteResource.ResourceType));
-        private ClientDiagnostics WebSiteWebAppsClientDiagnostics => _webSiteWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteResource.ResourceType.Namespace, Diagnostics);
-        private WebAppsRestOperations WebSiteWebAppsRestClient => _webSiteWebAppsRestClient ??= new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebSiteResource.ResourceType));
+        private ClientDiagnostics AppServiceWebAppsClientDiagnostics => _appServiceWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceResource.ResourceType.Namespace, Diagnostics);
+        private WebAppsRestOperations AppServiceWebAppsRestClient => _appServiceWebAppsRestClient ??= new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -2004,17 +2004,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteResource> GetWebSitesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceResource> GetAppServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WebSiteWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebSites");
+                using var scope = AppServiceWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServices");
                 scope.Start();
                 try
                 {
-                    var response = await WebSiteWebAppsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AppServiceWebAppsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2022,14 +2022,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WebSiteWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebSites");
+                using var scope = AppServiceWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServices");
                 scope.Start();
                 try
                 {
-                    var response = await WebSiteWebAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AppServiceWebAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2046,17 +2046,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteResource> GetWebSites(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceResource> GetAppServices(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WebSiteWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebSites");
+                using var scope = AppServiceWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServices");
                 scope.Start();
                 try
                 {
-                    var response = WebSiteWebAppsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AppServiceWebAppsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2064,14 +2064,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WebSiteWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWebSites");
+                using var scope = AppServiceWebAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServices");
                 scope.Start();
                 try
                 {
-                    var response = WebSiteWebAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AppServiceWebAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

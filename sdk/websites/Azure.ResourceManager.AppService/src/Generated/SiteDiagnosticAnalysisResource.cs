@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteDiagnosticAnalysisDiagnosticsClientDiagnostics;
         private readonly DiagnosticsRestOperations _siteDiagnosticAnalysisDiagnosticsRestClient;
-        private readonly WebSiteAnalysisDefinitionData _data;
+        private readonly AppServiceAnalysisDefinitionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticAnalysisResource"/> class for mocking. </summary>
         protected SiteDiagnosticAnalysisResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteDiagnosticAnalysisResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteDiagnosticAnalysisResource(ArmClient client, WebSiteAnalysisDefinitionData data) : this(client, data.Id)
+        internal SiteDiagnosticAnalysisResource(ArmClient client, AppServiceAnalysisDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WebSiteAnalysisDefinitionData Data
+        public virtual AppServiceAnalysisDefinitionData Data
         {
             get
             {

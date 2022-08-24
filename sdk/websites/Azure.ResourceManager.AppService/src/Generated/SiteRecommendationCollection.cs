@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="SiteRecommendationResource" /> and their operations.
-    /// Each <see cref="SiteRecommendationResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteRecommendationCollection" /> instance call the GetSiteRecommendations method from an instance of <see cref="WebSiteResource" />.
+    /// Each <see cref="SiteRecommendationResource" /> in the collection will belong to the same instance of <see cref="AppServiceResource" />.
+    /// To get a <see cref="SiteRecommendationCollection" /> instance call the GetSiteRecommendations method from an instance of <see cref="AppServiceResource" />.
     /// </summary>
     public partial class SiteRecommendationCollection : ArmCollection
     {
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

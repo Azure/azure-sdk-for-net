@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class representing Abnormal Time Period identified in diagnosis. </summary>
+    /// <summary>
+    /// Class representing Abnormal Time Period identified in diagnosis
+    /// Serialized Name: AbnormalTimePeriod
+    /// </summary>
     public partial class AbnormalTimePeriod
     {
         /// <summary> Initializes a new instance of AbnormalTimePeriod. </summary>
@@ -22,10 +25,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AbnormalTimePeriod. </summary>
-        /// <param name="startOn"> Start time of the downtime. </param>
-        /// <param name="endOn"> End time of the downtime. </param>
-        /// <param name="events"> List of Possible Cause of downtime. </param>
-        /// <param name="solutions"> List of proposed solutions. </param>
+        /// <param name="startOn">
+        /// Start time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.endTime
+        /// </param>
+        /// <param name="events">
+        /// List of Possible Cause of downtime
+        /// Serialized Name: AbnormalTimePeriod.events
+        /// </param>
+        /// <param name="solutions">
+        /// List of proposed solutions
+        /// Serialized Name: AbnormalTimePeriod.solutions
+        /// </param>
         internal AbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DetectorAbnormalTimePeriod> events, IList<Solution> solutions)
         {
             StartOn = startOn;
@@ -34,13 +49,25 @@ namespace Azure.ResourceManager.AppService.Models
             Solutions = solutions;
         }
 
-        /// <summary> Start time of the downtime. </summary>
+        /// <summary>
+        /// Start time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time of the downtime. </summary>
+        /// <summary>
+        /// End time of the downtime
+        /// Serialized Name: AbnormalTimePeriod.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> List of Possible Cause of downtime. </summary>
+        /// <summary>
+        /// List of Possible Cause of downtime
+        /// Serialized Name: AbnormalTimePeriod.events
+        /// </summary>
         public IList<DetectorAbnormalTimePeriod> Events { get; }
-        /// <summary> List of proposed solutions. </summary>
+        /// <summary>
+        /// List of proposed solutions
+        /// Serialized Name: AbnormalTimePeriod.solutions
+        /// </summary>
         public IList<Solution> Solutions { get; }
     }
 }

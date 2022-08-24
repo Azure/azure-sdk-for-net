@@ -12,11 +12,17 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The PrivateEndpointConnectionCollection. </summary>
+    /// <summary>
+    /// The PrivateEndpointConnectionCollection.
+    /// Serialized Name: PrivateEndpointConnectionCollection
+    /// </summary>
     internal partial class PrivateEndpointConnectionCollection
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: PrivateEndpointConnectionCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateEndpointConnectionCollection(IEnumerable<RemotePrivateEndpointConnectionARMResourceData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: PrivateEndpointConnectionCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: PrivateEndpointConnectionCollection.nextLink
+        /// </param>
         internal PrivateEndpointConnectionCollection(IReadOnlyList<RemotePrivateEndpointConnectionARMResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: PrivateEndpointConnectionCollection.value
+        /// </summary>
         public IReadOnlyList<RemotePrivateEndpointConnectionARMResourceData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: PrivateEndpointConnectionCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

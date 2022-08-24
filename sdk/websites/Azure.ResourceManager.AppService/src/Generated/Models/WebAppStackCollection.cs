@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Web app Stacks. </summary>
+    /// <summary>
+    /// Collection of Web app Stacks
+    /// Serialized Name: WebAppStackCollection
+    /// </summary>
     internal partial class WebAppStackCollection
     {
         /// <summary> Initializes a new instance of WebAppStackCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: WebAppStackCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebAppStackCollection(IEnumerable<WebAppStack> value)
         {
@@ -28,17 +34,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebAppStackCollection. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: WebAppStackCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: WebAppStackCollection.nextLink
+        /// </param>
         internal WebAppStackCollection(IReadOnlyList<WebAppStack> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: WebAppStackCollection.value
+        /// </summary>
         public IReadOnlyList<WebAppStack> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: WebAppStackCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

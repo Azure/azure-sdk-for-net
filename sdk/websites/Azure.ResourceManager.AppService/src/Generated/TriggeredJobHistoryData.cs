@@ -26,17 +26,29 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="runs"> List of triggered web job runs. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="runs">
+        /// List of triggered web job runs.
+        /// Serialized Name: TriggeredJobHistory.properties.runs
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TriggeredJobRun> runs, string kind) : base(id, name, resourceType, systemData)
         {
             Runs = runs;
             Kind = kind;
         }
 
-        /// <summary> List of triggered web job runs. </summary>
+        /// <summary>
+        /// List of triggered web job runs.
+        /// Serialized Name: TriggeredJobHistory.properties.runs
+        /// </summary>
         public IList<TriggeredJobRun> Runs { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

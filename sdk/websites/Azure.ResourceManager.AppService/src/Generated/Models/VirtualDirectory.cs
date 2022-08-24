@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Directory for virtual application. </summary>
+    /// <summary>
+    /// Directory for virtual application.
+    /// Serialized Name: VirtualDirectory
+    /// </summary>
     public partial class VirtualDirectory
     {
         /// <summary> Initializes a new instance of VirtualDirectory. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of VirtualDirectory. </summary>
-        /// <param name="virtualPath"> Path to virtual application. </param>
-        /// <param name="physicalPath"> Physical path. </param>
+        /// <param name="virtualPath">
+        /// Path to virtual application.
+        /// Serialized Name: VirtualDirectory.virtualPath
+        /// </param>
+        /// <param name="physicalPath">
+        /// Physical path.
+        /// Serialized Name: VirtualDirectory.physicalPath
+        /// </param>
         internal VirtualDirectory(string virtualPath, string physicalPath)
         {
             VirtualPath = virtualPath;
             PhysicalPath = physicalPath;
         }
 
-        /// <summary> Path to virtual application. </summary>
+        /// <summary>
+        /// Path to virtual application.
+        /// Serialized Name: VirtualDirectory.virtualPath
+        /// </summary>
         public string VirtualPath { get; set; }
-        /// <summary> Physical path. </summary>
+        /// <summary>
+        /// Physical path.
+        /// Serialized Name: VirtualDirectory.physicalPath
+        /// </summary>
         public string PhysicalPath { get; set; }
     }
 }

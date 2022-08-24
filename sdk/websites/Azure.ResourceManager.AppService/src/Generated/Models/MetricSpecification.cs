@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Definition of a single resource metric. </summary>
+    /// <summary>
+    /// Definition of a single resource metric.
+    /// Serialized Name: MetricSpecification
+    /// </summary>
     public partial class MetricSpecification
     {
         /// <summary> Initializes a new instance of MetricSpecification. </summary>
@@ -23,23 +26,23 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of MetricSpecification. </summary>
-        /// <param name="name"></param>
-        /// <param name="displayName"></param>
-        /// <param name="displayDescription"></param>
-        /// <param name="unit"></param>
-        /// <param name="aggregationType"></param>
-        /// <param name="isInstanceLevelAggregationSupported"></param>
-        /// <param name="isRegionalMdmAccountEnabled"></param>
-        /// <param name="sourceMdmAccount"></param>
-        /// <param name="sourceMdmNamespace"></param>
-        /// <param name="metricFilterPattern"></param>
-        /// <param name="fillGapWithZero"></param>
-        /// <param name="isInternal"></param>
-        /// <param name="dimensions"></param>
-        /// <param name="category"></param>
-        /// <param name="availabilities"></param>
-        /// <param name="supportedTimeGrainTypes"></param>
-        /// <param name="supportedAggregationTypes"></param>
+        /// <param name="name"> Serialized Name: MetricSpecification.name. </param>
+        /// <param name="displayName"> Serialized Name: MetricSpecification.displayName. </param>
+        /// <param name="displayDescription"> Serialized Name: MetricSpecification.displayDescription. </param>
+        /// <param name="unit"> Serialized Name: MetricSpecification.unit. </param>
+        /// <param name="aggregationType"> Serialized Name: MetricSpecification.aggregationType. </param>
+        /// <param name="isInstanceLevelAggregationSupported"> Serialized Name: MetricSpecification.supportsInstanceLevelAggregation. </param>
+        /// <param name="isRegionalMdmAccountEnabled"> Serialized Name: MetricSpecification.enableRegionalMdmAccount. </param>
+        /// <param name="sourceMdmAccount"> Serialized Name: MetricSpecification.sourceMdmAccount. </param>
+        /// <param name="sourceMdmNamespace"> Serialized Name: MetricSpecification.sourceMdmNamespace. </param>
+        /// <param name="metricFilterPattern"> Serialized Name: MetricSpecification.metricFilterPattern. </param>
+        /// <param name="fillGapWithZero"> Serialized Name: MetricSpecification.fillGapWithZero. </param>
+        /// <param name="isInternal"> Serialized Name: MetricSpecification.isInternal. </param>
+        /// <param name="dimensions"> Serialized Name: MetricSpecification.dimensions. </param>
+        /// <param name="category"> Serialized Name: MetricSpecification.category. </param>
+        /// <param name="availabilities"> Serialized Name: MetricSpecification.availabilities. </param>
+        /// <param name="supportedTimeGrainTypes"> Serialized Name: MetricSpecification.supportedTimeGrainTypes. </param>
+        /// <param name="supportedAggregationTypes"> Serialized Name: MetricSpecification.supportedAggregationTypes. </param>
         internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<Dimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes)
         {
             Name = name;
@@ -61,39 +64,39 @@ namespace Azure.ResourceManager.AppService.Models
             SupportedAggregationTypes = supportedAggregationTypes;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Serialized Name: MetricSpecification.name. </summary>
         public string Name { get; }
-        /// <summary> Gets the display name. </summary>
+        /// <summary> Serialized Name: MetricSpecification.displayName. </summary>
         public string DisplayName { get; }
-        /// <summary> Gets the display description. </summary>
+        /// <summary> Serialized Name: MetricSpecification.displayDescription. </summary>
         public string DisplayDescription { get; }
-        /// <summary> Gets the unit. </summary>
+        /// <summary> Serialized Name: MetricSpecification.unit. </summary>
         public string Unit { get; }
-        /// <summary> Gets the aggregation type. </summary>
+        /// <summary> Serialized Name: MetricSpecification.aggregationType. </summary>
         public string AggregationType { get; }
-        /// <summary> Gets the is instance level aggregation supported. </summary>
+        /// <summary> Serialized Name: MetricSpecification.supportsInstanceLevelAggregation. </summary>
         public bool? IsInstanceLevelAggregationSupported { get; }
-        /// <summary> Gets the is regional mdm account enabled. </summary>
+        /// <summary> Serialized Name: MetricSpecification.enableRegionalMdmAccount. </summary>
         public bool? IsRegionalMdmAccountEnabled { get; }
-        /// <summary> Gets the source mdm account. </summary>
+        /// <summary> Serialized Name: MetricSpecification.sourceMdmAccount. </summary>
         public string SourceMdmAccount { get; }
-        /// <summary> Gets the source mdm namespace. </summary>
+        /// <summary> Serialized Name: MetricSpecification.sourceMdmNamespace. </summary>
         public string SourceMdmNamespace { get; }
-        /// <summary> Gets the metric filter pattern. </summary>
+        /// <summary> Serialized Name: MetricSpecification.metricFilterPattern. </summary>
         public string MetricFilterPattern { get; }
-        /// <summary> Gets the fill gap with zero. </summary>
+        /// <summary> Serialized Name: MetricSpecification.fillGapWithZero. </summary>
         public bool? FillGapWithZero { get; }
-        /// <summary> Gets the is internal. </summary>
+        /// <summary> Serialized Name: MetricSpecification.isInternal. </summary>
         public bool? IsInternal { get; }
-        /// <summary> Gets the dimensions. </summary>
+        /// <summary> Serialized Name: MetricSpecification.dimensions. </summary>
         public IReadOnlyList<Dimension> Dimensions { get; }
-        /// <summary> Gets the category. </summary>
+        /// <summary> Serialized Name: MetricSpecification.category. </summary>
         public string Category { get; }
-        /// <summary> Gets the availabilities. </summary>
+        /// <summary> Serialized Name: MetricSpecification.availabilities. </summary>
         public IReadOnlyList<MetricAvailability> Availabilities { get; }
-        /// <summary> Gets the supported time grain types. </summary>
+        /// <summary> Serialized Name: MetricSpecification.supportedTimeGrainTypes. </summary>
         public IReadOnlyList<string> SupportedTimeGrainTypes { get; }
-        /// <summary> Gets the supported aggregation types. </summary>
+        /// <summary> Serialized Name: MetricSpecification.supportedAggregationTypes. </summary>
         public IReadOnlyList<string> SupportedAggregationTypes { get; }
     }
 }

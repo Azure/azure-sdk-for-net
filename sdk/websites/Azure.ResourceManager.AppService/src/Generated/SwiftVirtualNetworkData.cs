@@ -23,9 +23,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="subnetResourceId"> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
-        /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="subnetResourceId">
+        /// The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
+        /// Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
+        /// </param>
+        /// <param name="isSwiftSupported">
+        /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
+        /// Serialized Name: SwiftVirtualNetwork.properties.swiftSupported
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier subnetResourceId, bool? isSwiftSupported, string kind) : base(id, name, resourceType, systemData)
         {
             SubnetResourceId = subnetResourceId;
@@ -33,11 +42,20 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
+        /// <summary>
+        /// The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
+        /// Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
+        /// </summary>
         public ResourceIdentifier SubnetResourceId { get; set; }
-        /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
+        /// <summary>
+        /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
+        /// Serialized Name: SwiftVirtualNetwork.properties.swiftSupported
+        /// </summary>
         public bool? IsSwiftSupported { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

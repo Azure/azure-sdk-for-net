@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Result for utterances query. </summary>
+    /// <summary>
+    /// Result for utterances query.
+    /// Serialized Name: QueryUtterancesResult
+    /// </summary>
     public partial class QueryUtterancesResult
     {
         /// <summary> Initializes a new instance of QueryUtterancesResult. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of QueryUtterancesResult. </summary>
-        /// <param name="sampleUtterance"> A sample utterance. </param>
-        /// <param name="score"> Score of a sample utterance. </param>
+        /// <param name="sampleUtterance">
+        /// A sample utterance.
+        /// Serialized Name: QueryUtterancesResult.sampleUtterance
+        /// </param>
+        /// <param name="score">
+        /// Score of a sample utterance.
+        /// Serialized Name: QueryUtterancesResult.score
+        /// </param>
         internal QueryUtterancesResult(SampleUtterance sampleUtterance, float? score)
         {
             SampleUtterance = sampleUtterance;
             Score = score;
         }
 
-        /// <summary> A sample utterance. </summary>
+        /// <summary>
+        /// A sample utterance.
+        /// Serialized Name: QueryUtterancesResult.sampleUtterance
+        /// </summary>
         public SampleUtterance SampleUtterance { get; set; }
-        /// <summary> Score of a sample utterance. </summary>
+        /// <summary>
+        /// Score of a sample utterance.
+        /// Serialized Name: QueryUtterancesResult.score
+        /// </summary>
         public float? Score { get; set; }
     }
 }

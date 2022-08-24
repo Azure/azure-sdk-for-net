@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MachineKey of an app. </summary>
+    /// <summary>
+    /// MachineKey of an app.
+    /// Serialized Name: SiteMachineKey
+    /// </summary>
     public partial class SiteMachineKey
     {
         /// <summary> Initializes a new instance of SiteMachineKey. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SiteMachineKey. </summary>
-        /// <param name="validation"> MachineKey validation. </param>
-        /// <param name="validationKey"> Validation key. </param>
-        /// <param name="decryption"> Algorithm used for decryption. </param>
-        /// <param name="decryptionKey"> Decryption key. </param>
+        /// <param name="validation">
+        /// MachineKey validation.
+        /// Serialized Name: SiteMachineKey.validation
+        /// </param>
+        /// <param name="validationKey">
+        /// Validation key.
+        /// Serialized Name: SiteMachineKey.validationKey
+        /// </param>
+        /// <param name="decryption">
+        /// Algorithm used for decryption.
+        /// Serialized Name: SiteMachineKey.decryption
+        /// </param>
+        /// <param name="decryptionKey">
+        /// Decryption key.
+        /// Serialized Name: SiteMachineKey.decryptionKey
+        /// </param>
         internal SiteMachineKey(string validation, string validationKey, string decryption, string decryptionKey)
         {
             Validation = validation;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.AppService.Models
             DecryptionKey = decryptionKey;
         }
 
-        /// <summary> MachineKey validation. </summary>
+        /// <summary>
+        /// MachineKey validation.
+        /// Serialized Name: SiteMachineKey.validation
+        /// </summary>
         public string Validation { get; }
-        /// <summary> Validation key. </summary>
+        /// <summary>
+        /// Validation key.
+        /// Serialized Name: SiteMachineKey.validationKey
+        /// </summary>
         public string ValidationKey { get; }
-        /// <summary> Algorithm used for decryption. </summary>
+        /// <summary>
+        /// Algorithm used for decryption.
+        /// Serialized Name: SiteMachineKey.decryption
+        /// </summary>
         public string Decryption { get; }
-        /// <summary> Decryption key. </summary>
+        /// <summary>
+        /// Decryption key.
+        /// Serialized Name: SiteMachineKey.decryptionKey
+        /// </summary>
         public string DecryptionKey { get; }
     }
 }

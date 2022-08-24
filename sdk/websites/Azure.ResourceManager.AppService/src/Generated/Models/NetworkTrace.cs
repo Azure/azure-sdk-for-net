@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Network trace. </summary>
+    /// <summary>
+    /// Network trace
+    /// Serialized Name: NetworkTrace
+    /// </summary>
     public partial class NetworkTrace
     {
         /// <summary> Initializes a new instance of NetworkTrace. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of NetworkTrace. </summary>
-        /// <param name="path"> Local file path for the captured network trace file. </param>
-        /// <param name="status"> Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed). </param>
-        /// <param name="message"> Detailed message of a network trace operation, e.g. error message in case of failure. </param>
+        /// <param name="path">
+        /// Local file path for the captured network trace file.
+        /// Serialized Name: NetworkTrace.path
+        /// </param>
+        /// <param name="status">
+        /// Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed).
+        /// Serialized Name: NetworkTrace.status
+        /// </param>
+        /// <param name="message">
+        /// Detailed message of a network trace operation, e.g. error message in case of failure.
+        /// Serialized Name: NetworkTrace.message
+        /// </param>
         internal NetworkTrace(string path, string status, string message)
         {
             Path = path;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             Message = message;
         }
 
-        /// <summary> Local file path for the captured network trace file. </summary>
+        /// <summary>
+        /// Local file path for the captured network trace file.
+        /// Serialized Name: NetworkTrace.path
+        /// </summary>
         public string Path { get; }
-        /// <summary> Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed). </summary>
+        /// <summary>
+        /// Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed).
+        /// Serialized Name: NetworkTrace.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> Detailed message of a network trace operation, e.g. error message in case of failure. </summary>
+        /// <summary>
+        /// Detailed message of a network trace operation, e.g. error message in case of failure.
+        /// Serialized Name: NetworkTrace.message
+        /// </summary>
         public string Message { get; }
     }
 }

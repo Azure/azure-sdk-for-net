@@ -45,41 +45,47 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: WebSiteWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: WebSiteFtpPublishingCredentialsPolicy
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm: WebSiteScmPublishingCredentialsPolicy
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteConnectionStringConfig
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}: WebSiteContinuousWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}: WebSiteHybridConnection
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}: WebSitePremierAddon
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks: WebSitePrivateAccess
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default: WebSiteResourceHealthMetadata
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}: WebSiteSlotTriggeredWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}: WebSiteSlotTriggeredWebJobHistory
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web: WebSiteSourceControl
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: WebSiteExtension
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}: WebSiteSlot
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}: WebSiteSlotWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp: WebSiteSlotFtpPublishingCredentialsPolicy
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm: WebSiteSlotScmPublishingCredentialsPolicy
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}: WebSiteSlotAppSettingConfig
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteSlotConnectionStringConfig
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}: WebSiteSlotContinuousWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}: WebSiteSlotPremierAddOn
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks: WebSiteSlotPrivateAccess
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default: WebSiteSlotResourceHealthMetadata
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: WebSiteTriggeredwebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: WebSiteTriggeredWebJobHistory
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}: WebSiteSlotPublicCertificate
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: WebSiteSlotSourceControl
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: WebSiteSlotHybridConnection
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}: WebSiteSlotExtension
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: AppService
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: AppServiceWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: AppServiceFtpPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm: AppServiceScmPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}: AppServiceContinuousWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}: AppServiceHybridConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}: AppServicePremierAddon
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks: AppServicePrivateAccess
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default: AppServiceResourceHealthMetadata
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}: AppServiceSlotTriggeredWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}: AppServiceSlotTriggeredWebJobHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web: AppServiceSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: AppServiceExtension
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}: AppServiceSlot
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}: AppServiceSlotWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp: AppServiceSlotFtpPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm: AppServiceSlotScmPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}: AppServiceSlotContinuousWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}: AppServiceSlotPremierAddOn
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks: AppServiceSlotPrivateAccess
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default: AppServiceSlotResourceHealthMetadata
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: AppServiceTriggeredwebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: AppServiceTriggeredWebJobHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}: AppServiceSlotPublicCertificate
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: AppServiceSlotSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: AppServiceSlotHybridConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}: AppServiceSlotExtension
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}: AppServicePlanVirtualNetworkConnectionGateway
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}: AppServiceCertificateOrderDetector
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}: AppServiceEnvironmentDetector
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}: AppServiceDetector
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}: AppServiceSlotDetector
 
 override-operation-name:
   Diagnostics_ExecuteSiteAnalysis: Execute
@@ -124,6 +130,8 @@ override-operation-name:
   WebApps_CreateInstanceMSDeployOperation: ExecuteMSDeployOperation
   WebApps_CreateInstanceMSDeployOperationSlot: ExecuteMSDeployOperation
   WebApps_GetMSDeployLogSlot: GetMSDeployLog
+  WebApps_GetAppSettingKeyVaultReferenceSlot: GetSlotAppSettingKeyVaultReference
+  WebApps_GetSiteConnectionStringKeyVaultReferencesSlot: GetSlotConnectionStringKeyVaultReferences
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -164,10 +172,11 @@ rename-rules:
   Ipssl: IPSsl|ipSsl
   WWW: Www
   Ms: MS
+  MSI: Msi
 
 rename-mapping:
 # site and site related
-  Site: WebSite
+  Site: AppService
   Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
   Site.properties.clientCertEnabled: IsClientCertEnabled
   Site.properties.enabled: IsEnabled
@@ -177,8 +186,8 @@ rename-mapping:
   Site.properties.reserved: IsReserved
   Site.properties.suspendedTill: SuspendOn
   Site.properties.storageAccountRequired: IsStorageAccountRequired
-  Site.properties.serverFarmId: AppServicePlanId
-  SiteAvailabilityState: WebSiteAvailabilityState
+  Site.properties.serverFarmId: AppServicePlanId|arm-id
+  SiteAvailabilityState: AppServiceAvailabilityState
   Certificate: AppCertificate
   AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
   AppServiceCertificatePatchResource: AppServiceCertificatePatch
@@ -194,11 +203,11 @@ rename-mapping:
   Recommendation: AppServiceRecommendation
   Resource: AppServiceResource
   DetectorResponse: AppServiceDetector
-  ApiKVReference: ApiKeyVaultReference
   Domain: AppServiceDomain
 # rename property
   ValidateResourceTypes.Site: WebSite
   CheckNameResourceTypes.Site: WebSite
+  ApiKVReference: AppServiceKeyVaultReference
   ApiKVReference.properties.identityType: Identity
   AppServiceCertificateOrder.properties.autoRenew: IsAutoRenew
   AppServiceCertificateOrder.properties.expirationTime: ExpireOn
@@ -218,8 +227,12 @@ rename-mapping:
   BackupItem.properties.finishedTimeStamp: FinishedOn
   BackupItem.properties.lastRestoreTimeStamp: LastRestoreOn
   BackupItem.properties.scheduled: IsScheduled
+  Certificate.properties.keyVaultId: -|arm-id
+  Certificate.properties.serverFarmId: AppServicePlanId|arm-id
   Certificate.properties.expirationDate: ExpireOn
   Certificate.properties.valid: IsValid
+  CertificatePatchResource.properties.keyVaultId: -|arm-id
+  CertificatePatchResource.properties.serverFarmId: AppServicePlanId|arm-id
   ContinuousWebJob.properties.using_sdk: IsUsingSdk
   Deployment.properties.active: IsActive
   KubeEnvironment.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
@@ -322,10 +335,12 @@ rename-mapping:
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
+  AppServiceCertificateResource.properties.keyVaultId: -|arm-id
   StaticSiteARMResource: StaticSite
   StaticSiteBuildARMResource: StaticSiteBuild
   StaticSiteCustomDomainOverviewARMResource: StaticSiteCustomDomainOverview
   StaticSiteUserProvidedFunctionAppARMResource: StaticSiteUserProvidedFunctionApp
+  StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppResourceId: -|arm-id
   StaticSiteUserProvidedFunctionApp: StaticSiteUserProvidedFunctionAppProperties # just rename this to avoid collision, this class will be automatically removed
   StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainContent
   WorkerPoolResource: WorkerPool
@@ -361,12 +376,14 @@ rename-mapping:
   SkuCapacity: AppServiceSkuCapacity
   SkuDescription: AppServiceSkuDescription
   Snapshot: AppSnapshot
-  AnalysisDefinition: WebSiteAnalysisDefinition
+  AnalysisDefinition: AppServiceAnalysisDefinition
   SlotConfigNamesResource: SlotConfigNames
   SlotConfigNames: SlotConfigNamesProperties
+  KubeEnvironment.properties.aksResourceID: -|arm-id
+  KeyVaultSecretStatus: AppServiceKeyVaultSecretStatus
 
-# mgmt-debug:
-#   show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 directive:
 # operation removal - should be temporary
@@ -380,25 +397,13 @@ directive:
 # this operation is a LRO operation
   - remove-operation: Global_GetSubscriptionOperationWithAsyncResponse
 # ResourceId
-  - from: Certificates.json
-    where: $.definitions.Certificate.properties.properties.properties.serverFarmId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: Certificates.json
-    where: $.definitions.Certificate.properties.properties.properties.keyVaultId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: Certificates.json
-    where: $.definitions.CertificatePatchResource.properties.properties.properties.keyVaultId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: Certificates.json
-    where: $.definitions.CertificatePatchResource.properties.properties.properties.serverFarmId
-    transform: $["x-ms-format"] = "arm-id"
 # not sure
-  - from: KubeEnvironments.json
-    where: $.definitions.KubeEnvironment.properties.properties.properties.aksResourceID
-    transform: $["x-ms-format"] = "arm-id"
-  - from: KubeEnvironments.json
-    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
-    transform: $["x-ms-format"] = "arm-id"
+#   - from: KubeEnvironments.json
+#     where: $.definitions.KubeEnvironment.properties.properties.properties.aksResourceID
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: KubeEnvironments.json
+#     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
+#     transform: $["x-ms-format"] = "arm-id"
   - from: ResourceProvider.json
     where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
     transform: $["x-ms-format"] = "arm-id"
@@ -462,9 +467,6 @@ directive:
   - from: WebApps.json
     where: $.definitions.SnapshotRecoverySource.properties.id
     transform: $["x-ms-format"] = "arm-id"
-#   - from: StaticSites.json
-#     where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
-#     transform: $["x-ms-format"] = "arm-id"
   - from: StaticSites.json
     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
@@ -511,7 +513,7 @@ directive:
             "modelAsString": true
           }
 # get array
-  - remove-operation: AppServicePlans_GetRouteForVnet
+  - remove-operation: AppServicePlans_GetRouteForVnet # TODO -- directive to correct this
   - from: swagger-document
     where: $.definitions.AppServicePlan.properties.properties.properties.hostingEnvironmentProfile
     transform: >

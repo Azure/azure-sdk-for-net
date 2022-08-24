@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services. </summary>
+    /// <summary>
+    /// App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services.
+    /// Serialized Name: BillingMeter
+    /// </summary>
     public partial class BillingMeter : ResourceData
     {
         /// <summary> Initializes a new instance of BillingMeter. </summary>
@@ -23,13 +26,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="meterId"> Meter GUID onboarded in Commerce. </param>
-        /// <param name="billingLocation"> Azure Location of billable resource. </param>
-        /// <param name="shortName"> Short Name from App Service Azure pricing Page. </param>
-        /// <param name="friendlyName"> Friendly name of the meter. </param>
-        /// <param name="osType"> App Service OS type meter used for. </param>
-        /// <param name="multiplier"> Meter Multiplier. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="meterId">
+        /// Meter GUID onboarded in Commerce
+        /// Serialized Name: BillingMeter.properties.meterId
+        /// </param>
+        /// <param name="billingLocation">
+        /// Azure Location of billable resource
+        /// Serialized Name: BillingMeter.properties.billingLocation
+        /// </param>
+        /// <param name="shortName">
+        /// Short Name from App Service Azure pricing Page
+        /// Serialized Name: BillingMeter.properties.shortName
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the meter
+        /// Serialized Name: BillingMeter.properties.friendlyName
+        /// </param>
+        /// <param name="osType">
+        /// App Service OS type meter used for
+        /// Serialized Name: BillingMeter.properties.osType
+        /// </param>
+        /// <param name="multiplier">
+        /// Meter Multiplier
+        /// Serialized Name: BillingMeter.properties.multiplier
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal BillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string meterId, string billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind) : base(id, name, resourceType, systemData)
         {
             MeterId = meterId;
@@ -41,19 +65,40 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> Meter GUID onboarded in Commerce. </summary>
+        /// <summary>
+        /// Meter GUID onboarded in Commerce
+        /// Serialized Name: BillingMeter.properties.meterId
+        /// </summary>
         public string MeterId { get; set; }
-        /// <summary> Azure Location of billable resource. </summary>
+        /// <summary>
+        /// Azure Location of billable resource
+        /// Serialized Name: BillingMeter.properties.billingLocation
+        /// </summary>
         public string BillingLocation { get; set; }
-        /// <summary> Short Name from App Service Azure pricing Page. </summary>
+        /// <summary>
+        /// Short Name from App Service Azure pricing Page
+        /// Serialized Name: BillingMeter.properties.shortName
+        /// </summary>
         public string ShortName { get; set; }
-        /// <summary> Friendly name of the meter. </summary>
+        /// <summary>
+        /// Friendly name of the meter
+        /// Serialized Name: BillingMeter.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> App Service OS type meter used for. </summary>
+        /// <summary>
+        /// App Service OS type meter used for
+        /// Serialized Name: BillingMeter.properties.osType
+        /// </summary>
         public string OSType { get; set; }
-        /// <summary> Meter Multiplier. </summary>
+        /// <summary>
+        /// Meter Multiplier
+        /// Serialized Name: BillingMeter.properties.multiplier
+        /// </summary>
         public double? Multiplier { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

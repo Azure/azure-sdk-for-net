@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Deployment slot parameters. </summary>
+    /// <summary>
+    /// Deployment slot parameters.
+    /// Serialized Name: CsmSlotEntity
+    /// </summary>
     public partial class CsmSlotEntity
     {
         /// <summary> Initializes a new instance of CsmSlotEntity. </summary>
-        /// <param name="targetSlot"> Destination deployment slot during swap operation. </param>
-        /// <param name="preserveVnet"> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="targetSlot">
+        /// Destination deployment slot during swap operation.
+        /// Serialized Name: CsmSlotEntity.targetSlot
+        /// </param>
+        /// <param name="preserveVnet">
+        /// &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CsmSlotEntity.preserveVnet
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetSlot"/> is null. </exception>
         public CsmSlotEntity(string targetSlot, bool preserveVnet)
         {
@@ -27,9 +36,15 @@ namespace Azure.ResourceManager.AppService.Models
             PreserveVnet = preserveVnet;
         }
 
-        /// <summary> Destination deployment slot during swap operation. </summary>
+        /// <summary>
+        /// Destination deployment slot during swap operation.
+        /// Serialized Name: CsmSlotEntity.targetSlot
+        /// </summary>
         public string TargetSlot { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CsmSlotEntity.preserveVnet
+        /// </summary>
         public bool PreserveVnet { get; }
     }
 }

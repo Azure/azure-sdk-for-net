@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Additional configuration for a data providers. </summary>
+    /// <summary>
+    /// Additional configuration for a data providers
+    /// Serialized Name: DataProviderMetadata
+    /// </summary>
     public partial class DataProviderMetadata
     {
         /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
@@ -20,17 +23,23 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
-        /// <param name="providerName"></param>
-        /// <param name="propertyBag"> Settings for the data provider. </param>
+        /// <param name="providerName"> Serialized Name: DataProviderMetadata.providerName. </param>
+        /// <param name="propertyBag">
+        /// Settings for the data provider
+        /// Serialized Name: DataProviderMetadata.propertyBag
+        /// </param>
         internal DataProviderMetadata(string providerName, IReadOnlyList<KeyValuePairStringObject> propertyBag)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
         }
 
-        /// <summary> Gets or sets the provider name. </summary>
+        /// <summary> Serialized Name: DataProviderMetadata.providerName. </summary>
         public string ProviderName { get; set; }
-        /// <summary> Settings for the data provider. </summary>
+        /// <summary>
+        /// Settings for the data provider
+        /// Serialized Name: DataProviderMetadata.propertyBag
+        /// </summary>
         public IReadOnlyList<KeyValuePairStringObject> PropertyBag { get; }
     }
 }

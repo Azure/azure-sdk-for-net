@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Trigger based on request execution time. </summary>
+    /// <summary>
+    /// Trigger based on request execution time.
+    /// Serialized Name: SlowRequestsBasedTrigger
+    /// </summary>
     public partial class SlowRequestsBasedTrigger
     {
         /// <summary> Initializes a new instance of SlowRequestsBasedTrigger. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SlowRequestsBasedTrigger. </summary>
-        /// <param name="timeTaken"> Time taken. </param>
-        /// <param name="path"> Request Path. </param>
-        /// <param name="count"> Request Count. </param>
-        /// <param name="timeInterval"> Time interval. </param>
+        /// <param name="timeTaken">
+        /// Time taken.
+        /// Serialized Name: SlowRequestsBasedTrigger.timeTaken
+        /// </param>
+        /// <param name="path">
+        /// Request Path.
+        /// Serialized Name: SlowRequestsBasedTrigger.path
+        /// </param>
+        /// <param name="count">
+        /// Request Count.
+        /// Serialized Name: SlowRequestsBasedTrigger.count
+        /// </param>
+        /// <param name="timeInterval">
+        /// Time interval.
+        /// Serialized Name: SlowRequestsBasedTrigger.timeInterval
+        /// </param>
         internal SlowRequestsBasedTrigger(string timeTaken, string path, int? count, string timeInterval)
         {
             TimeTaken = timeTaken;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.AppService.Models
             TimeInterval = timeInterval;
         }
 
-        /// <summary> Time taken. </summary>
+        /// <summary>
+        /// Time taken.
+        /// Serialized Name: SlowRequestsBasedTrigger.timeTaken
+        /// </summary>
         public string TimeTaken { get; set; }
-        /// <summary> Request Path. </summary>
+        /// <summary>
+        /// Request Path.
+        /// Serialized Name: SlowRequestsBasedTrigger.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> Request Count. </summary>
+        /// <summary>
+        /// Request Count.
+        /// Serialized Name: SlowRequestsBasedTrigger.count
+        /// </summary>
         public int? Count { get; set; }
-        /// <summary> Time interval. </summary>
+        /// <summary>
+        /// Time interval.
+        /// Serialized Name: SlowRequestsBasedTrigger.timeInterval
+        /// </summary>
         public string TimeInterval { get; set; }
     }
 }

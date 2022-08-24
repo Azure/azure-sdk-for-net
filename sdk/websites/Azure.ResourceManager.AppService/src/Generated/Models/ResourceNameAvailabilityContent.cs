@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Resource name availability request content. </summary>
+    /// <summary>
+    /// Resource name availability request content.
+    /// Serialized Name: ResourceNameAvailabilityRequest
+    /// </summary>
     public partial class ResourceNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of ResourceNameAvailabilityContent. </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="name">
+        /// Resource name to verify.
+        /// Serialized Name: ResourceNameAvailabilityRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type used for verification.
+        /// Serialized Name: ResourceNameAvailabilityRequest.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceNameAvailabilityContent(string name, CheckNameResourceType resourceType)
         {
@@ -27,11 +36,20 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> Resource name to verify. </summary>
+        /// <summary>
+        /// Resource name to verify.
+        /// Serialized Name: ResourceNameAvailabilityRequest.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Resource type used for verification. </summary>
+        /// <summary>
+        /// Resource type used for verification.
+        /// Serialized Name: ResourceNameAvailabilityRequest.type
+        /// </summary>
         public CheckNameResourceType ResourceType { get; }
-        /// <summary> Is fully qualified domain name. </summary>
+        /// <summary>
+        /// Is fully qualified domain name.
+        /// Serialized Name: ResourceNameAvailabilityRequest.isFqdn
+        /// </summary>
         public bool? IsFqdn { get; set; }
     }
 }

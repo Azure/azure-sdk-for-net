@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<UsageState> usageState = default;
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<string>> enabledHostNames = default;
-            Optional<WebSiteAvailabilityState> availabilityState = default;
+            Optional<AppServiceAvailabilityState> availabilityState = default;
             Optional<IList<HostNameSslState>> hostNameSslStates = default;
             Optional<ResourceIdentifier> serverFarmId = default;
             Optional<bool> reserved = default;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityState = property0.Value.GetString().ToWebSiteAvailabilityState();
+                            availabilityState = property0.Value.GetString().ToAppServiceAvailabilityState();
                             continue;
                         }
                         if (property0.NameEquals("hostNameSslStates"))

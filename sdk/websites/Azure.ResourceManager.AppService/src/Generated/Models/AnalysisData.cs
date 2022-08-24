@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class Representing Detector Evidence used for analysis. </summary>
+    /// <summary>
+    /// Class Representing Detector Evidence used for analysis
+    /// Serialized Name: AnalysisData
+    /// </summary>
     public partial class AnalysisData
     {
         /// <summary> Initializes a new instance of AnalysisData. </summary>
@@ -21,11 +24,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AnalysisData. </summary>
-        /// <param name="source"> Name of the Detector. </param>
-        /// <param name="detectorDefinition"> Detector Definition. </param>
-        /// <param name="metrics"> Source Metrics. </param>
-        /// <param name="data"> Additional Source Data. </param>
-        /// <param name="detectorMetaData"> Detector Meta Data. </param>
+        /// <param name="source">
+        /// Name of the Detector
+        /// Serialized Name: AnalysisData.source
+        /// </param>
+        /// <param name="detectorDefinition">
+        /// Detector Definition
+        /// Serialized Name: AnalysisData.detectorDefinition
+        /// </param>
+        /// <param name="metrics">
+        /// Source Metrics
+        /// Serialized Name: AnalysisData.metrics
+        /// </param>
+        /// <param name="data">
+        /// Additional Source Data
+        /// Serialized Name: AnalysisData.data
+        /// </param>
+        /// <param name="detectorMetaData">
+        /// Detector Meta Data
+        /// Serialized Name: AnalysisData.detectorMetaData
+        /// </param>
         internal AnalysisData(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<NameValuePair>> data, ResponseMetaData detectorMetaData)
         {
             Source = source;
@@ -35,17 +53,35 @@ namespace Azure.ResourceManager.AppService.Models
             DetectorMetaData = detectorMetaData;
         }
 
-        /// <summary> Name of the Detector. </summary>
+        /// <summary>
+        /// Name of the Detector
+        /// Serialized Name: AnalysisData.source
+        /// </summary>
         public string Source { get; set; }
-        /// <summary> Detector Definition. </summary>
+        /// <summary>
+        /// Detector Definition
+        /// Serialized Name: AnalysisData.detectorDefinition
+        /// </summary>
         public DetectorDefinition DetectorDefinition { get; set; }
-        /// <summary> Source Metrics. </summary>
+        /// <summary>
+        /// Source Metrics
+        /// Serialized Name: AnalysisData.metrics
+        /// </summary>
         public IList<DiagnosticMetricSet> Metrics { get; }
-        /// <summary> Additional Source Data. </summary>
+        /// <summary>
+        /// Additional Source Data
+        /// Serialized Name: AnalysisData.data
+        /// </summary>
         public IList<IList<NameValuePair>> Data { get; }
-        /// <summary> Detector Meta Data. </summary>
+        /// <summary>
+        /// Detector Meta Data
+        /// Serialized Name: AnalysisData.detectorMetaData
+        /// </summary>
         internal ResponseMetaData DetectorMetaData { get; set; }
-        /// <summary> Source of the Data. </summary>
+        /// <summary>
+        /// Source of the Data
+        /// Serialized Name: ResponseMetaData.dataSource
+        /// </summary>
         public DataSource DataSource
         {
             get => DetectorMetaData is null ? default : DetectorMetaData.DataSource;

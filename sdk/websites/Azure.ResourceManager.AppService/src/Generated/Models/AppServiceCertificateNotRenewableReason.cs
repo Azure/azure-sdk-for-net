@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The AppServiceCertificateNotRenewableReason. </summary>
+    /// <summary>
+    /// The AppServiceCertificateNotRenewableReason.
+    /// Serialized Name: AppServiceCertificateNotRenewableReason
+    /// </summary>
     public readonly partial struct AppServiceCertificateNotRenewableReason : IEquatable<AppServiceCertificateNotRenewableReason>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ExpirationNotInRenewalTimeRangeValue = "ExpirationNotInRenewalTimeRange";
         private const string SubscriptionNotActiveValue = "SubscriptionNotActive";
 
-        /// <summary> RegistrationStatusNotSupportedForRenewal. </summary>
+        /// <summary>
+        /// RegistrationStatusNotSupportedForRenewal
+        /// Serialized Name: AppServiceCertificateNotRenewableReason.RegistrationStatusNotSupportedForRenewal
+        /// </summary>
         public static AppServiceCertificateNotRenewableReason RegistrationStatusNotSupportedForRenewal { get; } = new AppServiceCertificateNotRenewableReason(RegistrationStatusNotSupportedForRenewalValue);
-        /// <summary> ExpirationNotInRenewalTimeRange. </summary>
+        /// <summary>
+        /// ExpirationNotInRenewalTimeRange
+        /// Serialized Name: AppServiceCertificateNotRenewableReason.ExpirationNotInRenewalTimeRange
+        /// </summary>
         public static AppServiceCertificateNotRenewableReason ExpirationNotInRenewalTimeRange { get; } = new AppServiceCertificateNotRenewableReason(ExpirationNotInRenewalTimeRangeValue);
-        /// <summary> SubscriptionNotActive. </summary>
+        /// <summary>
+        /// SubscriptionNotActive
+        /// Serialized Name: AppServiceCertificateNotRenewableReason.SubscriptionNotActive
+        /// </summary>
         public static AppServiceCertificateNotRenewableReason SubscriptionNotActive { get; } = new AppServiceCertificateNotRenewableReason(SubscriptionNotActiveValue);
         /// <summary> Determines if two <see cref="AppServiceCertificateNotRenewableReason"/> values are the same. </summary>
         public static bool operator ==(AppServiceCertificateNotRenewableReason left, AppServiceCertificateNotRenewableReason right) => left.Equals(right);

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Key Vault container ARM resource for a certificate that is purchased through Azure. </summary>
+    /// <summary>
+    /// Key Vault container ARM resource for a certificate that is purchased through Azure.
+    /// Serialized Name: AppServiceCertificatePatchResource
+    /// </summary>
     public partial class AppServiceCertificatePatch : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
@@ -23,11 +26,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="keyVaultId">
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultId
+        /// </param>
+        /// <param name="keyVaultSecretName">
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultSecretName
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.provisioningState
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier keyVaultId, string keyVaultSecretName, AppServiceKeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
@@ -35,13 +50,25 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
         }
 
-        /// <summary> Key Vault resource Id. </summary>
-        public string KeyVaultId { get; set; }
-        /// <summary> Key Vault secret name. </summary>
+        /// <summary>
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultId
+        /// </summary>
+        public ResourceIdentifier KeyVaultId { get; set; }
+        /// <summary>
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultSecretName
+        /// </summary>
         public string KeyVaultSecretName { get; set; }
-        /// <summary> Status of the Key Vault secret. </summary>
-        public KeyVaultSecretStatus? ProvisioningState { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.provisioningState
+        /// </summary>
+        public AppServiceKeyVaultSecretStatus? ProvisioningState { get; }
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

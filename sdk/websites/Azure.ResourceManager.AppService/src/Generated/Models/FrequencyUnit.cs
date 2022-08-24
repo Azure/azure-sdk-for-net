@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </summary>
+    /// <summary>
+    /// The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7)
+    /// Serialized Name: FrequencyUnit
+    /// </summary>
     public enum FrequencyUnit
     {
-        /// <summary> Day. </summary>
+        /// <summary>
+        /// Day
+        /// Serialized Name: FrequencyUnit.Day
+        /// </summary>
         Day,
-        /// <summary> Hour. </summary>
+        /// <summary>
+        /// Hour
+        /// Serialized Name: FrequencyUnit.Hour
+        /// </summary>
         Hour
     }
 }

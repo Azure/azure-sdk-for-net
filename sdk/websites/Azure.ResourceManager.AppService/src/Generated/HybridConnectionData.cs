@@ -24,18 +24,43 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
-        /// <param name="relayName"> The name of the Service Bus relay. </param>
-        /// <param name="relayArmUri"> The ARM URI to the Service Bus relay. </param>
-        /// <param name="hostname"> The hostname of the endpoint. </param>
-        /// <param name="port"> The port of the endpoint. </param>
-        /// <param name="sendKeyName"> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </param>
+        /// <param name="serviceBusNamespace">
+        /// The name of the Service Bus namespace.
+        /// Serialized Name: HybridConnection.properties.serviceBusNamespace
+        /// </param>
+        /// <param name="relayName">
+        /// The name of the Service Bus relay.
+        /// Serialized Name: HybridConnection.properties.relayName
+        /// </param>
+        /// <param name="relayArmUri">
+        /// The ARM URI to the Service Bus relay.
+        /// Serialized Name: HybridConnection.properties.relayArmUri
+        /// </param>
+        /// <param name="hostname">
+        /// The hostname of the endpoint.
+        /// Serialized Name: HybridConnection.properties.hostname
+        /// </param>
+        /// <param name="port">
+        /// The port of the endpoint.
+        /// Serialized Name: HybridConnection.properties.port
+        /// </param>
+        /// <param name="sendKeyName">
+        /// The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus.
+        /// Serialized Name: HybridConnection.properties.sendKeyName
+        /// </param>
         /// <param name="sendKeyValue">
         /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
         /// normally, use the POST /listKeys API instead.
+        /// Serialized Name: HybridConnection.properties.sendKeyValue
         /// </param>
-        /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serviceBusSuffix">
+        /// The suffix for the service bus endpoint. By default this is .servicebus.windows.net
+        /// Serialized Name: HybridConnection.properties.serviceBusSuffix
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceBusNamespace, string relayName, Uri relayArmUri, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, string kind) : base(id, name, resourceType, systemData)
         {
             ServiceBusNamespace = serviceBusNamespace;
@@ -49,26 +74,51 @@ namespace Azure.ResourceManager.AppService
             Kind = kind;
         }
 
-        /// <summary> The name of the Service Bus namespace. </summary>
+        /// <summary>
+        /// The name of the Service Bus namespace.
+        /// Serialized Name: HybridConnection.properties.serviceBusNamespace
+        /// </summary>
         public string ServiceBusNamespace { get; set; }
-        /// <summary> The name of the Service Bus relay. </summary>
+        /// <summary>
+        /// The name of the Service Bus relay.
+        /// Serialized Name: HybridConnection.properties.relayName
+        /// </summary>
         public string RelayName { get; set; }
-        /// <summary> The ARM URI to the Service Bus relay. </summary>
+        /// <summary>
+        /// The ARM URI to the Service Bus relay.
+        /// Serialized Name: HybridConnection.properties.relayArmUri
+        /// </summary>
         public Uri RelayArmUri { get; set; }
-        /// <summary> The hostname of the endpoint. </summary>
+        /// <summary>
+        /// The hostname of the endpoint.
+        /// Serialized Name: HybridConnection.properties.hostname
+        /// </summary>
         public string Hostname { get; set; }
-        /// <summary> The port of the endpoint. </summary>
+        /// <summary>
+        /// The port of the endpoint.
+        /// Serialized Name: HybridConnection.properties.port
+        /// </summary>
         public int? Port { get; set; }
-        /// <summary> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </summary>
+        /// <summary>
+        /// The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus.
+        /// Serialized Name: HybridConnection.properties.sendKeyName
+        /// </summary>
         public string SendKeyName { get; set; }
         /// <summary>
         /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
         /// normally, use the POST /listKeys API instead.
+        /// Serialized Name: HybridConnection.properties.sendKeyValue
         /// </summary>
         public string SendKeyValue { get; set; }
-        /// <summary> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </summary>
+        /// <summary>
+        /// The suffix for the service bus endpoint. By default this is .servicebus.windows.net
+        /// Serialized Name: HybridConnection.properties.serviceBusSuffix
+        /// </summary>
         public string ServiceBusSuffix { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         public string Kind { get; set; }
     }
 }

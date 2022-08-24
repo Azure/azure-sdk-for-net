@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SitePublicCertificate along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SitePublicCertificateResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSitePublicCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSitePublicCertificate method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceResource" /> using the GetSitePublicCertificate method.
     /// </summary>
     public partial class SitePublicCertificateResource : ArmResource
     {
