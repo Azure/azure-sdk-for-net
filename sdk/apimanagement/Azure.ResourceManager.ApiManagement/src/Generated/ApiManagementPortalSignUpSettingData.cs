@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isEnabled"> Allow users to sign up on a developer portal. </param>
+        /// <param name="isSignUpDeveloperPortalEnabled"> Allow users to sign up on a developer portal. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        internal ApiManagementPortalSignUpSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, TermsOfServiceProperties termsOfService) : base(id, name, resourceType, systemData)
+        internal ApiManagementPortalSignUpSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isSignUpDeveloperPortalEnabled, TermsOfServiceProperties termsOfService) : base(id, name, resourceType, systemData)
         {
-            IsEnabled = isEnabled;
+            IsSignUpDeveloperPortalEnabled = isSignUpDeveloperPortalEnabled;
             TermsOfService = termsOfService;
         }
 
         /// <summary> Allow users to sign up on a developer portal. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsSignUpDeveloperPortalEnabled { get; set; }
         /// <summary> Terms of service contract properties. </summary>
         public TermsOfServiceProperties TermsOfService { get; set; }
     }

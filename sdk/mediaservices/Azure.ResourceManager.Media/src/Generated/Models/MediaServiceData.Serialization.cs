@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media
             Optional<IList<MediaServiceStorageAccount>> storageAccounts = default;
             Optional<MediaStorageAuthentication?> storageAuthentication = default;
             Optional<AccountEncryption> encryption = default;
-            Optional<KeyDelivery> keyDelivery = default;
+            Optional<MediaKeyDelivery> keyDelivery = default;
             Optional<MediaPublicNetworkAccessStatus?> publicNetworkAccess = default;
             Optional<MediaProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<MediaPrivateEndpointConnectionData>> privateEndpointConnections = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyDelivery = KeyDelivery.DeserializeKeyDelivery(property0.Value);
+                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))

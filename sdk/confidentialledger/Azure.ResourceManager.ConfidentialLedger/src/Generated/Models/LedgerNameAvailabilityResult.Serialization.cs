@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         internal static LedgerNameAvailabilityResult DeserializeLedgerNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<CheckNameAvailabilityReason> reason = default;
+            Optional<LegerNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
+                    reason = new LegerNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))

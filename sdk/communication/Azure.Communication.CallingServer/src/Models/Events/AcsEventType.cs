@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     [CodeGenModel("AcsEventType")]
-    public partial struct AcsEventType
+    internal partial struct AcsEventType
     {
     }
 }

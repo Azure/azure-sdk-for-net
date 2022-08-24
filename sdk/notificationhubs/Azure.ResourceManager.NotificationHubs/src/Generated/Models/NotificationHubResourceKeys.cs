@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Namespace/NotificationHub Connection String
-    /// Serialized Name: ResourceListKeys
-    /// </summary>
+    /// <summary> Namespace/NotificationHub Connection String. </summary>
     public partial class NotificationHubResourceKeys
     {
         /// <summary> Initializes a new instance of NotificationHubResourceKeys. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubResourceKeys. </summary>
-        /// <param name="primaryConnectionString">
-        /// PrimaryConnectionString of the AuthorizationRule.
-        /// Serialized Name: ResourceListKeys.primaryConnectionString
-        /// </param>
-        /// <param name="secondaryConnectionString">
-        /// SecondaryConnectionString of the created AuthorizationRule
-        /// Serialized Name: ResourceListKeys.secondaryConnectionString
-        /// </param>
-        /// <param name="primaryKey">
-        /// PrimaryKey of the created AuthorizationRule.
-        /// Serialized Name: ResourceListKeys.primaryKey
-        /// </param>
-        /// <param name="secondaryKey">
-        /// SecondaryKey of the created AuthorizationRule
-        /// Serialized Name: ResourceListKeys.secondaryKey
-        /// </param>
-        /// <param name="keyName">
-        /// KeyName of the created AuthorizationRule
-        /// Serialized Name: ResourceListKeys.keyName
-        /// </param>
+        /// <param name="primaryConnectionString"> PrimaryConnectionString of the AuthorizationRule. </param>
+        /// <param name="secondaryConnectionString"> SecondaryConnectionString of the created AuthorizationRule. </param>
+        /// <param name="primaryKey"> PrimaryKey of the created AuthorizationRule. </param>
+        /// <param name="secondaryKey"> SecondaryKey of the created AuthorizationRule. </param>
+        /// <param name="keyName"> KeyName of the created AuthorizationRule. </param>
         internal NotificationHubResourceKeys(string primaryConnectionString, string secondaryConnectionString, string primaryKey, string secondaryKey, string keyName)
         {
             PrimaryConnectionString = primaryConnectionString;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             KeyName = keyName;
         }
 
-        /// <summary>
-        /// PrimaryConnectionString of the AuthorizationRule.
-        /// Serialized Name: ResourceListKeys.primaryConnectionString
-        /// </summary>
+        /// <summary> PrimaryConnectionString of the AuthorizationRule. </summary>
         public string PrimaryConnectionString { get; }
-        /// <summary>
-        /// SecondaryConnectionString of the created AuthorizationRule
-        /// Serialized Name: ResourceListKeys.secondaryConnectionString
-        /// </summary>
+        /// <summary> SecondaryConnectionString of the created AuthorizationRule. </summary>
         public string SecondaryConnectionString { get; }
-        /// <summary>
-        /// PrimaryKey of the created AuthorizationRule.
-        /// Serialized Name: ResourceListKeys.primaryKey
-        /// </summary>
+        /// <summary> PrimaryKey of the created AuthorizationRule. </summary>
         public string PrimaryKey { get; }
-        /// <summary>
-        /// SecondaryKey of the created AuthorizationRule
-        /// Serialized Name: ResourceListKeys.secondaryKey
-        /// </summary>
+        /// <summary> SecondaryKey of the created AuthorizationRule. </summary>
         public string SecondaryKey { get; }
-        /// <summary>
-        /// KeyName of the created AuthorizationRule
-        /// Serialized Name: ResourceListKeys.keyName
-        /// </summary>
+        /// <summary> KeyName of the created AuthorizationRule. </summary>
         public string KeyName { get; }
     }
 }

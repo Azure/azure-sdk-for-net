@@ -11,10 +11,7 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// The response of the List Namespace operation.
-    /// Serialized Name: NamespaceListResult
-    /// </summary>
+    /// <summary> The response of the List Namespace operation. </summary>
     internal partial class NotificationHubNamespaceListResult
     {
         /// <summary> Initializes a new instance of NotificationHubNamespaceListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubNamespaceListResult. </summary>
-        /// <param name="value">
-        /// Result of the List Namespace operation.
-        /// Serialized Name: NamespaceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to the next set of results. Not empty if Value contains incomplete list of Namespaces
-        /// Serialized Name: NamespaceListResult.nextLink
-        /// </param>
+        /// <param name="value"> Result of the List Namespace operation. </param>
+        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Namespaces. </param>
         internal NotificationHubNamespaceListResult(IReadOnlyList<NotificationHubNamespaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Result of the List Namespace operation.
-        /// Serialized Name: NamespaceListResult.value
-        /// </summary>
+        /// <summary> Result of the List Namespace operation. </summary>
         public IReadOnlyList<NotificationHubNamespaceData> Value { get; }
-        /// <summary>
-        /// Link to the next set of results. Not empty if Value contains incomplete list of Namespaces
-        /// Serialized Name: NamespaceListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Namespaces. </summary>
         public string NextLink { get; }
     }
 }

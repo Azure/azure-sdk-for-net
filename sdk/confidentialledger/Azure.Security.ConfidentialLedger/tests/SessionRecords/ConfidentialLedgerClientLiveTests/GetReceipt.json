@@ -1,64 +1,115 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://chrisss.confidential-ledger.azure.com/app/transactions?api-version=2022-05-13",
+      "RequestUri": "https://identity.confidential-ledger.core.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ab5639e160693693655f3a2d911eeabd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 08 Aug 2022 18:14:30 GMT",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "ab5639e160693693655f3a2d911eeabd",
+        "x-ms-correlation-request-id": "97c73717-b988-4142-9961-e8003c593606",
+        "x-ms-image-digest": "sha256:9b8d3952372e585a3b21995d9be0c8702fb7ba2ef54ca65392b2562dd2adcc73",
+        "x-ms-image-tag": "1.0.02031.28-b60f6adbe3f21e46216336ba378cc34dd0ab86ca",
+        "x-ms-machineName": "identityservice-6f96b84df8-wbxmj"
+      },
+      "ResponseBody": {
+        "ledgerTlsCertificate": "-----BEGIN CERTIFICATE-----\nMIIBfDCCASGgAwIBAgIRAJ2/vZkZ8ioQA1JdUVr2pqMwCgYIKoZIzj0EAwIwFjEU\nMBIGA1UEAwwLQ0NGIE5ldHdvcmswHhcNMjIwODA4MTcwMTU0WhcNMjIxMTA2MTcw\nMTUzWjAWMRQwEgYDVQQDDAtDQ0YgTmV0d29yazBZMBMGByqGSM49AgEGCCqGSM49\nAwEHA0IABFpANBl06p7tkizO8jhe4rZI6eSME8InEnnSLmNETYPYDvzdf1MnRa9o\n/XQqyMcWamkp\u002BQG0OduR2D4qMmqEvd\u002BjUDBOMAwGA1UdEwQFMAMBAf8wHQYDVR0O\nBBYEFJK3c\u002BQFMqaSIj6QSiSuWmxUnUKCMB8GA1UdIwQYMBaAFJK3c\u002BQFMqaSIj6Q\nSiSuWmxUnUKCMAoGCCqGSM49BAMCA0kAMEYCIQDkUaMHs5pch3vBLdU1o0rYhgG4\nYhHAK/MuRkKIIefUwgIhAIllvWx7pw\u002BXlIzB3c69vUX8JsJiWYyd/n3uCNwaprPY\n-----END CERTIFICATE-----\n",
+        "ledgerId": "chrissconfidentialledger"
+      }
+    },
+    {
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-05-13",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "23",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a479f1fd6e37fbfd1775759e1bacb3a2",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c024d6542e51079d3adf2cbedf49c64b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "contents": "test8514"
+        "contents": "test2071"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "30",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "5.885",
-        "x-ms-client-request-id": "a479f1fd6e37fbfd1775759e1bacb3a2",
-        "x-ms-request-id": "59075555"
+        "x-ms-ccf-transaction-id": "2.60",
+        "x-ms-client-request-id": "c024d6542e51079d3adf2cbedf49c64b",
+        "x-ms-request-id": "369848980"
       },
       "ResponseBody": {
         "collectionId": "subledger:0"
       }
     },
     {
-      "RequestUri": "https://chrisss.confidential-ledger.azure.com/app/transactions/5.885/status?api-version=2022-05-13",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.60/status?api-version=2022-05-13",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9590ea36e69565bdb8781b946c1d0a15",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f50ad70ddadc0111ebae345d9f54304e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "45",
+        "Content-Length": "42",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "5.886",
-        "x-ms-client-request-id": "9590ea36e69565bdb8781b946c1d0a15",
-        "x-ms-request-id": "166248766"
+        "x-ms-ccf-transaction-id": "2.60",
+        "x-ms-client-request-id": "f50ad70ddadc0111ebae345d9f54304e",
+        "x-ms-request-id": "1056289599"
       },
       "ResponseBody": {
-        "state": "Committed",
-        "transactionId": "5.885"
+        "state": "Pending",
+        "transactionId": "2.60"
       }
     },
     {
-      "RequestUri": "https://chrisss.confidential-ledger.azure.com/app/transactions?api-version=2022-05-13",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.60/status?api-version=2022-05-13",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "654d1bc40d9ce955b1322bebe1efc5ac",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a267e7b2b45d0a90b9a32f8166788516",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "2.61",
+        "x-ms-client-request-id": "a267e7b2b45d0a90b9a32f8166788516",
+        "x-ms-request-id": "614136403"
+      },
+      "ResponseBody": {
+        "state": "Committed",
+        "transactionId": "2.60"
+      }
+    },
+    {
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4683e274c8df7af3c522d5a2fa4068e5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -66,908 +117,121 @@
       "ResponseHeaders": {
         "Content-Length": "147",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "5.886",
-        "x-ms-client-request-id": "654d1bc40d9ce955b1322bebe1efc5ac",
-        "x-ms-request-id": "2141554883"
+        "x-ms-ccf-transaction-id": "2.61",
+        "x-ms-client-request-id": "4683e274c8df7af3c522d5a2fa4068e5",
+        "x-ms-request-id": "1673070049"
       },
       "ResponseBody": {
         "entries": [],
-        "nextLink": "/app/transactions?api-version=2022-05-13\u0026collectionId=subledger:0\u0026fromTransactionId=2.35",
+        "nextLink": "/app/transactions?api-version=2022-05-13\u0026collectionId=subledger:0\u0026fromTransactionId=2.34",
         "state": "Loading"
       }
     },
     {
-      "RequestUri": "https://chrisss.confidential-ledger.azure.com/app/transactions?api-version=2022-05-13\u0026collectionId=subledger:0\u0026fromTransactionId=2.35",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-05-13\u0026collectionId=subledger:0\u0026fromTransactionId=2.34",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "782ea56faf83169e3314ecbe53688efa",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f70cdeae23e258ed47ff3b39aa909a73",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "18159",
+        "Content-Length": "1141",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "5.886",
-        "x-ms-client-request-id": "782ea56faf83169e3314ecbe53688efa",
-        "x-ms-request-id": "1347345454"
+        "x-ms-ccf-transaction-id": "2.61",
+        "x-ms-client-request-id": "f70cdeae23e258ed47ff3b39aa909a73",
+        "x-ms-request-id": "285002108"
       },
       "ResponseBody": {
         "entries": [
           {
             "collectionId": "subledger:0",
-            "contents": "test4487",
-            "transactionId": "2.35"
+            "contents": "test5299",
+            "transactionId": "2.34"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test130",
-            "transactionId": "2.37"
+            "contents": "test4713",
+            "transactionId": "2.36"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test1871",
-            "transactionId": "2.39"
+            "contents": "test7850",
+            "transactionId": "2.38"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test2784",
-            "transactionId": "2.41"
+            "contents": "test1671",
+            "transactionId": "2.40"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test6661",
-            "transactionId": "2.43"
+            "contents": "test3933",
+            "transactionId": "2.42"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test6289",
-            "transactionId": "2.45"
+            "contents": "test2938",
+            "transactionId": "2.44"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test4754",
-            "transactionId": "2.51"
+            "contents": "test8355",
+            "transactionId": "2.54"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test2573",
-            "transactionId": "2.53"
+            "contents": "test1678",
+            "transactionId": "2.56"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test5781",
-            "transactionId": "2.55"
+            "contents": "test7185",
+            "transactionId": "2.58"
           },
           {
             "collectionId": "subledger:0",
-            "contents": "test3563",
-            "transactionId": "2.57"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test386",
-            "transactionId": "2.59"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9173",
-            "transactionId": "2.61"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello world!",
-            "transactionId": "2.63"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello from Chris!",
-            "transactionId": "2.65"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello from Allison!",
-            "transactionId": "2.67"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello world!",
-            "transactionId": "2.69"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello world!",
-            "transactionId": "2.71"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello from Chris!",
-            "transactionId": "2.73"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello from Allison!",
-            "transactionId": "2.75"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello world!",
-            "transactionId": "2.77"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello world 0",
-            "transactionId": "2.79"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "Hello world 1",
-            "transactionId": "2.81"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3709",
-            "transactionId": "2.94"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5731",
-            "transactionId": "2.96"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4227",
-            "transactionId": "2.98"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6769",
-            "transactionId": "2.100"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9745",
-            "transactionId": "2.102"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5624",
-            "transactionId": "2.104"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5753",
-            "transactionId": "2.109"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test1115",
-            "transactionId": "2.111"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8484",
-            "transactionId": "2.113"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3110",
-            "transactionId": "2.115"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7524",
-            "transactionId": "2.117"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8920",
-            "transactionId": "2.119"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8556",
-            "transactionId": "2.124"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8807",
-            "transactionId": "2.126"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7494",
-            "transactionId": "2.128"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6001",
-            "transactionId": "2.130"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8140",
-            "transactionId": "2.132"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4825",
-            "transactionId": "2.134"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test516",
-            "transactionId": "2.139"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test1631",
-            "transactionId": "2.141"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3111",
-            "transactionId": "2.143"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4994",
-            "transactionId": "2.145"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8456",
-            "transactionId": "2.147"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5647",
-            "transactionId": "2.149"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test1055",
-            "transactionId": "2.157"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6297",
-            "transactionId": "2.159"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6147",
-            "transactionId": "2.161"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2991",
-            "transactionId": "2.163"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3889",
-            "transactionId": "2.165"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test278",
-            "transactionId": "2.167"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6756",
-            "transactionId": "2.173"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9855",
-            "transactionId": "2.175"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7116",
-            "transactionId": "2.177"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7614",
-            "transactionId": "2.179"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7475",
-            "transactionId": "2.181"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5558",
-            "transactionId": "2.183"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6753",
-            "transactionId": "2.189"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2595",
-            "transactionId": "2.191"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2503",
-            "transactionId": "2.193"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4780",
-            "transactionId": "2.195"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9032",
-            "transactionId": "2.197"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test1781",
-            "transactionId": "2.199"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6655",
-            "transactionId": "2.205"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6956",
-            "transactionId": "2.207"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test624",
-            "transactionId": "2.209"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test1650",
-            "transactionId": "2.211"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5434",
-            "transactionId": "2.213"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6750",
-            "transactionId": "2.215"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8792",
-            "transactionId": "2.225"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2209",
-            "transactionId": "2.227"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9556",
-            "transactionId": "2.229"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test486",
-            "transactionId": "2.231"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2361",
-            "transactionId": "2.233"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3577",
-            "transactionId": "2.235"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7263",
-            "transactionId": "2.240"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8379",
-            "transactionId": "2.242"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6349",
-            "transactionId": "2.244"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7081",
-            "transactionId": "2.246"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4616",
-            "transactionId": "2.248"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6890",
-            "transactionId": "2.250"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6492",
-            "transactionId": "2.255"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7282",
-            "transactionId": "2.257"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7520",
-            "transactionId": "2.259"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6289",
-            "transactionId": "2.261"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6156",
-            "transactionId": "2.263"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9589",
-            "transactionId": "2.265"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4950",
-            "transactionId": "2.270"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8337",
-            "transactionId": "2.272"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3628",
-            "transactionId": "2.274"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8389",
-            "transactionId": "2.276"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6916",
-            "transactionId": "2.278"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3241",
-            "transactionId": "2.280"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test953",
-            "transactionId": "2.286"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test578",
-            "transactionId": "2.288"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6249",
-            "transactionId": "2.290"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6924",
-            "transactionId": "2.292"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2972",
-            "transactionId": "2.294"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2974",
-            "transactionId": "2.296"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test744",
-            "transactionId": "2.302"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3471",
-            "transactionId": "2.304"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5898",
-            "transactionId": "2.306"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6708",
-            "transactionId": "2.311"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4986",
-            "transactionId": "2.317"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test1516",
-            "transactionId": "2.319"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6646",
-            "transactionId": "2.321"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4149",
-            "transactionId": "2.323"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4058",
-            "transactionId": "2.325"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9482",
-            "transactionId": "2.327"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2225",
-            "transactionId": "2.333"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5921",
-            "transactionId": "2.335"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4869",
-            "transactionId": "2.337"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2627",
-            "transactionId": "2.339"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7869",
-            "transactionId": "2.341"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3378",
-            "transactionId": "2.343"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7692",
-            "transactionId": "2.348"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2961",
-            "transactionId": "2.350"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test1705",
-            "transactionId": "2.352"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7255",
-            "transactionId": "2.354"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test190",
-            "transactionId": "2.356"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6920",
-            "transactionId": "2.358"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2583",
-            "transactionId": "2.363"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5901",
-            "transactionId": "2.365"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7602",
-            "transactionId": "2.367"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8541",
-            "transactionId": "2.369"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7100",
-            "transactionId": "2.371"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4675",
-            "transactionId": "2.373"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2213",
-            "transactionId": "2.378"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6778",
-            "transactionId": "2.380"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7550",
-            "transactionId": "2.382"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7259",
-            "transactionId": "2.384"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9026",
-            "transactionId": "2.386"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test31",
-            "transactionId": "2.388"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7971",
-            "transactionId": "2.393"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2978",
-            "transactionId": "2.395"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9954",
-            "transactionId": "2.397"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5035",
-            "transactionId": "2.399"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test3959",
-            "transactionId": "2.401"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6072",
-            "transactionId": "2.403"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5177",
-            "transactionId": "5.721"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4293",
-            "transactionId": "5.723"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5553",
-            "transactionId": "5.725"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test305",
-            "transactionId": "5.727"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2663",
-            "transactionId": "5.729"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test7313",
-            "transactionId": "5.731"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8040",
-            "transactionId": "5.736"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5110",
-            "transactionId": "5.738"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test580",
-            "transactionId": "5.740"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test2190",
-            "transactionId": "5.742"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test963",
-            "transactionId": "5.744"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4729",
-            "transactionId": "5.746"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test502",
-            "transactionId": "5.854"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9834",
-            "transactionId": "5.864"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9221",
-            "transactionId": "5.866"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8711",
-            "transactionId": "5.868"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6000",
-            "transactionId": "5.870"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8010",
-            "transactionId": "5.872"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test4567",
-            "transactionId": "5.874"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test6835",
-            "transactionId": "5.879"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test9131",
-            "transactionId": "5.881"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test5608",
-            "transactionId": "5.883"
-          },
-          {
-            "collectionId": "subledger:0",
-            "contents": "test8514",
-            "transactionId": "5.885"
+            "contents": "test2071",
+            "transactionId": "2.60"
           }
         ],
         "state": "Ready"
       }
     },
     {
-      "RequestUri": "https://chrisss.confidential-ledger.azure.com/app/transactions/2.35/receipt?api-version=2022-05-13",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.34/receipt?api-version=2022-05-13",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "00da5f6b4d5e290595a6e362bad183c9",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220808.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bce91d29ead0ea6ef4eddd3adfee0f78",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1661",
+        "Content-Length": "66",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "5.886",
-        "x-ms-client-request-id": "00da5f6b4d5e290595a6e362bad183c9",
-        "x-ms-request-id": "516886753"
+        "x-ms-ccf-transaction-id": "2.61",
+        "x-ms-client-request-id": "bce91d29ead0ea6ef4eddd3adfee0f78",
+        "x-ms-request-id": "216811688"
       },
       "ResponseBody": {
-        "receipt": {
-          "cert": "-----BEGIN CERTIFICATE-----\nMIIBtzCCAV2gAwIBAgIQZ3YvqKF7f4c48eLXNSLDnDAKBggqhkjOPQQDAjAWMRQw\nEgYDVQQDDAtDQ0YgTmV0d29yazAeFw0yMjA3MTUxNzA3MDlaFw0yMjEwMTMxNzA3\nMDhaMBMxETAPBgNVBAMMCENDRiBOb2RlMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD\nQgAE8XxUIcQBg0kjKhxzinWvxjBhKPcsNe\u002B8f\u002BHsUbVGu21W2m8IyxMCLtads5Rb\njKpnBRCKufHoAUdqDemiEyJnDaOBjzCBjDAJBgNVHRMEAjAAMB0GA1UdDgQWBBSV\ngpE9whd5Bk9Wk1OqRGANyKRZazAfBgNVHSMEGDAWgBSwzHKRa1ujvY3ms3SyNnfE\nIP8WjTA/BgNVHREEODA2ggdjaHJpc3NzhwQK8CGJgiVjaHJpc3NzLmNvbmZpZGVu\ndGlhbC1sZWRnZXIuYXp1cmUuY29tMAoGCCqGSM49BAMCA0gAMEUCIQDP33AeIrKu\nwc0XLKweMw9UjCUAgWyPNdX4mMl6NMmcTQIgWgcy7NBVSqHA2737\u002BU6yG3h0a1o\u002B\nmJapX9VUhOK7cho=\n-----END CERTIFICATE-----\n",
-          "is_signature_transaction": false,
-          "leaf_components": {
-            "claims_digest": "0000000000000000000000000000000000000000000000000000000000000000",
-            "commit_evidence": "ce:2.35:f6458b55a0a11d380cb40329b1134142a99b615e8634d08ef515a013e390122a",
-            "write_set_digest": "2cffc3141a5c0a8f018fe1d07caf7e67d182e4a04eb8cc80bf497e16ee2a940d"
-          },
-          "node_id": "f1ed5f28234b2ce55539d3f9f6d851ef2495c77188958db6ae96840e50c80b1b",
-          "proof": [
-            {
-              "left": "651358c10856cf224537086a6d9069453220dc8cbfd26a445c8b723ccdc71c5c"
-            },
-            {
-              "left": "c32bd92ea3dc09ed4e0e22bd9b724e097730c0a1f3acff7e153c3418a3dceae6"
-            },
-            {
-              "left": "b554fe055e10816dc9dab7a6593ae447d8636924279669a9b0f81e633463b4ca"
-            }
-          ],
-          "service_endorsements": [],
-          "signature": "MEQCIFW4tRWHue/Tc6ZqYaPeUL6UzccVkHm6F9ij314wVXozAiA0cJWEXYbnYPAgXkJL0sa4Y0wtQdmBob2cT57UqePevQ=="
-        },
-        "state": "Ready",
-        "transactionId": "2.35"
+        "receipt": null,
+        "state": "Loading",
+        "transactionId": ""
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.confidential-ledger.core.azure.com",
-    "CONFIDENTIALLEDGER_URL": "https://chrisss.confidential-ledger.azure.com",
-    "RandomSeed": "2110897610"
+    "CONFIDENTIALLEDGER_URL": "https://chrissconfidentialledger.confidential-ledger.azure.com",
+    "RandomSeed": "1615241301"
   }
 }

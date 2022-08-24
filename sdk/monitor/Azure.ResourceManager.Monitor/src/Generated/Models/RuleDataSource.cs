@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="resourceLocation"> the location of the resource. </param>
         /// <param name="metricNamespace"> the namespace of the metric. </param>
-        internal RuleDataSource(string odataType, ResourceIdentifier resourceId, string legacyResourceId, string resourceLocation, string metricNamespace)
+        internal RuleDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace)
         {
             OdataType = odataType;
             ResourceId = resourceId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </summary>
-        public string LegacyResourceId { get; set; }
+        public ResourceIdentifier LegacyResourceId { get; set; }
         /// <summary> the location of the resource. </summary>
         public string ResourceLocation { get; set; }
         /// <summary> the namespace of the metric. </summary>

@@ -43,9 +43,9 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get; set; }
 
         /// <summary>
-        /// The default value of this property is 'false', except for methods like 'StartAnalyzeHealthcareEntities' and 'RecognizePiiEntities'.
-        /// This means, the Language service logs your input text for 48 hours, solely to allow for troubleshooting issues.
-        /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
+        /// The default value of this property is <c>false</c> except for methods like <c>StartAnalyzeHealthcareEntities</c> and <c>RecognizePiiEntities</c>.
+        /// This means that the Language service logs your input text for 48 hours solely to allow for troubleshooting issues.
+        /// Setting this property to <c>true</c> disables input logging and may limit our ability to investigate issues that occur.
         /// <para>
         /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
         /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.

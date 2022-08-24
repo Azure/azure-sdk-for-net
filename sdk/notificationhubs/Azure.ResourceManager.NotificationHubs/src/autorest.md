@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: NotificationHubNamespaceAuthorizationRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}: NotificationHubAuthorizationRule
@@ -29,6 +26,7 @@ rename-mapping:
   ApnsCredential.properties.endpoint: -|uri
   BaiduCredential.properties.baiduEndPoint: BaiduEndpoint|uri
   GcmCredential.properties.gcmEndpoint: -|uri
+  GcmCredential.properties.googleApiKey: gcmApiKey
   WnsCredential.properties.windowsLiveEndpoint: -|uri
   NotificationHubResource.properties.registrationTtl: -|duration-constant
   SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|datetime
@@ -102,4 +100,6 @@ directive:
   transform: >
     $.NotificationHubProperties.properties.name['x-ms-client-name'] = 'NotificationHubName';
     $.NamespaceProperties.properties.name['x-ms-client-name'] = 'NamespaceName';
+    $.DebugSendResult.properties.success['type'] = 'integer';
+    $.DebugSendResult.properties.failure['type'] = 'integer';
 ```

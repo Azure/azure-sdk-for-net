@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Description of a NotificationHub BaiduCredential.
-    /// Serialized Name: BaiduCredential
-    /// </summary>
+    /// <summary> Description of a NotificationHub BaiduCredential. </summary>
     public partial class NotificationHubBaiduCredential
     {
         /// <summary> Initializes a new instance of NotificationHubBaiduCredential. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubBaiduCredential. </summary>
-        /// <param name="baiduApiKey">
-        /// Baidu Api Key.
-        /// Serialized Name: BaiduCredential.properties.baiduApiKey
-        /// </param>
-        /// <param name="baiduEndpoint">
-        /// Baidu Endpoint.
-        /// Serialized Name: BaiduCredential.properties.baiduEndPoint
-        /// </param>
-        /// <param name="baiduSecretKey">
-        /// Baidu Secret Key
-        /// Serialized Name: BaiduCredential.properties.baiduSecretKey
-        /// </param>
+        /// <param name="baiduApiKey"> Baidu Api Key. </param>
+        /// <param name="baiduEndpoint"> Baidu Endpoint. </param>
+        /// <param name="baiduSecretKey"> Baidu Secret Key. </param>
         internal NotificationHubBaiduCredential(string baiduApiKey, Uri baiduEndpoint, string baiduSecretKey)
         {
             BaiduApiKey = baiduApiKey;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             BaiduSecretKey = baiduSecretKey;
         }
 
-        /// <summary>
-        /// Baidu Api Key.
-        /// Serialized Name: BaiduCredential.properties.baiduApiKey
-        /// </summary>
+        /// <summary> Baidu Api Key. </summary>
         public string BaiduApiKey { get; set; }
-        /// <summary>
-        /// Baidu Endpoint.
-        /// Serialized Name: BaiduCredential.properties.baiduEndPoint
-        /// </summary>
+        /// <summary> Baidu Endpoint. </summary>
         public Uri BaiduEndpoint { get; set; }
-        /// <summary>
-        /// Baidu Secret Key
-        /// Serialized Name: BaiduCredential.properties.baiduSecretKey
-        /// </summary>
+        /// <summary> Baidu Secret Key. </summary>
         public string BaiduSecretKey { get; set; }
     }
 }

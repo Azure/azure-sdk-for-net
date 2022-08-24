@@ -11,7 +11,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The add participants succeeded event.
     /// </summary>
-    public class AddParticipantsSucceeded: CallingServerEventBase
+    public class AddParticipantsSucceeded: CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of AddParticipantsSucceededEventInternal. </summary>
         internal AddParticipantsSucceeded()
@@ -38,12 +38,7 @@ namespace Azure.Communication.CallingServer
         public ResultInformation ResultInfo { get; }
         /// <summary> Participants added. </summary>
         public IReadOnlyList<CommunicationIdentifier> Participants { get; }
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
+
         /// <summary>
         /// Deserialize <see cref="AddParticipantsSucceeded"/> event.
         /// </summary>

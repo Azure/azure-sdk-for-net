@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules.
-    /// Serialized Name: SharedAccessAuthorizationRuleCreateOrUpdateParameters
-    /// </summary>
+    /// <summary> Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules. </summary>
     public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleCreateOrUpdateContent. </summary>
-        /// <param name="properties">
-        /// Properties of the Namespace AuthorizationRules.
-        /// Serialized Name: SharedAccessAuthorizationRuleCreateOrUpdateParameters.properties
-        /// </param>
+        /// <param name="properties"> Properties of the Namespace AuthorizationRules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SharedAccessAuthorizationRuleCreateOrUpdateContent(SharedAccessAuthorizationRuleProperties properties)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Properties = properties;
         }
 
-        /// <summary>
-        /// Properties of the Namespace AuthorizationRules.
-        /// Serialized Name: SharedAccessAuthorizationRuleCreateOrUpdateParameters.properties
-        /// </summary>
+        /// <summary> Properties of the Namespace AuthorizationRules. </summary>
         public SharedAccessAuthorizationRuleProperties Properties { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity of the factory. </param>
+        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
         /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
         /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
         /// <param name="version"> Version of the factory. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createdOn, string version, FactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, FactoryGlobalParameterSpecification> globalParameters, FactoryEncryptionConfiguration encryption, FactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, DateTimeOffset? createdOn, string version, FactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, FactoryGlobalParameterSpecification> globalParameters, FactoryEncryptionConfiguration encryption, FactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Managed service identity of the factory. </summary>
-        public FactoryIdentity Identity { get; set; }
+        /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Factory provisioning state, example Succeeded. </summary>
         public string ProvisioningState { get; }
         /// <summary> Time the factory was created in ISO8601 format. </summary>

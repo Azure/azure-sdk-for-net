@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Check Name Availability for Namespace and NotificationHubs.
-    /// Serialized Name: CheckAvailabilityParameters
-    /// </summary>
+    /// <summary> Parameters supplied to the Check Name Availability for Namespace and NotificationHubs. </summary>
     public partial class NotificationHubAvailabilityContent : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NotificationHubAvailabilityContent. </summary>
@@ -22,15 +19,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
         }
 
-        /// <summary>
-        /// The sku of the created namespace
-        /// Serialized Name: CheckAvailabilityParameters.sku
-        /// </summary>
+        /// <summary> The sku of the created namespace. </summary>
         public NotificationHubSku Sku { get; set; }
-        /// <summary>
-        /// True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false.
-        /// Serialized Name: CheckAvailabilityParameters.isAvailiable
-        /// </summary>
+        /// <summary> True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false. </summary>
         public bool? IsAvailiable { get; set; }
     }
 }

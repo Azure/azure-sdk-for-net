@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -18,6 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public ServiceBusQueueOutputDataSource()
         {
             PropertyColumns = new ChangeTrackingList<string>();
+            SystemPropertyColumns = new ChangeTrackingDictionary<string, string>();
             OutputDataSourceType = "Microsoft.ServiceBus/Queue";
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="queueName"> The name of the Service Bus Queue. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="propertyColumns"> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </param>
         /// <param name="systemPropertyColumns"> The system properties associated with the Service Bus Queue. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </param>
-        internal ServiceBusQueueOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string queueName, IList<string> propertyColumns, BinaryData systemPropertyColumns) : base(outputDataSourceType)
+        internal ServiceBusQueueOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string queueName, IList<string> propertyColumns, IDictionary<string, string> systemPropertyColumns) : base(outputDataSourceType)
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </summary>
         public IList<string> PropertyColumns { get; }
         /// <summary> The system properties associated with the Service Bus Queue. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </summary>
-        public BinaryData SystemPropertyColumns { get; set; }
+        public IDictionary<string, string> SystemPropertyColumns { get; }
     }
 }

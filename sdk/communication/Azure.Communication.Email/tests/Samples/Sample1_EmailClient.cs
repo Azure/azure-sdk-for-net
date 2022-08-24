@@ -159,7 +159,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
 #if SNIPPET
             var filePath = "<path to your file>";
-            var attachmentName = "<name of your attachment>"
+            var attachmentName = "<name of your attachment>";
             EmailAttachmentType attachmentType = EmailAttachmentType.Txt;
 #endif
 
