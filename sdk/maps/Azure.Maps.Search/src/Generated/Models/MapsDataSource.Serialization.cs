@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class DataSource
+    public partial class MapsDataSource
     {
-        internal static DataSource DeserializeDataSource(JsonElement element)
+        internal static MapsDataSource DeserializeMapsDataSource(JsonElement element)
         {
             Optional<GeometryIdentifier> geometry = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new DataSource(geometry.Value);
+            return new MapsDataSource(geometry.Value);
         }
     }
 }

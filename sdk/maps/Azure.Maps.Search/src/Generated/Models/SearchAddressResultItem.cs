@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MapsSearchMatchType? matchType, int? detourTime)
+        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTime)
         {
             Type = type;
             Id = id;
@@ -96,7 +96,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </summary>
         public AddressRanges AddressRanges { get; }
         /// <summary> Optional section. Reference geometry id for use with the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. </summary>
-        public DataSource DataSources { get; }
+        public MapsDataSource DataSources { get; }
         /// <summary>
         /// Information on the type of match.
         /// 

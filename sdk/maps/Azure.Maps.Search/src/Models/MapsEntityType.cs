@@ -13,7 +13,7 @@ namespace Azure.Maps.Search.Models
 {
     /// <summary> Entity type source of the bounding box. For reverse-geocoding this is always equal to position. </summary>
     [CodeGenModel("Entity")]
-    public readonly partial struct EntityType
+    public readonly partial struct MapsEntityType
     {
     }
 }

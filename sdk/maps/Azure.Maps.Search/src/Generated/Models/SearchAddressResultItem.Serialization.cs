@@ -27,7 +27,7 @@ namespace Azure.Maps.Search.Models
             Optional<BoundingBox> viewport = default;
             Optional<IReadOnlyList<FacilityEntryPoint>> entryPoints = default;
             Optional<AddressRanges> addressRanges = default;
-            Optional<DataSource> dataSources = default;
+            Optional<MapsDataSource> dataSources = default;
             Optional<MapsSearchMatchType> matchType = default;
             Optional<int> detourTime = default;
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataSources = DataSource.DeserializeDataSource(property.Value);
+                    dataSources = MapsDataSource.DeserializeMapsDataSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("matchType"))

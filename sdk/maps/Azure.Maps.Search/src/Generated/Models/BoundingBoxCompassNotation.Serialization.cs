@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         {
             Optional<string> northEast = default;
             Optional<string> southWest = default;
-            Optional<EntityType> entity = default;
+            Optional<MapsEntityType> entity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("northEast"))
@@ -36,7 +36,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    entity = new EntityType(property.Value.GetString());
+                    entity = new MapsEntityType(property.Value.GetString());
                     continue;
                 }
             }

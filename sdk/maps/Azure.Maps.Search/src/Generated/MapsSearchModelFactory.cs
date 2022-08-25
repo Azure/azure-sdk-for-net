@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class SearchModelFactory
+    public static partial class MapsSearchModelFactory
     {
         /// <summary> Initializes a new instance of PolygonResult. </summary>
         /// <param name="polygons"> Results array. </param>
@@ -79,12 +79,12 @@ namespace Azure.Maps.Search.Models
             return new OperatingHours(mode, timeRanges?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataSource. </summary>
+        /// <summary> Initializes a new instance of MapsDataSource. </summary>
         /// <param name="geometry"> Information about the geometric shape of the result. Only present if type == Geography. </param>
-        /// <returns> A new <see cref="Models.DataSource"/> instance for mocking. </returns>
-        public static DataSource DataSource(GeometryIdentifier geometry = null)
+        /// <returns> A new <see cref="Models.MapsDataSource"/> instance for mocking. </returns>
+        public static MapsDataSource MapsDataSource(GeometryIdentifier geometry = null)
         {
-            return new DataSource(geometry);
+            return new MapsDataSource(geometry);
         }
 
         /// <summary> Initializes a new instance of GeometryIdentifier. </summary>
