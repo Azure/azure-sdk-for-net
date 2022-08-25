@@ -13,9 +13,7 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class StreamingEndpointTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaServiceIdentifier;
         private MediaServicesAccountResource _mediaService;
-        private string _streamingEndpointName;  //The maximun allowed number of streaming endpoints is 2
 
         private StreamingEndpointCollection streamingEndpointCollection => _mediaService.GetStreamingEndpoints();
 
@@ -23,43 +21,29 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
-            _mediaServiceIdentifier = mediaService.Id;
-            _streamingEndpointName = SessionRecording.GenerateAssetName("streamingEndpoint");
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
+            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
+            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
+            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaservice"), storage.Id);
         }
 
-        private async Task<StreamingEndpointResource> CreateStreamingEndpoint()
+        private async Task<StreamingEndpointResource> CreateStreamingEndpoint(string streamingEndpointName)
         {
-            // streamingEndpointCollection.CreateOrUpdateAsync does not support update.
-            bool isExist = await streamingEndpointCollection.ExistsAsync(_streamingEndpointName);
-            if (!isExist)
-            {
-                StreamingEndpointData data = new StreamingEndpointData(_mediaService.Data.Location);
-                var streamingEndpoint = await streamingEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, _streamingEndpointName, data);
-                return streamingEndpoint.Value;
-            }
-            return await streamingEndpointCollection.GetAsync(_streamingEndpointName);
+            StreamingEndpointData data = new StreamingEndpointData(_mediaService.Data.Location);
+            var streamingEndpoint = await streamingEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, streamingEndpointName, data);
+            return streamingEndpoint.Value;
         }
 
         [Test]
         [RecordedTest]
         public async Task Create()
         {
-            var streamingEndpoint = await CreateStreamingEndpoint();
+            string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
+            var streamingEndpoint = await CreateStreamingEndpoint(streamingEndpointName);
             Assert.IsNotNull(streamingEndpoint);
-            Assert.AreEqual(_streamingEndpointName, streamingEndpoint.Data.Name);
+            Assert.AreEqual(streamingEndpointName, streamingEndpoint.Data.Name);
         }
 
         [Test]
@@ -67,22 +51,24 @@ namespace Azure.ResourceManager.Media.Tests
         [Ignore("Property 'StreamingEndpoint.Location' is read-only and cannot be changed")]
         public async Task Update()
         {
-            var streamingEndpoint = await CreateStreamingEndpoint();
+            string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
+            var streamingEndpoint = await CreateStreamingEndpoint(streamingEndpointName);
             StreamingEndpointData data = new StreamingEndpointData(_mediaService.Data.Location)
             {
                 Description = "changes test."
             };
             var response = await streamingEndpoint.UpdateAsync(WaitUntil.Completed, data);
             Assert.IsNotNull(response);
-            Assert.AreEqual(_streamingEndpointName, response.Value.Data.Name);
+            Assert.AreEqual(streamingEndpointName, response.Value.Data.Name);
         }
 
         [Test]
         [RecordedTest]
         public async Task Exist()
         {
-            await CreateStreamingEndpoint();
-            bool flag = await streamingEndpointCollection.ExistsAsync(_streamingEndpointName);
+            string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
+            await CreateStreamingEndpoint(streamingEndpointName);
+            bool flag = await streamingEndpointCollection.ExistsAsync(streamingEndpointName);
             Assert.IsTrue(flag);
         }
 
@@ -90,33 +76,36 @@ namespace Azure.ResourceManager.Media.Tests
         [RecordedTest]
         public async Task Get()
         {
-            await CreateStreamingEndpoint();
-            var streamingEndpoint = await streamingEndpointCollection.GetAsync(_streamingEndpointName);
+            string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
+            await CreateStreamingEndpoint(streamingEndpointName);
+            var streamingEndpoint = await streamingEndpointCollection.GetAsync(streamingEndpointName);
             Assert.IsNotNull(streamingEndpoint);
-            Assert.AreEqual(_streamingEndpointName, streamingEndpoint.Value.Data.Name);
+            Assert.AreEqual(streamingEndpointName, streamingEndpoint.Value.Data.Name);
         }
 
         [Test]
         [RecordedTest]
         public async Task GetAll()
         {
-            await CreateStreamingEndpoint();
+            string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
+            await CreateStreamingEndpoint(streamingEndpointName);
             var list = await streamingEndpointCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.IsTrue(list.Exists(item => item.Data.Name == "default"));
-            Assert.IsTrue(list.Exists(item => item.Data.Name == _streamingEndpointName));
+            Assert.IsTrue(list.Exists(item => item.Data.Name == streamingEndpointName));
         }
 
         [Test]
         [RecordedTest]
         public async Task Delete()
         {
-            var streamingEndpoint = await CreateStreamingEndpoint();
-            bool flag = await streamingEndpointCollection.ExistsAsync(_streamingEndpointName);
+            string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
+            var streamingEndpoint = await CreateStreamingEndpoint(streamingEndpointName);
+            bool flag = await streamingEndpointCollection.ExistsAsync(streamingEndpointName);
             Assert.IsTrue(flag);
 
             await streamingEndpoint.DeleteAsync(WaitUntil.Completed);
-            flag = await streamingEndpointCollection.ExistsAsync(_streamingEndpointName);
+            flag = await streamingEndpointCollection.ExistsAsync(streamingEndpointName);
             Assert.IsFalse(flag);
         }
     }
