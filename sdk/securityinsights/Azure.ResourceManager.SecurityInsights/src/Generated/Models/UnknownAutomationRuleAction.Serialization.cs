@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleAction : IUtf8JsonSerializable
+    internal partial class UnknownAutomationRuleAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,16 +22,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static AutomationRuleAction DeserializeAutomationRuleAction(JsonElement element)
+        internal static UnknownAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element)
         {
-            if (element.TryGetProperty("actionType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "ModifyProperties": return AutomationRuleModifyPropertiesAction.DeserializeAutomationRuleModifyPropertiesAction(element);
-                    case "RunPlaybook": return AutomationRuleRunPlaybookAction.DeserializeAutomationRuleRunPlaybookAction(element);
-                }
-            }
             int order = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())

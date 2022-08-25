@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleCondition : IUtf8JsonSerializable
+    internal partial class UnknownAutomationRuleCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,17 +20,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static AutomationRuleCondition DeserializeAutomationRuleCondition(JsonElement element)
+        internal static UnknownAutomationRuleCondition DeserializeUnknownAutomationRuleCondition(JsonElement element)
         {
-            if (element.TryGetProperty("conditionType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Property": return PropertyConditionProperties.DeserializePropertyConditionProperties(element);
-                    case "PropertyArrayChanged": return PropertyArrayChangedConditionProperties.DeserializePropertyArrayChangedConditionProperties(element);
-                    case "PropertyChanged": return PropertyChangedConditionProperties.DeserializePropertyChangedConditionProperties(element);
-                }
-            }
             ConditionType conditionType = default;
             foreach (var property in element.EnumerateObject())
             {
