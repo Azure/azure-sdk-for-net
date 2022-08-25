@@ -493,9 +493,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.LinkType left, Azure.ResourceManager.EdgeOrder.Models.LinkType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MeterDetails
+    public abstract partial class MeterDetails
     {
-        internal MeterDetails() { }
+        protected MeterDetails() { }
         public Azure.ResourceManager.EdgeOrder.Models.ChargingType? ChargingType { get { throw null; } }
         public double? Multiplier { get { throw null; } }
     }

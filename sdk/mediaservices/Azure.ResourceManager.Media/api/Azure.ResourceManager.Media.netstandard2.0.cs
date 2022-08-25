@@ -909,9 +909,9 @@ namespace Azure.ResourceManager.Media.Models
         public System.Guid? StreamingLocatorId { get { throw null; } }
         public string StreamingPolicyName { get { throw null; } }
     }
-    public partial class AssetTrackInfo
+    public abstract partial class AssetTrackInfo
     {
-        public AssetTrackInfo() { }
+        protected AssetTrackInfo() { }
     }
     public partial class AssetTrackOperationStatus
     {
@@ -1031,13 +1031,13 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.ChannelMapping left, Azure.ResourceManager.Media.Models.ChannelMapping right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ClipTime
+    public abstract partial class ClipTime
     {
-        public ClipTime() { }
+        protected ClipTime() { }
     }
-    public partial class CodecBasicProperties
+    public abstract partial class CodecBasicProperties
     {
-        public CodecBasicProperties() { }
+        protected CodecBasicProperties() { }
         public string Label { get { throw null; } set { } }
     }
     public partial class CommonEncryptionCbcs
@@ -1060,9 +1060,9 @@ namespace Azure.ResourceManager.Media.Models
     {
         public ContentKeyPolicyClearKeyConfiguration() { }
     }
-    public partial class ContentKeyPolicyConfiguration
+    public abstract partial class ContentKeyPolicyConfiguration
     {
-        public ContentKeyPolicyConfiguration() { }
+        protected ContentKeyPolicyConfiguration() { }
     }
     public partial class ContentKeyPolicyFairPlayConfiguration : Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration
     {
@@ -1120,9 +1120,9 @@ namespace Azure.ResourceManager.Media.Models
         public ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(System.Guid? keyId) { }
         public System.Guid? KeyId { get { throw null; } set { } }
     }
-    public partial class ContentKeyPolicyPlayReadyContentKeyLocation
+    public abstract partial class ContentKeyPolicyPlayReadyContentKeyLocation
     {
-        public ContentKeyPolicyPlayReadyContentKeyLocation() { }
+        protected ContentKeyPolicyPlayReadyContentKeyLocation() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentKeyPolicyPlayReadyContentType : System.IEquatable<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType>
@@ -1237,13 +1237,13 @@ namespace Azure.ResourceManager.Media.Models
         public System.Guid? PolicyId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.ContentKeyPolicyPreference> Preferences { get { throw null; } }
     }
-    public partial class ContentKeyPolicyRestriction
+    public abstract partial class ContentKeyPolicyRestriction
     {
-        public ContentKeyPolicyRestriction() { }
+        protected ContentKeyPolicyRestriction() { }
     }
-    public partial class ContentKeyPolicyRestrictionTokenKey
+    public abstract partial class ContentKeyPolicyRestrictionTokenKey
     {
-        public ContentKeyPolicyRestrictionTokenKey() { }
+        protected ContentKeyPolicyRestrictionTokenKey() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentKeyPolicyRestrictionTokenType : System.IEquatable<Azure.ResourceManager.Media.Models.ContentKeyPolicyRestrictionTokenType>
@@ -1572,9 +1572,9 @@ namespace Azure.ResourceManager.Media.Models
         public FilterTrackSelection(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> trackSelections) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> TrackSelections { get { throw null; } }
     }
-    public partial class FormatBasicProperties
+    public abstract partial class FormatBasicProperties
     {
-        public FormatBasicProperties(string filenamePattern) { }
+        protected FormatBasicProperties(string filenamePattern) { }
         public string FilenamePattern { get { throw null; } set { } }
     }
     public partial class FromAllInputFile : Azure.ResourceManager.Media.Models.MediaTransformJobInputDefinition
@@ -2067,9 +2067,9 @@ namespace Azure.ResourceManager.Media.Models
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
     }
-    public partial class MediaPreset
+    public abstract partial class MediaPreset
     {
-        public MediaPreset() { }
+        protected MediaPreset() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState>
@@ -2293,9 +2293,9 @@ namespace Azure.ResourceManager.Media.Models
         public MediaTransformJobInputAsset(string assetName) { }
         public string AssetName { get { throw null; } set { } }
     }
-    public partial class MediaTransformJobInputBasicProperties
+    public abstract partial class MediaTransformJobInputBasicProperties
     {
-        public MediaTransformJobInputBasicProperties() { }
+        protected MediaTransformJobInputBasicProperties() { }
     }
     public partial class MediaTransformJobInputClip : Azure.ResourceManager.Media.Models.MediaTransformJobInputBasicProperties
     {
@@ -2306,9 +2306,9 @@ namespace Azure.ResourceManager.Media.Models
         public string Label { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ClipTime Start { get { throw null; } set { } }
     }
-    public partial class MediaTransformJobInputDefinition
+    public abstract partial class MediaTransformJobInputDefinition
     {
-        public MediaTransformJobInputDefinition() { }
+        protected MediaTransformJobInputDefinition() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackDescriptor> IncludedTracks { get { throw null; } }
     }
     public partial class MediaTransformJobInputFile : Azure.ResourceManager.Media.Models.MediaTransformJobInputDefinition
@@ -2331,9 +2331,9 @@ namespace Azure.ResourceManager.Media.Models
         public MediaTransformJobInputSequence() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTransformJobInputClip> Inputs { get { throw null; } }
     }
-    public partial class MediaTransformJobOutput
+    public abstract partial class MediaTransformJobOutput
     {
-        public MediaTransformJobOutput() { }
+        protected MediaTransformJobOutput() { }
         public System.DateTimeOffset? EndsOn { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaTransformJobError Error { get { throw null; } }
         public string Label { get { throw null; } set { } }
@@ -2408,9 +2408,9 @@ namespace Azure.ResourceManager.Media.Models
     {
         public OutputImageFileFormat(string filenamePattern) : base (default(string)) { }
     }
-    public partial class OverlayBasicProperties
+    public abstract partial class OverlayBasicProperties
     {
-        public OverlayBasicProperties(string inputLabel) { }
+        protected OverlayBasicProperties(string inputLabel) { }
         public double? AudioGainLevel { get { throw null; } set { } }
         public System.TimeSpan? End { get { throw null; } set { } }
         public System.TimeSpan? FadeInDuration { get { throw null; } set { } }
@@ -2738,9 +2738,9 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.TrackAttribute left, Azure.ResourceManager.Media.Models.TrackAttribute right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrackDescriptor
+    public abstract partial class TrackDescriptor
     {
-        public TrackDescriptor() { }
+        protected TrackDescriptor() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrackPropertyCompareOperation : System.IEquatable<Azure.ResourceManager.Media.Models.TrackPropertyCompareOperation>

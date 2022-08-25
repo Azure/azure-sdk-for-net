@@ -15,6 +15,11 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+suppress-abstract-base-class:
+- ContainerRegistryRunContent
+- ContainerRegistryTaskStepProperties
+- ContainerRegistryTaskStepUpdateContent
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

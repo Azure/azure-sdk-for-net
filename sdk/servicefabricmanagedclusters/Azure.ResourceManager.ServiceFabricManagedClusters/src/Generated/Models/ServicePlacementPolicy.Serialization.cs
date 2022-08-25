@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ServicePlacementPolicy(type);
+            return new UnknownServicePlacementPolicy(type);
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="DatacenterAddressResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DatacenterAddressInstructionResponse"/> and <see cref="DatacenterAddressLocationResponse"/>.
     /// </summary>
-    public partial class DatacenterAddressResponse
+    public abstract partial class DatacenterAddressResponse
     {
         /// <summary> Initializes a new instance of DatacenterAddressResponse. </summary>
-        internal DatacenterAddressResponse()
+        protected DatacenterAddressResponse()
         {
             SupportedCarriersForReturnShipment = new ChangeTrackingList<string>();
         }

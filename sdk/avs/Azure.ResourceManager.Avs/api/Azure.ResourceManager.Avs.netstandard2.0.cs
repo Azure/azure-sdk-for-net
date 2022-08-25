@@ -929,9 +929,9 @@ namespace Azure.ResourceManager.Avs.Models
         public AddonHcxProperties(string offer) { }
         public string Offer { get { throw null; } set { } }
     }
-    public partial class AddonProperties
+    public abstract partial class AddonProperties
     {
-        public AddonProperties() { }
+        protected AddonProperties() { }
         public Azure.ResourceManager.Avs.Models.AddonProvisioningState? ProvisioningState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1411,9 +1411,9 @@ namespace Azure.ResourceManager.Avs.Models
         public Azure.ResourceManager.Avs.Models.PlacementPolicyState? State { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VmMembers { get { throw null; } }
     }
-    public partial class PlacementPolicyProperties
+    public abstract partial class PlacementPolicyProperties
     {
-        public PlacementPolicyProperties() { }
+        protected PlacementPolicyProperties() { }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.PlacementPolicyState? State { get { throw null; } set { } }
@@ -1558,9 +1558,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.QuotaEnabled left, Azure.ResourceManager.Avs.Models.QuotaEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScriptExecutionParameter
+    public abstract partial class ScriptExecutionParameter
     {
-        public ScriptExecutionParameter(string name) { }
+        protected ScriptExecutionParameter(string name) { }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1799,9 +1799,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.VmTypeEnum left, Azure.ResourceManager.Avs.Models.VmTypeEnum right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WorkloadNetworkDhcpEntity
+    public abstract partial class WorkloadNetworkDhcpEntity
     {
-        public WorkloadNetworkDhcpEntity() { }
+        protected WorkloadNetworkDhcpEntity() { }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.WorkloadNetworkDhcpProvisioningState? ProvisioningState { get { throw null; } }
         public long? Revision { get { throw null; } set { } }

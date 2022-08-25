@@ -1343,9 +1343,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         MicrosoftNetworkFrontDoors = 0,
         MicrosoftNetworkFrontDoorsFrontendEndpoints = 1,
     }
-    public partial class RouteConfiguration
+    public abstract partial class RouteConfiguration
     {
-        public RouteConfiguration() { }
+        protected RouteConfiguration() { }
     }
     public partial class RoutingRule : Azure.ResourceManager.FrontDoor.Models.SubResource
     {

@@ -13,5 +13,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// </summary>
     public abstract partial class CosmosDBAccountBackupPolicy
     {
+        /// <summary> Initializes a new instance of CosmosDBAccountBackupPolicy. </summary>
+        public CosmosDBAccountBackupPolicy()
+        {
+        }
     }
 }
