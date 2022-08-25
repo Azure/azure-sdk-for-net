@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="domain"> The domain for this whois record. </param>
         /// <param name="server"> The hostname of this registrar&apos;s whois server. </param>
         /// <param name="created"> The timestamp at which this record was created. </param>
-        /// <param name="updated"> The timestamp at which this record was last updated. </param>
-        /// <param name="expires"> The timestamp at which this record will expire. </param>
+        /// <param name="updatedOn"> The timestamp at which this record was last updated. </param>
+        /// <param name="expireOn"> The timestamp at which this record will expire. </param>
         /// <param name="parsedWhois"> The whois record for a given domain. </param>
-        internal EnrichmentDomainWhois(string domain, string server, DateTimeOffset? created, DateTimeOffset? updated, DateTimeOffset? expires, EnrichmentDomainWhoisDetails parsedWhois)
+        internal EnrichmentDomainWhois(string domain, string server, DateTimeOffset? created, DateTimeOffset? updatedOn, DateTimeOffset? expireOn, EnrichmentDomainWhoisDetails parsedWhois)
         {
             Domain = domain;
             Server = server;
             Created = created;
-            Updated = updated;
-            Expires = expires;
+            UpdatedOn = updatedOn;
+            ExpireOn = expireOn;
             ParsedWhois = parsedWhois;
         }
 
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The timestamp at which this record was created. </summary>
         public DateTimeOffset? Created { get; }
         /// <summary> The timestamp at which this record was last updated. </summary>
-        public DateTimeOffset? Updated { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The timestamp at which this record will expire. </summary>
-        public DateTimeOffset? Expires { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> The whois record for a given domain. </summary>
         public EnrichmentDomainWhoisDetails ParsedWhois { get; }
     }

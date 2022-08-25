@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("queryResult");
                 writer.WriteStringValue(QueryResult);
             }
-            if (Optional.IsDefined(Updated))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated");
-                writer.WriteStringValue(Updated.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedBy))
             {

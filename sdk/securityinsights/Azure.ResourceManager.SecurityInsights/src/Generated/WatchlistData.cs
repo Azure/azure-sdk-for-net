@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="source"> The filename of the watchlist, called &apos;source&apos;. </param>
         /// <param name="sourceType"> The sourceType of the watchlist. </param>
         /// <param name="created"> The time the watchlist was created. </param>
-        /// <param name="updated"> The last time the watchlist was updated. </param>
+        /// <param name="updatedOn"> The last time the watchlist was updated. </param>
         /// <param name="createdBy"> Describes a user that created the watchlist. </param>
         /// <param name="updatedBy"> Describes a user that updated the watchlist. </param>
         /// <param name="description"> A description of the watchlist. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="contentType"> The content type of the raw content. Example : text/csv or text/tsv. </param>
         /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal WatchlistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistId, string displayName, string provider, string source, SourceType? sourceType, DateTimeOffset? created, DateTimeOffset? updated, UserInfo createdBy, UserInfo updatedBy, string description, string watchlistType, string watchlistAlias, bool? isDeleted, IList<string> labels, TimeSpan? defaultDuration, Guid? tenantId, int? numberOfLinesToSkip, string rawContent, string itemsSearchKey, string contentType, string uploadStatus, ETag? etag) : base(id, name, resourceType, systemData)
+        internal WatchlistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistId, string displayName, string provider, string source, SourceType? sourceType, DateTimeOffset? created, DateTimeOffset? updatedOn, UserInfo createdBy, UserInfo updatedBy, string description, string watchlistType, string watchlistAlias, bool? isDeleted, IList<string> labels, TimeSpan? defaultDuration, Guid? tenantId, int? numberOfLinesToSkip, string rawContent, string itemsSearchKey, string contentType, string uploadStatus, ETag? etag) : base(id, name, resourceType, systemData)
         {
             WatchlistId = watchlistId;
             DisplayName = displayName;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Source = source;
             SourceType = sourceType;
             Created = created;
-            Updated = updated;
+            UpdatedOn = updatedOn;
             CreatedBy = createdBy;
             UpdatedBy = updatedBy;
             Description = description;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> The time the watchlist was created. </summary>
         public DateTimeOffset? Created { get; set; }
         /// <summary> The last time the watchlist was updated. </summary>
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Describes a user that created the watchlist. </summary>
         public UserInfo CreatedBy { get; set; }
         /// <summary> Describes a user that updated the watchlist. </summary>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="notes"> The notes of the bookmark. </param>
         /// <param name="query"> The query of the bookmark. </param>
         /// <param name="queryResult"> The query result of the bookmark. </param>
-        /// <param name="updated"> The last time the bookmark was updated. </param>
+        /// <param name="updatedOn"> The last time the bookmark was updated. </param>
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="eventOn"> The bookmark event time. </param>
         /// <param name="queryStartOn"> The start time for the query. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="tactics"> A list of relevant mitre attacks. </param>
         /// <param name="techniques"> A list of relevant mitre techniques. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal BookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? created, UserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updated, UserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, IncidentInfo incidentInfo, IList<BookmarkEntityMappings> entityMappings, IList<AttackTactic> tactics, IList<string> techniques, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? created, UserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, UserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, IncidentInfo incidentInfo, IList<BookmarkEntityMappings> entityMappings, IList<AttackTactic> tactics, IList<string> techniques, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Created = created;
             CreatedBy = createdBy;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Notes = notes;
             Query = query;
             QueryResult = queryResult;
-            Updated = updated;
+            UpdatedOn = updatedOn;
             UpdatedBy = updatedBy;
             EventOn = eventOn;
             QueryStartOn = queryStartOn;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> The query result of the bookmark. </summary>
         public string QueryResult { get; set; }
         /// <summary> The last time the bookmark was updated. </summary>
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Describes a user that updated the bookmark. </summary>
         public UserInfo UpdatedBy { get; set; }
         /// <summary> The bookmark event time. </summary>

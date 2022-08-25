@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("created");
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (Optional.IsDefined(Updated))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated");
-                writer.WriteStringValue(Updated.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(CreatedBy))
             {

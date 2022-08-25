@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="notes"> The notes of the bookmark. </param>
         /// <param name="query"> The query of the bookmark. </param>
         /// <param name="queryResult"> The query result of the bookmark. </param>
-        /// <param name="updated"> The last time the bookmark was updated. </param>
+        /// <param name="updatedOn"> The last time the bookmark was updated. </param>
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
-        internal HuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? created, UserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updated, UserInfo updatedBy, IncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind)
+        internal HuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? created, UserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, UserInfo updatedBy, IncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Notes = notes;
             Query = query;
             QueryResult = queryResult;
-            Updated = updated;
+            UpdatedOn = updatedOn;
             UpdatedBy = updatedBy;
             IncidentInfo = incidentInfo;
             Kind = kind;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The query result of the bookmark. </summary>
         public string QueryResult { get; set; }
         /// <summary> The last time the bookmark was updated. </summary>
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Describes a user that updated the bookmark. </summary>
         public UserInfo UpdatedBy { get; set; }
         /// <summary> Describes an incident that relates to bookmark. </summary>

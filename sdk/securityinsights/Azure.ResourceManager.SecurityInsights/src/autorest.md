@@ -26,8 +26,14 @@ operation-positions:
   ThreatIntelligenceIndicators_List: collection
 
 rename-mapping:
-  ThreatIntelligenceIndicatorModel: ThreatIntelligenceIndicator
+  Bookmark.properties.updated: UpdatedOn
+  EnrichmentDomainWhois.expires: ExpireOn
+  EnrichmentDomainWhois.updated: UpdatedOn
+  HuntingBookmark.properties.updated: UpdatedOn
+  Watchlist.properties.updated: UpdatedOn
+  WatchlistItem.properties.updated: UpdatedOn
   AlertRule: SecurityInsightsAlertRule
+  ThreatIntelligenceIndicatorModel: ThreatIntelligenceIndicator
 
 override-operation-name:
   DomainWhois_Get: GetDomainWhoisInformation

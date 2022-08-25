@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public System.DateTimeOffset? QueryStartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityInsights.Models.AttackTactic> Tactics { get { throw null; } }
         public System.Collections.Generic.IList<string> Techniques { get { throw null; } }
-        public System.DateTimeOffset? Updated { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.UserInfo UpdatedBy { get { throw null; } set { } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } set { } }
     }
     public partial class BookmarkRelationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.BookmarkRelationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.BookmarkRelationResource>, System.Collections.IEnumerable
     {
@@ -1001,8 +1001,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public string Source { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.SourceType? SourceType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
-        public System.DateTimeOffset? Updated { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.UserInfo UpdatedBy { get { throw null; } set { } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } set { } }
         public string UploadStatus { get { throw null; } set { } }
         public string WatchlistAlias { get { throw null; } set { } }
         public string WatchlistId { get { throw null; } set { } }
@@ -1033,8 +1033,8 @@ namespace Azure.ResourceManager.SecurityInsights
         public bool? IsDeleted { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ItemsKeyValue { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } set { } }
-        public System.DateTimeOffset? Updated { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.UserInfo UpdatedBy { get { throw null; } set { } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } set { } }
         public string WatchlistItemId { get { throw null; } set { } }
         public string WatchlistItemType { get { throw null; } set { } }
     }
@@ -2175,10 +2175,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal EnrichmentDomainWhois() { }
         public System.DateTimeOffset? Created { get { throw null; } }
         public string Domain { get { throw null; } }
-        public System.DateTimeOffset? Expires { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.EnrichmentDomainWhoisDetails ParsedWhois { get { throw null; } }
         public string Server { get { throw null; } }
-        public System.DateTimeOffset? Updated { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class EnrichmentDomainWhoisContact
     {
@@ -2834,8 +2834,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Notes { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public string QueryResult { get { throw null; } set { } }
-        public System.DateTimeOffset? Updated { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.UserInfo UpdatedBy { get { throw null; } set { } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } set { } }
     }
     public partial class IncidentAdditionalData
     {

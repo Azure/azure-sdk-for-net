@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="tenantId"> The tenantId to which the watchlist item belongs to. </param>
         /// <param name="isDeleted"> A flag that indicates if the watchlist item is deleted or not. </param>
         /// <param name="created"> The time the watchlist item was created. </param>
-        /// <param name="updated"> The last time the watchlist item was updated. </param>
+        /// <param name="updatedOn"> The last time the watchlist item was updated. </param>
         /// <param name="createdBy"> Describes a user that created the watchlist item. </param>
         /// <param name="updatedBy"> Describes a user that updated the watchlist item. </param>
         /// <param name="itemsKeyValue"> key-value pairs for a watchlist item. </param>
         /// <param name="entityMapping"> key-value pairs for a watchlist item entity mapping. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal WatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? created, DateTimeOffset? updated, UserInfo createdBy, UserInfo updatedBy, IDictionary<string, BinaryData> itemsKeyValue, IDictionary<string, BinaryData> entityMapping, ETag? etag) : base(id, name, resourceType, systemData)
+        internal WatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? created, DateTimeOffset? updatedOn, UserInfo createdBy, UserInfo updatedBy, IDictionary<string, BinaryData> itemsKeyValue, IDictionary<string, BinaryData> entityMapping, ETag? etag) : base(id, name, resourceType, systemData)
         {
             WatchlistItemType = watchlistItemType;
             WatchlistItemId = watchlistItemId;
             TenantId = tenantId;
             IsDeleted = isDeleted;
             Created = created;
-            Updated = updated;
+            UpdatedOn = updatedOn;
             CreatedBy = createdBy;
             UpdatedBy = updatedBy;
             ItemsKeyValue = itemsKeyValue;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> The time the watchlist item was created. </summary>
         public DateTimeOffset? Created { get; set; }
         /// <summary> The last time the watchlist item was updated. </summary>
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Describes a user that created the watchlist item. </summary>
         public UserInfo CreatedBy { get; set; }
         /// <summary> Describes a user that updated the watchlist item. </summary>
