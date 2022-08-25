@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Template.Models
 {
     /// <summary> The DerivedFromBaseClassWithUnknownDiscriminator. </summary>
-    public partial class DerivedFromBaseClassWithUnknownDiscriminator : BaseClassWithDiscriminator
+    internal partial class DerivedFromBaseClassWithUnknownDiscriminator : BaseClassWithDiscriminator
     {
         /// <summary> Initializes a new instance of DerivedFromBaseClassWithUnknownDiscriminator. </summary>
         /// <param name="baseClassProperty"> An example property. </param>

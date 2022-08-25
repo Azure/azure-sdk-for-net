@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Template.Models
 {
-    public partial class DerivedFromBaseClassWithUnknownDiscriminator
+    internal partial class DerivedFromBaseClassWithUnknownDiscriminator
     {
         internal override void WriteCore(Utf8JsonWriter writer)
         {
