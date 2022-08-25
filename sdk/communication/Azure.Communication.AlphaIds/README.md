@@ -5,7 +5,7 @@ This package contains a C# SDK for Azure Communication Services for Alpha IDs.
 ## Getting started
 
 ### Install the package
-Install the Azure Communication Email client library for .NET with [NuGet][nuget]:
+Install the Azure Communication Alpha ID client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Azure.Communication.AlphaIds --prerelease
@@ -24,44 +24,35 @@ Alpha ID clients can be authenticated using the connection string acquired from 
 
 ```C# Snippet:Azure_Communication_AlphaIds_CreateAlphaIdsClient
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-EmailClient client = new EmailClient(connectionString);
+AlphaIdsClient client = new AlphaIdsClient(connectionString);
 ```
 
-Alternatively, Email clients can also be authenticated using a valid token credential. With this option,
+Alternatively, Alpha Ids clients can also be authenticated using a valid token credential. With this option,
 `AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication. 
 
 ```C# Snippet:Azure_Communication_AlphaIds_CreateAlphaIdsClientWithToken
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
 tokenCredential = new DefaultAzureCredential();
-EmailClient client = new EmailClient(new Uri(endpoint), tokenCredential);
+AlphaIdsClient client = new AlphaIdsClient(new Uri(endpoint), tokenCredential);
 ```
 ## Examples
 ### Get configuration
 To get the current applied configuration, call the `GetConfiguration` or `GetConfigurationAsync` function from the `AlphaIdsClient`.
 ```C# Snippet:Azure_Communication_AlphaIds_GetConfiguration
-// Create the email content
-var emailContent = new EmailContent("This is the subject");
-emailContent.PlainText = "This is the body";
+try
+{
+    AlphaIdConfiguration configuration = await client.GetConfigurationAsync();
 
-// Create the recipient list
-var emailRecipients = new EmailRecipients(
-    new List<EmailAddress>
+    Console.WriteLine($"The usage of Alpha IDs is currently {(configuration.Enabled ? "enabled" : "disabled")}");
+}
+catch (RequestFailedException ex)
+{
+    if (ex.Status == 403)
     {
-        new EmailAddress(
-            email: "<recipient email address>"
-            displayName: "<recipient displayname>"
-    });
-
-// Create the EmailMessage
-var emailMessage = new EmailMessage(
-    sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    emailContent,
-    emailRecipients);
-
-SendEmailResult sendResult = client.Send(emailMessage);
-
-Console.WriteLine($"Email id: {sendResult.MessageId}");
+        Console.WriteLine("Resource is not eligible for Alpha ID usage");
+    }
+}
 ```
 
 ## Troubleshooting
