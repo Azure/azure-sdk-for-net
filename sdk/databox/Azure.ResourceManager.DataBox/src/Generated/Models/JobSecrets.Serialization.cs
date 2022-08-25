@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new JobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value);
+            return new UnknownJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value);
         }
     }
 }

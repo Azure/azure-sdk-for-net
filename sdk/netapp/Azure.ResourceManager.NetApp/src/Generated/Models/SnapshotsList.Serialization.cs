@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static SnapshotsList DeserializeSnapshotsList(JsonElement element)
         {
-            Optional<IReadOnlyList<SnapshotData>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeSnapshotData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SnapshotData> array = new List<SnapshotData>();
+                    List<NetAppVolumeSnapshotData> array = new List<NetAppVolumeSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SnapshotData.DeserializeSnapshotData(item));
+                        array.Add(NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(item));
                     }
                     value = array;
                     continue;

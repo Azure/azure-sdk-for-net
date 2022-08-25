@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="Partition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
     /// </summary>
-    public partial class Partition
+    public abstract partial class Partition
     {
         /// <summary> Initializes a new instance of Partition. </summary>
-        public Partition()
+        protected Partition()
         {
         }
 

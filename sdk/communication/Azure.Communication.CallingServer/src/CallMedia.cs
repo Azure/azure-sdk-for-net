@@ -195,5 +195,99 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+
+        /// <summary>
+        /// Recognize tones.
+        /// </summary>
+        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> RecognizeAsync(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            scope.Start();
+            try
+            {
+                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
+                return await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognize tones.
+        /// </summary>
+        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Recognize(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            scope.Start();
+            try
+            {
+                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
+                return ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private static RecognizeRequestInternal CreateRecognizeRequest(RecognizeOptions recognizeOptions)
+        {
+            if (recognizeOptions == null)
+                throw new ArgumentNullException(nameof(recognizeOptions));
+            RecognizeConfigurations recognizeConfigurations = recognizeOptions.RecognizeConfigurations;
+
+            if (recognizeConfigurations == null)
+                throw new ArgumentException(nameof(recognizeConfigurations));
+
+            DtmfConfigurationsInternal dtmfConfigurations = null;
+            if (recognizeConfigurations.DtmfConfigurations != null)
+            {
+                dtmfConfigurations = new DtmfConfigurationsInternal()
+                {
+                    InterToneTimeoutInSeconds = (int)recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds?.TotalSeconds,
+                    MaxTonesToCollect = recognizeConfigurations.DtmfConfigurations.MaxTonesToCollect,
+                    StopTones = (IList<StopTones>)recognizeConfigurations.DtmfConfigurations.StopTones
+                };
+            }
+
+            RecognizeConfigurationsInternal recognizeConfigurationsInternal = new RecognizeConfigurationsInternal()
+            {
+                DtmfConfigurations = dtmfConfigurations,
+                InterruptPromptAndStartRecognition = recognizeConfigurations.InterruptPromptAndStartRecognition,
+                InitialSilenceTimeoutInSeconds = (int)recognizeConfigurations.InitialSilenceTimeoutInSeconds?.TotalSeconds,
+                TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeConfigurations.TargetParticipant)
+            };
+
+            RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeOptions.RecognizeInputType, recognizeConfigurationsInternal);
+
+            if (recognizeOptions.Prompt != null && recognizeOptions.Prompt is FileSource fileSource)
+            {
+                PlaySourceInternal sourceInternal;
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
+
+                request.PlayPrompt = sourceInternal;
+            }
+            else if (recognizeOptions.Prompt != null)
+            {
+                throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
+            }
+
+            request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
+            request.OperationContext = recognizeOptions.OperationContext;
+
+            return request;
+        }
     }
 }

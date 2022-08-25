@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
         internal ServicesDescriptionListResult()
         {
-            Value = new ChangeTrackingList<ServicesDescriptionData>();
+            Value = new ChangeTrackingList<HealthcareApisServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
         /// <param name="nextLink"> The link used to get the next page of service description objects. </param>
         /// <param name="value"> A list of service description objects. </param>
-        internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<ServicesDescriptionData> value)
+        internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<HealthcareApisServiceData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The link used to get the next page of service description objects. </summary>
         public string NextLink { get; }
         /// <summary> A list of service description objects. </summary>
-        public IReadOnlyList<ServicesDescriptionData> Value { get; }
+        public IReadOnlyList<HealthcareApisServiceData> Value { get; }
     }
 }

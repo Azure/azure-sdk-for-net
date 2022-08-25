@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     case "#Microsoft.Media.AudioAnalyzerPreset": return AudioAnalyzerPreset.DeserializeAudioAnalyzerPreset(element);
                     case "#Microsoft.Media.BuiltInStandardEncoderPreset": return BuiltInStandardEncoderPreset.DeserializeBuiltInStandardEncoderPreset(element);
-                    case "#Microsoft.Media.FaceDetectorPreset": return FaceDetectorPreset.DeserializeFaceDetectorPreset(element);
                     case "#Microsoft.Media.StandardEncoderPreset": return StandardEncoderPreset.DeserializeStandardEncoderPreset(element);
                     case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element);
                 }
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaPreset(odataType);
+            return new UnknownMediaPreset(odataType);
         }
     }
 }

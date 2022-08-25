@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Initializes a new instance of FhirServiceImportConfiguration. </summary>
         /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
-        /// <param name="initialImportMode"> If the FHIR service is in InitialImportMode. </param>
-        /// <param name="enabled"> If the import operation is enabled. </param>
-        internal FhirServiceImportConfiguration(string integrationDataStore, bool? initialImportMode, bool? enabled)
+        /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
+        /// <param name="isEnabled"> If the import operation is enabled. </param>
+        internal FhirServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled)
         {
             IntegrationDataStore = integrationDataStore;
-            InitialImportMode = initialImportMode;
-            Enabled = enabled;
+            IsInitialImportMode = isInitialImportMode;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> The name of the default integration storage account. </summary>
         public string IntegrationDataStore { get; set; }
         /// <summary> If the FHIR service is in InitialImportMode. </summary>
-        public bool? InitialImportMode { get; set; }
+        public bool? IsInitialImportMode { get; set; }
         /// <summary> If the import operation is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

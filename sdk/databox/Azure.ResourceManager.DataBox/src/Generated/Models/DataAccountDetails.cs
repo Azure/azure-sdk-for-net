@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="StorageAccountDetails"/>.
     /// </summary>
-    public partial class DataAccountDetails
+    public abstract partial class DataAccountDetails
     {
         /// <summary> Initializes a new instance of DataAccountDetails. </summary>
-        public DataAccountDetails()
+        protected DataAccountDetails()
         {
         }
 

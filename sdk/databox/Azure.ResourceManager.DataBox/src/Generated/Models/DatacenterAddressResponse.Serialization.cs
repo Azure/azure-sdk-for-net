@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DatacenterAddressResponse(datacenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), dataCenterAzureLocation.Value);
+            return new UnknownDatacenterAddressResponse(datacenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), dataCenterAzureLocation.Value);
         }
     }
 }

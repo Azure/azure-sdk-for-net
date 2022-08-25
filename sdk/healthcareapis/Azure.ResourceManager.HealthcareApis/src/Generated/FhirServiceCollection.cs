@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A class representing a collection of <see cref="FhirServiceResource" /> and their operations.
-    /// Each <see cref="FhirServiceResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
-    /// To get a <see cref="FhirServiceCollection" /> instance call the GetFhirServices method from an instance of <see cref="WorkspaceResource" />.
+    /// Each <see cref="FhirServiceResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource" />.
+    /// To get a <see cref="FhirServiceCollection" /> instance call the GetFhirServices method from an instance of <see cref="HealthcareApisWorkspaceResource" />.
     /// </summary>
     public partial class FhirServiceCollection : ArmCollection, IEnumerable<FhirServiceResource>, IAsyncEnumerable<FhirServiceResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != HealthcareApisWorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthcareApisWorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

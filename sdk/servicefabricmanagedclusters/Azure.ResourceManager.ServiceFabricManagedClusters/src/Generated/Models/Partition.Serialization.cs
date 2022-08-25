@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new Partition(partitionScheme);
+            return new UnknownPartition(partitionScheme);
         }
     }
 }
