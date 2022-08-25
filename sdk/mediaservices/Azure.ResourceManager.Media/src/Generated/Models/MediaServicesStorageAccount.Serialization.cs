@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaServiceStorageAccount : IUtf8JsonSerializable
+    public partial class MediaServicesStorageAccount : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static MediaServiceStorageAccount DeserializeMediaServiceStorageAccount(JsonElement element)
+        internal static MediaServicesStorageAccount DeserializeMediaServicesStorageAccount(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
-            MediaServiceStorageAccountType type = default;
+            MediaServicesStorageAccountType type = default;
             Optional<ResourceIdentity> identity = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new MediaServiceStorageAccountType(property.Value.GetString());
+                    type = new MediaServicesStorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaServiceStorageAccount(id.Value, type, identity.Value, status.Value);
+            return new MediaServicesStorageAccount(id.Value, type, identity.Value, status.Value);
         }
     }
 }

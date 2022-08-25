@@ -18,28 +18,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaServiceOperationResultResource" /> and their operations.
-    /// Each <see cref="MediaServiceOperationResultResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="MediaServiceOperationResultCollection" /> instance call the GetMediaServiceOperationResults method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="MediaServicesOperationResultResource" /> and their operations.
+    /// Each <see cref="MediaServicesOperationResultResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="MediaServicesOperationResultCollection" /> instance call the GetMediaServicesOperationResults method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class MediaServiceOperationResultCollection : ArmCollection
+    public partial class MediaServicesOperationResultCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics;
-        private readonly MediaServicesOperationResultsRestOperations _mediaServiceOperationResultMediaServicesOperationResultsRestClient;
+        private readonly ClientDiagnostics _mediaServicesOperationResultClientDiagnostics;
+        private readonly MediaServicesOperationResultsRestOperations _mediaServicesOperationResultRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MediaServiceOperationResultCollection"/> class for mocking. </summary>
-        protected MediaServiceOperationResultCollection()
+        /// <summary> Initializes a new instance of the <see cref="MediaServicesOperationResultCollection"/> class for mocking. </summary>
+        protected MediaServicesOperationResultCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MediaServiceOperationResultCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaServicesOperationResultCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MediaServiceOperationResultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MediaServicesOperationResultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", MediaServiceOperationResultResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MediaServiceOperationResultResource.ResourceType, out string mediaServiceOperationResultMediaServicesOperationResultsApiVersion);
-            _mediaServiceOperationResultMediaServicesOperationResultsRestClient = new MediaServicesOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mediaServiceOperationResultMediaServicesOperationResultsApiVersion);
+            _mediaServicesOperationResultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", MediaServicesOperationResultResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MediaServicesOperationResultResource.ResourceType, out string mediaServicesOperationResultApiVersion);
+            _mediaServicesOperationResultRestClient = new MediaServicesOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mediaServicesOperationResultApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,18 +61,18 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<MediaServiceOperationResultResource>> GetAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesOperationResultResource>> GetAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Get");
+            using var scope = _mediaServicesOperationResultClientDiagnostics.CreateScope("MediaServicesOperationResultCollection.Get");
             scope.Start();
             try
             {
-                var response = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken).ConfigureAwait(false);
+                var response = await _mediaServicesOperationResultRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServiceOperationResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaServicesOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<MediaServiceOperationResultResource> Get(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesOperationResultResource> Get(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Get");
+            using var scope = _mediaServicesOperationResultClientDiagnostics.CreateScope("MediaServicesOperationResultCollection.Get");
             scope.Start();
             try
             {
-                var response = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken);
+                var response = _mediaServicesOperationResultRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServiceOperationResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaServicesOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Exists");
+            using var scope = _mediaServicesOperationResultClientDiagnostics.CreateScope("MediaServicesOperationResultCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mediaServicesOperationResultRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Exists");
+            using var scope = _mediaServicesOperationResultClientDiagnostics.CreateScope("MediaServicesOperationResultCollection.Exists");
             scope.Start();
             try
             {
-                var response = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken);
+                var response = _mediaServicesOperationResultRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class StreamingEndpointTests : MediaManagementTestBase
     {
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
 
         private StreamingEndpointCollection streamingEndpointCollection => _mediaService.GetStreamingEndpoints();
 

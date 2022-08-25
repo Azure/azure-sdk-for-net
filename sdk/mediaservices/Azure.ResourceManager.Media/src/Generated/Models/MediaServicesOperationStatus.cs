@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Status of media service operation. </summary>
-    public partial class MediaServiceOperationStatus
+    public partial class MediaServicesOperationStatus
     {
-        /// <summary> Initializes a new instance of MediaServiceOperationStatus. </summary>
+        /// <summary> Initializes a new instance of MediaServicesOperationStatus. </summary>
         /// <param name="name"> Operation identifier. </param>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="status"/> is null. </exception>
-        internal MediaServiceOperationStatus(string name, string status)
+        internal MediaServicesOperationStatus(string name, string status)
         {
             if (name == null)
             {
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Media.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of MediaServiceOperationStatus. </summary>
+        /// <summary> Initializes a new instance of MediaServicesOperationStatus. </summary>
         /// <param name="name"> Operation identifier. </param>
         /// <param name="id"> Operation resource ID. </param>
         /// <param name="startsOn"> Operation start time. </param>
         /// <param name="endsOn"> Operation end time. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="error"> The error detail. </param>
-        internal MediaServiceOperationStatus(string name, ResourceIdentifier id, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string status, ResponseError error)
+        internal MediaServicesOperationStatus(string name, ResourceIdentifier id, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string status, ResponseError error)
         {
             Name = name;
             Id = id;

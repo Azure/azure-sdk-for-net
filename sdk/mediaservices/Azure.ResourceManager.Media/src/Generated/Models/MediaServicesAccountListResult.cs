@@ -12,25 +12,25 @@ using Azure.ResourceManager.Media;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> A collection of MediaService items. </summary>
-    internal partial class MediaServiceListResult
+    internal partial class MediaServicesAccountListResult
     {
-        /// <summary> Initializes a new instance of MediaServiceListResult. </summary>
-        internal MediaServiceListResult()
+        /// <summary> Initializes a new instance of MediaServicesAccountListResult. </summary>
+        internal MediaServicesAccountListResult()
         {
-            Value = new ChangeTrackingList<MediaServiceData>();
+            Value = new ChangeTrackingList<MediaServicesAccountData>();
         }
 
-        /// <summary> Initializes a new instance of MediaServiceListResult. </summary>
+        /// <summary> Initializes a new instance of MediaServicesAccountListResult. </summary>
         /// <param name="value"> A collection of MediaService items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
-        internal MediaServiceListResult(IReadOnlyList<MediaServiceData> value, string odataNextLink)
+        internal MediaServicesAccountListResult(IReadOnlyList<MediaServicesAccountData> value, string odataNextLink)
         {
             Value = value;
             OdataNextLink = odataNextLink;
         }
 
         /// <summary> A collection of MediaService items. </summary>
-        public IReadOnlyList<MediaServiceData> Value { get; }
+        public IReadOnlyList<MediaServicesAccountData> Value { get; }
         /// <summary> A link to the next page of the collection (when the collection contains too many results to return in one response). </summary>
         public string OdataNextLink { get; }
     }

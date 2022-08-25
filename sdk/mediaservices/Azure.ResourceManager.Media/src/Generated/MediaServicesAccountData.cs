@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaService data model. </summary>
-    public partial class MediaServiceData : TrackedResourceData
+    /// <summary> A class representing the MediaServicesAccount data model. </summary>
+    public partial class MediaServicesAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MediaServiceData. </summary>
+        /// <summary> Initializes a new instance of MediaServicesAccountData. </summary>
         /// <param name="location"> The location. </param>
-        public MediaServiceData(AzureLocation location) : base(location)
+        public MediaServicesAccountData(AzureLocation location) : base(location)
         {
-            StorageAccounts = new ChangeTrackingList<MediaServiceStorageAccount>();
-            PrivateEndpointConnections = new ChangeTrackingList<MediaPrivateEndpointConnectionData>();
+            StorageAccounts = new ChangeTrackingList<MediaServicesStorageAccount>();
+            PrivateEndpointConnections = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of MediaServiceData. </summary>
+        /// <summary> Initializes a new instance of MediaServicesAccountData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Managed Identity for the Media Services account. </param>
-        /// <param name="mediaServiceId"> The Media Services account ID. </param>
+        /// <param name="mediaServicesAccountId"> The Media Services account ID. </param>
         /// <param name="storageAccounts"> The storage accounts for this resource. </param>
         /// <param name="storageAuthentication"></param>
         /// <param name="encryption"> The account encryption properties. </param>
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Media
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
         /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
-        internal MediaServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServiceId, IList<MediaServiceStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaPublicNetworkAccessStatus? publicNetworkAccess, MediaProvisioningState? provisioningState, IReadOnlyList<MediaPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal MediaServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServicesAccountId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaPublicNetworkAccessStatus? publicNetworkAccess, MediaProvisioningState? provisioningState, IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
-            MediaServiceId = mediaServiceId;
+            MediaServicesAccountId = mediaServicesAccountId;
             StorageAccounts = storageAccounts;
             StorageAuthentication = storageAuthentication;
             Encryption = encryption;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Media
         /// <summary> The Managed Identity for the Media Services account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The Media Services account ID. </summary>
-        public Guid? MediaServiceId { get; }
+        public Guid? MediaServicesAccountId { get; }
         /// <summary> The storage accounts for this resource. </summary>
-        public IList<MediaServiceStorageAccount> StorageAccounts { get; }
+        public IList<MediaServicesStorageAccount> StorageAccounts { get; }
         /// <summary> Gets or sets the storage authentication. </summary>
         public MediaStorageAuthentication? StorageAuthentication { get; set; }
         /// <summary> The account encryption properties. </summary>
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.Media
         /// <summary> Provisioning state of the Media Services account. </summary>
         public MediaProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>
-        public IReadOnlyList<MediaPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

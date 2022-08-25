@@ -12,15 +12,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaPrivateEndpointConnection data model. </summary>
-    public partial class MediaPrivateEndpointConnectionData : ResourceData
+    /// <summary> A class representing the MediaServicesPrivateEndpointConnection data model. </summary>
+    public partial class MediaServicesPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaPrivateEndpointConnectionData. </summary>
-        public MediaPrivateEndpointConnectionData()
+        /// <summary> Initializes a new instance of MediaServicesPrivateEndpointConnectionData. </summary>
+        public MediaServicesPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of MediaServicesPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal MediaPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, MediaPrivateLinkServiceConnectionState connectionState, MediaPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal MediaServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, MediaPrivateLinkServiceConnectionState connectionState, MediaPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
