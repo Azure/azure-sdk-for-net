@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiply of 4398046511104). </summary>
         public long? Size { get; set; }
         /// <summary> The qos type of the pool. </summary>
-        public QosType? QosType { get; set; }
+        public CapacityPoolQosType? QosType { get; set; }
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
         public bool? CoolAccess { get; set; }
     }

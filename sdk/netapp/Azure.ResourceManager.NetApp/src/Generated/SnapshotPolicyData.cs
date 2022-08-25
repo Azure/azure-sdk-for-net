@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
         /// <param name="enabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, HourlySchedule hourlySchedule, DailySchedule dailySchedule, WeeklySchedule weeklySchedule, MonthlySchedule monthlySchedule, bool? enabled, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? enabled, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             HourlySchedule = hourlySchedule;
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> Schedule for hourly snapshots. </summary>
-        public HourlySchedule HourlySchedule { get; set; }
+        public SnapshotPolicyHourlySchedule HourlySchedule { get; set; }
         /// <summary> Schedule for daily snapshots. </summary>
-        public DailySchedule DailySchedule { get; set; }
+        public SnapshotPolicyDailySchedule DailySchedule { get; set; }
         /// <summary> Schedule for weekly snapshots. </summary>
-        public WeeklySchedule WeeklySchedule { get; set; }
+        public SnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
         /// <summary> Schedule for monthly snapshots. </summary>
-        public MonthlySchedule MonthlySchedule { get; set; }
+        public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
         /// <summary> The property to decide policy is enabled or not. </summary>
         public bool? Enabled { get; set; }
         /// <summary> Azure lifecycle management. </summary>

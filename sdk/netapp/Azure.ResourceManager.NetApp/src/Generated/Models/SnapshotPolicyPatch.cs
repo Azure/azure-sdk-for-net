@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Schedule for hourly snapshots. </summary>
-        public HourlySchedule HourlySchedule { get; set; }
+        public SnapshotPolicyHourlySchedule HourlySchedule { get; set; }
         /// <summary> Schedule for daily snapshots. </summary>
-        public DailySchedule DailySchedule { get; set; }
+        public SnapshotPolicyDailySchedule DailySchedule { get; set; }
         /// <summary> Schedule for weekly snapshots. </summary>
-        public WeeklySchedule WeeklySchedule { get; set; }
+        public SnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
         /// <summary> Schedule for monthly snapshots. </summary>
-        public MonthlySchedule MonthlySchedule { get; set; }
+        public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
         /// <summary> The property to decide policy is enabled or not. </summary>
         public bool? Enabled { get; set; }
         /// <summary> Azure lifecycle management. </summary>
