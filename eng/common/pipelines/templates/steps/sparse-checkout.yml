@@ -39,7 +39,7 @@ steps:
               Write-Host "Repository $($repository.Name) is being initialized."
 
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
-                Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):$($repository.Commitish)' https://github.com/$($repository.Name) ."
+                Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)' https://github.com/$($repository.Name) ."
                 git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):$($repository.Commitish)'' https://github.com/$($repository.Name) .
               } else {
                 Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
