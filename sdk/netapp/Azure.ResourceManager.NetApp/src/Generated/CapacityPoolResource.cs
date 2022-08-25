@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VolumeResources in the CapacityPool. </summary>
-        /// <returns> An object representing collection of VolumeResources and their operations over a VolumeResource. </returns>
-        public virtual VolumeCollection GetVolumes()
+        /// <summary> Gets a collection of NetAppVolumeResources in the CapacityPool. </summary>
+        /// <returns> An object representing collection of NetAppVolumeResources and their operations over a NetAppVolumeResource. </returns>
+        public virtual NetAppVolumeCollection GetNetAppVolumes()
         {
-            return GetCachedClient(Client => new VolumeCollection(Client, Id));
+            return GetCachedClient(Client => new NetAppVolumeCollection(Client, Id));
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VolumeResource>> GetVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeResource>> GetNetAppVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            return await GetVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VolumeResource> GetVolume(string volumeName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeResource> GetNetAppVolume(string volumeName, CancellationToken cancellationToken = default)
         {
-            return GetVolumes().Get(volumeName, cancellationToken);
+            return GetNetAppVolumes().Get(volumeName, cancellationToken);
         }
 
         /// <summary>

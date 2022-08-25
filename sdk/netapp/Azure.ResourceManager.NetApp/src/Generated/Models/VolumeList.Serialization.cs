@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VolumeList DeserializeVolumeList(JsonElement element)
         {
-            Optional<IReadOnlyList<VolumeData>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VolumeData> array = new List<VolumeData>();
+                    List<NetAppVolumeData> array = new List<NetAppVolumeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VolumeData.DeserializeVolumeData(item));
+                        array.Add(NetAppVolumeData.DeserializeNetAppVolumeData(item));
                     }
                     value = array;
                     continue;

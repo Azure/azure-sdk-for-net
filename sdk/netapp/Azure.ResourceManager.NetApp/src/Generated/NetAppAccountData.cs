@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         public NetAppAccountData(AzureLocation location) : base(location)
         {
-            ActiveDirectories = new ChangeTrackingList<ActiveDirectory>();
+            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> Initializes a new instance of NetAppAccountData. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string provisioningState, IList<ActiveDirectory> activeDirectories, AccountEncryption encryption) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, AccountEncryption encryption) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
         /// <summary> Active Directories. </summary>
-        public IList<ActiveDirectory> ActiveDirectories { get; }
+        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Encryption settings. </summary>
         internal AccountEncryption Encryption { get; set; }
         /// <summary> Encryption Key Source. Possible values are: &apos;Microsoft.NetApp&apos;. </summary>

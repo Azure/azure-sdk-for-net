@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static VolumeSnapshotProperties DeserializeVolumeSnapshotProperties(JsonElement element)
         {
-            Optional<string> snapshotPolicyId = default;
+            Optional<ResourceIdentifier> snapshotPolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotPolicyId"))
                 {
-                    snapshotPolicyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    snapshotPolicyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
