@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
         }
 
         [Test]
+        [Ignore("Host resource region does not match Custom Location region")]
         public async Task TestOperationsCustomLocation()
         {
             await SetCollectionsAsync();
@@ -68,11 +69,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             // PATCH CL
             var patchData = new CustomLocationPatch()
             {
-                ClusterExtensionIds =
-                {
-                    new ResourceIdentifier(CassandraTest),
-                    new ResourceIdentifier(AnsibleTest)
-                }
+                Tags = { { "newkey", "newvalue"} }
             };
             customLocation = await customLocation.UpdateAsync(patchData);
             customLocation = await customLocation.GetAsync();

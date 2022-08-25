@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
 {
     public class ExtendedLocationsManagementTestBase : ManagementRecordedTestBase<ExtendedLocationsManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.WestUS;
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
