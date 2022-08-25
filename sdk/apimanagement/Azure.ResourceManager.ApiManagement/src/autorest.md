@@ -321,5 +321,8 @@ directive:
     where: $.parameters
     transform: >
       $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
+  - from: swagger-document
+    where: $..[?(@.name=='$orderby')]
+    transform: $['x-ms-client-name'] = 'orderBy' 
 
 ```

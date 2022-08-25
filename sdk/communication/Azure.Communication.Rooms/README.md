@@ -27,7 +27,7 @@ The main scenarios where Rooms can best be used:
 Install the Azure Communication Rooms client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Rooms
+dotnet add package Azure.Communication.Rooms --prerelease
 ``` 
 
 ### Prerequisites

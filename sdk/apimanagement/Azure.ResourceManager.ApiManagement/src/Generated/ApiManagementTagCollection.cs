@@ -285,8 +285,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using var scope0 = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.Exists");
-            scope0.Start();
+            using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.Exists");
+            scope.Start();
             try
             {
                 var response = await _apiManagementTagTagRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using var scope0 = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.Exists");
-            scope0.Start();
+            using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.Exists");
+            scope.Start();
             try
             {
                 var response = _apiManagementTagTagRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken);
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
