@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
     /// </summary>
-    public partial class IdentityConfiguration
+    public abstract partial class IdentityConfiguration
     {
         /// <summary> Initializes a new instance of IdentityConfiguration. </summary>
-        public IdentityConfiguration()
+        protected IdentityConfiguration()
         {
         }
 

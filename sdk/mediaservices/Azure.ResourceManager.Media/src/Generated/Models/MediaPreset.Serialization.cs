@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaPreset(odataType);
+            return new UnknownMediaPreset(odataType);
         }
     }
 }

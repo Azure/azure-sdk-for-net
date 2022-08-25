@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new PlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState));
+            return new UnknownPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

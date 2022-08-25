@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisObjectMetadata(type, Optional.ToNullable(id), name.Value, description.Value);
+            return new UnknownSsisObjectMetadata(type, Optional.ToNullable(id), name.Value, description.Value);
         }
     }
 }
