@@ -42,7 +42,7 @@ namespace Azure.Maps.Search
         ///
         /// Extended postal code is returned as an **extendedPostalCode** property of an address. Availability is region-dependent.
         /// </summary>
-        public IEnumerable<SearchIndexes> ExtendedPostalCodesFor { get; set; }
+        public IEnumerable<SearchIndex> ExtendedPostalCodesFor { get; set; }
 
         /// <summary>
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
@@ -52,6 +52,6 @@ namespace Azure.Maps.Search
         public string Language { get; set; }
 
         /// <summary> A comma separated list of indexes which should be utilized for the search. Item order does not matter. Available indexes are: Addr = Address range interpolation, Geo = Geographies, PAD = Point Addresses, POI = Points of interest, Str = Streets, Xstr = Cross Streets (intersections). </summary>
-        public IEnumerable<SearchIndexes> IndexFilter { get; set; }
+        public IEnumerable<SearchIndex> IndexFilter { get; set; }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.Maps.Search
         /// </summary>
         public int? MaxFuzzyLevel { get; set; }
         /// <summary> A comma separated list of indexes which should be utilized for the search. Item order does not matter. Available indexes are: Addr = Address range interpolation, Geo = Geographies, PAD = Point Addresses, POI = Points of interest, Str = Streets, Xstr = Cross Streets (intersections). </summary>
-        public IList<SearchIndexes> IndexFilter { get; }
+        public IList<SearchIndex> IndexFilter { get; }
 
         /// <summary>
         /// Indexes for which extended postal codes should be included in the results.
@@ -98,6 +98,6 @@ namespace Azure.Maps.Search
         ///
         /// Extended postal code is returned as an **extendedPostalCode** property of an address. Availability is region-dependent.
         /// </summary>
-        public new IEnumerable<SearchIndexes> ExtendedPostalCodesFor { get; set; }
+        public new IEnumerable<SearchIndex> ExtendedPostalCodesFor { get; set; }
     }
 }

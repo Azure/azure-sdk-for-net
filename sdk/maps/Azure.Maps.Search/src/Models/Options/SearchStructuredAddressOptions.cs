@@ -53,6 +53,6 @@ namespace Azure.Maps.Search.Models
         ///
         /// Extended postal code is returned as an **extendedPostalCode** property of an address. Availability is region-dependent.
         /// </summary>
-        public IEnumerable<SearchIndexes> ExtendedPostalCodesFor { get; set; }
+        public IEnumerable<SearchIndex> ExtendedPostalCodesFor { get; set; }
     }
 }

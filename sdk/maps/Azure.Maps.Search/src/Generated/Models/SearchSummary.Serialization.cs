@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class SearchSummary
+    internal partial class SearchSummary
     {
         internal static SearchSummary DeserializeSearchSummary(JsonElement element)
         {

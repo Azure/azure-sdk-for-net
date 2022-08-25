@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Summary object for a Search API response. </summary>
-    public partial class SearchSummary
+    internal partial class SearchSummary
     {
         /// <summary> Initializes a new instance of SearchSummary. </summary>
         internal SearchSummary()
