@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of FhirServiceAuthenticationConfiguration. </summary>
         /// <param name="authority"> The authority url for the service. </param>
         /// <param name="audience"> The audience url for the service. </param>
-        /// <param name="smartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>
-        internal FhirServiceAuthenticationConfiguration(string authority, string audience, bool? smartProxyEnabled)
+        /// <param name="isSmartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>
+        internal FhirServiceAuthenticationConfiguration(string authority, string audience, bool? isSmartProxyEnabled)
         {
             Authority = authority;
             Audience = audience;
-            SmartProxyEnabled = smartProxyEnabled;
+            IsSmartProxyEnabled = isSmartProxyEnabled;
         }
 
         /// <summary> The authority url for the service. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The audience url for the service. </summary>
         public string Audience { get; set; }
         /// <summary> If the SMART on FHIR proxy is enabled. </summary>
-        public bool? SmartProxyEnabled { get; set; }
+        public bool? IsSmartProxyEnabled { get; set; }
     }
 }

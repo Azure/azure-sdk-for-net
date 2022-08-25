@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthcareApis
     /// A Class representing a FhirService along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FhirServiceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetFhirServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetFhirService method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource" /> using the GetFhirService method.
     /// </summary>
     public partial class FhirServiceResource : ArmResource
     {

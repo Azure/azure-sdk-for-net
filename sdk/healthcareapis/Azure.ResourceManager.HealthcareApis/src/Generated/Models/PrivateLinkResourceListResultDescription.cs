@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
         internal PrivateLinkResourceListResultDescription()
         {
-            Value = new ChangeTrackingList<PrivateLinkResourceDescriptionData>();
+            Value = new ChangeTrackingList<HealthcareApisPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal PrivateLinkResourceListResultDescription(IReadOnlyList<PrivateLinkResourceDescriptionData> value)
+        internal PrivateLinkResourceListResultDescription(IReadOnlyList<HealthcareApisPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<PrivateLinkResourceDescriptionData> Value { get; }
+        public IReadOnlyList<HealthcareApisPrivateLinkResourceData> Value { get; }
     }
 }
