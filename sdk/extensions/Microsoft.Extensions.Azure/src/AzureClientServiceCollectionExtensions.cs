@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.ComponentModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -44,7 +45,9 @@ namespace Microsoft.Extensions.Azure
         /// </summary>
         /// <param name="collection">The <see cref="IServiceCollection"/>.</param>
         /// <param name="enableLogForwarding">Whether to enable Azure SDK log forwarding to <see cref="ILogger"/>. If set to <value>false</value>,
-        /// log forwarding can still be enabled by calling the <see cref="AzureEventSourceLogForwarder.Start"/> method.</param>
+        /// log forwarding can still be enabled by calling the <see cref="AzureEventSourceLogForwarder.Start"/> method. Note that even when setting to <value>true</value>,
+        /// you will still need to inject the <see cref="AzureEventSourceLogForwarder"/> somewhere in your app or retrieve it from the service collection.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void AddAzureClientsCore(this IServiceCollection collection, bool enableLogForwarding)
         {
             collection.AddOptions();

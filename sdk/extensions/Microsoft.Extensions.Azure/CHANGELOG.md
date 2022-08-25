@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.5.0 (2022-08-24)
 
 ### Bugs Fixed
 
-### Other Changes
+- Hiding the new `AddAzureClientsCore` from Intellisense as it's usage is not intuitive.
 
 ## 1.4.0 (2022-08-11)
 
