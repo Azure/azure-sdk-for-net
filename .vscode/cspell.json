@@ -493,7 +493,13 @@
         "mbps"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/policyinsights/**/*.cs",
+      "words": [
+        "remediations"
+      ]
+    },
+    {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
         "byok",
@@ -524,6 +530,25 @@
       "words": [
         "reimage",
         "ssdlrs"
+      ]
+    },
+    {
+      "filename": "**/sdk/securityinsights/**/*.cs",
+      "words": [
+        "Exfiltration",
+        "Mcas",
+        "Mdatp",
+        "Msti",
+        "Aadiam",
+        "Hkey",
+        "Taxii",
+        "Ueba",
+        "Signin",
+        "Defanged",
+        "Aatp",
+        "Puid",
+        "Stix",
+        "Whois"
       ]
     },
     {
@@ -589,6 +614,12 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagecache/**/*.cs",
+      "words": [
+        "Clfs"
       ]
     },
     {

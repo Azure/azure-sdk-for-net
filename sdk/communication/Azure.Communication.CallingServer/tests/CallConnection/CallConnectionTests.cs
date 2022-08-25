@@ -4,7 +4,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Azure.Communication.CallingServer.Tests
@@ -313,7 +312,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
-        public void GRemoveParticipants_404NotFound(CommunicationIdentifier[] participants)
+        public void RemoveParticipants_404NotFound(CommunicationIdentifier[] participants)
         {
             var callConnection = CreateMockCallConnection(404);
 
