@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="mySqlFlexibleServerConfigurationListForBatchUpdate"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerConfigurationListForBatchUpdate"/> is null. </exception>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerConfigurationListResult>> UpdateConfigurationsAsync(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerConfigurations>> UpdateConfigurationsAsync(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerConfigurationListForBatchUpdate, nameof(mySqlFlexibleServerConfigurationListForBatchUpdate));
 
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerConfigurationConfigurationsRestClient.BatchUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationListResult>(new MySqlFlexibleServerConfigurationListResultOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurations>(new MySqlFlexibleServerConfigurationsOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="mySqlFlexibleServerConfigurationListForBatchUpdate"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerConfigurationListForBatchUpdate"/> is null. </exception>
-        public virtual ArmOperation<MySqlFlexibleServerConfigurationListResult> UpdateConfigurations(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerConfigurations> UpdateConfigurations(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerConfigurationListForBatchUpdate, nameof(mySqlFlexibleServerConfigurationListForBatchUpdate));
 
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerConfigurationConfigurationsRestClient.BatchUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationListResult>(new MySqlFlexibleServerConfigurationListResultOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurations>(new MySqlFlexibleServerConfigurationsOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

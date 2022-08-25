@@ -20,7 +20,7 @@ pr:
   paths:
     include:
     - sdk/sqlvirtualmachine/
-    - sdk/resourcemanager/
+    - sdk/storage/Azure.ResourceManager.Storage
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
