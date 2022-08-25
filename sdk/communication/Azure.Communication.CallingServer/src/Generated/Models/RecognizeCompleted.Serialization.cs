@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
         internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
         {
             Optional<string> operationContext = default;
-            Optional<RecognitionType> recognitionType = default;
+            Optional<CallMediaRecognitionType> recognitionType = default;
             Optional<CollectTonesResult> collectTonesResult = default;
             Optional<ResultInformation> resultInfo = default;
             Optional<AcsEventType> type = default;
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallingServer
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recognitionType = new RecognitionType(property.Value.GetString());
+                    recognitionType = new CallMediaRecognitionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("collectTonesResult"))

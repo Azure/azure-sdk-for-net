@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal RecognizeCompleted(string operationContext, RecognitionType recognitionType, CollectTonesResult collectTonesResult, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        internal RecognizeCompleted(string operationContext, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
             OperationContext = operationContext;
             RecognitionType = recognitionType;

@@ -175,7 +175,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Initializes a new instance of Recognize Completed event.
         /// </summary>
-        public static RecognizeCompleted RecognizeCompleted(string operationContext = default, RecognitionType recognitionType = default, CollectTonesResult collectTonesResult = default, ResultInformation resultInfo = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        public static RecognizeCompleted RecognizeCompleted(string operationContext = default, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = default, ResultInformation resultInfo = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
         {
             return new RecognizeCompleted(
                 operationContext,

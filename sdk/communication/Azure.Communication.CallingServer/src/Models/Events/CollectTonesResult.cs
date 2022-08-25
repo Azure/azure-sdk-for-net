@@ -13,6 +13,6 @@ namespace Azure.Communication.CallingServer
         /// The Tones colelcted.
         /// </summary>
         [CodeGenMember("Tones")]
-        public IList<string> Tones { get; }
+        public IReadOnlyList<string> Tones { get; }
     }
 }

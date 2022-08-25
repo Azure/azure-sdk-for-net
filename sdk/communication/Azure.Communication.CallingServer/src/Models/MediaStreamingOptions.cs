@@ -13,18 +13,18 @@ namespace Azure.Communication.CallingServer
             MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType)
         {
             TransportUri = transportUri;
-            TransportType = transportType;
-            ContentType = contentType;
-            AudioChannelType = audioChannelType;
+            MediaStreamingTransport = transportType;
+            MediaStreamingContent = contentType;
+            MediaStreamingAudioChannel = audioChannelType;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
         public Uri TransportUri { get; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransportType TransportType { get; }
+        public MediaStreamingTransportType MediaStreamingTransport { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
-        public MediaStreamingContentType ContentType { get; }
+        public MediaStreamingContentType MediaStreamingContent { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
-        public MediaStreamingAudioChannelType AudioChannelType { get; }
+        public MediaStreamingAudioChannelType MediaStreamingAudioChannel { get; }
     }
 }

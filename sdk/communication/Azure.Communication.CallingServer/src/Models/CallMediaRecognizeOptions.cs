@@ -42,7 +42,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
         public bool InterruptPromptAndStartRecognition { get; set; }
         /// <summary> Time to wait for first input after prompt (if any). </summary>
-        public TimeSpan InitialSilenceTimeoutInSeconds { get; set; }
+        public TimeSpan InitialSilenceTimeout { get; set; }
         /// <summary> Target participant of DTFM tone recognition. </summary>
         public CommunicationIdentifier TargetParticipant { get; set; }
     }

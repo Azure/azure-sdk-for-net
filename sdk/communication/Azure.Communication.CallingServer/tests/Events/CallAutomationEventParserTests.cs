@@ -252,7 +252,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         {
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
                 "operationContext",
-                RecognitionType.Dtmf,
+                CallMediaRecognitionType.Dtmf,
                 new CollectTonesResult(new string[] { "5" }),
                 new ResultInformation(
                     code: 200,

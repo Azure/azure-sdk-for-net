@@ -426,8 +426,8 @@ namespace Azure.Communication.CallingServer
         {
             return configuration == default
                 ? default
-                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.TransportType, configuration.ContentType,
-                configuration.AudioChannelType);
+                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport, configuration.MediaStreamingContent,
+                configuration.MediaStreamingAudioChannel);
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The MediaStreamingConfiguration. </summary>
     internal partial class MediaStreamingOptionsInternal
     {
-        /// <summary> Initializes a new instance of MediaStreamingConfigurationInternal. </summary>
+        /// <summary> Initializes a new instance of MediaStreamingOptionsInternal. </summary>
         /// <param name="transportUrl"> Transport URL for media streaming. </param>
         /// <param name="transportType"> The type of tranport to be used for media streaming, eg. Websocket. </param>
         /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
