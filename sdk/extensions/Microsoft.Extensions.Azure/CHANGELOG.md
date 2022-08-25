@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Hiding the new `AddAzureClientsCore` from Intellisense as it's usage is not intuitive.
+- Hiding the new `AddAzureClientsCore` overload from IntelliSense, as its usage is not intuitive.
 
 ## 1.4.0 (2022-08-11)
 
