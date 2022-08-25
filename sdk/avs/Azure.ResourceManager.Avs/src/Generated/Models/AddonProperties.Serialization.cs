@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AddonProperties(addonType, Optional.ToNullable(provisioningState));
+            return new UnknownAddonProperties(addonType, Optional.ToNullable(provisioningState));
         }
     }
 }

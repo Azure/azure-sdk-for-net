@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaTransformJobInputBasicProperties(odataType);
+            return new UnknownMediaTransformJobInputBasicProperties(odataType);
         }
     }
 }

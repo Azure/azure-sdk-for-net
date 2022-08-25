@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataBoxJobDetails"/>, <see cref="DataBoxCustomerDiskJobDetails"/>, <see cref="DataBoxDiskJobDetails"/> and <see cref="DataBoxHeavyJobDetails"/>.
     /// </summary>
-    public partial class JobDetails
+    public abstract partial class JobDetails
     {
         /// <summary> Initializes a new instance of JobDetails. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public JobDetails(ContactDetails contactDetails)
+        protected JobDetails(ContactDetails contactDetails)
         {
             if (contactDetails == null)
             {

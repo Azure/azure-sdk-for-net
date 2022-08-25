@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="ValidationRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CreateJobValidations"/>.
     /// </summary>
-    public partial class ValidationRequest
+    public abstract partial class ValidationRequest
     {
         /// <summary> Initializes a new instance of ValidationRequest. </summary>
         /// <param name="individualRequestDetails">
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationRequest"/>, <see cref="DataTransferDetailsValidationRequest"/>, <see cref="PreferencesValidationRequest"/>, <see cref="SkuAvailabilityValidationRequest"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationRequest"/> and <see cref="ValidateAddress"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="individualRequestDetails"/> is null. </exception>
-        public ValidationRequest(IEnumerable<ValidationInputRequest> individualRequestDetails)
+        protected ValidationRequest(IEnumerable<ValidationInputRequest> individualRequestDetails)
         {
             if (individualRequestDetails == null)
             {
