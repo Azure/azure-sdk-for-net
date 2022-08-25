@@ -13,7 +13,7 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class AlertRuleData : IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertRuleData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        internal static AlertRuleData DeserializeAlertRuleData(JsonElement element)
+        internal static SecurityInsightsAlertRuleData DeserializeSecurityInsightsAlertRuleData(JsonElement element)
         {
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new AlertRuleData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new SecurityInsightsAlertRuleData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
         }
     }
 }

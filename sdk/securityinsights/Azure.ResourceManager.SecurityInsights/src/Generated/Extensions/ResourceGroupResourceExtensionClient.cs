@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.SecurityInsights
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AlertRuleResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SecurityInsightsAlertRuleResources in the ResourceGroupResource. </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <returns> An object representing collection of AlertRuleResources and their operations over a AlertRuleResource. </returns>
-        public virtual AlertRuleCollection GetAlertRules(string workspaceName)
+        /// <returns> An object representing collection of SecurityInsightsAlertRuleResources and their operations over a SecurityInsightsAlertRuleResource. </returns>
+        public virtual SecurityInsightsAlertRuleCollection GetSecurityInsightsAlertRules(string workspaceName)
         {
-            return new AlertRuleCollection(Client, Id, workspaceName);
+            return new SecurityInsightsAlertRuleCollection(Client, Id, workspaceName);
         }
 
         /// <summary> Gets a collection of AlertRuleTemplateResources in the ResourceGroupResource. </summary>

@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents Fusion alert rule. </summary>
-    public partial class FusionAlertRule : AlertRuleData
+    public partial class FusionAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of FusionAlertRule. </summary>
         public FusionAlertRule()

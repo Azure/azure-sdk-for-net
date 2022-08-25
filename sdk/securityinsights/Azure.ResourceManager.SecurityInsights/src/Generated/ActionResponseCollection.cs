@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="ActionResponseResource" /> and their operations.
-    /// Each <see cref="ActionResponseResource" /> in the collection will belong to the same instance of <see cref="AlertRuleResource" />.
-    /// To get an <see cref="ActionResponseCollection" /> instance call the GetActionResponses method from an instance of <see cref="AlertRuleResource" />.
+    /// Each <see cref="ActionResponseResource" /> in the collection will belong to the same instance of <see cref="SecurityInsightsAlertRuleResource" />.
+    /// To get an <see cref="ActionResponseCollection" /> instance call the GetActionResponses method from an instance of <see cref="SecurityInsightsAlertRuleResource" />.
     /// </summary>
     public partial class ActionResponseCollection : ArmCollection, IEnumerable<ActionResponseResource>, IAsyncEnumerable<ActionResponseResource>
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AlertRuleResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AlertRuleResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityInsightsAlertRuleResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityInsightsAlertRuleResource.ResourceType), nameof(id));
         }
 
         /// <summary>

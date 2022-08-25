@@ -36,43 +36,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.ActionResponseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.Models.ActionResponseCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.ActionResponseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.Models.ActionResponseCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AlertRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.AlertRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.AlertRuleResource>, System.Collections.IEnumerable
-    {
-        protected AlertRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.AlertRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.SecurityInsights.AlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.AlertRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.SecurityInsights.AlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleResource> Get(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.AlertRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.AlertRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleResource>> GetAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityInsights.AlertRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.AlertRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.AlertRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.AlertRuleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertRuleData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AlertRuleData() { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-    }
-    public partial class AlertRuleResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertRuleResource() { }
-        public virtual Azure.ResourceManager.SecurityInsights.AlertRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.ActionResponseResource> GetActionResponse(string actionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.ActionResponseResource>> GetActionResponseAsync(string actionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityInsights.ActionResponseCollection GetActionResponses() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.AlertRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.AlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.AlertRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.AlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class AlertRuleTemplateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.AlertRuleTemplateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.AlertRuleTemplateResource>, System.Collections.IEnumerable
     {
         protected AlertRuleTemplateCollection() { }
@@ -662,15 +625,48 @@ namespace Azure.ResourceManager.SecurityInsights
         public string RelatedResourceName { get { throw null; } }
         public string RelatedResourceType { get { throw null; } }
     }
+    public partial class SecurityInsightsAlertRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>, System.Collections.IEnumerable
+    {
+        protected SecurityInsightsAlertRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> Get(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>> GetAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SecurityInsightsAlertRuleData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SecurityInsightsAlertRuleData() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+    }
+    public partial class SecurityInsightsAlertRuleResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SecurityInsightsAlertRuleResource() { }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityInsights.ActionResponseResource> GetActionResponse(string actionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.ActionResponseResource>> GetActionResponseAsync(string actionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.ActionResponseCollection GetActionResponses() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class SecurityInsightsExtensions
     {
         public static Azure.Response<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceInformation> CreateThreatIntelligenceIndicator(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, Azure.ResourceManager.SecurityInsights.ThreatIntelligenceIndicatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceInformation>> CreateThreatIntelligenceIndicatorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, Azure.ResourceManager.SecurityInsights.ThreatIntelligenceIndicatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.ActionResponseResource GetActionResponseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleResource> GetAlertRule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleResource>> GetAlertRuleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.AlertRuleResource GetAlertRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SecurityInsights.AlertRuleCollection GetAlertRules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleTemplateResource> GetAlertRuleTemplate(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string alertRuleTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.AlertRuleTemplateResource>> GetAlertRuleTemplateAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string alertRuleTemplateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.AlertRuleTemplateResource GetAlertRuleTemplateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -727,6 +723,10 @@ namespace Azure.ResourceManager.SecurityInsights
         public static Azure.ResourceManager.SecurityInsights.OfficeConsentCollection GetOfficeConsents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityInsights.Models.Repo> GetRepositoriesSourceControls(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, Azure.ResourceManager.SecurityInsights.Models.RepoType repoType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityInsights.Models.Repo> GetRepositoriesSourceControlsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, Azure.ResourceManager.SecurityInsights.Models.RepoType repoType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> GetSecurityInsightsAlertRule(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>> GetSecurityInsightsAlertRuleAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleCollection GetSecurityInsightsAlertRules(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource> GetSecurityMLAnalyticsSetting(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>> GetSecurityMLAnalyticsSettingAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, string settingsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2695,7 +2695,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string FileName { get { throw null; } set { } }
         public int? FileSize { get { throw null; } set { } }
     }
-    public partial class FusionAlertRule : Azure.ResourceManager.SecurityInsights.AlertRuleData
+    public partial class FusionAlertRule : Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData
     {
         public FusionAlertRule() { }
         public string AlertRuleTemplateName { get { throw null; } set { } }
@@ -3367,7 +3367,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.SupportTier Tier { get { throw null; } set { } }
     }
-    public partial class MicrosoftSecurityIncidentCreationAlertRule : Azure.ResourceManager.SecurityInsights.AlertRuleData
+    public partial class MicrosoftSecurityIncidentCreationAlertRule : Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData
     {
         public MicrosoftSecurityIncidentCreationAlertRule() { }
         public string AlertRuleTemplateName { get { throw null; } set { } }
@@ -3418,7 +3418,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName left, Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MLBehaviorAnalyticsAlertRule : Azure.ResourceManager.SecurityInsights.AlertRuleData
+    public partial class MLBehaviorAnalyticsAlertRule : Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData
     {
         public MLBehaviorAnalyticsAlertRule() { }
         public string AlertRuleTemplateName { get { throw null; } set { } }
@@ -3486,7 +3486,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string MacAddress { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Vlans { get { throw null; } }
     }
-    public partial class NrtAlertRule : Azure.ResourceManager.SecurityInsights.AlertRuleData
+    public partial class NrtAlertRule : Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData
     {
         public NrtAlertRule() { }
         public Azure.ResourceManager.SecurityInsights.Models.AlertDetailsOverride AlertDetailsOverride { get { throw null; } set { } }
@@ -3884,7 +3884,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Description { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
     }
-    public partial class ScheduledAlertRule : Azure.ResourceManager.SecurityInsights.AlertRuleData
+    public partial class ScheduledAlertRule : Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData
     {
         public ScheduledAlertRule() { }
         public Azure.ResourceManager.SecurityInsights.Models.AlertDetailsOverride AlertDetailsOverride { get { throw null; } set { } }
@@ -4187,7 +4187,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string ThreatName { get { throw null; } }
         public string ThreatType { get { throw null; } }
     }
-    public partial class ThreatIntelligenceAlertRule : Azure.ResourceManager.SecurityInsights.AlertRuleData
+    public partial class ThreatIntelligenceAlertRule : Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData
     {
         public ThreatIntelligenceAlertRule() { }
         public string AlertRuleTemplateName { get { throw null; } set { } }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MLBehaviorAnalytics alert rule. </summary>
-    public partial class MLBehaviorAnalyticsAlertRule : AlertRuleData
+    public partial class MLBehaviorAnalyticsAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of MLBehaviorAnalyticsAlertRule. </summary>
         public MLBehaviorAnalyticsAlertRule()

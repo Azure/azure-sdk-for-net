@@ -27,6 +27,7 @@ operation-positions:
 
 rename-mapping:
   ThreatIntelligenceIndicatorModel: ThreatIntelligenceIndicator
+  AlertRule: SecurityInsightsAlertRule
 
 override-operation-name:
   DomainWhois_Get: GetDomainWhoisInformation

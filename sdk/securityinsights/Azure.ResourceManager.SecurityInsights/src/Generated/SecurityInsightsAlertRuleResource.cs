@@ -18,46 +18,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing an AlertRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AlertRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAlertRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAlertRule method.
+    /// A Class representing a SecurityInsightsAlertRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsAlertRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsAlertRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSecurityInsightsAlertRule method.
     /// </summary>
-    public partial class AlertRuleResource : ArmResource
+    public partial class SecurityInsightsAlertRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AlertRuleResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsAlertRuleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string ruleId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _alertRuleClientDiagnostics;
-        private readonly AlertRulesRestOperations _alertRuleRestClient;
-        private readonly AlertRuleData _data;
+        private readonly ClientDiagnostics _securityInsightsAlertRuleAlertRulesClientDiagnostics;
+        private readonly AlertRulesRestOperations _securityInsightsAlertRuleAlertRulesRestClient;
+        private readonly SecurityInsightsAlertRuleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AlertRuleResource"/> class for mocking. </summary>
-        protected AlertRuleResource()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleResource"/> class for mocking. </summary>
+        protected SecurityInsightsAlertRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AlertRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsAlertRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AlertRuleResource(ArmClient client, AlertRuleData data) : this(client, data.Id)
+        internal SecurityInsightsAlertRuleResource(ArmClient client, SecurityInsightsAlertRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AlertRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsAlertRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _alertRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string alertRuleApiVersion);
-            _alertRuleRestClient = new AlertRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, alertRuleApiVersion);
+            _securityInsightsAlertRuleAlertRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string securityInsightsAlertRuleAlertRulesApiVersion);
+            _securityInsightsAlertRuleAlertRulesRestClient = new AlertRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsAlertRuleAlertRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AlertRuleData Data
+        public virtual SecurityInsightsAlertRuleData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ActionResponseResources in the AlertRule. </summary>
+        /// <summary> Gets a collection of ActionResponseResources in the SecurityInsightsAlertRule. </summary>
         /// <returns> An object representing collection of ActionResponseResources and their operations over a ActionResponseResource. </returns>
         public virtual ActionResponseCollection GetActionResponses()
         {
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Operation Id: AlertRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsAlertRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Get");
+            using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _alertRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsAlertRuleAlertRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Operation Id: AlertRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertRuleResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsAlertRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Get");
+            using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _alertRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _securityInsightsAlertRuleAlertRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Delete");
+            using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _alertRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsAlertRuleAlertRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Delete");
+            using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _alertRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _securityInsightsAlertRuleAlertRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new SecurityInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -233,16 +233,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AlertRuleResource>> UpdateAsync(WaitUntil waitUntil, AlertRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsAlertRuleResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsAlertRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Update");
+            using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _alertRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<AlertRuleResource>(Response.FromValue(new AlertRuleResource(Client, response), response.GetRawResponse()));
+                var response = await _securityInsightsAlertRuleAlertRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAlertRuleResource>(Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -263,16 +263,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AlertRuleResource> Update(WaitUntil waitUntil, AlertRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsAlertRuleResource> Update(WaitUntil waitUntil, SecurityInsightsAlertRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleResource.Update");
+            using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _alertRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<AlertRuleResource>(Response.FromValue(new AlertRuleResource(Client, response), response.GetRawResponse()));
+                var response = _securityInsightsAlertRuleAlertRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAlertRuleResource>(Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

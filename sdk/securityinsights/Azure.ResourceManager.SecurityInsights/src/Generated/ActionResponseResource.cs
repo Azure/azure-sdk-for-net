@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A Class representing an ActionResponse along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ActionResponseResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetActionResponseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AlertRuleResource" /> using the GetActionResponse method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsAlertRuleResource" /> using the GetActionResponse method.
     /// </summary>
     public partial class ActionResponseResource : ArmResource
     {

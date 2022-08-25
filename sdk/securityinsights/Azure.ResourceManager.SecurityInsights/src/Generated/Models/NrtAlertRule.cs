@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents NRT alert rule. </summary>
-    public partial class NrtAlertRule : AlertRuleData
+    public partial class NrtAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of NrtAlertRule. </summary>
         public NrtAlertRule()

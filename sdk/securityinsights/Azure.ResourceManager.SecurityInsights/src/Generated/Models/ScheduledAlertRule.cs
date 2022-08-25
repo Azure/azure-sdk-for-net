@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents scheduled alert rule. </summary>
-    public partial class ScheduledAlertRule : AlertRuleData
+    public partial class ScheduledAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of ScheduledAlertRule. </summary>
         public ScheduledAlertRule()

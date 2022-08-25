@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MicrosoftSecurityIncidentCreation rule. </summary>
-    public partial class MicrosoftSecurityIncidentCreationAlertRule : AlertRuleData
+    public partial class MicrosoftSecurityIncidentCreationAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRule. </summary>
         public MicrosoftSecurityIncidentCreationAlertRule()

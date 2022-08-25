@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents Threat Intelligence alert rule. </summary>
-    public partial class ThreatIntelligenceAlertRule : AlertRuleData
+    public partial class ThreatIntelligenceAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of ThreatIntelligenceAlertRule. </summary>
         public ThreatIntelligenceAlertRule()

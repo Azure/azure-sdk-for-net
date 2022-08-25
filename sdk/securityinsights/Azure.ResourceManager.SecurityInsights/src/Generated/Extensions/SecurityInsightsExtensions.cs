@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.SecurityInsights
             );
         }
 
-        /// <summary> Gets a collection of AlertRuleResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SecurityInsightsAlertRuleResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An object representing collection of AlertRuleResources and their operations over a AlertRuleResource. </returns>
-        public static AlertRuleCollection GetAlertRules(this ResourceGroupResource resourceGroupResource, string workspaceName)
+        /// <returns> An object representing collection of SecurityInsightsAlertRuleResources and their operations over a SecurityInsightsAlertRuleResource. </returns>
+        public static SecurityInsightsAlertRuleCollection GetSecurityInsightsAlertRules(this ResourceGroupResource resourceGroupResource, string workspaceName)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetExtensionClient(resourceGroupResource).GetAlertRules(workspaceName);
+            return GetExtensionClient(resourceGroupResource).GetSecurityInsightsAlertRules(workspaceName);
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="ruleId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AlertRuleResource>> GetAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityInsightsAlertRuleResource>> GetSecurityInsightsAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAlertRules(workspaceName).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSecurityInsightsAlertRules(workspaceName).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="ruleId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertRuleResource> GetAlertRule(this ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, CancellationToken cancellationToken = default)
+        public static Response<SecurityInsightsAlertRuleResource> GetSecurityInsightsAlertRule(this ResourceGroupResource resourceGroupResource, string workspaceName, string ruleId, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAlertRules(workspaceName).Get(ruleId, cancellationToken);
+            return resourceGroupResource.GetSecurityInsightsAlertRules(workspaceName).Get(ruleId, cancellationToken);
         }
 
         /// <summary> Gets a collection of AlertRuleTemplateResources in the ResourceGroupResource. </summary>
@@ -1123,20 +1123,20 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetExtensionClient(resourceGroupResource).PostDataConnectorsCheckRequirement(workspaceName, dataConnectorsCheckRequirements, cancellationToken);
         }
 
-        #region AlertRuleResource
+        #region SecurityInsightsAlertRuleResource
         /// <summary>
-        /// Gets an object representing an <see cref="AlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsAlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsAlertRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsAlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertRuleResource" /> object. </returns>
-        public static AlertRuleResource GetAlertRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsAlertRuleResource" /> object. </returns>
+        public static SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AlertRuleResource.ValidateResourceId(id);
-                return new AlertRuleResource(client, id);
+                SecurityInsightsAlertRuleResource.ValidateResourceId(id);
+                return new SecurityInsightsAlertRuleResource(client, id);
             }
             );
         }
