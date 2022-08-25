@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new PartitionSchemeDescription(partitionScheme);
+            return new UnknownPartitionSchemeDescription(partitionScheme);
         }
     }
 }

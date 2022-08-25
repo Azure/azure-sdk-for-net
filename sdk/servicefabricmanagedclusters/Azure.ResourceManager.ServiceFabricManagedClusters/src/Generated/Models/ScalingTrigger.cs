@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="ScalingTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AveragePartitionLoadScalingTrigger"/> and <see cref="AverageServiceLoadScalingTrigger"/>.
     /// </summary>
-    public partial class ScalingTrigger
+    public abstract partial class ScalingTrigger
     {
         /// <summary> Initializes a new instance of ScalingTrigger. </summary>
-        public ScalingTrigger()
+        protected ScalingTrigger()
         {
         }
 
