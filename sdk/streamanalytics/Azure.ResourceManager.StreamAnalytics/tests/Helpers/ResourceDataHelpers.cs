@@ -72,6 +72,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
             var data = new StreamAnalyticsPrivateEndpointData()
             {
                 Properties = new PrivateEndpointProperties()
+                {
+                    ManualPrivateLinkServiceConnections =
+                    {
+                        new PrivateLinkServiceConnection()
+                        {
+                            PrivateLinkServiceId = "/subscriptions/113d0adc-1017-40e9-84ff-763f52896cc2/resourceGroups/sjrg5830/providers/Microsoft.EventHub/namespaces/testeventhub4asacluster",
+                            GroupIds =
+                            {
+                                "namespace"
+                            }
+                        }
+                    }
+                }
             };
             return data;
         }
@@ -91,17 +104,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                 {
                     Name = "Standard"
                 },
-                EventsOutOfOrderPolicy = new EventsOutOfOrderPolicy("Drop"),
-                OutputErrorPolicy = new OutputErrorPolicy("Drop"),
+                EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop,
+                OutputErrorPolicy = OutputErrorPolicy.Drop,
                 EventsOutOfOrderMaxDelayInSeconds = 0,
                 EventsLateArrivalMaxDelayInSeconds = 5,
                 DataLocale = "en-US",
-                CompatibilityLevel = new CompatibilityLevel("1.0"),
-                Transformation = new StreamingJobTransformationData()
-                {
-                    StreamingUnits = 1,
-                    Query = "Select Id, Name from inputtest"
-                }
+                CompatibilityLevel = CompatibilityLevel.One0,
+                //Transformation = new StreamingJobTransformationData()
+                //{
+                //    StreamingUnits = 1,
+                //    Query = "Select Id, Name from inputtest"
+                //}
             };
             return data;
         }

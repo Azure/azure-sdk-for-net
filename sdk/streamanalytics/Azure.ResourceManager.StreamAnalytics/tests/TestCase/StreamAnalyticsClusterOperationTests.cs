@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
     public class StreamAnalyticsClusterOperationTests : StreamAnalyticsManagementTestBase
     {
         public StreamAnalyticsClusterOperationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<StreamAnalyticsClusterResource> CreateClusterResourceAsync(string Name)

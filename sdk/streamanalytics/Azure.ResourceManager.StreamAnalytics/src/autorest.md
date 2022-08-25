@@ -15,7 +15,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
- 
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
 
@@ -101,4 +101,12 @@ directive:
     $.TestInput['x-ms-client-name'] = 'TestInputContent';
     $.TestOutput['x-ms-client-name'] = 'TestOutputContent';
     $.TestQuery['x-ms-client-name'] = 'TestQueryContent';
+# - from: swagger-document
+#     where: $.definitions.StreamingJobProperties.properties.jobStorageAccount
+#     transform: >
+#         $["x-nullable"] = true;
+# - from: swagger-document
+#     where: $.definitions.PrivateEndpoint.properties.properties.etag
+#     transform: >
+#         $["x-nullable"] = true;
 ```
