@@ -114,30 +114,30 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("isRestoring");
                 writer.WriteBooleanValue(IsRestoring.Value);
             }
-            if (Optional.IsDefined(SnapshotDirectoryVisible))
+            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
                 writer.WritePropertyName("snapshotDirectoryVisible");
-                writer.WriteBooleanValue(SnapshotDirectoryVisible.Value);
+                writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Optional.IsDefined(KerberosEnabled))
+            if (Optional.IsDefined(IsKerberosEnabled))
             {
                 writer.WritePropertyName("kerberosEnabled");
-                writer.WriteBooleanValue(KerberosEnabled.Value);
+                writer.WriteBooleanValue(IsKerberosEnabled.Value);
             }
             if (Optional.IsDefined(SecurityStyle))
             {
                 writer.WritePropertyName("securityStyle");
                 writer.WriteStringValue(SecurityStyle.Value.ToString());
             }
-            if (Optional.IsDefined(SmbEncryption))
+            if (Optional.IsDefined(IsSmbEncryptionEnabled))
             {
                 writer.WritePropertyName("smbEncryption");
-                writer.WriteBooleanValue(SmbEncryption.Value);
+                writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(SmbContinuouslyAvailable))
+            if (Optional.IsDefined(IsSmbContinuouslyAvailable))
             {
                 writer.WritePropertyName("smbContinuouslyAvailable");
-                writer.WriteBooleanValue(SmbContinuouslyAvailable.Value);
+                writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
             }
             if (Optional.IsDefined(ThroughputMibps))
             {
@@ -154,15 +154,15 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("keyVaultPrivateEndpointResourceId");
                 writer.WriteStringValue(KeyVaultPrivateEndpointResourceId);
             }
-            if (Optional.IsDefined(LdapEnabled))
+            if (Optional.IsDefined(IsLdapEnabled))
             {
                 writer.WritePropertyName("ldapEnabled");
-                writer.WriteBooleanValue(LdapEnabled.Value);
+                writer.WriteBooleanValue(IsLdapEnabled.Value);
             }
-            if (Optional.IsDefined(CoolAccess))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess");
-                writer.WriteBooleanValue(CoolAccess.Value);
+                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(CoolnessPeriod))
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<string> snapshotId = default;
             Optional<string> backupId = default;
             Optional<string> baremetalTenantId = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             Optional<NetAppNetworkFeature> networkFeatures = default;
             Optional<string> networkSiblingSetId = default;
             Optional<NetAppVolumeStorageToNetworkProximity> storageToNetworkProximity = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<bool> smbContinuouslyAvailable = default;
             Optional<float> throughputMibps = default;
             Optional<NetAppEncryptionKeySource> encryptionKeySource = default;
-            Optional<string> keyVaultPrivateEndpointResourceId = default;
+            Optional<ResourceIdentifier> keyVaultPrivateEndpointResourceId = default;
             Optional<bool> ldapEnabled = default;
             Optional<bool> coolAccess = default;
             Optional<int> coolnessPeriod = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<long> defaultGroupQuotaInKiBs = default;
             Optional<long> maximumNumberOfFiles = default;
             Optional<string> volumeGroupName = default;
-            Optional<string> capacityPoolResourceId = default;
+            Optional<ResourceIdentifier> capacityPoolResourceId = default;
             Optional<string> proximityPlacementGroup = default;
             Optional<string> t2Network = default;
             Optional<string> volumeSpecName = default;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.NetApp
                         }
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkFeatures"))
@@ -592,7 +592,12 @@ namespace Azure.ResourceManager.NetApp
                         }
                         if (property0.NameEquals("keyVaultPrivateEndpointResourceId"))
                         {
-                            keyVaultPrivateEndpointResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            keyVaultPrivateEndpointResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ldapEnabled"))
@@ -702,7 +707,12 @@ namespace Azure.ResourceManager.NetApp
                         }
                         if (property0.NameEquals("capacityPoolResourceId"))
                         {
-                            capacityPoolResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            capacityPoolResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("proximityPlacementGroup"))

@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
         /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
-        /// <param name="enabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? enabled, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             HourlySchedule = hourlySchedule;
             DailySchedule = dailySchedule;
             WeeklySchedule = weeklySchedule;
             MonthlySchedule = monthlySchedule;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ProvisioningState = provisioningState;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Schedule for monthly snapshots. </summary>
         public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
     }

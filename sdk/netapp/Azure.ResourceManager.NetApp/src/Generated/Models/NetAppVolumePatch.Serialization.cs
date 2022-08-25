@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("unixPermissions");
                 }
             }
-            if (Optional.IsDefined(CoolAccess))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess");
-                writer.WriteBooleanValue(CoolAccess.Value);
+                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(CoolnessPeriod))
             {

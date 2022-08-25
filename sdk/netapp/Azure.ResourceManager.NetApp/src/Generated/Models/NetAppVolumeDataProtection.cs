@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
         /// <summary> Snapshot Policy ResourceId. </summary>
-        public string SnapshotPolicyId
+        public ResourceIdentifier SnapshotPolicyId
         {
             get => Snapshot is null ? default : Snapshot.SnapshotPolicyId;
             set

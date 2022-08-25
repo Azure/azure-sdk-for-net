@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The qos type of the pool. </summary>
         public CapacityPoolQosType? QosType { get; set; }
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        public bool? CoolAccess { get; set; }
+        public bool? IsCoolAccessEnabled { get; set; }
     }
 }

@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of NetAppRestoreStatus. </summary>
-        /// <param name="healthy"> Restore health status. </param>
+        /// <param name="isHealthy"> Restore health status. </param>
         /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
         /// <param name="mirrorState"> The status of the restore. </param>
         /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
         /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        internal NetAppRestoreStatus(bool? healthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes)
+        internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes)
         {
-            Healthy = healthy;
+            IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
             MirrorState = mirrorState;
             UnhealthyReason = unhealthyReason;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Restore health status. </summary>
-        public bool? Healthy { get; }
+        public bool? IsHealthy { get; }
         /// <summary> Status of the restore SnapMirror relationship. </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }
         /// <summary> The status of the restore. </summary>

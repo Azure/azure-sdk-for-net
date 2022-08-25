@@ -313,29 +313,32 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class NetAppVolumeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppVolumeData(Azure.Core.AzureLocation location, string creationToken, long usageThreshold, string subnetId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppVolumeData(Azure.Core.AzureLocation location, string creationToken, long usageThreshold, Azure.Core.ResourceIdentifier subnetId) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? AvsDataStore { get { throw null; } set { } }
         public string BackupId { get { throw null; } set { } }
         public string BaremetalTenantId { get { throw null; } }
-        public string CapacityPoolResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityPoolResourceId { get { throw null; } set { } }
         public int? CloneProgress { get { throw null; } }
-        public bool? CoolAccess { get { throw null; } set { } }
         public int? CoolnessPeriod { get { throw null; } set { } }
         public string CreationToken { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection DataProtection { get { throw null; } set { } }
         public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
         public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? EnableSubvolumes { get { throw null; } set { } }
-        public bool? Encrypted { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? EncryptionKeySource { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
         public string FileSystemId { get { throw null; } }
+        public bool? IsCoolAccessEnabled { get { throw null; } set { } }
         public bool? IsDefaultQuotaEnabled { get { throw null; } set { } }
+        public bool? IsEncrypted { get { throw null; } }
+        public bool? IsKerberosEnabled { get { throw null; } set { } }
+        public bool? IsLdapEnabled { get { throw null; } set { } }
         public bool? IsRestoring { get { throw null; } set { } }
-        public bool? KerberosEnabled { get { throw null; } set { } }
-        public string KeyVaultPrivateEndpointResourceId { get { throw null; } set { } }
-        public bool? LdapEnabled { get { throw null; } set { } }
+        public bool? IsSmbContinuouslyAvailable { get { throw null; } set { } }
+        public bool? IsSmbEncryptionEnabled { get { throw null; } set { } }
+        public bool? IsSnapshotDirectoryVisible { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultPrivateEndpointResourceId { get { throw null; } set { } }
         public long? MaximumNumberOfFiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> MountTargets { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? NetworkFeatures { get { throw null; } set { } }
@@ -346,12 +349,9 @@ namespace Azure.ResourceManager.NetApp
         public string ProximityPlacementGroup { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? SecurityStyle { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
-        public bool? SmbContinuouslyAvailable { get { throw null; } set { } }
-        public bool? SmbEncryption { get { throw null; } set { } }
-        public bool? SnapshotDirectoryVisible { get { throw null; } set { } }
         public string SnapshotId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public string T2Network { get { throw null; } }
         public float? ThroughputMibps { get { throw null; } set { } }
         public string UnixPermissions { get { throw null; } set { } }
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.NetApp
     {
         public SnapshotPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyDailySchedule DailySchedule { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyHourlySchedule HourlySchedule { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyMonthlySchedule MonthlySchedule { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyWeeklySchedule WeeklySchedule { get { throw null; } set { } }
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class CapacityPoolPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CapacityPoolPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public bool? CoolAccess { get { throw null; } set { } }
+        public bool? IsCoolAccessEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? QosType { get { throw null; } set { } }
         public long? Size { get { throw null; } set { } }
     }
@@ -680,16 +680,16 @@ namespace Azure.ResourceManager.NetApp.Models
         public string ActiveDirectoryId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public string AdName { get { throw null; } set { } }
-        public bool? AesEncryption { get { throw null; } set { } }
         public bool? AllowLocalNfsUsersWithLdap { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> BackupOperators { get { throw null; } }
         public string Dns { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }
         public bool? EncryptDCConnections { get { throw null; } set { } }
+        public bool? IsAesEncryptionEnabled { get { throw null; } set { } }
+        public bool? IsLdapOverTlsEnabled { get { throw null; } set { } }
+        public bool? IsLdapSigningEnabled { get { throw null; } set { } }
         public string KdcIP { get { throw null; } set { } }
-        public bool? LdapOverTLS { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppLdapSearchScopeConfiguration LdapSearchScope { get { throw null; } set { } }
-        public bool? LdapSigning { get { throw null; } set { } }
         public string OrganizationalUnit { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SecurityOperators { get { throw null; } }
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppBackupPolicyPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } }
         public int? DailyBackupsToKeep { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public int? MonthlyBackupsToKeep { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail> VolumeBackups { get { throw null; } }
@@ -1008,10 +1008,10 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppReplicationObject
     {
-        public NetAppReplicationObject(string remoteVolumeResourceId) { }
+        public NetAppReplicationObject(Azure.Core.ResourceIdentifier remoteVolumeResourceId) { }
         public Azure.ResourceManager.NetApp.Models.EndpointType? EndpointType { get { throw null; } set { } }
         public string RemoteVolumeRegion { get { throw null; } set { } }
-        public string RemoteVolumeResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RemoteVolumeResourceId { get { throw null; } set { } }
         public string ReplicationId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? ReplicationSchedule { get { throw null; } set { } }
     }
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal NetAppRestoreStatus() { }
         public string ErrorMessage { get { throw null; } }
-        public bool? Healthy { get { throw null; } }
+        public bool? IsHealthy { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppMirrorState? MirrorState { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus? RelationshipStatus { get { throw null; } }
         public long? TotalTransferBytes { get { throw null; } }
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal NetAppVolumeBackupStatus() { }
         public string ErrorMessage { get { throw null; } }
-        public bool? Healthy { get { throw null; } }
+        public bool? IsHealthy { get { throw null; } }
         public long? LastTransferSize { get { throw null; } }
         public string LastTransferType { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppMirrorState? MirrorState { get { throw null; } }
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeDataProtection() { }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration Backup { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppReplicationObject Replication { get { throw null; } set { } }
-        public string SnapshotPolicyId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SnapshotPolicyId { get { throw null; } set { } }
     }
     public partial class NetAppVolumeExportPolicyRule
     {
@@ -1174,12 +1174,12 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
         public NetAppVolumePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public bool? CoolAccess { get { throw null; } set { } }
         public int? CoolnessPeriod { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumePatchDataProtection DataProtection { get { throw null; } set { } }
         public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
         public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
+        public bool? IsCoolAccessEnabled { get { throw null; } set { } }
         public bool? IsDefaultQuotaEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
         public float? ThroughputMibps { get { throw null; } set { } }
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public NetAppVolumePatchDataProtection() { }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration Backup { get { throw null; } set { } }
-        public string SnapshotPolicyId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SnapshotPolicyId { get { throw null; } set { } }
     }
     public partial class NetAppVolumePlacementRule
     {
@@ -1200,8 +1200,8 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppVolumePoolChangeContent
     {
-        public NetAppVolumePoolChangeContent(string newPoolResourceId) { }
-        public string NewPoolResourceId { get { throw null; } }
+        public NetAppVolumePoolChangeContent(Azure.Core.ResourceIdentifier newPoolResourceId) { }
+        public Azure.Core.ResourceIdentifier NewPoolResourceId { get { throw null; } }
     }
     public partial class NetAppVolumeQuotaRulePatch
     {
@@ -1234,21 +1234,21 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumeReestablishReplicationContent
     {
         public NetAppVolumeReestablishReplicationContent() { }
-        public string SourceVolumeId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVolumeId { get { throw null; } set { } }
     }
     public partial class NetAppVolumeReplication
     {
         internal NetAppVolumeReplication() { }
         public Azure.ResourceManager.NetApp.Models.EndpointType? EndpointType { get { throw null; } }
         public string RemoteVolumeRegion { get { throw null; } }
-        public string RemoteVolumeResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RemoteVolumeResourceId { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppReplicationSchedule? ReplicationSchedule { get { throw null; } }
     }
     public partial class NetAppVolumeReplicationStatus
     {
         internal NetAppVolumeReplicationStatus() { }
         public string ErrorMessage { get { throw null; } }
-        public bool? Healthy { get { throw null; } }
+        public bool? IsHealthy { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppMirrorState? MirrorState { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus? RelationshipStatus { get { throw null; } }
         public string TotalProgress { get { throw null; } }
@@ -1329,8 +1329,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public SnapshotPolicyPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyDailySchedule DailySchedule { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyHourlySchedule HourlySchedule { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyMonthlySchedule MonthlySchedule { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyWeeklySchedule WeeklySchedule { get { throw null; } set { } }

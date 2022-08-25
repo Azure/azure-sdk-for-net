@@ -98,15 +98,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("serverRootCACertificate");
                 writer.WriteStringValue(ServerRootCACertificate);
             }
-            if (Optional.IsDefined(AesEncryption))
+            if (Optional.IsDefined(IsAesEncryptionEnabled))
             {
                 writer.WritePropertyName("aesEncryption");
-                writer.WriteBooleanValue(AesEncryption.Value);
+                writer.WriteBooleanValue(IsAesEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(LdapSigning))
+            if (Optional.IsDefined(IsLdapSigningEnabled))
             {
                 writer.WritePropertyName("ldapSigning");
-                writer.WriteBooleanValue(LdapSigning.Value);
+                writer.WriteBooleanValue(IsLdapSigningEnabled.Value);
             }
             if (Optional.IsCollectionDefined(SecurityOperators))
             {
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LdapOverTLS))
+            if (Optional.IsDefined(IsLdapOverTlsEnabled))
             {
                 writer.WritePropertyName("ldapOverTLS");
-                writer.WriteBooleanValue(LdapOverTLS.Value);
+                writer.WriteBooleanValue(IsLdapOverTlsEnabled.Value);
             }
             if (Optional.IsDefined(AllowLocalNfsUsersWithLdap))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> aesEncryption = default;
             Optional<bool> ldapSigning = default;
             Optional<IList<string>> securityOperators = default;
-            Optional<bool> ldapOverTLS = default;
+            Optional<bool> ldapOverTls = default;
             Optional<bool> allowLocalNfsUsersWithLdap = default;
             Optional<bool> encryptDCConnections = default;
             Optional<NetAppLdapSearchScopeConfiguration> ldapSearchScope = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ldapOverTLS = property.Value.GetBoolean();
+                    ldapOverTls = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("allowLocalNfsUsersWithLdap"))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTLS), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value);
+            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value);
         }
     }
 }

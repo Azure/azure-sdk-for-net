@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppReplicationObject. </summary>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
-        public NetAppReplicationObject(string remoteVolumeResourceId)
+        public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
         {
             if (remoteVolumeResourceId == null)
             {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        internal NetAppReplicationObject(string replicationId, EndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, string remoteVolumeResourceId, string remoteVolumeRegion)
+        internal NetAppReplicationObject(string replicationId, EndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
         /// <summary> The resource ID of the remote volume. </summary>
-        public string RemoteVolumeResourceId { get; set; }
+        public ResourceIdentifier RemoteVolumeResourceId { get; set; }
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; set; }
     }

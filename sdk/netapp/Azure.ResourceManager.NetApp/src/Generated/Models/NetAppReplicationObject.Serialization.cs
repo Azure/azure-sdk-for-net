@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> replicationId = default;
             Optional<EndpointType> endpointType = default;
             Optional<NetAppReplicationSchedule> replicationSchedule = default;
-            string remoteVolumeResourceId = default;
+            ResourceIdentifier remoteVolumeResourceId = default;
             Optional<string> remoteVolumeRegion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("remoteVolumeResourceId"))
                 {
-                    remoteVolumeResourceId = property.Value.GetString();
+                    remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("remoteVolumeRegion"))

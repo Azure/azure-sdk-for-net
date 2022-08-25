@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppVolumeReplication. </summary>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
-        internal NetAppVolumeReplication(string remoteVolumeResourceId)
+        internal NetAppVolumeReplication(ResourceIdentifier remoteVolumeResourceId)
         {
             if (remoteVolumeResourceId == null)
             {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        internal NetAppVolumeReplication(EndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, string remoteVolumeResourceId, string remoteVolumeRegion)
+        internal NetAppVolumeReplication(EndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
         {
             EndpointType = endpointType;
             ReplicationSchedule = replicationSchedule;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; }
         /// <summary> The resource ID of the remote volume. </summary>
-        public string RemoteVolumeResourceId { get; }
+        public ResourceIdentifier RemoteVolumeResourceId { get; }
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; }
     }

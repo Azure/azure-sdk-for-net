@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppVolumePoolChangeContent. </summary>
         /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
-        public NetAppVolumePoolChangeContent(string newPoolResourceId)
+        public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)
         {
             if (newPoolResourceId == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource id of the pool to move volume to. </summary>
-        public string NewPoolResourceId { get; }
+        public ResourceIdentifier NewPoolResourceId { get; }
     }
 }

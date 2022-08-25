@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Re-establish request object supplied in the body of the operation. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource id of the source volume for the replication. </summary>
-        public string SourceVolumeId { get; set; }
+        public ResourceIdentifier SourceVolumeId { get; set; }
     }
 }

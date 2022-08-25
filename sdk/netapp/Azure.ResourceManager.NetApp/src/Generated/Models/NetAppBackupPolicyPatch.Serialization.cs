@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("monthlyBackupsToKeep");
                 writer.WriteNumberValue(MonthlyBackupsToKeep.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

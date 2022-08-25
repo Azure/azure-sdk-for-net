@@ -46,6 +46,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   SAP: Sap
+  TLS: Tls
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}: NetAppAccountBackup
@@ -69,9 +70,20 @@ rename-mapping:
   BackupType: NetAppBackupType
   BackupPolicy: NetAppBackupPolicy
   Volume: NetAppVolume
+  Volume.properties.coolAccess: IsCoolAccessEnabled
+  Volume.properties.keyVaultPrivateEndpointResourceId: -|arm-id
+  Volume.properties.subnetId: -|arm-id
+  Volume.properties.capacityPoolResourceId: -|arm-id
+  Volume.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
+  Volume.properties.kerberosEnabled: IsKerberosEnabled
+  Volume.properties.smbEncryption: IsSmbEncryptionEnabled
+  Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
+  Volume.properties.ldapEnabled: IsLdapEnabled
+  Volume.properties.encrypted: IsEncrypted
   VolumeGroupDetails: NetAppVolumeGroup
   VolumeQuotaRule: NetAppVolumeQuotaRule
   CapacityPool.properties.coolAccess: IsCoolAccessEnabled
+  CapacityPoolPatch.properties.coolAccess: IsCoolAccessEnabled
   QosType: CapacityPoolQosType
   ServiceLevel: NetAppFileServiceLevel
   ActiveDirectory: NetAppAccountActiveDirectory
@@ -93,7 +105,9 @@ rename-mapping:
   SubvolumeInfo: NetAppSubvolume
   Replication: NetAppVolumeReplication
   BackupStatus: NetAppVolumeBackupStatus
+  BackupStatus.healthy: IsHealthy
   RestoreStatus: NetAppRestoreStatus
+  RestoreStatus.healthy: IsHealthy
   ApplicationType: NetAppApplicationType
   AuthorizeRequest: NetAppVolumeAuthorizeReplicationContent
   AuthorizeRequest.remoteVolumeResourceId: -|arm-id
@@ -131,6 +145,7 @@ rename-mapping:
   VolumeRevert: NetAppVolumeRevertContent
   VolumeRevert.snapshotId: -|arm-id
   ReplicationObject: NetAppReplicationObject
+  ReplicationObject.remoteVolumeResourceId: -|arm-id
   ReplicationSchedule: NetAppReplicationSchedule
   VolumeBackupProperties: NetAppVolumeBackupConfiguration
   VolumeBackupProperties.backupPolicyId: -|arm-id
@@ -139,6 +154,18 @@ rename-mapping:
   VolumeBackupProperties.backupEnabled: IsBackupEnabled
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
   VolumeStorageToNetworkProximity: NetAppVolumeStorageToNetworkProximity
+  SnapshotPolicy.properties.enabled: IsEnabled
+  SnapshotPolicyPatch.properties.enabled: IsEnabled
+  ActiveDirectory.aesEncryption: IsAesEncryptionEnabled
+  ActiveDirectory.ldapSigning: IsLdapSigningEnabled
+  ActiveDirectory.ldapOverTLS: IsLdapOverTlsEnabled
+  BackupPolicyPatch.properties.enabled: IsEnabled
+  VolumePatch.properties.coolAccess: IsCoolAccessEnabled
+  ReplicationStatus.healthy: IsHealthy
+  VolumeSnapshotProperties.snapshotPolicyId: -|arm-id
+  PoolChangeRequest.newPoolResourceId: -|arm-id
+  ReestablishReplicationRequest.sourceVolumeId: -|arm-id
+  Replication.remoteVolumeResourceId: -|arm-id
 
 directive:
 # remove this operation because the Snapshots_Update defines an empty object

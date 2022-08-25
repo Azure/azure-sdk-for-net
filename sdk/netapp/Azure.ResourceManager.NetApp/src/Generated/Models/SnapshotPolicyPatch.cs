@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Schedule for monthly snapshots. </summary>
         public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
     }

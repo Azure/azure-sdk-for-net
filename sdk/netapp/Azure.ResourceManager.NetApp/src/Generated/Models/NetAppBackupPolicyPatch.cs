@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Volumes using current backup policy. </summary>
         public int? VolumesAssigned { get; }
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> A list of volumes assigned to this policy. </summary>
         public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; }
     }
