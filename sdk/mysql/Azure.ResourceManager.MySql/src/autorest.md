@@ -146,7 +146,7 @@ rename-mapping:
   PerformanceTierServiceLevelObjectives.vCore: VCores
   NameAvailability: MySqlNameAvailabilityResult
   PerformanceTierProperties: MySqlPerformanceTier
-  ConfigurationListResult: MySqlConfigurationListResult
+  ConfigurationListResult: MySqlConfigurations
   LogFile.properties.type: LogFileType
   ConfigurationListResult.value: Values
 
