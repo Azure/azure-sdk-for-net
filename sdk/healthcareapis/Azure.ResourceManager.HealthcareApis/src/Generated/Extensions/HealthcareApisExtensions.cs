@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ServicesNameAvailabilityInfo>> CheckNameAvailabilityServiceAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityServiceAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ServicesNameAvailabilityInfo> CheckNameAvailabilityService(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityService(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -110,44 +110,6 @@ namespace Azure.ResourceManager.HealthcareApis
         public static Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the operation. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationResultId"/> is null. </exception>
-        public static async Task<Response<OperationResultsDescription>> GetOperationResultAsync(this SubscriptionResource subscriptionResource, string locationName, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
-
-            return await GetExtensionClient(subscriptionResource).GetOperationResultAsync(locationName, operationResultId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The location of the operation. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationResultId"/> is null. </exception>
-        public static Response<OperationResultsDescription> GetOperationResult(this SubscriptionResource subscriptionResource, string locationName, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
-
-            return GetExtensionClient(subscriptionResource).GetOperationResult(locationName, operationResultId, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -372,39 +334,39 @@ namespace Azure.ResourceManager.HealthcareApis
         }
         #endregion
 
-        #region IotConnectorResource
+        #region HealthcareApisIotConnectorResource
         /// <summary>
-        /// Gets an object representing an <see cref="IotConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotConnectorResource.CreateResourceIdentifier" /> to create an <see cref="IotConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisIotConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisIotConnectorResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotConnectorResource" /> object. </returns>
-        public static IotConnectorResource GetIotConnectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisIotConnectorResource" /> object. </returns>
+        public static HealthcareApisIotConnectorResource GetHealthcareApisIotConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IotConnectorResource.ValidateResourceId(id);
-                return new IotConnectorResource(client, id);
+                HealthcareApisIotConnectorResource.ValidateResourceId(id);
+                return new HealthcareApisIotConnectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IotFhirDestinationResource
+        #region HealthcareApisIotFhirDestinationResource
         /// <summary>
-        /// Gets an object representing an <see cref="IotFhirDestinationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotFhirDestinationResource.CreateResourceIdentifier" /> to create an <see cref="IotFhirDestinationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthcareApisIotFhirDestinationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthcareApisIotFhirDestinationResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotFhirDestinationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotFhirDestinationResource" /> object. </returns>
-        public static IotFhirDestinationResource GetIotFhirDestinationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthcareApisIotFhirDestinationResource" /> object. </returns>
+        public static HealthcareApisIotFhirDestinationResource GetHealthcareApisIotFhirDestinationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IotFhirDestinationResource.ValidateResourceId(id);
-                return new IotFhirDestinationResource(client, id);
+                HealthcareApisIotFhirDestinationResource.ValidateResourceId(id);
+                return new HealthcareApisIotFhirDestinationResource(client, id);
             }
             );
         }

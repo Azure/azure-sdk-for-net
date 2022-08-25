@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// FhirService patch properties
     /// Serialized Name: FhirServicePatchResource
     /// </summary>
-    public partial class FhirServicePatch : ResourceTags
+    public partial class FhirServicePatch : HealthcareApisResourceTags
     {
         /// <summary> Initializes a new instance of FhirServicePatch. </summary>
         public FhirServicePatch()

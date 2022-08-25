@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
         internal IotFhirDestinationCollection()
         {
-            Value = new ChangeTrackingList<IotFhirDestinationData>();
+            Value = new ChangeTrackingList<HealthcareApisIotFhirDestinationData>();
         }
 
         /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// The list of IoT Connector FHIR destinations.
         /// Serialized Name: IotFhirDestinationCollection.value
         /// </param>
-        internal IotFhirDestinationCollection(string nextLink, IReadOnlyList<IotFhirDestinationData> value)
+        internal IotFhirDestinationCollection(string nextLink, IReadOnlyList<HealthcareApisIotFhirDestinationData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// The list of IoT Connector FHIR destinations.
         /// Serialized Name: IotFhirDestinationCollection.value
         /// </summary>
-        public IReadOnlyList<IotFhirDestinationData> Value { get; }
+        public IReadOnlyList<HealthcareApisIotFhirDestinationData> Value { get; }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// Workspace patch properties
     /// Serialized Name: WorkspacePatchResource
     /// </summary>
-    public partial class HealthcareApisWorkspacePatch : ResourceTags
+    public partial class HealthcareApisWorkspacePatch : HealthcareApisResourceTags
     {
         /// <summary> Initializes a new instance of HealthcareApisWorkspacePatch. </summary>
         public HealthcareApisWorkspacePatch()

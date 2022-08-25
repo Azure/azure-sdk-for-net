@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// Dicom Service patch properties
     /// Serialized Name: DicomServicePatchResource
     /// </summary>
-    public partial class DicomServicePatch : ResourceTags
+    public partial class DicomServicePatch : HealthcareApisResourceTags
     {
         /// <summary> Initializes a new instance of DicomServicePatch. </summary>
         public DicomServicePatch()

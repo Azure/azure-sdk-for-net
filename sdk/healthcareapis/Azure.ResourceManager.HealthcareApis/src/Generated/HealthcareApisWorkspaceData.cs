@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// An etag associated with the resource, used for optimistic concurrency when editing it.
         /// Serialized Name: ResourceCore.etag
         /// </param>
-        internal HealthcareApisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal HealthcareApisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisWorkspaceProperties properties, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = etag;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Workspaces resource specific properties.
         /// Serialized Name: Workspace.properties
         /// </summary>
-        public WorkspaceProperties Properties { get; set; }
+        public HealthcareApisWorkspaceProperties Properties { get; set; }
         /// <summary>
         /// An etag associated with the resource, used for optimistic concurrency when editing it.
         /// Serialized Name: ResourceCore.etag

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Setting indicating whether the service has a managed identity associated with it.
         /// Serialized Name: ServicesResource.identity. Current supported identity types: SystemAssigned, None
         /// </param>
-        internal HealthcareApisServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServicesProperties properties, HealthcareApisKind kind, ETag? etag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal HealthcareApisServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisServiceProperties properties, HealthcareApisKind kind, ETag? etag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Kind = kind;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// The common properties of a service.
         /// Serialized Name: ServicesDescription.properties
         /// </summary>
-        public ServicesProperties Properties { get; set; }
+        public HealthcareApisServiceProperties Properties { get; set; }
         /// <summary>
         /// The kind of the service.
         /// Serialized Name: ServicesResource.kind

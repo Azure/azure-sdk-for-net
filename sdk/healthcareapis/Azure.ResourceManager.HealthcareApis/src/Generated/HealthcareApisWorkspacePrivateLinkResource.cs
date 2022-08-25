@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         private readonly ClientDiagnostics _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics;
         private readonly WorkspacePrivateLinkResourcesRestOperations _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient;
-        private readonly PrivateLinkResourceDescriptionData _data;
+        private readonly HealthcareApisPrivateLinkResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateLinkResource"/> class for mocking. </summary>
         protected HealthcareApisWorkspacePrivateLinkResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> Initializes a new instance of the <see cref = "HealthcareApisWorkspacePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HealthcareApisWorkspacePrivateLinkResource(ArmClient client, PrivateLinkResourceDescriptionData data) : this(client, data.Id)
+        internal HealthcareApisWorkspacePrivateLinkResource(ArmClient client, HealthcareApisPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PrivateLinkResourceDescriptionData Data
+        public virtual HealthcareApisPrivateLinkResourceData Data
         {
             get
             {

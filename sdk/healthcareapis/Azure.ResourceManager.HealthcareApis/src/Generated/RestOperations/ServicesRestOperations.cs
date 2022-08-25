@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, HealthcareApisNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServicesNameAvailabilityInfo>> CheckNameAvailabilityAsync(string subscriptionId, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthcareApisNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -521,9 +521,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        ServicesNameAvailabilityInfo value = default;
+                        HealthcareApisNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServicesNameAvailabilityInfo.DeserializeServicesNameAvailabilityInfo(document.RootElement);
+                        value = HealthcareApisNameAvailabilityResult.DeserializeHealthcareApisNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServicesNameAvailabilityInfo> CheckNameAvailability(string subscriptionId, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<HealthcareApisNameAvailabilityResult> CheckNameAvailability(string subscriptionId, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -548,9 +548,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        ServicesNameAvailabilityInfo value = default;
+                        HealthcareApisNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServicesNameAvailabilityInfo.DeserializeServicesNameAvailabilityInfo(document.RootElement);
+                        value = HealthcareApisNameAvailabilityResult.DeserializeHealthcareApisNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

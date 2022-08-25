@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
         /// Serialized Name: ServicesPatchDescription.properties.publicNetworkAccess
         /// </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

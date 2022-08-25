@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static HealthcareApisServiceData DeserializeHealthcareApisServiceData(JsonElement element)
         {
-            Optional<ServicesProperties> properties = default;
+            Optional<HealthcareApisServiceProperties> properties = default;
             HealthcareApisKind kind = default;
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ServicesProperties.DeserializeServicesProperties(property.Value);
+                    properties = HealthcareApisServiceProperties.DeserializeHealthcareApisServiceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))

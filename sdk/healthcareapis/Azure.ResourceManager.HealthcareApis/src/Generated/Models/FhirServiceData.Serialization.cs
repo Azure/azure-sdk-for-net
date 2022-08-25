@@ -110,16 +110,16 @@ namespace Azure.ResourceManager.HealthcareApis
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<IList<FhirServiceAccessPolicyEntry>> accessPolicies = default;
             Optional<FhirServiceAcrConfiguration> acrConfiguration = default;
             Optional<FhirServiceAuthenticationConfiguration> authenticationConfiguration = default;
             Optional<FhirServiceCorsConfiguration> corsConfiguration = default;
             Optional<FhirServiceExportConfiguration> exportConfiguration = default;
             Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ServiceEventState> eventState = default;
-            Optional<ResourceVersionPolicyConfiguration> resourceVersionPolicyConfiguration = default;
+            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<FhirServiceEventState> eventState = default;
+            Optional<FhirServiceResourceVersionPolicyConfiguration> resourceVersionPolicyConfiguration = default;
             Optional<FhirServiceImportConfiguration> importConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new HealthcareApisProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accessPolicies"))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new HealthcareApisPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventState"))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            eventState = new ServiceEventState(property0.Value.GetString());
+                            eventState = new FhirServiceEventState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceVersionPolicyConfiguration"))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceVersionPolicyConfiguration = ResourceVersionPolicyConfiguration.DeserializeResourceVersionPolicyConfiguration(property0.Value);
+                            resourceVersionPolicyConfiguration = FhirServiceResourceVersionPolicyConfiguration.DeserializeFhirServiceResourceVersionPolicyConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("importConfiguration"))

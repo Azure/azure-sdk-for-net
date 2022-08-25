@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static HealthcareApisWorkspaceData DeserializeHealthcareApisWorkspaceData(JsonElement element)
         {
-            Optional<WorkspaceProperties> properties = default;
+            Optional<HealthcareApisWorkspaceProperties> properties = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = WorkspaceProperties.DeserializeWorkspaceProperties(property.Value);
+                    properties = HealthcareApisWorkspaceProperties.DeserializeHealthcareApisWorkspaceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

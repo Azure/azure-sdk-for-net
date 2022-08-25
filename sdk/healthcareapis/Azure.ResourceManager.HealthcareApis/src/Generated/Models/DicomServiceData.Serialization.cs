@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.HealthcareApis
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<DicomServiceAuthenticationConfiguration> authenticationConfiguration = default;
-            Optional<CorsConfiguration> corsConfiguration = default;
+            Optional<DicomServiceCorsConfiguration> corsConfiguration = default;
             Optional<Uri> serviceUrl = default;
             Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new HealthcareApisProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("authenticationConfiguration"))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            corsConfiguration = CorsConfiguration.DeserializeCorsConfiguration(property0.Value);
+                            corsConfiguration = DicomServiceCorsConfiguration.DeserializeDicomServiceCorsConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.HealthcareApis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new HealthcareApisPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

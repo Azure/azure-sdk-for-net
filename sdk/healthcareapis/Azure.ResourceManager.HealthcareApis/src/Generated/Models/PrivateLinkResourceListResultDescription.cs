@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
         internal PrivateLinkResourceListResultDescription()
         {
-            Value = new ChangeTrackingList<PrivateLinkResourceDescriptionData>();
+            Value = new ChangeTrackingList<HealthcareApisPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// Array of private link resources
         /// Serialized Name: PrivateLinkResourceListResultDescription.value
         /// </param>
-        internal PrivateLinkResourceListResultDescription(IReadOnlyList<PrivateLinkResourceDescriptionData> value)
+        internal PrivateLinkResourceListResultDescription(IReadOnlyList<HealthcareApisPrivateLinkResourceData> value)
         {
             Value = value;
         }
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// Array of private link resources
         /// Serialized Name: PrivateLinkResourceListResultDescription.value
         /// </summary>
-        public IReadOnlyList<PrivateLinkResourceDescriptionData> Value { get; }
+        public IReadOnlyList<HealthcareApisPrivateLinkResourceData> Value { get; }
     }
 }

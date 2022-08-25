@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// An etag associated with the resource, used for optimistic concurrency when editing it.
         /// Serialized Name: ResourceCore.etag
         /// </param>
-        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, CorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AuthenticationConfiguration = authenticationConfiguration;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// The provisioning state.
         /// Serialized Name: DicomService.properties.provisioningState
         /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HealthcareApisProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Dicom Service authentication configuration.
         /// Serialized Name: DicomService.properties.authenticationConfiguration
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Dicom Service Cors configuration.
         /// Serialized Name: DicomService.properties.corsConfiguration
         /// </summary>
-        public CorsConfiguration CorsConfiguration { get; set; }
+        public DicomServiceCorsConfiguration CorsConfiguration { get; set; }
         /// <summary>
         /// The url of the Dicom Services.
         /// Serialized Name: DicomService.properties.serviceUrl
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
         /// Serialized Name: DicomService.properties.publicNetworkAccess
         /// </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary>
         /// Setting indicating whether the service has a managed identity associated with it.
         /// Serialized Name: ServiceManagedIdentity.identity

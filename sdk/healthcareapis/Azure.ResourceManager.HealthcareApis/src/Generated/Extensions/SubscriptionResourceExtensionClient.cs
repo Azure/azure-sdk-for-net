@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.HealthcareApis
         private ServicesRestOperations _healthcareApisServiceServicesRestClient;
         private ClientDiagnostics _healthcareApisWorkspaceWorkspacesClientDiagnostics;
         private WorkspacesRestOperations _healthcareApisWorkspaceWorkspacesRestClient;
-        private ClientDiagnostics _operationResultsClientDiagnostics;
-        private OperationResultsRestOperations _operationResultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.HealthcareApis
         private ServicesRestOperations HealthcareApisServiceServicesRestClient => _healthcareApisServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HealthcareApisServiceResource.ResourceType));
         private ClientDiagnostics HealthcareApisWorkspaceWorkspacesClientDiagnostics => _healthcareApisWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspaceResource.ResourceType.Namespace, Diagnostics);
         private WorkspacesRestOperations HealthcareApisWorkspaceWorkspacesRestClient => _healthcareApisWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HealthcareApisWorkspaceResource.ResourceType));
-        private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -143,9 +139,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServicesNameAvailabilityInfo>> CheckNameAvailabilityServiceAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckHealthcareApisNameAvailability");
             scope.Start();
             try
             {
@@ -166,9 +162,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServicesNameAvailabilityInfo> CheckNameAvailabilityService(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckHealthcareApisNameAvailability");
             scope.Start();
             try
             {
@@ -264,54 +260,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="locationName"> The location of the operation. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationResultsDescription>> GetOperationResultAsync(string locationName, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, locationName, operationResultId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="locationName"> The location of the operation. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationResultsDescription> GetOperationResult(string locationName, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = OperationResultsRestClient.Get(Id.SubscriptionId, locationName, operationResultId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

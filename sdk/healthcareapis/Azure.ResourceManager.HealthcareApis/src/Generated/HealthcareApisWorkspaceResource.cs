@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.HealthcareApis
             return GetDicomServices().Get(dicomServiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IotConnectorResources in the HealthcareApisWorkspace. </summary>
-        /// <returns> An object representing collection of IotConnectorResources and their operations over a IotConnectorResource. </returns>
-        public virtual IotConnectorCollection GetIotConnectors()
+        /// <summary> Gets a collection of HealthcareApisIotConnectorResources in the HealthcareApisWorkspace. </summary>
+        /// <returns> An object representing collection of HealthcareApisIotConnectorResources and their operations over a HealthcareApisIotConnectorResource. </returns>
+        public virtual HealthcareApisIotConnectorCollection GetHealthcareApisIotConnectors()
         {
-            return GetCachedClient(Client => new IotConnectorCollection(Client, Id));
+            return GetCachedClient(Client => new HealthcareApisIotConnectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IotConnectorResource>> GetIotConnectorAsync(string iotConnectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthcareApisIotConnectorResource>> GetHealthcareApisIotConnectorAsync(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            return await GetIotConnectors().GetAsync(iotConnectorName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthcareApisIotConnectors().GetAsync(iotConnectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IotConnectorResource> GetIotConnector(string iotConnectorName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthcareApisIotConnectorResource> GetHealthcareApisIotConnector(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            return GetIotConnectors().Get(iotConnectorName, cancellationToken);
+            return GetHealthcareApisIotConnectors().Get(iotConnectorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FhirServiceResources in the HealthcareApisWorkspace. </summary>

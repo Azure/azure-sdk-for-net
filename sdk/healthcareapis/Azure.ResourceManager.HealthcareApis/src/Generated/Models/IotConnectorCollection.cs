@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of IotConnectorCollection. </summary>
         internal IotConnectorCollection()
         {
-            Value = new ChangeTrackingList<IotConnectorData>();
+            Value = new ChangeTrackingList<HealthcareApisIotConnectorData>();
         }
 
         /// <summary> Initializes a new instance of IotConnectorCollection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// The list of IoT Connectors.
         /// Serialized Name: IotConnectorCollection.value
         /// </param>
-        internal IotConnectorCollection(string nextLink, IReadOnlyList<IotConnectorData> value)
+        internal IotConnectorCollection(string nextLink, IReadOnlyList<HealthcareApisIotConnectorData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// The list of IoT Connectors.
         /// Serialized Name: IotConnectorCollection.value
         /// </summary>
-        public IReadOnlyList<IotConnectorData> Value { get; }
+        public IReadOnlyList<HealthcareApisIotConnectorData> Value { get; }
     }
 }
