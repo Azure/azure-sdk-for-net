@@ -17,11 +17,7 @@ pr:
     - feature/*
     - hotfix/*
     - release/*
-  paths:
-    include:
-    - sdk/automanage/
-    - sdk/resourcemanager/
-
+    
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
