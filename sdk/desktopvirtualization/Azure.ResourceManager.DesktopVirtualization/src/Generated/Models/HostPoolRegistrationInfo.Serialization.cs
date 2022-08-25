@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class RegistrationInfo : IUtf8JsonSerializable
+    public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteEndObject();
         }
 
-        internal static RegistrationInfo DeserializeRegistrationInfo(JsonElement element)
+        internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element)
         {
             Optional<DateTimeOffset> expirationTime = default;
             Optional<string> token = default;
-            Optional<RegistrationTokenOperation> registrationTokenOperation = default;
+            Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expirationTime"))
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    registrationTokenOperation = new RegistrationTokenOperation(property.Value.GetString());
+                    registrationTokenOperation = new HostPoolRegistrationTokenOperation(property.Value.GetString());
                     continue;
                 }
             }
-            return new RegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation));
+            return new HostPoolRegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation));
         }
     }
 }

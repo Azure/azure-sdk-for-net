@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents message sent to a UserSession. </summary>
-    public partial class SendMessage
+    public partial class UserSessionMessage
     {
-        /// <summary> Initializes a new instance of SendMessage. </summary>
-        public SendMessage()
+        /// <summary> Initializes a new instance of UserSessionMessage. </summary>
+        public UserSessionMessage()
         {
         }
 

@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents a StartMenuItem definition. </summary>
-    public partial class StartMenuItem : ResourceData
+    public partial class DesktopVirtualizationStartMenuItem : ResourceData
     {
-        /// <summary> Initializes a new instance of StartMenuItem. </summary>
-        public StartMenuItem()
+        /// <summary> Initializes a new instance of DesktopVirtualizationStartMenuItem. </summary>
+        public DesktopVirtualizationStartMenuItem()
         {
         }
 
-        /// <summary> Initializes a new instance of StartMenuItem. </summary>
+        /// <summary> Initializes a new instance of DesktopVirtualizationStartMenuItem. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="commandLineArguments"> Command line arguments for StartMenuItem. </param>
         /// <param name="iconPath"> Path to the icon. </param>
         /// <param name="iconIndex"> Index of the icon. </param>
-        internal StartMenuItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string appAlias, string filePath, string commandLineArguments, string iconPath, int? iconIndex) : base(id, name, resourceType, systemData)
+        internal DesktopVirtualizationStartMenuItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string appAlias, string filePath, string commandLineArguments, string iconPath, int? iconIndex) : base(id, name, resourceType, systemData)
         {
             AppAlias = appAlias;
             FilePath = filePath;

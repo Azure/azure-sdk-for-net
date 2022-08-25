@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class StartMenuItem : IUtf8JsonSerializable
+    public partial class DesktopVirtualizationStartMenuItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteEndObject();
         }
 
-        internal static StartMenuItem DeserializeStartMenuItem(JsonElement element)
+        internal static DesktopVirtualizationStartMenuItem DeserializeDesktopVirtualizationStartMenuItem(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new StartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex));
+            return new DesktopVirtualizationStartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex));
         }
     }
 }
