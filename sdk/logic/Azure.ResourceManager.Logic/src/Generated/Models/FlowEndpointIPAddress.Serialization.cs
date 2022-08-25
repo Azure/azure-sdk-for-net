@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,24 +18,19 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address");
-                writer.WriteStringValue(Address.ToString());
+                writer.WriteStringValue(Address);
             }
             writer.WriteEndObject();
         }
 
         internal static FlowEndpointIPAddress DeserializeFlowEndpointIPAddress(JsonElement element)
         {
-            Optional<IPAddress> address = default;
+            Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    address = IPAddress.Parse(property.Value.GetString());
+                    address = property.Value.GetString();
                     continue;
                 }
             }

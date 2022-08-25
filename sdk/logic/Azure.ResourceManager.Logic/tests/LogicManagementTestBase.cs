@@ -13,6 +13,7 @@ using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.KeyVault;
 using System;
+using System.IO;
 
 namespace Azure.ResourceManager.Logic.Tests
 {
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Logic.Tests
     {
         protected ArmClient Client { get; private set; }
         protected const string ResourceGroupNamePrefix = "LogicAppRG-";
+        protected const string DefaultTriggerName = "manual";
         protected LogicManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -53,6 +55,18 @@ namespace Azure.ResourceManager.Logic.Tests
             };
             var integrationAccount = await resourceGroup.GetIntegrationAccounts().CreateOrUpdateAsync(WaitUntil.Completed, integrationAccountName, data);
             return integrationAccount.Value;
+        }
+
+        protected async Task<LogicWorkflowResource> CreateLogicWorkflow(ResourceGroupResource resourceGroup, ResourceIdentifier integrationAccountIdentifier, string logicWorkflowName)
+        {
+            byte[] definition = File.ReadAllBytes(@"..\..\..\..\..\sdk\logic\Azure.ResourceManager.Logic\tests\TestData\WorkflowDefinition.json");
+            LogicWorkflowData data = new LogicWorkflowData(resourceGroup.Data.Location)
+            {
+                Definition = new BinaryData(definition),
+                IntegrationAccount = new LogicResourceReference() { Id = integrationAccountIdentifier },
+            };
+            var workflow = await resourceGroup.GetLogicWorkflows().CreateOrUpdateAsync(WaitUntil.Completed, logicWorkflowName, data);
+            return workflow.Value;
         }
 
         protected async Task<VirtualNetworkResource> CreateDefaultNetwork(ResourceGroupResource resourceGroup, string vnetName)
