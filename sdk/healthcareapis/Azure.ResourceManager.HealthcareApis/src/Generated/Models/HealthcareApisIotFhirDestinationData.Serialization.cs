@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthcareApis
             Optional<SystemData> systemData = default;
             Optional<HealthcareApisProvisioningState> provisioningState = default;
             HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default;
-            string fhirServiceResourceId = default;
+            ResourceIdentifier fhirServiceResourceId = default;
             HealthcareApisIotMappingProperties fhirMapping = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         }
                         if (property0.NameEquals("fhirServiceResourceId"))
                         {
-                            fhirServiceResourceId = property0.Value.GetString();
+                            fhirServiceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("fhirMapping"))

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Serialized Name: IotFhirDestination.properties.fhirMapping
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceResourceId"/> or <paramref name="fhirMapping"/> is null. </exception>
-        public HealthcareApisIotFhirDestinationData(HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, string fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping)
+        public HealthcareApisIotFhirDestinationData(HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping)
         {
             if (fhirServiceResourceId == null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// An etag associated with the resource, used for optimistic concurrency when editing it.
         /// Serialized Name: ResourceCore.etag
         /// </param>
-        internal HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, string fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping, AzureLocation? location, ETag? etag) : base(id, name, resourceType, systemData)
+        internal HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping, AzureLocation? location, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ResourceIdentityResolutionType = resourceIdentityResolutionType;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Fully qualified resource id of the FHIR service to connect to.
         /// Serialized Name: IotFhirDestination.properties.fhirServiceResourceId
         /// </summary>
-        public string FhirServiceResourceId { get; set; }
+        public ResourceIdentifier FhirServiceResourceId { get; set; }
         /// <summary>
         /// FHIR Mappings
         /// Serialized Name: IotFhirDestination.properties.fhirMapping

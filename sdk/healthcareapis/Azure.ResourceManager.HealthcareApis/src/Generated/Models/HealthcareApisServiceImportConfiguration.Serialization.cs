@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("integrationDataStore");
                 writer.WriteStringValue(IntegrationDataStore);
             }
-            if (Optional.IsDefined(InitialImportMode))
+            if (Optional.IsDefined(IsInitialImportMode))
             {
                 writer.WritePropertyName("initialImportMode");
-                writer.WriteBooleanValue(InitialImportMode.Value);
+                writer.WriteBooleanValue(IsInitialImportMode.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
         }

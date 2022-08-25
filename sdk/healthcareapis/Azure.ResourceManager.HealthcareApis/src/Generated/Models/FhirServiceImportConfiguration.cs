@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// The name of the default integration storage account.
         /// Serialized Name: FhirServiceImportConfiguration.integrationDataStore
         /// </param>
-        /// <param name="initialImportMode">
+        /// <param name="isInitialImportMode">
         /// If the FHIR service is in InitialImportMode.
         /// Serialized Name: FhirServiceImportConfiguration.initialImportMode
         /// </param>
-        /// <param name="enabled">
+        /// <param name="isEnabled">
         /// If the import operation is enabled.
         /// Serialized Name: FhirServiceImportConfiguration.enabled
         /// </param>
-        internal FhirServiceImportConfiguration(string integrationDataStore, bool? initialImportMode, bool? enabled)
+        internal FhirServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled)
         {
             IntegrationDataStore = integrationDataStore;
-            InitialImportMode = initialImportMode;
-            Enabled = enabled;
+            IsInitialImportMode = isInitialImportMode;
+            IsEnabled = isEnabled;
         }
 
         /// <summary>
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// If the FHIR service is in InitialImportMode.
         /// Serialized Name: FhirServiceImportConfiguration.initialImportMode
         /// </summary>
-        public bool? InitialImportMode { get; set; }
+        public bool? IsInitialImportMode { get; set; }
         /// <summary>
         /// If the import operation is enabled.
         /// Serialized Name: FhirServiceImportConfiguration.enabled
         /// </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

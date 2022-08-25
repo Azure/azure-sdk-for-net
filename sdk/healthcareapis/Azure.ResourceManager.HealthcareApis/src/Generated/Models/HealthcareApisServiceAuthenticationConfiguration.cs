@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// The audience url for the service
         /// Serialized Name: ServiceAuthenticationConfigurationInfo.audience
         /// </param>
-        /// <param name="smartProxyEnabled">
+        /// <param name="isSmartProxyEnabled">
         /// If the SMART on FHIR proxy is enabled
         /// Serialized Name: ServiceAuthenticationConfigurationInfo.smartProxyEnabled
         /// </param>
-        internal HealthcareApisServiceAuthenticationConfiguration(string authority, string audience, bool? smartProxyEnabled)
+        internal HealthcareApisServiceAuthenticationConfiguration(string authority, string audience, bool? isSmartProxyEnabled)
         {
             Authority = authority;
             Audience = audience;
-            SmartProxyEnabled = smartProxyEnabled;
+            IsSmartProxyEnabled = isSmartProxyEnabled;
         }
 
         /// <summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// If the SMART on FHIR proxy is enabled
         /// Serialized Name: ServiceAuthenticationConfigurationInfo.smartProxyEnabled
         /// </summary>
-        public bool? SmartProxyEnabled { get; set; }
+        public bool? IsSmartProxyEnabled { get; set; }
     }
 }

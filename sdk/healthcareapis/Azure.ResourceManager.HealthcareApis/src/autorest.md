@@ -87,6 +87,13 @@ rename-mapping:
   ServiceCosmosDbConfigurationInfo: HealthcareApisServiceCosmosDbConfiguration
   ServiceImportConfigurationInfo: HealthcareApisServiceImportConfiguration
   ServiceOciArtifactEntry: HealthcareApisServiceOciArtifactEntry
+  FhirServiceAuthenticationConfiguration.smartProxyEnabled: IsSmartProxyEnabled
+  FhirServiceImportConfiguration.enabled: IsEnabled
+  FhirServiceImportConfiguration.initialImportMode: IsInitialImportMode
+  ServiceAuthenticationConfigurationInfo.smartProxyEnabled: IsSmartProxyEnabled
+  ServiceImportConfigurationInfo.enabled: IsEnabled
+  ServiceImportConfigurationInfo.initialImportMode: IsInitialImportMode
+  IotFhirDestination.properties.fhirServiceResourceId: -|arm-id
 
 mgmt-debug:
   show-serialized-names: true

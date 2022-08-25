@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.HealthcareApis
     }
     public partial class HealthcareApisIotFhirDestinationData : Azure.ResourceManager.Models.ResourceData
     {
-        public HealthcareApisIotFhirDestinationData(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, string fhirServiceResourceId, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties fhirMapping) { }
+        public HealthcareApisIotFhirDestinationData(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, Azure.Core.ResourceIdentifier fhirServiceResourceId, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties fhirMapping) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.BinaryData FhirMappingContent { get { throw null; } set { } }
-        public string FhirServiceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier FhirServiceResourceId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType ResourceIdentityResolutionType { get { throw null; } set { } }
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public FhirServiceAuthenticationConfiguration() { }
         public string Audience { get { throw null; } set { } }
         public string Authority { get { throw null; } set { } }
-        public bool? SmartProxyEnabled { get { throw null; } set { } }
+        public bool? IsSmartProxyEnabled { get { throw null; } set { } }
     }
     public partial class FhirServiceCorsConfiguration
     {
@@ -525,9 +525,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public partial class FhirServiceImportConfiguration
     {
         public FhirServiceImportConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public bool? InitialImportMode { get { throw null; } set { } }
         public string IntegrationDataStore { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsInitialImportMode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FhirServiceKind : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public HealthcareApisServiceAuthenticationConfiguration() { }
         public string Audience { get { throw null; } set { } }
         public string Authority { get { throw null; } set { } }
-        public bool? SmartProxyEnabled { get { throw null; } set { } }
+        public bool? IsSmartProxyEnabled { get { throw null; } set { } }
     }
     public partial class HealthcareApisServiceCorsConfiguration
     {
@@ -751,9 +751,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public partial class HealthcareApisServiceImportConfiguration
     {
         public HealthcareApisServiceImportConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public bool? InitialImportMode { get { throw null; } set { } }
         public string IntegrationDataStore { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsInitialImportMode { get { throw null; } set { } }
     }
     public partial class HealthcareApisServiceOciArtifactEntry
     {
