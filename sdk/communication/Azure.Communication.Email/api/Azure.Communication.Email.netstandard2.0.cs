@@ -132,6 +132,7 @@ namespace Azure.Communication.Email.Models
     }
     public partial class EmailRecipients
     {
+        public EmailRecipients(Azure.Communication.Email.Models.EmailAddress to, System.Collections.Generic.IEnumerable<Azure.Communication.Email.Models.EmailAddress> cc = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.Models.EmailAddress> bcc = null) { }
         public EmailRecipients(System.Collections.Generic.IEnumerable<Azure.Communication.Email.Models.EmailAddress> to) { }
         public EmailRecipients(System.Collections.Generic.IEnumerable<Azure.Communication.Email.Models.EmailAddress> to, System.Collections.Generic.IEnumerable<Azure.Communication.Email.Models.EmailAddress> cc = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.Models.EmailAddress> bcc = null) { }
         public System.Collections.Generic.IList<Azure.Communication.Email.Models.EmailAddress> BCC { get { throw null; } }
