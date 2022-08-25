@@ -1,0 +1,495 @@
+import "@cadl-lang/rest";
+
+import "./models.cadl";
+
+using Cadl.Rest;
+
+using Cadl.Http;
+
+// TODO: (missing-docs) Add documentation
+interface Operations {
+  @summary("Gets a list of keys.")
+  @doc("Gets a list of keys.")
+  @route("/keys")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @get
+  GetKeys(
+    @doc("A filter for the name of the returned keys.")
+    @query
+    name: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.keyset+json, application/json, application/problem+json"
+  ): Error | KeyListResult;
+  @summary("Requests the headers and status of the given resource.")
+  @doc("Requests the headers and status of the given resource.")
+  @route("/keys")
+  @head
+  CheckKeys(
+    @doc("A filter for the name of the returned keys.")
+    @query
+    name: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string
+  ): void;
+  @summary("Gets a list of key-values.")
+  @doc("Gets a list of key-values.")
+  @route("/kv")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @get
+  GetKeyValues(
+    @doc("A filter used to match keys.")
+    @query
+    key: string,
+
+    @doc("A filter used to match labels")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: get_6_itemsItem[],
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json"
+  ): Error | KeyValueListResult;
+  @summary("Requests the headers and status of the given resource.")
+  @doc("Requests the headers and status of the given resource.")
+  @route("/kv")
+  @head
+  CheckKeyValues(
+    @doc("A filter used to match keys.")
+    @query
+    key: string,
+
+    @doc("A filter used to match labels")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: head_6_itemsItem[]
+  ): void;
+  @summary("Gets a single key-value.")
+  @doc("Gets a single key-value.")
+  @route("/kv/{key}")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @get
+  GetKeyValue(
+    @doc("The key of the key-value to retrieve.")
+    @path
+    key: string,
+
+    @doc("The label of the key-value to retrieve.")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
+    @header
+    "If-Match": string,
+
+    @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
+    @header
+    "If-None-Match": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: get_7_itemsItem[],
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+  ): Error | KeyValue;
+  @summary("Creates a key-value.")
+  @doc("Creates a key-value.")
+  @route("/kv/{key}")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @put
+  PutKeyValue(
+    @doc("The key of the key-value to create.")
+    @path
+    key: string,
+
+    @doc("The label of the key-value to create.")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
+    @header
+    "If-Match": string,
+
+    @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
+    @header
+    "If-None-Match": string,
+
+    @doc("The key-value to create.")
+    @body
+    entity: KeyValue,
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+  ): Error | KeyValue;
+  @summary("Deletes a key-value.")
+  @doc("Deletes a key-value.")
+  @route("/kv/{key}")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @delete
+  DeleteKeyValue(
+    @doc("The key of the key-value to delete.")
+    @path
+    key: string,
+
+    @doc("The label of the key-value to delete.")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
+    @header
+    "If-Match": string,
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+  ): Error | KeyValue | void;
+  @summary("Requests the headers and status of the given resource.")
+  @doc("Requests the headers and status of the given resource.")
+  @route("/kv/{key}")
+  @head
+  CheckKeyValue(
+    @doc("The key of the key-value to retrieve.")
+    @path
+    key: string,
+
+    @doc("The label of the key-value to retrieve.")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
+    @header
+    "If-Match": string,
+
+    @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
+    @header
+    "If-None-Match": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: head_7_itemsItem[]
+  ): void;
+  @summary("Gets a list of labels.")
+  @doc("Gets a list of labels.")
+  @route("/labels")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @get
+  GetLabels(
+    @doc("A filter for the name of the returned labels.")
+    @query
+    name: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: get_5_itemsItem[],
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.labelset+json, application/json, application/problem+json"
+  ): Error | LabelListResult;
+  @summary("Requests the headers and status of the given resource.")
+  @doc("Requests the headers and status of the given resource.")
+  @route("/labels")
+  @head
+  CheckLabels(
+    @doc("A filter for the name of the returned labels.")
+    @query
+    name: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: head_5_itemsItem[]
+  ): void;
+  @summary("Locks a key-value.")
+  @doc("Locks a key-value.")
+  @route("/locks/{key}")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @put
+  PutLock(
+    @doc("The key of the key-value to lock.")
+    @path
+    key: string,
+
+    @doc("The label, if any, of the key-value to lock.")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
+    @header
+    "If-Match": string,
+
+    @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
+    @header
+    "If-None-Match": string,
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+  ): Error | KeyValue;
+  @summary("Unlocks a key-value.")
+  @doc("Unlocks a key-value.")
+  @route("/locks/{key}")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @delete
+  DeleteLock(
+    @doc("The key of the key-value to unlock.")
+    @path
+    key: string,
+
+    @doc("The label, if any, of the key-value to unlock.")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
+    @header
+    "If-Match": string,
+
+    @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
+    @header
+    "If-None-Match": string,
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+  ): Error | KeyValue;
+  @summary("Gets a list of key-value revisions.")
+  @doc("Gets a list of key-value revisions.")
+  @route("/revisions")
+  //TODO: (multi-response) Swagger defines multiple requests and responses.
+  //      This needs to be revisited as CADL supports linking specific responses to each request
+  @get
+  GetRevisions(
+    @doc("A filter used to match keys.")
+    @query
+    key: string,
+
+    @doc("A filter used to match labels")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: paths·18s2vl1·revisions·get·parameters·6·schema·items[],
+
+    @doc("Accept header")
+    @header
+    Accept: "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json"
+  ): Error | KeyValueListResult;
+  @summary("Requests the headers and status of the given resource.")
+  @doc("Requests the headers and status of the given resource.")
+  @route("/revisions")
+  @head
+  CheckRevisions(
+    @doc("A filter used to match keys.")
+    @query
+    key: string,
+
+    @doc("A filter used to match labels")
+    @query
+    label: string,
+
+    @doc("Used to guarantee real-time consistency between requests.")
+    @header
+    "Sync-Token": string,
+
+    @doc("Api Version")
+    @query
+    "api-version": "1.0",
+
+    @doc("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query
+    After: string,
+
+    @doc("Requests the server to respond with the state of the resource at the specified time.")
+    @header
+    "Accept-Datetime": string,
+
+    @doc("Used to select what fields are present in the returned resource(s).")
+    @query
+    $Select: paths·eaaa80·revisions·head·parameters·6·schema·items[]
+  ): void;
+}

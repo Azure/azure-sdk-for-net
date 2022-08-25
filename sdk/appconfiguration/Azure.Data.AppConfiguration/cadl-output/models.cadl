@@ -1,0 +1,199 @@
+import "@cadl-lang/rest";
+import "@azure-tools/cadl-azure-core";
+
+using Cadl.Rest;
+using Azure.Core;
+
+// TODO: (missing-docs) Add documentation
+enum get_6_itemsItemKnownValues {
+  "key",
+  "label",
+  "content_type",
+  "value",
+  "last_modified",
+  "tags",
+  "locked",
+  "etag",
+}
+
+@knownValues(get_6_itemsItemKnownValues)
+model get_6_itemsItem is string;
+
+// TODO: (missing-docs) Add documentation
+enum head_6_itemsItemKnownValues {
+  "key",
+  "label",
+  "content_type",
+  "value",
+  "last_modified",
+  "tags",
+  "locked",
+  "etag",
+}
+
+@knownValues(head_6_itemsItemKnownValues)
+model head_6_itemsItem is string;
+
+// TODO: (missing-docs) Add documentation
+enum get_7_itemsItemKnownValues {
+  "key",
+  "label",
+  "content_type",
+  "value",
+  "last_modified",
+  "tags",
+  "locked",
+  "etag",
+}
+
+@knownValues(get_7_itemsItemKnownValues)
+model get_7_itemsItem is string;
+
+// TODO: (missing-docs) Add documentation
+enum head_7_itemsItemKnownValues {
+  "key",
+  "label",
+  "content_type",
+  "value",
+  "last_modified",
+  "tags",
+  "locked",
+  "etag",
+}
+
+@knownValues(head_7_itemsItemKnownValues)
+model head_7_itemsItem is string;
+
+// TODO: (missing-docs) Add documentation
+enum get_5_itemsItemKnownValues {
+  "name",
+}
+
+@knownValues(get_5_itemsItemKnownValues)
+model get_5_itemsItem is string;
+
+// TODO: (missing-docs) Add documentation
+enum head_5_itemsItemKnownValues {
+  "name",
+}
+
+@knownValues(head_5_itemsItemKnownValues)
+model head_5_itemsItem is string;
+
+// TODO: (missing-docs) Add documentation
+enum paths·18s2vl1·revisions·get·parameters·6·schema·itemsKnownValues {
+  "key",
+  "label",
+  "content_type",
+  "value",
+  "last_modified",
+  "tags",
+  "locked",
+  "etag",
+}
+
+@knownValues(paths·18s2vl1·revisions·get·parameters·6·schema·itemsKnownValues)
+model paths·18s2vl1·revisions·get·parameters·6·schema·items is string;
+
+// TODO: (missing-docs) Add documentation
+enum paths·eaaa80·revisions·head·parameters·6·schema·itemsKnownValues {
+  "key",
+  "label",
+  "content_type",
+  "value",
+  "last_modified",
+  "tags",
+  "locked",
+  "etag",
+}
+
+@knownValues(paths·eaaa80·revisions·head·parameters·6·schema·itemsKnownValues)
+model paths·eaaa80·revisions·head·parameters·6·schema·items is string;
+
+@doc("The result of a list request.")
+@pagedResult
+model KeyListResult {
+  @doc("The collection value.")
+  @items
+  items: Key[];
+
+  @doc("The URI that can be used to request the next set of paged results.")
+  @nextLink
+  "@nextLink": string;
+}
+
+// TODO: (missing-docs) Add documentation
+model Key {
+  // TODO: (missing-docs) Add documentation
+  name: string;
+}
+
+@doc("Azure App Configuration error object.")
+@error
+model Error {
+  @doc("The type of the error.")
+  type: string;
+
+  @doc("A brief summary of the error.")
+  title: string;
+
+  @doc("The name of the parameter that resulted in the error.")
+  name: string;
+
+  @doc("A detailed description of the error.")
+  detail: string;
+
+  @doc("The HTTP status code that the error maps to.")
+  status: int32;
+}
+
+@doc("The result of a list request.")
+@pagedResult
+model KeyValueListResult {
+  @doc("The collection value.")
+  @items
+  items: KeyValue[];
+
+  @doc("The URI that can be used to request the next set of paged results.")
+  @nextLink
+  "@nextLink": string;
+}
+
+// TODO: (missing-docs) Add documentation
+model KeyValue {
+  // TODO: (missing-docs) Add documentation
+  key: string;
+  // TODO: (missing-docs) Add documentation
+  label: string;
+  // TODO: (missing-docs) Add documentation
+  content_type: string;
+  // TODO: (missing-docs) Add documentation
+  value: string;
+  // TODO: (missing-docs) Add documentation
+  last_modified: zonedDateTime;
+
+  @doc("Dictionary of <string>")
+  tags: Record<string>;
+  // TODO: (missing-docs) Add documentation
+  locked: boolean;
+  // TODO: (missing-docs) Add documentation
+  etag: string;
+}
+
+@doc("The result of a list request.")
+@pagedResult
+model LabelListResult {
+  @doc("The collection value.")
+  @items
+  items: Label[];
+
+  @doc("The URI that can be used to request the next set of paged results.")
+  @nextLink
+  "@nextLink": string;
+}
+
+// TODO: (missing-docs) Add documentation
+model Label {
+  // TODO: (missing-docs) Add documentation
+  name: string;
+}

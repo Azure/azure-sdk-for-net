@@ -1,0 +1,18 @@
+import "./routes.cadl";
+
+using Cadl.Rest;
+
+using Cadl.Http;
+
+@serviceTitle("Azure App Configuration")
+@serviceVersion("1.0")
+@server(
+  "{endpoint}",
+  "// TODO: (miissing-service-description) Add service description",
+  {
+    @doc("The endpoint of the App Configuration instance to send requests to.")
+    endpoint: string,
+  }
+)
+@doc("// TODO: (miissing-service-description) Add service description")
+namespace AzureAppConfiguration;
