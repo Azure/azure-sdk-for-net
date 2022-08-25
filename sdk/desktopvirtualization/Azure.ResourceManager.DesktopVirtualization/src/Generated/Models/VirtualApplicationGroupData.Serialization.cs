@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                workspaceArmPath = null;
                                 continue;
                             }
                             workspaceArmPath = new ResourceIdentifier(property0.Value.GetString());

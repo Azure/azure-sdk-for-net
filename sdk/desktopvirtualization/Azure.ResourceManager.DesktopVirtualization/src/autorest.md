@@ -98,4 +98,8 @@ directive:
       return {
           "$ref": "#/definitions/Sku"
         }
+# nullable issue
+  - from: swagger-document
+    where: $.definitions.ApplicationGroupProperties.properties.workspaceArmPath
+    transform: $["x-nullable"] = true
 ```
