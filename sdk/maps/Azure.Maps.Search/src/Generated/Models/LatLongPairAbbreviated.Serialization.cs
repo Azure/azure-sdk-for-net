@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class LatLongPairAbbreviated
+    internal partial class LatLongPairAbbreviated
     {
         internal static LatLongPairAbbreviated DeserializeLatLongPairAbbreviated(JsonElement element)
         {

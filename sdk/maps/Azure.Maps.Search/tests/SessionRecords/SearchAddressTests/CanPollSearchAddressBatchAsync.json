@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "102",
         "Content-Type": "application/json",
-        "traceparent": "00-74038fce37de73f63b8c518c59c65037-932f823e75de738b-00",
+        "traceparent": "00-f4877dc705b9375ea6b553bffcab382f-c0483652f83643cc-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220824.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "84d860ae639909dd79a45e800e019175",
+        "x-ms-client-request-id": "b42c2ceee2ea79c1a75ccd0362bb3302",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,38 +28,38 @@
       "ResponseHeaders": {
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 24 Aug 2022 23:37:51 GMT",
-        "Location": "https://atlas.microsoft.com/search/address/batch/64f46562-a401-4216-8075-cbcf3ebc841d?api-version=1.0",
+        "Date": "Thu, 25 Aug 2022 00:03:58 GMT",
+        "Location": "https://atlas.microsoft.com/search/address/batch/e0ba6d48-1280-467f-b2de-0e671cf3152c?api-version=1.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: F18D14B5117448AFBE296F1E754F1850 Ref B: PAOEDGE0521 Ref C: 2022-08-24T23:37:52Z"
+        "X-MSEdge-Ref": "Ref A: 5F824BCA458640ABAF4BFAE48BE2FB4C Ref B: PAOEDGE0511 Ref C: 2022-08-25T00:03:58Z"
       },
       "ResponseBody": "\u0022\u0022"
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/search/address/batch/64f46562-a401-4216-8075-cbcf3ebc841d?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/search/address/batch/e0ba6d48-1280-467f-b2de-0e671cf3152c?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220824.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "a80cbfa8e5a0a02b4abc3bd31da450ea",
+        "x-ms-client-request-id": "81c125c5d78d0aa9b0b8ce4a3a95bf1c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Wed, 24 Aug 2022 23:37:51 GMT",
+        "Date": "Thu, 25 Aug 2022 00:03:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: E7BB2E27D63A4234AB07C763946DE635 Ref B: PAOEDGE0521 Ref C: 2022-08-24T23:37:52Z"
+        "X-MSEdge-Ref": "Ref A: FBCD848D6DF842C98EF04CC192E20316 Ref B: PAOEDGE0511 Ref C: 2022-08-25T00:03:59Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -69,7 +69,7 @@
               "summary": {
                 "query": "microsoft campus",
                 "queryType": "NON_NEAR",
-                "queryTime": 34,
+                "queryTime": 4,
                 "numResults": 1,
                 "offset": 0,
                 "totalResults": 1,
@@ -119,7 +119,7 @@
               "summary": {
                 "query": "millenium",
                 "queryType": "NON_NEAR",
-                "queryTime": 14,
+                "queryTime": 5,
                 "numResults": 2,
                 "offset": 0,
                 "totalResults": 2,
@@ -213,6 +213,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "471251200"
+    "RandomSeed": "1473267678"
   }
 }

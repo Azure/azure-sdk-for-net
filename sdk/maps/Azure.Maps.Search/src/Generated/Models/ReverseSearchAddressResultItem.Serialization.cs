@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
             Optional<MapsAddress> address = default;
             Optional<string> position = default;
             Optional<IReadOnlyList<RoadUseType>> roadUse = default;
-            Optional<MatchType> matchType = default;
+            Optional<MapsSearchMatchType> matchType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"))
@@ -58,7 +58,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    matchType = new MatchType(property.Value.GetString());
+                    matchType = new MapsSearchMatchType(property.Value.GetString());
                     continue;
                 }
             }

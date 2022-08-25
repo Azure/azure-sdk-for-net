@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-    public partial class LatLongPairAbbreviated
+    internal partial class LatLongPairAbbreviated
     {
         /// <summary> Initializes a new instance of LatLongPairAbbreviated. </summary>
         internal LatLongPairAbbreviated()

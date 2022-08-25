@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
             Optional<IReadOnlyList<FacilityEntryPoint>> entryPoints = default;
             Optional<AddressRanges> addressRanges = default;
             Optional<DataSource> dataSources = default;
-            Optional<MatchType> matchType = default;
+            Optional<MapsSearchMatchType> matchType = default;
             Optional<int> detourTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    matchType = new MatchType(property.Value.GetString());
+                    matchType = new MapsSearchMatchType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("detourTime"))

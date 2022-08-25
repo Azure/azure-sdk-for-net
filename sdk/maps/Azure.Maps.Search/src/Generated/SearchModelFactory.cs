@@ -32,15 +32,6 @@ namespace Azure.Maps.Search.Models
             return new PolygonObject(providerId, geometryData);
         }
 
-        /// <summary> Initializes a new instance of LatLongPairAbbreviated. </summary>
-        /// <param name="lat"> Latitude property. </param>
-        /// <param name="lon"> Longitude property. </param>
-        /// <returns> A new <see cref="Models.LatLongPairAbbreviated"/> instance for mocking. </returns>
-        public static LatLongPairAbbreviated LatLongPairAbbreviated(double? lat = null, double? lon = null)
-        {
-            return new LatLongPairAbbreviated(lat, lon);
-        }
-
         /// <summary> Initializes a new instance of PointOfInterest. </summary>
         /// <param name="name"> Name of the POI property. </param>
         /// <param name="phone"> Telephone number property. </param>
@@ -161,7 +152,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <returns> A new <see cref="Models.ReverseSearchAddressResultItem"/> instance for mocking. </returns>
-        public static ReverseSearchAddressResultItem ReverseSearchAddressResultItem(MapsAddress address = null, string position = null, IEnumerable<RoadUseType> roadUse = null, MatchType? matchType = null)
+        public static ReverseSearchAddressResultItem ReverseSearchAddressResultItem(MapsAddress address = null, string position = null, IEnumerable<RoadUseType> roadUse = null, MapsSearchMatchType? matchType = null)
         {
             roadUse ??= new List<RoadUseType>();
 
