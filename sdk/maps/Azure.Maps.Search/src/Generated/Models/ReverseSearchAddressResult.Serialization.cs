@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         internal static ReverseSearchAddressResult DeserializeReverseSearchAddressResult(JsonElement element)
         {
             Optional<SearchSummary> summary = default;
-            Optional<IReadOnlyList<ReverseSearchAddressResultItem>> addresses = default;
+            Optional<IReadOnlyList<ReverseSearchAddressItem>> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"))
@@ -36,10 +36,10 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReverseSearchAddressResultItem> array = new List<ReverseSearchAddressResultItem>();
+                    List<ReverseSearchAddressItem> array = new List<ReverseSearchAddressItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReverseSearchAddressResultItem.DeserializeReverseSearchAddressResultItem(item));
+                        array.Add(ReverseSearchAddressItem.DeserializeReverseSearchAddressItem(item));
                     }
                     addresses = array;
                     continue;

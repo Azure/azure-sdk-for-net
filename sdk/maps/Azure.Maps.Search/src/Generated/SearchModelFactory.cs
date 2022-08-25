@@ -119,7 +119,7 @@ namespace Azure.Maps.Search.Models
             return new PointOfInterestCategory(id, name, childIds?.ToList(), synonyms?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressResultItem. </summary>
+        /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
         /// <param name="address"> The address of the result. </param>
         /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
         /// <param name="roadUse"></param>
@@ -131,12 +131,12 @@ namespace Azure.Maps.Search.Models
         ///   * HouseNumberRange
         ///   * Street
         /// </param>
-        /// <returns> A new <see cref="Models.ReverseSearchAddressResultItem"/> instance for mocking. </returns>
-        public static ReverseSearchAddressResultItem ReverseSearchAddressResultItem(MapsAddress address = null, string position = null, IEnumerable<RoadUseType> roadUse = null, MapsSearchMatchType? matchType = null)
+        /// <returns> A new <see cref="Models.ReverseSearchAddressItem"/> instance for mocking. </returns>
+        public static ReverseSearchAddressItem ReverseSearchAddressItem(MapsAddress address = null, string position = null, IEnumerable<RoadKind> roadUse = null, MapsSearchMatchType? matchType = null)
         {
-            roadUse ??= new List<RoadUseType>();
+            roadUse ??= new List<RoadKind>();
 
-            return new ReverseSearchAddressResultItem(address, position, roadUse?.ToList(), matchType);
+            return new ReverseSearchAddressItem(address, position, roadUse?.ToList(), matchType);
         }
 
         /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResultItem. </summary>

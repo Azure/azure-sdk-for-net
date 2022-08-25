@@ -1877,7 +1877,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateReverseSearchAddressRequest(IEnumerable<double> query, ResponseFormat? format, string language, bool? includeSpeedLimit, int? heading, int? radiusInMeters, string number, bool? includeRoadUse, IEnumerable<RoadUseType> roadUse, bool? allowFreeformNewline, bool? includeMatchType, GeographicEntityType? entityType, LocalizedMapView? localizedMapView)
+        internal HttpMessage CreateReverseSearchAddressRequest(IEnumerable<double> query, ResponseFormat? format, string language, bool? includeSpeedLimit, int? heading, int? radiusInMeters, string number, bool? includeRoadUse, IEnumerable<RoadKind> roadUse, bool? allowFreeformNewline, bool? includeMatchType, GeographicEntityType? entityType, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1985,7 +1985,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadKind> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2053,7 +2053,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadUseType> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadKind> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {

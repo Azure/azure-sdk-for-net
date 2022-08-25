@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Result object for a Search Address Reverse response. </summary>
-    public partial class ReverseSearchAddressResultItem
+    public partial class ReverseSearchAddressItem
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressResultItem. </summary>
-        internal ReverseSearchAddressResultItem()
+        /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
+        internal ReverseSearchAddressItem()
         {
-            RoadUse = new ChangeTrackingList<RoadUseType>();
+            RoadUse = new ChangeTrackingList<RoadKind>();
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressResultItem. </summary>
+        /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
         /// <param name="address"> The address of the result. </param>
         /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
         /// <param name="roadUse"></param>
@@ -31,7 +31,7 @@ namespace Azure.Maps.Search.Models
         ///   * HouseNumberRange
         ///   * Street
         /// </param>
-        internal ReverseSearchAddressResultItem(MapsAddress address, string position, IReadOnlyList<RoadUseType> roadUse, MapsSearchMatchType? matchType)
+        internal ReverseSearchAddressItem(MapsAddress address, string position, IReadOnlyList<RoadKind> roadUse, MapsSearchMatchType? matchType)
         {
             Address = address;
             Position = position;
@@ -44,7 +44,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Position property in the form of &quot;{latitude},{longitude}&quot;. </summary>
         public string Position { get; }
         /// <summary> Gets the road use. </summary>
-        public IReadOnlyList<RoadUseType> RoadUse { get; }
+        public IReadOnlyList<RoadKind> RoadUse { get; }
         /// <summary>
         /// Information on the type of match.
         /// 

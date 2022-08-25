@@ -24,7 +24,7 @@ namespace Azure.Maps.Search
         public string Number { get; set; }
 
         /// <summary> To restrict reverse geocodes to a certain type of road use. The road use array for reverse geocodes can be one or more of LimitedAccess, Arterial, Terminal, Ramp, Rotary, LocalStreet. </summary>
-        public IEnumerable<RoadUseType> RoadUse { get; set; }
+        public IEnumerable<RoadKind> RoadUse { get; set; }
 
         /// <summary>
         /// Format of newlines in the formatted address.

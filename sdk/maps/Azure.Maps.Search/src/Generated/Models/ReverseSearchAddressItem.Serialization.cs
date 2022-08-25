@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseSearchAddressResultItem
+    public partial class ReverseSearchAddressItem
     {
-        internal static ReverseSearchAddressResultItem DeserializeReverseSearchAddressResultItem(JsonElement element)
+        internal static ReverseSearchAddressItem DeserializeReverseSearchAddressItem(JsonElement element)
         {
             Optional<MapsAddress> address = default;
             Optional<string> position = default;
-            Optional<IReadOnlyList<RoadUseType>> roadUse = default;
+            Optional<IReadOnlyList<RoadKind>> roadUse = default;
             Optional<MapsSearchMatchType> matchType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,10 +43,10 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RoadUseType> array = new List<RoadUseType>();
+                    List<RoadKind> array = new List<RoadKind>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RoadUseType(item.GetString()));
+                        array.Add(new RoadKind(item.GetString()));
                     }
                     roadUse = array;
                     continue;
@@ -62,7 +62,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressResultItem(address.Value, position.Value, Optional.ToList(roadUse), Optional.ToNullable(matchType));
+            return new ReverseSearchAddressItem(address.Value, position.Value, Optional.ToList(roadUse), Optional.ToNullable(matchType));
         }
     }
 }

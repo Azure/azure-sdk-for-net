@@ -16,18 +16,18 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of ReverseSearchAddressResult. </summary>
         internal ReverseSearchAddressResult()
         {
-            Addresses = new ChangeTrackingList<ReverseSearchAddressResultItem>();
+            Addresses = new ChangeTrackingList<ReverseSearchAddressItem>();
         }
 
         /// <summary> Initializes a new instance of ReverseSearchAddressResult. </summary>
         /// <param name="summary"> Summary object for a Search Address Reverse response. </param>
         /// <param name="addresses"> Addresses array. </param>
-        internal ReverseSearchAddressResult(SearchSummary summary, IReadOnlyList<ReverseSearchAddressResultItem> addresses)
+        internal ReverseSearchAddressResult(SearchSummary summary, IReadOnlyList<ReverseSearchAddressItem> addresses)
         {
             Summary = summary;
             Addresses = addresses;
         }
         /// <summary> Addresses array. </summary>
-        public IReadOnlyList<ReverseSearchAddressResultItem> Addresses { get; }
+        public IReadOnlyList<ReverseSearchAddressItem> Addresses { get; }
     }
 }
