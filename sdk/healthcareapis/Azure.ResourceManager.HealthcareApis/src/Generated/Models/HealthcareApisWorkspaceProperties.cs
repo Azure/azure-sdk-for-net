@@ -11,10 +11,7 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Workspaces resource specific properties.
-    /// Serialized Name: WorkspaceProperties
-    /// </summary>
+    /// <summary> Workspaces resource specific properties. </summary>
     public partial class HealthcareApisWorkspaceProperties
     {
         /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
-        /// <param name="provisioningState">
-        /// The provisioning state.
-        /// Serialized Name: WorkspaceProperties.provisioningState
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// The list of private endpoint connections that are set up for this resource.
-        /// Serialized Name: WorkspaceProperties.privateEndpointConnections
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-        /// Serialized Name: WorkspaceProperties.publicNetworkAccess
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
+        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         internal HealthcareApisWorkspaceProperties(HealthcareApisProvisioningState? provisioningState, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess)
         {
             ProvisioningState = provisioningState;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             PublicNetworkAccess = publicNetworkAccess;
         }
 
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: WorkspaceProperties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         public HealthcareApisProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The list of private endpoint connections that are set up for this resource.
-        /// Serialized Name: WorkspaceProperties.privateEndpointConnections
-        /// </summary>
+        /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
         public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary>
-        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-        /// Serialized Name: WorkspaceProperties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

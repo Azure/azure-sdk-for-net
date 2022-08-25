@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The kind of the service.
-    /// Serialized Name: FhirServiceKind
-    /// </summary>
+    /// <summary> The kind of the service. </summary>
     public readonly partial struct FhirServiceKind : IEquatable<FhirServiceKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string FhirStu3Value = "fhir-Stu3";
         private const string FhirR4Value = "fhir-R4";
 
-        /// <summary>
-        /// fhir-Stu3
-        /// Serialized Name: FhirServiceKind.fhir-Stu3
-        /// </summary>
+        /// <summary> fhir-Stu3. </summary>
         public static FhirServiceKind FhirStu3 { get; } = new FhirServiceKind(FhirStu3Value);
-        /// <summary>
-        /// fhir-R4
-        /// Serialized Name: FhirServiceKind.fhir-R4
-        /// </summary>
+        /// <summary> fhir-R4. </summary>
         public static FhirServiceKind FhirR4 { get; } = new FhirServiceKind(FhirR4Value);
         /// <summary> Determines if two <see cref="FhirServiceKind"/> values are the same. </summary>
         public static bool operator ==(FhirServiceKind left, FhirServiceKind right) => left.Equals(right);

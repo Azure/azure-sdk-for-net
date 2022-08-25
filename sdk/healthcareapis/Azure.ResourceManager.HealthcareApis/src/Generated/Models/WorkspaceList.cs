@@ -11,10 +11,7 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Collection of workspace object with a next link
-    /// Serialized Name: WorkspaceList
-    /// </summary>
+    /// <summary> Collection of workspace object with a next link. </summary>
     internal partial class WorkspaceList
     {
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
-        /// <param name="nextLink">
-        /// The link used to get the next page.
-        /// Serialized Name: WorkspaceList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: WorkspaceList.value
-        /// </param>
+        /// <param name="nextLink"> The link used to get the next page. </param>
+        /// <param name="value"> Collection of resources. </param>
         internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspaceData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link used to get the next page.
-        /// Serialized Name: WorkspaceList.nextLink
-        /// </summary>
+        /// <summary> The link used to get the next page. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: WorkspaceList.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<HealthcareApisWorkspaceData> Value { get; }
     }
 }

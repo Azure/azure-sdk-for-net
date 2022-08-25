@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The mapping content.
-    /// Serialized Name: IotMappingProperties
-    /// </summary>
+    /// <summary> The mapping content. </summary>
     public partial class HealthcareApisIotMappingProperties
     {
         /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
@@ -21,10 +18,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
-        /// <param name="content">
-        /// The mapping.
-        /// Serialized Name: IotMappingProperties.content
-        /// </param>
+        /// <param name="content"> The mapping. </param>
         internal HealthcareApisIotMappingProperties(BinaryData content)
         {
             Content = content;
@@ -32,7 +26,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary>
         /// The mapping.
-        /// Serialized Name: IotMappingProperties.content
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

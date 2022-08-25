@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Authentication configuration information
-    /// Serialized Name: ServiceAuthenticationConfigurationInfo
-    /// </summary>
+    /// <summary> Authentication configuration information. </summary>
     public partial class HealthcareApisServiceAuthenticationConfiguration
     {
         /// <summary> Initializes a new instance of HealthcareApisServiceAuthenticationConfiguration. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisServiceAuthenticationConfiguration. </summary>
-        /// <param name="authority">
-        /// The authority url for the service
-        /// Serialized Name: ServiceAuthenticationConfigurationInfo.authority
-        /// </param>
-        /// <param name="audience">
-        /// The audience url for the service
-        /// Serialized Name: ServiceAuthenticationConfigurationInfo.audience
-        /// </param>
-        /// <param name="isSmartProxyEnabled">
-        /// If the SMART on FHIR proxy is enabled
-        /// Serialized Name: ServiceAuthenticationConfigurationInfo.smartProxyEnabled
-        /// </param>
+        /// <param name="authority"> The authority url for the service. </param>
+        /// <param name="audience"> The audience url for the service. </param>
+        /// <param name="isSmartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>
         internal HealthcareApisServiceAuthenticationConfiguration(string authority, string audience, bool? isSmartProxyEnabled)
         {
             Authority = authority;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             IsSmartProxyEnabled = isSmartProxyEnabled;
         }
 
-        /// <summary>
-        /// The authority url for the service
-        /// Serialized Name: ServiceAuthenticationConfigurationInfo.authority
-        /// </summary>
+        /// <summary> The authority url for the service. </summary>
         public string Authority { get; set; }
-        /// <summary>
-        /// The audience url for the service
-        /// Serialized Name: ServiceAuthenticationConfigurationInfo.audience
-        /// </summary>
+        /// <summary> The audience url for the service. </summary>
         public string Audience { get; set; }
-        /// <summary>
-        /// If the SMART on FHIR proxy is enabled
-        /// Serialized Name: ServiceAuthenticationConfigurationInfo.smartProxyEnabled
-        /// </summary>
+        /// <summary> If the SMART on FHIR proxy is enabled. </summary>
         public bool? IsSmartProxyEnabled { get; set; }
     }
 }

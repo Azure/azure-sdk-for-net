@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Import operation configuration information
-    /// Serialized Name: FhirServiceImportConfiguration
-    /// </summary>
+    /// <summary> Import operation configuration information. </summary>
     public partial class FhirServiceImportConfiguration
     {
         /// <summary> Initializes a new instance of FhirServiceImportConfiguration. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of FhirServiceImportConfiguration. </summary>
-        /// <param name="integrationDataStore">
-        /// The name of the default integration storage account.
-        /// Serialized Name: FhirServiceImportConfiguration.integrationDataStore
-        /// </param>
-        /// <param name="isInitialImportMode">
-        /// If the FHIR service is in InitialImportMode.
-        /// Serialized Name: FhirServiceImportConfiguration.initialImportMode
-        /// </param>
-        /// <param name="isEnabled">
-        /// If the import operation is enabled.
-        /// Serialized Name: FhirServiceImportConfiguration.enabled
-        /// </param>
+        /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
+        /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
+        /// <param name="isEnabled"> If the import operation is enabled. </param>
         internal FhirServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled)
         {
             IntegrationDataStore = integrationDataStore;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary>
-        /// The name of the default integration storage account.
-        /// Serialized Name: FhirServiceImportConfiguration.integrationDataStore
-        /// </summary>
+        /// <summary> The name of the default integration storage account. </summary>
         public string IntegrationDataStore { get; set; }
-        /// <summary>
-        /// If the FHIR service is in InitialImportMode.
-        /// Serialized Name: FhirServiceImportConfiguration.initialImportMode
-        /// </summary>
+        /// <summary> If the FHIR service is in InitialImportMode. </summary>
         public bool? IsInitialImportMode { get; set; }
-        /// <summary>
-        /// If the import operation is enabled.
-        /// Serialized Name: FhirServiceImportConfiguration.enabled
-        /// </summary>
+        /// <summary> If the import operation is enabled. </summary>
         public bool? IsEnabled { get; set; }
     }
 }

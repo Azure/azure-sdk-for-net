@@ -95,9 +95,6 @@ rename-mapping:
   ServiceImportConfigurationInfo.initialImportMode: IsInitialImportMode
   IotFhirDestination.properties.fhirServiceResourceId: -|arm-id
 
-mgmt-debug:
-  show-serialized-names: true
-
 directive:
 # remove LRO related operations
   - remove-operation: OperationResults_Get

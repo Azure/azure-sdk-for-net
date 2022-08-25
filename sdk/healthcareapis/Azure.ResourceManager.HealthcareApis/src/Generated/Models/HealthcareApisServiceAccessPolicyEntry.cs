@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// An access policy entry.
-    /// Serialized Name: ServiceAccessPolicyEntry
-    /// </summary>
+    /// <summary> An access policy entry. </summary>
     public partial class HealthcareApisServiceAccessPolicyEntry
     {
         /// <summary> Initializes a new instance of HealthcareApisServiceAccessPolicyEntry. </summary>
-        /// <param name="objectId">
-        /// An Azure AD object ID (User or Apps) that is allowed access to the FHIR service.
-        /// Serialized Name: ServiceAccessPolicyEntry.objectId
-        /// </param>
+        /// <param name="objectId"> An Azure AD object ID (User or Apps) that is allowed access to the FHIR service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public HealthcareApisServiceAccessPolicyEntry(string objectId)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             ObjectId = objectId;
         }
 
-        /// <summary>
-        /// An Azure AD object ID (User or Apps) that is allowed access to the FHIR service.
-        /// Serialized Name: ServiceAccessPolicyEntry.objectId
-        /// </summary>
+        /// <summary> An Azure AD object ID (User or Apps) that is allowed access to the FHIR service. </summary>
         public string ObjectId { get; set; }
     }
 }

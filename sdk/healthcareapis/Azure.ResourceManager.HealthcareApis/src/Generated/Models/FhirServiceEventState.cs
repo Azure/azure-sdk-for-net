@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Indicates the current status of event support for the resource.
-    /// Serialized Name: ServiceEventState
-    /// </summary>
+    /// <summary> Indicates the current status of event support for the resource. </summary>
     public readonly partial struct FhirServiceEventState : IEquatable<FhirServiceEventState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string EnabledValue = "Enabled";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ServiceEventState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static FhirServiceEventState Disabled { get; } = new FhirServiceEventState(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ServiceEventState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static FhirServiceEventState Enabled { get; } = new FhirServiceEventState(EnabledValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ServiceEventState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static FhirServiceEventState Updating { get; } = new FhirServiceEventState(UpdatingValue);
         /// <summary> Determines if two <see cref="FhirServiceEventState"/> values are the same. </summary>
         public static bool operator ==(FhirServiceEventState left, FhirServiceEventState right) => left.Equals(right);

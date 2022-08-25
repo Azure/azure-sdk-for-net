@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Event Hub ingestion endpoint configuration
-    /// Serialized Name: IotEventHubIngestionEndpointConfiguration
-    /// </summary>
+    /// <summary> Event Hub ingestion endpoint configuration. </summary>
     public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration
     {
         /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
-        /// <param name="eventHubName">
-        /// Event Hub name to connect to.
-        /// Serialized Name: IotEventHubIngestionEndpointConfiguration.eventHubName
-        /// </param>
-        /// <param name="consumerGroup">
-        /// Consumer group of the event hub to connected to.
-        /// Serialized Name: IotEventHubIngestionEndpointConfiguration.consumerGroup
-        /// </param>
-        /// <param name="fullyQualifiedEventHubNamespace">
-        /// Fully qualified namespace of the Event Hub to connect to.
-        /// Serialized Name: IotEventHubIngestionEndpointConfiguration.fullyQualifiedEventHubNamespace
-        /// </param>
+        /// <param name="eventHubName"> Event Hub name to connect to. </param>
+        /// <param name="consumerGroup"> Consumer group of the event hub to connected to. </param>
+        /// <param name="fullyQualifiedEventHubNamespace"> Fully qualified namespace of the Event Hub to connect to. </param>
         internal HealthcareApisIotConnectorEventHubIngestionConfiguration(string eventHubName, string consumerGroup, string fullyQualifiedEventHubNamespace)
         {
             EventHubName = eventHubName;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             FullyQualifiedEventHubNamespace = fullyQualifiedEventHubNamespace;
         }
 
-        /// <summary>
-        /// Event Hub name to connect to.
-        /// Serialized Name: IotEventHubIngestionEndpointConfiguration.eventHubName
-        /// </summary>
+        /// <summary> Event Hub name to connect to. </summary>
         public string EventHubName { get; set; }
-        /// <summary>
-        /// Consumer group of the event hub to connected to.
-        /// Serialized Name: IotEventHubIngestionEndpointConfiguration.consumerGroup
-        /// </summary>
+        /// <summary> Consumer group of the event hub to connected to. </summary>
         public string ConsumerGroup { get; set; }
-        /// <summary>
-        /// Fully qualified namespace of the Event Hub to connect to.
-        /// Serialized Name: IotEventHubIngestionEndpointConfiguration.fullyQualifiedEventHubNamespace
-        /// </summary>
+        /// <summary> Fully qualified namespace of the Event Hub to connect to. </summary>
         public string FullyQualifiedEventHubNamespace { get; set; }
     }
 }

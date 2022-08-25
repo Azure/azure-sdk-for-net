@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-    /// Serialized Name: PublicNetworkAccess
-    /// </summary>
+    /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
     public readonly partial struct HealthcareApisPublicNetworkAccess : IEquatable<HealthcareApisPublicNetworkAccess>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PublicNetworkAccess.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static HealthcareApisPublicNetworkAccess Enabled { get; } = new HealthcareApisPublicNetworkAccess(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PublicNetworkAccess.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static HealthcareApisPublicNetworkAccess Disabled { get; } = new HealthcareApisPublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="HealthcareApisPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisPublicNetworkAccess left, HealthcareApisPublicNetworkAccess right) => left.Equals(right);

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The description of the service.
-    /// Serialized Name: ServicesPatchDescription
-    /// </summary>
+    /// <summary> The description of the service. </summary>
     public partial class HealthcareApisServicePatch
     {
         /// <summary> Initializes a new instance of HealthcareApisServicePatch. </summary>
@@ -22,15 +19,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Instance tags
-        /// Serialized Name: ServicesPatchDescription.tags
-        /// </summary>
+        /// <summary> Instance tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-        /// Serialized Name: ServicesPatchDescription.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

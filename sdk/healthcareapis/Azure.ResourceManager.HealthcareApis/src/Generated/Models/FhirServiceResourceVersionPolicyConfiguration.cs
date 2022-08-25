@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The settings for history tracking for FHIR resources.
-    /// Serialized Name: ResourceVersionPolicyConfiguration
-    /// </summary>
+    /// <summary> The settings for history tracking for FHIR resources. </summary>
     public partial class FhirServiceResourceVersionPolicyConfiguration
     {
         /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
-        /// <param name="default">
-        /// The default value for tracking history across all resources.
-        /// Serialized Name: ResourceVersionPolicyConfiguration.default
-        /// </param>
-        /// <param name="resourceTypeOverrides">
-        /// A list of FHIR Resources and their version policy overrides.
-        /// Serialized Name: ResourceVersionPolicyConfiguration.resourceTypeOverrides
-        /// </param>
+        /// <param name="default"> The default value for tracking history across all resources. </param>
+        /// <param name="resourceTypeOverrides"> A list of FHIR Resources and their version policy overrides. </param>
         internal FhirServiceResourceVersionPolicyConfiguration(FhirResourceVersionPolicy? @default, IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides)
         {
             Default = @default;
             ResourceTypeOverrides = resourceTypeOverrides;
         }
 
-        /// <summary>
-        /// The default value for tracking history across all resources.
-        /// Serialized Name: ResourceVersionPolicyConfiguration.default
-        /// </summary>
+        /// <summary> The default value for tracking history across all resources. </summary>
         public FhirResourceVersionPolicy? Default { get; set; }
-        /// <summary>
-        /// A list of FHIR Resources and their version policy overrides.
-        /// Serialized Name: ResourceVersionPolicyConfiguration.resourceTypeOverrides
-        /// </summary>
+        /// <summary> A list of FHIR Resources and their version policy overrides. </summary>
         public IDictionary<string, FhirResourceVersionPolicy> ResourceTypeOverrides { get; }
     }
 }

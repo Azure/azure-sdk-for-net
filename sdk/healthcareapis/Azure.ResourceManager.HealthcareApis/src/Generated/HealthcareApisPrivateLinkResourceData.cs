@@ -26,18 +26,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId">
-        /// The private link resource group id.
-        /// Serialized Name: DummyPrivateLinkResource.properties.groupId
-        /// </param>
-        /// <param name="requiredMembers">
-        /// The private link resource required member names.
-        /// Serialized Name: DummyPrivateLinkResource.properties.requiredMembers
-        /// </param>
-        /// <param name="requiredZoneNames">
-        /// The private link resource Private link DNS zone name.
-        /// Serialized Name: DummyPrivateLinkResource.properties.requiredZoneNames
-        /// </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         internal HealthcareApisPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
@@ -45,20 +36,11 @@ namespace Azure.ResourceManager.HealthcareApis
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary>
-        /// The private link resource group id.
-        /// Serialized Name: DummyPrivateLinkResource.properties.groupId
-        /// </summary>
+        /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
-        /// <summary>
-        /// The private link resource required member names.
-        /// Serialized Name: DummyPrivateLinkResource.properties.requiredMembers
-        /// </summary>
+        /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary>
-        /// The private link resource Private link DNS zone name.
-        /// Serialized Name: DummyPrivateLinkResource.properties.requiredZoneNames
-        /// </summary>
+        /// <summary> The private link resource Private link DNS zone name. </summary>
         public IList<string> RequiredZoneNames { get; }
     }
 }

@@ -30,26 +30,11 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state.
-        /// Serialized Name: IotConnector.properties.provisioningState
-        /// </param>
-        /// <param name="ingestionEndpointConfiguration">
-        /// Source configuration.
-        /// Serialized Name: IotConnector.properties.ingestionEndpointConfiguration
-        /// </param>
-        /// <param name="deviceMapping">
-        /// Device Mappings.
-        /// Serialized Name: IotConnector.properties.deviceMapping
-        /// </param>
-        /// <param name="identity">
-        /// Setting indicating whether the service has a managed identity associated with it.
-        /// Serialized Name: ServiceManagedIdentity.identity
-        /// </param>
-        /// <param name="etag">
-        /// An etag associated with the resource, used for optimistic concurrency when editing it.
-        /// Serialized Name: ResourceCore.etag
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="ingestionEndpointConfiguration"> Source configuration. </param>
+        /// <param name="deviceMapping"> Device Mappings. </param>
+        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
+        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         internal HealthcareApisIotConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration, HealthcareApisIotMappingProperties deviceMapping, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
@@ -59,24 +44,14 @@ namespace Azure.ResourceManager.HealthcareApis
             ETag = etag;
         }
 
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: IotConnector.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         public HealthcareApisProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Source configuration.
-        /// Serialized Name: IotConnector.properties.ingestionEndpointConfiguration
-        /// </summary>
+        /// <summary> Source configuration. </summary>
         public HealthcareApisIotConnectorEventHubIngestionConfiguration IngestionEndpointConfiguration { get; set; }
-        /// <summary>
-        /// Device Mappings.
-        /// Serialized Name: IotConnector.properties.deviceMapping
-        /// </summary>
+        /// <summary> Device Mappings. </summary>
         internal HealthcareApisIotMappingProperties DeviceMapping { get; set; }
         /// <summary>
         /// The mapping.
-        /// Serialized Name: IotMappingProperties.content
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -116,15 +91,9 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        /// <summary>
-        /// Setting indicating whether the service has a managed identity associated with it.
-        /// Serialized Name: ServiceManagedIdentity.identity
-        /// </summary>
+        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// An etag associated with the resource, used for optimistic concurrency when editing it.
-        /// Serialized Name: ResourceCore.etag
-        /// </summary>
+        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
         public ETag? ETag { get; set; }
     }
 }

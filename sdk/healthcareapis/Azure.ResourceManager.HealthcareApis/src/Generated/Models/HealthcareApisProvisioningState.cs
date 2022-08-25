@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The provisioning state.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state. </summary>
     public readonly partial struct HealthcareApisProvisioningState : IEquatable<HealthcareApisProvisioningState>
     {
         private readonly string _value;
@@ -39,70 +36,31 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string WarnedValue = "Warned";
         private const string SystemMaintenanceValue = "SystemMaintenance";
 
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static HealthcareApisProvisioningState Deleting { get; } = new HealthcareApisProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static HealthcareApisProvisioningState Succeeded { get; } = new HealthcareApisProvisioningState(SucceededValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static HealthcareApisProvisioningState Creating { get; } = new HealthcareApisProvisioningState(CreatingValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static HealthcareApisProvisioningState Accepted { get; } = new HealthcareApisProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Verifying
-        /// Serialized Name: ProvisioningState.Verifying
-        /// </summary>
+        /// <summary> Verifying. </summary>
         public static HealthcareApisProvisioningState Verifying { get; } = new HealthcareApisProvisioningState(VerifyingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static HealthcareApisProvisioningState Updating { get; } = new HealthcareApisProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static HealthcareApisProvisioningState Failed { get; } = new HealthcareApisProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static HealthcareApisProvisioningState Canceled { get; } = new HealthcareApisProvisioningState(CanceledValue);
-        /// <summary>
-        /// Deprovisioned
-        /// Serialized Name: ProvisioningState.Deprovisioned
-        /// </summary>
+        /// <summary> Deprovisioned. </summary>
         public static HealthcareApisProvisioningState Deprovisioned { get; } = new HealthcareApisProvisioningState(DeprovisionedValue);
-        /// <summary>
-        /// Moving
-        /// Serialized Name: ProvisioningState.Moving
-        /// </summary>
+        /// <summary> Moving. </summary>
         public static HealthcareApisProvisioningState Moving { get; } = new HealthcareApisProvisioningState(MovingValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: ProvisioningState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static HealthcareApisProvisioningState Suspended { get; } = new HealthcareApisProvisioningState(SuspendedValue);
-        /// <summary>
-        /// Warned
-        /// Serialized Name: ProvisioningState.Warned
-        /// </summary>
+        /// <summary> Warned. </summary>
         public static HealthcareApisProvisioningState Warned { get; } = new HealthcareApisProvisioningState(WarnedValue);
-        /// <summary>
-        /// SystemMaintenance
-        /// Serialized Name: ProvisioningState.SystemMaintenance
-        /// </summary>
+        /// <summary> SystemMaintenance. </summary>
         public static HealthcareApisProvisioningState SystemMaintenance { get; } = new HealthcareApisProvisioningState(SystemMaintenanceValue);
         /// <summary> Determines if two <see cref="HealthcareApisProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisProvisioningState left, HealthcareApisProvisioningState right) => left.Equals(right);

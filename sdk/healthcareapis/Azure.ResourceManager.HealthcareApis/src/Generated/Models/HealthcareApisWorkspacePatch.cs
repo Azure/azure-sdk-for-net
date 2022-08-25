@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Workspace patch properties
-    /// Serialized Name: WorkspacePatchResource
-    /// </summary>
+    /// <summary> Workspace patch properties. </summary>
     public partial class HealthcareApisWorkspacePatch : HealthcareApisResourceTags
     {
         /// <summary> Initializes a new instance of HealthcareApisWorkspacePatch. </summary>
@@ -21,10 +18,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisWorkspacePatch. </summary>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: ResourceTags.tags
-        /// </param>
+        /// <param name="tags"> Resource tags. </param>
         internal HealthcareApisWorkspacePatch(IDictionary<string, string> tags) : base(tags)
         {
         }

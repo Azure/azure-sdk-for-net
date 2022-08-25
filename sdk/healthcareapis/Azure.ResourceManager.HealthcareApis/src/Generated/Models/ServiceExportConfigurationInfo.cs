@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Export operation configuration information
-    /// Serialized Name: ServiceExportConfigurationInfo
-    /// </summary>
+    /// <summary> Export operation configuration information. </summary>
     internal partial class ServiceExportConfigurationInfo
     {
         /// <summary> Initializes a new instance of ServiceExportConfigurationInfo. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of ServiceExportConfigurationInfo. </summary>
-        /// <param name="storageAccountName">
-        /// The name of the default export storage account.
-        /// Serialized Name: ServiceExportConfigurationInfo.storageAccountName
-        /// </param>
+        /// <param name="storageAccountName"> The name of the default export storage account. </param>
         internal ServiceExportConfigurationInfo(string storageAccountName)
         {
             StorageAccountName = storageAccountName;
         }
 
-        /// <summary>
-        /// The name of the default export storage account.
-        /// Serialized Name: ServiceExportConfigurationInfo.storageAccountName
-        /// </summary>
+        /// <summary> The name of the default export storage account. </summary>
         public string StorageAccountName { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The settings for the CORS configuration of the service instance.
-    /// Serialized Name: CorsConfiguration
-    /// </summary>
+    /// <summary> The settings for the CORS configuration of the service instance. </summary>
     public partial class DicomServiceCorsConfiguration
     {
         /// <summary> Initializes a new instance of DicomServiceCorsConfiguration. </summary>
@@ -25,26 +22,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of DicomServiceCorsConfiguration. </summary>
-        /// <param name="origins">
-        /// The origins to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.origins
-        /// </param>
-        /// <param name="headers">
-        /// The headers to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.headers
-        /// </param>
-        /// <param name="methods">
-        /// The methods to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.methods
-        /// </param>
-        /// <param name="maxAge">
-        /// The max age to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.maxAge
-        /// </param>
-        /// <param name="allowCredentials">
-        /// If credentials are allowed via CORS.
-        /// Serialized Name: CorsConfiguration.allowCredentials
-        /// </param>
+        /// <param name="origins"> The origins to be allowed via CORS. </param>
+        /// <param name="headers"> The headers to be allowed via CORS. </param>
+        /// <param name="methods"> The methods to be allowed via CORS. </param>
+        /// <param name="maxAge"> The max age to be allowed via CORS. </param>
+        /// <param name="allowCredentials"> If credentials are allowed via CORS. </param>
         internal DicomServiceCorsConfiguration(IList<string> origins, IList<string> headers, IList<string> methods, int? maxAge, bool? allowCredentials)
         {
             Origins = origins;
@@ -54,30 +36,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             AllowCredentials = allowCredentials;
         }
 
-        /// <summary>
-        /// The origins to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.origins
-        /// </summary>
+        /// <summary> The origins to be allowed via CORS. </summary>
         public IList<string> Origins { get; }
-        /// <summary>
-        /// The headers to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.headers
-        /// </summary>
+        /// <summary> The headers to be allowed via CORS. </summary>
         public IList<string> Headers { get; }
-        /// <summary>
-        /// The methods to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.methods
-        /// </summary>
+        /// <summary> The methods to be allowed via CORS. </summary>
         public IList<string> Methods { get; }
-        /// <summary>
-        /// The max age to be allowed via CORS.
-        /// Serialized Name: CorsConfiguration.maxAge
-        /// </summary>
+        /// <summary> The max age to be allowed via CORS. </summary>
         public int? MaxAge { get; set; }
-        /// <summary>
-        /// If credentials are allowed via CORS.
-        /// Serialized Name: CorsConfiguration.allowCredentials
-        /// </summary>
+        /// <summary> If credentials are allowed via CORS. </summary>
         public bool? AllowCredentials { get; set; }
     }
 }

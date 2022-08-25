@@ -25,18 +25,9 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint">
-        /// The resource of private end point.
-        /// Serialized Name: DummyPrivateEndpointConnection.properties.privateEndpoint
-        /// </param>
-        /// <param name="connectionState">
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: DummyPrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: DummyPrivateEndpointConnection.properties.provisioningState
-        /// </param>
+        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         internal HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, HealthcareApisPrivateLinkServiceConnectionState connectionState, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
@@ -44,10 +35,7 @@ namespace Azure.ResourceManager.HealthcareApis
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// The resource of private end point.
-        /// Serialized Name: DummyPrivateEndpointConnection.properties.privateEndpoint
-        /// </summary>
+        /// <summary> The resource of private end point. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
@@ -55,15 +43,9 @@ namespace Azure.ResourceManager.HealthcareApis
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
-        /// <summary>
-        /// A collection of information about the state of the connection between service consumer and provider.
-        /// Serialized Name: DummyPrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public HealthcareApisPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary>
-        /// The provisioning state of the private endpoint connection resource.
-        /// Serialized Name: DummyPrivateEndpointConnection.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public HealthcareApisPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

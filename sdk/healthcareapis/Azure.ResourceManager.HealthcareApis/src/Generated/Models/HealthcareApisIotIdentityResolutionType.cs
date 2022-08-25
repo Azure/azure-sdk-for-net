@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The type of IoT identity resolution to use with the destination.
-    /// Serialized Name: IotIdentityResolutionType
-    /// </summary>
+    /// <summary> The type of IoT identity resolution to use with the destination. </summary>
     public readonly partial struct HealthcareApisIotIdentityResolutionType : IEquatable<HealthcareApisIotIdentityResolutionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private const string CreateValue = "Create";
         private const string LookupValue = "Lookup";
 
-        /// <summary>
-        /// Create
-        /// Serialized Name: IotIdentityResolutionType.Create
-        /// </summary>
+        /// <summary> Create. </summary>
         public static HealthcareApisIotIdentityResolutionType Create { get; } = new HealthcareApisIotIdentityResolutionType(CreateValue);
-        /// <summary>
-        /// Lookup
-        /// Serialized Name: IotIdentityResolutionType.Lookup
-        /// </summary>
+        /// <summary> Lookup. </summary>
         public static HealthcareApisIotIdentityResolutionType Lookup { get; } = new HealthcareApisIotIdentityResolutionType(LookupValue);
         /// <summary> Determines if two <see cref="HealthcareApisIotIdentityResolutionType"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisIotIdentityResolutionType left, HealthcareApisIotIdentityResolutionType right) => left.Equals(right);

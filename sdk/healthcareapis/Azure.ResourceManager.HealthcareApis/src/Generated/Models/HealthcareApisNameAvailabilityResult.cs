@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The properties indicating whether a given service name is available.
-    /// Serialized Name: ServicesNameAvailabilityInfo
-    /// </summary>
+    /// <summary> The properties indicating whether a given service name is available. </summary>
     public partial class HealthcareApisNameAvailabilityResult
     {
         /// <summary> Initializes a new instance of HealthcareApisNameAvailabilityResult. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisNameAvailabilityResult. </summary>
-        /// <param name="isNameAvailable">
-        /// The value which indicates whether the provided name is available.
-        /// Serialized Name: ServicesNameAvailabilityInfo.nameAvailable
-        /// </param>
-        /// <param name="reason">
-        /// The reason for unavailability.
-        /// Serialized Name: ServicesNameAvailabilityInfo.reason
-        /// </param>
-        /// <param name="message">
-        /// The detailed reason message.
-        /// Serialized Name: ServicesNameAvailabilityInfo.message
-        /// </param>
+        /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
+        /// <param name="reason"> The reason for unavailability. </param>
+        /// <param name="message"> The detailed reason message. </param>
         internal HealthcareApisNameAvailabilityResult(bool? isNameAvailable, HealthcareApisNameUnavailableReason? reason, string message)
         {
             IsNameAvailable = isNameAvailable;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Message = message;
         }
 
-        /// <summary>
-        /// The value which indicates whether the provided name is available.
-        /// Serialized Name: ServicesNameAvailabilityInfo.nameAvailable
-        /// </summary>
+        /// <summary> The value which indicates whether the provided name is available. </summary>
         public bool? IsNameAvailable { get; }
-        /// <summary>
-        /// The reason for unavailability.
-        /// Serialized Name: ServicesNameAvailabilityInfo.reason
-        /// </summary>
+        /// <summary> The reason for unavailability. </summary>
         public HealthcareApisNameUnavailableReason? Reason { get; }
-        /// <summary>
-        /// The detailed reason message.
-        /// Serialized Name: ServicesNameAvailabilityInfo.message
-        /// </summary>
+        /// <summary> The detailed reason message. </summary>
         public string Message { get; }
     }
 }

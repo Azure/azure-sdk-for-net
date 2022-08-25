@@ -17,18 +17,9 @@ namespace Azure.ResourceManager.HealthcareApis
     public partial class HealthcareApisIotFhirDestinationData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationData. </summary>
-        /// <param name="resourceIdentityResolutionType">
-        /// Determines how resource identity is resolved on the destination.
-        /// Serialized Name: IotFhirDestination.properties.resourceIdentityResolutionType
-        /// </param>
-        /// <param name="fhirServiceResourceId">
-        /// Fully qualified resource id of the FHIR service to connect to.
-        /// Serialized Name: IotFhirDestination.properties.fhirServiceResourceId
-        /// </param>
-        /// <param name="fhirMapping">
-        /// FHIR Mappings
-        /// Serialized Name: IotFhirDestination.properties.fhirMapping
-        /// </param>
+        /// <param name="resourceIdentityResolutionType"> Determines how resource identity is resolved on the destination. </param>
+        /// <param name="fhirServiceResourceId"> Fully qualified resource id of the FHIR service to connect to. </param>
+        /// <param name="fhirMapping"> FHIR Mappings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceResourceId"/> or <paramref name="fhirMapping"/> is null. </exception>
         public HealthcareApisIotFhirDestinationData(HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping)
         {
@@ -51,30 +42,12 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state.
-        /// Serialized Name: IotFhirDestination.properties.provisioningState
-        /// </param>
-        /// <param name="resourceIdentityResolutionType">
-        /// Determines how resource identity is resolved on the destination.
-        /// Serialized Name: IotFhirDestination.properties.resourceIdentityResolutionType
-        /// </param>
-        /// <param name="fhirServiceResourceId">
-        /// Fully qualified resource id of the FHIR service to connect to.
-        /// Serialized Name: IotFhirDestination.properties.fhirServiceResourceId
-        /// </param>
-        /// <param name="fhirMapping">
-        /// FHIR Mappings
-        /// Serialized Name: IotFhirDestination.properties.fhirMapping
-        /// </param>
-        /// <param name="location">
-        /// The resource location.
-        /// Serialized Name: LocationBasedResource.location
-        /// </param>
-        /// <param name="etag">
-        /// An etag associated with the resource, used for optimistic concurrency when editing it.
-        /// Serialized Name: ResourceCore.etag
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="resourceIdentityResolutionType"> Determines how resource identity is resolved on the destination. </param>
+        /// <param name="fhirServiceResourceId"> Fully qualified resource id of the FHIR service to connect to. </param>
+        /// <param name="fhirMapping"> FHIR Mappings. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         internal HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping, AzureLocation? location, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
@@ -85,29 +58,16 @@ namespace Azure.ResourceManager.HealthcareApis
             ETag = etag;
         }
 
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: IotFhirDestination.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         public HealthcareApisProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Determines how resource identity is resolved on the destination.
-        /// Serialized Name: IotFhirDestination.properties.resourceIdentityResolutionType
-        /// </summary>
+        /// <summary> Determines how resource identity is resolved on the destination. </summary>
         public HealthcareApisIotIdentityResolutionType ResourceIdentityResolutionType { get; set; }
-        /// <summary>
-        /// Fully qualified resource id of the FHIR service to connect to.
-        /// Serialized Name: IotFhirDestination.properties.fhirServiceResourceId
-        /// </summary>
+        /// <summary> Fully qualified resource id of the FHIR service to connect to. </summary>
         public ResourceIdentifier FhirServiceResourceId { get; set; }
-        /// <summary>
-        /// FHIR Mappings
-        /// Serialized Name: IotFhirDestination.properties.fhirMapping
-        /// </summary>
+        /// <summary> FHIR Mappings. </summary>
         internal HealthcareApisIotMappingProperties FhirMapping { get; set; }
         /// <summary>
         /// The mapping.
-        /// Serialized Name: IotMappingProperties.content
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -147,15 +107,9 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        /// <summary>
-        /// The resource location.
-        /// Serialized Name: LocationBasedResource.location
-        /// </summary>
+        /// <summary> The resource location. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// An etag associated with the resource, used for optimistic concurrency when editing it.
-        /// Serialized Name: ResourceCore.etag
-        /// </summary>
+        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
         public ETag? ETag { get; set; }
     }
 }

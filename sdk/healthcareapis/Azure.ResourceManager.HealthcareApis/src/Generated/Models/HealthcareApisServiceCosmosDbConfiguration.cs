@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// The settings for the Cosmos DB database backing the service.
-    /// Serialized Name: ServiceCosmosDbConfigurationInfo
-    /// </summary>
+    /// <summary> The settings for the Cosmos DB database backing the service. </summary>
     public partial class HealthcareApisServiceCosmosDbConfiguration
     {
         /// <summary> Initializes a new instance of HealthcareApisServiceCosmosDbConfiguration. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisServiceCosmosDbConfiguration. </summary>
-        /// <param name="offerThroughput">
-        /// The provisioned throughput for the backing database.
-        /// Serialized Name: ServiceCosmosDbConfigurationInfo.offerThroughput
-        /// </param>
-        /// <param name="keyVaultKeyUri">
-        /// The URI of the customer-managed key for the backing database.
-        /// Serialized Name: ServiceCosmosDbConfigurationInfo.keyVaultKeyUri
-        /// </param>
+        /// <param name="offerThroughput"> The provisioned throughput for the backing database. </param>
+        /// <param name="keyVaultKeyUri"> The URI of the customer-managed key for the backing database. </param>
         internal HealthcareApisServiceCosmosDbConfiguration(int? offerThroughput, Uri keyVaultKeyUri)
         {
             OfferThroughput = offerThroughput;
             KeyVaultKeyUri = keyVaultKeyUri;
         }
 
-        /// <summary>
-        /// The provisioned throughput for the backing database.
-        /// Serialized Name: ServiceCosmosDbConfigurationInfo.offerThroughput
-        /// </summary>
+        /// <summary> The provisioned throughput for the backing database. </summary>
         public int? OfferThroughput { get; set; }
-        /// <summary>
-        /// The URI of the customer-managed key for the backing database.
-        /// Serialized Name: ServiceCosmosDbConfigurationInfo.keyVaultKeyUri
-        /// </summary>
+        /// <summary> The URI of the customer-managed key for the backing database. </summary>
         public Uri KeyVaultKeyUri { get; set; }
     }
 }

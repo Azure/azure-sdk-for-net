@@ -11,10 +11,7 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// A list of private link resources
-    /// Serialized Name: PrivateLinkResourceListResultDescription
-    /// </summary>
+    /// <summary> A list of private link resources. </summary>
     internal partial class PrivateLinkResourceListResultDescription
     {
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
-        /// <param name="value">
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResultDescription.value
-        /// </param>
+        /// <param name="value"> Array of private link resources. </param>
         internal PrivateLinkResourceListResultDescription(IReadOnlyList<HealthcareApisPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Array of private link resources
-        /// Serialized Name: PrivateLinkResourceListResultDescription.value
-        /// </summary>
+        /// <summary> Array of private link resources. </summary>
         public IReadOnlyList<HealthcareApisPrivateLinkResourceData> Value { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// A collection of IoT Connector FHIR destinations.
-    /// Serialized Name: IotFhirDestinationCollection
-    /// </summary>
+    /// <summary> A collection of IoT Connector FHIR destinations. </summary>
     internal partial class IotFhirDestinationCollection
     {
         /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
-        /// <param name="nextLink">
-        /// The link used to get the next page of IoT FHIR destinations.
-        /// Serialized Name: IotFhirDestinationCollection.nextLink
-        /// </param>
-        /// <param name="value">
-        /// The list of IoT Connector FHIR destinations.
-        /// Serialized Name: IotFhirDestinationCollection.value
-        /// </param>
+        /// <param name="nextLink"> The link used to get the next page of IoT FHIR destinations. </param>
+        /// <param name="value"> The list of IoT Connector FHIR destinations. </param>
         internal IotFhirDestinationCollection(string nextLink, IReadOnlyList<HealthcareApisIotFhirDestinationData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link used to get the next page of IoT FHIR destinations.
-        /// Serialized Name: IotFhirDestinationCollection.nextLink
-        /// </summary>
+        /// <summary> The link used to get the next page of IoT FHIR destinations. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// The list of IoT Connector FHIR destinations.
-        /// Serialized Name: IotFhirDestinationCollection.value
-        /// </summary>
+        /// <summary> The list of IoT Connector FHIR destinations. </summary>
         public IReadOnlyList<HealthcareApisIotFhirDestinationData> Value { get; }
     }
 }

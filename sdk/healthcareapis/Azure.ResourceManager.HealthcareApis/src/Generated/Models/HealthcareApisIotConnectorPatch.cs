@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Iot Connector patch properties
-    /// Serialized Name: IotConnectorPatchResource
-    /// </summary>
+    /// <summary> Iot Connector patch properties. </summary>
     public partial class HealthcareApisIotConnectorPatch : HealthcareApisResourceTags
     {
         /// <summary> Initializes a new instance of HealthcareApisIotConnectorPatch. </summary>
@@ -22,23 +19,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisIotConnectorPatch. </summary>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: ResourceTags.tags
-        /// </param>
-        /// <param name="identity">
-        /// Setting indicating whether the service has a managed identity associated with it.
-        /// Serialized Name: ServiceManagedIdentity.identity
-        /// </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         internal HealthcareApisIotConnectorPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(tags)
         {
             Identity = identity;
         }
 
-        /// <summary>
-        /// Setting indicating whether the service has a managed identity associated with it.
-        /// Serialized Name: ServiceManagedIdentity.identity
-        /// </summary>
+        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

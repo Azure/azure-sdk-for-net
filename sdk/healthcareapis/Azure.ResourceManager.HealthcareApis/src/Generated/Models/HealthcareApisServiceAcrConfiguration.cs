@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// Azure container registry configuration information
-    /// Serialized Name: ServiceAcrConfigurationInfo
-    /// </summary>
+    /// <summary> Azure container registry configuration information. </summary>
     public partial class HealthcareApisServiceAcrConfiguration
     {
         /// <summary> Initializes a new instance of HealthcareApisServiceAcrConfiguration. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareApisServiceAcrConfiguration. </summary>
-        /// <param name="loginServers">
-        /// The list of the ACR login servers.
-        /// Serialized Name: ServiceAcrConfigurationInfo.loginServers
-        /// </param>
-        /// <param name="ociArtifacts">
-        /// The list of Open Container Initiative (OCI) artifacts.
-        /// Serialized Name: ServiceAcrConfigurationInfo.ociArtifacts
-        /// </param>
+        /// <param name="loginServers"> The list of the ACR login servers. </param>
+        /// <param name="ociArtifacts"> The list of Open Container Initiative (OCI) artifacts. </param>
         internal HealthcareApisServiceAcrConfiguration(IList<string> loginServers, IList<HealthcareApisServiceOciArtifactEntry> ociArtifacts)
         {
             LoginServers = loginServers;
             OciArtifacts = ociArtifacts;
         }
 
-        /// <summary>
-        /// The list of the ACR login servers.
-        /// Serialized Name: ServiceAcrConfigurationInfo.loginServers
-        /// </summary>
+        /// <summary> The list of the ACR login servers. </summary>
         public IList<string> LoginServers { get; }
-        /// <summary>
-        /// The list of Open Container Initiative (OCI) artifacts.
-        /// Serialized Name: ServiceAcrConfigurationInfo.ociArtifacts
-        /// </summary>
+        /// <summary> The list of Open Container Initiative (OCI) artifacts. </summary>
         public IList<HealthcareApisServiceOciArtifactEntry> OciArtifacts { get; }
     }
 }
