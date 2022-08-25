@@ -5,44 +5,20 @@ Event Hubs is built to be entirely mockable, an important feature that allows fo
 ## `EventHubProducerClient`
 
 ### Testing Batching logic 
-When writing an application that uses batches to send events to an Event Hub, you may have logic surrounding how you manipulate events when adding them to the batch. For example, if you have an application that needs to send large events often, you may have logic to simplify events that are too large to fit in a batch. One way to test this method is to mock the `EventHubProducerClient` and `EventDataBatch` types, and focus testing on the application-defined method instead.
+When writing an application that uses batches to send events to an Event Hub, you may have logic surrounding how you manipulate events when adding them to the batch. For example, if you have an application that occasionally sends events that are larger than the maximum size of a batch. One way to test this method is to mock the `EventHubProducerClient` and `EventDataBatch` types, and focus testing on the application-defined method instead.
 
-```C# Snippet:EventHubs_Sample11_Validating
-// Define the custom TryAdd callback to return false for any bodies
-// larger than 5
-var emptyBatch = EventHubsModelFactory.EventDataBatch(
-    90,
-    new List<EventData>(),
-    new CreateBatchOptions() { MaximumSizeInBytes = 100 },
-    eventData =>
-    {
-        return eventData.EventBody.ToString().Length > 5;
-    });
-
-// Create a mock of the EventHubProducerClient
-var mockProducer = new Mock<EventHubProducerClient>();
-mockProducer.Setup(p => p.CreateBatchAsync(It.IsAny<CancellationToken>())).ReturnsAsync(emptyBatch);
-var producer = mockProducer.Object;
-
-// Attempt to add an event with a string body larger than 5
-var largeEvent = new EventData(new BinaryData("Large Event"));
-
-using (var eventBatch = await producer.CreateBatchAsync())
-{
-    var wasAdded = eventBatch.TryAdd(largeEvent);
-    if (!wasAdded)
-    {
-        // Validate the application-defined SimplifyEvent method
-        var smallerEvent = SimplifyEvent(largeEvent);
-        Assert.IsTrue(eventBatch.TryAdd(smallerEvent));
-    }
-}
+Note: This scenario is simplified for illustrative purposes. 
+```C# Snippet:EventHubs_Sample11_Batching
 ```
-
-Mocking EventHubProducer client - 
 
 ## `EventHubConsumerClient`
 
+### Testing Event Hubs property-driven application logic
+Applications may want to implement throttling logic when there are high volumes of events being published to the Event Hub. One way to implement this could be through querying properties of the Event Hub and its partitions. Note that querying the properties of Event Hubs often can negatively impact performance, so in production scenarios this needs to be done carefully.
+
+```C# Snippet:EventHubs_Sample11_Properties
+```
+Mocking the properties above can be done in the same way for the `EventHubProducerClient`, since the properties are returned in a similar way.
 
 ## `EventProcessorClient`
 
