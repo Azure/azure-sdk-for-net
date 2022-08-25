@@ -22,11 +22,8 @@ namespace Azure.Maps.Search.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string POIValue = "POI";
+        private const string PointOfInterestValue = "POI";
         private const string NoneValue = "None";
-
-        /// <summary> POI. </summary>
-        public static PointOfInterestExtendedPostalCodes POI { get; } = new PointOfInterestExtendedPostalCodes(POIValue);
         /// <summary> None. </summary>
         public static PointOfInterestExtendedPostalCodes None { get; } = new PointOfInterestExtendedPostalCodes(NoneValue);
         /// <summary> Determines if two <see cref="PointOfInterestExtendedPostalCodes"/> values are the same. </summary>

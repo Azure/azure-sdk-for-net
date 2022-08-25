@@ -32,26 +32,6 @@ namespace Azure.Maps.Search.Models
             return new PolygonObject(providerId, geometryData);
         }
 
-        /// <summary> Initializes a new instance of PointOfInterest. </summary>
-        /// <param name="name"> Name of the POI property. </param>
-        /// <param name="phone"> Telephone number property. </param>
-        /// <param name="url"> Website URL property. </param>
-        /// <param name="categorySet"> The list of the most specific POI categories. </param>
-        /// <param name="categories"> Categories array. </param>
-        /// <param name="classifications"> Classification array. </param>
-        /// <param name="brands"> Brands array. The name of the brand for the POI being returned. </param>
-        /// <param name="operatingHours"> Opening hours for a POI (Points of Interest). </param>
-        /// <returns> A new <see cref="Models.PointOfInterest"/> instance for mocking. </returns>
-        public static PointOfInterest PointOfInterest(string name = null, string phone = null, string url = null, IEnumerable<PointOfInterestCategorySet> categorySet = null, IEnumerable<string> categories = null, IEnumerable<PointOfInterestClassification> classifications = null, IEnumerable<BrandName> brands = null, OperatingHours operatingHours = null)
-        {
-            categorySet ??= new List<PointOfInterestCategorySet>();
-            categories ??= new List<string>();
-            classifications ??= new List<PointOfInterestClassification>();
-            brands ??= new List<BrandName>();
-
-            return new PointOfInterest(name, phone, url, categorySet?.ToList(), categories?.ToList(), classifications?.ToList(), brands?.ToList(), operatingHours);
-        }
-
         /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
         /// <param name="id"> Category ID. </param>
         /// <returns> A new <see cref="Models.PointOfInterestCategorySet"/> instance for mocking. </returns>

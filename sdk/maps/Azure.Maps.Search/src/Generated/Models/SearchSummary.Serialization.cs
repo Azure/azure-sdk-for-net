@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
         internal static SearchSummary DeserializeSearchSummary(JsonElement element)
         {
             Optional<string> query = default;
-            Optional<QueryType> queryType = default;
+            Optional<MapsQueryType> queryType = default;
             Optional<int> queryTime = default;
             Optional<int> numResults = default;
             Optional<int> limit = default;
@@ -37,7 +37,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    queryType = new QueryType(property.Value.GetString());
+                    queryType = new MapsQueryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("queryTime"))

@@ -25,7 +25,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="totalResults"> The total number of Results found. </param>
         /// <param name="fuzzyLevel"> The maximum fuzzy level required to provide Results. </param>
         /// <param name="geoBiasInternal"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
-        internal SearchSummary(string query, QueryType? queryType, int? queryTime, int resultCount, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLongPairAbbreviated geoBiasInternal)
+        internal SearchSummary(string query, MapsQueryType? queryType, int? queryTime, int resultCount, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLongPairAbbreviated geoBiasInternal)
         {
             Query = query;
             QueryType = queryType;
@@ -41,7 +41,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> The query parameter that was used to produce these search results. </summary>
         public string Query { get; }
         /// <summary> The type of query being returned: NEARBY or NON_NEAR. </summary>
-        public QueryType? QueryType { get; }
+        public MapsQueryType? QueryType { get; }
         /// <summary> Time spent resolving the query, in milliseconds. </summary>
         public int? QueryTime { get; }
         /// <summary> Maximum number of responses that will be returned. </summary>

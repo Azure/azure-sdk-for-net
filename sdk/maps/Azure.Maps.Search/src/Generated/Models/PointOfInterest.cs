@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PointOfInterest. </summary>
         internal PointOfInterest()
         {
-            CategorySet = new ChangeTrackingList<PointOfInterestCategorySet>();
+            CategorySets = new ChangeTrackingList<PointOfInterestCategorySet>();
             Categories = new ChangeTrackingList<string>();
             Classifications = new ChangeTrackingList<PointOfInterestClassification>();
             Brands = new ChangeTrackingList<BrandName>();
@@ -25,18 +25,18 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PointOfInterest. </summary>
         /// <param name="name"> Name of the POI property. </param>
         /// <param name="phone"> Telephone number property. </param>
-        /// <param name="url"> Website URL property. </param>
-        /// <param name="categorySet"> The list of the most specific POI categories. </param>
+        /// <param name="urlInternal"> Website URL property. </param>
+        /// <param name="categorySets"> The list of the most specific POI categories. </param>
         /// <param name="categories"> Categories array. </param>
         /// <param name="classifications"> Classification array. </param>
         /// <param name="brands"> Brands array. The name of the brand for the POI being returned. </param>
         /// <param name="operatingHours"> Opening hours for a POI (Points of Interest). </param>
-        internal PointOfInterest(string name, string phone, string url, IReadOnlyList<PointOfInterestCategorySet> categorySet, IReadOnlyList<string> categories, IReadOnlyList<PointOfInterestClassification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours)
+        internal PointOfInterest(string name, string phone, string urlInternal, IReadOnlyList<PointOfInterestCategorySet> categorySets, IReadOnlyList<string> categories, IReadOnlyList<PointOfInterestClassification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours)
         {
             Name = name;
             Phone = phone;
-            Url = url;
-            CategorySet = categorySet;
+            UrlInternal = urlInternal;
+            CategorySets = categorySets;
             Categories = categories;
             Classifications = classifications;
             Brands = brands;
@@ -47,10 +47,6 @@ namespace Azure.Maps.Search.Models
         public string Name { get; }
         /// <summary> Telephone number property. </summary>
         public string Phone { get; }
-        /// <summary> Website URL property. </summary>
-        public string Url { get; }
-        /// <summary> The list of the most specific POI categories. </summary>
-        public IReadOnlyList<PointOfInterestCategorySet> CategorySet { get; }
         /// <summary> Categories array. </summary>
         public IReadOnlyList<string> Categories { get; }
         /// <summary> Classification array. </summary>
