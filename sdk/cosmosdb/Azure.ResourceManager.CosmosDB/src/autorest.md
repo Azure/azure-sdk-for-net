@@ -261,6 +261,7 @@ rename-mapping:
   ServiceStatus: CosmosDBServiceStatus
   ServiceSize: CosmosDBServiceSize
   ServiceType: CosmosDBServiceType
+  CosmosDBAccountRestoreParameters.DatabasesToRestore: DatabasesToRestoreV2
 
 prepend-rp-prefix:
 - UniqueKey
