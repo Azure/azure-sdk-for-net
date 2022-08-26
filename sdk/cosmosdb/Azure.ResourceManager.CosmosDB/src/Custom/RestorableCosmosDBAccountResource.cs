@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class RestorableCosmosDBAccountResource : ArmResource
     {
-        // TODO:
+        [Obsolete("This function is obsolete and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(AzureLocation? restoreLocation, string restoreTimestampInUtc, CancellationToken cancellationToken)
         {
             Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = _restorableMongoDBResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -41,7 +43,8 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        // TODO:
+        [Obsolete("This function is obsolete and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(AzureLocation? restoreLocation, string restoreTimestampInUtc, CancellationToken cancellationToken)
         {
             async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = await _restorableMongoDBResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -62,6 +65,8 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        [Obsolete("This function is obsolete and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
@@ -71,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = await _restorableSqlResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -82,6 +87,8 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        [Obsolete("This function is obsolete and will be removed in a future release.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableSqlResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
@@ -91,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = _restorableSqlResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(x => this.GetDatabaseResourceResourceInfoFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -102,16 +109,14 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        private DatabaseRestoreResourceInfo GetDatabaseResourceResourceInfoFromRestorableMongoDBResourceData(RestorableMongoDBResourceData x)
+        private static DatabaseRestoreResourceInfo ConvertFromRestorableMongoDBResourceData(RestorableMongoDBResourceData value)
         {
-            // TODO:
-            throw new NotImplementedException();
+            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList());
         }
 
-        private DatabaseRestoreResourceInfo GetDatabaseResourceResourceInfoFromRestorableSqlResourceData(RestorableSqlResourceData x)
+        private static DatabaseRestoreResourceInfo ConvertFromRestorableSqlResourceData(RestorableSqlResourceData value)
         {
-            // TODO:
-            throw new NotImplementedException();
+            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList());
         }
     }
 }
