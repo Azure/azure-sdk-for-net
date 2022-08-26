@@ -14,14 +14,14 @@ using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
 
 namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
 {
-    public class ServiceBusClientFactory
+    internal class ServiceBusClientFactory
     {
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _componentFactory;
         private readonly MessagingProvider _messagingProvider;
         private readonly ServiceBusOptions _options;
 
-        public ServiceBusClientFactory(
+        internal ServiceBusClientFactory(
             IConfiguration configuration,
             AzureComponentFactory componentFactory,
             MessagingProvider messagingProvider,
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
             logForwarder.Start();
         }
 
-        public ServiceBusClient CreateClientFromSetting(string connection)
+        internal ServiceBusClient CreateClientFromSetting(string connection)
         {
             var connectionInfo = ResolveConnectionInformation(connection);
 

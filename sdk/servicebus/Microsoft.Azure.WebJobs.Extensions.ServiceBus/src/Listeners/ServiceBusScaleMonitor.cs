@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Scale;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using Azure.Messaging.ServiceBus;
@@ -26,10 +29,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<ServiceBusReceiver> _receiver;
         private readonly Lazy<ServiceBusAdministrationClient> _administrationClient;
         private readonly ILogger<ServiceBusScaleMonitor> _logger;
-
+        private readonly Lazy<ServiceBusClientFactory> _clientFactory;
+        private readonly Lazy<ServiceBusClient> _client;
         private DateTime _nextWarningTime;
 
-        public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
+        internal ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
         {
             _functionId = functionId;
             _serviceBusEntityType = serviceBusEntityType;
@@ -40,6 +44,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => clientFactory.CreateAdministrationClient(connection));
             _logger = loggerFactory.CreateLogger<ServiceBusScaleMonitor>();
             _nextWarningTime = DateTime.UtcNow;
+        }
+
+        public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, ILoggerFactory loggerFactory, IConfiguration configuration, AzureComponentFactory componentFactory, MessagingProvider messagingProvider, AzureEventSourceLogForwarder logForwarder, IOptions<ServiceBusOptions> options)
+        {
+            _functionId = functionId;
+            _serviceBusEntityType = serviceBusEntityType;
+            _entityPath = entityPath;
+            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture));
+            _isListeningOnDeadLetterQueue = entityPath.EndsWith(DeadLetterQueuePath, StringComparison.OrdinalIgnoreCase);
+            _logger = loggerFactory.CreateLogger<ServiceBusScaleMonitor>();
+            _nextWarningTime = DateTime.UtcNow;
+            _clientFactory = new Lazy<ServiceBusClientFactory>(() => new ServiceBusClientFactory(configuration, componentFactory, messagingProvider, logForwarder, options));
+            _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => _clientFactory.Value.CreateAdministrationClient(connection));
+            _client = new Lazy<ServiceBusClient>(() => _clientFactory.Value.CreateClientFromSetting(connection));
+            _receiver = new Lazy<ServiceBusReceiver>(() => _client.Value.CreateReceiver(entityPath));
         }
 
         public ScaleMonitorDescriptor Descriptor
