@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Redis.Tests
     public class CreateUpdateDeleteFunctionalTests : RedisManagementTestBase
     {
         public CreateUpdateDeleteFunctionalTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            //Assert.AreEqual(DefaultLocation, responseCreate.Data.Location);
-            //Assert.AreEqual(redisCacheName, responseCreate.Data.Name);
-            //Assert.AreEqual(RedisSkuName.Basic, responseCreate.Data.Sku.Name);
-            //Assert.AreEqual(RedisSkuFamily.BasicOrStandard, responseCreate.Data.Sku.Family);
-            //Assert.AreEqual(0, responseCreate.Data.Sku.Capacity);
-            //Assert.AreEqual(6379, responseCreate.Data.Port);
-            //Assert.AreEqual(6380, responseCreate.Data.SslPort);
-            //Assert.IsFalse(responseCreate.Data.EnableNonSslPort);
+            Assert.AreEqual(DefaultLocation, responseCreate.Data.Location);
+            Assert.AreEqual(redisCacheName, responseCreate.Data.Name);
+            Assert.AreEqual(RedisSkuName.Basic, responseCreate.Data.Sku.Name);
+            Assert.AreEqual(RedisSkuFamily.BasicOrStandard, responseCreate.Data.Sku.Family);
+            Assert.AreEqual(0, responseCreate.Data.Sku.Capacity);
+            Assert.AreEqual(6379, responseCreate.Data.Port);
+            Assert.AreEqual(6380, responseCreate.Data.SslPort);
+            Assert.IsFalse(responseCreate.Data.EnableNonSslPort);
 
             var patch = new RedisPatch()
             {
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Redis.Tests
             };
             var responseUpdate = (await responseCreate.UpdateAsync(patch)).Value;
 
-            //Assert.AreEqual(DefaultLocation, responseUpdate.Data.Location);
-            //Assert.AreEqual(redisCacheName, responseUpdate.Data.Name);
-            //Assert.AreEqual(RedisSkuName.Basic, responseUpdate.Data.Sku.Name);
-            //Assert.AreEqual(RedisSkuFamily.BasicOrStandard, responseUpdate.Data.Sku.Family);
-            //Assert.AreEqual(0, responseUpdate.Data.Sku.Capacity);
-            //Assert.AreEqual("allkeys-lru", responseUpdate.Data.RedisConfiguration.MaxMemoryPolicy);
-            //Assert.AreEqual(6379, responseUpdate.Data.Port);
-            //Assert.AreEqual(6380, responseUpdate.Data.SslPort);
-            //Assert.IsTrue(responseUpdate.Data.EnableNonSslPort);
+            Assert.AreEqual(DefaultLocation, responseUpdate.Data.Location);
+            Assert.AreEqual(redisCacheName, responseUpdate.Data.Name);
+            Assert.AreEqual(RedisSkuName.Basic, responseUpdate.Data.Sku.Name);
+            Assert.AreEqual(RedisSkuFamily.BasicOrStandard, responseUpdate.Data.Sku.Family);
+            Assert.AreEqual(0, responseUpdate.Data.Sku.Capacity);
+            Assert.AreEqual("allkeys-lru", responseUpdate.Data.RedisConfiguration.MaxMemoryPolicy);
+            Assert.AreEqual(6379, responseUpdate.Data.Port);
+            Assert.AreEqual(6380, responseUpdate.Data.SslPort);
+            Assert.IsTrue(responseUpdate.Data.EnableNonSslPort);
 
             await responseUpdate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
-            //Assert.IsFalse(falseResult);
+            Assert.IsFalse(falseResult);
         }
     }
 }
