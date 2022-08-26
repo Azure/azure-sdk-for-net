@@ -10,8 +10,6 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Logic.Models;
-using Azure.ResourceManager.KeyVault.Models;
-using Azure.ResourceManager.KeyVault;
 using System;
 using System.IO;
 
@@ -84,15 +82,6 @@ namespace Azure.ResourceManager.Logic.Tests
             data.Subnets[0].Delegations.Add(new ServiceDelegation() { Name = "integrationServiceEnvironments", ServiceName = "Microsoft.Logic/integrationServiceEnvironments" });
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
             return vnet.Value;
-        }
-
-        protected async Task<KeyVaultResource> CreateDefaultKeyVault(ResourceGroupResource resourceGroup, string keyvaultName)
-        {
-            KeyVaultSku sku = new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard);
-            KeyVaultProperties properties = new KeyVaultProperties(new Guid(Environment.GetEnvironmentVariable("CLIENT_ID")), sku);
-            KeyVaultCreateOrUpdateContent data = new KeyVaultCreateOrUpdateContent(resourceGroup.Data.Location, properties);
-            var keyvault = await resourceGroup.GetKeyVaults().CreateOrUpdateAsync(WaitUntil.Completed, keyvaultName, data);
-            return keyvault.Value;
         }
     }
 }

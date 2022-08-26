@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Logic.Tests
     internal class IntegrationAccountCertificateTests : LogicManagementTestBase
     {
         private ResourceIdentifier _integrationAccountIdentifier;
-        private ResourceIdentifier _keyVaultIdentifier;
         private IntegrationAccountResource _integrationAccount;
 
         private IntegrationAccountCertificateCollection _certificateCollection => _integrationAccount.GetIntegrationAccountCertificates();
@@ -29,9 +28,7 @@ namespace Azure.ResourceManager.Logic.Tests
         {
             var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.CentralUS));
             var integrationAccount = await CreateIntegrationAccount(rgLro.Value, SessionRecording.GenerateAssetName("intergrationAccount"));
-            var keyVault = await CreateDefaultKeyVault(rgLro.Value, SessionRecording.GenerateAssetName("vaultforlogicapp"));
             _integrationAccountIdentifier = integrationAccount.Data.Id;
-            _keyVaultIdentifier = keyVault.Data.Id;
             await StopSessionRecordingAsync();
         }
 
@@ -41,22 +38,66 @@ namespace Azure.ResourceManager.Logic.Tests
             _integrationAccount = await Client.GetIntegrationAccountResource(_integrationAccountIdentifier).GetAsync();
         }
 
-        [RecordedTest]
-        [Ignore("Please authorize logic apps to perform operations on key vault by granting access for the logic apps service principal..")]
-        public async Task CreateOrUpdate()
+        private async Task<IntegrationAccountCertificateResource> CreateCertificate(string certificateName)
         {
-            string certificateName = Recording.GenerateAssetName("cert");
             var certContent = new X509Certificate2(@"..\..\..\..\..\sdk\logic\Azure.ResourceManager.Logic\tests\TestData\IntegrationAccountCertificate.cer");
             string certContentStr = Convert.ToBase64String(certContent.RawData);
             IntegrationAccountCertificateData data = new IntegrationAccountCertificateData(_integrationAccount.Data.Location)
             {
-                Key = new IntegrationAccountKeyVaultKeyReference("privatekey")
-                {
-                    ResourceId = _keyVaultIdentifier
-                },
                 PublicCertificate = BinaryData.FromString($"\"{certContentStr}\""),
             };
             var cert = await _certificateCollection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);
+            return cert.Value;
+        }
+
+        [RecordedTest]
+        public async Task CreateOrUpdate()
+        {
+            string certificateName = Recording.GenerateAssetName("cert");
+            var cert = await CreateCertificate(certificateName);
+            Assert.IsNotNull(cert);
+            Assert.AreEqual(certificateName, cert.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task Exist()
+        {
+            string certificateName = Recording.GenerateAssetName("cert");
+            await CreateCertificate(certificateName);
+            bool flag = await _certificateCollection.ExistsAsync(certificateName);
+            Assert.IsTrue(flag);
+        }
+
+        [RecordedTest]
+        public async Task Get()
+        {
+            string certificateName = Recording.GenerateAssetName("cert");
+            await CreateCertificate(certificateName);
+            var cert = await _certificateCollection.GetAsync(certificateName);
+            Assert.IsNotNull(cert);
+            Assert.AreEqual(certificateName, cert.Value.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            string certificateName = Recording.GenerateAssetName("cert");
+            await CreateCertificate(certificateName);
+            var list = await _certificateCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+        }
+
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string certificateName = Recording.GenerateAssetName("cert");
+            var cert = await CreateCertificate(certificateName);
+            bool flag = await _certificateCollection.ExistsAsync(certificateName);
+            Assert.IsTrue(flag);
+
+            await cert.DeleteAsync(WaitUntil.Completed);
+            flag = await _certificateCollection.ExistsAsync(certificateName);
+            Assert.IsFalse(flag);
         }
     }
 }

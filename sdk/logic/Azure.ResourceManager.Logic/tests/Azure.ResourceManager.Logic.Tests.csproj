@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.KeyVault" />
     <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>
