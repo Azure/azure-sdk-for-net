@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string IotEdgeLoggingOptionsValue = "IoT_EdgeLoggingOptions";
         private const string IotInconsistentModuleSettingsValue = "IoT_InconsistentModuleSettings";
         private const string IotInstallAgentValue = "IoT_InstallAgent";
-        private const string IotIpfilterDenyAllValue = "IoT_IPFilter_DenyAll";
-        private const string IotIpfilterPermissiveRuleValue = "IoT_IPFilter_PermissiveRule";
+        private const string IotIPFilterDenyAllValue = "IoT_IPFilter_DenyAll";
+        private const string IotIPFilterPermissiveRuleValue = "IoT_IPFilter_PermissiveRule";
         private const string IotOpenPortsValue = "IoT_OpenPorts";
         private const string IotPermissiveFirewallPolicyValue = "IoT_PermissiveFirewallPolicy";
         private const string IotPermissiveInputFirewallRulesValue = "IoT_PermissiveInputFirewallRules";
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Install the Azure Security of Things Agent. </summary>
         public static RecommendationType IotInstallAgent { get; } = new RecommendationType(IotInstallAgentValue);
         /// <summary> IP Filter Configuration should have rules defined for allowed traffic and should deny all other traffic by default. </summary>
-        public static RecommendationType IotIpfilterDenyAll { get; } = new RecommendationType(IotIpfilterDenyAllValue);
+        public static RecommendationType IotIPFilterDenyAll { get; } = new RecommendationType(IotIPFilterDenyAllValue);
         /// <summary> An Allow IP Filter rules source IP range is too large. Overly permissive rules might expose your IoT hub to malicious intenders. </summary>
-        public static RecommendationType IotIpfilterPermissiveRule { get; } = new RecommendationType(IotIpfilterPermissiveRuleValue);
+        public static RecommendationType IotIPFilterPermissiveRule { get; } = new RecommendationType(IotIPFilterPermissiveRuleValue);
         /// <summary> A listening endpoint was found on the device. </summary>
         public static RecommendationType IotOpenPorts { get; } = new RecommendationType(IotOpenPortsValue);
         /// <summary> An Allowed firewall policy was found (INPUT/OUTPUT). The policy should Deny all traffic by default and define rules to allow necessary communication to/from the device. </summary>

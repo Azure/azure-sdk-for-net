@@ -3782,8 +3782,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotEdgeLoggingOptions { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotInconsistentModuleSettings { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotInstallAgent { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIpfilterDenyAll { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIpfilterPermissiveRule { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIPFilterDenyAll { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIPFilterPermissiveRule { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotOpenPorts { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveFirewallPolicy { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveInputFirewallRules { get { throw null; } }

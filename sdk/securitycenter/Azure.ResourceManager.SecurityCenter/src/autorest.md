@@ -19,6 +19,8 @@ modelerfour:
 rename-mapping:
   OnPremiseResourceDetails.vmuuid: VmUuid|uuid
   RecommendationType.IoT_ACRAuthentication: IotAcrAuthentication
+  RecommendationType.IoT_IPFilter_DenyAll: IotIPFilterDenyAll
+  RecommendationType.IoT_IPFilter_PermissiveRule: IotIPFilterPermissiveRule
 
 format-by-name-rules:
   'tenantId': 'uuid'
