@@ -46,9 +46,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="playTo"></param>
         /// <param name="playOptions"></param>
         /// <returns></returns>
-        public virtual async Task<Response> PlayAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartPlayingAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Play)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartPlaying)}");
             scope.Start();
             try
             {
@@ -71,9 +71,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="playTo"></param>
         /// <param name="playOptions"></param>
         /// <returns></returns>
-        public virtual Response Play(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response StartPlaying(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Play)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartPlaying)}");
             scope.Start();
             try
             {
@@ -119,13 +119,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="playOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> PlayToAllAsync(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartPlayingToAllAsync(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayToAll)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartPlayingToAll)}");
             scope.Start();
             try
             {
-                return await PlayAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken).ConfigureAwait(false);
+                return await StartPlayingAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -141,13 +141,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="playOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response PlayToAll(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response StartPlayingToAll(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayToAll)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartPlayingToAll)}");
             scope.Start();
             try
             {
-                return Play(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken);
+                return StartPlaying(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -202,9 +202,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> RecognizeAsync(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartRecognizingAsync(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartRecognizing)}");
             scope.Start();
             try
             {
@@ -224,9 +224,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response Recognize(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        public virtual Response StartRecognizing(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartRecognizing)}");
             scope.Start();
             try
             {

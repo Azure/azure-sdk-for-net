@@ -95,11 +95,11 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_fileSource, _target, _options)
+                   callMedia => callMedia.StartPlayingAsync(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.PlayToAllAsync(_fileSource, _options)
+                   callMedia => callMedia.StartPlayingToAllAsync(_fileSource, _options)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
@@ -107,7 +107,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.RecognizeAsync(_recognizeConfigurations)
+                   callMedia => callMedia.StartRecognizingAsync(_recognizeConfigurations)
                 }
             };
         }
@@ -118,11 +118,11 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.Play(_fileSource, _target, _options)
+                   callMedia => callMedia.StartPlaying(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.PlayToAll(_fileSource, _options)
+                   callMedia => callMedia.StartPlayingToAll(_fileSource, _options)
                 },
                 new Func<CallMedia, Response>?[]
                 {
@@ -130,7 +130,7 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.Recognize(_recognizeConfigurations)
+                   callMedia => callMedia.StartRecognizing(_recognizeConfigurations)
                 }
             };
         }
