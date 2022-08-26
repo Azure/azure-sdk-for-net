@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeliveryAttributeMapping : IUtf8JsonSerializable
+    internal partial class UnknownDeliveryAttributeMapping : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,16 +25,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
-        internal static DeliveryAttributeMapping DeserializeDeliveryAttributeMapping(JsonElement element)
+        internal static UnknownDeliveryAttributeMapping DeserializeUnknownDeliveryAttributeMapping(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Dynamic": return DynamicDeliveryAttributeMapping.DeserializeDynamicDeliveryAttributeMapping(element);
-                    case "Static": return StaticDeliveryAttributeMapping.DeserializeStaticDeliveryAttributeMapping(element);
-                }
-            }
             Optional<string> name = default;
             DeliveryAttributeMappingType type = default;
             foreach (var property in element.EnumerateObject())

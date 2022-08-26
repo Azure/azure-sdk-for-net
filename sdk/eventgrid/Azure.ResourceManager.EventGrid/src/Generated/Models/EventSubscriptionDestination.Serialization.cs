@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new EventSubscriptionDestination(endpointType);
+            return new UnknownEventSubscriptionDestination(endpointType);
         }
     }
 }

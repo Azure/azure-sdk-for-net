@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// Please note <see cref="AdvancedFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BoolEqualsAdvancedFilter"/>, <see cref="IsNotNullAdvancedFilter"/>, <see cref="IsNullOrUndefinedAdvancedFilter"/>, <see cref="NumberGreaterThanAdvancedFilter"/>, <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>, <see cref="NumberInAdvancedFilter"/>, <see cref="NumberInRangeAdvancedFilter"/>, <see cref="NumberLessThanAdvancedFilter"/>, <see cref="NumberLessThanOrEqualsAdvancedFilter"/>, <see cref="NumberNotInAdvancedFilter"/>, <see cref="NumberNotInRangeAdvancedFilter"/>, <see cref="StringBeginsWithAdvancedFilter"/>, <see cref="StringContainsAdvancedFilter"/>, <see cref="StringEndsWithAdvancedFilter"/>, <see cref="StringInAdvancedFilter"/>, <see cref="StringNotBeginsWithAdvancedFilter"/>, <see cref="StringNotContainsAdvancedFilter"/>, <see cref="StringNotEndsWithAdvancedFilter"/> and <see cref="StringNotInAdvancedFilter"/>.
     /// </summary>
-    public partial class AdvancedFilter
+    public abstract partial class AdvancedFilter
     {
         /// <summary> Initializes a new instance of AdvancedFilter. </summary>
-        public AdvancedFilter()
+        protected AdvancedFilter()
         {
         }
 

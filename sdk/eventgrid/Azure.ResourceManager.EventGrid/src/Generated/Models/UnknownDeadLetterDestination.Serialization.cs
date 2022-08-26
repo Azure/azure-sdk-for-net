@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeadLetterDestination : IUtf8JsonSerializable
+    internal partial class UnknownDeadLetterDestination : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,15 +20,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
-        internal static DeadLetterDestination DeserializeDeadLetterDestination(JsonElement element)
+        internal static UnknownDeadLetterDestination DeserializeUnknownDeadLetterDestination(JsonElement element)
         {
-            if (element.TryGetProperty("endpointType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "StorageBlob": return StorageBlobDeadLetterDestination.DeserializeStorageBlobDeadLetterDestination(element);
-                }
-            }
             DeadLetterEndPointType endpointType = default;
             foreach (var property in element.EnumerateObject())
             {

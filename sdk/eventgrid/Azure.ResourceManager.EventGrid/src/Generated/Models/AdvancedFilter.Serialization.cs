@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new AdvancedFilter(operatorType, key.Value);
+            return new UnknownAdvancedFilter(operatorType, key.Value);
         }
     }
 }

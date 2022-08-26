@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// Please note <see cref="InputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="JsonInputSchemaMapping"/>.
     /// </summary>
-    public partial class InputSchemaMapping
+    public abstract partial class InputSchemaMapping
     {
         /// <summary> Initializes a new instance of InputSchemaMapping. </summary>
-        public InputSchemaMapping()
+        protected InputSchemaMapping()
         {
         }
 

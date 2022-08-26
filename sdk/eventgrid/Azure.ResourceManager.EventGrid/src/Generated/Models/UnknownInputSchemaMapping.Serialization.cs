@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class InputSchemaMapping : IUtf8JsonSerializable
+    internal partial class UnknownInputSchemaMapping : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,15 +20,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
-        internal static InputSchemaMapping DeserializeInputSchemaMapping(JsonElement element)
+        internal static UnknownInputSchemaMapping DeserializeUnknownInputSchemaMapping(JsonElement element)
         {
-            if (element.TryGetProperty("inputSchemaMappingType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Json": return JsonInputSchemaMapping.DeserializeJsonInputSchemaMapping(element);
-                }
-            }
             InputSchemaMappingType inputSchemaMappingType = default;
             foreach (var property in element.EnumerateObject())
             {

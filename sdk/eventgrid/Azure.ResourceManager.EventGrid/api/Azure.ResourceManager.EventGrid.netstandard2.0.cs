@@ -983,9 +983,9 @@ namespace Azure.ResourceManager.EventGrid
 }
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class AdvancedFilter
+    public abstract partial class AdvancedFilter
     {
-        public AdvancedFilter() { }
+        protected AdvancedFilter() { }
         public string Key { get { throw null; } set { } }
     }
     public partial class AzureFunctionEventSubscriptionDestination : Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination
@@ -1072,9 +1072,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary left, Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeadLetterDestination
+    public abstract partial class DeadLetterDestination
     {
-        public DeadLetterDestination() { }
+        protected DeadLetterDestination() { }
     }
     public partial class DeadLetterWithResourceIdentity
     {
@@ -1082,9 +1082,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public Azure.ResourceManager.EventGrid.Models.DeadLetterDestination DeadLetterDestination { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity Identity { get { throw null; } set { } }
     }
-    public partial class DeliveryAttributeMapping
+    public abstract partial class DeliveryAttributeMapping
     {
-        public DeliveryAttributeMapping() { }
+        protected DeliveryAttributeMapping() { }
         public string Name { get { throw null; } set { } }
     }
     public partial class DeliveryWithResourceIdentity
@@ -1207,9 +1207,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> DeliveryAttributeMappings { get { throw null; } }
         public string ResourceId { get { throw null; } set { } }
     }
-    public partial class EventSubscriptionDestination
+    public abstract partial class EventSubscriptionDestination
     {
-        public EventSubscriptionDestination() { }
+        protected EventSubscriptionDestination() { }
     }
     public partial class EventSubscriptionFilter
     {
@@ -1367,9 +1367,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator !=(Azure.ResourceManager.EventGrid.Models.InputSchema left, Azure.ResourceManager.EventGrid.Models.InputSchema right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class InputSchemaMapping
+    public abstract partial class InputSchemaMapping
     {
-        public InputSchemaMapping() { }
+        protected InputSchemaMapping() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IPActionType : System.IEquatable<Azure.ResourceManager.EventGrid.Models.IPActionType>
