@@ -35,7 +35,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
                 return (int)HttpStatusCode.OK == result.Status;
             }
-            catch (RequestFailedException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"IsEnvironmentReadyAsync: {ex.Message}");
                 return false;

@@ -257,8 +257,8 @@ namespace Azure.Core.TestFramework
 
         private async Task WaitForEnvironmentInternalAsync()
         {
-            //if (GlobalIsRunningInCI)
-            //{
+            if (GlobalIsRunningInCI)
+            {
                 if (Mode == RecordedTestMode.Live)
                 {
                     int numberOfTries = 60;
@@ -277,11 +277,11 @@ namespace Azure.Core.TestFramework
                     throw new InvalidOperationException(
                         "The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
                 }
-            //}
-            //else
-            //{
-            //    await ExtendResourceGroupExpirationAsync();
-            //}
+            }
+            else
+            {
+                await ExtendResourceGroupExpirationAsync();
+            }
         }
 
         private async Task ExtendResourceGroupExpirationAsync()
