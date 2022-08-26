@@ -1353,14 +1353,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.AttackTactic left, Azure.ResourceManager.SecurityInsights.Models.AttackTactic right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationRuleAction
+    public abstract partial class AutomationRuleAction
     {
-        public AutomationRuleAction(int order) { }
+        protected AutomationRuleAction(int order) { }
         public int Order { get { throw null; } set { } }
     }
-    public partial class AutomationRuleCondition
+    public abstract partial class AutomationRuleCondition
     {
-        public AutomationRuleCondition() { }
+        protected AutomationRuleCondition() { }
     }
     public partial class AutomationRuleModifyPropertiesAction : Azure.ResourceManager.SecurityInsights.Models.AutomationRuleAction
     {
@@ -1983,9 +1983,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState? AuthorizationState { get { throw null; } }
         public Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState? LicenseState { get { throw null; } }
     }
-    public partial class DataConnectorsCheckRequirements
+    public abstract partial class DataConnectorsCheckRequirements
     {
-        public DataConnectorsCheckRequirements() { }
+        protected DataConnectorsCheckRequirements() { }
     }
     public partial class DataTypeDefinitions
     {
@@ -2442,9 +2442,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public int? NumberOfBucket { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } }
     }
-    public partial class EntityTimelineItem
+    public abstract partial class EntityTimelineItem
     {
-        internal EntityTimelineItem() { }
+        protected EntityTimelineItem() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityTimelineKind : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.EntityTimelineKind>
