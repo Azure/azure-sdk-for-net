@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
         private readonly MessagingProvider _messagingProvider;
         private readonly ServiceBusOptions _options;
 
-        internal ServiceBusClientFactory(
+        public ServiceBusClientFactory(
             IConfiguration configuration,
             AzureComponentFactory componentFactory,
             MessagingProvider messagingProvider,
