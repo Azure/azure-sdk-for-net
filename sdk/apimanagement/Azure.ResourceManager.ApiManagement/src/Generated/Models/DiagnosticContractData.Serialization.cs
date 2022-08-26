@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("backend");
                 writer.WriteObjectValue(Backend);
             }
-            if (Optional.IsDefined(EnableLogClientIP))
+            if (Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp");
-                writer.WriteBooleanValue(EnableLogClientIP.Value);
+                writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {

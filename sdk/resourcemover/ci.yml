@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/resourcemover/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -28,5 +27,5 @@ extends:
     ServiceDirectory: resourcemover
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Migrate
-      safeName: AzureResourceManagerMigrate
+    - name: Azure.ResourceManager.ResourceMover
+      safeName: AzureResourceManagerResourceMover

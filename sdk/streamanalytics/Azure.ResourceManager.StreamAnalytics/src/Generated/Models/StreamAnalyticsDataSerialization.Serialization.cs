@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsDataSerialization(type);
+            return new UnknownStreamAnalyticsDataSerialization(type);
         }
     }
 }

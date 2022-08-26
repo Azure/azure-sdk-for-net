@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableUserRegistrationDelegation))
+            if (Optional.IsDefined(IsUserRegistrationDelegationEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(EnableUserRegistrationDelegation.Value);
+                writer.WriteBooleanValue(IsUserRegistrationDelegationEnabled.Value);
             }
             writer.WriteEndObject();
         }

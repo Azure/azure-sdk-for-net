@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelOperationCanPollFromNewObject()
+        public async Task CopyModelToOperationCanPollFromNewObject()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var modelId = Recording.GenerateId();
@@ -92,7 +92,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
             Assert.IsNotNull(operation.GetRawResponse());
 
-            var sameOperation = InstrumentOperation(new CopyModelOperation(operation.Id, nonInstrumentedClient));
+            var sameOperation = InstrumentOperation(new CopyModelToOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelOperationPercentageCompletedValue()
+        public async Task CopyModelToOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();

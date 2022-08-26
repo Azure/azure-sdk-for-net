@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// The call transfer accepted event.
     /// </summary>
     [CodeGenModel("CallTransferAcceptedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallTransferAccepted : CallingServerEventBase
+    public partial class CallTransferAccepted : CallAutomationEventBase
     {
         /// <summary>
         /// Deserialize <see cref="CallTransferAccepted"/> event.

@@ -6,10 +6,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 csharp: true
-tag: package-2020-10-01
 library-name: Authorization
 namespace: Azure.ResourceManager.Authorization
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a416080c85111fbe4e0a483a1b99f1126ca6e97c/specification/authorization/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a436672b07fb1fe276c203b086b3f0e0d0c4aa24/specification/authorization/resource-manager/readme.md
+tag: package-2022-04-01
 output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
@@ -29,6 +29,7 @@ rename-mapping:
   Principal: RoleManagementPrincipal
   NotificationLevel: RoleManagementPolicyNotificationLevel
   RecipientType: RoleManagementPolicyRecipientType
+  DenyAssignment.properties.doNotApplyToChildScopes: IsAppliedToChildScopes
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -76,21 +77,26 @@ rename-rules:
 request-path-to-resource-type:
   /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
 
-list-exception: 
-- /{roleDefinitionId}
-- /{roleAssignmentId}
-
 directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'
   - remove-operation: 'RoleManagementPolicyAssignments_Delete'
-
+  # TODO: remove dup methods with scope method, here is another issue logged https://github.com/Azure/autorest.csharp/issues/2629
+  - remove-operation: 'RoleAssignments_ListForSubscription'
+  - remove-operation: 'RoleAssignments_ListForResourceGroup'
+  - remove-operation: 'RoleAssignments_ListForResource'
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
     where: $.paths['/{roleAssignmentId}']
     transform: $ = {}
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/{roleDefinitionId}']
+    transform: $ = {}
+  - from: authorization-RoleDefinitionsCalls.json
+    where: $['x-ms-paths']['/{roleId}?disambiguation_dummy']
+    transform: $ = {}
+  - from: authorization-DenyAssignmentCalls.json
+    where: $.paths['/{denyAssignmentId}']
     transform: $ = {}
 
   - from: authorization-RoleDefinitionsCalls.json
@@ -107,6 +113,10 @@ directive:
       $.UserSet.properties.id['x-ms-format'] = 'uuid';
       delete $.Permission;
 
+  - from: authorization-RoleAssignmentsCalls.json
+    where: $.definitions
+    transform: >
+      $.RoleAssignmentProperties.properties.principalType['x-ms-enum']['name'] = 'RoleAssignmentPrincipalType';
   - from: RoleAssignmentSchedule.json
     where: $.definitions
     transform: >
