@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    // Data plane generated client. The PurviewEntities service client.
+    // Data plane generated sub-client. The PurviewEntities service client.
     /// <summary> The PurviewEntities service client. </summary>
     public partial class PurviewEntities
     {
