@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertsMetaDataProperties(metadataIdentifier);
+            return new UnknownServiceAlertsMetaDataProperties(metadataIdentifier);
         }
     }
 }

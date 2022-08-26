@@ -60,7 +60,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="body"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<CallConnectionPropertiesDtoInternal>> CreateCallAsync(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesInternal>> CreateCallAsync(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -73,9 +73,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 201:
                     {
-                        CallConnectionPropertiesDtoInternal value = default;
+                        CallConnectionPropertiesInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
+                        value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,7 +87,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="body"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<CallConnectionPropertiesDtoInternal> CreateCall(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesInternal> CreateCall(CreateCallRequestInternal body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -100,9 +100,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 201:
                     {
-                        CallConnectionPropertiesDtoInternal value = default;
+                        CallConnectionPropertiesInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
+                        value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -133,7 +133,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
         /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
-        public async Task<Response<CallConnectionPropertiesDtoInternal>> AnswerCallAsync(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesInternal>> AnswerCallAsync(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
             {
@@ -146,9 +146,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDtoInternal value = default;
+                        CallConnectionPropertiesInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
+                        value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,7 +161,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
         /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
-        public Response<CallConnectionPropertiesDtoInternal> AnswerCall(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesInternal> AnswerCall(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
             if (answerCallRequest == null)
             {
@@ -174,9 +174,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDtoInternal value = default;
+                        CallConnectionPropertiesInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallConnectionPropertiesDtoInternal.DeserializeCallConnectionPropertiesDtoInternal(document.RootElement);
+                        value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

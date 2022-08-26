@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new LinkedIntegrationRuntimeType(authorizationType);
+            return new UnknownLinkedIntegrationRuntimeType(authorizationType);
         }
     }
 }

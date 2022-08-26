@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapConfiguration(configurationType);
+            return new UnknownSapConfiguration(configurationType);
         }
     }
 }
