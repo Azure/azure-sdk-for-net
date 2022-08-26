@@ -1,0 +1,11 @@
+{
+  "Entries": [],
+  "Variables": {
+    "AZURE_CLIENT_ID": "Sanitized",
+    "AZURE_CLIENT_SECRET": "Sanitized",
+    "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "Sanitized",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "Sanitized",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Sanitized",
+    "AZURE_TENANT_ID": "Sanitized"
+  }
+}

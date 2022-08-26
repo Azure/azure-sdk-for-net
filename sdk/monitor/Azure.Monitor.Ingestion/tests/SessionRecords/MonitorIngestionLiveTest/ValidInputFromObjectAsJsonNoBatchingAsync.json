@@ -1,0 +1,43 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://nibhati-ingestion-dce-8qbl.westus2-1.ingest.monitor.azure.com/dataCollectionRules/dcr-4c0684412e0547b49be35f8c553702d5/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "184",
+        "Content-Type": "application/json",
+        "traceparent": "00-de351bebc88d844e8589f1bcd4f2578a-1e3f3e1da37c5347-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20220826.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8ffe168985ea63b58fa380d73a667849",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u001F\uFFFD\b\u0000\u0000\u0000\u0000\u0000\u0000\n",
+        "\uFFFD\uFFFDV\n",
+        "\uFFFD\uFFFDMU\uFFFDR2202\uFFFD5\uFFFD\uFFFD52\u000B14\uFFFD25\uFFFD20\uFFFD3667077\uFFFD50\uFFFD20P\uFFFDQr\uFFFD\uFFFD-(-I-\u0002*\uFFFD1\r",
+        "\uFFFD\u008E))\uFFFD%\uFFFD\uFFFDy\uFFFD9\uFFFD\uFFFDy%\uFFFD\u0015%JVF\uFFFD:\u0004M\uFFFD0\u0005\n",
+        "\uFFFD6\uFFFD\b\uFFFD\uFFFD\u01B5\uFFFD\u0000\u0000\u0000\u0000\uFFFD\uFFFD"
+      ],
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Fri, 26 Aug 2022 21:53:07 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "8ffe1689-85ea-63b5-8fa3-80d73a667849",
+        "x-ms-request-id": "8288fa6e-7f0b-4a16-81ff-f3dae034aff0"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_CLIENT_ID": "Sanitized",
+    "AZURE_CLIENT_SECRET": "Sanitized",
+    "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "Sanitized",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "Sanitized",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Sanitized",
+    "AZURE_TENANT_ID": "Sanitized",
+    "RandomSeed": "1795539410"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://nibhati-ingestion-dce-8qbl.westus2-1.ingest.monitor.azure.com/dataCollectionRules/dcr-4c0684412e0547b49be35f8c553702d5/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "280",
+        "Content-Type": "application/json",
+        "traceparent": "00-a13b982e66a57946a388a6304824a98f-7e13f2056bde074f-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20220826.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "df840c3895ef11032b6714746eba49da",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u001F\uFFFD\b\u0000\u0000\u0000\u0000\u0000\u0000\n",
+        "\uFFFD\u033B\n",
+        "\uFFFD@\u0010\uFFFD\uFFFDw\uFFFD:\uFFFD\uFFFD\uFFFD\uC953\uFFFDB\uFFFD\uFFFD\uFFFD\uFFFD-\u0016LVd\u0005A\uFFFD\uFFFDja7\uFFFD\uFFFD\u001D~\u000E\u07F2\uFFFD\u0060\uFFFD[\uFFFD\u0004\u001A\uFFFD\u001E1\uFFFD\uFFFDfe\uFFFD3\t\uFFFD\u0014\uFFFDG\uFFFD8\uFFFDO\uFFFD0\uFFFD\u0536\u06E3\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD|^\uFFFD\uFFFDk\uFFFD/\u05E9\uFFFD\uFFFD\u003C;$\u003C\uFFFD\uFFFDx[I\u061A\uFFFD\uFFFD\uFFFDmx\uFFFDH\u0616\uFFFD\uFFFD\uFFFD\uFFFDx\uFFFDI\uFFFD\uFFFD\uFFFD$a{\uFFFD\uFFFD\u0012v\uFFFD\uFFFD aG\u078EG\uFFFDo\u0000\u0000\u0000\uFFFD\uFFFD"
+      ],
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Fri, 26 Aug 2022 21:53:07 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "df840c38-95ef-1103-2b67-14746eba49da",
+        "x-ms-request-id": "f3aad362-7fa9-466a-b304-bff134e7ca06"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_CLIENT_ID": "Sanitized",
+    "AZURE_CLIENT_SECRET": "Sanitized",
+    "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "Sanitized",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "Sanitized",
+    "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Sanitized",
+    "AZURE_TENANT_ID": "Sanitized",
+    "RandomSeed": "1387881397"
+  }
+}

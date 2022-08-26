@@ -2,26 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Threading;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Collections;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
-    public class IngestionClientLiveTest : RecordedTestBase<IngestionClientTestEnvironment>
+    public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public IngestionClientLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -33,14 +28,13 @@ namespace Azure.Monitor.Ingestion.Tests
             return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential, clientOptions));
         }
 
-        [LiveOnly]
         [Test]
         public void NullInput()
         {
             LogsIngestionClient client = CreateClient();
-            Assert.Throws<ArgumentNullException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null).ConfigureAwait(false));
         }
-        [LiveOnly]
+
         [Test]
         public void EmptyData()
         {
@@ -48,10 +42,10 @@ namespace Azure.Monitor.Ingestion.Tests
 
             var entries = new List<IEnumerable>();
 
-            var exception = Assert.Throws<ArgumentException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries));
+            var exception = Assert.ThrowsAsync<ArgumentException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false));
             StringAssert.StartsWith("Value cannot be an empty collection.", exception.Message);
         }
-        [LiveOnly]
+
         [Test]
         public void NullStream()
         {
@@ -60,6 +54,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Stream stream = null;
             var exception = Assert.Throws<NullReferenceException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(stream)));
         }
+
         [LiveOnly]
         [Test]
         public async Task UploadOneLogGreaterThan1Mb()
@@ -81,54 +76,12 @@ namespace Azure.Monitor.Ingestion.Tests
             // Check the response
             Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
         }
-        [LiveOnly]
-        [Test]
-        public void ValidateBatchingOneChunkNoGzip()
-        {
-            var entries = new List<IEnumerable>();
-            for (int i = 0; i < 10; i++)
-            {
-                entries.Add(new Object[] {
-                    new {
-                        Time = "2021",
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-            IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
-            Assert.AreEqual(1, x.Count());
-        }
 
-        [LiveOnly]
-        [Test]
-        public void ValidateBatchingMultiChunkNoGzip()
+        private static List<Object> GenerateEntries(int numEntries)
         {
-            var entries = new List<IEnumerable>();
-            for (int i = 0; i < 20000; i++)
-            {
-                entries.Add(new Object[] {
-                    new {
-                        Time = i + "2021",
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-            IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
-            Assert.Greater(x.Count(), 1);
-        }
-
-        [LiveOnly]
-        [Test]
-        public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
-        {
-            LogsIngestionClient client = CreateClient();
-
             DateTime now = DateTime.Now;
-
             var entries = new List<Object>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numEntries; i++)
             {
                 entries.Add(new Object[] {
                     new {
@@ -138,16 +91,23 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
+            return entries;
+        }
+
+        [Test]
+        public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
+        {
+            LogsIngestionClient client = CreateClient();
 
            // Make the request
-           var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+           var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10)).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
         }
-        [LiveOnly]
+
         [Test]
-        public void ValidInputFromObjectAsJsonNoBatching()
+        public async Task ValidInputFromObjectAsJsonNoBatchingAsync()
         {
             LogsIngestionClient client = CreateClient();
 
@@ -168,7 +128,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     },
                 });
 
-            Response response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data), "gzip"); //takes StreamName not tablename
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data), "gzip").ConfigureAwait(false); //takes StreamName not tablename
             // Check the response
             Assert.AreEqual(204, response.Status);
         }
@@ -179,20 +139,8 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             LogsIngestionClient client = CreateClient();
 
-            var entries = new List<IEnumerable>();
-            for (int i = 0; i < 10000; i++)
-            {
-                entries.Add(new Object[] {
-                    new {
-                        Time = "2021",
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-
             // Make the request
-            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000)).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
@@ -200,23 +148,11 @@ namespace Azure.Monitor.Ingestion.Tests
 
         [LiveOnly]
         [Test]
-        public void InvalidInputFromObjectAsJsonNoBatchingNoGzip()
+        public async Task InvalidInputFromObjectAsJsonNoBatchingNoGzipAsync()
         {
             LogsIngestionClient client = CreateClient();
 
-            var entries = new List<IEnumerable>();
-            for (int i = 0; i < 100000; i++)
-            {
-                entries.Add(new Object[] {
-                    new {
-                        Time = "2021",
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-
-            Response<UploadLogsResult> response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries); //takes StreamName not tablename
+            Response<UploadLogsResult> response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000)).ConfigureAwait(false); //takes StreamName not tablename
             // Check the response - run without Batching and Gzip for error 413
             Assert.AreEqual(UploadLogsStatus.FAILURE, response.Value.Status);
             Assert.AreEqual(413, response.Value.Errors.FirstOrDefault().Error.Code);
