@@ -281,14 +281,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
-                {
-                    var (receiver, maxMessages, maxWaitTime) = value;
-                    return await receiver.ReceiveMessagesAsyncInternal(
-                        maxMessages,
-                        maxWaitTime,
-                        timeout,
-                        token).ConfigureAwait(false);
-                },
+            {
+                var (receiver, maxMessages, maxWaitTime) = value;
+                return await receiver.ReceiveMessagesAsyncInternal(
+                    maxMessages,
+                    maxWaitTime,
+                    timeout,
+                    token).ConfigureAwait(false);
+            },
                 (this, maxMessages, maxWaitTime),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
@@ -367,7 +367,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                    registration.Dispose();
+                registration.Dispose();
             }
         }
 
@@ -728,7 +728,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                         {
-                            rejected.Error.Info.Add(pair.Key, amqpObject);
+                            // Attempting to set the dead letter reason or description header through the properties
+                            var isReasonHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterReasonHeader);
+                            var isDescriptionHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
+
+                            // General case
+                            var isOtherProperty = !(isReasonHeaderKey || isDescriptionHeaderKey);
+
+                            // Only allow setting of a header property if the header was not passed in through the parameters
+                            var setHeaderInProperties = ((isReasonHeaderKey && deadLetterReason == null) || (isDescriptionHeaderKey && deadLetterErrorDescription == null));
+
+                            if (isOtherProperty || setHeaderInProperties)
+                            {
+                                rejected.Error.Info.Add(pair.Key, amqpObject);
+                            }
                         }
                         else
                         {
@@ -769,7 +782,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[]{ lockToken };
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[] { lockToken };
             amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
             if (deadLetterReason != null)
