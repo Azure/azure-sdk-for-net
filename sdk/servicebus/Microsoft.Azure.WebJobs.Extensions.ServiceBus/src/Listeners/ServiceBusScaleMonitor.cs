@@ -17,6 +17,9 @@ using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
+    /// <summary>
+    /// Used to retrive metrics and make scale decisions for Service Bus Queues and Topics.
+    /// </summary>
     public class ServiceBusScaleMonitor : IScaleMonitor<ServiceBusTriggerMetrics>
     {
         private const string DeadLetterQueuePath = @"/$DeadLetterQueue";
@@ -46,6 +49,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _nextWarningTime = DateTime.UtcNow;
         }
 
+        /// <summary>
+        /// Public constructor used to retrieve metrics and make scale decisions for Service Bus entities.
+        /// </summary>
+        /// <param name="functionId">The function name to make scale decisions for.</param>
+        /// <param name="serviceBusEntityType">Either a Queue or Topic. <see cref="ServiceBusEntityType"/></param>
+        /// <param name="entityPath">The name of the queue or topic that scale decisions are made for.</param>
+        /// <param name="connection">The connection name used for the function.</param>
+        /// <param name="loggerFactory">Used to create an ILogger instance.</param>
+        /// <param name="configuration">IConfiguration object that contains connection information specified by the "connection" name.</param>
+        /// <param name="componentFactory">Contains logic used for identity-based connections.</param>
+        /// <param name="messagingProvider">Used for creation of Service Bus message processing entities.</param>
+        /// <param name="logForwarder">Used to forward log events from Azure SDK EventSources to a logger factory.</param>
+        /// <param name="options">Configuration options used by the Service Bus extension.</param>
         public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, ILoggerFactory loggerFactory, IConfiguration configuration, AzureComponentFactory componentFactory, MessagingProvider messagingProvider, AzureEventSourceLogForwarder logForwarder, IOptions<ServiceBusOptions> options)
         {
             _functionId = functionId;
