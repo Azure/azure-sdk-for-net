@@ -62,6 +62,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     receiver = client.CreateReceiver(scope.QueueName);
                 }
 
+                var peeked = await receiver.PeekMessageAsync();
+                var peekScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PeekActivityName);
+                AssertCommonTags(peekScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[0].ParentId, peekScope.LinkedActivities.First().ParentId);
+
                 var remaining = numMessages;
                 List<ServiceBusReceivedMessage> receivedMsgs = new List<ServiceBusReceivedMessage>();
                 while (remaining > 0)
@@ -73,6 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(receiveScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                     var receiveLinkedActivities = receiveScope.LinkedActivities;
+                    Assert.Greater(receiveLinkedActivities.Count, 0);
                     for (int i = 0; i < receiveLinkedActivities.Count; i++)
                     {
                         Assert.AreEqual(sendActivities[i].ParentId, receiveLinkedActivities[i].ParentId);
@@ -86,21 +92,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.CompleteMessageAsync(completed);
                 var completeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.CompleteActivityName);
                 AssertCommonTags(completeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, completeScope.LinkedActivities.First().ParentId);
 
                 var deferred = receivedMsgs[++msgIndex];
                 await receiver.DeferMessageAsync(deferred);
                 var deferredScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeferActivityName);
                 AssertCommonTags(deferredScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, deferredScope.LinkedActivities.First().ParentId);
 
                 var deadLettered = receivedMsgs[++msgIndex];
                 await receiver.DeadLetterMessageAsync(deadLettered);
                 var deadLetterScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeadLetterActivityName);
                 AssertCommonTags(deadLetterScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, deadLetterScope.LinkedActivities.First().ParentId);
 
                 var abandoned = receivedMsgs[++msgIndex];
                 await receiver.AbandonMessageAsync(abandoned);
                 var abandonScope = _listener.AssertAndRemoveScope(DiagnosticProperty.AbandonActivityName);
                 AssertCommonTags(abandonScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, abandonScope.LinkedActivities.First().ParentId);
 
                 var receiveDeferMsg = await receiver.ReceiveDeferredMessageAsync(deferred.SequenceNumber);
                 var receiveDeferScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveDeferredActivityName);

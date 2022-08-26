@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b5a2897b8859634c99410a0591577f98-c7727e54f945e542-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "ecf4c5de88003828ad3da2146a8d220c",
+        "traceparent": "00-11c83a2a469c227fcd018fe1088a9ce1-80973cde5b8d82d7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "c767e08f4add0361077cf3be7545cc58",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 13 Jul 2022 03:18:16 GMT",
+        "Date": "Fri, 19 Aug 2022 17:22:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "24638742-831b-42ab-9777-6d1ad76a2bde",
+        "x-ms-correlation-request-id": "57772195-ff9d-4022-b387-1881bb237e9d",
         "x-ms-ratelimit-remaining-subscription-reads": "11983",
-        "x-ms-request-id": "24638742-831b-42ab-9777-6d1ad76a2bde",
-        "x-ms-routing-request-id": "KOREASOUTH:20220713T031816Z:24638742-831b-42ab-9777-6d1ad76a2bde"
+        "x-ms-request-id": "57772195-ff9d-4022-b387-1881bb237e9d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220819T172229Z:57772195-ff9d-4022-b387-1881bb237e9d"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-3192?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-6411?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-0c79375ed3e81c4aad28f1b3643e7283-dfff4873b503e84f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0b525e97632e39db7973a8e7fdb4817f",
+        "traceparent": "00-3cab1f0fc8b6e00174d5201657d96686-3ebb20ec1bb37efb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "b1686015d1e2cf43f8a5f6b69cb9f4b3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -79,19 +79,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 13 Jul 2022 03:18:17 GMT",
+        "Date": "Fri, 19 Aug 2022 17:22:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2b322450-3e6b-4d65-a1f7-a4b353e95be6",
+        "x-ms-correlation-request-id": "6fd5d607-b4be-4ffe-82a7-47343de67460",
         "x-ms-ratelimit-remaining-subscription-writes": "1194",
-        "x-ms-request-id": "2b322450-3e6b-4d65-a1f7-a4b353e95be6",
-        "x-ms-routing-request-id": "KOREASOUTH:20220713T031817Z:2b322450-3e6b-4d65-a1f7-a4b353e95be6"
+        "x-ms-request-id": "6fd5d607-b4be-4ffe-82a7-47343de67460",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220819T172230Z:6fd5d607-b4be-4ffe-82a7-47343de67460"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-3192",
-        "name": "testRG-3192",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6411",
+        "name": "testRG-6411",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "tags": {
@@ -103,14 +103,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-3192/providers/Microsoft.Authorization/roleAssignmentScheduleInstances?api-version=2020-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-6411/providers/Microsoft.Authorization/roleAssignmentScheduleInstances?api-version=2020-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d06ddd475c8ce14398a424bfbc1d48ee-1feaf53a0854364b-00",
-        "User-Agent": "azsdk-net-ResourceManager.Authorization/1.0.0-alpha.20220713.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a43f08c4d44fe580891db0f7660b0606",
+        "traceparent": "00-594711c5e34e1eeb41ab13bcf93a863e-aa5d14925ebdf583-00",
+        "User-Agent": "azsdk-net-ResourceManager.Authorization/1.0.0-alpha.20220820.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "e1d09d7bba7d9c9bf9be32c79f2ccef7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -120,18 +120,18 @@
         "Access-Control-Allow-Methods": "POST, PUT, DELETE, GET, OPTIONS, PATCH",
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "private",
-        "Content-Length": "158643",
+        "Content-Length": "165262",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 13 Jul 2022 03:18:21 GMT",
+        "Date": "Fri, 19 Aug 2022 17:22:34 GMT",
         "mspimslice": "PROD",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "a43f08c4-d44f-e580-891d-b0f7660b0606",
-        "x-ms-correlation-request-id": "2d201813-a6c0-4a29-8fa8-a308a34364c2",
+        "x-ms-client-request-id": "e1d09d7b-ba7d-9c9b-f9be-32c79f2ccef7",
+        "x-ms-correlation-request-id": "be1ff802-6e5f-423f-962c-7e88a2f55249",
         "x-ms-ratelimit-remaining-subscription-reads": "11982",
-        "x-ms-request-id": "2d201813-a6c0-4a29-8fa8-a308a34364c2",
-        "x-ms-routing-request-id": "KOREASOUTH:20220713T031821Z:2d201813-a6c0-4a29-8fa8-a308a34364c2"
+        "x-ms-request-id": "be1ff802-6e5f-423f-962c-7e88a2f55249",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220819T172235Z:be1ff802-6e5f-423f-962c-7e88a2f55249"
       },
       "ResponseBody": {
         "value": [
@@ -168,6 +168,41 @@
             },
             "name": "403b97d1-ee0a-4b10-afe1-f36f368d2ced",
             "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/403b97d1-ee0a-4b10-afe1-f36f368d2ced",
+            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
+          },
+          {
+            "properties": {
+              "roleAssignmentScheduleId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentSchedules/f4254463-7a28-4d26-b331-5a18c354cbe6",
+              "originRoleAssignmentId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignments/f4254463-7a28-4d26-b331-5a18c354cbe6",
+              "assignmentType": "Assigned",
+              "scope": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792",
+              "roleDefinitionId": "/providers/Microsoft.Authorization/roleDefinitions/fd6e57ea-fe3c-4f21-bd1e-de170a9a4971",
+              "principalId": "9c6d261d-f447-4cf6-bbde-6010b3953a75",
+              "principalType": "ServicePrincipal",
+              "status": "Provisioned",
+              "startDateTime": "2022-07-19T00:07:23.702098Z",
+              "memberType": "Inherited",
+              "createdOn": "2022-07-19T00:07:23.702098Z",
+              "expandedProperties": {
+                "principal": {
+                  "id": "9c6d261d-f447-4cf6-bbde-6010b3953a75",
+                  "displayName": "SEC-ASM-UA-MSI-v17",
+                  "type": "ServicePrincipal"
+                },
+                "roleDefinition": {
+                  "id": "/providers/Microsoft.Authorization/roleDefinitions/fd6e57ea-fe3c-4f21-bd1e-de170a9a4971",
+                  "displayName": "AzSecPackUAPolicyResourceContributorCorpProd",
+                  "type": "CustomRole"
+                },
+                "scope": {
+                  "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792",
+                  "displayName": "Non Production",
+                  "type": "managementgroup"
+                }
+              }
+            },
+            "name": "f4254463-7a28-4d26-b331-5a18c354cbe6",
+            "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/f4254463-7a28-4d26-b331-5a18c354cbe6",
             "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
           },
           {
@@ -273,42 +308,6 @@
             },
             "name": "9f7990ef-fc46-4852-a0c9-5704383f90fd",
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/9f7990ef-fc46-4852-a0c9-5704383f90fd",
-            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
-          },
-          {
-            "properties": {
-              "roleAssignmentScheduleId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentSchedules/206c67d9-485b-4352-9b01-2962445e34fd",
-              "originRoleAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignments/206c67d9-485b-4352-9b01-2962445e34fd",
-              "assignmentType": "Assigned",
-              "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-              "roleDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
-              "principalId": "d1adf373-76e0-4c7c-98f0-185d05fbcf4c",
-              "principalType": "Group",
-              "status": "Provisioned",
-              "startDateTime": "2020-10-23T02:17:10.2351592Z",
-              "memberType": "Inherited",
-              "createdOn": "2020-10-23T02:17:10.2351592Z",
-              "expandedProperties": {
-                "principal": {
-                  "id": "d1adf373-76e0-4c7c-98f0-185d05fbcf4c",
-                  "displayName": "AME Engineering Redmond",
-                  "email": "ameredmonddev@microsoft.com",
-                  "type": "Group"
-                },
-                "roleDefinition": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
-                  "displayName": "Contributor",
-                  "type": "BuiltInRole"
-                },
-                "scope": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-                  "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
-                  "type": "subscription"
-                }
-              }
-            },
-            "name": "206c67d9-485b-4352-9b01-2962445e34fd",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/206c67d9-485b-4352-9b01-2962445e34fd",
             "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
           },
           {
@@ -990,42 +989,6 @@
           },
           {
             "properties": {
-              "roleAssignmentScheduleId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentSchedules/9022b27b-95bc-4088-a341-c85492e0fe1c",
-              "originRoleAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignments/9022b27b-95bc-4088-a341-c85492e0fe1c",
-              "assignmentType": "Assigned",
-              "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-              "roleDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
-              "principalId": "30e5d93e-928c-424c-9b40-fae932e45990",
-              "principalType": "User",
-              "status": "Provisioned",
-              "startDateTime": "2022-06-02T06:39:48.2269339Z",
-              "memberType": "Inherited",
-              "createdOn": "2022-06-02T06:39:48.2269339Z",
-              "expandedProperties": {
-                "principal": {
-                  "id": "30e5d93e-928c-424c-9b40-fae932e45990",
-                  "displayName": "Junxi Su (WICRESOFT NORTH AMERICA LTD)",
-                  "email": "v-junxisu@microsoft.com",
-                  "type": "User"
-                },
-                "roleDefinition": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
-                  "displayName": "Contributor",
-                  "type": "BuiltInRole"
-                },
-                "scope": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-                  "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
-                  "type": "subscription"
-                }
-              }
-            },
-            "name": "9022b27b-95bc-4088-a341-c85492e0fe1c",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/9022b27b-95bc-4088-a341-c85492e0fe1c",
-            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
-          },
-          {
-            "properties": {
               "roleAssignmentScheduleId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentSchedules/397690ac-c007-43f7-b281-c130c5396f2c",
               "originRoleAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignments/397690ac-c007-43f7-b281-c130c5396f2c",
               "assignmentType": "Assigned",
@@ -1129,6 +1092,77 @@
             },
             "name": "a8585fd3-0ed3-4db8-b14a-79fd71655ce2",
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/a8585fd3-0ed3-4db8-b14a-79fd71655ce2",
+            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
+          },
+          {
+            "properties": {
+              "roleAssignmentScheduleId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentSchedules/185f93ec-9012-456e-b505-8796b97aff0d",
+              "originRoleAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignments/185f93ec-9012-456e-b505-8796b97aff0d",
+              "assignmentType": "Assigned",
+              "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+              "roleDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+              "principalId": "5350cd0a-129b-4051-86d2-76d567db42a7",
+              "principalType": "User",
+              "status": "Provisioned",
+              "startDateTime": "2022-08-03T07:32:24.0509799Z",
+              "memberType": "Inherited",
+              "createdOn": "2022-08-03T07:32:24.0509799Z",
+              "expandedProperties": {
+                "principal": {
+                  "id": "5350cd0a-129b-4051-86d2-76d567db42a7",
+                  "displayName": "Yuchao Yan",
+                  "email": "yuchaoyan@microsoft.com",
+                  "type": "User"
+                },
+                "roleDefinition": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                  "displayName": "Contributor",
+                  "type": "BuiltInRole"
+                },
+                "scope": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+                  "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+                  "type": "subscription"
+                }
+              }
+            },
+            "name": "185f93ec-9012-456e-b505-8796b97aff0d",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/185f93ec-9012-456e-b505-8796b97aff0d",
+            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
+          },
+          {
+            "properties": {
+              "roleAssignmentScheduleId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentSchedules/d90ce49c-09ed-4ad1-aeb4-fcacb8d18833",
+              "originRoleAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignments/d90ce49c-09ed-4ad1-aeb4-fcacb8d18833",
+              "assignmentType": "Assigned",
+              "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+              "roleDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+              "principalId": "816faa8f-2c18-4900-97c5-d1fbd6cd0f99",
+              "principalType": "ServicePrincipal",
+              "status": "Provisioned",
+              "startDateTime": "2022-08-12T07:55:35.1768579Z",
+              "memberType": "Inherited",
+              "createdOn": "2022-08-12T07:55:35.1768579Z",
+              "expandedProperties": {
+                "principal": {
+                  "id": "816faa8f-2c18-4900-97c5-d1fbd6cd0f99",
+                  "displayName": "netsdkSP",
+                  "type": "ServicePrincipal"
+                },
+                "roleDefinition": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                  "displayName": "Contributor",
+                  "type": "BuiltInRole"
+                },
+                "scope": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+                  "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+                  "type": "subscription"
+                }
+              }
+            },
+            "name": "d90ce49c-09ed-4ad1-aeb4-fcacb8d18833",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/d90ce49c-09ed-4ad1-aeb4-fcacb8d18833",
             "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
           },
           {
@@ -2518,6 +2552,42 @@
           },
           {
             "properties": {
+              "roleAssignmentScheduleId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentSchedules/12419ade-5913-433c-b574-77a267a6acc7",
+              "originRoleAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignments/12419ade-5913-433c-b574-77a267a6acc7",
+              "assignmentType": "Assigned",
+              "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+              "roleDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+              "principalId": "adadad3d-2ce2-4fcd-aab9-467bf76419d1",
+              "principalType": "User",
+              "status": "Provisioned",
+              "startDateTime": "2022-08-03T09:14:55.1412933Z",
+              "memberType": "Inherited",
+              "createdOn": "2022-08-03T09:14:55.1412933Z",
+              "expandedProperties": {
+                "principal": {
+                  "id": "adadad3d-2ce2-4fcd-aab9-467bf76419d1",
+                  "displayName": "Chengming Ruan (WICRESOFT NORTH AMERICA LTD)",
+                  "email": "v-cruan@microsoft.com",
+                  "type": "User"
+                },
+                "roleDefinition": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+                  "displayName": "Owner",
+                  "type": "BuiltInRole"
+                },
+                "scope": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+                  "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+                  "type": "subscription"
+                }
+              }
+            },
+            "name": "12419ade-5913-433c-b574-77a267a6acc7",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/12419ade-5913-433c-b574-77a267a6acc7",
+            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
+          },
+          {
+            "properties": {
               "roleAssignmentScheduleId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignmentSchedules/39dcfe51-3199-4f1f-a38a-0ef789e5baad",
               "originRoleAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleAssignments/39dcfe51-3199-4f1f-a38a-0ef789e5baad",
               "assignmentType": "Assigned",
@@ -3328,6 +3398,76 @@
           },
           {
             "properties": {
+              "roleAssignmentScheduleId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentSchedules/2697280b-812c-472d-841b-a10a9fe540a5",
+              "originRoleAssignmentId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignments/2697280b-812c-472d-841b-a10a9fe540a5",
+              "assignmentType": "Assigned",
+              "scope": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792",
+              "roleDefinitionId": "/providers/Microsoft.Authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c",
+              "principalId": "421cdbd5-e8fa-4961-a599-600c3230e091",
+              "principalType": "ServicePrincipal",
+              "status": "Provisioned",
+              "startDateTime": "2022-07-19T00:07:21.3325762Z",
+              "memberType": "Inherited",
+              "createdOn": "2022-07-19T00:07:21.3325762Z",
+              "expandedProperties": {
+                "principal": {
+                  "id": "421cdbd5-e8fa-4961-a599-600c3230e091",
+                  "displayName": "SEC-ASA-VM-Central-113",
+                  "type": "ServicePrincipal"
+                },
+                "roleDefinition": {
+                  "id": "/providers/Microsoft.Authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c",
+                  "displayName": "Virtual Machine Contributor",
+                  "type": "BuiltInRole"
+                },
+                "scope": {
+                  "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792",
+                  "displayName": "Non Production",
+                  "type": "managementgroup"
+                }
+              }
+            },
+            "name": "2697280b-812c-472d-841b-a10a9fe540a5",
+            "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/2697280b-812c-472d-841b-a10a9fe540a5",
+            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
+          },
+          {
+            "properties": {
+              "roleAssignmentScheduleId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentSchedules/065a63ba-71cc-4c69-b92b-bc67421e7e64",
+              "originRoleAssignmentId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignments/065a63ba-71cc-4c69-b92b-bc67421e7e64",
+              "assignmentType": "Assigned",
+              "scope": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792",
+              "roleDefinitionId": "/providers/Microsoft.Authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c",
+              "principalId": "f47f1409-00ea-40d5-bed1-401a50741ae3",
+              "principalType": "ServicePrincipal",
+              "status": "Provisioned",
+              "startDateTime": "2022-07-19T00:07:26.4080657Z",
+              "memberType": "Inherited",
+              "createdOn": "2022-07-19T00:07:26.4080657Z",
+              "expandedProperties": {
+                "principal": {
+                  "id": "f47f1409-00ea-40d5-bed1-401a50741ae3",
+                  "displayName": "SEC-ASA-VMSS-Central-113",
+                  "type": "ServicePrincipal"
+                },
+                "roleDefinition": {
+                  "id": "/providers/Microsoft.Authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c",
+                  "displayName": "Virtual Machine Contributor",
+                  "type": "BuiltInRole"
+                },
+                "scope": {
+                  "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792",
+                  "displayName": "Non Production",
+                  "type": "managementgroup"
+                }
+              }
+            },
+            "name": "065a63ba-71cc-4c69-b92b-bc67421e7e64",
+            "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/065a63ba-71cc-4c69-b92b-bc67421e7e64",
+            "type": "Microsoft.Authorization/roleAssignmentScheduleInstances"
+          },
+          {
+            "properties": {
               "roleAssignmentScheduleId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignmentSchedules/82fe7886-5c1b-42c2-9319-7b4d436d8aba",
               "originRoleAssignmentId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/roleAssignments/82fe7886-5c1b-42c2-9319-7b4d436d8aba",
               "assignmentType": "Assigned",
@@ -3576,7 +3716,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "311031477",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1574928381",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

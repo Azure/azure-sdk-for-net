@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Tests
         private ResourceIdentifier _mediaTransformIdentifier;
         private ResourceIdentifier _mediaServiceIdentifier;
         private MediaTransformResource _mediaTransform;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
 
         private MediaTransformJobCollection mediaTransformJobCollection => _mediaTransform.GetMediaTransformJobs();
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
             _mediaTransform = await Client.GetMediaTransformResource(_mediaTransformIdentifier).GetAsync();
         }
 

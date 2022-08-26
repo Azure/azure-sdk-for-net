@@ -21,7 +21,6 @@ pr:
   paths:
     include:
     - sdk/sqlmanagement/
-    - sdk/resourcemanager/
     - sdk/network/
 
 extends:

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         internal static IotFhirDestinationCollection DeserializeIotFhirDestinationCollection(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<IotFhirDestinationData>> value = default;
+            Optional<IReadOnlyList<HealthcareApisIotFhirDestinationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IotFhirDestinationData> array = new List<IotFhirDestinationData>();
+                    List<HealthcareApisIotFhirDestinationData> array = new List<HealthcareApisIotFhirDestinationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotFhirDestinationData.DeserializeIotFhirDestinationData(item));
+                        array.Add(HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(item));
                     }
                     value = array;
                     continue;

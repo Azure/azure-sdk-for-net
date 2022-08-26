@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VaultList. </summary>
         internal VaultList()
         {
-            Value = new ChangeTrackingList<Vault>();
+            Value = new ChangeTrackingList<NetAppVault>();
         }
 
         /// <summary> Initializes a new instance of VaultList. </summary>
         /// <param name="value"> A list of vaults. </param>
-        internal VaultList(IReadOnlyList<Vault> value)
+        internal VaultList(IReadOnlyList<NetAppVault> value)
         {
             Value = value;
         }
 
         /// <summary> A list of vaults. </summary>
-        public IReadOnlyList<Vault> Value { get; }
+        public IReadOnlyList<NetAppVault> Value { get; }
     }
 }

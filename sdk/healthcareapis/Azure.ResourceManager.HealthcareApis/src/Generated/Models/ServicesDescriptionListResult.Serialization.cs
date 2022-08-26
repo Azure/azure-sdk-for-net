@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         internal static ServicesDescriptionListResult DeserializeServicesDescriptionListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ServicesDescriptionData>> value = default;
+            Optional<IReadOnlyList<HealthcareApisServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServicesDescriptionData> array = new List<ServicesDescriptionData>();
+                    List<HealthcareApisServiceData> array = new List<HealthcareApisServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServicesDescriptionData.DeserializeServicesDescriptionData(item));
+                        array.Add(HealthcareApisServiceData.DeserializeHealthcareApisServiceData(item));
                     }
                     value = array;
                     continue;

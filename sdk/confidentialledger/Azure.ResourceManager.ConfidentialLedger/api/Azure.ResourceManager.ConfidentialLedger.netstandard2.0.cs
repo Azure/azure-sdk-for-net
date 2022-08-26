@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     {
         public AadBasedSecurityPrincipal() { }
         public Azure.ResourceManager.ConfidentialLedger.Models.LedgerRoleName? LedgerRoleName { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } set { } }
+        public System.Guid? PrincipalId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class CertBasedSecurityPrincipal
@@ -67,36 +67,18 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public string Cert { get { throw null; } set { } }
         public Azure.ResourceManager.ConfidentialLedger.Models.LedgerRoleName? LedgerRoleName { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CheckNameAvailabilityReason(string value) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class LedgerNameAvailabilityContent
     {
         public LedgerNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
     }
     public partial class LedgerNameAvailabilityResult
     {
         internal LedgerNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason? Reason { get { throw null; } }
     }
     public partial class LedgerProperties
     {
@@ -169,6 +151,24 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.LedgerType left, Azure.ResourceManager.ConfidentialLedger.Models.LedgerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.LedgerType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.LedgerType left, Azure.ResourceManager.ConfidentialLedger.Models.LedgerType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LegerNameUnavailableReason : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LegerNameUnavailableReason(string value) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason left, Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason left, Azure.ResourceManager.ConfidentialLedger.Models.LegerNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

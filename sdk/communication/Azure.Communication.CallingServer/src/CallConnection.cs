@@ -148,11 +148,13 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Transfer this call to a participant. </summary>
-        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
-        /// <param name="options">The transfer options. </param>
+        /// <param name="targetParticipant"> The target participant. </param>
+        /// <param name="sourceCallerId"> The caller id of the source. </param>
+        /// <param name="userToUserInformation"> The UserToUserInformation. </param>
+        /// <param name="operationContext"> The operationContext for this transfer call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, TransferCallToParticipantOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, PhoneNumberIdentifier sourceCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
@@ -160,12 +162,9 @@ namespace Azure.Communication.CallingServer
             {
                 TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
-                if (options != null)
-                {
-                    request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-                    request.UserToUserInformation = options.UserToUserInformation;
-                    request.OperationContext = options.OperationContext;
-                }
+                request.TransfereeCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
+                request.UserToUserInformation = userToUserInformation;
+                request.OperationContext = operationContext;
 
                 return await RestClient.TransferToParticipantAsync(
                     callConnectionId: CallConnectionId,
@@ -182,10 +181,12 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Transfer the call. </summary>
         /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="options">The transfer options. </param>
+        /// <param name="sourceCallerId"> The caller id of the source. </param>
+        /// <param name="userToUserInformation"> The UserToUserInformation. </param>
+        /// <param name="operationContext"> The operationContext for this transfer call. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CommunicationIdentifier targetParticipant, TransferCallToParticipantOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CommunicationIdentifier targetParticipant, PhoneNumberIdentifier sourceCallerId = default, string userToUserInformation = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
@@ -193,12 +194,9 @@ namespace Azure.Communication.CallingServer
             {
                 TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
-                if (options != null)
-                {
-                    request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-                    request.UserToUserInformation = options.UserToUserInformation;
-                    request.OperationContext = options.OperationContext;
-                }
+                request.TransfereeCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
+                request.UserToUserInformation = userToUserInformation;
+                request.OperationContext = operationContext;
 
                 return RestClient.TransferToParticipant(
                     callConnectionId: CallConnectionId,
@@ -215,11 +213,13 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Add participants to the call. </summary>
         /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
-        /// <param name="options">The options. </param>
+        /// <param name="sourceCallerId"> The caller id of the source. </param>
+        /// <param name="operationContext"> The Operation Context. </param>
+        /// <param name="invitationTimeoutInSeconds"> Timeout before invitation timesout. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
-        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToAdd, PhoneNumberIdentifier sourceCallerId = default, string operationContext = default, int? invitationTimeoutInSeconds = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
             scope.Start();
@@ -227,12 +227,9 @@ namespace Azure.Communication.CallingServer
             {
                 AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(participantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
 
-                if (options != null)
-                {
-                    request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-                    request.OperationContext = options.OperationContext;
-                    request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
-                }
+                request.SourceCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
+                request.OperationContext = operationContext;
+                request.InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
 
                 var response = await RestClient.AddParticipantAsync(
                     callConnectionId: CallConnectionId,
@@ -251,11 +248,13 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Add participants to the call. </summary>
         /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
-        /// <param name="options">The options. </param>
+        /// <param name="sourceCallerId"> The caller id of the source. </param>
+        /// <param name="operationContext"> The Operation Context. </param>
+        /// <param name="invitationTimeoutInSeconds"> Timeout before invitation timesout. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
-        public virtual Response<AddParticipantsResult> AddParticipants(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<AddParticipantsResult> AddParticipants(IEnumerable<CommunicationIdentifier> participantsToAdd, PhoneNumberIdentifier sourceCallerId = default, string operationContext = default, int? invitationTimeoutInSeconds = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
             scope.Start();
@@ -263,12 +262,9 @@ namespace Azure.Communication.CallingServer
             {
                 AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(participantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
 
-                if (options != null)
-                {
-                    request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-                    request.OperationContext = options.OperationContext;
-                    request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
-                }
+                request.SourceCallerId = sourceCallerId == null ? null : new PhoneNumberIdentifierModel(sourceCallerId.PhoneNumber);
+                request.OperationContext = operationContext;
+                request.InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
 
                 var response = RestClient.AddParticipant(
                     callConnectionId: CallConnectionId,
@@ -391,11 +387,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Remove participants from the call. </summary>
         /// <param name="participantsToRemove"> The list of identity of participants to be removed from the call. </param>
-        /// <param name="options"> Options for removing participants. </param>
+        /// <param name="operationContext"> The Operation Context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, RemoveParticipantsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipants)}");
             scope.Start();
@@ -403,10 +399,7 @@ namespace Azure.Communication.CallingServer
             {
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(participantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
 
-                if (options != null)
-                {
-                    request.OperationContext = options.OperationContext;
-                }
+                request.OperationContext = operationContext;
 
                 return await RestClient.RemoveParticipantsAsync(
                     callConnectionId: CallConnectionId,
@@ -423,11 +416,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Remove participants from the call. </summary>
         /// <param name="participantsToRemove"> The list of identity of participants to be removed from the call. </param>
-        /// <param name="options"> Options for removing participants. </param>
+        /// <param name="operationContext"> The Operation Context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public virtual Response<RemoveParticipantsResult> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, RemoveParticipantsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<RemoveParticipantsResult> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipants)}");
             scope.Start();
@@ -435,10 +428,7 @@ namespace Azure.Communication.CallingServer
             {
                 RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(participantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
 
-                if (options != null)
-                {
-                    request.OperationContext = options.OperationContext;
-                }
+                request.OperationContext = operationContext;
 
                return RestClient.RemoveParticipants(
                     callConnectionId: CallConnectionId,

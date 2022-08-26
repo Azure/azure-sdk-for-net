@@ -28,13 +28,134 @@ namespace Azure.ResourceManager.NetApp
             );
         }
 
-        /// <summary> Gets a collection of SubscriptionQuotaItemResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Check if a resource name is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
+        /// Operation Id: NetAppResource_CheckNameAvailability
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
-        /// <returns> An object representing collection of SubscriptionQuotaItemResources and their operations over a SubscriptionQuotaItemResource. </returns>
-        public static SubscriptionQuotaItemCollection GetSubscriptionQuotaItems(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSubscriptionQuotaItems(location);
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(subscriptionResource).CheckNetAppNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check if a resource name is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
+        /// Operation Id: NetAppResource_CheckNameAvailability
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(subscriptionResource).CheckNetAppNameAvailability(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check if a file path is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
+        /// Operation Id: NetAppResource_CheckFilePathAvailability
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="content"> File path availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(subscriptionResource).CheckNetAppFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check if a file path is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
+        /// Operation Id: NetAppResource_CheckFilePathAvailability
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="content"> File path availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(subscriptionResource).CheckNetAppFilePathAvailability(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check if a quota is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
+        /// Operation Id: NetAppResource_CheckQuotaAvailability
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="content"> Quota availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(subscriptionResource).CheckNetAppQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check if a quota is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
+        /// Operation Id: NetAppResource_CheckQuotaAvailability
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="content"> Quota availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(subscriptionResource).CheckNetAppQuotaAvailability(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the default and current limits for quotas
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
+        /// Operation Id: NetAppResourceQuotaLimits_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetNetAppQuotaLimitsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the default and current limits for quotas
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
+        /// Operation Id: NetAppResourceQuotaLimits_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetNetAppQuotaLimits(location, cancellationToken);
         }
 
         /// <summary>
@@ -48,10 +169,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionQuotaItemResource>> GetSubscriptionQuotaItemAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSubscriptionQuotaItems(location).GetAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
+
+            return await GetExtensionClient(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,112 +187,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionQuotaItemResource> GetSubscriptionQuotaItem(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public static Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSubscriptionQuotaItems(location).Get(quotaLimitName, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
-        /// <summary>
-        /// Check if a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
-        /// Operation Id: NetAppResource_CheckNameAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="content"> Name availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckAvailabilityResponse>> CheckNameAvailabilityNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityNetAppResourceAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check if a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
-        /// Operation Id: NetAppResource_CheckNameAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="content"> Name availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckAvailabilityResponse> CheckNameAvailabilityNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityNetAppResource(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Check if a file path is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
-        /// Operation Id: NetAppResource_CheckFilePathAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="content"> File path availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckAvailabilityResponse>> CheckFilePathAvailabilityNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FilePathAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckFilePathAvailabilityNetAppResourceAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check if a file path is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
-        /// Operation Id: NetAppResource_CheckFilePathAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="content"> File path availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckAvailabilityResponse> CheckFilePathAvailabilityNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, FilePathAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckFilePathAvailabilityNetAppResource(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Check if a quota is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
-        /// Operation Id: NetAppResource_CheckQuotaAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="content"> Quota availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckAvailabilityResponse>> CheckQuotaAvailabilityNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, QuotaAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckQuotaAvailabilityNetAppResourceAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check if a quota is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
-        /// Operation Id: NetAppResource_CheckQuotaAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="content"> Quota availability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckAvailabilityResponse> CheckQuotaAvailabilityNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, QuotaAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckQuotaAvailabilityNetAppResource(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetNetAppQuotaLimit(location, quotaLimitName, cancellationToken);
         }
 
         /// <summary>
@@ -248,25 +269,6 @@ namespace Azure.ResourceManager.NetApp
             return resourceGroupResource.GetNetAppAccounts().Get(accountName, cancellationToken);
         }
 
-        #region SubscriptionQuotaItemResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionQuotaItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionQuotaItemResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionQuotaItemResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionQuotaItemResource" /> object. </returns>
-        public static SubscriptionQuotaItemResource GetSubscriptionQuotaItemResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionQuotaItemResource.ValidateResourceId(id);
-                return new SubscriptionQuotaItemResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region NetAppAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -305,39 +307,39 @@ namespace Azure.ResourceManager.NetApp
         }
         #endregion
 
-        #region VolumeResource
+        #region NetAppVolumeResource
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VolumeResource.CreateResourceIdentifier" /> to create a <see cref="VolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppVolumeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VolumeResource" /> object. </returns>
-        public static VolumeResource GetVolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeResource" /> object. </returns>
+        public static NetAppVolumeResource GetNetAppVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VolumeResource.ValidateResourceId(id);
-                return new VolumeResource(client, id);
+                NetAppVolumeResource.ValidateResourceId(id);
+                return new NetAppVolumeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SnapshotResource
+        #region NetAppVolumeSnapshotResource
         /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppVolumeSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppVolumeSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
-        public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeSnapshotResource" /> object. </returns>
+        public static NetAppVolumeSnapshotResource GetNetAppVolumeSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SnapshotResource.ValidateResourceId(id);
-                return new SnapshotResource(client, id);
+                NetAppVolumeSnapshotResource.ValidateResourceId(id);
+                return new NetAppVolumeSnapshotResource(client, id);
             }
             );
         }
@@ -362,115 +364,115 @@ namespace Azure.ResourceManager.NetApp
         }
         #endregion
 
-        #region NetAppAccountCapacityPoolVolumeBackupResource
+        #region NetAppVolumeBackupResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppAccountCapacityPoolVolumeBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppAccountCapacityPoolVolumeBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountCapacityPoolVolumeBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppVolumeBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppVolumeBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppAccountCapacityPoolVolumeBackupResource" /> object. </returns>
-        public static NetAppAccountCapacityPoolVolumeBackupResource GetNetAppAccountCapacityPoolVolumeBackupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeBackupResource" /> object. </returns>
+        public static NetAppVolumeBackupResource GetNetAppVolumeBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetAppAccountCapacityPoolVolumeBackupResource.ValidateResourceId(id);
-                return new NetAppAccountCapacityPoolVolumeBackupResource(client, id);
+                NetAppVolumeBackupResource.ValidateResourceId(id);
+                return new NetAppVolumeBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NetAppAccountAccountBackupResource
+        #region NetAppAccountBackupResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppAccountAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppAccountAccountBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountAccountBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppAccountBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppAccountAccountBackupResource" /> object. </returns>
-        public static NetAppAccountAccountBackupResource GetNetAppAccountAccountBackupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppAccountBackupResource" /> object. </returns>
+        public static NetAppAccountBackupResource GetNetAppAccountBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetAppAccountAccountBackupResource.ValidateResourceId(id);
-                return new NetAppAccountAccountBackupResource(client, id);
+                NetAppAccountBackupResource.ValidateResourceId(id);
+                return new NetAppAccountBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BackupPolicyResource
+        #region NetAppBackupPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="BackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupPolicyResource" /> object. </returns>
-        public static BackupPolicyResource GetBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBackupPolicyResource" /> object. </returns>
+        public static NetAppBackupPolicyResource GetNetAppBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BackupPolicyResource.ValidateResourceId(id);
-                return new BackupPolicyResource(client, id);
+                NetAppBackupPolicyResource.ValidateResourceId(id);
+                return new NetAppBackupPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VolumeQuotaRuleResource
+        #region NetAppVolumeQuotaRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeQuotaRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VolumeQuotaRuleResource.CreateResourceIdentifier" /> to create a <see cref="VolumeQuotaRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppVolumeQuotaRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppVolumeQuotaRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeQuotaRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VolumeQuotaRuleResource" /> object. </returns>
-        public static VolumeQuotaRuleResource GetVolumeQuotaRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeQuotaRuleResource" /> object. </returns>
+        public static NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VolumeQuotaRuleResource.ValidateResourceId(id);
-                return new VolumeQuotaRuleResource(client, id);
+                NetAppVolumeQuotaRuleResource.ValidateResourceId(id);
+                return new NetAppVolumeQuotaRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VolumeGroupDetailResource
+        #region NetAppVolumeGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeGroupDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VolumeGroupDetailResource.CreateResourceIdentifier" /> to create a <see cref="VolumeGroupDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppVolumeGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppVolumeGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VolumeGroupDetailResource" /> object. </returns>
-        public static VolumeGroupDetailResource GetVolumeGroupDetailResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppVolumeGroupResource" /> object. </returns>
+        public static NetAppVolumeGroupResource GetNetAppVolumeGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VolumeGroupDetailResource.ValidateResourceId(id);
-                return new VolumeGroupDetailResource(client, id);
+                NetAppVolumeGroupResource.ValidateResourceId(id);
+                return new NetAppVolumeGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SubvolumeInfoResource
+        #region NetAppSubvolumeResource
         /// <summary>
-        /// Gets an object representing a <see cref="SubvolumeInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubvolumeInfoResource.CreateResourceIdentifier" /> to create a <see cref="SubvolumeInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppSubvolumeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppSubvolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppSubvolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubvolumeInfoResource" /> object. </returns>
-        public static SubvolumeInfoResource GetSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppSubvolumeResource" /> object. </returns>
+        public static NetAppSubvolumeResource GetNetAppSubvolumeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SubvolumeInfoResource.ValidateResourceId(id);
-                return new SubvolumeInfoResource(client, id);
+                NetAppSubvolumeResource.ValidateResourceId(id);
+                return new NetAppSubvolumeResource(client, id);
             }
             );
         }

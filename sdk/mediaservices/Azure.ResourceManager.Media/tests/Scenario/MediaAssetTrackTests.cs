@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaAssetTrackTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaAssetIdentifier;
         private MediaAssetResource _mediaAsset;
 
         private MediaAssetTrackCollection mediaAssetCollection => _mediaAsset.GetMediaAssetTracks();
@@ -20,21 +19,14 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
-            var mediaAsset = await mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("asset"), new MediaAssetData());
-            _mediaAssetIdentifier = mediaAsset.Value.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaAsset = await Client.GetMediaAssetResource(_mediaAssetIdentifier).GetAsync();
+            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
+            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
+            var mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaservice"), storage.Id);
+            var mediaAsset = await mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("asset"), new MediaAssetData());
+            _mediaAsset = mediaAsset.Value;
         }
 
         [Test]
