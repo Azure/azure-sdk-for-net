@@ -1,10 +1,6 @@
 $packageSuffix = "dev" + [datetime]::UtcNow.Ticks.ToString()
-$outputDirectory = "/Users/likasem/source/extoutput"
+$outputDirectory = "C:\Users\likasem\source\extoutput"
 $project = "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj"
-$localNuget = "/Users/likasem/source/localnuget"
-# $packageName = "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.5.1.0-alpha." + $packageSuffix
-
-# Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.5.1.0-alpha.20220822.1.nupkg
 
 dotnet --version
 
@@ -14,4 +10,4 @@ $cmd = "pack", "$project", "-o", $outputDirectory, "--no-build", "--version-suff
 
 & dotnet $cmd
 
-nuget init $outputDirectory $localNuget
+Copy-Item -Path "C:\Users\likasem\source\extoutput\*" -Destination "C:\Users\likasem\source\localnuget" -Recurse

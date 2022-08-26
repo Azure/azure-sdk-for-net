@@ -144,6 +144,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             RegisterCommonConverters(rule);
             rule.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
+            rule.AddConverter<BlobBaseClient, RichBindingReferenceType>(ConvertToReferenceType);
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete. FluentBindingRule is "Not ready for public consumption."
@@ -152,7 +153,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         {
             // Converter manager already has Stream-->Byte[],String,TextReader
             rule.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
-            rule.AddConverter<BlobBaseClient, RichBindingReferenceType>(ConvertToReferenceType);
 
             // Blob type is a property of an existing blob.
             rule.AddConverter(new StorageBlobConverter<AppendBlobClient>());
@@ -209,9 +209,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
 
             var referenceType = new RichBindingReferenceType();
-            referenceType.Properties.Add("connection_string", blobAttribute.Connection);
-            referenceType.Properties.Add("blob_container", blobPath.ContainerName);
-            referenceType.Properties.Add("blob_name", blobPath.BlobName);
+            referenceType.Properties = new Dictionary<string, string>()
+            {
+                { "connection_string", blobAttribute.Connection },
+                { "blob_container", blobPath.ContainerName },
+                { "blob_name", blobPath.BlobName }
+            };
 
             return referenceType;
         }
@@ -352,15 +355,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             return await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
-        private RichBindingReferenceType ConvertToReferenceType(BlobBaseClient input)
+        private static RichBindingReferenceType ConvertToReferenceType(BlobBaseClient input, BlobTriggerAttribute attr)
         {
             var referenceType = new RichBindingReferenceType();
-            if (input is not null)
+            referenceType.Properties = new Dictionary<string, string>()
             {
-                referenceType.Properties.Add("account_name", input.AccountName);
-                referenceType.Properties.Add("blob_container", input.BlobContainerName);
-                referenceType.Properties.Add("blob_name", input.Name);
-            }
+                { "connection_string", attr.Connection },
+                { "blob_container", input.BlobContainerName },
+                { "blob_name", input.Name }
+            };
+
             return referenceType;
         }
 
