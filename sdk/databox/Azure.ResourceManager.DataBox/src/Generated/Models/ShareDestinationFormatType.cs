@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Unknown format. </summary>
         UnknownType,
         /// <summary> Storsimple data format. </summary>
-        HCS,
+        Hcs,
         /// <summary> Azure storage block blob format. </summary>
         BlockBlob,
         /// <summary> Azure storage page blob format. </summary>

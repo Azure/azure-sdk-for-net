@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        internal UnknownJobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, ResponseError error) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal UnknownJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             JobSecretsType = jobSecretsType;
         }

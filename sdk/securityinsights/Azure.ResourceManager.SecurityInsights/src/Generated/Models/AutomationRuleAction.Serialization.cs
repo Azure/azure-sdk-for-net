@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AutomationRuleAction(order, actionType);
+            return new UnknownAutomationRuleAction(order, actionType);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             CopyLogLink = new ChangeTrackingList<string>();
             CopyVerboseLogLink = new ChangeTrackingList<string>();
-            CopyLogDetailsType = ClassDiscriminator.DataBoxHeavy;
+            CopyLogDetailsType = DataBoxOrderType.DataBoxHeavy;
         }
 
         /// <summary> Initializes a new instance of DataBoxHeavyAccountCopyLogDetails. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
-        internal DataBoxHeavyAccountCopyLogDetails(ClassDiscriminator copyLogDetailsType, string accountName, IReadOnlyList<string> copyLogLink, IReadOnlyList<string> copyVerboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, string accountName, IReadOnlyList<string> copyLogLink, IReadOnlyList<string> copyVerboseLogLink) : base(copyLogDetailsType)
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;
