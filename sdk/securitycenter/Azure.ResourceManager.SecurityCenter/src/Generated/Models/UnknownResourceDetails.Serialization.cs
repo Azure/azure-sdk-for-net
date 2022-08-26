@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ResourceDetails : IUtf8JsonSerializable
+    internal partial class UnknownResourceDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,17 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceDetails DeserializeResourceDetails(JsonElement element)
+        internal static UnknownResourceDetails DeserializeUnknownResourceDetails(JsonElement element)
         {
-            if (element.TryGetProperty("source", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Azure": return AzureResourceDetails.DeserializeAzureResourceDetails(element);
-                    case "OnPremise": return OnPremiseResourceDetails.DeserializeOnPremiseResourceDetails(element);
-                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element);
-                }
-            }
             Source source = default;
             foreach (var property in element.EnumerateObject())
             {

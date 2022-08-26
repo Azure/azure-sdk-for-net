@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class EnvironmentData : IUtf8JsonSerializable
+    internal partial class UnknownEnvironmentData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,18 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static EnvironmentData DeserializeEnvironmentData(JsonElement element)
+        internal static UnknownEnvironmentData DeserializeUnknownEnvironmentData(JsonElement element)
         {
-            if (element.TryGetProperty("environmentType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AwsAccount": return AWSEnvironmentData.DeserializeAWSEnvironmentData(element);
-                    case "AzureDevOpsScope": return AzureDevOpsScopeEnvironmentData.DeserializeAzureDevOpsScopeEnvironmentData(element);
-                    case "GcpProject": return GcpProjectEnvironmentData.DeserializeGcpProjectEnvironmentData(element);
-                    case "GithubScope": return GithubScopeEnvironmentData.DeserializeGithubScopeEnvironmentData(element);
-                }
-            }
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
             {

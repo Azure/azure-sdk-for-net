@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsOrganizationalData : IUtf8JsonSerializable
+    internal partial class UnknownAwsOrganizationalData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,16 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static AwsOrganizationalData DeserializeAwsOrganizationalData(JsonElement element)
+        internal static UnknownAwsOrganizationalData DeserializeUnknownAwsOrganizationalData(JsonElement element)
         {
-            if (element.TryGetProperty("organizationMembershipType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element);
-                    case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element);
-                }
-            }
             OrganizationMembershipType organizationMembershipType = default;
             foreach (var property in element.EnumerateObject())
             {

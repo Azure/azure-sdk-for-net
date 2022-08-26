@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _securityConnectorGovernanceRuleClientDiagnostics;
         private readonly SecurityConnectorGovernanceRulesRestOperations _securityConnectorGovernanceRuleRestClient;
-        private readonly ClientDiagnostics _securityConnectorGovernanceRuleClientDiagnostics0;
-        private readonly SecurityConnectorGovernanceRuleRestOperations _securityConnectorGovernanceRuleRestClient0;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityConnectorGovernanceRuleCollection"/> class for mocking. </summary>
         protected SecurityConnectorGovernanceRuleCollection()
@@ -44,9 +42,6 @@ namespace Azure.ResourceManager.SecurityCenter
             _securityConnectorGovernanceRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorGovernanceRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityConnectorGovernanceRuleResource.ResourceType, out string securityConnectorGovernanceRuleApiVersion);
             _securityConnectorGovernanceRuleRestClient = new SecurityConnectorGovernanceRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorGovernanceRuleApiVersion);
-            _securityConnectorGovernanceRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorGovernanceRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityConnectorGovernanceRuleResource.ResourceType, out string securityConnectorGovernanceRuleApiVersion);
-            _securityConnectorGovernanceRuleRestClient = new SecurityConnectorGovernanceRuleRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorGovernanceRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -185,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a list of all relevant governanceRules over a security connector level scope
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/governanceRules
-        /// Operation Id: SecurityConnectorGovernanceRule_List
+        /// Operation Id: SecurityConnectorGovernanceRules_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityConnectorGovernanceRuleResource" /> that may take multiple service requests to iterate over. </returns>
@@ -227,7 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a list of all relevant governanceRules over a security connector level scope
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/governanceRules
-        /// Operation Id: SecurityConnectorGovernanceRule_List
+        /// Operation Id: SecurityConnectorGovernanceRules_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityConnectorGovernanceRuleResource" /> that may take multiple service requests to iterate over. </returns>

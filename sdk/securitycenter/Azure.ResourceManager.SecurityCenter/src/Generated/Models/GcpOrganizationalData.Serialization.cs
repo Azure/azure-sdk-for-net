@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new GcpOrganizationalData(organizationMembershipType);
+            return new UnknownGcpOrganizationalData(organizationMembershipType);
         }
     }
 }

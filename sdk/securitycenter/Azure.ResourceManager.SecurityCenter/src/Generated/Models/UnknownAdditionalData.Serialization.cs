@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AdditionalData : IUtf8JsonSerializable
+    internal partial class UnknownAdditionalData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,17 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static AdditionalData DeserializeAdditionalData(JsonElement element)
+        internal static UnknownAdditionalData DeserializeUnknownAdditionalData(JsonElement element)
         {
-            if (element.TryGetProperty("assessedResourceType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "ContainerRegistryVulnerability": return ContainerRegistryVulnerabilityProperties.DeserializeContainerRegistryVulnerabilityProperties(element);
-                    case "ServerVulnerabilityAssessment": return ServerVulnerabilityProperties.DeserializeServerVulnerabilityProperties(element);
-                    case "SqlServerVulnerability": return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element);
-                }
-            }
             AssessedResourceType assessedResourceType = default;
             foreach (var property in element.EnumerateObject())
             {

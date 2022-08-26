@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AuthenticationDetailsProperties : IUtf8JsonSerializable
+    internal partial class UnknownAuthenticationDetailsProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,17 +21,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static AuthenticationDetailsProperties DeserializeAuthenticationDetailsProperties(JsonElement element)
+        internal static UnknownAuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element)
         {
-            if (element.TryGetProperty("authenticationType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "awsAssumeRole": return AwAssumeRoleAuthenticationDetailsProperties.DeserializeAwAssumeRoleAuthenticationDetailsProperties(element);
-                    case "awsCreds": return AwsCredsAuthenticationDetailsProperties.DeserializeAwsCredsAuthenticationDetailsProperties(element);
-                    case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element);
-                }
-            }
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
             Optional<IReadOnlyList<PermissionProperty>> grantedPermissions = default;
             AuthenticationType authenticationType = default;

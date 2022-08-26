@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         private readonly ClientDiagnostics _securityConnectorApplicationClientDiagnostics;
-        private readonly SecurityConnectorApplicationRestOperations _securityConnectorApplicationRestClient;
+        private readonly SecurityConnectorApplicationsRestOperations _securityConnectorApplicationRestClient;
         private readonly ApplicationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityConnectorApplicationResource"/> class for mocking. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string securityConnectorApplicationApiVersion);
-            _securityConnectorApplicationRestClient = new SecurityConnectorApplicationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion);
+            _securityConnectorApplicationRestClient = new SecurityConnectorApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityConnectorApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityConnectorApplicationResource> Get(CancellationToken cancellationToken = default)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Delete an Application over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Delete
+        /// Operation Id: SecurityConnectorApplications_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Delete an Application over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Delete
+        /// Operation Id: SecurityConnectorApplications_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Creates or update a security Application on the given security connector.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_CreateOrUpdate
+        /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Application over a subscription scope. </param>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Creates or update a security Application on the given security connector.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_CreateOrUpdate
+        /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Application over a subscription scope. </param>

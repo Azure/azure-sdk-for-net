@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new CustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType);
+            return new UnknownCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType);
         }
     }
 }

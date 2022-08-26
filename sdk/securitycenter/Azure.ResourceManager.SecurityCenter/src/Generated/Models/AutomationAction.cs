@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="AutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutomationActionEventHub"/>, <see cref="AutomationActionLogicApp"/> and <see cref="AutomationActionWorkspace"/>.
     /// </summary>
-    public partial class AutomationAction
+    public abstract partial class AutomationAction
     {
         /// <summary> Initializes a new instance of AutomationAction. </summary>
-        public AutomationAction()
+        protected AutomationAction()
         {
         }
 

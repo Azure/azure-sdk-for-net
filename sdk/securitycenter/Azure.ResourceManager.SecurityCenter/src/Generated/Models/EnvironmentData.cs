@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="EnvironmentData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AWSEnvironmentData"/>, <see cref="AzureDevOpsScopeEnvironmentData"/>, <see cref="GcpProjectEnvironmentData"/> and <see cref="GithubScopeEnvironmentData"/>.
     /// </summary>
-    public partial class EnvironmentData
+    public abstract partial class EnvironmentData
     {
         /// <summary> Initializes a new instance of EnvironmentData. </summary>
-        public EnvironmentData()
+        protected EnvironmentData()
         {
         }
 

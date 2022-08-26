@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new CloudOffering(offeringType, description.Value);
+            return new UnknownCloudOffering(offeringType, description.Value);
         }
     }
 }

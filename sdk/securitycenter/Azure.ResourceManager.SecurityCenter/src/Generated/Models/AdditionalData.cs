@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="AdditionalData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
     /// </summary>
-    public partial class AdditionalData
+    public abstract partial class AdditionalData
     {
         /// <summary> Initializes a new instance of AdditionalData. </summary>
-        public AdditionalData()
+        protected AdditionalData()
         {
         }
 

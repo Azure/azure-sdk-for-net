@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="ResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
     /// </summary>
-    public partial class ResourceDetails
+    public abstract partial class ResourceDetails
     {
         /// <summary> Initializes a new instance of ResourceDetails. </summary>
-        public ResourceDetails()
+        protected ResourceDetails()
         {
         }
 

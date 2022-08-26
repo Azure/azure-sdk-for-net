@@ -56,6 +56,18 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}
 
 directive:
+  - rename-operation:
+      from: SecurityConnectorApplication_Get
+      to: SecurityConnectorApplications_Get
+  - rename-operation:
+      from: SecurityConnectorApplication_CreateOrUpdate
+      to: SecurityConnectorApplications_CreateOrUpdate
+  - rename-operation:
+      from: SecurityConnectorApplication_Delete
+      to: SecurityConnectorApplications_Delete
+  - rename-operation:
+      from: SecurityConnectorGovernanceRule_List
+      to: SecurityConnectorGovernanceRules_List
   - from: externalSecuritySolutions.json
     where: $.definitions
     transform: >

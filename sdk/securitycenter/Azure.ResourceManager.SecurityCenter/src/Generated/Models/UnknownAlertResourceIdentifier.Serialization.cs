@@ -10,18 +10,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AlertResourceIdentifier
+    internal partial class UnknownAlertResourceIdentifier : IUtf8JsonSerializable
     {
-        internal static AlertResourceIdentifier DeserializeAlertResourceIdentifier(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AzureResource": return AzureResourceIdentifier.DeserializeAzureResourceIdentifier(element);
-                    case "LogAnalytics": return LogAnalyticsIdentifier.DeserializeLogAnalyticsIdentifier(element);
-                }
-            }
+            writer.WriteStartObject();
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(ResourceIdentifierType.ToString());
+            writer.WriteEndObject();
+        }
+
+        internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element)
+        {
             ResourceIdentifierType type = default;
             foreach (var property in element.EnumerateObject())
             {

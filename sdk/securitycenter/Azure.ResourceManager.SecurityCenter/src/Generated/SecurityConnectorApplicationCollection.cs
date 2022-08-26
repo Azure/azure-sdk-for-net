@@ -27,9 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityConnectorApplicationCollection : ArmCollection, IEnumerable<SecurityConnectorApplicationResource>, IAsyncEnumerable<SecurityConnectorApplicationResource>
     {
         private readonly ClientDiagnostics _securityConnectorApplicationClientDiagnostics;
-        private readonly SecurityConnectorApplicationRestOperations _securityConnectorApplicationRestClient;
-        private readonly ClientDiagnostics _securityConnectorApplicationClientDiagnostics0;
-        private readonly SecurityConnectorApplicationsRestOperations _securityConnectorApplicationRestClient0;
+        private readonly SecurityConnectorApplicationsRestOperations _securityConnectorApplicationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityConnectorApplicationCollection"/> class for mocking. </summary>
         protected SecurityConnectorApplicationCollection()
@@ -41,9 +39,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SecurityConnectorApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityConnectorApplicationResource.ResourceType, out string securityConnectorApplicationApiVersion);
-            _securityConnectorApplicationRestClient = new SecurityConnectorApplicationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion);
             _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityConnectorApplicationResource.ResourceType, out string securityConnectorApplicationApiVersion);
             _securityConnectorApplicationRestClient = new SecurityConnectorApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion);
@@ -61,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Creates or update a security Application on the given security connector.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_CreateOrUpdate
+        /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
@@ -94,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Creates or update a security Application on the given security connector.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_CreateOrUpdate
+        /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
@@ -127,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -156,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -296,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplication_Get
+        /// Operation Id: SecurityConnectorApplications_Get
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
