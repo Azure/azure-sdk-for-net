@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Redis.Tests
             // Delete
             await ruleTwo.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await firewallCollection.ExistsAsync("RuleTwo")).Value;
-            Assert.IsFalse(falseResult);
+            Assert.IsTrue(falseResult);
         }
     }
 }
