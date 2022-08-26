@@ -71,7 +71,7 @@ namespace Azure.Communication.CallingServer
                 Assert.NotNull(callResponse.Value);
                 var callConnection = callResponse.Value.CallConnection;
                 callConnectionId = callConnection.CallConnectionId;
-                var dtmfResponse = await callConnection.GetCallMedia().RecognizeAsync(new CallMediaRecognizeDtmfOptions()
+                var dtmfResponse = await callConnection.GetCallMedia().StartRecognizingAsync(new CallMediaRecognizeDtmfOptions()
                 {
                     MaxTonesToCollect = 5,
                     InitialSilenceTimeout = TimeSpan.FromSeconds(15),
