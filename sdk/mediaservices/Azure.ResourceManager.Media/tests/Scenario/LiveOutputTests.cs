@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class LiveOutputTests : MediaManagementTestBase
     {
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
         private LiveEventResource _liveEvent;
 
         private LiveOutputCollection liveOutputCollection => _liveEvent.GetLiveOutputs();

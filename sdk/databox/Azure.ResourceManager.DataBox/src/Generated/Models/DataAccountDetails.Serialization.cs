@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataAccountDetails(dataAccountType, sharePassword.Value);
+            return new UnknownDataAccountDetails(dataAccountType, sharePassword.Value);
         }
     }
 }

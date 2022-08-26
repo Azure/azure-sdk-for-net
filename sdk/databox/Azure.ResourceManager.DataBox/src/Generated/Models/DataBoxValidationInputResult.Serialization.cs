@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxValidationInputResult(validationType, error.Value);
+            return new UnknownDataBoxValidationInputResult(validationType, error.Value);
         }
     }
 }

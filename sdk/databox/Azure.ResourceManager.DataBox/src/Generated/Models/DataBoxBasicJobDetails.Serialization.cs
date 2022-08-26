@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxBasicJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTeraBytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode));
+            return new UnknownDataBoxBasicJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTeraBytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new CopyLogDetails(copyLogDetailsType);
+            return new UnknownCopyLogDetails(copyLogDetailsType);
         }
     }
 }

@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="ScalingMechanism"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AddRemoveIncrementalNamedPartitionScalingMechanism"/> and <see cref="PartitionInstanceCountScaleMechanism"/>.
     /// </summary>
-    public partial class ScalingMechanism
+    public abstract partial class ScalingMechanism
     {
         /// <summary> Initializes a new instance of ScalingMechanism. </summary>
-        public ScalingMechanism()
+        protected ScalingMechanism()
         {
         }
 

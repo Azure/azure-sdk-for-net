@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a StreamingEndpoint along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingEndpointResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStreamingEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServiceResource" /> using the GetStreamingEndpoint method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetStreamingEndpoint method.
     /// </summary>
     public partial class StreamingEndpointResource : ArmResource
     {

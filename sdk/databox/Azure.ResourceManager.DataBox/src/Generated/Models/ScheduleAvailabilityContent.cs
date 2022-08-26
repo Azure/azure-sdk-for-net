@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="ScheduleAvailabilityContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataBoxScheduleAvailabilityContent"/>, <see cref="DiskScheduleAvailabilityContent"/> and <see cref="HeavyScheduleAvailabilityContent"/>.
     /// </summary>
-    public partial class ScheduleAvailabilityContent
+    public abstract partial class ScheduleAvailabilityContent
     {
         /// <summary> Initializes a new instance of ScheduleAvailabilityContent. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        public ScheduleAvailabilityContent(AzureLocation storageLocation)
+        protected ScheduleAvailabilityContent(AzureLocation storageLocation)
         {
             StorageLocation = storageLocation;
         }

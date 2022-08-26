@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// Please note <see cref="AutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="PropertyConditionProperties"/>, <see cref="PropertyArrayChangedConditionProperties"/> and <see cref="PropertyChangedConditionProperties"/>.
     /// </summary>
-    public partial class AutomationRuleCondition
+    public abstract partial class AutomationRuleCondition
     {
         /// <summary> Initializes a new instance of AutomationRuleCondition. </summary>
-        public AutomationRuleCondition()
+        protected AutomationRuleCondition()
         {
         }
 

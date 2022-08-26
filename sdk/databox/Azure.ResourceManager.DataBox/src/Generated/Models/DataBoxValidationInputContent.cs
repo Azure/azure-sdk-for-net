@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="DataBoxValidateAddressContent"/>.
     /// </summary>
-    public partial class DataBoxValidationInputContent
+    public abstract partial class DataBoxValidationInputContent
     {
         /// <summary> Initializes a new instance of DataBoxValidationInputContent. </summary>
-        public DataBoxValidationInputContent()
+        protected DataBoxValidationInputContent()
         {
         }
 

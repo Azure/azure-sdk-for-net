@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="PartialAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="PartialDataPathAssetReference"/>, <see cref="PartialIdAssetReference"/> and <see cref="PartialOutputPathAssetReference"/>.
     /// </summary>
-    public partial class PartialAssetReferenceBase
+    public abstract partial class PartialAssetReferenceBase
     {
         /// <summary> Initializes a new instance of PartialAssetReferenceBase. </summary>
-        public PartialAssetReferenceBase()
+        protected PartialAssetReferenceBase()
         {
         }
 

@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataboxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
     /// </summary>
-    public partial class JobSecrets
+    public abstract partial class JobSecrets
     {
         /// <summary> Initializes a new instance of JobSecrets. </summary>
-        internal JobSecrets()
+        protected JobSecrets()
         {
         }
 

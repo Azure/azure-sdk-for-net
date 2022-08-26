@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AutomationRuleCondition(conditionType);
+            return new UnknownAutomationRuleCondition(conditionType);
         }
     }
 }

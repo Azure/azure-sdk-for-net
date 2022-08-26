@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IList<string> BlobPrefixList { get { throw null; } }
         public System.Collections.Generic.IList<string> ContainerList { get { throw null; } }
     }
-    public partial class CopyLogDetails
+    public abstract partial class CopyLogDetails
     {
-        internal CopyLogDetails() { }
+        protected CopyLogDetails() { }
     }
     public partial class CreateJobValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationContent
     {
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.DataBox.Models
         Restart = 3,
         ReachOutToOperation = 4,
     }
-    public partial class DataAccountDetails
+    public abstract partial class DataAccountDetails
     {
-        public DataAccountDetails() { }
+        protected DataAccountDetails() { }
         public string SharePassword { get { throw null; } set { } }
     }
     public enum DataAccountType
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataAccountType? DataAccountType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails> ShareCredentialDetails { get { throw null; } }
     }
-    public partial class DataBoxBasicJobDetails
+    public abstract partial class DataBoxBasicJobDetails
     {
-        public DataBoxBasicJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) { }
+        protected DataBoxBasicJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
         public string ChainOfCustodySasKey { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxContactDetails ContactDetails { get { throw null; } set { } }
@@ -588,18 +588,18 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
-    public partial class DataBoxValidationContent
+    public abstract partial class DataBoxValidationContent
     {
-        public DataBoxValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent> individualRequestDetails) { }
+        protected DataBoxValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent> individualRequestDetails) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent> IndividualRequestDetails { get { throw null; } }
     }
-    public partial class DataBoxValidationInputContent
+    public abstract partial class DataBoxValidationInputContent
     {
-        public DataBoxValidationInputContent() { }
+        protected DataBoxValidationInputContent() { }
     }
-    public partial class DataBoxValidationInputResult
+    public abstract partial class DataBoxValidationInputResult
     {
-        internal DataBoxValidationInputResult() { }
+        protected DataBoxValidationInputResult() { }
         public Azure.ResponseError Error { get { throw null; } }
     }
     public partial class DataBoxValidationResult
@@ -648,9 +648,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public string Street3 { get { throw null; } }
         public string Zip { get { throw null; } }
     }
-    public partial class DataCenterAddressResult
+    public abstract partial class DataCenterAddressResult
     {
-        internal DataCenterAddressResult() { }
+        protected DataCenterAddressResult() { }
         public Azure.Core.AzureLocation? DataCenterAzureLocation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedCarriersForReturnShipment { get { throw null; } }
     }
@@ -826,9 +826,9 @@ namespace Azure.ResourceManager.DataBox.Models
         NonScheduled = 0,
         Scheduled = 1,
     }
-    public partial class JobSecrets
+    public abstract partial class JobSecrets
     {
-        internal JobSecrets() { }
+        protected JobSecrets() { }
         public Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode DcAccessSecurityCode { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
     }
@@ -941,9 +941,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> ScheduleAvailabilityResponseAvailableDates { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails> TransportAvailabilityDetails { get { throw null; } }
     }
-    public partial class ScheduleAvailabilityContent
+    public abstract partial class ScheduleAvailabilityContent
     {
-        public ScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation) { }
+        protected ScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation) { }
         public string Country { get { throw null; } set { } }
         public Azure.Core.AzureLocation StorageLocation { get { throw null; } }
     }
