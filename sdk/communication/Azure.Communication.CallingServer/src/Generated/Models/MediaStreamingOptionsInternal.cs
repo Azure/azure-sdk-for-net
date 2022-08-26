@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
         /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
-        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransportType transportType, MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType)
+        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
         {
             if (transportUrl == null)
             {
@@ -34,10 +34,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> Transport URL for media streaming. </summary>
         public string TransportUrl { get; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransportType TransportType { get; }
+        public MediaStreamingTransport TransportType { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
-        public MediaStreamingContentType ContentType { get; }
+        public MediaStreamingContent ContentType { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
-        public MediaStreamingAudioChannelType AudioChannelType { get; }
+        public MediaStreamingAudioChannel AudioChannelType { get; }
     }
 }

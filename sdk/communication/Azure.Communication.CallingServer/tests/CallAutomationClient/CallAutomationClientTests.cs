@@ -13,9 +13,9 @@ namespace Azure.Communication.CallingServer
     {
         private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
             new Uri("https://websocket"),
-            MediaStreamingTransportType.Websocket,
-            MediaStreamingContentType.Audio,
-            MediaStreamingAudioChannelType.Mixed);
+            MediaStreamingTransport.Websocket,
+            MediaStreamingContent.Audio,
+            MediaStreamingAudioChannel.Mixed);
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
