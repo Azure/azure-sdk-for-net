@@ -102,6 +102,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             return resourceGroupResource.GetUserAssignedIdentities().Get(resourceName, cancellationToken);
         }
 
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -112,11 +121,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
-        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
+        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetSystemAssignedIdentity();
+            return GetExtensionClient(client, scope).GetSystemAssignedIdentity();
         }
 
         #region SystemAssignedIdentityResource
