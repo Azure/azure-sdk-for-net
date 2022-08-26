@@ -31,7 +31,7 @@ namespace Azure.Maps.Search
         /// * roadUse
         /// * returnMatchType
         /// </summary>
-        public GeographicEntityType? EntityType { get; set; }
+        public GeographicEntity? EntityType { get; set; }
         /// <summary>
         /// Minimum fuzziness level to be used. Default: 1, minimum: 1 and maximum: 4
         ///

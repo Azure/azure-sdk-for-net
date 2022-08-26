@@ -29,7 +29,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var searchResult = await client.SearchAddressAsync("Redmond", new SearchAddressOptions {
-                EntityType = GeographicEntityType.Municipality
+                EntityType = GeographicEntity.Municipality
             });
             Assert.AreEqual("Redmond, WA", searchResult.Value.Results[0].Address.FreeformAddress);
         }

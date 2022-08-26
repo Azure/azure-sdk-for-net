@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonMultiLineString : IUtf8JsonSerializable
+    internal partial class GeoJsonMultiLineString : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

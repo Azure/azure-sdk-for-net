@@ -13,7 +13,7 @@ namespace Azure.Maps.Search.Models
 {
     /// <summary> Initializes a new instance of SearchAlongRouteRequest. </summary>
     [CodeGenModel("SearchAlongRouteRequest")]
-    public partial class SearchAlongRouteRequest {
+    internal partial class SearchAlongRouteRequest {
         /// constructor takes in geolinestring
         public SearchAlongRouteRequest(GeoLineString Route) {
             // convert from GeoLineString Route to GeoJsonLineString this.Route

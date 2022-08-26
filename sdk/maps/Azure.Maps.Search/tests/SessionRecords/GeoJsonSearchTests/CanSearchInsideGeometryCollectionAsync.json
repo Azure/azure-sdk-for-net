@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "364",
         "Content-Type": "application/json",
-        "traceparent": "00-85a6b5f5648f569b2def7860ec9ef8cd-6b02bf0ac3b63630-00",
+        "traceparent": "00-8b71fb629617f63d599b2ecb366b796f-04d6e70032aaa11a-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220825.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "8e51270db1f2a3decec6fe0d8041c373",
+        "x-ms-client-request-id": "b3bfbfc82d22be4c01ba2409b2d64e1f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -75,7 +75,7 @@
       "ResponseHeaders": {
         "Content-Length": "10086",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Aug 2022 17:40:48 GMT",
+        "Date": "Fri, 26 Aug 2022 06:04:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,13 +84,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 58F7C021F0F34543BC0FB022A5AB918A Ref B: PAOEDGE0518 Ref C: 2022-08-25T17:40:48Z"
+        "X-MSEdge-Ref": "Ref A: 2B94EFD25078411486D89CE9B3344D14 Ref B: PAOEDGE0608 Ref C: 2022-08-26T06:04:51Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 9,
+          "queryTime": 8,
           "numResults": 10,
           "offset": 0,
           "totalResults": 156,
@@ -119,11 +119,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -189,11 +189,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -261,11 +261,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -333,11 +333,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -403,11 +403,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -472,11 +472,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -542,11 +542,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -615,11 +615,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -810,6 +810,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "343153635"
+    "RandomSeed": "1050157533"
   }
 }

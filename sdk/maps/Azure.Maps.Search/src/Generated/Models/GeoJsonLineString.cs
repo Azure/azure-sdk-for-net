@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A valid `GeoJSON LineString` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </summary>
-    public partial class GeoJsonLineString : GeoJsonGeometry
+    internal partial class GeoJsonLineString : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of GeoJsonLineString. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>

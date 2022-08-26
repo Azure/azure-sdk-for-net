@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
         /// * roadUse
         /// * returnMatchType
         /// </summary>
-        public GeographicEntityType? EntityType { get; set; }
+        public GeographicEntity? EntityType { get; set; }
 
         /// <summary>
         /// Indexes for which extended postal codes should be included in the results.

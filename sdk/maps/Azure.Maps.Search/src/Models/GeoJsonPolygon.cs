@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     [CodeGenModel("GeoJsonPolygon")]
-    public partial class GeoJsonPolygon
+    internal partial class GeoJsonPolygon
     {
         /// <summary> Deserialize json geometry </summary>
         #pragma warning disable AZC0014 // Allow using JsonElement

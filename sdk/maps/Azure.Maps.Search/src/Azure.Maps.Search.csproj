@@ -4,8 +4,8 @@
     <AssemblyTitle>Azure Maps Azure.Maps.Search</AssemblyTitle>
     <Version>1.0.3-beta.20</Version>
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Search</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-  <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn></PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+  <NoWarn>$(NoWarn);AZC0001;AZC0012;CA1835</NoWarn></PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

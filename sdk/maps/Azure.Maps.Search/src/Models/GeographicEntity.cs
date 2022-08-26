@@ -12,15 +12,16 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The GeographicEntityType. </summary>
-    public readonly partial struct GeographicEntityType : IEquatable<GeographicEntityType>
+    [CodeGenModel("GeographicEntityType")]
+    public readonly partial struct GeographicEntity
     {
         /// <summary> Neighborhood. </summary>
         // cSpell:ignore Neighbourhood
         [CodeGenMember("Neighbourhood")]
-        internal static GeographicEntityType Neighbourhood { get; } = new GeographicEntityType(NeighborhoodValue);
+        internal static GeographicEntity Neighbourhood { get; } = new GeographicEntity(NeighborhoodValue);
 
         /// <summary> Neighborhood. </summary>
-        public static GeographicEntityType Neighborhood { get; } = new GeographicEntityType(NeighborhoodValue);
+        public static GeographicEntity Neighborhood { get; } = new GeographicEntity(NeighborhoodValue);
 
         /// <summary> NeighborhoodValue. </summary>
         private const string NeighborhoodValue = "Neighborhood";

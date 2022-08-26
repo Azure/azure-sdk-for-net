@@ -139,7 +139,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateFuzzySearchRequest(string query, ResponseFormat? format, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, int? minFuzzyLevel, int? maxFuzzyLevel, IEnumerable<SearchIndex> indexFilter, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, GeographicEntityType? entityType, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
+        internal HttpMessage CreateFuzzySearchRequest(string query, ResponseFormat? format, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, int? minFuzzyLevel, int? maxFuzzyLevel, IEnumerable<SearchIndex> indexFilter, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, GeographicEntity? entityType, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,7 +384,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndex> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndex> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -553,7 +553,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<SearchAddressResult> FuzzySearch(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndex> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> FuzzySearch(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<int> categoryFilter = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, int? minFuzzyLevel = null, int? maxFuzzyLevel = null, IEnumerable<SearchIndex> indexFilter = null, IEnumerable<string> brandFilter = null, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, OperatingHoursRange? operatingHours = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -1615,7 +1615,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateSearchAddressRequest(string query, ResponseFormat? format, bool? isTypeAhead, int? top, int? skip, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntityType? entityType, LocalizedMapView? localizedMapView)
+        internal HttpMessage CreateSearchAddressRequest(string query, ResponseFormat? format, bool? isTypeAhead, int? top, int? skip, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1758,7 +1758,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -1853,7 +1853,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<SearchAddressResult> SearchAddress(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchAddress(string query, ResponseFormat? format = null, bool? isTypeAhead = null, int? top = null, int? skip = null, IEnumerable<string> countryFilter = null, double? lat = null, double? lon = null, int? radiusInMeters = null, string topLeft = null, string btmRight = null, string language = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -1877,7 +1877,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateReverseSearchAddressRequest(IEnumerable<double> query, ResponseFormat? format, string language, bool? includeSpeedLimit, int? heading, int? radiusInMeters, string number, bool? includeRoadUse, IEnumerable<RoadKind> roadUse, bool? allowFreeformNewline, bool? includeMatchType, GeographicEntityType? entityType, LocalizedMapView? localizedMapView)
+        internal HttpMessage CreateReverseSearchAddressRequest(IEnumerable<double> query, ResponseFormat? format, string language, bool? includeSpeedLimit, int? heading, int? radiusInMeters, string number, bool? includeRoadUse, IEnumerable<RoadKind> roadUse, bool? allowFreeformNewline, bool? includeMatchType, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1985,7 +1985,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadKind> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadKind> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2053,7 +2053,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadKind> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<ReverseSearchAddressResult> ReverseSearchAddress(IEnumerable<double> query, ResponseFormat? format = null, string language = null, bool? includeSpeedLimit = null, int? heading = null, int? radiusInMeters = null, string number = null, bool? includeRoadUse = null, IEnumerable<RoadKind> roadUse = null, bool? allowFreeformNewline = null, bool? includeMatchType = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (query == null)
             {
@@ -2215,7 +2215,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateSearchStructuredAddressRequest(string countryCode, ResponseFormat? format, string language, int? top, int? skip, string streetNumber, string streetName, string crossStreet, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntityType? entityType, LocalizedMapView? localizedMapView)
+        internal HttpMessage CreateSearchStructuredAddressRequest(string countryCode, ResponseFormat? format, string language, int? top, int? skip, string streetNumber, string streetName, string crossStreet, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2368,7 +2368,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public async Task<Response<SearchAddressResult>> SearchStructuredAddressAsync(string countryCode, ResponseFormat? format = null, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchAddressResult>> SearchStructuredAddressAsync(string countryCode, ResponseFormat? format = null, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
@@ -2465,7 +2465,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> is null. </exception>
-        public Response<SearchAddressResult> SearchStructuredAddress(string countryCode, ResponseFormat? format = null, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntityType? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public Response<SearchAddressResult> SearchStructuredAddress(string countryCode, ResponseFormat? format = null, string language = null, int? top = null, int? skip = null, string streetNumber = null, string streetName = null, string crossStreet = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, IEnumerable<SearchIndex> extendedPostalCodesFor = null, GeographicEntity? entityType = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {

@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-22e4930645e3f52f17d16009f9b8fd44-8f7b3b0d7f6ace37-00",
+        "traceparent": "00-8f9c8909fe2fc770b5d8c2ee83c1aa8d-f4045dca3a64e243-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220825.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "427a3713bdb45712949dca12af750b5e",
+        "x-ms-client-request-id": "737c1cdb5345ad39cc55807beb5763ab",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "6874",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Aug 2022 17:41:04 GMT",
+        "Date": "Fri, 26 Aug 2022 06:05:02 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 9FF010C929B143AC956A49EECAAAF754 Ref B: PAOEDGE0518 Ref C: 2022-08-25T17:41:04Z"
+        "X-MSEdge-Ref": "Ref A: 79811741DB0C46D4AE4C4864391A4A33 Ref B: PAOEDGE0608 Ref C: 2022-08-26T06:05:03Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "ne 24th street 15127 redmond 98052 wa",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 6,
           "numResults": 10,
           "offset": 0,
           "totalResults": 30,
@@ -389,6 +389,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1491200503"
+    "RandomSeed": "668411690"
   }
 }

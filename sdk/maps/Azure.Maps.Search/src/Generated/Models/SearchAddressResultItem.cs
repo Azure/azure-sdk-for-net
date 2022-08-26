@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTime)
+        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntity? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTime)
         {
             Type = type;
             Id = id;
@@ -86,7 +86,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Straight line distance between the result and geobias location in meters. </summary>
         public double? DistanceInMeters { get; }
         /// <summary> Gets the entity type. </summary>
-        public GeographicEntityType? EntityType { get; }
+        public GeographicEntity? EntityType { get; }
         /// <summary> Details of the returned POI including information such as the name, phone, url address, and classifications. </summary>
         public PointOfInterest PointOfInterest { get; }
         /// <summary> The address of the result. </summary>

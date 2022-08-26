@@ -44,6 +44,6 @@ namespace Azure.Maps.Search
         /// * roadUse
         /// * returnMatchType
         /// </summary>
-        public GeographicEntityType? EntityType { get; set; }
+        public GeographicEntity? EntityType { get; set; }
     }
 }

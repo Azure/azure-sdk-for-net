@@ -7,34 +7,11 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
     public partial class PolygonObject
     {
-        internal static PolygonObject DeserializePolygonObject(JsonElement element)
-        {
-            Optional<string> providerID = default;
-            Optional<GeoJsonFeatureCollection> geometryData = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("providerID"))
-                {
-                    providerID = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("geometryData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    geometryData = GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(property.Value);
-                    continue;
-                }
-            }
-            return new PolygonObject(providerID.Value, geometryData.Value);
-        }
     }
 }

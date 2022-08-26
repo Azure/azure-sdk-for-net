@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
             Optional<double> score = default;
             Optional<double> dist = default;
             Optional<string> info = default;
-            Optional<GeographicEntityType> entityType = default;
+            Optional<GeographicEntity> entityType = default;
             Optional<PointOfInterest> poi = default;
             Optional<MapsAddress> address = default;
             Optional<LatLongPairAbbreviated> position = default;
@@ -79,7 +79,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    entityType = new GeographicEntityType(property.Value.GetString());
+                    entityType = new GeographicEntity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("poi"))
