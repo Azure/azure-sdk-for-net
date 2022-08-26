@@ -1920,6 +1920,15 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetExtensionClient(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
         }
 
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -1930,11 +1939,12 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets a collection of ComplianceResultResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ComplianceResultResources and their operations over a ComplianceResultResource. </returns>
-        public static ComplianceResultCollection GetComplianceResults(this ArmResource armResource)
+        public static ComplianceResultCollection GetComplianceResults(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetComplianceResults();
+            return GetExtensionClient(client, scope).GetComplianceResults();
         }
 
         /// <summary>
@@ -1942,15 +1952,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
         /// Operation Id: ComplianceResults_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(this ArmResource armResource, string complianceResultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetComplianceResults().GetAsync(complianceResultName, cancellationToken).ConfigureAwait(false);
+            return await client.GetComplianceResults(scope).GetAsync(complianceResultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1958,31 +1969,34 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
         /// Operation Id: ComplianceResults_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ComplianceResultResource> GetComplianceResult(this ArmResource armResource, string complianceResultName, CancellationToken cancellationToken = default)
+        public static Response<ComplianceResultResource> GetComplianceResult(this ArmClient client, ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetComplianceResults().Get(complianceResultName, cancellationToken);
+            return client.GetComplianceResults(scope).Get(complianceResultName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a AdvancedThreatProtectionSettingResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource" /> object. </returns>
-        public static AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(this ArmResource armResource)
+        public static AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetAdvancedThreatProtectionSetting();
+            return GetExtensionClient(client, scope).GetAdvancedThreatProtectionSetting();
         }
 
         /// <summary> Gets a collection of DeviceSecurityGroupResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DeviceSecurityGroupResources and their operations over a DeviceSecurityGroupResource. </returns>
-        public static DeviceSecurityGroupCollection GetDeviceSecurityGroups(this ArmResource armResource)
+        public static DeviceSecurityGroupCollection GetDeviceSecurityGroups(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetDeviceSecurityGroups();
+            return GetExtensionClient(client, scope).GetDeviceSecurityGroups();
         }
 
         /// <summary>
@@ -1990,15 +2004,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}
         /// Operation Id: DeviceSecurityGroups_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(this ArmResource armResource, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetDeviceSecurityGroups().GetAsync(deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            return await client.GetDeviceSecurityGroups(scope).GetAsync(deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2006,23 +2021,25 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}
         /// Operation Id: DeviceSecurityGroups_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(this ArmResource armResource, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        public static Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(this ArmClient client, ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetDeviceSecurityGroups().Get(deviceSecurityGroupName, cancellationToken);
+            return client.GetDeviceSecurityGroups(scope).Get(deviceSecurityGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ComplianceResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ComplianceResources and their operations over a ComplianceResource. </returns>
-        public static ComplianceCollection GetCompliances(this ArmResource armResource)
+        public static ComplianceCollection GetCompliances(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetCompliances();
+            return GetExtensionClient(client, scope).GetCompliances();
         }
 
         /// <summary>
@@ -2030,15 +2047,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{scope}/providers/Microsoft.Security/compliances/{complianceName}
         /// Operation Id: Compliances_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ComplianceResource>> GetComplianceAsync(this ArmResource armResource, string complianceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ComplianceResource>> GetComplianceAsync(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetCompliances().GetAsync(complianceName, cancellationToken).ConfigureAwait(false);
+            return await client.GetCompliances(scope).GetAsync(complianceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2046,23 +2064,25 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{scope}/providers/Microsoft.Security/compliances/{complianceName}
         /// Operation Id: Compliances_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ComplianceResource> GetCompliance(this ArmResource armResource, string complianceName, CancellationToken cancellationToken = default)
+        public static Response<ComplianceResource> GetCompliance(this ArmClient client, ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetCompliances().Get(complianceName, cancellationToken);
+            return client.GetCompliances(scope).Get(complianceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityAssessmentResponseResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of SecurityAssessmentResponseResources and their operations over a SecurityAssessmentResponseResource. </returns>
-        public static SecurityAssessmentResponseCollection GetSecurityAssessmentResponses(this ArmResource armResource)
+        public static SecurityAssessmentResponseCollection GetSecurityAssessmentResponses(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetSecurityAssessmentResponses();
+            return GetExtensionClient(client, scope).GetSecurityAssessmentResponses();
         }
 
         /// <summary>
@@ -2070,16 +2090,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
         /// Operation Id: Assessments_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SecurityAssessmentResponseResource>> GetSecurityAssessmentResponseAsync(this ArmResource armResource, string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityAssessmentResponseResource>> GetSecurityAssessmentResponseAsync(this ArmClient client, ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetSecurityAssessmentResponses().GetAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
+            return await client.GetSecurityAssessmentResponses(scope).GetAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2087,24 +2108,26 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
         /// Operation Id: Assessments_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SecurityAssessmentResponseResource> GetSecurityAssessmentResponse(this ArmResource armResource, string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
+        public static Response<SecurityAssessmentResponseResource> GetSecurityAssessmentResponse(this ArmClient client, ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = null, CancellationToken cancellationToken = default)
         {
-            return armResource.GetSecurityAssessmentResponses().Get(assessmentName, expand, cancellationToken);
+            return client.GetSecurityAssessmentResponses(scope).Get(assessmentName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ScanResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ScanResources and their operations over a ScanResource. </returns>
-        public static ScanCollection GetScans(this ArmResource armResource)
+        public static ScanCollection GetScans(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetScans();
+            return GetExtensionClient(client, scope).GetScans();
         }
 
         /// <summary>
@@ -2112,16 +2135,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}
         /// Operation Id: SqlVulnerabilityAssessmentScans_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> or <paramref name="workspaceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ScanResource>> GetScanAsync(this ArmResource armResource, string scanId, string workspaceId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScanResource>> GetScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, string workspaceId, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetScans().GetAsync(scanId, workspaceId, cancellationToken).ConfigureAwait(false);
+            return await client.GetScans(scope).GetAsync(scanId, workspaceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2129,24 +2153,26 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}
         /// Operation Id: SqlVulnerabilityAssessmentScans_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> or <paramref name="workspaceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ScanResource> GetScan(this ArmResource armResource, string scanId, string workspaceId, CancellationToken cancellationToken = default)
+        public static Response<ScanResource> GetScan(this ArmClient client, ResourceIdentifier scope, string scanId, string workspaceId, CancellationToken cancellationToken = default)
         {
-            return armResource.GetScans().Get(scanId, workspaceId, cancellationToken);
+            return client.GetScans(scope).Get(scanId, workspaceId, cancellationToken);
         }
 
         /// <summary> Gets a collection of RuleResultResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of RuleResultResources and their operations over a RuleResultResource. </returns>
-        public static RuleResultCollection GetRuleResults(this ArmResource armResource)
+        public static RuleResultCollection GetRuleResults(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetRuleResults();
+            return GetExtensionClient(client, scope).GetRuleResults();
         }
 
         /// <summary>
@@ -2154,16 +2180,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}
         /// Operation Id: SqlVulnerabilityAssessmentBaselineRules_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="workspaceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RuleResultResource>> GetRuleResultAsync(this ArmResource armResource, string ruleId, string workspaceId, CancellationToken cancellationToken = default)
+        public static async Task<Response<RuleResultResource>> GetRuleResultAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, string workspaceId, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetRuleResults().GetAsync(ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
+            return await client.GetRuleResults(scope).GetAsync(ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2171,16 +2198,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Request Path: /{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}
         /// Operation Id: SqlVulnerabilityAssessmentBaselineRules_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="workspaceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RuleResultResource> GetRuleResult(this ArmResource armResource, string ruleId, string workspaceId, CancellationToken cancellationToken = default)
+        public static Response<RuleResultResource> GetRuleResult(this ArmClient client, ResourceIdentifier scope, string ruleId, string workspaceId, CancellationToken cancellationToken = default)
         {
-            return armResource.GetRuleResults().Get(ruleId, workspaceId, cancellationToken);
+            return client.GetRuleResults(scope).Get(ruleId, workspaceId, cancellationToken);
         }
 
         #region MdeOnboardingDataResource
