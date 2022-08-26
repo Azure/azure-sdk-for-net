@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
         /// <param name="datacenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DatacenterAddressResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatacenterAddressInstructionResponse"/> and <see cref="DatacenterAddressLocationResponse"/>.
+        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        internal JobDetails(IReadOnlyList<JobStages> jobStages, ContactDetails contactDetails, ShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, Preferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, KeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DatacenterAddressResponse datacenterAddress, DataCenterCode? dataCenterCode)
+        internal JobDetails(IReadOnlyList<JobStages> jobStages, ContactDetails contactDetails, ShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, Preferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, KeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult datacenterAddress, DataCenterCode? dataCenterCode)
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.DataBox.Models
         public LastMitigationActionOnJob LastMitigationActionOnJob { get; }
         /// <summary>
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DatacenterAddressResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatacenterAddressInstructionResponse"/> and <see cref="DatacenterAddressLocationResponse"/>.
+        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </summary>
-        public DatacenterAddressResponse DatacenterAddress { get; }
+        public DataCenterAddressResult DatacenterAddress { get; }
         /// <summary> DataCenter code. </summary>
         public DataCenterCode? DataCenterCode { get; }
     }

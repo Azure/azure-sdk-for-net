@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> DataBox CustomerDisk Copy Progress. </summary>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="copyStatus"> The Status of the copy. </param>
-        internal DataBoxCustomerDiskCopyProgress(string storageAccountName, TransferType? transferType, DataAccountType? dataAccountType, string accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress, string serialNumber, CopyStatus? copyStatus) : base(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress)
+        internal DataBoxCustomerDiskCopyProgress(string storageAccountName, TransferType? transferType, DataAccountType? dataAccountType, ResourceIdentifier accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress, string serialNumber, DataBoxCopyStatus? copyStatus) : base(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress)
         {
             SerialNumber = serialNumber;
             CopyStatus = copyStatus;
@@ -45,6 +47,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Disk Serial Number. </summary>
         public string SerialNumber { get; }
         /// <summary> The Status of the copy. </summary>
-        public CopyStatus? CopyStatus { get; }
+        public DataBoxCopyStatus? CopyStatus { get; }
     }
 }

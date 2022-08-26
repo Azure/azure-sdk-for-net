@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary>
     /// Minimum request requirement of any validation category.
     /// Please note <see cref="ValidationRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CreateJobValidations"/>.
+    /// The available derived classes include <see cref="CreateJobValidationContent"/>.
     /// </summary>
     public partial class ValidationRequest
     {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
         /// Please note <see cref="ValidationInputRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationRequest"/>, <see cref="DataTransferDetailsValidationRequest"/>, <see cref="PreferencesValidationRequest"/>, <see cref="SkuAvailabilityValidationRequest"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationRequest"/> and <see cref="ValidateAddress"/>.
+        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationRequest"/>, <see cref="PreferencesValidationRequest"/>, <see cref="SkuAvailabilityValidationRequest"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationRequest"/> and <see cref="ValidateAddress"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="individualRequestDetails"/> is null. </exception>
         public ValidationRequest(IEnumerable<ValidationInputRequest> individualRequestDetails)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary>
         /// List of request details contain validationType and its request as key and value respectively.
         /// Please note <see cref="ValidationInputRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationRequest"/>, <see cref="DataTransferDetailsValidationRequest"/>, <see cref="PreferencesValidationRequest"/>, <see cref="SkuAvailabilityValidationRequest"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationRequest"/> and <see cref="ValidateAddress"/>.
+        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationRequest"/>, <see cref="PreferencesValidationRequest"/>, <see cref="SkuAvailabilityValidationRequest"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationRequest"/> and <see cref="ValidateAddress"/>.
         /// </summary>
         public IList<ValidationInputRequest> IndividualRequestDetails { get; }
     }

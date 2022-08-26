@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ImportDiskDetailsCollection))
+            if (Optional.IsCollectionDefined(ImportDiskDetails))
             {
                 writer.WritePropertyName("importDiskDetailsCollection");
                 writer.WriteStartObject();
-                foreach (var item in ImportDiskDetailsCollection)
+                foreach (var item in ImportDiskDetails)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<int> expectedDataSizeInTeraBytes = default;
             Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Optional<DatacenterAddressResponse> datacenterAddress = default;
+            Optional<DataCenterAddressResult> datacenterAddress = default;
             Optional<DataCenterCode> dataCenterCode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     Dictionary<string, ImportDiskDetails> dictionary = new Dictionary<string, ImportDiskDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ImportDiskDetails.DeserializeImportDiskDetails(property0.Value));
+                        dictionary.Add(property0.Name, Models.ImportDiskDetails.DeserializeImportDiskDetails(property0.Value));
                     }
                     importDiskDetailsCollection = dictionary;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     Dictionary<string, ExportDiskDetails> dictionary = new Dictionary<string, ExportDiskDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExportDiskDetails.DeserializeExportDiskDetails(property0.Value));
+                        dictionary.Add(property0.Name, Models.ExportDiskDetails.DeserializeExportDiskDetails(property0.Value));
                     }
                     exportDiskDetailsCollection = dictionary;
                     continue;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    datacenterAddress = DatacenterAddressResponse.DeserializeDatacenterAddressResponse(property.Value);
+                    datacenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"))

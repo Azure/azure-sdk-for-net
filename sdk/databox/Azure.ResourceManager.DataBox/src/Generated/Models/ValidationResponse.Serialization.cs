@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         internal static ValidationResponse DeserializeValidationResponse(JsonElement element)
         {
             Optional<OverallValidationStatus> status = default;
-            Optional<IReadOnlyList<ValidationInputResponse>> individualResponseDetails = default;
+            Optional<IReadOnlyList<ValidationInputResult>> individualResponseDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DataBox.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ValidationInputResponse> array = new List<ValidationInputResponse>();
+                            List<ValidationInputResult> array = new List<ValidationInputResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ValidationInputResponse.DeserializeValidationInputResponse(item));
+                                array.Add(ValidationInputResult.DeserializeValidationInputResult(item));
                             }
                             individualResponseDetails = array;
                             continue;

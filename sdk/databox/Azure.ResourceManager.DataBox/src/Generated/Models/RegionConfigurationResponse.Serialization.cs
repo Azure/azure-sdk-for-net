@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Optional<ScheduleAvailabilityResponse> scheduleAvailabilityResponse = default;
             Optional<TransportAvailabilityResponse> transportAvailabilityResponse = default;
-            Optional<DatacenterAddressResponse> datacenterAddressResponse = default;
+            Optional<DataCenterAddressResult> datacenterAddressResponse = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleAvailabilityResponse"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    datacenterAddressResponse = DatacenterAddressResponse.DeserializeDatacenterAddressResponse(property.Value);
+                    datacenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
                     continue;
                 }
             }

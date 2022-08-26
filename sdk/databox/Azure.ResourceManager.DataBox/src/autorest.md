@@ -16,14 +16,14 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'storageLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*AccountId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -48,4 +48,40 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - CopyStatus
+rename-mapping:
+  JobResource: DataBoxJob
+  JobResourceUpdateParameter: DataBoxJobPatch
+  JobResourceList: DataBoxJobListResult
+  CreateJobValidations: CreateJobValidationContent
+  CreateOrderLimitForSubscriptionValidationRequest: CreateOrderLimitForSubscriptionValidationContent
+  CreateOrderLimitForSubscriptionValidationResponseProperties: CreateOrderLimitForSubscriptionValidationResult
+  DataTransferDetailsValidationResponseProperties: DataTransferDetailsValidationResult
+  PreferencesValidationResponseProperties: PreferencesValidationResult
+  SkuAvailabilityValidationResponseProperties: SkuAvailabilityValidationResult
+  SubscriptionIsAllowedToCreateJobValidationResponseProperties: SubscriptionIsAllowedToCreateJobValidationResult
+  AddressValidationProperties: AddressValidationResult
+  ValidationInputResponse: ValidationInputResult
+  DataBoxCustomerDiskJobDetails.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
+  DataBoxCustomerDiskJobDetails.exportDiskDetailsCollection: ExportDiskDetails
+  DataBoxCustomerDiskJobDetails.importDiskDetailsCollection: ImportDiskDetails
+  DataBoxDiskJobSecrets.passKey: Passkey
+  DataBoxScheduleAvailabilityRequest: DataBoxScheduleAvailabilityContent
+  DiskScheduleAvailabilityRequest: DiskScheduleAvailabilityContent
+  HeavyScheduleAvailabilityRequest: HeavyScheduleAvailabilityContent
+  ScheduleAvailabilityRequest: ScheduleAvailabilityContent
+  DataBoxSkuInformation.properties.enabled: IsEnabled
+  DatacenterAddressInstructionResponse: DataCenterAddressInstructionResult
+  DatacenterAddressLocationResponse: DataCenterAddressLocationResult
+  DatacenterAddressResponse: DataCenterAddressResult
+  DatacenterAddressRequest: DataCenterAddressContent
+
+override-operation-name:
+  Service_ListAvailableSkusByResourceGroup: GetAvailableSkus
+  Service_RegionConfigurationByResourceGroup: GetRegionConfiguration
+  Service_RegionConfiguration: GetRegionConfiguration
+  Service_ValidateAddress: ValidateAddress
+  Service_ValidateInputs: ValidateInputs
+  Service_ValidateInputsByResourceGroup: ValidateInputs
 ```

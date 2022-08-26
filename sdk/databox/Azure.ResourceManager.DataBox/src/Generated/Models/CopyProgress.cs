@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Copy progress. </summary>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// To indicate if enumeration of data is in progress. 
         /// Until this is true, the TotalBytesToProcess may not be valid.
         /// </param>
-        internal CopyProgress(string storageAccountName, TransferType? transferType, DataAccountType? dataAccountType, string accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress)
+        internal CopyProgress(string storageAccountName, TransferType? transferType, DataAccountType? dataAccountType, ResourceIdentifier accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress)
         {
             StorageAccountName = storageAccountName;
             TransferType = transferType;
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Data Account Type. </summary>
         public DataAccountType? DataAccountType { get; }
         /// <summary> Id of the account where the data needs to be uploaded. </summary>
-        public string AccountId { get; }
+        public ResourceIdentifier AccountId { get; }
         /// <summary> To indicate bytes transferred. </summary>
         public long? BytesProcessed { get; }
         /// <summary> Total amount of data to be processed by the job. </summary>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
         internal static ManagedDiskDetails DeserializeManagedDiskDetails(JsonElement element)
         {
             string resourceGroupId = default;
-            string stagingStorageAccountId = default;
+            ResourceIdentifier stagingStorageAccountId = default;
             DataAccountType dataAccountType = default;
             Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("stagingStorageAccountId"))
                 {
-                    stagingStorageAccountId = property.Value.GetString();
+                    stagingStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataAccountType"))

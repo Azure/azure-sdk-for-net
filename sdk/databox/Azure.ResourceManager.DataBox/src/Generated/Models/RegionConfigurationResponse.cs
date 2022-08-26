@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="transportAvailabilityResponse"> Transport options available for given sku in a region. </param>
         /// <param name="datacenterAddressResponse">
         /// Datacenter address for given sku in a region.
-        /// Please note <see cref="DatacenterAddressResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatacenterAddressInstructionResponse"/> and <see cref="DatacenterAddressLocationResponse"/>.
+        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
-        internal RegionConfigurationResponse(ScheduleAvailabilityResponse scheduleAvailabilityResponse, TransportAvailabilityResponse transportAvailabilityResponse, DatacenterAddressResponse datacenterAddressResponse)
+        internal RegionConfigurationResponse(ScheduleAvailabilityResponse scheduleAvailabilityResponse, TransportAvailabilityResponse transportAvailabilityResponse, DataCenterAddressResult datacenterAddressResponse)
         {
             ScheduleAvailabilityResponse = scheduleAvailabilityResponse;
             TransportAvailabilityResponse = transportAvailabilityResponse;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary>
         /// Datacenter address for given sku in a region.
-        /// Please note <see cref="DatacenterAddressResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatacenterAddressInstructionResponse"/> and <see cref="DatacenterAddressLocationResponse"/>.
+        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </summary>
-        public DatacenterAddressResponse DatacenterAddressResponse { get; }
+        public DataCenterAddressResult DatacenterAddressResponse { get; }
     }
 }

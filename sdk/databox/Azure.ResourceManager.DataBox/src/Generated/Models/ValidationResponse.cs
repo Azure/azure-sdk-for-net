@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of ValidationResponse. </summary>
         internal ValidationResponse()
         {
-            IndividualResponseDetails = new ChangeTrackingList<ValidationInputResponse>();
+            IndividualResponseDetails = new ChangeTrackingList<ValidationInputResult>();
         }
 
         /// <summary> Initializes a new instance of ValidationResponse. </summary>
         /// <param name="status"> Overall validation status. </param>
         /// <param name="individualResponseDetails">
         /// List of response details contain validationType and its response as key and value respectively.
-        /// Please note <see cref="ValidationInputResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationResponseProperties"/>, <see cref="DataTransferDetailsValidationResponseProperties"/>, <see cref="PreferencesValidationResponseProperties"/>, <see cref="SkuAvailabilityValidationResponseProperties"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationResponseProperties"/> and <see cref="AddressValidationProperties"/>.
+        /// Please note <see cref="ValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/> and <see cref="AddressValidationResult"/>.
         /// </param>
-        internal ValidationResponse(OverallValidationStatus? status, IReadOnlyList<ValidationInputResponse> individualResponseDetails)
+        internal ValidationResponse(OverallValidationStatus? status, IReadOnlyList<ValidationInputResult> individualResponseDetails)
         {
             Status = status;
             IndividualResponseDetails = individualResponseDetails;
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public OverallValidationStatus? Status { get; }
         /// <summary>
         /// List of response details contain validationType and its response as key and value respectively.
-        /// Please note <see cref="ValidationInputResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationResponseProperties"/>, <see cref="DataTransferDetailsValidationResponseProperties"/>, <see cref="PreferencesValidationResponseProperties"/>, <see cref="SkuAvailabilityValidationResponseProperties"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationResponseProperties"/> and <see cref="AddressValidationProperties"/>.
+        /// Please note <see cref="ValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/> and <see cref="AddressValidationResult"/>.
         /// </summary>
-        public IReadOnlyList<ValidationInputResponse> IndividualResponseDetails { get; }
+        public IReadOnlyList<ValidationInputResult> IndividualResponseDetails { get; }
     }
 }

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataBox.Models
         internal static DataBoxCustomerDiskCopyProgress DeserializeDataBoxCustomerDiskCopyProgress(JsonElement element)
         {
             Optional<string> serialNumber = default;
-            Optional<CopyStatus> copyStatus = default;
+            Optional<DataBoxCopyStatus> copyStatus = default;
             Optional<string> storageAccountName = default;
             Optional<TransferType> transferType = default;
             Optional<DataAccountType> dataAccountType = default;
-            Optional<string> accountId = default;
+            Optional<ResourceIdentifier> accountId = default;
             Optional<long> bytesProcessed = default;
             Optional<long> totalBytesToProcess = default;
             Optional<long> filesProcessed = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    copyStatus = new CopyStatus(property.Value.GetString());
+                    copyStatus = new DataBoxCopyStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountName"))
@@ -75,7 +75,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("accountId"))
                 {
-                    accountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    accountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("bytesProcessed"))

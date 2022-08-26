@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<int> expectedDataSizeInTeraBytes = default;
             Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Optional<DatacenterAddressResponse> datacenterAddress = default;
+            Optional<DataCenterAddressResult> datacenterAddress = default;
             Optional<DataCenterCode> dataCenterCode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    datacenterAddress = DatacenterAddressResponse.DeserializeDatacenterAddressResponse(property.Value);
+                    datacenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"))

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of StorageAccountDetails. </summary>
         /// <param name="storageAccountId"> Storage Account Resource Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
-        public StorageAccountDetails(string storageAccountId)
+        public StorageAccountDetails(ResourceIdentifier storageAccountId)
         {
             if (storageAccountId == null)
             {
@@ -30,13 +31,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         /// <param name="storageAccountId"> Storage Account Resource Id. </param>
-        internal StorageAccountDetails(DataAccountType dataAccountType, string sharePassword, string storageAccountId) : base(dataAccountType, sharePassword)
+        internal StorageAccountDetails(DataAccountType dataAccountType, string sharePassword, ResourceIdentifier storageAccountId) : base(dataAccountType, sharePassword)
         {
             StorageAccountId = storageAccountId;
             DataAccountType = dataAccountType;
         }
 
         /// <summary> Storage Account Resource Id. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
     }
 }

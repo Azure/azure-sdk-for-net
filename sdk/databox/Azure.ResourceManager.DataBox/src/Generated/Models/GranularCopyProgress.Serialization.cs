@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> storageAccountName = default;
             Optional<TransferType> transferType = default;
             Optional<DataAccountType> dataAccountType = default;
-            Optional<string> accountId = default;
+            Optional<ResourceIdentifier> accountId = default;
             Optional<long> bytesProcessed = default;
             Optional<long> totalBytesToProcess = default;
             Optional<long> filesProcessed = default;
@@ -58,7 +58,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("accountId"))
                 {
-                    accountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    accountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("bytesProcessed"))

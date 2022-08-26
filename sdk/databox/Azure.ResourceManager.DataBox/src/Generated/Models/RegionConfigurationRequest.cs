@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary>
         /// Request body to get the availability for scheduling orders.
-        /// Please note <see cref="ScheduleAvailabilityRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxScheduleAvailabilityRequest"/>, <see cref="DiskScheduleAvailabilityRequest"/> and <see cref="HeavyScheduleAvailabilityRequest"/>.
+        /// Please note <see cref="ScheduleAvailabilityContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataBoxScheduleAvailabilityContent"/>, <see cref="DiskScheduleAvailabilityContent"/> and <see cref="HeavyScheduleAvailabilityContent"/>.
         /// </summary>
-        public ScheduleAvailabilityRequest ScheduleAvailabilityRequest { get; set; }
+        public ScheduleAvailabilityContent ScheduleAvailabilityRequest { get; set; }
         /// <summary> Request body to get the transport availability for given sku. </summary>
         internal TransportAvailabilityRequest TransportAvailabilityRequest { get; set; }
         /// <summary> Type of the device. </summary>
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Request body to get the datacenter address for given sku. </summary>
-        public DatacenterAddressRequest DatacenterAddressRequest { get; set; }
+        public DataCenterAddressContent DatacenterAddressRequest { get; set; }
     }
 }
