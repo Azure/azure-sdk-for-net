@@ -222,6 +222,9 @@ rename-mapping:
   KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
   KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
 
+generate-arm-resource-extensions:
+  - /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+
 directive:
   # nullable issue resolution
   - from: swagger-document
