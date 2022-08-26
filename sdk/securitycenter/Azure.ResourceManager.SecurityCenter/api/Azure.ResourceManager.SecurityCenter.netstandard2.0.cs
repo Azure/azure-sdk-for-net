@@ -723,22 +723,22 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.IngestionSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.IngestionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.IngestionSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.IngestionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class IoTSecurityAggregatedAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>, System.Collections.IEnumerable
+    public partial class IotSecurityAggregatedAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>, System.Collections.IEnumerable
     {
-        protected IoTSecurityAggregatedAlertCollection() { }
+        protected IotSecurityAggregatedAlertCollection() { }
         public virtual Azure.Response<bool> Exists(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> Get(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>> GetAsync(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> Get(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>> GetAsync(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IoTSecurityAggregatedAlertData : Azure.ResourceManager.Models.ResourceData
+    public partial class IotSecurityAggregatedAlertData : Azure.ResourceManager.Models.ResourceData
     {
-        public IoTSecurityAggregatedAlertData() { }
+        public IotSecurityAggregatedAlertData() { }
         public string ActionTaken { get { throw null; } }
         public System.DateTimeOffset? AggregatedDateUtc { get { throw null; } }
         public string AlertDisplayName { get { throw null; } }
@@ -751,43 +751,43 @@ namespace Azure.ResourceManager.SecurityCenter
         public Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity? ReportedSeverity { get { throw null; } }
         public string SystemSource { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> TopDevicesList { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityAggregatedAlertPropertiesTopDevicesListItem> TopDevicesList { get { throw null; } }
         public string VendorName { get { throw null; } }
     }
-    public partial class IoTSecurityAggregatedAlertResource : Azure.ResourceManager.ArmResource
+    public partial class IotSecurityAggregatedAlertResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected IoTSecurityAggregatedAlertResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertData Data { get { throw null; } }
+        protected IotSecurityAggregatedAlertResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedAlertName) { throw null; }
         public virtual Azure.Response Dismiss(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DismissAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class IoTSecurityAggregatedRecommendationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>, System.Collections.IEnumerable
+    public partial class IotSecurityAggregatedRecommendationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>, System.Collections.IEnumerable
     {
-        protected IoTSecurityAggregatedRecommendationCollection() { }
+        protected IotSecurityAggregatedRecommendationCollection() { }
         public virtual Azure.Response<bool> Exists(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> Get(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>> GetAsync(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> Get(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>> GetAsync(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IoTSecurityAggregatedRecommendationData : Azure.ResourceManager.Models.ResourceData
+    public partial class IotSecurityAggregatedRecommendationData : Azure.ResourceManager.Models.ResourceData
     {
-        public IoTSecurityAggregatedRecommendationData() { }
+        public IotSecurityAggregatedRecommendationData() { }
         public string Description { get { throw null; } }
         public string DetectedBy { get { throw null; } }
         public long? HealthyDevices { get { throw null; } }
@@ -800,66 +800,66 @@ namespace Azure.ResourceManager.SecurityCenter
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public long? UnhealthyDeviceCount { get { throw null; } }
     }
-    public partial class IoTSecurityAggregatedRecommendationResource : Azure.ResourceManager.ArmResource
+    public partial class IotSecurityAggregatedRecommendationResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected IoTSecurityAggregatedRecommendationResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationData Data { get { throw null; } }
+        protected IotSecurityAggregatedRecommendationResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class IoTSecuritySolutionAnalyticsModelData : Azure.ResourceManager.Models.ResourceData
+    public partial class IotSecuritySolutionAnalyticsModelData : Azure.ResourceManager.Models.ResourceData
     {
-        public IoTSecuritySolutionAnalyticsModelData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> DevicesMetrics { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.IoTSeverityMetrics Metrics { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IoTSecurityDeviceAlert> MostPrevalentDeviceAlerts { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IoTSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IoTSecurityAlertedDevice> TopAlertedDevices { get { throw null; } }
+        public IotSecuritySolutionAnalyticsModelData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> DevicesMetrics { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.IotSeverityMetrics Metrics { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityDeviceAlert> MostPrevalentDeviceAlerts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecurityAlertedDevice> TopAlertedDevices { get { throw null; } }
         public long? UnhealthyDeviceCount { get { throw null; } }
     }
-    public partial class IoTSecuritySolutionAnalyticsModelResource : Azure.ResourceManager.ArmResource
+    public partial class IotSecuritySolutionAnalyticsModelResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected IoTSecuritySolutionAnalyticsModelResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionAnalyticsModelData Data { get { throw null; } }
+        protected IotSecuritySolutionAnalyticsModelResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.IotSecuritySolutionAnalyticsModelData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionAnalyticsModelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionAnalyticsModelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource> GetIoTSecurityAggregatedAlert(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource>> GetIoTSecurityAggregatedAlertAsync(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertCollection GetIoTSecurityAggregatedAlerts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource> GetIoTSecurityAggregatedRecommendation(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource>> GetIoTSecurityAggregatedRecommendationAsync(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationCollection GetIoTSecurityAggregatedRecommendations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionAnalyticsModelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionAnalyticsModelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource> GetIotSecurityAggregatedAlert(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource>> GetIotSecurityAggregatedAlertAsync(string aggregatedAlertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertCollection GetIotSecurityAggregatedAlerts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource> GetIotSecurityAggregatedRecommendation(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource>> GetIotSecurityAggregatedRecommendationAsync(string aggregatedRecommendationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationCollection GetIotSecurityAggregatedRecommendations() { throw null; }
     }
-    public partial class IoTSecuritySolutionModelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>, System.Collections.IEnumerable
+    public partial class IotSecuritySolutionModelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>, System.Collections.IEnumerable
     {
-        protected IoTSecuritySolutionModelCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string solutionName, Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string solutionName, Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected IotSecuritySolutionModelCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string solutionName, Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string solutionName, Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> Get(string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> GetAsync(string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> Get(string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> GetAsync(string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IoTSecuritySolutionModelData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class IotSecuritySolutionModelData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IoTSecuritySolutionModelData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public IotSecuritySolutionModelData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspacesProperties> AdditionalWorkspaces { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AutoDiscoveredResources { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.DataSource> DisabledDataSources { get { throw null; } }
@@ -872,26 +872,26 @@ namespace Azure.ResourceManager.SecurityCenter
         public Azure.ResourceManager.SecurityCenter.Models.UserDefinedResourcesProperties UserDefinedResources { get { throw null; } set { } }
         public string Workspace { get { throw null; } set { } }
     }
-    public partial class IoTSecuritySolutionModelResource : Azure.ResourceManager.ArmResource
+    public partial class IotSecuritySolutionModelResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected IoTSecuritySolutionModelResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelData Data { get { throw null; } }
+        protected IotSecuritySolutionModelResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModel() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> Update(Azure.ResourceManager.SecurityCenter.Models.IoTSecuritySolutionModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> UpdateAsync(Azure.ResourceManager.SecurityCenter.Models.IoTSecuritySolutionModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModel() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> Update(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> UpdateAsync(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class JitNetworkAccessPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.JitNetworkAccessPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.JitNetworkAccessPolicyResource>, System.Collections.IEnumerable
     {
@@ -1415,15 +1415,15 @@ namespace Azure.ResourceManager.SecurityCenter
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IngestionSettingResource>> GetIngestionSettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ingestionSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.IngestionSettingResource GetIngestionSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.IngestionSettingCollection GetIngestionSettings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedAlertResource GetIoTSecurityAggregatedAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.IoTSecurityAggregatedRecommendationResource GetIoTSecurityAggregatedRecommendationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModel(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource>> GetIoTSecuritySolutionModelAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource GetIoTSecuritySolutionModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelCollection GetIoTSecuritySolutionModels(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModels(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModelsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> GetIotSecuritySolutionModel(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource>> GetIotSecuritySolutionModelAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string solutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource GetIotSecuritySolutionModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelCollection GetIotSecuritySolutionModels(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> GetIotSecuritySolutionModels(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.IotSecuritySolutionModelResource> GetIotSecuritySolutionModelsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ascLocation) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2536,7 +2536,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.Category Compute { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.Category Data { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.Category IdentityAndAccess { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.Category IoT { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.Category Iot { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.Category Networking { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.Category other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3385,48 +3385,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.Intent left, Azure.ResourceManager.SecurityCenter.Models.Intent right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IoTSecurityAggregatedAlertPropertiesTopDevicesListItem
+    public partial class IotSecurityAggregatedAlertPropertiesTopDevicesListItem
     {
-        internal IoTSecurityAggregatedAlertPropertiesTopDevicesListItem() { }
+        internal IotSecurityAggregatedAlertPropertiesTopDevicesListItem() { }
         public long? AlertsCount { get { throw null; } }
         public string DeviceId { get { throw null; } }
         public string LastOccurrence { get { throw null; } }
     }
-    public partial class IoTSecurityAlertedDevice
+    public partial class IotSecurityAlertedDevice
     {
-        public IoTSecurityAlertedDevice() { }
+        public IotSecurityAlertedDevice() { }
         public long? AlertsCount { get { throw null; } }
         public string DeviceId { get { throw null; } }
     }
-    public partial class IoTSecurityDeviceAlert
+    public partial class IotSecurityDeviceAlert
     {
-        public IoTSecurityDeviceAlert() { }
+        public IotSecurityDeviceAlert() { }
         public string AlertDisplayName { get { throw null; } }
         public long? AlertsCount { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity? ReportedSeverity { get { throw null; } }
     }
-    public partial class IoTSecurityDeviceRecommendation
+    public partial class IotSecurityDeviceRecommendation
     {
-        public IoTSecurityDeviceRecommendation() { }
+        public IotSecurityDeviceRecommendation() { }
         public long? DevicesCount { get { throw null; } }
         public string RecommendationDisplayName { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity? ReportedSeverity { get { throw null; } }
     }
-    public partial class IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
+    public partial class IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
     {
-        internal IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem() { }
-        public Azure.ResourceManager.SecurityCenter.Models.IoTSeverityMetrics DevicesMetrics { get { throw null; } }
+        internal IotSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem() { }
+        public Azure.ResourceManager.SecurityCenter.Models.IotSeverityMetrics DevicesMetrics { get { throw null; } }
         public System.DateTimeOffset? On { get { throw null; } }
     }
-    public partial class IoTSecuritySolutionModelPatch : Azure.ResourceManager.SecurityCenter.Models.TagsResource
+    public partial class IotSecuritySolutionModelPatch : Azure.ResourceManager.SecurityCenter.Models.TagsResource
     {
-        public IoTSecuritySolutionModelPatch() { }
+        public IotSecuritySolutionModelPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigurationProperties> RecommendationsConfiguration { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.UserDefinedResourcesProperties UserDefinedResources { get { throw null; } set { } }
     }
-    public partial class IoTSeverityMetrics
+    public partial class IotSeverityMetrics
     {
-        internal IoTSeverityMetrics() { }
+        internal IotSeverityMetrics() { }
         public long? High { get { throw null; } }
         public long? Low { get { throw null; } }
         public long? Medium { get { throw null; } }
@@ -3522,15 +3522,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class OnPremiseResourceDetails : Azure.ResourceManager.SecurityCenter.Models.ResourceDetails
     {
-        public OnPremiseResourceDetails(string workspaceId, string vmuuid, string sourceComputerId, string machineName) { }
+        public OnPremiseResourceDetails(string workspaceId, System.Guid vmUuid, string sourceComputerId, string machineName) { }
         public string MachineName { get { throw null; } set { } }
         public string SourceComputerId { get { throw null; } set { } }
-        public string Vmuuid { get { throw null; } set { } }
+        public System.Guid VmUuid { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
     }
     public partial class OnPremiseSqlResourceDetails : Azure.ResourceManager.SecurityCenter.Models.OnPremiseResourceDetails
     {
-        public OnPremiseSqlResourceDetails(string workspaceId, string vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base (default(string), default(string), default(string), default(string)) { }
+        public OnPremiseSqlResourceDetails(string workspaceId, System.Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base (default(string), default(System.Guid), default(string), default(string)) { }
         public string DatabaseName { get { throw null; } set { } }
         public string ServerName { get { throw null; } set { } }
     }
@@ -3775,22 +3775,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RecommendationType(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTAcrauthentication { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTAgentSendsUnutilizedMessages { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTBaseline { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTEdgeHubMemOptimize { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTEdgeLoggingOptions { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTInconsistentModuleSettings { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTInstallAgent { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTIpfilterDenyAll { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTIpfilterPermissiveRule { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTOpenPorts { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTPermissiveFirewallPolicy { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTPermissiveInputFirewallRules { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTPermissiveOutputFirewallRules { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTPrivilegedDockerOptions { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTSharedCredentials { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IoTVulnerableTLSCipherSuite { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotAcrAuthentication { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotAgentSendsUnutilizedMessages { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotBaseline { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotEdgeHubMemOptimize { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotEdgeLoggingOptions { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotInconsistentModuleSettings { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotInstallAgent { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIpfilterDenyAll { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotIpfilterPermissiveRule { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotOpenPorts { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveFirewallPolicy { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveInputFirewallRules { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPermissiveOutputFirewallRules { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotPrivilegedDockerOptions { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotSharedCredentials { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.RecommendationType IotVulnerableTlsCipherSuite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RecommendationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

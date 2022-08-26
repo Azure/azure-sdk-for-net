@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecuritySolutionsList>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecuritySolutionsList>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecuritySolutionsList> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<IotSecuritySolutionsList> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecuritySolutionsList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecuritySolutionsList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecuritySolutionsList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<IotSecuritySolutionsList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecuritySolutionModelData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecuritySolutionModelData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -228,13 +228,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionModelData value = default;
+                        IotSecuritySolutionModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecuritySolutionModelData.DeserializeIoTSecuritySolutionModelData(document.RootElement);
+                        value = IotSecuritySolutionModelData.DeserializeIotSecuritySolutionModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IoTSecuritySolutionModelData)null, message.Response);
+                    return Response.FromValue((IotSecuritySolutionModelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecuritySolutionModelData> Get(string subscriptionId, string resourceGroupName, string solutionName, CancellationToken cancellationToken = default)
+        public Response<IotSecuritySolutionModelData> Get(string subscriptionId, string resourceGroupName, string solutionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,19 +259,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionModelData value = default;
+                        IotSecuritySolutionModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecuritySolutionModelData.DeserializeIoTSecuritySolutionModelData(document.RootElement);
+                        value = IotSecuritySolutionModelData.DeserializeIotSecuritySolutionModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IoTSecuritySolutionModelData)null, message.Response);
+                    return Response.FromValue((IotSecuritySolutionModelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string solutionName, IoTSecuritySolutionModelData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string solutionName, IotSecuritySolutionModelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecuritySolutionModelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string solutionName, IoTSecuritySolutionModelData data, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecuritySolutionModelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string solutionName, IotSecuritySolutionModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                 case 201:
                     {
-                        IoTSecuritySolutionModelData value = default;
+                        IotSecuritySolutionModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecuritySolutionModelData.DeserializeIoTSecuritySolutionModelData(document.RootElement);
+                        value = IotSecuritySolutionModelData.DeserializeIotSecuritySolutionModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecuritySolutionModelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string solutionName, IoTSecuritySolutionModelData data, CancellationToken cancellationToken = default)
+        public Response<IotSecuritySolutionModelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string solutionName, IotSecuritySolutionModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -349,9 +349,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                 case 201:
                     {
-                        IoTSecuritySolutionModelData value = default;
+                        IotSecuritySolutionModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecuritySolutionModelData.DeserializeIoTSecuritySolutionModelData(document.RootElement);
+                        value = IotSecuritySolutionModelData.DeserializeIotSecuritySolutionModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string solutionName, IoTSecuritySolutionModelPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string solutionName, IotSecuritySolutionModelPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecuritySolutionModelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string solutionName, IoTSecuritySolutionModelPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecuritySolutionModelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string solutionName, IotSecuritySolutionModelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionModelData value = default;
+                        IotSecuritySolutionModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecuritySolutionModelData.DeserializeIoTSecuritySolutionModelData(document.RootElement);
+                        value = IotSecuritySolutionModelData.DeserializeIotSecuritySolutionModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecuritySolutionModelData> Update(string subscriptionId, string resourceGroupName, string solutionName, IoTSecuritySolutionModelPatch patch, CancellationToken cancellationToken = default)
+        public Response<IotSecuritySolutionModelData> Update(string subscriptionId, string resourceGroupName, string solutionName, IotSecuritySolutionModelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -435,9 +435,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionModelData value = default;
+                        IotSecuritySolutionModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecuritySolutionModelData.DeserializeIoTSecuritySolutionModelData(document.RootElement);
+                        value = IotSecuritySolutionModelData.DeserializeIotSecuritySolutionModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecuritySolutionsList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecuritySolutionsList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -547,9 +547,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecuritySolutionsList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<IotSecuritySolutionsList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -575,9 +575,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecuritySolutionsList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecuritySolutionsList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -619,9 +619,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecuritySolutionsList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<IotSecuritySolutionsList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -649,9 +649,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecuritySolutionsList value = default;
+                        IotSecuritySolutionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecuritySolutionsList.DeserializeIoTSecuritySolutionsList(document.RootElement);
+                        value = IotSecuritySolutionsList.DeserializeIotSecuritySolutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

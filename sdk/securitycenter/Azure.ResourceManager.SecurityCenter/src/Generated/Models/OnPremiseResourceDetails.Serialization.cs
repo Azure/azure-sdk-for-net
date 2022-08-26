@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("workspaceId");
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("vmuuid");
-            writer.WriteStringValue(Vmuuid);
+            writer.WriteStringValue(VmUuid);
             writer.WritePropertyName("sourceComputerId");
             writer.WriteStringValue(SourceComputerId);
             writer.WritePropertyName("machineName");
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             string workspaceId = default;
-            string vmuuid = default;
+            Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
             Source source = default;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("vmuuid"))
                 {
-                    vmuuid = property.Value.GetString();
+                    vmuuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("sourceComputerId"))

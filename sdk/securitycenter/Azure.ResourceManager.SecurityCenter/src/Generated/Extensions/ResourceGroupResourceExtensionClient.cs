@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new CustomEntityStoreAssignmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IoTSecuritySolutionModelResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IoTSecuritySolutionModelResources and their operations over a IoTSecuritySolutionModelResource. </returns>
-        public virtual IoTSecuritySolutionModelCollection GetIoTSecuritySolutionModels()
+        /// <summary> Gets a collection of IotSecuritySolutionModelResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IotSecuritySolutionModelResources and their operations over a IotSecuritySolutionModelResource. </returns>
+        public virtual IotSecuritySolutionModelCollection GetIotSecuritySolutionModels()
         {
-            return GetCachedClient(Client => new IoTSecuritySolutionModelCollection(Client, Id));
+            return GetCachedClient(Client => new IotSecuritySolutionModelCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ResourceGroupLocationTaskResources in the ResourceGroupResource. </summary>

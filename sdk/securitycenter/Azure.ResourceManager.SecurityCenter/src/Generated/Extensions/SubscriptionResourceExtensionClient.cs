@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.SecurityCenter
         private CustomAssessmentAutomationsRestOperations _customAssessmentAutomationRestClient;
         private ClientDiagnostics _customEntityStoreAssignmentClientDiagnostics;
         private CustomEntityStoreAssignmentsRestOperations _customEntityStoreAssignmentRestClient;
-        private ClientDiagnostics _ioTSecuritySolutionModelIotSecuritySolutionClientDiagnostics;
-        private IotSecuritySolutionRestOperations _ioTSecuritySolutionModelIotSecuritySolutionRestClient;
+        private ClientDiagnostics _iotSecuritySolutionModelIotSecuritySolutionClientDiagnostics;
+        private IotSecuritySolutionRestOperations _iotSecuritySolutionModelIotSecuritySolutionRestClient;
         private ClientDiagnostics _tasksClientDiagnostics;
         private TasksRestOperations _tasksRestClient;
         private ClientDiagnostics _automationClientDiagnostics;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.SecurityCenter
         private CustomAssessmentAutomationsRestOperations CustomAssessmentAutomationRestClient => _customAssessmentAutomationRestClient ??= new CustomAssessmentAutomationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomAssessmentAutomationResource.ResourceType));
         private ClientDiagnostics CustomEntityStoreAssignmentClientDiagnostics => _customEntityStoreAssignmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", CustomEntityStoreAssignmentResource.ResourceType.Namespace, Diagnostics);
         private CustomEntityStoreAssignmentsRestOperations CustomEntityStoreAssignmentRestClient => _customEntityStoreAssignmentRestClient ??= new CustomEntityStoreAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomEntityStoreAssignmentResource.ResourceType));
-        private ClientDiagnostics IoTSecuritySolutionModelIotSecuritySolutionClientDiagnostics => _ioTSecuritySolutionModelIotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IoTSecuritySolutionModelResource.ResourceType.Namespace, Diagnostics);
-        private IotSecuritySolutionRestOperations IoTSecuritySolutionModelIotSecuritySolutionRestClient => _ioTSecuritySolutionModelIotSecuritySolutionRestClient ??= new IotSecuritySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IoTSecuritySolutionModelResource.ResourceType));
+        private ClientDiagnostics IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics => _iotSecuritySolutionModelIotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecuritySolutionModelResource.ResourceType.Namespace, Diagnostics);
+        private IotSecuritySolutionRestOperations IotSecuritySolutionModelIotSecuritySolutionRestClient => _iotSecuritySolutionModelIotSecuritySolutionRestClient ??= new IotSecuritySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotSecuritySolutionModelResource.ResourceType));
         private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private TasksRestOperations TasksRestClient => _tasksRestClient ??= new TasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AutomationClientDiagnostics => _automationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AutomationResource.ResourceType.Namespace, Diagnostics);
@@ -392,17 +392,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IoTSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModelsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotSecuritySolutionModelResource> GetIotSecuritySolutionModelsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IoTSecuritySolutionModelResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotSecuritySolutionModelResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IoTSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIoTSecuritySolutionModels");
+                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
                 scope.Start();
                 try
                 {
-                    var response = await IoTSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IoTSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -410,14 +410,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            async Task<Page<IoTSecuritySolutionModelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IotSecuritySolutionModelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IoTSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIoTSecuritySolutionModels");
+                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
                 scope.Start();
                 try
                 {
-                    var response = await IoTSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IoTSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -435,17 +435,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IoTSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModels(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotSecuritySolutionModelResource> GetIotSecuritySolutionModels(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<IoTSecuritySolutionModelResource> FirstPageFunc(int? pageSizeHint)
+            Page<IotSecuritySolutionModelResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = IoTSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIoTSecuritySolutionModels");
+                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
                 scope.Start();
                 try
                 {
-                    var response = IoTSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IoTSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -453,14 +453,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw;
                 }
             }
-            Page<IoTSecuritySolutionModelResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IotSecuritySolutionModelResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = IoTSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIoTSecuritySolutionModels");
+                using var scope = IotSecuritySolutionModelIotSecuritySolutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotSecuritySolutionModels");
                 scope.Start();
                 try
                 {
-                    var response = IoTSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IoTSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = IotSecuritySolutionModelIotSecuritySolutionRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionModelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

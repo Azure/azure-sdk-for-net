@@ -18,19 +18,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of OnPremiseResourceDetails. </summary>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
-        /// <param name="vmuuid"> The unique Id of the machine. </param>
+        /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="vmuuid"/>, <paramref name="sourceComputerId"/> or <paramref name="machineName"/> is null. </exception>
-        public OnPremiseResourceDetails(string workspaceId, string vmuuid, string sourceComputerId, string machineName)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/> or <paramref name="machineName"/> is null. </exception>
+        public OnPremiseResourceDetails(string workspaceId, Guid vmUuid, string sourceComputerId, string machineName)
         {
             if (workspaceId == null)
             {
                 throw new ArgumentNullException(nameof(workspaceId));
-            }
-            if (vmuuid == null)
-            {
-                throw new ArgumentNullException(nameof(vmuuid));
             }
             if (sourceComputerId == null)
             {
@@ -42,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             WorkspaceId = workspaceId;
-            Vmuuid = vmuuid;
+            VmUuid = vmUuid;
             SourceComputerId = sourceComputerId;
             MachineName = machineName;
             Source = Source.OnPremise;
@@ -51,13 +47,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of OnPremiseResourceDetails. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
-        /// <param name="vmuuid"> The unique Id of the machine. </param>
+        /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
-        internal OnPremiseResourceDetails(Source source, string workspaceId, string vmuuid, string sourceComputerId, string machineName) : base(source)
+        internal OnPremiseResourceDetails(Source source, string workspaceId, Guid vmUuid, string sourceComputerId, string machineName) : base(source)
         {
             WorkspaceId = workspaceId;
-            Vmuuid = vmuuid;
+            VmUuid = vmUuid;
             SourceComputerId = sourceComputerId;
             MachineName = machineName;
             Source = source;
@@ -66,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Azure resource Id of the workspace the machine is attached to. </summary>
         public string WorkspaceId { get; set; }
         /// <summary> The unique Id of the machine. </summary>
-        public string Vmuuid { get; set; }
+        public Guid VmUuid { get; set; }
         /// <summary> The oms agent Id installed on the machine. </summary>
         public string SourceComputerId { get; set; }
         /// <summary> The name of the machine. </summary>

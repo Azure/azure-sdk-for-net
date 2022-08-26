@@ -727,10 +727,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IoTSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModelsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotSecuritySolutionModelResource> GetIotSecuritySolutionModelsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetIoTSecuritySolutionModelsAsync(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotSecuritySolutionModelsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -741,10 +741,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IoTSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModels(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotSecuritySolutionModelResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotSecuritySolutionModelResource> GetIotSecuritySolutionModels(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetIoTSecuritySolutionModels(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetIotSecuritySolutionModels(filter, cancellationToken);
         }
 
         /// <summary>
@@ -1234,12 +1234,12 @@ namespace Azure.ResourceManager.SecurityCenter
             return resourceGroupResource.GetCustomEntityStoreAssignments().Get(customEntityStoreAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IoTSecuritySolutionModelResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of IotSecuritySolutionModelResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IoTSecuritySolutionModelResources and their operations over a IoTSecuritySolutionModelResource. </returns>
-        public static IoTSecuritySolutionModelCollection GetIoTSecuritySolutionModels(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IotSecuritySolutionModelResources and their operations over a IotSecuritySolutionModelResource. </returns>
+        public static IotSecuritySolutionModelCollection GetIotSecuritySolutionModels(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetIoTSecuritySolutionModels();
+            return GetExtensionClient(resourceGroupResource).GetIotSecuritySolutionModels();
         }
 
         /// <summary>
@@ -1253,9 +1253,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<IoTSecuritySolutionModelResource>> GetIoTSecuritySolutionModelAsync(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IotSecuritySolutionModelResource>> GetIotSecuritySolutionModelAsync(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIoTSecuritySolutionModels().GetAsync(solutionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetIotSecuritySolutionModels().GetAsync(solutionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1269,9 +1269,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<IoTSecuritySolutionModelResource> GetIoTSecuritySolutionModel(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
+        public static Response<IotSecuritySolutionModelResource> GetIotSecuritySolutionModel(this ResourceGroupResource resourceGroupResource, string solutionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIoTSecuritySolutionModels().Get(solutionName, cancellationToken);
+            return resourceGroupResource.GetIotSecuritySolutionModels().Get(solutionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGroupLocationTaskResources in the ResourceGroupResource. </summary>
@@ -2316,77 +2316,77 @@ namespace Azure.ResourceManager.SecurityCenter
         }
         #endregion
 
-        #region IoTSecuritySolutionModelResource
+        #region IotSecuritySolutionModelResource
         /// <summary>
-        /// Gets an object representing an <see cref="IoTSecuritySolutionModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IoTSecuritySolutionModelResource.CreateResourceIdentifier" /> to create an <see cref="IoTSecuritySolutionModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotSecuritySolutionModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotSecuritySolutionModelResource.CreateResourceIdentifier" /> to create an <see cref="IotSecuritySolutionModelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IoTSecuritySolutionModelResource" /> object. </returns>
-        public static IoTSecuritySolutionModelResource GetIoTSecuritySolutionModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotSecuritySolutionModelResource" /> object. </returns>
+        public static IotSecuritySolutionModelResource GetIotSecuritySolutionModelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IoTSecuritySolutionModelResource.ValidateResourceId(id);
-                return new IoTSecuritySolutionModelResource(client, id);
+                IotSecuritySolutionModelResource.ValidateResourceId(id);
+                return new IotSecuritySolutionModelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IoTSecuritySolutionAnalyticsModelResource
+        #region IotSecuritySolutionAnalyticsModelResource
         /// <summary>
-        /// Gets an object representing an <see cref="IoTSecuritySolutionAnalyticsModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IoTSecuritySolutionAnalyticsModelResource.CreateResourceIdentifier" /> to create an <see cref="IoTSecuritySolutionAnalyticsModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotSecuritySolutionAnalyticsModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotSecuritySolutionAnalyticsModelResource.CreateResourceIdentifier" /> to create an <see cref="IotSecuritySolutionAnalyticsModelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IoTSecuritySolutionAnalyticsModelResource" /> object. </returns>
-        public static IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource" /> object. </returns>
+        public static IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IoTSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
-                return new IoTSecuritySolutionAnalyticsModelResource(client, id);
+                IotSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
+                return new IotSecuritySolutionAnalyticsModelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IoTSecurityAggregatedAlertResource
+        #region IotSecurityAggregatedAlertResource
         /// <summary>
-        /// Gets an object representing an <see cref="IoTSecurityAggregatedAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IoTSecurityAggregatedAlertResource.CreateResourceIdentifier" /> to create an <see cref="IoTSecurityAggregatedAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotSecurityAggregatedAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotSecurityAggregatedAlertResource.CreateResourceIdentifier" /> to create an <see cref="IotSecurityAggregatedAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IoTSecurityAggregatedAlertResource" /> object. </returns>
-        public static IoTSecurityAggregatedAlertResource GetIoTSecurityAggregatedAlertResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotSecurityAggregatedAlertResource" /> object. </returns>
+        public static IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IoTSecurityAggregatedAlertResource.ValidateResourceId(id);
-                return new IoTSecurityAggregatedAlertResource(client, id);
+                IotSecurityAggregatedAlertResource.ValidateResourceId(id);
+                return new IotSecurityAggregatedAlertResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IoTSecurityAggregatedRecommendationResource
+        #region IotSecurityAggregatedRecommendationResource
         /// <summary>
-        /// Gets an object representing an <see cref="IoTSecurityAggregatedRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IoTSecurityAggregatedRecommendationResource.CreateResourceIdentifier" /> to create an <see cref="IoTSecurityAggregatedRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotSecurityAggregatedRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotSecurityAggregatedRecommendationResource.CreateResourceIdentifier" /> to create an <see cref="IotSecurityAggregatedRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IoTSecurityAggregatedRecommendationResource" /> object. </returns>
-        public static IoTSecurityAggregatedRecommendationResource GetIoTSecurityAggregatedRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotSecurityAggregatedRecommendationResource" /> object. </returns>
+        public static IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IoTSecurityAggregatedRecommendationResource.ValidateResourceId(id);
-                return new IoTSecurityAggregatedRecommendationResource(client, id);
+                IotSecurityAggregatedRecommendationResource.ValidateResourceId(id);
+                return new IotSecurityAggregatedRecommendationResource(client, id);
             }
             );
         }

@@ -16,6 +16,10 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  OnPremiseResourceDetails.vmuuid: VmUuid|uuid
+  RecommendationType.IoT_ACRAuthentication: IotAcrAuthentication
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -45,6 +49,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  IoT: Iot
+  TLS: Tls
 
 list-exception:
   - /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}

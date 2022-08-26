@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NetworkingValue = "Networking";
         private const string DataValue = "Data";
         private const string IdentityAndAccessValue = "IdentityAndAccess";
-        private const string IoTValue = "IoT";
+        private const string IotValue = "IoT";
 
         /// <summary> Compute. </summary>
         public static Category Compute { get; } = new Category(ComputeValue);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> IdentityAndAccess. </summary>
         public static Category IdentityAndAccess { get; } = new Category(IdentityAndAccessValue);
         /// <summary> IoT. </summary>
-        public static Category IoT { get; } = new Category(IoTValue);
+        public static Category Iot { get; } = new Category(IotValue);
         /// <summary> Determines if two <see cref="Category"/> values are the same. </summary>
         public static bool operator ==(Category left, Category right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Category"/> values are not the same. </summary>

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedRecommendationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecurityAggregatedRecommendationData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecurityAggregatedRecommendationData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecurityAggregatedRecommendationData value = default;
+                        IotSecurityAggregatedRecommendationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecurityAggregatedRecommendationData.DeserializeIoTSecurityAggregatedRecommendationData(document.RootElement);
+                        value = IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IoTSecurityAggregatedRecommendationData)null, message.Response);
+                    return Response.FromValue((IotSecurityAggregatedRecommendationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedRecommendationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecurityAggregatedRecommendationData> Get(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName, CancellationToken cancellationToken = default)
+        public Response<IotSecurityAggregatedRecommendationData> Get(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecurityAggregatedRecommendationData value = default;
+                        IotSecurityAggregatedRecommendationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecurityAggregatedRecommendationData.DeserializeIoTSecurityAggregatedRecommendationData(document.RootElement);
+                        value = IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IoTSecurityAggregatedRecommendationData)null, message.Response);
+                    return Response.FromValue((IotSecurityAggregatedRecommendationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecurityAggregatedRecommendationList>> ListAsync(string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecurityAggregatedRecommendationList>> ListAsync(string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecurityAggregatedRecommendationList value = default;
+                        IotSecurityAggregatedRecommendationList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecurityAggregatedRecommendationList.DeserializeIoTSecurityAggregatedRecommendationList(document.RootElement);
+                        value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecurityAggregatedRecommendationList> List(string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IotSecurityAggregatedRecommendationList> List(string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecurityAggregatedRecommendationList value = default;
+                        IotSecurityAggregatedRecommendationList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecurityAggregatedRecommendationList.DeserializeIoTSecurityAggregatedRecommendationList(document.RootElement);
+                        value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IoTSecurityAggregatedRecommendationList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IotSecurityAggregatedRecommendationList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecurityAggregatedRecommendationList value = default;
+                        IotSecurityAggregatedRecommendationList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IoTSecurityAggregatedRecommendationList.DeserializeIoTSecurityAggregatedRecommendationList(document.RootElement);
+                        value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IoTSecurityAggregatedRecommendationList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IotSecurityAggregatedRecommendationList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        IoTSecurityAggregatedRecommendationList value = default;
+                        IotSecurityAggregatedRecommendationList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IoTSecurityAggregatedRecommendationList.DeserializeIoTSecurityAggregatedRecommendationList(document.RootElement);
+                        value = IotSecurityAggregatedRecommendationList.DeserializeIotSecurityAggregatedRecommendationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
