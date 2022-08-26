@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "158",
         "Content-Type": "application/json",
-        "traceparent": "00-5adc8b5e1259394bb9750e4134cdd76f-a3216108faf5b84a-00",
-        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220814.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-4a170cb2895382c479dfbf19962a4897-feaa2855d6ca40a8-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "07f9aea72d6fd040cf1bf7960034f652",
+        "x-ms-client-request-id": "f9c45535855d1be08240ba6c680ff005",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -42,7 +42,7 @@
       "ResponseHeaders": {
         "Content-Length": "559",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 14 Aug 2022 14:11:06 GMT",
+        "Date": "Fri, 26 Aug 2022 09:22:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -51,7 +51,7 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: C452C6119A674498A2FAEE2A8F7EEFDE Ref B: TPE30EDGE0721 Ref C: 2022-08-14T14:11:06Z"
+        "X-MSEdge-Ref": "Ref A: F52CA94AF7F7477A96F347775B8EB177 Ref B: TYBEDGE0511 Ref C: 2022-08-26T09:22:48Z"
       },
       "ResponseBody": {
         "formatVersion": "0.0.1",
@@ -65,8 +65,8 @@
                   "travelTimeInSeconds": 443,
                   "trafficDelayInSeconds": 0,
                   "trafficLengthInMeters": 0,
-                  "departureTime": "2022-08-14T22:11:07\u002B08:00",
-                  "arrivalTime": "2022-08-14T22:18:29\u002B08:00"
+                  "departureTime": "2022-08-26T17:22:49\u002B08:00",
+                  "arrivalTime": "2022-08-26T17:30:11\u002B08:00"
                 }
               }
             }
@@ -80,8 +80,8 @@
                   "travelTimeInSeconds": 863,
                   "trafficDelayInSeconds": 0,
                   "trafficLengthInMeters": 0,
-                  "departureTime": "2022-08-14T22:11:07\u002B08:00",
-                  "arrivalTime": "2022-08-14T22:25:30\u002B08:00"
+                  "departureTime": "2022-08-26T17:22:49\u002B08:00",
+                  "arrivalTime": "2022-08-26T17:37:12\u002B08:00"
                 }
               }
             }
@@ -97,6 +97,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "493981239"
+    "RandomSeed": "1734395892"
   }
 }

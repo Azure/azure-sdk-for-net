@@ -174,11 +174,11 @@ var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
     Origins = new List<GeoPosition>() {
-        new GeoPosition(45.9375, 123.751),
-        new GeoPosition(45.96875, 123.791)
+        new GeoPosition(123.751, 45.9375),
+        new GeoPosition(123.791, 45.96875)
     },
     // one destination point
-    Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+    Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
 };
 var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
 ```
@@ -191,11 +191,11 @@ var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
     Origins = new List<GeoPosition>() {
-        new GeoPosition(45.9375, 123.751),
-        new GeoPosition(45.96875, 123.791)
+        new GeoPosition(123.751, 45.9375),
+        new GeoPosition(123.791, 45.96875)
     },
     // one destination point
-    Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+    Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
 };
 
 // Instantiate route matrix options
@@ -216,7 +216,7 @@ Route range API helps to find a set of locations that can be reached from the or
 
 ```C# Snippet:SimpleRouteRange
 // Search from a point of time budget that can be reached in 2000 seconds
-var options = new RouteRangeOptions(46, 123.75)
+var options = new RouteRangeOptions(123.75, 46)
 {
     TimeBudget = new TimeSpan(0, 20, 0)
 };

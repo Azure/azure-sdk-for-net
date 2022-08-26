@@ -10,7 +10,7 @@ The sample below search for the route range for a coordinate that can be reached
 
 ```C# Snippet:SimpleRouteRange
 // Search from a point of time budget that can be reached in 2000 seconds
-var options = new RouteRangeOptions(46, 123.75)
+var options = new RouteRangeOptions(123.75, 46)
 {
     TimeBudget = new TimeSpan(0, 20, 0)
 };

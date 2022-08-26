@@ -288,11 +288,11 @@ namespace Azure.Maps.Route.Tests
             {
                 // two origin points
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
                 // one destination point
-                Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
             var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
             #endregion
@@ -316,11 +316,11 @@ namespace Azure.Maps.Route.Tests
             {
                 // two origin points
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
                 // one destination point
-                Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
 
             // Add more options for route matrix request
@@ -349,11 +349,11 @@ namespace Azure.Maps.Route.Tests
             {
                 // two origin points
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
                 // one destination point
-                Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
 
             // Instantiate route matrix options
@@ -384,11 +384,11 @@ namespace Azure.Maps.Route.Tests
             {
                 // two origin points
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
                 // one destination point
-                Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
 
             // Instantiate route matrix options
@@ -443,7 +443,7 @@ namespace Azure.Maps.Route.Tests
 
             #region Snippet:SimpleRouteRange
             // Search from a point of time budget that can be reached in 2000 seconds
-            var options = new RouteRangeOptions(46, 123.75)
+            var options = new RouteRangeOptions(123.75, 46)
             {
                 TimeBudget = new TimeSpan(0, 20, 0)
             };

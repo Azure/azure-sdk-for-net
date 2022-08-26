@@ -581,7 +581,7 @@ namespace Azure.Maps.Route.Models
     {
         protected RouteRangeOptions() { }
         public RouteRangeOptions(Azure.Core.GeoJson.GeoPosition routeRangePoint) { }
-        public RouteRangeOptions(double latitude, double longitude) { }
+        public RouteRangeOptions(double longitude, double latitude) { }
         public double? AccelerationEfficiency { get { throw null; } set { } }
         public double? AuxiliaryPowerInKw { get { throw null; } set { } }
         public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }

@@ -24,10 +24,10 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
-                Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
             var result = await client.SyncRequestRouteMatrixAsync(routeMatrixQuery);
 
@@ -45,10 +45,10 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
-                Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767) },
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
             var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
             {
@@ -88,10 +88,10 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
-                Destinations = new List<GeoPosition>() { new GeoPosition(45.90625, 123.767)},
+                Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625)},
             };
             var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
             {
@@ -116,8 +116,8 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 Origins = new List<GeoPosition>() {
-                    new GeoPosition(45.9375, 123.751),
-                    new GeoPosition(45.96875, 123.791)
+                    new GeoPosition(123.751, 45.9375),
+                    new GeoPosition(123.791, 45.96875)
                 },
                 Destinations = new List<GeoPosition>() {},
             };

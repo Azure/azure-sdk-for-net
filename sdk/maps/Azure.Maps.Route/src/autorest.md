@@ -26,7 +26,18 @@ public-clients: false
 clear-output-folder: true
 data-plane: true
 skip-csproj: true
+```
 
-# modelerfour:
-#   lenient-model-deduplication: true
+```yaml
+directive:
+- from: swagger-document
+  where: $.securityDefinitions
+  transform: |
+    $["azure_auth"] = $["AADToken"];
+    delete $["AADToken"];
+- from: swagger-document
+  where: '$.security[0]'
+  transform: |
+    $["azure_auth"] = $["AADToken"];
+    delete $["AADToken"];
 ```

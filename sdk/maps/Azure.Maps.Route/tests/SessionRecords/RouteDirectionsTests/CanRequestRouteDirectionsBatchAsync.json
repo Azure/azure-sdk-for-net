@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "199",
         "Content-Type": "application/json",
-        "traceparent": "00-593533759412624ca45f1ed296a56a1f-9827870f75637744-00",
-        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220814.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-0fc1477ddfa397a9bd12a9d8488996ca-513cb490526f8da4-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "aecae4fd46ef86f7008c20d3d6757257",
+        "x-ms-client-request-id": "5974f5f51329cf229d71751c3b40b52f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,39 +28,39 @@
       "ResponseHeaders": {
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 14 Aug 2022 14:15:03 GMT",
-        "Location": "https://atlas.microsoft.com/route/directions/batch/fe8a81eb-b738-44b4-9371-ec07ab05bf60?api-version=1.0",
+        "Date": "Fri, 26 Aug 2022 09:22:42 GMT",
+        "Location": "https://atlas.microsoft.com/route/directions/batch/8ebe8b68-bc62-4e85-8e16-a1ee5c290209?api-version=1.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: ECC6983711D64A968A6780ED4C6C5578 Ref B: TPE30EDGE0517 Ref C: 2022-08-14T14:15:03Z"
+        "X-MSEdge-Ref": "Ref A: A423DF95087344B3AF149683909F1FD5 Ref B: TYBEDGE0511 Ref C: 2022-08-26T09:22:43Z"
       },
       "ResponseBody": "\u0022\u0022"
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/route/directions/batch/fe8a81eb-b738-44b4-9371-ec07ab05bf60?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/route/directions/batch/8ebe8b68-bc62-4e85-8e16-a1ee5c290209?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-593533759412624ca45f1ed296a56a1f-083193defe94064c-00",
-        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220814.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-0fc1477ddfa397a9bd12a9d8488996ca-7c2d701ac47c156d-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "563bb00c9be7e78474ccadee1717d4ed",
+        "x-ms-client-request-id": "00d6e2ba0a209a1fe50bb284616aa5be",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Sun, 14 Aug 2022 14:15:03 GMT",
+        "Date": "Fri, 26 Aug 2022 09:22:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 9AF82FE3877D49A5B14800B99254AF14 Ref B: TPE30EDGE0517 Ref C: 2022-08-14T14:15:03Z"
+        "X-MSEdge-Ref": "Ref A: DB6D5EC24B07411F9A89F67C4FC001EF Ref B: TYBEDGE0511 Ref C: 2022-08-26T09:22:43Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -74,8 +74,8 @@
                     "lengthInMeters": 14128,
                     "travelTimeInSeconds": 2549,
                     "trafficDelayInSeconds": 0,
-                    "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                    "arrivalTime": "2022-08-14T14:57:32\u002B00:00"
+                    "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                    "arrivalTime": "2022-08-26T10:05:11\u002B00:00"
                   },
                   "legs": [
                     {
@@ -83,8 +83,8 @@
                         "lengthInMeters": 4672,
                         "travelTimeInSeconds": 841,
                         "trafficDelayInSeconds": 0,
-                        "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                        "arrivalTime": "2022-08-14T14:29:04\u002B00:00"
+                        "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                        "arrivalTime": "2022-08-26T09:36:43\u002B00:00"
                       },
                       "points": [
                         {
@@ -122,8 +122,8 @@
                         "lengthInMeters": 9456,
                         "travelTimeInSeconds": 1708,
                         "trafficDelayInSeconds": 0,
-                        "departureTime": "2022-08-14T14:29:04\u002B00:00",
-                        "arrivalTime": "2022-08-14T14:57:32\u002B00:00"
+                        "departureTime": "2022-08-26T09:36:43\u002B00:00",
+                        "arrivalTime": "2022-08-26T10:05:11\u002B00:00"
                       },
                       "points": [
                         {
@@ -207,8 +207,8 @@
                     "lengthInMeters": 4784,
                     "travelTimeInSeconds": 443,
                     "trafficDelayInSeconds": 0,
-                    "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                    "arrivalTime": "2022-08-14T14:22:26\u002B00:00"
+                    "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                    "arrivalTime": "2022-08-26T09:30:05\u002B00:00"
                   },
                   "legs": [
                     {
@@ -216,8 +216,8 @@
                         "lengthInMeters": 4784,
                         "travelTimeInSeconds": 443,
                         "trafficDelayInSeconds": 0,
-                        "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                        "arrivalTime": "2022-08-14T14:22:26\u002B00:00"
+                        "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                        "arrivalTime": "2022-08-26T09:30:05\u002B00:00"
                       },
                       "points": [
                         {
@@ -279,27 +279,27 @@
       }
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/route/directions/batch/fe8a81eb-b738-44b4-9371-ec07ab05bf60?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/route/directions/batch/8ebe8b68-bc62-4e85-8e16-a1ee5c290209?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220814.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "0da4080a6f4cd14a609a3f5f6b025be7",
+        "x-ms-client-request-id": "74d1cb2a8adbc1168e6c1d3737f1582e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Sun, 14 Aug 2022 14:15:04 GMT",
+        "Date": "Fri, 26 Aug 2022 09:22:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 029455FFC1FB48F7BE521A5230CC0FFF Ref B: TPE30EDGE0517 Ref C: 2022-08-14T14:15:04Z"
+        "X-MSEdge-Ref": "Ref A: F50BA2A4E9734791BBAFB33982EA769A Ref B: TYBEDGE0511 Ref C: 2022-08-26T09:22:44Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -313,8 +313,8 @@
                     "lengthInMeters": 14128,
                     "travelTimeInSeconds": 2549,
                     "trafficDelayInSeconds": 0,
-                    "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                    "arrivalTime": "2022-08-14T14:57:32\u002B00:00"
+                    "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                    "arrivalTime": "2022-08-26T10:05:11\u002B00:00"
                   },
                   "legs": [
                     {
@@ -322,8 +322,8 @@
                         "lengthInMeters": 4672,
                         "travelTimeInSeconds": 841,
                         "trafficDelayInSeconds": 0,
-                        "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                        "arrivalTime": "2022-08-14T14:29:04\u002B00:00"
+                        "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                        "arrivalTime": "2022-08-26T09:36:43\u002B00:00"
                       },
                       "points": [
                         {
@@ -361,8 +361,8 @@
                         "lengthInMeters": 9456,
                         "travelTimeInSeconds": 1708,
                         "trafficDelayInSeconds": 0,
-                        "departureTime": "2022-08-14T14:29:04\u002B00:00",
-                        "arrivalTime": "2022-08-14T14:57:32\u002B00:00"
+                        "departureTime": "2022-08-26T09:36:43\u002B00:00",
+                        "arrivalTime": "2022-08-26T10:05:11\u002B00:00"
                       },
                       "points": [
                         {
@@ -446,8 +446,8 @@
                     "lengthInMeters": 4784,
                     "travelTimeInSeconds": 443,
                     "trafficDelayInSeconds": 0,
-                    "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                    "arrivalTime": "2022-08-14T14:22:26\u002B00:00"
+                    "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                    "arrivalTime": "2022-08-26T09:30:05\u002B00:00"
                   },
                   "legs": [
                     {
@@ -455,8 +455,8 @@
                         "lengthInMeters": 4784,
                         "travelTimeInSeconds": 443,
                         "trafficDelayInSeconds": 0,
-                        "departureTime": "2022-08-14T14:15:04\u002B00:00",
-                        "arrivalTime": "2022-08-14T14:22:26\u002B00:00"
+                        "departureTime": "2022-08-26T09:22:43\u002B00:00",
+                        "arrivalTime": "2022-08-26T09:30:05\u002B00:00"
                       },
                       "points": [
                         {
@@ -521,6 +521,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "489577904"
+    "RandomSeed": "462694602"
   }
 }

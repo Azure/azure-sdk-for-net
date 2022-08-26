@@ -20,7 +20,7 @@ namespace Azure.Maps.Route.Tests
         {
             var client = CreateClient();
             // The route range within
-            var options = new RouteRangeOptions(46, 123.75)
+            var options = new RouteRangeOptions(123.75, 46)
             {
                 TimeBudget = new TimeSpan(0, 20, 0)
             };
@@ -35,7 +35,7 @@ namespace Azure.Maps.Route.Tests
         public void CanGetRouteRangeError()
         {
             var client = CreateClient();
-            var options = new RouteRangeOptions(46, 123.75);
+            var options = new RouteRangeOptions(123.75, 46);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetRouteRangeAsync(options));
             Assert.AreEqual(400, ex.Status);
