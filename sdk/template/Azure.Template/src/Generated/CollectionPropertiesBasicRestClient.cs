@@ -16,7 +16,7 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    internal partial class ModelCollectionPropertiesRestClient
+    internal partial class CollectionPropertiesBasicRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -24,19 +24,19 @@ namespace Azure.Template
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of ModelCollectionPropertiesRestClient. </summary>
+        /// <summary> Initializes a new instance of CollectionPropertiesBasicRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        public ModelCollectionPropertiesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        public CollectionPropertiesBasicRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("http://localhost:3000");
         }
 
-        internal HttpMessage CreateSendCollectionModelRequest(ModelCollectionModel input)
+        internal HttpMessage CreateSendCollectionModelRequest(InputModel input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,10 +53,10 @@ namespace Azure.Template
             return message;
         }
 
-        /// <param name="input"> The ModelCollectionModel to use. </param>
+        /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response> SendCollectionModelAsync(ModelCollectionModel input, CancellationToken cancellationToken = default)
+        public async Task<Response> SendCollectionModelAsync(InputModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -74,10 +74,10 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="input"> The ModelCollectionModel to use. </param>
+        /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response SendCollectionModel(ModelCollectionModel input, CancellationToken cancellationToken = default)
+        public Response SendCollectionModel(InputModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -109,7 +109,7 @@ namespace Azure.Template
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ModelCollectionModel>> GetCollectionModelAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<OutputModel>> GetCollectionModelAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCollectionModelRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,9 +117,9 @@ namespace Azure.Template
             {
                 case 200:
                     {
-                        ModelCollectionModel value = default;
+                        OutputModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelCollectionModel.DeserializeModelCollectionModel(document.RootElement);
+                        value = OutputModel.DeserializeOutputModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,7 +128,7 @@ namespace Azure.Template
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ModelCollectionModel> GetCollectionModel(CancellationToken cancellationToken = default)
+        public Response<OutputModel> GetCollectionModel(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCollectionModelRequest();
             _pipeline.Send(message, cancellationToken);
@@ -136,9 +136,9 @@ namespace Azure.Template
             {
                 case 200:
                     {
-                        ModelCollectionModel value = default;
+                        OutputModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelCollectionModel.DeserializeModelCollectionModel(document.RootElement);
+                        value = OutputModel.DeserializeOutputModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateSetCollectionModelRequest(ModelCollectionModel input)
+        internal HttpMessage CreateSetCollectionModelRequest(RoundTripModel input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -163,10 +163,10 @@ namespace Azure.Template
             return message;
         }
 
-        /// <param name="input"> The ModelCollectionModel to use. </param>
+        /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<ModelCollectionModel>> SetCollectionModelAsync(ModelCollectionModel input, CancellationToken cancellationToken = default)
+        public async Task<Response<RoundTripModel>> SetCollectionModelAsync(RoundTripModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -179,9 +179,9 @@ namespace Azure.Template
             {
                 case 200:
                     {
-                        ModelCollectionModel value = default;
+                        RoundTripModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelCollectionModel.DeserializeModelCollectionModel(document.RootElement);
+                        value = RoundTripModel.DeserializeRoundTripModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,10 +189,10 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="input"> The ModelCollectionModel to use. </param>
+        /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<ModelCollectionModel> SetCollectionModel(ModelCollectionModel input, CancellationToken cancellationToken = default)
+        public Response<RoundTripModel> SetCollectionModel(RoundTripModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -205,9 +205,9 @@ namespace Azure.Template
             {
                 case 200:
                     {
-                        ModelCollectionModel value = default;
+                        RoundTripModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelCollectionModel.DeserializeModelCollectionModel(document.RootElement);
+                        value = RoundTripModel.DeserializeRoundTripModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
