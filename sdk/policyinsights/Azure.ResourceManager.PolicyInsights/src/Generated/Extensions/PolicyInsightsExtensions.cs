@@ -1082,6 +1082,15 @@ namespace Azure.ResourceManager.PolicyInsights
             return GetExtensionClient(managementGroupResource).CheckAtManagementGroupScopePolicyRestriction(content, cancellationToken);
         }
 
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -1092,11 +1101,12 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Gets a collection of RemediationResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of RemediationResources and their operations over a RemediationResource. </returns>
-        public static RemediationCollection GetRemediations(this ArmResource armResource)
+        public static RemediationCollection GetRemediations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetRemediations();
+            return GetExtensionClient(client, scope).GetRemediations();
         }
 
         /// <summary>
@@ -1104,15 +1114,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
         /// Operation Id: Remediations_GetAtResource
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RemediationResource>> GetRemediationAsync(this ArmResource armResource, string remediationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<RemediationResource>> GetRemediationAsync(this ArmClient client, ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetRemediations().GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
+            return await client.GetRemediations(scope).GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1120,23 +1131,25 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
         /// Operation Id: Remediations_GetAtResource
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RemediationResource> GetRemediation(this ArmResource armResource, string remediationName, CancellationToken cancellationToken = default)
+        public static Response<RemediationResource> GetRemediation(this ArmClient client, ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetRemediations().Get(remediationName, cancellationToken);
+            return client.GetRemediations(scope).Get(remediationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AttestationResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of AttestationResources and their operations over a AttestationResource. </returns>
-        public static AttestationCollection GetAttestations(this ArmResource armResource)
+        public static AttestationCollection GetAttestations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetAttestations();
+            return GetExtensionClient(client, scope).GetAttestations();
         }
 
         /// <summary>
@@ -1144,15 +1157,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
         /// Operation Id: Attestations_GetAtResource
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AttestationResource>> GetAttestationAsync(this ArmResource armResource, string attestationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AttestationResource>> GetAttestationAsync(this ArmClient client, ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetAttestations().GetAsync(attestationName, cancellationToken).ConfigureAwait(false);
+            return await client.GetAttestations(scope).GetAsync(attestationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1160,15 +1174,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
         /// Operation Id: Attestations_GetAtResource
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AttestationResource> GetAttestation(this ArmResource armResource, string attestationName, CancellationToken cancellationToken = default)
+        public static Response<AttestationResource> GetAttestation(this ArmClient client, ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetAttestations().Get(attestationName, cancellationToken);
+            return client.GetAttestations(scope).Get(attestationName, cancellationToken);
         }
 
         #region RemediationResource
