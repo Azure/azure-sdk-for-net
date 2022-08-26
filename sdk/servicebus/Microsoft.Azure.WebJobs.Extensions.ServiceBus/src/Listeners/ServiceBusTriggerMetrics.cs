@@ -8,6 +8,9 @@ using System.Text;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
+    /// <summary>
+    /// Trigger metrics class for Service Bus. Used to make scaling decisions in <see cref="ServiceBusScaleMonitor"/>.
+    /// </summary>
     public class ServiceBusTriggerMetrics : ScaleMetrics
     {
         /// <summary>
