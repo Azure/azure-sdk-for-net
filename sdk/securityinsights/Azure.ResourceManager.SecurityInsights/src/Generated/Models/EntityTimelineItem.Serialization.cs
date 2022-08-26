@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new EntityTimelineItem(kind);
+            return new UnknownEntityTimelineItem(kind);
         }
     }
 }
