@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The plan of the resource. </summary>
         public ArmPlan Plan { get; set; }
         /// <summary>
-        /// The resource properties..
+        /// The resource properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

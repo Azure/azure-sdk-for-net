@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VolumeQuotaRulesList DeserializeVolumeQuotaRulesList(JsonElement element)
         {
-            Optional<IReadOnlyList<VolumeQuotaRuleData>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeQuotaRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VolumeQuotaRuleData> array = new List<VolumeQuotaRuleData>();
+                    List<NetAppVolumeQuotaRuleData> array = new List<NetAppVolumeQuotaRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VolumeQuotaRuleData.DeserializeVolumeQuotaRuleData(item));
+                        array.Add(NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(item));
                     }
                     value = array;
                     continue;

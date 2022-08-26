@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Variable type. </summary>
         public PipelineVariableType VariableType { get; set; }
         /// <summary>
-        /// Default value of variable..
+        /// Default value of variable.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

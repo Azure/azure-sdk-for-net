@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary>
-        /// The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests..
+        /// The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

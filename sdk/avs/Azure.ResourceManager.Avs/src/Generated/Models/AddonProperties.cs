@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Avs.Models
     /// Please note <see cref="AddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
     /// </summary>
-    public partial class AddonProperties
+    public abstract partial class AddonProperties
     {
         /// <summary> Initializes a new instance of AddonProperties. </summary>
-        public AddonProperties()
+        protected AddonProperties()
         {
         }
 

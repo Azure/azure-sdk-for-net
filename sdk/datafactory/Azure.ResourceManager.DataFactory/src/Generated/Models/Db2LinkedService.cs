@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference..
+        /// The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ConnectionString { get; set; }
         /// <summary>
-        /// Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string)..
+        /// Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Server { get; set; }
         /// <summary>
-        /// Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string)..
+        /// Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </summary>
         public Db2AuthenticationType? AuthenticationType { get; set; }
         /// <summary>
-        /// Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string)..
+        /// Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
-        /// Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string)..
+        /// Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData PackageCollection { get; set; }
         /// <summary>
-        /// Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string)..
+        /// Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData CertificateCommonName { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string)..
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

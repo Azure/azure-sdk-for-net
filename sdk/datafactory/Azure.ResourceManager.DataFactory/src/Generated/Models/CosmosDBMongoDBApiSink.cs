@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is &quot;insert&quot;. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string)..
+        /// Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is &quot;insert&quot;. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

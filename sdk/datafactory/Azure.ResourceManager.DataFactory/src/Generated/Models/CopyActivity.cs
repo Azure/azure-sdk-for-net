@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public CopySink Sink { get; set; }
         /// <summary>
-        /// Copy activity translator. If not specified, tabular translator is used..
+        /// Copy activity translator. If not specified, tabular translator is used.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Translator { get; set; }
         /// <summary>
-        /// Specifies whether to copy data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean)..
+        /// Specifies whether to copy data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Specifies interim staging settings when EnableStaging is true. </summary>
         public StagingSettings StagingSettings { get; set; }
         /// <summary>
-        /// Maximum number of concurrent sessions opened on the source or sink to avoid overloading the data store. Type: integer (or Expression with resultType integer), minimum: 0..
+        /// Maximum number of concurrent sessions opened on the source or sink to avoid overloading the data store. Type: integer (or Expression with resultType integer), minimum: 0.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ParallelCopies { get; set; }
         /// <summary>
-        /// Maximum number of data integration units that can be used to perform this data movement. Type: integer (or Expression with resultType integer), minimum: 0..
+        /// Maximum number of data integration units that can be used to perform this data movement. Type: integer (or Expression with resultType integer), minimum: 0.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData DataIntegrationUnits { get; set; }
         /// <summary>
-        /// Whether to skip incompatible row. Default value is false. Type: boolean (or Expression with resultType boolean)..
+        /// Whether to skip incompatible row. Default value is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Preserve rules. </summary>
         public IList<BinaryData> Preserve { get; }
         /// <summary>
-        /// Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean)..
+        /// Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

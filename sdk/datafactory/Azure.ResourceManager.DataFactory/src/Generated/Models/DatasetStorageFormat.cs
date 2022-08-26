@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of dataset storage format. </summary>
         internal string DatasetStorageFormatType { get; set; }
         /// <summary>
-        /// Serializer. Type: string (or Expression with resultType string)..
+        /// Serializer. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Serializer { get; set; }
         /// <summary>
-        /// Deserializer. Type: string (or Expression with resultType string)..
+        /// Deserializer. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

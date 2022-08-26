@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
         public string ThumbprintAlgorithm { get; set; }
         /// <summary>
-        /// This must match the thumbprint from the name..
+        /// This must match the thumbprint from the name.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

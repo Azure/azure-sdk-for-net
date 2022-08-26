@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaTransformJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MediaTransformJobOutputAsset"/>.
     /// </summary>
-    public partial class MediaTransformJobOutput
+    public abstract partial class MediaTransformJobOutput
     {
         /// <summary> Initializes a new instance of MediaTransformJobOutput. </summary>
-        public MediaTransformJobOutput()
+        protected MediaTransformJobOutput()
         {
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
         /// Please note <see cref="MediaPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="FaceDetectorPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
         /// <param name="progress"> If the JobOutput is in a Processing state, this contains the Job completion percentage. The value is an estimate and not intended to be used to predict Job completion times. To determine if the JobOutput is complete, use the State property. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary>
         /// A preset used to override the preset in the corresponding transform output.
         /// Please note <see cref="MediaPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="FaceDetectorPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
         /// </summary>
         public MediaPreset PresetOverride { get; set; }
         /// <summary> Describes the state of the JobOutput. </summary>

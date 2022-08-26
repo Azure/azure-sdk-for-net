@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Schema name for interim table. Type: string (or Expression with resultType string)..
+        /// Schema name for interim table. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData InterimSchemaName { get; set; }
         /// <summary>
-        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings)..
+        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

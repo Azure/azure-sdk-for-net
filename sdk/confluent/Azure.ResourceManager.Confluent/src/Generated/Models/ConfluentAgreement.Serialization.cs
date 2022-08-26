@@ -44,20 +44,20 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("privacyPolicyLink");
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (Optional.IsDefined(RetrieveDatetime))
+            if (Optional.IsDefined(RetrieveOn))
             {
                 writer.WritePropertyName("retrieveDatetime");
-                writer.WriteStringValue(RetrieveDatetime.Value, "O");
+                writer.WriteStringValue(RetrieveOn.Value, "O");
             }
             if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature");
                 writer.WriteStringValue(Signature);
             }
-            if (Optional.IsDefined(Accepted))
+            if (Optional.IsDefined(IsAccepted))
             {
                 writer.WritePropertyName("accepted");
-                writer.WriteBooleanValue(Accepted.Value);
+                writer.WriteBooleanValue(IsAccepted.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

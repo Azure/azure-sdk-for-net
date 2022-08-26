@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the key. </summary>
         public string Key { get; }
         /// <summary>
-        /// Any object.
+        /// Any object
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary>
-        /// Optional parameters to pass to the initializer of the meta-learner..
+        /// Optional parameters to pass to the initializer of the meta-learner.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

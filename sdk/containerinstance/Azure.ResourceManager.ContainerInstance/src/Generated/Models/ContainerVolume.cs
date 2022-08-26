@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The Azure File volume. </summary>
         public ContainerInstanceAzureFileVolume AzureFile { get; set; }
         /// <summary>
-        /// The empty directory volume..
+        /// The empty directory volume.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

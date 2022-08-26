@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Customer disk job details. </summary>
-    public partial class DataBoxCustomerDiskJobDetails : JobDetails
+    public partial class DataBoxCustomerDiskJobDetails : DataBoxBasicJobDetails
     {
         /// <summary> Initializes a new instance of DataBoxCustomerDiskJobDetails. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> or <paramref name="returnToCustomerPackageDetails"/> is null. </exception>
-        public DataBoxCustomerDiskJobDetails(ContactDetails contactDetails, PackageCarrierDetails returnToCustomerPackageDetails) : base(contactDetails)
+        public DataBoxCustomerDiskJobDetails(DataBoxContactDetails contactDetails, PackageCarrierDetails returnToCustomerPackageDetails) : base(contactDetails)
         {
             if (contactDetails == null)
             {
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new ArgumentNullException(nameof(returnToCustomerPackageDetails));
             }
 
-            ImportDiskDetailsCollection = new ChangeTrackingDictionary<string, ImportDiskDetails>();
-            ExportDiskDetailsCollection = new ChangeTrackingDictionary<string, ExportDiskDetails>();
+            ImportDiskDetails = new ChangeTrackingDictionary<string, ImportDiskDetails>();
+            ExportDiskDetails = new ChangeTrackingDictionary<string, ExportDiskDetails>();
             CopyProgress = new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>();
             ReturnToCustomerPackageDetails = returnToCustomerPackageDetails;
-            JobDetailsType = ClassDiscriminator.DataBoxCustomerDisk;
+            JobDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
         /// <summary> Initializes a new instance of DataBoxCustomerDiskJobDetails. </summary>
@@ -58,37 +58,37 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="expectedDataSizeInTeraBytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="datacenterAddress">
+        /// <param name="dataCenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DatacenterAddressResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatacenterAddressInstructionResponse"/> and <see cref="DatacenterAddressLocationResponse"/>.
+        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="importDiskDetailsCollection"> Contains the map of disk serial number to the disk details for import jobs. </param>
-        /// <param name="exportDiskDetailsCollection"> Contains the map of disk serial number to the disk details for export jobs. </param>
+        /// <param name="importDiskDetails"> Contains the map of disk serial number to the disk details for import jobs. </param>
+        /// <param name="exportDiskDetails"> Contains the map of disk serial number to the disk details for export jobs. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
-        /// <param name="deliverToDcPackageDetails"> Delivery package shipping details. </param>
+        /// <param name="deliverToDataCenterPackageDetails"> Delivery package shipping details. </param>
         /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
         /// <param name="enableManifestBackup"> Flag to indicate if disk manifest should be backed-up in the Storage Account. </param>
-        internal DataBoxCustomerDiskJobDetails(IReadOnlyList<JobStages> jobStages, ContactDetails contactDetails, ShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, Preferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, KeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DatacenterAddressResponse datacenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, ImportDiskDetails> importDiskDetailsCollection, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetailsCollection, IReadOnlyList<DataBoxCustomerDiskCopyProgress> copyProgress, PackageCarrierInfo deliverToDcPackageDetails, PackageCarrierDetails returnToCustomerPackageDetails, bool? enableManifestBackup) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, datacenterAddress, dataCenterCode)
+        internal DataBoxCustomerDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, ImportDiskDetails> importDiskDetails, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails, IReadOnlyList<DataBoxCustomerDiskCopyProgress> copyProgress, PackageCarrierInfo deliverToDataCenterPackageDetails, PackageCarrierDetails returnToCustomerPackageDetails, bool? enableManifestBackup) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
         {
-            ImportDiskDetailsCollection = importDiskDetailsCollection;
-            ExportDiskDetailsCollection = exportDiskDetailsCollection;
+            ImportDiskDetails = importDiskDetails;
+            ExportDiskDetails = exportDiskDetails;
             CopyProgress = copyProgress;
-            DeliverToDcPackageDetails = deliverToDcPackageDetails;
+            DeliverToDataCenterPackageDetails = deliverToDataCenterPackageDetails;
             ReturnToCustomerPackageDetails = returnToCustomerPackageDetails;
             EnableManifestBackup = enableManifestBackup;
             JobDetailsType = jobDetailsType;
         }
 
         /// <summary> Contains the map of disk serial number to the disk details for import jobs. </summary>
-        public IDictionary<string, ImportDiskDetails> ImportDiskDetailsCollection { get; }
+        public IDictionary<string, ImportDiskDetails> ImportDiskDetails { get; }
         /// <summary> Contains the map of disk serial number to the disk details for export jobs. </summary>
-        public IReadOnlyDictionary<string, ExportDiskDetails> ExportDiskDetailsCollection { get; }
+        public IReadOnlyDictionary<string, ExportDiskDetails> ExportDiskDetails { get; }
         /// <summary> Copy progress per disk. </summary>
         public IReadOnlyList<DataBoxCustomerDiskCopyProgress> CopyProgress { get; }
         /// <summary> Delivery package shipping details. </summary>
-        public PackageCarrierInfo DeliverToDcPackageDetails { get; }
+        public PackageCarrierInfo DeliverToDataCenterPackageDetails { get; }
         /// <summary> Return package shipping details. </summary>
         public PackageCarrierDetails ReturnToCustomerPackageDetails { get; set; }
         /// <summary> Flag to indicate if disk manifest should be backed-up in the Storage Account. </summary>

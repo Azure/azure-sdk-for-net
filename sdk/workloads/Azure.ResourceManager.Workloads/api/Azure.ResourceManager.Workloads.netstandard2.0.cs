@@ -794,9 +794,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
-    public partial class InfrastructureConfiguration
+    public abstract partial class InfrastructureConfiguration
     {
-        public InfrastructureConfiguration(string appResourceGroup) { }
+        protected InfrastructureConfiguration(string appResourceGroup) { }
         public string AppResourceGroup { get { throw null; } set { } }
     }
     public partial class LinuxConfiguration : Azure.ResourceManager.Workloads.Models.OSConfiguration
@@ -905,9 +905,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.DiskInfo OSDisk { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.OSImageProfile OSImage { get { throw null; } set { } }
     }
-    public partial class OSConfiguration
+    public abstract partial class OSConfiguration
     {
-        public OSConfiguration() { }
+        protected OSConfiguration() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OSImageOffer : System.IEquatable<Azure.ResourceManager.Workloads.Models.OSImageOffer>
@@ -1069,9 +1069,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public PrometheusOSProviderInstanceProperties() { }
         public System.Uri PrometheusUri { get { throw null; } set { } }
     }
-    public partial class ProviderSpecificProperties
+    public abstract partial class ProviderSpecificProperties
     {
-        public ProviderSpecificProperties() { }
+        protected ProviderSpecificProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedisCacheFamily : System.IEquatable<Azure.ResourceManager.Workloads.Models.RedisCacheFamily>
@@ -1143,9 +1143,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public SapCentralServerInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class SapConfiguration
+    public abstract partial class SapConfiguration
     {
-        public SapConfiguration() { }
+        protected SapConfiguration() { }
     }
     public partial class SapDatabaseInstancePatch
     {
@@ -1346,9 +1346,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.SapProductType SapProduct { get { throw null; } }
         public long Saps { get { throw null; } }
     }
-    public partial class SapSizingRecommendationResult
+    public abstract partial class SapSizingRecommendationResult
     {
-        internal SapSizingRecommendationResult() { }
+        protected SapSizingRecommendationResult() { }
     }
     public partial class SapSupportedResourceSkusResult
     {
@@ -1589,9 +1589,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
-    public partial class SoftwareConfiguration
+    public abstract partial class SoftwareConfiguration
     {
-        public SoftwareConfiguration() { }
+        protected SoftwareConfiguration() { }
     }
     public partial class SshKeyPair
     {

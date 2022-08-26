@@ -12,5 +12,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class SecretBaseInfo
     {
+        /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
+        public SecretBaseInfo()
+        {
+        }
     }
 }

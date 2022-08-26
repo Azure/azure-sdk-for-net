@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public DatasetLocation DataLocation { get; set; }
         /// <summary>
-        /// The column delimiter. Type: string (or Expression with resultType string)..
+        /// The column delimiter. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ColumnDelimiter { get; set; }
         /// <summary>
-        /// The row delimiter. Type: string (or Expression with resultType string)..
+        /// The row delimiter. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData RowDelimiter { get; set; }
         /// <summary>
-        /// The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string)..
+        /// The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EncodingName { get; set; }
         /// <summary>
-        /// The data compressionCodec. Type: string (or Expression with resultType string)..
+        /// The data compressionCodec. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData CompressionCodec { get; set; }
         /// <summary>
-        /// The data compression method used for DelimitedText..
+        /// The data compression method used for DelimitedText.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData CompressionLevel { get; set; }
         /// <summary>
-        /// The quote character. Type: string (or Expression with resultType string)..
+        /// The quote character. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData QuoteChar { get; set; }
         /// <summary>
-        /// The escape character. Type: string (or Expression with resultType string)..
+        /// The escape character. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EscapeChar { get; set; }
         /// <summary>
-        /// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean)..
+        /// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FirstRowAsHeader { get; set; }
         /// <summary>
-        /// The null value string. Type: string (or Expression with resultType string)..
+        /// The null value string. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

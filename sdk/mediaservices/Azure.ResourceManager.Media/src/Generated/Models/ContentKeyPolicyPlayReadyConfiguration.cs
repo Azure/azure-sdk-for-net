@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The PlayReady licenses. </summary>
         public IList<ContentKeyPolicyPlayReadyLicense> Licenses { get; }
         /// <summary>
-        /// The custom response data..
+        /// The custom response data.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

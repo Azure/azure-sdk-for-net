@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <summary> Percentage completed. </summary>
         public double? PercentComplete { get; }
         /// <summary>
-        /// Operation result properties..
+        /// Operation result properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

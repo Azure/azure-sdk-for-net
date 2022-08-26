@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string)..
+        /// Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData NestingSeparator { get; set; }
         /// <summary>
-        /// Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert..
+        /// Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> A filesystem safe relative path of the artifact. </summary>
         public string Path { get; set; }
         /// <summary>
-        /// The Azure Resource Manager template..
+        /// The Azure Resource Manager template.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

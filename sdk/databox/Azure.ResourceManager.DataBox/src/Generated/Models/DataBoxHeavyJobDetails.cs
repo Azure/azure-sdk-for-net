@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Databox Heavy Device Job Details. </summary>
-    public partial class DataBoxHeavyJobDetails : JobDetails
+    public partial class DataBoxHeavyJobDetails : DataBoxBasicJobDetails
     {
         /// <summary> Initializes a new instance of DataBoxHeavyJobDetails. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public DataBoxHeavyJobDetails(ContactDetails contactDetails) : base(contactDetails)
+        public DataBoxHeavyJobDetails(DataBoxContactDetails contactDetails) : base(contactDetails)
         {
             if (contactDetails == null)
             {
                 throw new ArgumentNullException(nameof(contactDetails));
             }
 
-            CopyProgress = new ChangeTrackingList<CopyProgress>();
-            JobDetailsType = ClassDiscriminator.DataBoxHeavy;
+            CopyProgress = new ChangeTrackingList<DataBoxCopyProgress>();
+            JobDetailsType = DataBoxOrderType.DataBoxHeavy;
         }
 
         /// <summary> Initializes a new instance of DataBoxHeavyJobDetails. </summary>
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="expectedDataSizeInTeraBytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="datacenterAddress">
+        /// <param name="dataCenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DatacenterAddressResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatacenterAddressInstructionResponse"/> and <see cref="DatacenterAddressLocationResponse"/>.
+        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
         /// <param name="copyProgress"> Copy progress per account. </param>
         /// <param name="devicePassword"> Set Device password for unlocking Databox Heavy. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        internal DataBoxHeavyJobDetails(IReadOnlyList<JobStages> jobStages, ContactDetails contactDetails, ShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, Preferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, KeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DatacenterAddressResponse datacenterAddress, DataCenterCode? dataCenterCode, IReadOnlyList<CopyProgress> copyProgress, string devicePassword) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, datacenterAddress, dataCenterCode)
+        internal DataBoxHeavyJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IReadOnlyList<DataBoxCopyProgress> copyProgress, string devicePassword) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
         {
             CopyProgress = copyProgress;
             DevicePassword = devicePassword;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Copy progress per account. </summary>
-        public IReadOnlyList<CopyProgress> CopyProgress { get; }
+        public IReadOnlyList<DataBoxCopyProgress> CopyProgress { get; }
         /// <summary> Set Device password for unlocking Databox Heavy. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </summary>
         public string DevicePassword { get; set; }
     }
