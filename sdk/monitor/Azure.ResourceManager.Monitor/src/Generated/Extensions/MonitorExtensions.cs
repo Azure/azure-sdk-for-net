@@ -963,12 +963,36 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
+        public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmResource armResource)
+        {
+            return GetExtensionClient(armResource).GetDiagnosticSettings();
+        }
+
+        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
         public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope)
         {
             return GetExtensionClient(client, scope).GetDiagnosticSettings();
+        }
+
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        {
+            return await armResource.GetDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -986,6 +1010,22 @@ namespace Azure.ResourceManager.Monitor
         public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             return await client.GetDiagnosticSettings(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}
+        /// Operation Id: DiagnosticSettings_Get
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        {
+            return armResource.GetDiagnosticSettings().Get(name, cancellationToken);
         }
 
         /// <summary>
