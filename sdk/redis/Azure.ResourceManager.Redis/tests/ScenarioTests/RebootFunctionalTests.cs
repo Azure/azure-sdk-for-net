@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Redis.Tests
     public class RebootFunctionalTests : RedisManagementTestBase
     {
         public RebootFunctionalTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -39,7 +39,9 @@ namespace Azure.ResourceManager.Redis.Tests
             {
                 RebootType = RedisRebootType.AllNodes
             };
-            Assert.DoesNotThrowAsync(async () => await redis.ForceRebootAsync(rebootParameter));
+            await redis.ForceRebootAsync(rebootParameter);
+            // Assert throw will take long time on playback
+            //Assert.DoesNotThrowAsync(async () => await redis.ForceRebootAsync(rebootParameter));
         }
     }
 }
