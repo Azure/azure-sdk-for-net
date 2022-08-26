@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The role management policy approval rule. </summary>
@@ -23,13 +21,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="setting"> The approval setting. </param>
-        internal RoleManagementPolicyApprovalRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, ApprovalSettings setting) : base(id, ruleType, target)
+        internal RoleManagementPolicyApprovalRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, RoleManagementApprovalSettings setting) : base(id, ruleType, target)
         {
             Setting = setting;
             RuleType = ruleType;
         }
 
         /// <summary> The approval setting. </summary>
-        public ApprovalSettings Setting { get; set; }
+        public RoleManagementApprovalSettings Setting { get; set; }
     }
 }

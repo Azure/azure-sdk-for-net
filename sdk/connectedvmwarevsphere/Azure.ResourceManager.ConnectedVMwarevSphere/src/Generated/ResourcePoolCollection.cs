@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public virtual async Task<ArmOperation<ResourcePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourcePoolName, ResourcePoolData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ResourcePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourcePoolName, ResourcePoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourcePoolClientDiagnostics.CreateScope("ResourcePoolCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public virtual ArmOperation<ResourcePoolResource> CreateOrUpdate(WaitUntil waitUntil, string resourcePoolName, ResourcePoolData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ResourcePoolResource> CreateOrUpdate(WaitUntil waitUntil, string resourcePoolName, ResourcePoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourcePoolClientDiagnostics.CreateScope("ResourcePoolCollection.CreateOrUpdate");
             scope.Start();

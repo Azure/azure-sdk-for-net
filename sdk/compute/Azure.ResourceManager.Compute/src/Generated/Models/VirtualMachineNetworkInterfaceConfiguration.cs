@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
-        /// <param name="dscpConfiguration"></param>
+        /// <param name="dscpConfiguration"> Gets or sets the dscp configuration. </param>
         internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration)
         {
             Name = name;

@@ -34,13 +34,13 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetDisposingContainerAsync(
             BlobServiceClient service = null,
             string containerName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default)
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None)
         {
             var disposingContainer = await ClientBuilder.GetTestContainerAsync(service: service, containerName: containerName);
 
-            disposingContainer.Container.ClientConfiguration.UploadTransferValidationOptions = uploadTransferValidationOptions;
-            disposingContainer.Container.ClientConfiguration.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            disposingContainer.Container.ClientConfiguration.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
+            disposingContainer.Container.ClientConfiguration.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
 
             return disposingContainer;
         }
@@ -82,9 +82,17 @@ namespace Azure.Storage.Blobs.Tests
                 TransferValidationOptions = hashingOptions
             });
 
+        [Test]
+        public override void TestAutoResolve()
+        {
+            Assert.AreEqual(
+                StorageChecksumAlgorithm.StorageCrc64,
+                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
+        }
+
         #region Added Tests
         [TestCaseSource("GetValidationAlgorithms")]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned(ValidationAlgorithm algorithm)
+        public async Task ExpectedDownloadStreamingStreamTypeReturned(StorageChecksumAlgorithm algorithm)
         {
             await using var test = await GetDisposingContainerAsync();
 
@@ -96,9 +104,9 @@ namespace Azure.Storage.Blobs.Tests
                 await blob.UploadAsync(stream);
             }
             // don't make options instance at all for no hash request
-            DownloadTransferValidationOptions hashingOptions = algorithm == ValidationAlgorithm.None
+            DownloadTransferValidationOptions hashingOptions = algorithm == StorageChecksumAlgorithm.None
                 ? default
-                : new DownloadTransferValidationOptions { Algorithm = algorithm };
+                : new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
 
             // Act
             Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions

@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<ArmOperation<GuestAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, GuestAgentData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<GuestAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, GuestAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual ArmOperation<GuestAgentResource> CreateOrUpdate(WaitUntil waitUntil, string name, GuestAgentData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GuestAgentResource> CreateOrUpdate(WaitUntil waitUntil, string name, GuestAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.CreateOrUpdate");
             scope.Start();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
-        public ExecutePipelineActivity(string name, PipelineReference pipeline) : base(name)
+        public ExecutePipelineActivity(string name, FactoryPipelineReference pipeline) : base(name)
         {
             if (name == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
         /// <param name="waitOnCompletion"> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </param>
-        internal ExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ExecutePipelineActivityPolicy policy, PipelineReference pipeline, IDictionary<string, BinaryData> parameters, bool? waitOnCompletion) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ExecutePipelineActivityPolicy policy, FactoryPipelineReference pipeline, IDictionary<string, BinaryData> parameters, bool? waitOnCompletion) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             Pipeline = pipeline;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Execute pipeline activity policy. </summary>
         public ExecutePipelineActivityPolicy Policy { get; set; }
         /// <summary> Pipeline reference. </summary>
-        public PipelineReference Pipeline { get; set; }
+        public FactoryPipelineReference Pipeline { get; set; }
         /// <summary> Pipeline parameters. </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </summary>

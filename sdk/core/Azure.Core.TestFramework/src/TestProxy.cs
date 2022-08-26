@@ -94,7 +94,7 @@ namespace Azure.Core.TestFramework
             if (debugMode)
             {
                 _proxyPortHttp = 5000;
-                _proxyPortHttp = 5001;
+                _proxyPortHttps = 5001;
             }
             else
             {
@@ -162,7 +162,8 @@ namespace Azure.Core.TestFramework
                         .Assembly
                         .GetCustomAttributes<AssemblyMetadataAttribute>()
                         .Single(a => a.Key == "TestProxyPath")
-                        .Value);
+                        .Value,
+                        debugMode);
 
                     AppDomain.CurrentDomain.DomainUnload += (_, _) =>
                     {

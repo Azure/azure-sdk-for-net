@@ -31,7 +31,7 @@ rename-mapping:
   Acl: DiskPoolIscsiTargetPortalGroupAcl
   EndpointDependency: OutboundEndpointDependency
   EndpointDetail: OutboundEndpointDetail
-  EndpointDetail.latency: LatencyInMilliseconds
+  EndpointDetail.latency: LatencyInMs
   IscsiLun: ManagedDiskIscsiLun
   IscsiTarget: DiskPoolIscsiTarget
   IscsiTargetList: DiskPoolIscsiTargetList

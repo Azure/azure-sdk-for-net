@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ListStreamingLocatorsResponse
+    internal partial class ListStreamingLocatorsResponse
     {
         internal static ListStreamingLocatorsResponse DeserializeListStreamingLocatorsResponse(JsonElement element)
         {

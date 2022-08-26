@@ -155,8 +155,7 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                uploadTransferValidationOptions: options.UploadTransferValidationOptions,
-                downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
+                transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
@@ -283,8 +282,7 @@ namespace Azure.Storage.Blobs
                       clientDiagnostics: new StorageClientDiagnostics(options),
                       version: options?.Version ?? BlobClientOptions.LatestVersion,
                       customerProvidedKey: options?.CustomerProvidedKey,
-                      uploadTransferValidationOptions: options.UploadTransferValidationOptions,
-                      downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
+                      transferValidation: options.TransferValidation,
                       encryptionScope: options?.EncryptionScope),
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
@@ -363,8 +361,7 @@ namespace Azure.Storage.Blobs
                     clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
-                    uploadTransferValidationOptions: options.UploadTransferValidationOptions,
-                    downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
+                    transferValidation: options.TransferValidation,
                     encryptionScope: null),
                 authentication,
                 clientSideEncryption: null);

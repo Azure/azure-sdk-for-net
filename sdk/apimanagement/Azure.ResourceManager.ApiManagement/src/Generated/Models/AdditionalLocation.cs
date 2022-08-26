@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="gatewayRegionalUri"> Gateway URL of the API Management service in the Region. </param>
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </param>
         /// <param name="platformVersion"> Compute Platform Version running the service. </param>
-        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, string publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion)
+        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion)
         {
             Location = location;
             Sku = sku;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Private Static Load Balanced IP addresses of the API Management service which is deployed in an Internal Virtual Network in a particular additional location. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
         public IReadOnlyList<IPAddress> PrivateIPAddresses { get; }
         /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </summary>
-        public string PublicIPAddressId { get; set; }
+        public ResourceIdentifier PublicIPAddressId { get; set; }
         /// <summary> Virtual network configuration for the location. </summary>
         public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
         /// <summary> Gateway URL of the API Management service in the Region. </summary>

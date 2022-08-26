@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("branch");
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(Force))
+            if (Optional.IsDefined(ForceUpdate))
             {
                 writer.WritePropertyName("force");
-                writer.WriteBooleanValue(Force.Value);
+                writer.WriteBooleanValue(ForceUpdate.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

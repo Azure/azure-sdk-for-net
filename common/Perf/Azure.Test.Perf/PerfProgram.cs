@@ -444,8 +444,9 @@ namespace Azure.Test.Perf
             var cpuTime = (Process.GetCurrentProcess().TotalProcessorTime - startCpuTime).TotalMilliseconds;
             var cpuPercentage = (cpuTime / cpuElapsed) / Environment.ProcessorCount;
 
-            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
-                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op, {cpuPercentage * 100:N2}% CPU)");
+            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {NumberFormatter.Format(weightedAverageSeconds, 4)}s " +
+                $"({NumberFormatter.Format(operationsPerSecond, 4)} ops/s, {NumberFormatter.Format(secondsPerOperation, 4)} s/op, " +
+                $"{NumberFormatter.Format(cpuPercentage * 100, 2)}% CPU)");
             Console.WriteLine();
 
             if (latency)

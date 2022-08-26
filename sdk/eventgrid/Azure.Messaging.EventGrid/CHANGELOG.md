@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Stopped populating CloudEvents Distributed Tracing extension when distributed tracing is disabled.
 
 ### Bugs Fixed
 

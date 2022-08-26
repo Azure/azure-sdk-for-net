@@ -13,9 +13,7 @@ namespace Azure.Storage.Files.DataLake
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
-        public virtual UploadTransferValidationOptions UploadTransferValidationOptions { get; internal set; }
-
-        public virtual DownloadTransferValidationOptions DownloadTransferValidationOptions { get; internal set; }
+        public virtual TransferValidationOptions TransferValidation { get; } = new();
 
         public DataLakeClientConfiguration(
             HttpPipeline pipeline,
@@ -48,8 +46,7 @@ namespace Azure.Storage.Files.DataLake
         {
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
-            UploadTransferValidationOptions = clientOptions.UploadTransferValidationOptions;
-            DownloadTransferValidationOptions = clientOptions.DownloadTransferValidationOptions;
+            TransferValidation = clientOptions.TransferValidation;
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)

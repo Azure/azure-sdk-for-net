@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> roleName = default;
             Optional<string> description = default;
             Optional<string> type0 = default;
-            Optional<IList<AzurePermission>> permissions = default;
+            Optional<IList<RoleDefinitionPermission>> permissions = default;
             Optional<IList<string>> assignableScopes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzurePermission> array = new List<AzurePermission>();
+                            List<RoleDefinitionPermission> array = new List<RoleDefinitionPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzurePermission.DeserializeAzurePermission(item));
+                                array.Add(RoleDefinitionPermission.DeserializeRoleDefinitionPermission(item));
                             }
                             permissions = array;
                             continue;

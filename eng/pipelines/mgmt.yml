@@ -203,8 +203,8 @@ stages:
           Scope: ${{ parameters.Scope }}
           ShouldPublish: ${{ parameters.ShouldPublish }}
 
-      - ${{ if and(eq(parameters.ShouldPublish, 'true'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net')) }}:
-        - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
-          - template: /eng/pipelines/templates/jobs/mgmt-release.yml
-            parameters:
-              DependsOn: Build
+      - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
+        - template: /eng/pipelines/templates/jobs/mgmt-release.yml
+          parameters:
+            DependsOn: Build
+            ShouldPublish: ${{ parameters.ShouldPublish }}

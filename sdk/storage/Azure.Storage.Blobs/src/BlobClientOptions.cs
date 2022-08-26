@@ -96,7 +96,12 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2021-08-06 service version.
             /// </summary>
-            V2021_08_06 = 13
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -131,14 +136,10 @@ namespace Azure.Storage.Blobs
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
-        /// Transfer validation options to be applied to blob uploads from this client.
+        /// Configures whether to send or receive checksum headers for blob uploads and downloads. Downloads
+        /// can optionally validate that the content matches the checksum.
         /// </summary>
-        public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
-
-        /// <summary>
-        /// Transfer validation options to be applied to blob downloads from this client.
-        /// </summary>
-        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; set; }
+        public TransferValidationOptions TransferValidation { get; } = new();
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

@@ -30,13 +30,15 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
         /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, string dataCollectionRuleId, string dataCollectionEndpointId, KnownDataCollectionRuleAssociationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="metadata"> Metadata about the resource. </param>
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
             DataCollectionEndpointId = dataCollectionEndpointId;
             ProvisioningState = provisioningState;
+            Metadata = metadata;
         }
 
         /// <summary> Resource entity tag (ETag). </summary>
@@ -44,10 +46,17 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Description of the association. </summary>
         public string Description { get; set; }
         /// <summary> The resource ID of the data collection rule that is to be associated. </summary>
-        public string DataCollectionRuleId { get; set; }
+        public ResourceIdentifier DataCollectionRuleId { get; set; }
         /// <summary> The resource ID of the data collection endpoint that is to be associated. </summary>
-        public string DataCollectionEndpointId { get; set; }
+        public ResourceIdentifier DataCollectionEndpointId { get; set; }
         /// <summary> The resource provisioning state. </summary>
-        public KnownDataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
+        public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
+        /// <summary> Metadata about the resource. </summary>
+        internal DataCollectionRuleAssociationMetadata Metadata { get; }
+        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
+        public string MetadataProvisionedBy
+        {
+            get => Metadata?.ProvisionedBy;
+        }
     }
 }

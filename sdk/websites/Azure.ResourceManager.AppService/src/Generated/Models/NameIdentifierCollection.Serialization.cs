@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static NameIdentifierCollection DeserializeNameIdentifierCollection(JsonElement element)
         {
-            IReadOnlyList<NameIdentifier> value = default;
+            IReadOnlyList<AppServiceDomainNameIdentifier> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<NameIdentifier> array = new List<NameIdentifier>();
+                    List<AppServiceDomainNameIdentifier> array = new List<AppServiceDomainNameIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameIdentifier.DeserializeNameIdentifier(item));
+                        array.Add(AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(item));
                     }
                     value = array;
                     continue;

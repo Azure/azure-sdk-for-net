@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetTrackData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaAssetTrackData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,15 +87,15 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetTrackData value = default;
+                        MediaAssetTrackData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetTrackData.DeserializeAssetTrackData(document.RootElement);
+                        value = MediaAssetTrackData.DeserializeMediaAssetTrackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
                 case 204:
                 case 404:
-                    return Response.FromValue((AssetTrackData)null, message.Response);
+                    return Response.FromValue((MediaAssetTrackData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="assetName"/>, <paramref name="trackName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetTrackData> Get(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId, CancellationToken cancellationToken = default)
+        public Response<MediaAssetTrackData> Get(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AssetTrackData value = default;
+                        MediaAssetTrackData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetTrackData.DeserializeAssetTrackData(document.RootElement);
+                        value = MediaAssetTrackData.DeserializeMediaAssetTrackData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
                 case 204:
                 case 404:
-                    return Response.FromValue((AssetTrackData)null, message.Response);
+                    return Response.FromValue((MediaAssetTrackData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

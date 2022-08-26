@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
         /// Options for transfer validation settings on this operation.
         /// When transfer validation options are set in the client, setting this parameter
         /// acts as an override.
-        /// Set <see cref="DownloadTransferValidationOptions.Validate"/> to false if you
+        /// Set <see cref="DownloadTransferValidationOptions.AutoValidateChecksum"/> to false if you
         /// would like to skip SDK checksum validation and validate the checksum found
         /// in the <see cref="Response"/> object yourself.
         /// Range must be provided explicitly, stating a range withing Azure

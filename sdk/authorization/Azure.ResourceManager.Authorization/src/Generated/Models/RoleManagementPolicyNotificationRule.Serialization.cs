@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element)
         {
             Optional<NotificationDeliveryMechanism> notificationType = default;
-            Optional<NotificationLevel> notificationLevel = default;
-            Optional<RecipientType> recipientType = default;
+            Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
+            Optional<RoleManagementPolicyRecipientType> recipientType = default;
             Optional<IList<string>> notificationRecipients = default;
             Optional<bool> isDefaultRecipientsEnabled = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    notificationLevel = new NotificationLevel(property.Value.GetString());
+                    notificationLevel = new RoleManagementPolicyNotificationLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recipientType"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recipientType = new RecipientType(property.Value.GetString());
+                    recipientType = new RoleManagementPolicyRecipientType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("notificationRecipients"))
@@ -130,12 +130,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ruleType"))

@@ -58,9 +58,9 @@ namespace Azure.Storage.Files.Shares.Models
                 {
                     return null;
                 }
-                if (TransferValidationOptions.Algorithm == ValidationAlgorithm.MD5)
+                if (TransferValidationOptions.ChecksumAlgorithm == StorageChecksumAlgorithm.MD5)
                 {
-                    return TransferValidationOptions.PrecalculatedChecksum;
+                    return TransferValidationOptions.PrecalculatedChecksum.ToArray();
                 }
 
                 throw new InvalidOperationException("Legacy facade property cannot convert from non-MD5 ValidationAlgorithm.");
@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Shares.Models
                 {
                     TransferValidationOptions = new UploadTransferValidationOptions
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = value,
                     };
                 }

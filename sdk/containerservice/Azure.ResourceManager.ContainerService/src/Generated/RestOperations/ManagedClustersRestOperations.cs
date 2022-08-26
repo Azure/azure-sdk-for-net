@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerServiceManagedClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -726,13 +726,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        ManagedClusterData value = default;
+                        ContainerServiceManagedClusterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedClusterData.DeserializeManagedClusterData(document.RootElement);
+                        value = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ManagedClusterData)null, message.Response);
+                    return Response.FromValue((ContainerServiceManagedClusterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedClusterData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<ContainerServiceManagedClusterData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -757,19 +757,19 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        ManagedClusterData value = default;
+                        ContainerServiceManagedClusterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedClusterData.DeserializeManagedClusterData(document.RootElement);
+                        value = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ManagedClusterData)null, message.Response);
+                    return Response.FromValue((ContainerServiceManagedClusterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, ManagedClusterData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, ContainerServiceManagedClusterData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, ManagedClusterData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, ContainerServiceManagedClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, ManagedClusterData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, ContainerServiceManagedClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string resourceName, TagsObject tagsObject)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string resourceName, ContainerServiceTagsObject containerServiceTagsObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.ContainerService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagsObject);
+            content.JsonWriter.WriteObjectValue(containerServiceTagsObject);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -875,18 +875,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="tagsObject"> Parameters supplied to the Update Managed Cluster Tags operation. </param>
+        /// <param name="containerServiceTagsObject"> Parameters supplied to the Update Managed Cluster Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="containerServiceTagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string resourceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string resourceName, ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, resourceName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, resourceName, containerServiceTagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -901,18 +901,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="tagsObject"> Parameters supplied to the Update Managed Cluster Tags operation. </param>
+        /// <param name="containerServiceTagsObject"> Parameters supplied to the Update Managed Cluster Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="containerServiceTagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateTags(string subscriptionId, string resourceGroupName, string resourceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public Response UpdateTags(string subscriptionId, string resourceGroupName, string resourceName, ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, resourceName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, resourceName, containerServiceTagsObject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        internal HttpMessage CreateRunCommandRequest(string subscriptionId, string resourceGroupName, string resourceName, RunCommandContent content)
+        internal HttpMessage CreateRunCommandRequest(string subscriptionId, string resourceGroupName, string resourceName, ManagedClusterRunCommandContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RunCommandAsync(string subscriptionId, string resourceGroupName, string resourceName, RunCommandContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> RunCommandAsync(string subscriptionId, string resourceGroupName, string resourceName, ManagedClusterRunCommandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RunCommand(string subscriptionId, string resourceGroupName, string resourceName, RunCommandContent content, CancellationToken cancellationToken = default)
+        public Response RunCommand(string subscriptionId, string resourceGroupName, string resourceName, ManagedClusterRunCommandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="commandId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RunCommandResult>> GetCommandResultAsync(string subscriptionId, string resourceGroupName, string resourceName, string commandId, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedClusterRunCommandResult>> GetCommandResultAsync(string subscriptionId, string resourceGroupName, string resourceName, string commandId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1486,13 +1486,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        RunCommandResult value = default;
+                        ManagedClusterRunCommandResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RunCommandResult.DeserializeRunCommandResult(document.RootElement);
+                        value = ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((RunCommandResult)null, message.Response);
+                    return Response.FromValue((ManagedClusterRunCommandResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="commandId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RunCommandResult> GetCommandResult(string subscriptionId, string resourceGroupName, string resourceName, string commandId, CancellationToken cancellationToken = default)
+        public Response<ManagedClusterRunCommandResult> GetCommandResult(string subscriptionId, string resourceGroupName, string resourceName, string commandId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1519,13 +1519,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        RunCommandResult value = default;
+                        ManagedClusterRunCommandResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RunCommandResult.DeserializeRunCommandResult(document.RootElement);
+                        value = ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((RunCommandResult)null, message.Response);
+                    return Response.FromValue((ManagedClusterRunCommandResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1559,7 +1559,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<OutboundEnvironmentEndpointListResult>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1571,9 +1571,9 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        OutboundEnvironmentEndpointListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<OutboundEnvironmentEndpointListResult> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1600,9 +1600,9 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        OutboundEnvironmentEndpointListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1772,7 +1772,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<OutboundEnvironmentEndpointListResult>> ListOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1785,9 +1785,9 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        OutboundEnvironmentEndpointListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1803,7 +1803,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<OutboundEnvironmentEndpointListResult> ListOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1816,9 +1816,9 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        OutboundEnvironmentEndpointListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = OutboundEnvironmentEndpointListResult.DeserializeOutboundEnvironmentEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

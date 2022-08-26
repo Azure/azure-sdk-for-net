@@ -44,14 +44,15 @@ namespace Azure.Communication.CallingServer
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="playTo"></param>
+        /// <param name="playOptions"></param>
         /// <returns></returns>
-        public virtual async Task<Response> PlayAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PlayAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Play)}");
             scope.Start();
             try
             {
-                PlayRequestInternal request = CreatePlayRequest(playSource, playTo);
+                PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
                 return await ContentRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -68,14 +69,15 @@ namespace Azure.Communication.CallingServer
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="playTo"></param>
+        /// <param name="playOptions"></param>
         /// <returns></returns>
-        public virtual Response Play(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
+        public virtual Response Play(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Play)}");
             scope.Start();
             try
             {
-                PlayRequestInternal request = CreatePlayRequest(playSource, playTo);
+                PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
                 return ContentRestClient.Play(CallConnectionId, request, cancellationToken);
             }
@@ -86,7 +88,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        private static PlayRequestInternal CreatePlayRequest(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo)
+        private static PlayRequestInternal CreatePlayRequest(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options)
         {
             if (playSource is FileSource fileSource)
             {
@@ -98,27 +100,32 @@ namespace Azure.Communication.CallingServer
                 PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
                 request.PlayTo = playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
 
+                if (options != null)
+                {
+                    request.PlayOptions = new PlayOptionsInternal(options.Loop);
+                    request.OperationContext = options.OperationContext;
+                }
+
                 return request;
             }
-            else
-            {
-                throw new NotSupportedException(playSource.GetType().Name);
-            }
+
+            throw new NotSupportedException(playSource.GetType().Name);
         }
 
         /// <summary>
         /// Play to all participants async.
         /// </summary>
         /// <param name="playSource"></param>
+        /// <param name="playOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> PlayToAllAsync(PlaySource playSource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PlayToAllAsync(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayToAll)}");
             scope.Start();
             try
             {
-                return await PlayAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken).ConfigureAwait(false);
+                return await PlayAsync(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -131,15 +138,16 @@ namespace Azure.Communication.CallingServer
         /// Play to all participants.
         /// </summary>
         /// <param name="playSource"></param>
+        /// <param name="playOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response PlayToAll(PlaySource playSource, CancellationToken cancellationToken = default)
+        public virtual Response PlayToAll(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayToAll)}");
             scope.Start();
             try
             {
-                return Play(playSource, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken);
+                return Play(playSource, Enumerable.Empty<CommunicationIdentifier>(), playOptions, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -186,6 +194,100 @@ namespace Azure.Communication.CallingServer
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Recognize tones.
+        /// </summary>
+        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> RecognizeAsync(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            scope.Start();
+            try
+            {
+                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
+                return await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognize tones.
+        /// </summary>
+        /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Recognize(RecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            scope.Start();
+            try
+            {
+                RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
+                return ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private static RecognizeRequestInternal CreateRecognizeRequest(RecognizeOptions recognizeOptions)
+        {
+            if (recognizeOptions == null)
+                throw new ArgumentNullException(nameof(recognizeOptions));
+            RecognizeConfigurations recognizeConfigurations = recognizeOptions.RecognizeConfigurations;
+
+            if (recognizeConfigurations == null)
+                throw new ArgumentException(nameof(recognizeConfigurations));
+
+            DtmfConfigurationsInternal dtmfConfigurations = null;
+            if (recognizeConfigurations.DtmfConfigurations != null)
+            {
+                dtmfConfigurations = new DtmfConfigurationsInternal()
+                {
+                    InterToneTimeoutInSeconds = (int)recognizeConfigurations.DtmfConfigurations.InterToneTimeoutInSeconds?.TotalSeconds,
+                    MaxTonesToCollect = recognizeConfigurations.DtmfConfigurations.MaxTonesToCollect,
+                    StopTones = (IList<StopTones>)recognizeConfigurations.DtmfConfigurations.StopTones
+                };
+            }
+
+            RecognizeConfigurationsInternal recognizeConfigurationsInternal = new RecognizeConfigurationsInternal()
+            {
+                DtmfConfigurations = dtmfConfigurations,
+                InterruptPromptAndStartRecognition = recognizeConfigurations.InterruptPromptAndStartRecognition,
+                InitialSilenceTimeoutInSeconds = (int)recognizeConfigurations.InitialSilenceTimeoutInSeconds?.TotalSeconds,
+                TargetParticipant = CommunicationIdentifierSerializer.Serialize(recognizeConfigurations.TargetParticipant)
+            };
+
+            RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeOptions.RecognizeInputType, recognizeConfigurationsInternal);
+
+            if (recognizeOptions.Prompt != null && recognizeOptions.Prompt is FileSource fileSource)
+            {
+                PlaySourceInternal sourceInternal;
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
+
+                request.PlayPrompt = sourceInternal;
+            }
+            else if (recognizeOptions.Prompt != null)
+            {
+                throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
+            }
+
+            request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
+            request.OperationContext = recognizeOptions.OperationContext;
+
+            return request;
         }
     }
 }

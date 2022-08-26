@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int count = default;
             string lowKey = default;
             string highKey = default;
-            PartitionScheme partitionScheme = default;
+            ApplicationPartitionScheme partitionScheme = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("partitionScheme"))
                 {
-                    partitionScheme = new PartitionScheme(property.Value.GetString());
+                    partitionScheme = new ApplicationPartitionScheme(property.Value.GetString());
                     continue;
                 }
             }

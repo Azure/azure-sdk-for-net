@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("tokenEndpoint");
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Optional.IsDefined(SupportState))
+            if (Optional.IsDefined(DoesSupportState))
             {
                 writer.WritePropertyName("supportState");
-                writer.WriteBooleanValue(SupportState.Value);
+                writer.WriteBooleanValue(DoesSupportState.Value);
             }
             if (Optional.IsDefined(DefaultScope))
             {

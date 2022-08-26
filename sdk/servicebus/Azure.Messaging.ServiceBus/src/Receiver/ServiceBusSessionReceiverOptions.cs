@@ -40,6 +40,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
+        /// <inheritdoc cref="ServiceBusReceiverOptions.Identifier"/>
+        public string Identifier { get; set; }
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -73,6 +76,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
+                Identifier = Identifier
             };
     }
 }

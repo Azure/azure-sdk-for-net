@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element)
         {
             BinaryData filePath = default;
-            LinkedServiceReference linkedServiceName = default;
+            FactoryLinkedServiceReference linkedServiceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePath"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
             }

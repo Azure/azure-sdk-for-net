@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ContainerCpuUsage> cpuUsage = default;
             Optional<long> systemCpuUsage = default;
             Optional<int> onlineCpuCount = default;
-            Optional<ContainerThrottlingData> throttlingData = default;
+            Optional<ContainerThrottlingInfo> throttlingData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuUsage"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    throttlingData = ContainerThrottlingData.DeserializeContainerThrottlingData(property.Value);
+                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value);
                     continue;
                 }
             }

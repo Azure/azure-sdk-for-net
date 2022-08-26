@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of PerfCounterDataSource. </summary>
         public PerfCounterDataSource()
         {
-            Streams = new ChangeTrackingList<KnownPerfCounterDataSourceStream>();
+            Streams = new ChangeTrackingList<PerfCounterDataSourceStream>();
             CounterSpecifiers = new ChangeTrackingList<string>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal PerfCounterDataSource(IList<KnownPerfCounterDataSourceStream> streams, int? samplingFrequencyInSeconds, IList<string> counterSpecifiers, string name)
+        internal PerfCounterDataSource(IList<PerfCounterDataSourceStream> streams, int? samplingFrequencyInSeconds, IList<string> counterSpecifiers, string name)
         {
             Streams = streams;
             SamplingFrequencyInSeconds = samplingFrequencyInSeconds;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IList<KnownPerfCounterDataSourceStream> Streams { get; }
+        public IList<PerfCounterDataSourceStream> Streams { get; }
         /// <summary> The number of seconds between consecutive counter measurements (samples). </summary>
         public int? SamplingFrequencyInSeconds { get; set; }
         /// <summary>

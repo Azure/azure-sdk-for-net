@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation)
+        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation)
         {
             if (operationId == null)
             {
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags)
+        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags)
         {
             OperationId = operationId;
             Status = status;
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public int? PercentCompleted { get; }
         /// <summary> Type of operation. </summary>
         public DocumentOperationKind Kind { get; }
-        /// <summary> URL of the resource targeted by this operation. </summary>
-        public string ResourceLocation { get; }
+        /// <summary> List of key-value tag attributes associated with the model. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

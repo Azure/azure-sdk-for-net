@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _rangeSize = validationOptions != null
+                _rangeSize = (validationOptions?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
                     ? Constants.MaxHashRequestDownloadRange
                     : Constants.DefaultBufferSize;
             }
@@ -91,13 +91,13 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _initialRangeSize = validationOptions != null
+                _initialRangeSize = (validationOptions?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
                     ? Constants.MaxHashRequestDownloadRange
                     : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            if (!(validationOptions?.Validate ?? true))
+            if (!(validationOptions?.AutoValidateChecksum ?? true))
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }

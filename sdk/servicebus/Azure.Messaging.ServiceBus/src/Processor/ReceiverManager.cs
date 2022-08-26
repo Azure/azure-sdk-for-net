@@ -41,7 +41,8 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = ProcessorOptions.PrefetchCount,
                 // Pass None for subqueue since the subqueue has already
                 // been taken into account when computing the EntityPath of the processor.
-                SubQueue = SubQueue.None
+                SubQueue = SubQueue.None,
+                Identifier = $"{processor.Identifier}-Receiver"
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
             Receiver = new ServiceBusReceiver(
@@ -111,6 +112,7 @@ namespace Azure.Messaging.ServiceBus
                         errorSource,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         cancellationToken))
                     .ConfigureAwait(false);
             }
@@ -188,6 +190,7 @@ namespace Azure.Messaging.ServiceBus
                             errorSource,
                             Processor.FullyQualifiedNamespace,
                             Processor.EntityPath,
+                            Processor.Identifier,
                             cancellationToken))
                     .ConfigureAwait(false);
 
@@ -220,6 +223,7 @@ namespace Azure.Messaging.ServiceBus
                                         ServiceBusErrorSource.Abandon,
                                         Processor.FullyQualifiedNamespace,
                                         Processor.EntityPath,
+                                        Processor.Identifier,
                                         cancellationToken))
                                 .ConfigureAwait(false);
                         }
@@ -250,6 +254,7 @@ namespace Azure.Messaging.ServiceBus
             new ProcessMessageEventArgs(
             message,
             this,
+            Processor.Identifier,
             cancellationToken);
 
         protected virtual async Task OnMessageHandler(EventArgs args) =>
@@ -330,6 +335,7 @@ namespace Azure.Messaging.ServiceBus
                         ServiceBusErrorSource.RenewLock,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         cancellationToken)).ConfigureAwait(false);
             }
         }

@@ -81,7 +81,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (MultiLabelClassifyActionResult classificationActionResults in multiClassificationActionResults)
                 {
                     Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-                    foreach (LabelClassifyResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (ClassifyDocumentResult documentResults in classificationActionResults.DocumentsResults)
                     {
                         if (documentResults.ClassificationCategories.Count > 0)
                         {

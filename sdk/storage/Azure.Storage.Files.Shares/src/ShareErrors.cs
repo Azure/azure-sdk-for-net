@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Azure.Storage.Files.Shares
@@ -17,15 +18,18 @@ namespace Azure.Storage.Files.Shares
             string shareClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {fileClient} or {shareClient}");
 
-        public static void AssertAlgorithmSupport(ValidationAlgorithm? algorithm)
+        public static void AssertAlgorithmSupport(StorageChecksumAlgorithm? algorithm)
         {
-            switch ((algorithm ?? ValidationAlgorithm.None).ResolveAuto())
+            StorageChecksumAlgorithm resolved = (algorithm ?? StorageChecksumAlgorithm.None).ResolveAuto();
+            switch (resolved)
             {
-                case ValidationAlgorithm.None:
-                case ValidationAlgorithm.MD5:
+                case StorageChecksumAlgorithm.None:
+                case StorageChecksumAlgorithm.MD5:
                     return;
+                case StorageChecksumAlgorithm.StorageCrc64:
+                    throw new ArgumentException("Azure File Shares do not support CRC-64.");
                 default:
-                    throw new ArgumentException(null);
+                    throw new ArgumentException($"{nameof(StorageChecksumAlgorithm)} does not support value {Enum.GetName(typeof(StorageChecksumAlgorithm), resolved) ?? ((int)resolved).ToString(CultureInfo.InvariantCulture)}.");
             }
         }
     }

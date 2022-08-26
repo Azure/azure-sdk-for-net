@@ -889,10 +889,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServicePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServicePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServicePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetPrivateLinkResources");
                 scope.Start();
@@ -916,10 +916,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServicePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<AppServicePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppServicePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetPrivateLinkResources");
                 scope.Start();
@@ -1072,17 +1072,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteResource> GetWebAppsAsync(string propertiesToInclude = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1090,14 +1090,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<WebSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1115,17 +1115,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="propertiesToInclude"> Comma separated list of app properties to include. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteResource> GetWebApps(string propertiesToInclude = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteData> GetWebApps(string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            Page<WebSiteResource> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1133,14 +1133,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<WebSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetWebApps");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -19,7 +19,8 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
-            IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults
+            IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -27,9 +28,10 @@ namespace Azure.AI.TextAnalytics
             RecognizePiiEntitiesResults = recognizePiiEntitiesActionResults;
             RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionResults;
             AnalyzeSentimentResults = analyzeSentimentActionResults;
+            RecognizeCustomEntitiesResults = recognizeCustomEntitiesActionResults;
             SingleLabelClassifyResults = singleLabelClassifyActionResults;
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
-            RecognizeCustomEntitiesResults = recognizeCustomEntitiesActionResults;
+            AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
         }
 
         internal AnalyzeActionsResult(
@@ -48,6 +50,7 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyResults = Array.Empty<SingleLabelClassifyActionResult>();
             MultiLabelClassifyResults = Array.Empty<MultiLabelClassifyActionResult>();
             RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
+            AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
         }
 
         /// <summary>
@@ -89,5 +92,10 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of <see cref="MultiLabelClassifyActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<MultiLabelClassifyActionResult> MultiLabelClassifyResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="AnalyzeHealthcareEntitiesResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> AnalyzeHealthcareEntitiesResults { get; }
     }
 }

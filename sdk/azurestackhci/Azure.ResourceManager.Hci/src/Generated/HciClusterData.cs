@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HciProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the cluster agent. </summary>
         public HciClusterStatus? Status { get; }
         /// <summary> Unique, immutable resource id. </summary>
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Id of cluster identity service principal. </summary>
         public Guid? AadServicePrincipalObjectId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
-        public ClusterDesiredProperties DesiredProperties { get; set; }
+        public HciClusterDesiredProperties DesiredProperties { get; set; }
         /// <summary> Properties reported by cluster agent. </summary>
-        public ClusterReportedProperties ReportedProperties { get; }
+        public HciClusterReportedProperties ReportedProperties { get; }
         /// <summary> Number of days remaining in the trial period. </summary>
         public float? TrialDaysRemaining { get; }
         /// <summary> Type of billing applied to the resource. </summary>

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> A codec flag, which tells the encoder to copy the input audio bitstream. </summary>
-    public partial class CopyAudio : Codec
+    public partial class CopyAudio : CodecBasicProperties
     {
         /// <summary> Initializes a new instance of CopyAudio. </summary>
         public CopyAudio()

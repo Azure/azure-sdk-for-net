@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The name of the Git branch from which the configuration is to be deployed to the configuration database. </summary>
         public string Branch { get; set; }
         /// <summary> The value enforcing deleting subscriptions to products that are deleted in this update. </summary>
-        public bool? Force { get; set; }
+        public bool? ForceDelete { get; set; }
     }
 }

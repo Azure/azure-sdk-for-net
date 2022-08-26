@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> msixPackageFamilyName = default;
             Optional<string> msixPackageApplicationId = default;
             Optional<RemoteApplicationType> applicationType = default;
-            CommandLineSetting commandLineSetting = default;
+            VirtualApplicationCommandLineSetting commandLineSetting = default;
             Optional<string> commandLineArguments = default;
             Optional<bool> showInPortal = default;
             Optional<string> iconPath = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("commandLineSetting"))
                         {
-                            commandLineSetting = new CommandLineSetting(property0.Value.GetString());
+                            commandLineSetting = new VirtualApplicationCommandLineSetting(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("commandLineArguments"))
