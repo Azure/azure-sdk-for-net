@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer
                 Assert.NotNull(callResponse.Value);
                 var callConnection = callResponse.Value.CallConnection;
                 callConnectionId = callConnection.CallConnectionId;
-                var playResponse = await callConnection.GetCallMedia().PlayAsync(
+                var playResponse = await callConnection.GetCallMedia().StartPlayingAsync(
                     new FileSource(new Uri(playAudioUri)) { PlaySourceId = "playSourceId"},
                     new CommunicationUserIdentifier[] { targetUser });
                 Assert.NotNull(playResponse);
