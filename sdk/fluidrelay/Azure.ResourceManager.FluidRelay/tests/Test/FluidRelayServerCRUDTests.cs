@@ -62,7 +62,10 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
 
             //list by subscription
             AsyncPageable<FluidRelayServerResource> fluidRelayServerResourceCollection2 = GetFluidRelayServerCollectionBySubscriptionAsync();
-            Assert.IsNotNull(fluidRelayServerResourceCollection2.GetAsyncEnumerator().Current);
+            await foreach (FluidRelayServerResource server in fluidRelayServerResourceCollection2)
+            {
+                Assert.IsNotNull(server.Data.Name);
+            }
             Assert.IsTrue(await fluidRelayServerResourceCollection2.GetAsyncEnumerator().MoveNextAsync());
 
             //Regenerate Keys
