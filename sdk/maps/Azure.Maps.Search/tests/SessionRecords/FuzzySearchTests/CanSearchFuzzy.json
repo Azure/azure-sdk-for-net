@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-466206858e64272c8487dfe18a2f20fe-9cbb445166bef77c-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220825.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-1f15f7d3b387a73e9f2f3c392812403b-28c579c11b6a6f0e-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "31f53541e907813d8b6cf551063dccf0",
+        "x-ms-client-request-id": "367f90968fbd4811bc47f806f6f050d3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "8508",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Aug 2022 06:04:44 GMT",
+        "Date": "Fri, 26 Aug 2022 07:08:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 0FA6B20DFF654B47B6032921DC28C386 Ref B: PAOEDGE0608 Ref C: 2022-08-26T06:04:45Z"
+        "X-MSEdge-Ref": "Ref A: D2E51CF568864C71A6D4EC001C1DD12C Ref B: PAOEDGE0516 Ref C: 2022-08-26T07:08:30Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "milford",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 5,
           "numResults": 10,
           "offset": 0,
           "totalResults": 108,
@@ -580,6 +580,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "720963399"
+    "RandomSeed": "1720040706"
   }
 }

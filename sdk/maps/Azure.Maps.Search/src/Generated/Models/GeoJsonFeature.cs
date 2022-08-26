@@ -10,7 +10,7 @@ using System;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A valid `GeoJSON Feature` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.2) for details. </summary>
-    public partial class GeoJsonFeature : GeoJsonObject
+    internal partial class GeoJsonFeature : GeoJsonObject
     {
         /// <summary> Initializes a new instance of GeoJsonFeature. </summary>
         /// <param name="geometry"> A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details. </param>

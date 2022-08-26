@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The GeoJsonFeatureCollectionData. </summary>
-    public partial class GeoJsonFeatureCollectionData
+    internal partial class GeoJsonFeatureCollectionData
     {
         /// <summary> Initializes a new instance of GeoJsonFeatureCollectionData. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>

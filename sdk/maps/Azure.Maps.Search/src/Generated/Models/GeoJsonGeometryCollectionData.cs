@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The GeoJsonGeometryCollectionData. </summary>
-    public partial class GeoJsonGeometryCollectionData
+    internal partial class GeoJsonGeometryCollectionData
     {
         /// <summary> Initializes a new instance of GeoJsonGeometryCollectionData. </summary>
         /// <param name="geometries"> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
