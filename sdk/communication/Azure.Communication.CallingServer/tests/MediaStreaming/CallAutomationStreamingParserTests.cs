@@ -108,7 +108,8 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
             Assert.IsNotNull(streamingAudio);
             Assert.AreEqual(5, streamingAudio.Data.ToArray().Length);
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
-            Assert.AreEqual("participantId", streamingAudio.ParticipantId);
+            Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
+            Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
             Assert.IsFalse(streamingAudio.IsSilence);
         }
     }

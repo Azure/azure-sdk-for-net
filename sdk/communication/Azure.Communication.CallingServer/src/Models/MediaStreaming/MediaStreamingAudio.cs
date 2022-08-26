@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         {
             Data = data;
             Timestamp = timestamp;
-            ParticipantId = participantId;
+            Participant = new CommunicationUserIdentifier(participantId);
             IsSilence = isSilence;
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Participant ID
         /// </summary>
-        public string ParticipantId { get; }
+        public CommunicationIdentifier Participant { get; }
         /// <summary>
         /// Indicates if the received audio buffer contains only silence.
         /// </summary>
