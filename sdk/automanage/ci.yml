@@ -17,7 +17,7 @@ pr:
     - feature/*
     - hotfix/*
     - release/*
-    
+
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
