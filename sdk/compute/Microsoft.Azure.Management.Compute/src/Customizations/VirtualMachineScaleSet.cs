@@ -85,6 +85,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="priorityMixPolicy">Specifies the desired targets for
         /// mixing Spot and Regular priority VMs within the same VMSS Flex
         /// instance.</param>
+        ///
 
         public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, string orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, PriorityMixPolicy priorityMixPolicy = default(PriorityMixPolicy))
             : base(location, id, name, type, tags)
