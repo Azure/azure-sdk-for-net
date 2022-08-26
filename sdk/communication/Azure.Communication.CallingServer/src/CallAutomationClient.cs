@@ -329,21 +329,6 @@ namespace Azure.Communication.CallingServer
         /// <returns></returns>
         public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CreateCallOptions options, CancellationToken cancellationToken = default)
         {
-            CreateCallOptions options = new CreateCallOptions(source, targets, callbackEndpoint)
-            {
-                Subject = subject
-            };
-            return await CreateCallAsync(options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Create an outgoing call from source to target identities.
-        /// </summary>
-        /// <param name="options">Options for the CreateCall request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CreateCallOptions options = null, CancellationToken cancellationToken = default)
-        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
@@ -394,22 +379,6 @@ namespace Azure.Communication.CallingServer
         /// <returns></returns>
 
         public virtual Response<CreateCallResult> CreateCall(CreateCallOptions options, CancellationToken cancellationToken = default)
-        {
-            CreateCallOptions options = new CreateCallOptions(source, targets, callbackEndpoint)
-            {
-                Subject = subject
-            };
-            return CreateCall(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Create an outgoing call from source to target identities.
-        /// </summary>
-        /// <param name="options">Options for the CreateCall request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-
-        public virtual Response<CreateCallResult> CreateCall(CreateCallOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
             scope.Start();
