@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> User property name. </summary>
         public string Name { get; set; }
         /// <summary>
-        /// User property value. Type: string (or Expression with resultType string)..
+        /// User property value. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

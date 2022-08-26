@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> FhirService patch properties. </summary>
-    public partial class FhirServicePatch : ResourceTags
+    public partial class FhirServicePatch : HealthcareApisResourceTags
     {
         /// <summary> Initializes a new instance of FhirServicePatch. </summary>
         public FhirServicePatch()

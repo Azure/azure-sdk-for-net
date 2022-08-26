@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The table name of the Cassandra database. Type: string (or Expression with resultType string)..
+        /// The table name of the Cassandra database. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData TableName { get; set; }
         /// <summary>
-        /// The keyspace of the Cassandra database. Type: string (or Expression with resultType string)..
+        /// The keyspace of the Cassandra database. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

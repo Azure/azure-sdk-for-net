@@ -441,9 +441,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public string SourceRegion { get { throw null; } set { } }
         public string TargetRegion { get { throw null; } set { } }
     }
-    public partial class MoverResourceSettings
+    public abstract partial class MoverResourceSettings
     {
-        public MoverResourceSettings(string targetResourceName) { }
+        protected MoverResourceSettings(string targetResourceName) { }
         public string TargetResourceName { get { throw null; } set { } }
     }
     public partial class MoverResourceStatus

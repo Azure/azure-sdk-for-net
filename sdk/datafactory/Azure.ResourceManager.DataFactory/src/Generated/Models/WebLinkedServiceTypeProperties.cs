@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
     /// </summary>
-    public partial class WebLinkedServiceTypeProperties
+    public abstract partial class WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public WebLinkedServiceTypeProperties(BinaryData uri)
+        protected WebLinkedServiceTypeProperties(BinaryData uri)
         {
             if (uri == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string)..
+        /// The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

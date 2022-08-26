@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static BackupPoliciesList DeserializeBackupPoliciesList(JsonElement element)
         {
-            Optional<IReadOnlyList<BackupPolicyData>> value = default;
+            Optional<IReadOnlyList<NetAppBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackupPolicyData> array = new List<BackupPolicyData>();
+                    List<NetAppBackupPolicyData> array = new List<NetAppBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupPolicyData.DeserializeBackupPolicyData(item));
+                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item));
                     }
                     value = array;
                     continue;

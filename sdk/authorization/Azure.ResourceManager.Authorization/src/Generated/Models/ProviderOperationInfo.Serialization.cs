@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> description = default;
             Optional<string> origin = default;
             Optional<BinaryData> properties = default;
+            Optional<bool> isDataAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -52,8 +53,18 @@ namespace Azure.ResourceManager.Authorization.Models
                     properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("isDataAction"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isDataAction = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value);
+            return new ProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value, Optional.ToNullable(isDataAction));
         }
     }
 }

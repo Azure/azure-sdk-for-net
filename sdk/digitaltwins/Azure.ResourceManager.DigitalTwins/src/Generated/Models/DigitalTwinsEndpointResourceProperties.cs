@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// Please note <see cref="DigitalTwinsEndpointResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="EventGrid"/>, <see cref="EventHub"/> and <see cref="ServiceBus"/>.
     /// </summary>
-    public partial class DigitalTwinsEndpointResourceProperties
+    public abstract partial class DigitalTwinsEndpointResourceProperties
     {
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceProperties. </summary>
-        public DigitalTwinsEndpointResourceProperties()
+        protected DigitalTwinsEndpointResourceProperties()
         {
         }
 

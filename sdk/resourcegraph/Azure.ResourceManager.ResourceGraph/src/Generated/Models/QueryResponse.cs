@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <summary> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </summary>
         public string SkipToken { get; }
         /// <summary>
-        /// Query output in JObject array or Table format..
+        /// Query output in JObject array or Table format.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

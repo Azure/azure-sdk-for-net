@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string)..
+        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData LogLevel { get; set; }
         /// <summary>
-        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean)..
+        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

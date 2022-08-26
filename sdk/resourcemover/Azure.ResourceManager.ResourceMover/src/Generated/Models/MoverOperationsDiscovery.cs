@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// </summary>
         public string Origin { get; }
         /// <summary>
-        /// ClientDiscovery properties..
+        /// ClientDiscovery properties.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

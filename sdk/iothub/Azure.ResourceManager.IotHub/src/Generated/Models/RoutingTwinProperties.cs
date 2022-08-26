@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary>
-        /// Twin desired properties.
+        /// Twin desired properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </summary>
         public BinaryData Desired { get; set; }
         /// <summary>
-        /// Twin desired properties.
+        /// Twin desired properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

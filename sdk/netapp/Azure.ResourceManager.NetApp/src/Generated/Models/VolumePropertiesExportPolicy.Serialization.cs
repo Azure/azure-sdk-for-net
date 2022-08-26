@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static VolumePropertiesExportPolicy DeserializeVolumePropertiesExportPolicy(JsonElement element)
         {
-            Optional<IList<ExportPolicyRule>> rules = default;
+            Optional<IList<NetAppVolumeExportPolicyRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExportPolicyRule> array = new List<ExportPolicyRule>();
+                    List<NetAppVolumeExportPolicyRule> array = new List<NetAppVolumeExportPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExportPolicyRule.DeserializeExportPolicyRule(item));
+                        array.Add(NetAppVolumeExportPolicyRule.DeserializeNetAppVolumeExportPolicyRule(item));
                     }
                     rules = array;
                     continue;

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static SubscriptionQuotaItemList DeserializeSubscriptionQuotaItemList(JsonElement element)
         {
-            Optional<IReadOnlyList<SubscriptionQuotaItemData>> value = default;
+            Optional<IReadOnlyList<NetAppSubscriptionQuotaItem>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubscriptionQuotaItemData> array = new List<SubscriptionQuotaItemData>();
+                    List<NetAppSubscriptionQuotaItem> array = new List<NetAppSubscriptionQuotaItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionQuotaItemData.DeserializeSubscriptionQuotaItemData(item));
+                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item));
                     }
                     value = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string).
+        /// Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData ComputeType { get; set; }
         /// <summary>
-        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer).
+        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer)
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

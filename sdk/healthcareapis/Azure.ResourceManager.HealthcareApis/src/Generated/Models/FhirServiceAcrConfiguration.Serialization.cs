@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         internal static FhirServiceAcrConfiguration DeserializeFhirServiceAcrConfiguration(JsonElement element)
         {
             Optional<IList<string>> loginServers = default;
-            Optional<IList<ServiceOciArtifactEntry>> ociArtifacts = default;
+            Optional<IList<HealthcareApisServiceOciArtifactEntry>> ociArtifacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginServers"))
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceOciArtifactEntry> array = new List<ServiceOciArtifactEntry>();
+                    List<HealthcareApisServiceOciArtifactEntry> array = new List<HealthcareApisServiceOciArtifactEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceOciArtifactEntry.DeserializeServiceOciArtifactEntry(item));
+                        array.Add(HealthcareApisServiceOciArtifactEntry.DeserializeHealthcareApisServiceOciArtifactEntry(item));
                     }
                     ociArtifacts = array;
                     continue;

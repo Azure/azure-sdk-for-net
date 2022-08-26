@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IList<string> Fields { get; set; }
         /// <summary>
         /// Different properties to be passed to transformer.
-        /// Input expected is dictionary of key,value pairs in JSON format..
+        /// Input expected is dictionary of key,value pairs in JSON format.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

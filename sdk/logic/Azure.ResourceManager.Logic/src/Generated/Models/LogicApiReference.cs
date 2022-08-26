@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The icon uri of the api. </summary>
         public Uri IconUri { get; set; }
         /// <summary>
-        /// The swagger of the api..
+        /// The swagger of the api.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

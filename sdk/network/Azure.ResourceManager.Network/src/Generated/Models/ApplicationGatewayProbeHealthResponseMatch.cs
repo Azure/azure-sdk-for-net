@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary>
-        /// Body that must be contained in the health response. Default value is empty..
+        /// Body that must be contained in the health response. Default value is empty.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

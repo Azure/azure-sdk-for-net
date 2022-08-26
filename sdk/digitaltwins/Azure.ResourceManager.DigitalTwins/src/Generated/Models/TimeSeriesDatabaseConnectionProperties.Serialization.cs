@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new TimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState));
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState));
         }
     }
 }

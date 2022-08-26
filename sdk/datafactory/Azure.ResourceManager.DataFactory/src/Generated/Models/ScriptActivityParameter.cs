@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The name of the parameter. Type: string (or Expression with resultType string)..
+        /// The name of the parameter. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The type of the parameter. </summary>
         public ScriptActivityParameterType? ParameterType { get; set; }
         /// <summary>
-        /// The value of the parameter..
+        /// The value of the parameter.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

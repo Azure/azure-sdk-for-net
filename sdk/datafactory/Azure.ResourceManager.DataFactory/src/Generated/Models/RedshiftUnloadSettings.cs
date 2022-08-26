@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </summary>
         public FactoryLinkedServiceReference S3LinkedServiceName { get; set; }
         /// <summary>
-        /// The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string)..
+        /// The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

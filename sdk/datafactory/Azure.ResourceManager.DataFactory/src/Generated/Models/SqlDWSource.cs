@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// SQL Data Warehouse reader query. Type: string (or Expression with resultType string)..
+        /// SQL Data Warehouse reader query. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SqlReaderQuery { get; set; }
         /// <summary>
-        /// Name of the stored procedure for a SQL Data Warehouse source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string)..
+        /// Name of the stored procedure for a SQL Data Warehouse source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData SqlReaderStoredProcedureName { get; set; }
         /// <summary>
-        /// Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. Type: object (or Expression with resultType object), itemType: StoredProcedureParameter..
+        /// Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. Type: object (or Expression with resultType object), itemType: StoredProcedureParameter.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData StoredProcedureParameters { get; set; }
         /// <summary>
-        /// The partition mechanism that will be used for Sql read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;..
+        /// The partition mechanism that will be used for Sql read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

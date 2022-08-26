@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0..
+        /// The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData Index { get; set; }
         /// <summary>
-        /// The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string)..
+        /// The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

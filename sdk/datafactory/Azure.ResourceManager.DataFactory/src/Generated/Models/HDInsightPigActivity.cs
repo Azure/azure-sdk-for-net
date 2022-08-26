@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Storage linked service references. </summary>
         public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
-        /// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array)..
+        /// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary>
-        /// Script path. Type: string (or Expression with resultType string)..
+        /// Script path. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
