@@ -20,10 +20,16 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'dataCenterAzureLocation': 'azure-location'
+  'dataLocation': 'azure-location'
+  'serviceLocation': 'azure-location'
   'storageLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   '*AccountId': 'arm-id'
+  '*ResourceId': 'arm-id'
+  'resourceGroupId': 'arm-id'
+  'meterId': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -47,9 +53,21 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Datacenter: DataCenter
+  SMB: Smb
+  NFS: Nfs
+  HCS: Hcs
 
 prepend-rp-prefix:
   - CopyStatus
+  - CopyProgress
+  - KeyEncryptionKey
+  - ShippingAddress
+  - StageName
+  - AccessProtocol
+  - AccountCredentialDetails
+  - ContactDetails
+
 rename-mapping:
   JobResource: DataBoxJob
   JobResourceUpdateParameter: DataBoxJobPatch
@@ -71,11 +89,41 @@ rename-mapping:
   DiskScheduleAvailabilityRequest: DiskScheduleAvailabilityContent
   HeavyScheduleAvailabilityRequest: HeavyScheduleAvailabilityContent
   ScheduleAvailabilityRequest: ScheduleAvailabilityContent
-  DataBoxSkuInformation.properties.enabled: IsEnabled
+  SkuInformation.enabled: IsEnabled
   DatacenterAddressInstructionResponse: DataCenterAddressInstructionResult
   DatacenterAddressLocationResponse: DataCenterAddressLocationResult
   DatacenterAddressResponse: DataCenterAddressResult
   DatacenterAddressRequest: DataCenterAddressContent
+  DataTransferDetailsValidationRequest: DataTransferDetailsValidationContent
+  PreferencesValidationRequest: PreferencesValidationContent
+  SkuAvailabilityValidationRequest: SkuAvailabilityValidationContent
+  SubscriptionIsAllowedToCreateJobValidationRequest: SubscriptionIsAllowedToCreateJobValidationContent
+  ValidateAddress: ValidateAddressContent
+  DcAccessSecurityCode: DataCenterAccessSecurityCode
+  DcAccessSecurityCode.forwardDCAccessCode: ForwardDataCenterAccessCode
+  DcAccessSecurityCode.reverseDCAccessCode: ReverseDataCenterAccessCode
+  KekType: DataBoxKeyEncryptionKeyType
+  IdentityProperties: DataBoxManagedIdentity
+  KeyEncryptionKey.identityProperties: ManagedIdentity
+  IdentityProperties.type: IdentityType
+  UserAssignedProperties: DataBoxUserAssignedIdentity
+  JobDetails: DataBoxBasicJobDetails
+  JobStages: DataBoxJobStage
+  MarkDevicesShippedContent.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
+  Preferences: DataBoxOrderPreferences
+  RegionConfigurationRequest: RegionConfigurationContent
+  RegionConfigurationResponse: RegionConfigurationResult
+  ShipmentPickUpResponse: DataBoxShipmentPickUpResult
+  ShipmentPickUpResponse.readyByTime: ReadyBy
+  ValidationInputRequest: ValidationInputContent
+  ValidationRequest: ValidationContent
+  ValidationResponse: ValidationResult
+  AddressType: DataBoxShippingAddressType
+  
+  AvailableSkuRequest: AvailableSkusContent
+  CancellationReason: DataBoxJobCancellationReason
+  ClassDiscriminator: DataBoxOrderType
+
 
 override-operation-name:
   Service_ListAvailableSkusByResourceGroup: GetAvailableSkus

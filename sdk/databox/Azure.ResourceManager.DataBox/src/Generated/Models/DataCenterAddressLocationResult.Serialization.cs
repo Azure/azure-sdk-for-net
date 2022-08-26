@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> phoneExtension = default;
             Optional<string> addressType = default;
             Optional<string> additionalShippingInformation = default;
-            DatacenterAddressType datacenterAddressType = default;
+            DataCenterAddressType dataCenterAddressType = default;
             Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<string> dataCenterAzureLocation = default;
+            Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactPersonName"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("datacenterAddressType"))
                 {
-                    datacenterAddressType = property.Value.GetString().ToDatacenterAddressType();
+                    dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
                     continue;
                 }
                 if (property.NameEquals("supportedCarriersForReturnShipment"))
@@ -120,11 +120,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("dataCenterAzureLocation"))
                 {
-                    dataCenterAzureLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataCenterAzureLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new DataCenterAddressLocationResult(datacenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), dataCenterAzureLocation.Value, contactPersonName.Value, company.Value, street1.Value, street2.Value, street3.Value, city.Value, state.Value, zip.Value, country.Value, phone.Value, phoneExtension.Value, addressType.Value, additionalShippingInformation.Value);
+            return new DataCenterAddressLocationResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), contactPersonName.Value, company.Value, street1.Value, street2.Value, street3.Value, city.Value, state.Value, zip.Value, country.Value, phone.Value, phoneExtension.Value, addressType.Value, additionalShippingInformation.Value);
         }
     }
 }

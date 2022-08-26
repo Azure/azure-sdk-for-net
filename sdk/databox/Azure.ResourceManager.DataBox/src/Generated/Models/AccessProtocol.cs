@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.DataBox.Models
     public enum AccessProtocol
     {
         /// <summary> Server Message Block protocol(SMB). </summary>
-        SMB,
+        Smb,
         /// <summary> Network File System protocol(NFS). </summary>
-        NFS
+        Nfs
     }
 }

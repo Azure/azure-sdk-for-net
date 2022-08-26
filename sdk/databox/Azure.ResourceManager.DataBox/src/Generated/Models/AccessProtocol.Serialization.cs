@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         public static string ToSerialString(this AccessProtocol value) => value switch
         {
-            AccessProtocol.SMB => "SMB",
-            AccessProtocol.NFS => "NFS",
+            AccessProtocol.Smb => "SMB",
+            AccessProtocol.Nfs => "NFS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessProtocol value.")
         };
 
         public static AccessProtocol ToAccessProtocol(this string value)
         {
-            if (string.Equals(value, "SMB", StringComparison.InvariantCultureIgnoreCase)) return AccessProtocol.SMB;
-            if (string.Equals(value, "NFS", StringComparison.InvariantCultureIgnoreCase)) return AccessProtocol.NFS;
+            if (string.Equals(value, "SMB", StringComparison.InvariantCultureIgnoreCase)) return AccessProtocol.Smb;
+            if (string.Equals(value, "NFS", StringComparison.InvariantCultureIgnoreCase)) return AccessProtocol.Nfs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessProtocol value.");
         }
     }

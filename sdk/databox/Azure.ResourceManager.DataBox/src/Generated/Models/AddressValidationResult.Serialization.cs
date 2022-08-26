@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         internal static AddressValidationResult DeserializeAddressValidationResult(JsonElement element)
         {
             Optional<AddressValidationStatus> validationStatus = default;
-            Optional<IReadOnlyList<ShippingAddress>> alternateAddresses = default;
+            Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
             ValidationInputDiscriminator validationType = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ShippingAddress> array = new List<ShippingAddress>();
+                    List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShippingAddress.DeserializeShippingAddress(item));
+                        array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
                     }
                     alternateAddresses = array;
                     continue;

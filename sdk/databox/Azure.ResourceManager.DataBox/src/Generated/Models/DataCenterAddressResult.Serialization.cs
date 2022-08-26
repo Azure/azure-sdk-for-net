@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DatacenterAddressLocation": return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element);
                 }
             }
-            DatacenterAddressType datacenterAddressType = default;
+            DataCenterAddressType dataCenterAddressType = default;
             Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<string> dataCenterAzureLocation = default;
+            Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datacenterAddressType"))
                 {
-                    datacenterAddressType = property.Value.GetString().ToDatacenterAddressType();
+                    dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
                     continue;
                 }
                 if (property.NameEquals("supportedCarriersForReturnShipment"))
@@ -50,11 +50,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("dataCenterAzureLocation"))
                 {
-                    dataCenterAzureLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataCenterAzureLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new DataCenterAddressResult(datacenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), dataCenterAzureLocation.Value);
+            return new DataCenterAddressResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation));
         }
     }
 }

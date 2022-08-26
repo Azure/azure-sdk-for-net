@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validateAddress"> Shipping address of the customer. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateAddress"/> is null. </exception>
-        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ValidateAddress validateAddress, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validateAddress, nameof(validateAddress));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).ValidateAddressAsync(location, validateAddress, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validateAddress"> Shipping address of the customer. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateAddress"/> is null. </exception>
-        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, ValidateAddress validateAddress, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, ValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validateAddress, nameof(validateAddress));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).ValidateAddress(location, validateAddress, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ValidateAddress(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validationRequest"/> is null. </exception>
-        public static async Task<Response<ValidationResponse>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).ValidateInputsAsync(location, validationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validationRequest"/> is null. </exception>
-        public static Response<ValidationResponse> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).ValidateInputs(location, validationRequest, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regionConfigurationRequest"/> is null. </exception>
-        public static async Task<Response<RegionConfigurationResponse>> GetRegionConfigurationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).GetRegionConfigurationAsync(location, regionConfigurationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regionConfigurationRequest"/> is null. </exception>
-        public static Response<RegionConfigurationResponse> GetRegionConfiguration(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<RegionConfigurationResult> GetRegionConfiguration(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetRegionConfiguration(location, regionConfigurationRequest, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validationRequest"/> is null. </exception>
-        public static async Task<Response<ValidationResponse>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ValidationResult>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).ValidateInputsAsync(location, validationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validationRequest"/> is null. </exception>
-        public static Response<ValidationResponse> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ValidationResult> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).ValidateInputs(location, validationRequest, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region at resource group level. </param>
+        /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regionConfigurationRequest"/> is null. </exception>
-        public static async Task<Response<RegionConfigurationResponse>> GetRegionConfigurationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).GetRegionConfigurationAsync(location, regionConfigurationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -303,14 +303,14 @@ namespace Azure.ResourceManager.DataBox
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region at resource group level. </param>
+        /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regionConfigurationRequest"/> is null. </exception>
-        public static Response<RegionConfigurationResponse> GetRegionConfiguration(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<RegionConfigurationResult> GetRegionConfiguration(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).GetRegionConfiguration(location, regionConfigurationRequest, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
         }
 
         #region DataBoxJobResource

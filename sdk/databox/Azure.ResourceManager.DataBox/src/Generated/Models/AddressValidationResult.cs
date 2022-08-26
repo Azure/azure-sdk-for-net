@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of AddressValidationResult. </summary>
         internal AddressValidationResult()
         {
-            AlternateAddresses = new ChangeTrackingList<ShippingAddress>();
+            AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
             ValidationType = ValidationInputDiscriminator.ValidateAddress;
         }
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        internal AddressValidationResult(ValidationInputDiscriminator validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<ShippingAddress> alternateAddresses) : base(validationType, error)
+        internal AddressValidationResult(ValidationInputDiscriminator validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error)
         {
             ValidationStatus = validationStatus;
             AlternateAddresses = alternateAddresses;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> The address validation status. </summary>
         public AddressValidationStatus? ValidationStatus { get; }
         /// <summary> List of alternate addresses. </summary>
-        public IReadOnlyList<ShippingAddress> AlternateAddresses { get; }
+        public IReadOnlyList<DataBoxShippingAddress> AlternateAddresses { get; }
     }
 }

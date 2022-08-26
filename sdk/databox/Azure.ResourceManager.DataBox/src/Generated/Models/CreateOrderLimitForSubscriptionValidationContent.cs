@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Request to validate create order limit for current subscription. </summary>
-    public partial class CreateOrderLimitForSubscriptionValidationContent : ValidationInputRequest
+    public partial class CreateOrderLimitForSubscriptionValidationContent : ValidationInputContent
     {
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationContent. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>

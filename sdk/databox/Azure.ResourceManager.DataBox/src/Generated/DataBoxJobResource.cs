@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Details of shipment pick up request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ShipmentPickUpResponse>> BookShipmentPickUpAsync(ShipmentPickUpContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxShipmentPickUpResult>> BookShipmentPickUpAsync(ShipmentPickUpContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Details of shipment pick up request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ShipmentPickUpResponse> BookShipmentPickUp(ShipmentPickUpContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxShipmentPickUpResult> BookShipmentPickUp(ShipmentPickUpContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

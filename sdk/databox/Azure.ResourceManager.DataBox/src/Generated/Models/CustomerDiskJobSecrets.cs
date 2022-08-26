@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="carrierAccountNumber"> Carrier Account Number of the customer. </param>
-        internal CustomerDiskJobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DiskSecret> diskSecrets, string carrierAccountNumber) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal CustomerDiskJobSecrets(ClassDiscriminator jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DiskSecret> diskSecrets, string carrierAccountNumber) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             DiskSecrets = diskSecrets;
             CarrierAccountNumber = carrierAccountNumber;

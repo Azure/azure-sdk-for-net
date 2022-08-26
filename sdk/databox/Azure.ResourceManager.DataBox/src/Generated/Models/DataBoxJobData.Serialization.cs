@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.DataBox
             Optional<bool> isDeletable = default;
             Optional<bool> isShippingAddressEditable = default;
             Optional<bool> isPrepareToShipEnabled = default;
-            Optional<StageName> status = default;
+            Optional<DataBoxStageName> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<ResponseError> error = default;
-            Optional<JobDetails> details = default;
+            Optional<DataBoxBasicJobDetails> details = default;
             Optional<string> cancellationReason = default;
             Optional<JobDeliveryType> deliveryType = default;
             Optional<JobDeliveryInfo> deliveryInfo = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataBox
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new StageName(property0.Value.GetString());
+                            status = new DataBoxStageName(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBox
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            details = JobDetails.DeserializeJobDetails(property0.Value);
+                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cancellationReason"))

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Describes metadata for retrieving price info. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="meterId"> Meter id of the Sku. </param>
         /// <param name="meterType"> The type of the meter. </param>
         /// <param name="multiplier"> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </param>
-        internal SkuCost(string meterId, string meterType, double? multiplier)
+        internal SkuCost(Guid? meterId, string meterType, double? multiplier)
         {
             MeterId = meterId;
             MeterType = meterType;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Meter id of the Sku. </summary>
-        public string MeterId { get; }
+        public Guid? MeterId { get; }
         /// <summary> The type of the meter. </summary>
         public string MeterType { get; }
         /// <summary> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </summary>

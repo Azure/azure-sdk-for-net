@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<ValidationInputDiscriminator> validationType = default;
             Optional<ResponseError> error = default;
             Optional<AddressValidationStatus> validationStatus = default;
-            Optional<IReadOnlyList<ShippingAddress>> alternateAddresses = default;
+            Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.DataBox.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ShippingAddress> array = new List<ShippingAddress>();
+                            List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShippingAddress.DeserializeShippingAddress(item));
+                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
                             }
                             alternateAddresses = array;
                             continue;

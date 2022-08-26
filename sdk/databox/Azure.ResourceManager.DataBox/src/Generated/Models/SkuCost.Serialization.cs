@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,14 +15,19 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static SkuCost DeserializeSkuCost(JsonElement element)
         {
-            Optional<string> meterId = default;
+            Optional<Guid> meterId = default;
             Optional<string> meterType = default;
             Optional<double> multiplier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"))
                 {
-                    meterId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    meterId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("meterType"))
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new SkuCost(meterId.Value, meterType.Value, Optional.ToNullable(multiplier));
+            return new SkuCost(Optional.ToNullable(meterId), meterType.Value, Optional.ToNullable(multiplier));
         }
     }
 }

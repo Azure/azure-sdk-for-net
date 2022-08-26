@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="details">
         /// Details of a job run. This field will only be sent for expand details filter.
-        /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataBoxBasicJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataBoxJobDetails"/>, <see cref="DataBoxCustomerDiskJobDetails"/>, <see cref="DataBoxDiskJobDetails"/> and <see cref="DataBoxHeavyJobDetails"/>.
         /// </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, bool? isPrepareToShipEnabled, StageName? status, DateTimeOffset? startOn, ResponseError error, JobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> Is Prepare To Ship Enabled on this job. </summary>
         public bool? IsPrepareToShipEnabled { get; }
         /// <summary> Name of the stage which is in progress. </summary>
-        public StageName? Status { get; }
+        public DataBoxStageName? Status { get; }
         /// <summary> Time at which the job was started in UTC ISO 8601 format. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> Top level error for the job. </summary>
         public ResponseError Error { get; }
         /// <summary>
         /// Details of a job run. This field will only be sent for expand details filter.
-        /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataBoxBasicJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataBoxJobDetails"/>, <see cref="DataBoxCustomerDiskJobDetails"/>, <see cref="DataBoxDiskJobDetails"/> and <see cref="DataBoxHeavyJobDetails"/>.
         /// </summary>
-        public JobDetails Details { get; set; }
+        public DataBoxBasicJobDetails Details { get; set; }
         /// <summary> Reason for cancellation. </summary>
         public string CancellationReason { get; }
         /// <summary> Delivery type of Job. </summary>

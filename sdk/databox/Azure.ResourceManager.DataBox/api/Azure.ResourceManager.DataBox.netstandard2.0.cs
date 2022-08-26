@@ -10,16 +10,16 @@ namespace Azure.ResourceManager.DataBox
         public static Azure.ResourceManager.DataBox.DataBoxJobCollection GetDataBoxJobs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJobs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJobsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResponse> GetRegionConfiguration(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationRequest regionConfigurationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResponse> GetRegionConfiguration(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationRequest regionConfigurationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResponse>> GetRegionConfigurationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationRequest regionConfigurationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResponse>> GetRegionConfigurationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationRequest regionConfigurationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataBox.Models.AddressValidationOutput> ValidateAddress(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidateAddress validateAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>> ValidateAddressAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidateAddress validateAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResponse> ValidateInputs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationRequest validationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResponse> ValidateInputs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationRequest validationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResponse>> ValidateInputsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationRequest validationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResponse>> ValidateInputsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationRequest validationRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult> GetRegionConfiguration(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult> GetRegionConfiguration(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>> GetRegionConfigurationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>> GetRegionConfigurationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataBox.Models.AddressValidationOutput> ValidateAddress(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidateAddressContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>> ValidateAddressAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidateAddressContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResult> ValidateInputs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResult> ValidateInputs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResult>> ValidateInputsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.ValidationResult>> ValidateInputsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.ValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataBoxJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBox.DataBoxJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.DataBoxJobResource>, System.Collections.IEnumerable
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBox
         public string CancellationReason { get { throw null; } }
         public System.DateTimeOffset? DeliveryInfoScheduledOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.JobDeliveryType? DeliveryType { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBox.Models.JobDetails Details { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails Details { get { throw null; } set { } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsCancellable { get { throw null; } }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox
         public bool? IsShippingAddressEditable { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.StageName? Status { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxStageName? Status { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransferType TransferType { get { throw null; } set { } }
     }
     public partial class DataBoxJobResource : Azure.ResourceManager.ArmResource
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.DataBox
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.DataBox.DataBoxJobResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.DataBoxJobResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.ShipmentPickUpResponse> BookShipmentPickUp(Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.ShipmentPickUpResponse>> BookShipmentPickUpAsync(Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult> BookShipmentPickUp(Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>> BookShipmentPickUpAsync(Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Cancel(Azure.ResourceManager.DataBox.Models.CancellationReason cancellationReason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(Azure.ResourceManager.DataBox.Models.CancellationReason cancellationReason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName) { throw null; }
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public enum AccessProtocol
     {
-        SMB = 0,
-        NFS = 1,
+        Smb = 0,
+        Nfs = 1,
     }
     public partial class AccountCredentialDetails
     {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class AddressValidationOutput
     {
         internal AddressValidationOutput() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ShippingAddress> AlternateAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress> AlternateAddresses { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.AddressValidationStatus? ValidationStatus { get { throw null; } }
     }
     public partial class AddressValidationResult : Azure.ResourceManager.DataBox.Models.ValidationInputResult
     {
         internal AddressValidationResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ShippingAddress> AlternateAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress> AlternateAddresses { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.AddressValidationStatus? ValidationStatus { get { throw null; } }
     }
     public enum AddressValidationStatus
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.DataBox.Models
         public long? TotalFilesToProcess { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransferType? TransferType { get { throw null; } }
     }
-    public partial class CreateJobValidationContent : Azure.ResourceManager.DataBox.Models.ValidationRequest
+    public partial class CreateJobValidationContent : Azure.ResourceManager.DataBox.Models.ValidationContent
     {
-        public CreateJobValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ValidationInputRequest> individualRequestDetails) : base (default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ValidationInputRequest>)) { }
+        public CreateJobValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ValidationInputContent> individualRequestDetails) : base (default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ValidationInputContent>)) { }
     }
-    public partial class CreateOrderLimitForSubscriptionValidationContent : Azure.ResourceManager.DataBox.Models.ValidationInputRequest
+    public partial class CreateOrderLimitForSubscriptionValidationContent : Azure.ResourceManager.DataBox.Models.ValidationInputContent
     {
         public CreateOrderLimitForSubscriptionValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
@@ -236,6 +236,28 @@ namespace Azure.ResourceManager.DataBox.Models
         public string AccountName { get { throw null; } }
         public string CopyLogLink { get { throw null; } }
         public string CopyVerboseLogLink { get { throw null; } }
+    }
+    public partial class DataBoxBasicJobDetails
+    {
+        public DataBoxBasicJobDetails(Azure.ResourceManager.DataBox.Models.ContactDetails contactDetails) { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
+        public string ChainOfCustodySasKey { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.ContactDetails ContactDetails { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CopyLogDetails> CopyLogDetails { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DataCenterAddress { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataCenterCode? DataCenterCode { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataExportDetails> DataExportDetails { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataImportDetails> DataImportDetails { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.PackageShippingDetails DeliveryPackage { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DeviceErasureDetails DeviceErasureDetails { get { throw null; } }
+        public int? ExpectedDataSizeInTeraBytes { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> JobStages { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey KeyEncryptionKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob LastMitigationActionOnJob { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences Preferences { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.PackageShippingDetails ReturnPackage { get { throw null; } }
+        public string ReverseShipmentLabelSasKey { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxCopyStatus : System.IEquatable<Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus>
@@ -284,7 +306,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? CopyStatus { get { throw null; } }
         public string SerialNumber { get { throw null; } }
     }
-    public partial class DataBoxCustomerDiskJobDetails : Azure.ResourceManager.DataBox.Models.JobDetails
+    public partial class DataBoxCustomerDiskJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
     {
         public DataBoxCustomerDiskJobDetails(Azure.ResourceManager.DataBox.Models.ContactDetails contactDetails, Azure.ResourceManager.DataBox.Models.PackageCarrierDetails returnToCustomerPackageDetails) : base (default(Azure.ResourceManager.DataBox.Models.ContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress> CopyProgress { get { throw null; } }
@@ -315,7 +337,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? CopyStatus { get { throw null; } }
         public string SerialNumber { get { throw null; } }
     }
-    public partial class DataBoxDiskJobDetails : Azure.ResourceManager.DataBox.Models.JobDetails
+    public partial class DataBoxDiskJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
     {
         public DataBoxDiskJobDetails(Azure.ResourceManager.DataBox.Models.ContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.ContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress> CopyProgress { get { throw null; } }
@@ -338,7 +360,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IReadOnlyList<string> CopyLogLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CopyVerboseLogLink { get { throw null; } }
     }
-    public partial class DataBoxHeavyJobDetails : Azure.ResourceManager.DataBox.Models.JobDetails
+    public partial class DataBoxHeavyJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
     {
         public DataBoxHeavyJobDetails(Azure.ResourceManager.DataBox.Models.ContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.ContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CopyProgress> CopyProgress { get { throw null; } }
@@ -358,7 +380,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public string EncodedValidationCertPubKey { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration> NetworkConfigurations { get { throw null; } }
     }
-    public partial class DataBoxJobDetails : Azure.ResourceManager.DataBox.Models.JobDetails
+    public partial class DataBoxJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
     {
         public DataBoxJobDetails(Azure.ResourceManager.DataBox.Models.ContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.ContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CopyProgress> CopyProgress { get { throw null; } }
@@ -376,6 +398,42 @@ namespace Azure.ResourceManager.DataBox.Models
         internal DataboxJobSecrets() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxSecret> PodSecrets { get { throw null; } }
     }
+    public partial class DataBoxJobStage
+    {
+        internal DataBoxJobStage() { }
+        public string DisplayName { get { throw null; } }
+        public System.BinaryData JobStageDetails { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxStageName? StageName { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.StageStatus? StageStatus { get { throw null; } }
+        public System.DateTimeOffset? StageTime { get { throw null; } }
+    }
+    public partial class DataBoxKeyEncryptionKey
+    {
+        public DataBoxKeyEncryptionKey(Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKeyType kekType) { }
+        public Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKeyType KekType { get { throw null; } set { } }
+        public System.Uri KekUri { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KekVaultResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity ManagedIdentity { get { throw null; } set { } }
+    }
+    public enum DataBoxKeyEncryptionKeyType
+    {
+        MicrosoftManaged = 0,
+        CustomerManaged = 1,
+    }
+    public partial class DataBoxManagedIdentity
+    {
+        public DataBoxManagedIdentity() { }
+        public string IdentityType { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentityId { get { throw null; } set { } }
+    }
+    public partial class DataBoxOrderPreferences
+    {
+        public DataBoxOrderPreferences() { }
+        public Azure.ResourceManager.DataBox.Models.DoubleEncryption? DoubleEncryption { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PreferredDataCenterRegion { get { throw null; } }
+        public System.Collections.Generic.IList<string> StorageAccountAccessTierPreferences { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
+    }
     public partial class DataBoxScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
     {
         public DataBoxScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation) : base (default(Azure.Core.AzureLocation)) { }
@@ -388,6 +446,26 @@ namespace Azure.ResourceManager.DataBox.Models
         public string DeviceSerialNumber { get { throw null; } }
         public string EncodedValidationCertPubKey { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration> NetworkConfigurations { get { throw null; } }
+    }
+    public partial class DataBoxShipmentPickUpResult
+    {
+        internal DataBoxShipmentPickUpResult() { }
+        public string ConfirmationNumber { get { throw null; } }
+        public System.DateTimeOffset? ReadyBy { get { throw null; } }
+    }
+    public partial class DataBoxShippingAddress
+    {
+        public DataBoxShippingAddress(string streetAddress1, string country, string postalCode) { }
+        public Azure.ResourceManager.DataBox.Models.AddressType? AddressType { get { throw null; } set { } }
+        public string City { get { throw null; } set { } }
+        public string CompanyName { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public string StateOrProvince { get { throw null; } set { } }
+        public string StreetAddress1 { get { throw null; } set { } }
+        public string StreetAddress2 { get { throw null; } set { } }
+        public string StreetAddress3 { get { throw null; } set { } }
+        public string ZipExtendedCode { get { throw null; } set { } }
     }
     public partial class DataBoxSku
     {
@@ -405,7 +483,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap> DataLocationToServiceLocationMap { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.SkuDisabledReason? DisabledReason { get { throw null; } }
         public string DisabledReasonMessage { get { throw null; } }
-        public bool? Enabled { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } }
         public string RequiredFeature { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSku Sku { get { throw null; } }
     }
@@ -415,6 +493,49 @@ namespace Azure.ResourceManager.DataBox.Models
         DataBoxDisk = 1,
         DataBoxHeavy = 2,
         DataBoxCustomerDisk = 3,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataBoxStageName : System.IEquatable<Azure.ResourceManager.DataBox.Models.DataBoxStageName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataBoxStageName(string value) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Aborted { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName AtAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName AwaitingShipmentDetails { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Completed { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName CompletedWithErrors { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName CompletedWithWarnings { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Created { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName DataCopy { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Delivered { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName DeviceOrdered { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName DevicePrepared { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName Dispatched { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName FailedIssueDetectedAtAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName FailedIssueReportedAtCustomer { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName PickedUp { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName PreparingToShipFromAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ReadyToDispatchFromAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ReadyToReceiveAtAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ShippedToAzureDC { get { throw null; } }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxStageName ShippedToCustomer { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBox.Models.DataBoxStageName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBox.Models.DataBoxStageName left, Azure.ResourceManager.DataBox.Models.DataBoxStageName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBox.Models.DataBoxStageName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBox.Models.DataBoxStageName left, Azure.ResourceManager.DataBox.Models.DataBoxStageName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DataCenterAccessSecurityCode
+    {
+        internal DataCenterAccessSecurityCode() { }
+        public string ForwardDataCenterAccessCode { get { throw null; } }
+        public string ReverseDataCenterAccessCode { get { throw null; } }
     }
     public partial class DataCenterAddressContent
     {
@@ -447,7 +568,7 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataCenterAddressResult
     {
         internal DataCenterAddressResult() { }
-        public string DataCenterAzureLocation { get { throw null; } }
+        public Azure.Core.AzureLocation? DataCenterAzureLocation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedCarriersForReturnShipment { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -541,12 +662,12 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataLocationToServiceLocationMap
     {
         internal DataLocationToServiceLocationMap() { }
-        public string DataLocation { get { throw null; } }
-        public string ServiceLocation { get { throw null; } }
+        public Azure.Core.AzureLocation? DataLocation { get { throw null; } }
+        public Azure.Core.AzureLocation? ServiceLocation { get { throw null; } }
     }
-    public partial class DataTransferDetailsValidationRequest : Azure.ResourceManager.DataBox.Models.ValidationInputRequest
+    public partial class DataTransferDetailsValidationContent : Azure.ResourceManager.DataBox.Models.ValidationInputContent
     {
-        public DataTransferDetailsValidationRequest(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType, Azure.ResourceManager.DataBox.Models.TransferType transferType) { }
+        public DataTransferDetailsValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType, Azure.ResourceManager.DataBox.Models.TransferType transferType) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataExportDetails> DataExportDetails { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataImportDetails> DataImportDetails { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
@@ -556,12 +677,6 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal DataTransferDetailsValidationResult() { }
         public Azure.ResourceManager.DataBox.Models.ValidationStatus? Status { get { throw null; } }
-    }
-    public partial class DcAccessSecurityCode
-    {
-        internal DcAccessSecurityCode() { }
-        public string ForwardDCAccessCode { get { throw null; } }
-        public string ReverseDCAccessCode { get { throw null; } }
     }
     public partial class DeviceErasureDetails
     {
@@ -626,12 +741,6 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         public HeavyScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation) : base (default(Azure.Core.AzureLocation)) { }
     }
-    public partial class IdentityProperties
-    {
-        public IdentityProperties() { }
-        public string IdentityPropertiesType { get { throw null; } set { } }
-        public string UserAssignedResourceId { get { throw null; } set { } }
-    }
     public partial class ImportDiskDetails
     {
         public ImportDiskDetails(string manifestFile, string manifestHash, string bitLockerKey) { }
@@ -645,55 +754,11 @@ namespace Azure.ResourceManager.DataBox.Models
         NonScheduled = 0,
         Scheduled = 1,
     }
-    public partial class JobDetails
-    {
-        public JobDetails(Azure.ResourceManager.DataBox.Models.ContactDetails contactDetails) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
-        public string ChainOfCustodySasKey { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.ContactDetails ContactDetails { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CopyLogDetails> CopyLogDetails { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DatacenterAddress { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.DataCenterCode? DataCenterCode { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataExportDetails> DataExportDetails { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataImportDetails> DataImportDetails { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.PackageShippingDetails DeliveryPackage { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.DeviceErasureDetails DeviceErasureDetails { get { throw null; } }
-        public int? ExpectedDataSizeInTeraBytes { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.JobStages> JobStages { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.KeyEncryptionKey KeyEncryptionKey { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob LastMitigationActionOnJob { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.Preferences Preferences { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBox.Models.PackageShippingDetails ReturnPackage { get { throw null; } }
-        public string ReverseShipmentLabelSasKey { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.ShippingAddress ShippingAddress { get { throw null; } set { } }
-    }
     public partial class JobSecrets
     {
         internal JobSecrets() { }
-        public Azure.ResourceManager.DataBox.Models.DcAccessSecurityCode DcAccessSecurityCode { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode DcAccessSecurityCode { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-    }
-    public partial class JobStages
-    {
-        internal JobStages() { }
-        public string DisplayName { get { throw null; } }
-        public System.BinaryData JobStageDetails { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.StageName? StageName { get { throw null; } }
-        public System.DateTimeOffset? StageOn { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.StageStatus? StageStatus { get { throw null; } }
-    }
-    public enum KekType
-    {
-        MicrosoftManaged = 0,
-        CustomerManaged = 1,
-    }
-    public partial class KeyEncryptionKey
-    {
-        public KeyEncryptionKey(Azure.ResourceManager.DataBox.Models.KekType kekType) { }
-        public Azure.ResourceManager.DataBox.Models.IdentityProperties IdentityProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBox.Models.KekType KekType { get { throw null; } set { } }
-        public System.Uri KekUri { get { throw null; } set { } }
-        public string KekVaultResourceId { get { throw null; } set { } }
     }
     public partial class LastMitigationActionOnJob
     {
@@ -709,8 +774,8 @@ namespace Azure.ResourceManager.DataBox.Models
     }
     public partial class ManagedDiskDetails : Azure.ResourceManager.DataBox.Models.DataAccountDetails
     {
-        public ManagedDiskDetails(string resourceGroupId, Azure.Core.ResourceIdentifier stagingStorageAccountId) { }
-        public string ResourceGroupId { get { throw null; } set { } }
+        public ManagedDiskDetails(Azure.Core.ResourceIdentifier resourceGroupId, Azure.Core.ResourceIdentifier stagingStorageAccountId) { }
+        public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StagingStorageAccountId { get { throw null; } set { } }
     }
     public partial class MarkDevicesShippedContent
@@ -779,36 +844,28 @@ namespace Azure.ResourceManager.DataBox.Models
         public string TrackingId { get { throw null; } }
         public System.Uri TrackingUri { get { throw null; } }
     }
-    public partial class Preferences
+    public partial class PreferencesValidationContent : Azure.ResourceManager.DataBox.Models.ValidationInputContent
     {
-        public Preferences() { }
-        public Azure.ResourceManager.DataBox.Models.DoubleEncryption? DoubleEncryption { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PreferredDataCenterRegion { get { throw null; } }
-        public System.Collections.Generic.IList<string> StorageAccountAccessTierPreferences { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
-    }
-    public partial class PreferencesValidationRequest : Azure.ResourceManager.DataBox.Models.ValidationInputRequest
-    {
-        public PreferencesValidationRequest(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
+        public PreferencesValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.Preferences Preference { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences Preference { get { throw null; } set { } }
     }
     public partial class PreferencesValidationResult : Azure.ResourceManager.DataBox.Models.ValidationInputResult
     {
         internal PreferencesValidationResult() { }
         public Azure.ResourceManager.DataBox.Models.ValidationStatus? Status { get { throw null; } }
     }
-    public partial class RegionConfigurationRequest
+    public partial class RegionConfigurationContent
     {
-        public RegionConfigurationRequest() { }
-        public Azure.ResourceManager.DataBox.Models.DataCenterAddressContent DatacenterAddressRequest { get { throw null; } set { } }
+        public RegionConfigurationContent() { }
+        public Azure.ResourceManager.DataBox.Models.DataCenterAddressContent DataCenterAddressRequest { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent ScheduleAvailabilityRequest { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName? TransportAvailabilityRequestSkuName { get { throw null; } set { } }
     }
-    public partial class RegionConfigurationResponse
+    public partial class RegionConfigurationResult
     {
-        internal RegionConfigurationResponse() { }
-        public Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DatacenterAddressResponse { get { throw null; } }
+        internal RegionConfigurationResult() { }
+        public Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DataCenterAddressResponse { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> ScheduleAvailabilityResponseAvailableDates { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails> TransportAvailabilityDetails { get { throw null; } }
     }
@@ -830,7 +887,7 @@ namespace Azure.ResourceManager.DataBox.Models
     public enum ShareDestinationFormatType
     {
         UnknownType = 0,
-        HCS = 1,
+        Hcs = 1,
         BlockBlob = 2,
         PageBlob = 3,
         AzureFile = 4,
@@ -843,29 +900,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public string ShipmentLocation { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
     }
-    public partial class ShipmentPickUpResponse
+    public partial class SkuAvailabilityValidationContent : Azure.ResourceManager.DataBox.Models.ValidationInputContent
     {
-        internal ShipmentPickUpResponse() { }
-        public string ConfirmationNumber { get { throw null; } }
-        public System.DateTimeOffset? ReadyByOn { get { throw null; } }
-    }
-    public partial class ShippingAddress
-    {
-        public ShippingAddress(string streetAddress1, string country, string postalCode) { }
-        public Azure.ResourceManager.DataBox.Models.AddressType? AddressType { get { throw null; } set { } }
-        public string City { get { throw null; } set { } }
-        public string CompanyName { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
-        public string PostalCode { get { throw null; } set { } }
-        public string StateOrProvince { get { throw null; } set { } }
-        public string StreetAddress1 { get { throw null; } set { } }
-        public string StreetAddress2 { get { throw null; } set { } }
-        public string StreetAddress3 { get { throw null; } set { } }
-        public string ZipExtendedCode { get { throw null; } set { } }
-    }
-    public partial class SkuAvailabilityValidationRequest : Azure.ResourceManager.DataBox.Models.ValidationInputRequest
-    {
-        public SkuAvailabilityValidationRequest(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType, Azure.ResourceManager.DataBox.Models.TransferType transferType, string country, Azure.Core.AzureLocation location) { }
+        public SkuAvailabilityValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType, Azure.ResourceManager.DataBox.Models.TransferType transferType, string country, Azure.Core.AzureLocation location) { }
         public string Country { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
@@ -885,7 +922,7 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class SkuCost
     {
         internal SkuCost() { }
-        public string MeterId { get { throw null; } }
+        public System.Guid? MeterId { get { throw null; } }
         public string MeterType { get { throw null; } }
         public double? Multiplier { get { throw null; } }
     }
@@ -897,43 +934,6 @@ namespace Azure.ResourceManager.DataBox.Models
         Feature = 3,
         OfferType = 4,
         NoSubscriptionInfo = 5,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StageName : System.IEquatable<Azure.ResourceManager.DataBox.Models.StageName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StageName(string value) { throw null; }
-        public static Azure.ResourceManager.DataBox.Models.StageName Aborted { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName AtAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName AwaitingShipmentDetails { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName Completed { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName CompletedWithErrors { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName CompletedWithWarnings { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName Created { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName DataCopy { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName Delivered { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName DeviceOrdered { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName DevicePrepared { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName Dispatched { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName FailedIssueDetectedAtAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName FailedIssueReportedAtCustomer { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName PickedUp { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName PreparingToShipFromAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName ReadyToDispatchFromAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName ReadyToReceiveAtAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName ShippedToAzureDC { get { throw null; } }
-        public static Azure.ResourceManager.DataBox.Models.StageName ShippedToCustomer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataBox.Models.StageName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataBox.Models.StageName left, Azure.ResourceManager.DataBox.Models.StageName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataBox.Models.StageName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataBox.Models.StageName left, Azure.ResourceManager.DataBox.Models.StageName right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum StageStatus
     {
@@ -956,9 +956,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public StorageAccountDetails(Azure.Core.ResourceIdentifier storageAccountId) { }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
     }
-    public partial class SubscriptionIsAllowedToCreateJobValidationRequest : Azure.ResourceManager.DataBox.Models.ValidationInputRequest
+    public partial class SubscriptionIsAllowedToCreateJobValidationContent : Azure.ResourceManager.DataBox.Models.ValidationInputContent
     {
-        public SubscriptionIsAllowedToCreateJobValidationRequest() { }
+        public SubscriptionIsAllowedToCreateJobValidationContent() { }
     }
     public partial class SubscriptionIsAllowedToCreateJobValidationResult : Azure.ResourceManager.DataBox.Models.ValidationInputResult
     {
@@ -1017,34 +1017,34 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         public UpdateJobDetails() { }
         public Azure.ResourceManager.DataBox.Models.ContactDetails ContactDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBox.Models.KeyEncryptionKey KeyEncryptionKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey KeyEncryptionKey { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.PackageCarrierDetails ReturnToCustomerPackageDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBox.Models.ShippingAddress ShippingAddress { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
     }
-    public partial class ValidateAddress : Azure.ResourceManager.DataBox.Models.ValidationInputRequest
+    public partial class ValidateAddressContent : Azure.ResourceManager.DataBox.Models.ValidationInputContent
     {
-        public ValidateAddress(Azure.ResourceManager.DataBox.Models.ShippingAddress shippingAddress, Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
+        public ValidateAddressContent(Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress, Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
-        public Azure.ResourceManager.DataBox.Models.ShippingAddress ShippingAddress { get { throw null; } }
+        public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
-    public partial class ValidationInputRequest
+    public partial class ValidationContent
     {
-        public ValidationInputRequest() { }
+        public ValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ValidationInputContent> individualRequestDetails) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.ValidationInputContent> IndividualRequestDetails { get { throw null; } }
+    }
+    public partial class ValidationInputContent
+    {
+        public ValidationInputContent() { }
     }
     public partial class ValidationInputResult
     {
         internal ValidationInputResult() { }
         public Azure.ResponseError Error { get { throw null; } }
     }
-    public partial class ValidationRequest
+    public partial class ValidationResult
     {
-        public ValidationRequest(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ValidationInputRequest> individualRequestDetails) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.ValidationInputRequest> IndividualRequestDetails { get { throw null; } }
-    }
-    public partial class ValidationResponse
-    {
-        internal ValidationResponse() { }
+        internal ValidationResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ValidationInputResult> IndividualResponseDetails { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.OverallValidationStatus? Status { get { throw null; } }
     }

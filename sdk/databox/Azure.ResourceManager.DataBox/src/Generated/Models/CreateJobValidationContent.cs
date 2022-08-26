@@ -11,16 +11,16 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> It does all pre-job creation validations. </summary>
-    public partial class CreateJobValidationContent : ValidationRequest
+    public partial class CreateJobValidationContent : ValidationContent
     {
         /// <summary> Initializes a new instance of CreateJobValidationContent. </summary>
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
-        /// Please note <see cref="ValidationInputRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationRequest"/>, <see cref="PreferencesValidationRequest"/>, <see cref="SkuAvailabilityValidationRequest"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationRequest"/> and <see cref="ValidateAddress"/>.
+        /// Please note <see cref="ValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="ValidateAddressContent"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="individualRequestDetails"/> is null. </exception>
-        public CreateJobValidationContent(IEnumerable<ValidationInputRequest> individualRequestDetails) : base(individualRequestDetails)
+        public CreateJobValidationContent(IEnumerable<ValidationInputContent> individualRequestDetails) : base(individualRequestDetails)
         {
             if (individualRequestDetails == null)
             {

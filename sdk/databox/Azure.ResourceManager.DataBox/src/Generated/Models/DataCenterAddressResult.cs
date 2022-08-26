@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>
-        /// <param name="datacenterAddressType"> Data center address type. </param>
+        /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        internal DataCenterAddressResult(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, string dataCenterAzureLocation)
+        internal DataCenterAddressResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation)
         {
-            DatacenterAddressType = datacenterAddressType;
+            DataCenterAddressType = dataCenterAddressType;
             SupportedCarriersForReturnShipment = supportedCarriersForReturnShipment;
             DataCenterAzureLocation = dataCenterAzureLocation;
         }
 
         /// <summary> Data center address type. </summary>
-        internal DatacenterAddressType DatacenterAddressType { get; set; }
+        internal DataCenterAddressType DataCenterAddressType { get; set; }
         /// <summary> List of supported carriers for return shipment. </summary>
         public IReadOnlyList<string> SupportedCarriersForReturnShipment { get; }
         /// <summary> Azure Location where the Data Center serves primarily. </summary>
-        public string DataCenterAzureLocation { get; }
+        public AzureLocation? DataCenterAzureLocation { get; }
     }
 }

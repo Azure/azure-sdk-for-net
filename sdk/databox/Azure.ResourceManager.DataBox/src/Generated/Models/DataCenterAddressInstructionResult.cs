@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -15,18 +16,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataCenterAddressInstructionResult. </summary>
         internal DataCenterAddressInstructionResult()
         {
-            DatacenterAddressType = DatacenterAddressType.DatacenterAddressInstruction;
+            DataCenterAddressType = DataCenterAddressType.DataCenterAddressInstruction;
         }
 
         /// <summary> Initializes a new instance of DataCenterAddressInstructionResult. </summary>
-        /// <param name="datacenterAddressType"> Data center address type. </param>
+        /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="communicationInstruction"> Data center communication instruction. </param>
-        internal DataCenterAddressInstructionResult(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, string dataCenterAzureLocation, string communicationInstruction) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation)
+        internal DataCenterAddressInstructionResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, string communicationInstruction) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation)
         {
             CommunicationInstruction = communicationInstruction;
-            DatacenterAddressType = datacenterAddressType;
+            DataCenterAddressType = dataCenterAddressType;
         }
 
         /// <summary> Data center communication instruction. </summary>

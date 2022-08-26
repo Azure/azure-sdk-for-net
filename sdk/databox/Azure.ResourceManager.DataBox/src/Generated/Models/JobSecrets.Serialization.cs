@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             ClassDiscriminator jobSecretsType = default;
-            Optional<DcAccessSecurityCode> dcAccessSecurityCode = default;
+            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dcAccessSecurityCode = DcAccessSecurityCode.DeserializeDcAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"))

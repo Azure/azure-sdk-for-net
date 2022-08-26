@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataBox.Models
         internal static DataCenterAddressInstructionResult DeserializeDataCenterAddressInstructionResult(JsonElement element)
         {
             Optional<string> communicationInstruction = default;
-            DatacenterAddressType datacenterAddressType = default;
+            DataCenterAddressType dataCenterAddressType = default;
             Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<string> dataCenterAzureLocation = default;
+            Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationInstruction"))
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("datacenterAddressType"))
                 {
-                    datacenterAddressType = property.Value.GetString().ToDatacenterAddressType();
+                    dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
                     continue;
                 }
                 if (property.NameEquals("supportedCarriersForReturnShipment"))
@@ -48,11 +48,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("dataCenterAzureLocation"))
                 {
-                    dataCenterAzureLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataCenterAzureLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new DataCenterAddressInstructionResult(datacenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), dataCenterAzureLocation.Value, communicationInstruction.Value);
+            return new DataCenterAddressInstructionResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), communicationInstruction.Value);
         }
     }
 }
