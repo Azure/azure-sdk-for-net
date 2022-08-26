@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             string AnsibleTest = "/subscriptions/"+ DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator-ansible";
             string CassandraTest = "/subscriptions/"+ DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator";
 
-        // CREATE CL
-        var resourceName = Recording.GenerateAssetName("cltest-");
+            // CREATE CL
+            var resourceName = Recording.GenerateAssetName("cltest-");
             var parameters = new CustomLocationData(DefaultLocation)
             {
                 HostResourceId = new ResourceIdentifier("/subscriptions/" + DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster"),
