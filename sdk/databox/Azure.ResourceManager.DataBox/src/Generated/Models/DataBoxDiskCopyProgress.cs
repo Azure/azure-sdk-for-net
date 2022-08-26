@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="bytesCopied"> Bytes copied during the copy of disk. </param>
         /// <param name="percentComplete"> Indicates the percentage completed for the copy of the disk. </param>
         /// <param name="status"> The Status of the copy. </param>
-        internal DataBoxDiskCopyProgress(string serialNumber, long? bytesCopied, int? percentComplete, CopyStatus? status)
+        internal DataBoxDiskCopyProgress(string serialNumber, long? bytesCopied, int? percentComplete, DataBoxCopyStatus? status)
         {
             SerialNumber = serialNumber;
             BytesCopied = bytesCopied;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Indicates the percentage completed for the copy of the disk. </summary>
         public int? PercentComplete { get; }
         /// <summary> The Status of the copy. </summary>
-        public CopyStatus? Status { get; }
+        public DataBoxCopyStatus? Status { get; }
     }
 }

@@ -74,6 +74,19 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+generate-arm-resource-extensions:
+  - /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}
+  - /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}
+  - /{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}
+  - /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
+  - /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
+  - /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
+  - /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
+
 request-path-to-resource-type:
   /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
 
