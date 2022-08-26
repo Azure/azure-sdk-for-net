@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> A component of a composed model. </summary>
-    internal partial class ComponentModelInfo
+    /// <summary> A component of a composed document model. </summary>
+    internal partial class ComponentDocumentModelDetails
     {
-        /// <summary> Initializes a new instance of ComponentModelInfo. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Initializes a new instance of ComponentDocumentModelDetails. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ComponentModelInfo(string modelId)
+        public ComponentDocumentModelDetails(string modelId)
         {
             if (modelId == null)
             {
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ModelId = modelId;
         }
 
-        /// <summary> Unique model name. </summary>
+        /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
     }
 }

@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class GetInfoResponse
+    internal partial class ServiceResourceDetails
     {
-        internal static GetInfoResponse DeserializeGetInfoResponse(JsonElement element)
+        internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element)
         {
-            ResourceDetails customDocumentModels = default;
+            CustomDocumentModelsDetails customDocumentModels = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"))
                 {
-                    customDocumentModels = ResourceDetails.DeserializeResourceDetails(property.Value);
+                    customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value);
                     continue;
                 }
             }
-            return new GetInfoResponse(customDocumentModels);
+            return new ServiceResourceDetails(customDocumentModels);
         }
     }
 }

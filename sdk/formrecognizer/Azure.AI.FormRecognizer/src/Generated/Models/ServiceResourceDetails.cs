@@ -10,12 +10,12 @@ using System;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> General information regarding the current resource. </summary>
-    internal partial class GetInfoResponse
+    internal partial class ServiceResourceDetails
     {
-        /// <summary> Initializes a new instance of GetInfoResponse. </summary>
-        /// <param name="customDocumentModels"> Info regarding custom document models. </param>
+        /// <summary> Initializes a new instance of ServiceResourceDetails. </summary>
+        /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
-        internal GetInfoResponse(ResourceDetails customDocumentModels)
+        internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels)
         {
             if (customDocumentModels == null)
             {
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             CustomDocumentModels = customDocumentModels;
         }
 
-        /// <summary> Info regarding custom document models. </summary>
-        public ResourceDetails CustomDocumentModels { get; }
+        /// <summary> Details regarding custom document models. </summary>
+        public CustomDocumentModelsDetails CustomDocumentModels { get; }
     }
 }

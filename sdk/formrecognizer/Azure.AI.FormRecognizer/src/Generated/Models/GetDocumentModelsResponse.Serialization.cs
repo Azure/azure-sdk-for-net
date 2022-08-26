@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class GetModelsResponse
+    internal partial class GetDocumentModelsResponse
     {
-        internal static GetModelsResponse DeserializeGetModelsResponse(JsonElement element)
+        internal static GetDocumentModelsResponse DeserializeGetDocumentModelsResponse(JsonElement element)
         {
             IReadOnlyList<DocumentModelSummary> value = default;
             Optional<string> nextLink = default;
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new GetModelsResponse(value, nextLink.Value);
+            return new GetDocumentModelsResponse(value, nextLink.Value);
         }
     }
 }

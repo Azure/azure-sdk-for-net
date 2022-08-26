@@ -12,12 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class GetOperationResponse
+    public partial class DocumentModelComposeOperationDetails
     {
-        internal static GetOperationResponse DeserializeGetOperationResponse(JsonElement element)
+        internal static DocumentModelComposeOperationDetails DeserializeDocumentModelComposeOperationDetails(JsonElement element)
         {
-            Optional<JsonElement> error = default;
-            Optional<DocumentModel> result = default;
+            Optional<DocumentModelDetails> result = default;
             string operationId = default;
             DocumentOperationStatus status = default;
             Optional<int> percentCompleted = default;
@@ -27,13 +26,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Uri resourceLocation = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
-                {
-                    error = property.Value.Clone();
-                    continue;
-                }
                 if (property.NameEquals("result"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -41,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    result = DocumentModel.DeserializeDocumentModel(property.Value);
+                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"))
@@ -104,8 +99,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("error"))
+                {
+                    error = property.Value.Clone();
+                    continue;
+                }
             }
-            return new GetOperationResponse(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new DocumentModelComposeOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
         }
     }
 }

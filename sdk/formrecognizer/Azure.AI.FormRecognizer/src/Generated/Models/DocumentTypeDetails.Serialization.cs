@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocTypeInfo
+    public partial class DocumentTypeDetails
     {
-        internal static DocTypeInfo DeserializeDocTypeInfo(JsonElement element)
+        internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element)
         {
             Optional<string> description = default;
             Optional<DocumentBuildMode> buildMode = default;
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocTypeInfo(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence));
+            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence));
         }
     }
 }
