@@ -367,7 +367,7 @@ namespace Azure.Communication.CallingServer
     {
         internal MediaStreamingAudio() { }
         public System.BinaryData Data { get { throw null; } }
-        public bool IsSilence { get { throw null; } }
+        public bool IsSilent { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public System.DateTime Timestamp { get { throw null; } }
     }
