@@ -1138,6 +1138,15 @@ namespace Azure.ResourceManager.EventGrid
             return GetExtensionClient(resourceGroupResource).GetEventTypesTopics(providerNamespace, resourceTypeName, resourceName, cancellationToken);
         }
 
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -1148,11 +1157,12 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Gets a collection of EventSubscriptionResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of EventSubscriptionResources and their operations over a EventSubscriptionResource. </returns>
-        public static EventSubscriptionCollection GetEventSubscriptions(this ArmResource armResource)
+        public static EventSubscriptionCollection GetEventSubscriptions(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetEventSubscriptions();
+            return GetExtensionClient(client, scope).GetEventSubscriptions();
         }
 
         /// <summary>
@@ -1160,15 +1170,16 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventSubscriptionResource>> GetEventSubscriptionAsync(this ArmResource armResource, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventSubscriptionResource>> GetEventSubscriptionAsync(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetEventSubscriptions().GetAsync(eventSubscriptionName, cancellationToken).ConfigureAwait(false);
+            return await client.GetEventSubscriptions(scope).GetAsync(eventSubscriptionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1176,23 +1187,25 @@ namespace Azure.ResourceManager.EventGrid
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Get
         /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventSubscriptionResource> GetEventSubscription(this ArmResource armResource, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public static Response<EventSubscriptionResource> GetEventSubscription(this ArmClient client, ResourceIdentifier scope, string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetEventSubscriptions().Get(eventSubscriptionName, cancellationToken);
+            return client.GetEventSubscriptions(scope).Get(eventSubscriptionName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a ExtensionTopicResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
-        public static ExtensionTopicResource GetExtensionTopic(this ArmResource armResource)
+        public static ExtensionTopicResource GetExtensionTopic(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(armResource).GetExtensionTopic();
+            return GetExtensionClient(client, scope).GetExtensionTopic();
         }
 
         #region ChannelResource
