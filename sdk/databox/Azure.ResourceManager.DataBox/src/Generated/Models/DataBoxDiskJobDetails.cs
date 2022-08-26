@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxDiskJobDetails. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public DataBoxDiskJobDetails(ContactDetails contactDetails) : base(contactDetails)
+        public DataBoxDiskJobDetails(DataBoxContactDetails contactDetails) : base(contactDetails)
         {
             if (contactDetails == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             CopyProgress = new ChangeTrackingList<DataBoxDiskCopyProgress>();
             GranularCopyProgress = new ChangeTrackingList<DataBoxDiskGranularCopyProgress>();
             DisksAndSizeDetails = new ChangeTrackingDictionary<string, int>();
-            JobDetailsType = ClassDiscriminator.DataBoxDisk;
+            JobDetailsType = DataBoxOrderType.DataBoxDisk;
         }
 
         /// <summary> Initializes a new instance of DataBoxDiskJobDetails. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="granularCopyProgress"> Copy progress per disk. </param>
         /// <param name="disksAndSizeDetails"> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </param>
         /// <param name="passkey"> User entered passkey for DataBox Disk job. </param>
-        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, ContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
+        internal DataBoxDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, int> preferredDisks, IReadOnlyList<DataBoxDiskCopyProgress> copyProgress, IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress, IReadOnlyDictionary<string, int> disksAndSizeDetails, string passkey) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
         {
             PreferredDisks = preferredDisks;
             CopyProgress = copyProgress;

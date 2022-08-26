@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="transferType"> Type of the data transfer. </param>
         /// <param name="sku"> The sku type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public DataBoxJobData(AzureLocation location, TransferType transferType, DataBoxSku sku) : base(location)
+        public DataBoxJobData(AzureLocation location, DataBoxJobTransferType transferType, DataBoxSku sku) : base(location)
         {
             if (sku == null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary> Type of the data transfer. </summary>
-        public TransferType TransferType { get; set; }
+        public DataBoxJobTransferType TransferType { get; set; }
         /// <summary> Describes whether the job is cancellable or not. </summary>
         public bool? IsCancellable { get; }
         /// <summary> Describes whether the job is deletable or not. </summary>

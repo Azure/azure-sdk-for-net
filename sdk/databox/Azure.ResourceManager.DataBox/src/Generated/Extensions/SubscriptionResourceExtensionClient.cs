@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AddressValidationOutput>> ValidateAddressAsync(AzureLocation location, ValidateAddressContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddressValidationOutput>> ValidateAddressAsync(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddress");
             scope.Start();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AddressValidationOutput> ValidateAddress(AzureLocation location, ValidateAddressContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AddressValidationOutput> ValidateAddress(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAddress");
             scope.Start();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidationResult>> ValidateInputsAsync(AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputs");
             scope.Start();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidationResult> ValidateInputs(AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateInputs");
             scope.Start();

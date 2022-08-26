@@ -10,25 +10,25 @@ using Azure;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Properties of create order limit for subscription validation response. </summary>
-    public partial class CreateOrderLimitForSubscriptionValidationResult : ValidationInputResult
+    public partial class CreateOrderLimitForSubscriptionValidationResult : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResult. </summary>
         internal CreateOrderLimitForSubscriptionValidationResult()
         {
-            ValidationType = ValidationInputDiscriminator.ValidateCreateOrderLimit;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
         }
 
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResult. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Create order limit validation status. </param>
-        internal CreateOrderLimitForSubscriptionValidationResult(ValidationInputDiscriminator validationType, ResponseError error, ValidationStatus? status) : base(validationType, error)
+        internal CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, DataBoxValidationStatus? status) : base(validationType, error)
         {
             Status = status;
             ValidationType = validationType;
         }
 
         /// <summary> Create order limit validation status. </summary>
-        public ValidationStatus? Status { get; }
+        public DataBoxValidationStatus? Status { get; }
     }
 }

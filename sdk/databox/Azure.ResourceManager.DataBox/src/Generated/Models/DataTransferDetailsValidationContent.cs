@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Request to validate export and import data details. </summary>
-    public partial class DataTransferDetailsValidationContent : ValidationInputContent
+    public partial class DataTransferDetailsValidationContent : DataBoxValidationInputContent
     {
         /// <summary> Initializes a new instance of DataTransferDetailsValidationContent. </summary>
         /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
-        public DataTransferDetailsValidationContent(DataBoxSkuName deviceType, TransferType transferType)
+        public DataTransferDetailsValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType)
         {
             DataExportDetails = new ChangeTrackingList<DataExportDetails>();
             DataImportDetails = new ChangeTrackingList<DataImportDetails>();
             DeviceType = deviceType;
             TransferType = transferType;
-            ValidationType = ValidationInputDiscriminator.ValidateDataTransferDetails;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateDataTransferDetails;
         }
 
         /// <summary> List of DataTransfer details to be used to export data from azure. </summary>
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Device type. </summary>
         public DataBoxSkuName DeviceType { get; }
         /// <summary> Type of the transfer. </summary>
-        public TransferType TransferType { get; }
+        public DataBoxJobTransferType TransferType { get; }
     }
 }

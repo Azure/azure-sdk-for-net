@@ -10,25 +10,25 @@ using Azure;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Properties of sku availability validation response. </summary>
-    public partial class SkuAvailabilityValidationResult : ValidationInputResult
+    public partial class SkuAvailabilityValidationResult : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of SkuAvailabilityValidationResult. </summary>
         internal SkuAvailabilityValidationResult()
         {
-            ValidationType = ValidationInputDiscriminator.ValidateSkuAvailability;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateSkuAvailability;
         }
 
         /// <summary> Initializes a new instance of SkuAvailabilityValidationResult. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Sku availability validation status. </param>
-        internal SkuAvailabilityValidationResult(ValidationInputDiscriminator validationType, ResponseError error, ValidationStatus? status) : base(validationType, error)
+        internal SkuAvailabilityValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, DataBoxValidationStatus? status) : base(validationType, error)
         {
             Status = status;
             ValidationType = validationType;
         }
 
         /// <summary> Sku availability validation status. </summary>
-        public ValidationStatus? Status { get; }
+        public DataBoxValidationStatus? Status { get; }
     }
 }

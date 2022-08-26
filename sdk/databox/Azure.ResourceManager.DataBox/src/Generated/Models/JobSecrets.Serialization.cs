@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element);
                 }
             }
-            ClassDiscriminator jobSecretsType = default;
+            DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobSecretsType"))
                 {
-                    jobSecretsType = property.Value.GetString().ToClassDiscriminator();
+                    jobSecretsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
                 if (property.NameEquals("dcAccessSecurityCode"))

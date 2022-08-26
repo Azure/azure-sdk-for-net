@@ -10,25 +10,25 @@ using Azure;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Properties of data transfer details validation response. </summary>
-    public partial class DataTransferDetailsValidationResult : ValidationInputResult
+    public partial class DataTransferDetailsValidationResult : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of DataTransferDetailsValidationResult. </summary>
         internal DataTransferDetailsValidationResult()
         {
-            ValidationType = ValidationInputDiscriminator.ValidateDataTransferDetails;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateDataTransferDetails;
         }
 
         /// <summary> Initializes a new instance of DataTransferDetailsValidationResult. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Data transfer details validation status. </param>
-        internal DataTransferDetailsValidationResult(ValidationInputDiscriminator validationType, ResponseError error, ValidationStatus? status) : base(validationType, error)
+        internal DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, DataBoxValidationStatus? status) : base(validationType, error)
         {
             Status = status;
             ValidationType = validationType;
         }
 
         /// <summary> Data transfer details validation status. </summary>
-        public ValidationStatus? Status { get; }
+        public DataBoxValidationStatus? Status { get; }
     }
 }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBox
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            TransferType transferType = default;
+            DataBoxJobTransferType transferType = default;
             Optional<bool> isCancellable = default;
             Optional<bool> isDeletable = default;
             Optional<bool> isShippingAddressEditable = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         if (property0.NameEquals("transferType"))
                         {
-                            transferType = property0.Value.GetString().ToTransferType();
+                            transferType = property0.Value.GetString().ToDataBoxJobTransferType();
                             continue;
                         }
                         if (property0.NameEquals("isCancellable"))

@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxJobDetails DeserializeDataBoxJobDetails(JsonElement element)
         {
-            Optional<IReadOnlyList<CopyProgress>> copyProgress = default;
+            Optional<IReadOnlyList<DataBoxCopyProgress>> copyProgress = default;
             Optional<string> devicePassword = default;
             Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
-            ContactDetails contactDetails = default;
+            DataBoxContactDetails contactDetails = default;
             Optional<DataBoxShippingAddress> shippingAddress = default;
             Optional<PackageShippingDetails> deliveryPackage = default;
             Optional<PackageShippingDetails> returnPackage = default;
             Optional<IList<DataImportDetails>> dataImportDetails = default;
             Optional<IList<DataExportDetails>> dataExportDetails = default;
-            ClassDiscriminator jobDetailsType = default;
+            DataBoxOrderType jobDetailsType = default;
             Optional<DataBoxOrderPreferences> preferences = default;
             Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
             Optional<string> reverseShipmentLabelSasKey = default;
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CopyProgress> array = new List<CopyProgress>();
+                    List<DataBoxCopyProgress> array = new List<DataBoxCopyProgress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CopyProgress.DeserializeCopyProgress(item));
+                        array.Add(DataBoxCopyProgress.DeserializeDataBoxCopyProgress(item));
                     }
                     copyProgress = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("contactDetails"))
                 {
-                    contactDetails = ContactDetails.DeserializeContactDetails(property.Value);
+                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("jobDetailsType"))
                 {
-                    jobDetailsType = property.Value.GetString().ToClassDiscriminator();
+                    jobDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
                 if (property.NameEquals("preferences"))

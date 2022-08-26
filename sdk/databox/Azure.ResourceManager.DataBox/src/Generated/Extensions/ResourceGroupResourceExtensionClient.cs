@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             async Task<Page<DataBoxSkuInformation>> FirstPageFunc(int? pageSizeHint)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Page<DataBoxSkuInformation> FirstPageFunc(int? pageSizeHint)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidationResult>> ValidateInputsAsync(AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputs");
             scope.Start();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidationResult> ValidateInputs(AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputs");
             scope.Start();

@@ -10,25 +10,25 @@ using Azure;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Properties of subscription permission to create job validation response. </summary>
-    public partial class SubscriptionIsAllowedToCreateJobValidationResult : ValidationInputResult
+    public partial class SubscriptionIsAllowedToCreateJobValidationResult : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationResult. </summary>
         internal SubscriptionIsAllowedToCreateJobValidationResult()
         {
-            ValidationType = ValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
         }
 
         /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationResult. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of subscription permission to create job. </param>
-        internal SubscriptionIsAllowedToCreateJobValidationResult(ValidationInputDiscriminator validationType, ResponseError error, ValidationStatus? status) : base(validationType, error)
+        internal SubscriptionIsAllowedToCreateJobValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, DataBoxValidationStatus? status) : base(validationType, error)
         {
             Status = status;
             ValidationType = validationType;
         }
 
         /// <summary> Validation status of subscription permission to create job. </summary>
-        public ValidationStatus? Status { get; }
+        public DataBoxValidationStatus? Status { get; }
     }
 }

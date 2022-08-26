@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="zipExtendedCode"> Extended Zip Code. </param>
         /// <param name="companyName"> Name of the company. </param>
         /// <param name="addressType"> Type of address. </param>
-        internal DataBoxShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, AddressType? addressType)
+        internal DataBoxShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, DataBoxShippingAddressType? addressType)
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Name of the company. </summary>
         public string CompanyName { get; set; }
         /// <summary> Type of address. </summary>
-        public AddressType? AddressType { get; set; }
+        public DataBoxShippingAddressType? AddressType { get; set; }
     }
 }

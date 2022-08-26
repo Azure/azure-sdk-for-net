@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> It does all pre-job creation validations. </summary>
-    public partial class CreateJobValidationContent : ValidationContent
+    public partial class CreateJobValidationContent : DataBoxValidationContent
     {
         /// <summary> Initializes a new instance of CreateJobValidationContent. </summary>
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
-        /// Please note <see cref="ValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="ValidateAddressContent"/>.
+        /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="DataBoxValidateAddressContent"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="individualRequestDetails"/> is null. </exception>
-        public CreateJobValidationContent(IEnumerable<ValidationInputContent> individualRequestDetails) : base(individualRequestDetails)
+        public CreateJobValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails) : base(individualRequestDetails)
         {
             if (individualRequestDetails == null)
             {
                 throw new ArgumentNullException(nameof(individualRequestDetails));
             }
 
-            ValidationCategory = ValidationCategory.JobCreationValidation;
+            ValidationCategory = DataBoxValidationCategory.JobCreationValidation;
         }
     }
 }

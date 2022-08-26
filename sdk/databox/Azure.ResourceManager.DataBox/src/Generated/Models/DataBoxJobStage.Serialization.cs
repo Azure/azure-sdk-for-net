@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Optional<DataBoxStageName> stageName = default;
             Optional<string> displayName = default;
-            Optional<StageStatus> stageStatus = default;
+            Optional<DataBoxStageStatus> stageStatus = default;
             Optional<DateTimeOffset> stageTime = default;
             Optional<BinaryData> jobStageDetails = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stageStatus = property.Value.GetString().ToStageStatus();
+                    stageStatus = property.Value.GetString().ToDataBoxStageStatus();
                     continue;
                 }
                 if (property.NameEquals("stageTime"))

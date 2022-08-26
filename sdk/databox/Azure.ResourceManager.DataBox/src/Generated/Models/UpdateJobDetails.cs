@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Contact details for notification and shipping. </summary>
-        public ContactDetails ContactDetails { get; set; }
+        public DataBoxContactDetails ContactDetails { get; set; }
         /// <summary> Shipping address of the customer. </summary>
         public DataBoxShippingAddress ShippingAddress { get; set; }
         /// <summary> Key encryption key for the job. </summary>

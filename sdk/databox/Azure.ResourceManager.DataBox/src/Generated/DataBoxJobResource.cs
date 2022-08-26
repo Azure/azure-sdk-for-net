@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
-        public virtual async Task<Response> CancelAsync(CancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelAsync(DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
-        public virtual Response Cancel(CancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        public virtual Response Cancel(DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 

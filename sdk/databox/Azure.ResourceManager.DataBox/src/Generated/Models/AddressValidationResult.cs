@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The address validation output. </summary>
-    public partial class AddressValidationResult : ValidationInputResult
+    public partial class AddressValidationResult : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of AddressValidationResult. </summary>
         internal AddressValidationResult()
         {
             AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
-            ValidationType = ValidationInputDiscriminator.ValidateAddress;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
         }
 
         /// <summary> Initializes a new instance of AddressValidationResult. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        internal AddressValidationResult(ValidationInputDiscriminator validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error)
+        internal AddressValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error)
         {
             ValidationStatus = validationStatus;
             AlternateAddresses = alternateAddresses;

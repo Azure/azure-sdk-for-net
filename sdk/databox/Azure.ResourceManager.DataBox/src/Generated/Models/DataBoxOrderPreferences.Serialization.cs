@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Optional<IList<string>> preferredDataCenterRegion = default;
             Optional<TransportPreferences> transportPreferences = default;
-            Optional<EncryptionPreferences> encryptionPreferences = default;
+            Optional<DataBoxEncryptionPreferences> encryptionPreferences = default;
             Optional<IList<string>> storageAccountAccessTierPreferences = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value);
+                    encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageAccountAccessTierPreferences"))

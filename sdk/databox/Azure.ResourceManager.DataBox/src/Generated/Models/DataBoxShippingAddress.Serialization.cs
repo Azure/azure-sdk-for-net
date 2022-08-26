@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
             string postalCode = default;
             Optional<string> zipExtendedCode = default;
             Optional<string> companyName = default;
-            Optional<AddressType> addressType = default;
+            Optional<DataBoxShippingAddressType> addressType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streetAddress1"))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    addressType = property.Value.GetString().ToAddressType();
+                    addressType = property.Value.GetString().ToDataBoxShippingAddressType();
                     continue;
                 }
             }

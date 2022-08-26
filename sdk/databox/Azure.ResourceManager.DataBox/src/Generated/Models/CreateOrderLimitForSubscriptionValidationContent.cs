@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Request to validate create order limit for current subscription. </summary>
-    public partial class CreateOrderLimitForSubscriptionValidationContent : ValidationInputContent
+    public partial class CreateOrderLimitForSubscriptionValidationContent : DataBoxValidationInputContent
     {
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationContent. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         public CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType)
         {
             DeviceType = deviceType;
-            ValidationType = ValidationInputDiscriminator.ValidateCreateOrderLimit;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
         }
 
         /// <summary> Device type to be used for the job. </summary>

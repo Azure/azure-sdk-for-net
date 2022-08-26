@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ValidateAddressContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, ValidateAddressContent content, CancellationToken cancellationToken = default)
+        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public static Response<DataBoxValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataBoxSkuInformation> GetAvailableSkus(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public static Pageable<DataBoxSkuInformation> GetAvailableSkus(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ValidationResult>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ValidationResult> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidationContent content, CancellationToken cancellationToken = default)
+        public static Response<DataBoxValidationResult> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

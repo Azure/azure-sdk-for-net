@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Optional<AddressValidationStatus> validationStatus = default;
             Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
-            ValidationInputDiscriminator validationType = default;
+            DataBoxValidationInputDiscriminator validationType = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("validationType"))
                 {
-                    validationType = property.Value.GetString().ToValidationInputDiscriminator();
+                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
                     continue;
                 }
                 if (property.NameEquals("error"))

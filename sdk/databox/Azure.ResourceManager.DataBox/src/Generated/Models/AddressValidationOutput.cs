@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        internal AddressValidationOutput(ValidationInputDiscriminator? validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses)
+        internal AddressValidationOutput(DataBoxValidationInputDiscriminator? validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses)
         {
             ValidationType = validationType;
             Error = error;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Identifies the type of validation response. </summary>
-        internal ValidationInputDiscriminator? ValidationType { get; set; }
+        internal DataBoxValidationInputDiscriminator? ValidationType { get; set; }
         /// <summary> Error code and message of validation response. </summary>
         public ResponseError Error { get; }
         /// <summary> The address validation status. </summary>

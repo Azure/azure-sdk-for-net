@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Request to validate sku availability. </summary>
-    public partial class SkuAvailabilityValidationContent : ValidationInputContent
+    public partial class SkuAvailabilityValidationContent : DataBoxValidationInputContent
     {
         /// <summary> Initializes a new instance of SkuAvailabilityValidationContent. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
-        public SkuAvailabilityValidationContent(DataBoxSkuName deviceType, TransferType transferType, string country, AzureLocation location)
+        public SkuAvailabilityValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType, string country, AzureLocation location)
         {
             if (country == null)
             {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DataBox.Models
             TransferType = transferType;
             Country = country;
             Location = location;
-            ValidationType = ValidationInputDiscriminator.ValidateSkuAvailability;
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateSkuAvailability;
         }
 
         /// <summary> Device type to be used for the job. </summary>
         public DataBoxSkuName DeviceType { get; }
         /// <summary> Type of the transfer. </summary>
-        public TransferType TransferType { get; }
+        public DataBoxJobTransferType TransferType { get; }
         /// <summary> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </summary>
         public string Country { get; }
         /// <summary> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>

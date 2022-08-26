@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static AddressValidationOutput DeserializeAddressValidationOutput(JsonElement element)
         {
-            Optional<ValidationInputDiscriminator> validationType = default;
+            Optional<DataBoxValidationInputDiscriminator> validationType = default;
             Optional<ResponseError> error = default;
             Optional<AddressValidationStatus> validationStatus = default;
             Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            validationType = property0.Value.GetString().ToValidationInputDiscriminator();
+                            validationType = property0.Value.GetString().ToDataBoxValidationInputDiscriminator();
                             continue;
                         }
                         if (property0.NameEquals("error"))

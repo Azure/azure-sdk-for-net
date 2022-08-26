@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
         /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
-        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, EncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences)
+        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences)
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
             TransportPreferences = transportPreferences;
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Preferences related to the Encryption. </summary>
-        internal EncryptionPreferences EncryptionPreferences { get; set; }
+        internal DataBoxEncryptionPreferences EncryptionPreferences { get; set; }
         /// <summary> Defines secondary layer of software-based encryption enablement. </summary>
-        public DoubleEncryption? DoubleEncryption
+        public DataBoxDoubleEncryption? DoubleEncryption
         {
             get => EncryptionPreferences is null ? default : EncryptionPreferences.DoubleEncryption;
             set
             {
                 if (EncryptionPreferences is null)
-                    EncryptionPreferences = new EncryptionPreferences();
+                    EncryptionPreferences = new DataBoxEncryptionPreferences();
                 EncryptionPreferences.DoubleEncryption = value;
             }
         }

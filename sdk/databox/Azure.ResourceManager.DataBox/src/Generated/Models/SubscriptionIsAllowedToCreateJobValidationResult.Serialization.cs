@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static SubscriptionIsAllowedToCreateJobValidationResult DeserializeSubscriptionIsAllowedToCreateJobValidationResult(JsonElement element)
         {
-            Optional<ValidationStatus> status = default;
-            ValidationInputDiscriminator validationType = default;
+            Optional<DataBoxValidationStatus> status = default;
+            DataBoxValidationInputDiscriminator validationType = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToValidationStatus();
+                    status = property.Value.GetString().ToDataBoxValidationStatus();
                     continue;
                 }
                 if (property.NameEquals("validationType"))
                 {
-                    validationType = property.Value.GetString().ToValidationInputDiscriminator();
+                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
                     continue;
                 }
                 if (property.NameEquals("error"))

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public DataBoxBasicJobDetails(ContactDetails contactDetails)
+        public DataBoxBasicJobDetails(DataBoxContactDetails contactDetails)
         {
             if (contactDetails == null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, ContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode)
+        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode)
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> List of stages that run in the job. </summary>
         public IReadOnlyList<DataBoxJobStage> JobStages { get; }
         /// <summary> Contact details for notification and shipping. </summary>
-        public ContactDetails ContactDetails { get; set; }
+        public DataBoxContactDetails ContactDetails { get; set; }
         /// <summary> Shipping address of the customer. </summary>
         public DataBoxShippingAddress ShippingAddress { get; set; }
         /// <summary> Delivery package shipping details. </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Details of the data to be exported from azure. </summary>
         public IList<DataExportDetails> DataExportDetails { get; }
         /// <summary> Indicates the type of job details. </summary>
-        internal ClassDiscriminator JobDetailsType { get; set; }
+        internal DataBoxOrderType JobDetailsType { get; set; }
         /// <summary> Preferences for the order. </summary>
         public DataBoxOrderPreferences Preferences { get; set; }
         /// <summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         internal DataBoxSkuInformation()
         {
             DataLocationToServiceLocationMap = new ChangeTrackingList<DataLocationToServiceLocationMap>();
-            Costs = new ChangeTrackingList<SkuCost>();
+            Costs = new ChangeTrackingList<DataBoxSkuCost>();
             ApiVersions = new ChangeTrackingList<string>();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="disabledReason"> Reason why the Sku is disabled. </param>
         /// <param name="disabledReasonMessage"> Message for why the Sku is disabled. </param>
         /// <param name="requiredFeature"> Required feature to access the sku. </param>
-        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, SkuCapacity capacity, IReadOnlyList<SkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature)
+        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature)
         {
             Sku = sku;
             IsEnabled = isEnabled;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> The map of data location to service location. </summary>
         public IReadOnlyList<DataLocationToServiceLocationMap> DataLocationToServiceLocationMap { get; }
         /// <summary> Capacity of the Sku. </summary>
-        public SkuCapacity Capacity { get; }
+        public DataBoxSkuCapacity Capacity { get; }
         /// <summary> Cost of the Sku. </summary>
-        public IReadOnlyList<SkuCost> Costs { get; }
+        public IReadOnlyList<DataBoxSkuCost> Costs { get; }
         /// <summary> Api versions that support this Sku. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Reason why the Sku is disabled. </summary>

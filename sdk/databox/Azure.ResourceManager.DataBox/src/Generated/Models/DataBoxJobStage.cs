@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="stageStatus"> Status of the job stage. </param>
         /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
         /// <param name="jobStageDetails"> Job Stage Details. </param>
-        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, StageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails)
+        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails)
         {
             StageName = stageName;
             DisplayName = displayName;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Display name of the job stage. </summary>
         public string DisplayName { get; }
         /// <summary> Status of the job stage. </summary>
-        public StageStatus? StageStatus { get; }
+        public DataBoxStageStatus? StageStatus { get; }
         /// <summary>
         /// Job Stage Details
         /// <para>

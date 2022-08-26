@@ -67,6 +67,16 @@ prepend-rp-prefix:
   - AccessProtocol
   - AccountCredentialDetails
   - ContactDetails
+  - DiskSecret
+  - DoubleEncryption
+  - EncryptionPreferences
+  - SkuCapacity
+  - SkuCost
+  - StageStatus
+  - StorageAccountDetails
+  - ValidationStatus
+  - ValidationCategory
+  - ValidationInputDiscriminator
 
 rename-mapping:
   JobResource: DataBoxJob
@@ -80,7 +90,7 @@ rename-mapping:
   SkuAvailabilityValidationResponseProperties: SkuAvailabilityValidationResult
   SubscriptionIsAllowedToCreateJobValidationResponseProperties: SubscriptionIsAllowedToCreateJobValidationResult
   AddressValidationProperties: AddressValidationResult
-  ValidationInputResponse: ValidationInputResult
+  ValidationInputResponse: DataBoxValidationInputResult
   DataBoxCustomerDiskJobDetails.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
   DataBoxCustomerDiskJobDetails.exportDiskDetailsCollection: ExportDiskDetails
   DataBoxCustomerDiskJobDetails.importDiskDetailsCollection: ImportDiskDetails
@@ -98,7 +108,7 @@ rename-mapping:
   PreferencesValidationRequest: PreferencesValidationContent
   SkuAvailabilityValidationRequest: SkuAvailabilityValidationContent
   SubscriptionIsAllowedToCreateJobValidationRequest: SubscriptionIsAllowedToCreateJobValidationContent
-  ValidateAddress: ValidateAddressContent
+  ValidateAddress: DataBoxValidateAddressContent
   DcAccessSecurityCode: DataCenterAccessSecurityCode
   DcAccessSecurityCode.forwardDCAccessCode: ForwardDataCenterAccessCode
   DcAccessSecurityCode.reverseDCAccessCode: ReverseDataCenterAccessCode
@@ -115,14 +125,14 @@ rename-mapping:
   RegionConfigurationResponse: RegionConfigurationResult
   ShipmentPickUpResponse: DataBoxShipmentPickUpResult
   ShipmentPickUpResponse.readyByTime: ReadyBy
-  ValidationInputRequest: ValidationInputContent
-  ValidationRequest: ValidationContent
-  ValidationResponse: ValidationResult
+  ValidationInputRequest: DataBoxValidationInputContent
+  ValidationRequest: DataBoxValidationContent
+  ValidationResponse: DataBoxValidationResult
   AddressType: DataBoxShippingAddressType
-  
   AvailableSkuRequest: AvailableSkusContent
   CancellationReason: DataBoxJobCancellationReason
   ClassDiscriminator: DataBoxOrderType
+  TransferType: DataBoxJobTransferType
 
 
 override-operation-name:

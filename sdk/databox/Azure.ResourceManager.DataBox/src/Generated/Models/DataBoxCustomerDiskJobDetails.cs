@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> or <paramref name="returnToCustomerPackageDetails"/> is null. </exception>
-        public DataBoxCustomerDiskJobDetails(ContactDetails contactDetails, PackageCarrierDetails returnToCustomerPackageDetails) : base(contactDetails)
+        public DataBoxCustomerDiskJobDetails(DataBoxContactDetails contactDetails, PackageCarrierDetails returnToCustomerPackageDetails) : base(contactDetails)
         {
             if (contactDetails == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
             ExportDiskDetails = new ChangeTrackingDictionary<string, ExportDiskDetails>();
             CopyProgress = new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>();
             ReturnToCustomerPackageDetails = returnToCustomerPackageDetails;
-            JobDetailsType = ClassDiscriminator.DataBoxCustomerDisk;
+            JobDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
         /// <summary> Initializes a new instance of DataBoxCustomerDiskJobDetails. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="deliverToDataCenterPackageDetails"> Delivery package shipping details. </param>
         /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
         /// <param name="enableManifestBackup"> Flag to indicate if disk manifest should be backed-up in the Storage Account. </param>
-        internal DataBoxCustomerDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, ContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, ImportDiskDetails> importDiskDetails, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails, IReadOnlyList<DataBoxCustomerDiskCopyProgress> copyProgress, PackageCarrierInfo deliverToDataCenterPackageDetails, PackageCarrierDetails returnToCustomerPackageDetails, bool? enableManifestBackup) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
+        internal DataBoxCustomerDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTeraBytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, ImportDiskDetails> importDiskDetails, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails, IReadOnlyList<DataBoxCustomerDiskCopyProgress> copyProgress, PackageCarrierInfo deliverToDataCenterPackageDetails, PackageCarrierDetails returnToCustomerPackageDetails, bool? enableManifestBackup) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
         {
             ImportDiskDetails = importDiskDetails;
             ExportDiskDetails = exportDiskDetails;

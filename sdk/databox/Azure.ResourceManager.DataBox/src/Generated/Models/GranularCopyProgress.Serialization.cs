@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
         internal static GranularCopyProgress DeserializeGranularCopyProgress(JsonElement element)
         {
             Optional<string> storageAccountName = default;
-            Optional<TransferType> transferType = default;
+            Optional<DataBoxJobTransferType> transferType = default;
             Optional<DataAccountType> dataAccountType = default;
             Optional<ResourceIdentifier> accountId = default;
             Optional<long> bytesProcessed = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    transferType = property.Value.GetString().ToTransferType();
+                    transferType = property.Value.GetString().ToDataBoxJobTransferType();
                     continue;
                 }
                 if (property.NameEquals("dataAccountType"))

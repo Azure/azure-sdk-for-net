@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxDiskJobSecrets DeserializeDataBoxDiskJobSecrets(JsonElement element)
         {
-            Optional<IReadOnlyList<DiskSecret>> diskSecrets = default;
+            Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
             Optional<string> passKey = default;
             Optional<bool> isPasskeyUserDefined = default;
-            ClassDiscriminator jobSecretsType = default;
+            DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DiskSecret> array = new List<DiskSecret>();
+                    List<DataBoxDiskSecret> array = new List<DataBoxDiskSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskSecret.DeserializeDiskSecret(item));
+                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item));
                     }
                     diskSecrets = array;
                     continue;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("jobSecretsType"))
                 {
-                    jobSecretsType = property.Value.GetString().ToClassDiscriminator();
+                    jobSecretsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
                 if (property.NameEquals("dcAccessSecurityCode"))
