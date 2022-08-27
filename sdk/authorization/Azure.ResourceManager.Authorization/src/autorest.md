@@ -51,8 +51,8 @@ rename-mapping:
   RoleDefinition: AuthorizationRoleDefinition
   RoleType: AuthorizationRoleType
   PolicyProperties: RoleManagementPolicyProperties
-  Principal: ServicePrincipal
-  PrincipalType: ServicePrincipalType
+  Principal: RoleManagementPrincipal
+  PrincipalType: RoleManagementPrincipalType
   ProviderOperation: AuthorizationProviderOperationInfo
   ProviderOperationsMetadata: AuthorizationProviderOperationsMetadata
   ProviderOperationsMetadataListResult: AuthorizationProviderOperationsMetadataListResult

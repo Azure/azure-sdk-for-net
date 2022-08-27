@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<Guid> id = default;
             Optional<string> displayName = default;
             Optional<string> email = default;
-            Optional<ServicePrincipalType> type = default;
+            Optional<RoleManagementPrincipalType> type = default;
             Optional<ResourceIdentifier> id0 = default;
             Optional<string> displayName0 = default;
             Optional<AuthorizationRoleType> type0 = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Authorization.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type = new ServicePrincipalType(property0.Value.GetString());
+                            type = new RoleManagementPrincipalType(property0.Value.GetString());
                             continue;
                         }
                     }

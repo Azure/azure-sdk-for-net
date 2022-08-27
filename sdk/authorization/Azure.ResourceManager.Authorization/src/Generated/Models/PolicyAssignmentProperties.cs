@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>
-        internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyId, ServicePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType) : base(id, name, resourceType, systemData)
+        internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
             LastModifiedBy = lastModifiedBy;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Id of the policy. </summary>
         public ResourceIdentifier PolicyId { get; }
         /// <summary> The name of the entity last modified it. </summary>
-        public ServicePrincipal LastModifiedBy { get; }
+        public RoleManagementPrincipal LastModifiedBy { get; }
         /// <summary> The last modified date time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Id of the role definition. </summary>

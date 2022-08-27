@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>
-        internal RoleManagementExpandedProperties(Guid? principalId, string principalDisplayName, string email, ServicePrincipalType? principalType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType)
+        internal RoleManagementExpandedProperties(Guid? principalId, string principalDisplayName, string email, RoleManagementPrincipalType? principalType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType)
         {
             PrincipalId = principalId;
             PrincipalDisplayName = principalDisplayName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Email id of the principal. </summary>
         public string Email { get; }
         /// <summary> Type of the principal. </summary>
-        public ServicePrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Id of the role definition. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> Display name of the role definition. </summary>

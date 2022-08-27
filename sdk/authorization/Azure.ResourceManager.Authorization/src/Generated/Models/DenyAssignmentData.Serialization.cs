@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<IReadOnlyList<DenyAssignmentPermission>> permissions = default;
             Optional<string> scope = default;
             Optional<bool> doNotApplyToChildScopes = default;
-            Optional<IReadOnlyList<ServicePrincipal>> principals = default;
-            Optional<IReadOnlyList<ServicePrincipal>> excludePrincipals = default;
+            Optional<IReadOnlyList<RoleManagementPrincipal>> principals = default;
+            Optional<IReadOnlyList<RoleManagementPrincipal>> excludePrincipals = default;
             Optional<bool> isSystemProtected = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServicePrincipal> array = new List<ServicePrincipal>();
+                            List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServicePrincipal.DeserializeServicePrincipal(item));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
                             }
                             principals = array;
                             continue;
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServicePrincipal> array = new List<ServicePrincipal>();
+                            List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServicePrincipal.DeserializeServicePrincipal(item));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
                             }
                             excludePrincipals = array;
                             continue;

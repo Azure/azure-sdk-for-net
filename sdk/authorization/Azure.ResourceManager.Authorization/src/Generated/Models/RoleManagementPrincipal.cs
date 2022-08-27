@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The name of the entity last modified it. </summary>
-    public partial class ServicePrincipal
+    public partial class RoleManagementPrincipal
     {
-        /// <summary> Initializes a new instance of ServicePrincipal. </summary>
-        internal ServicePrincipal()
+        /// <summary> Initializes a new instance of RoleManagementPrincipal. </summary>
+        internal RoleManagementPrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of RoleManagementPrincipal. </summary>
         /// <param name="id"> The id of the principal made changes. </param>
         /// <param name="displayName"> The name of the principal made changes. </param>
         /// <param name="principalType"> Type of the principal. </param>
         /// <param name="email"> Email of principal. </param>
-        internal ServicePrincipal(string id, string displayName, ServicePrincipalType? principalType, string email)
+        internal RoleManagementPrincipal(string id, string displayName, RoleManagementPrincipalType? principalType, string email)
         {
             Id = id;
             DisplayName = displayName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> The name of the principal made changes. </summary>
         public string DisplayName { get; }
         /// <summary> Type of the principal. </summary>
-        public ServicePrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Email of principal. </summary>
         public string Email { get; }
     }

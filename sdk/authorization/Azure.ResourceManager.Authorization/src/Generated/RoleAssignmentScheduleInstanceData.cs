@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, ServicePrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? linkedRoleEligibilityScheduleId, Guid? linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? linkedRoleEligibilityScheduleId, Guid? linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The principal ID. </summary>
         public Guid? PrincipalId { get; }
         /// <summary> The principal type of the assigned principal ID. </summary>
-        public ServicePrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Id of the master role assignment schedule. </summary>
         public ResourceIdentifier RoleAssignmentScheduleId { get; }
         /// <summary> Role Assignment Id in external system. </summary>

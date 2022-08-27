@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class ServicePrincipal
+    public partial class RoleManagementPrincipal
     {
-        internal static ServicePrincipal DeserializeServicePrincipal(JsonElement element)
+        internal static RoleManagementPrincipal DeserializeRoleManagementPrincipal(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> displayName = default;
-            Optional<ServicePrincipalType> type = default;
+            Optional<RoleManagementPrincipalType> type = default;
             Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ServicePrincipalType(property.Value.GetString());
+                    type = new RoleManagementPrincipalType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("email"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new ServicePrincipal(id.Value, displayName.Value, Optional.ToNullable(type), email.Value);
+            return new RoleManagementPrincipal(id.Value, displayName.Value, Optional.ToNullable(type), email.Value);
         }
     }
 }

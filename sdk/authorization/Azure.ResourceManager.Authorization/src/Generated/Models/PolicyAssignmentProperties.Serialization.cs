@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> id0 = default;
-            Optional<ServicePrincipal> lastModifiedBy = default;
+            Optional<RoleManagementPrincipal> lastModifiedBy = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             Optional<ResourceIdentifier> id1 = default;
             Optional<string> displayName = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Authorization.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastModifiedBy = ServicePrincipal.DeserializeServicePrincipal(property0.Value);
+                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDateTime"))
