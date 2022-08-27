@@ -355,6 +355,55 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public async Task AnalyzeHealthcareEntitiesBatchWithNameTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                DisplayName = "AnalyzeHealthcareEntitiesBatchWithNameTest",
+            });
+
+            await operation.WaitForCompletionAsync();
+
+            ValidateOperationProperties(operation);
+            Assert.AreEqual("AnalyzeHealthcareEntitiesBatchWithNameTest", operation.DisplayName);
+
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedEntitiesOutput },
+                { "2", s_document2ExpectedEntitiesOutput },
+            };
+
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeHealthcareEntitiesBatchWithNameThrows()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
+            {
+                DisplayName = "AnalyzeHealthcareEntitiesBatchWithNameThrows",
+            }));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("StartAnalyzeHealthcareEntitiesAsync is only available for API version 2022-05-01 and newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("StartAnalyzeHealthcareEntities is only available for API version 2022-05-01 and newer.", ex.Message);
+            }
+        }
+
+        [RecordedTest]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();

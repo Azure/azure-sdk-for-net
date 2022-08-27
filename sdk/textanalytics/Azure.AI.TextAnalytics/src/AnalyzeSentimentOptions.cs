@@ -32,8 +32,15 @@ namespace Azure.AI.TextAnalytics
         /// will contain the result of this analysis.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
+
+        internal new AnalyzeSentimentOptions CheckSupported(TextAnalyticsClientOptions.ServiceVersion version)
+        {
+            base.CheckSupported(version);
+            Validation.SupportsProperty(IncludeOpinionMining, nameof(IncludeOpinionMining), TextAnalyticsClientOptions.ServiceVersion.V3_1, version);
+            return this;
+        }
     }
 }

@@ -35,8 +35,13 @@ namespace Azure.AI.TextAnalytics
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
+
+        /// <summary>
+        /// Optional display name for the operation.
+        /// </summary>
+        public string DisplayName { get; set; }
     }
 }

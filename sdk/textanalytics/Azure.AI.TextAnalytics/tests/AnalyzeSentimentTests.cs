@@ -472,6 +472,56 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, AnalyzeSentimentActionsResults.Select(result => result.ActionName));
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task AnalyzeSentimentBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void AnalyzeSentimentBatchDisableServiceLogsThrows()
+        {
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("DisableServiceLogs is only available for API version v3.1 and newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task AnalyzeSentimentBatchIncludeOpinionMining()
+        {
+            TextAnalyticsClient client = GetClient();
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new AnalyzeSentimentOptions { IncludeOpinionMining = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void AnalyzeSentimentBatchIncludeOpinionMiningThrows()
+        {
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new AnalyzeSentimentOptions { IncludeOpinionMining = true }));
+            Assert.AreEqual("IncludeOpinionMining is only available for API version v3.1 and newer.", ex.Message);
+        }
+
         private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)
         {
             Assert.IsNotNull(doc.ConfidenceScores.Positive);

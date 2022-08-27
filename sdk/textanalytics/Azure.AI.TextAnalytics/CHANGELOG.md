@@ -4,11 +4,23 @@
 
 ### Features Added
 
+- Added `DisplayName` property to the following classes to set the optional display name:
+  - `AnalyzeHealthcareEntitiesOptions`
+  - `MultiLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOptions`
+  - `SingleLabelClassifyOptions`
+- Added `DisplayName` property to the following operations to read the optional display name set on options classes above:
+  - `AnalyzeHealthcareEntitiesOperation` from `AnalyzeHealthcareEntitiesOptions`
+  - `ClassifyDocumentOperation` from `MultiLabelClassifyOptions` and `SingleLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOperation` from `RecognizeCustomEntitiesOptions`
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Validate that a number of operations and model properties are only used for API versions in which they were defined, or newer API versions.
 
 ## 5.2.0-beta.4 (2022-08-12)
 

@@ -253,6 +253,31 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, RecognizeLinkedEntitiesActionsResults.Select(result => result.ActionName));
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task RecognizeLinkedEntitiesBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void RecognizeLinkedEntitiesBatchDisableServiceLogsThrows()
+        {
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("DisableServiceLogs is only available for API version v3.1 and newer.", ex.Message);
+        }
+
         private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);

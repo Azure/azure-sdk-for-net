@@ -235,6 +235,25 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, ExtractKeyPhrasesActionsResults.Select(result => result.ActionName));
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task ExtractKeyPhrasesBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            ValidateBatchDocumentsResult(results, 3);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void ExtractKeyPhrasesBatchDisableServiceLogsThrows()
+        {
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.ExtractKeyPhrasesBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("DisableServiceLogs is only available for API version v3.1 and newer.", ex.Message);
+        }
+
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
         {
             Assert.IsNotNull(keyPhrases.Warnings);

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -52,8 +54,14 @@ namespace Azure.AI.TextAnalytics
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
+
+        internal TextAnalyticsRequestOptions CheckSupported(TextAnalyticsClientOptions.ServiceVersion version)
+        {
+            Validation.SupportsProperty(DisableServiceLogs, nameof(DisableServiceLogs), TextAnalyticsClientOptions.ServiceVersion.V3_1, version);
+            return this;
+        }
     }
 }

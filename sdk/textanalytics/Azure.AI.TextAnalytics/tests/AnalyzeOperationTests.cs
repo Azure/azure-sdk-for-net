@@ -741,6 +741,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeOperationAnalyzeHealthcareEntities()
         {
             TextAnalyticsClient client = GetClient();
@@ -777,6 +778,78 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // BUGBUG: HealthcareEntityCategory is returned as PascalCase though both the 3.1 and 2022-05-01 swaggers define them as SCREAMING_SNAKE_CASE: https://github.com/Azure/azure-rest-api-specs/issues/20024
             // Assert.That(analyzeHealthcareEntitiesActionResults, Has.Some.Matches<AnalyzeHealthcareEntitiesActionResult>(result => result.DocumentsResults.SelectMany(doc => doc.Entities).Any(e => e.Category == HealthcareEntityCategory.MedicationName && e.Text == "ibuprofen")));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                AnalyzeHealthcareEntitiesActions = new[]
+                {
+                    new AnalyzeHealthcareEntitiesAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("AnalyzeHealthcareEntitiesAction is only available for API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationMultiLabelClassifyActionNotSupported()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                MultiLabelClassifyActions = new[]
+                {
+                    new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("MultiLabelClassifyAction is only available for API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationRecognizeCustomEntitiesActionNotSupported()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizeCustomEntitiesActions = new[]
+                {
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("RecognizeCustomEntitiesAction is only available for API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationSingleLabelClassifyActionNotSupported()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                SingleLabelClassifyActions = new[]
+                {
+                    new SingleLabelClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.AreEqual("SingleLabelClassifyAction is only available for API version 2022-05-01 or newer.", ex.Message);
         }
     }
 }
