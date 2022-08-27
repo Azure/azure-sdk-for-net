@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    // Data plane generated sub-client. The PurviewLineages service client.
-    /// <summary> The PurviewLineages service client. </summary>
+    // Data plane generated sub-client. The PurviewLineages sub-client.
+    /// <summary> The PurviewLineages sub-client. </summary>
     public partial class PurviewLineages
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
