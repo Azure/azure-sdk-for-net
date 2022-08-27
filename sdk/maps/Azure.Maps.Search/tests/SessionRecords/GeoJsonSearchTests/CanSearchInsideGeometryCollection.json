@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "364",
         "Content-Type": "application/json",
-        "traceparent": "00-2a9bf10763632751851e12cfe09775c0-70ef8afd502b8187-00",
+        "traceparent": "00-7603e897c703d623278370dbeb398a94-f895dc619f058ae6-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "92667ab7b3ce7f12689c1d65d1d7e556",
+        "x-ms-client-request-id": "fdaa7817a1d9ee9f6831efc1b530c4d8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -73,9 +73,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10086",
+        "Content-Length": "10063",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Aug 2022 07:08:34 GMT",
+        "Date": "Sat, 27 Aug 2022 00:41:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,7 +84,7 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 02233BB20BD343828F005CB18834EC0E Ref B: PAOEDGE0516 Ref C: 2022-08-26T07:08:34Z"
+        "X-MSEdge-Ref": "Ref A: C8BA3C82D89742518D8291574CDFF255 Ref B: PAOEDGE0522 Ref C: 2022-08-27T00:41:55Z"
       },
       "ResponseBody": {
         "summary": {
@@ -99,19 +99,20 @@
         "results": [
           {
             "type": "POI",
-            "id": "158009002039083",
-            "score": 2.1456027031,
-            "info": "search:ta:158009002039083-TW",
+            "id": "158007000069409",
+            "score": 2.1455876827,
+            "info": "search:ta:158007000069409-TW",
             "poi": {
-              "name": "Fuji Flower And Cafe",
+              "name": "\u638C\u751F\u7A40\u7C92",
+              "phone": "\u002B886 2 6636 5888",
               "categorySet": [
                 {
-                  "id": 9376002
+                  "id": 9376005
                 }
               ],
               "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
+                "caf\u00E9/pub",
+                "tea house"
               ],
               "classifications": [
                 {
@@ -119,69 +120,69 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "tea house"
                     }
                   ]
                 }
               ]
             },
             "address": {
-              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 22",
+              "streetName": "Yanchang Road",
               "municipalitySubdivision": "Xinyi District",
               "municipality": "Taipei City",
               "countrySubdivision": "Taipei City",
               "postalCode": "110",
+              "extendedPostalCode": "11072",
               "countryCode": "TW",
               "country": "Taiwan",
               "countryCodeISO3": "TWN",
-              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553 Alley 22, Xinyi District, Taipei City 110",
+              "freeformAddress": "Yanchang Road, Xinyi District, Taipei City 11072",
               "localName": "Xinyi District"
             },
             "position": {
-              "lat": 25.04334,
-              "lon": 121.56332
+              "lat": 25.04427,
+              "lon": 121.56135
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 25.04424,
-                "lon": 121.56233
+                "lat": 25.04517,
+                "lon": 121.56036
               },
               "btmRightPoint": {
-                "lat": 25.04244,
-                "lon": 121.56431
+                "lat": 25.04337,
+                "lon": 121.56234
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 25.04325,
-                  "lon": 121.56331
+                  "lat": 25.04496,
+                  "lon": 121.56117
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "158009001796051",
-            "score": 2.1455848217,
-            "info": "search:ta:158009001796051-TW",
+            "id": "840069021163058",
+            "score": 2.1455757618,
+            "info": "search:ta:840069021163058-US",
             "poi": {
-              "name": "Wired Cafe",
-              "phone": "\u002B886 2 2764 4322",
+              "name": "Cuthbert\u0027s Tea Shoppe",
               "categorySet": [
                 {
-                  "id": 9376002
+                  "id": 9376005
                 }
               ],
-              "url": "brugescafe.com",
+              "url": "www.cuthbertsteashoppe.com",
               "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
+                "caf\u00E9/pub",
+                "tea house"
               ],
               "classifications": [
                 {
@@ -189,124 +190,64 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "tea house"
                     }
                   ]
                 }
               ]
             },
             "address": {
-              "streetNumber": "188-2",
-              "streetName": "Keelung Road Section 1",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "extendedPostalCode": "11006",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "188-2, Keelung Road Section 1, Xinyi District, Taipei City 11006",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.04201,
-              "lon": 121.5647
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.04291,
-                "lon": 121.56371
-              },
-              "btmRightPoint": {
-                "lat": 25.04111,
-                "lon": 121.56569
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.04195,
-                  "lon": 121.56477
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "840069019519139",
-            "score": 2.1455721855,
-            "info": "search:ta:840069019519139-US",
-            "poi": {
-              "name": "Progressive Grounds",
-              "phone": "\u002B1 415-282-6233",
-              "categorySet": [
-                {
-                  "id": 9376002
-                }
-              ],
-              "url": "progressivegrounds.com",
-              "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "400",
-              "streetName": "Cortland Avenue",
-              "municipalitySubdivision": "Bernal Heights",
-              "municipality": "San Francisco",
-              "countrySecondarySubdivision": "San Francisco",
+              "streetNumber": "2600",
+              "streetName": "Geneva Avenue",
+              "municipality": "Daly City",
+              "countrySecondarySubdivision": "San Mateo",
               "countrySubdivision": "CA",
               "countrySubdivisionName": "California",
-              "postalCode": "94110",
-              "extendedPostalCode": "94110-5538",
+              "postalCode": "94014",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "400 Cortland Avenue, San Francisco, CA 94110",
-              "localName": "San Francisco"
+              "freeformAddress": "2600 Geneva Avenue, Daly City, CA 94014",
+              "localName": "Daly City"
             },
             "position": {
-              "lat": 37.73903,
-              "lon": -122.4177
+              "lat": 37.7079,
+              "lon": -122.41914
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 37.73993,
-                "lon": -122.41884
+                "lat": 37.71322,
+                "lon": -122.42587
               },
               "btmRightPoint": {
-                "lat": 37.73813,
-                "lon": -122.41656
+                "lat": 37.70258,
+                "lon": -122.41241
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 37.73919,
-                  "lon": -122.41769
+                  "lat": 37.70785,
+                  "lon": -122.41867
+                }
+              },
+              {
+                "type": "minor",
+                "position": {
+                  "lat": 37.70277,
+                  "lon": -122.42094
+                }
+              },
+              {
+                "type": "minor",
+                "position": {
+                  "lat": 37.70826,
+                  "lon": -122.42013
                 }
               }
             ]
@@ -314,7 +255,7 @@
           {
             "type": "POI",
             "id": "158007000131232",
-            "score": 2.1455581188,
+            "score": 2.1455624104,
             "info": "search:ta:158007000131232-TW",
             "poi": {
               "name": "11 Cafe",
@@ -382,12 +323,11 @@
           },
           {
             "type": "POI",
-            "id": "158009001773748",
-            "score": 2.1455419064,
-            "info": "search:ta:158009001773748-TW",
+            "id": "158009001697825",
+            "score": 2.1455323696,
+            "info": "search:ta:158009001697825-TW",
             "poi": {
-              "name": "a day ri chang sheng huo",
-              "phone": "\u002B886 2 2766 7776",
+              "name": "7Teahouse",
               "categorySet": [
                 {
                   "id": 9376002
@@ -414,7 +354,7 @@
               ]
             },
             "address": {
-              "streetNumber": "11",
+              "streetNumber": "16",
               "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 46",
               "municipalitySubdivision": "Xinyi District",
               "municipality": "Taipei City",
@@ -423,21 +363,21 @@
               "countryCode": "TW",
               "country": "Taiwan",
               "countryCodeISO3": "TWN",
-              "freeformAddress": "11, Zhongxiao East Road Section 4 Lane 553 Alley 46, Xinyi District, Taipei City 110",
+              "freeformAddress": "16, Zhongxiao East Road Section 4 Lane 553 Alley 46, Xinyi District, Taipei City 110",
               "localName": "Xinyi District"
             },
             "position": {
-              "lat": 25.04428,
-              "lon": 121.56349
+              "lat": 25.0441,
+              "lon": 121.56348
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 25.04518,
-                "lon": 121.5625
+                "lat": 25.045,
+                "lon": 121.56249
               },
               "btmRightPoint": {
-                "lat": 25.04338,
-                "lon": 121.56448
+                "lat": 25.0432,
+                "lon": 121.56447
               }
             },
             "entryPoints": [
@@ -445,18 +385,19 @@
                 "type": "main",
                 "position": {
                   "lat": 25.04419,
-                  "lon": 121.56349
+                  "lon": 121.56348
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "158007000164726",
-            "score": 2.1455347538,
-            "info": "search:ta:158007000164726-TW",
+            "id": "840069019636456",
+            "score": 2.145512104,
+            "info": "search:ta:840069019636456-US",
             "poi": {
-              "name": "Comebuytea",
+              "name": "Lucky Deli Cafe",
+              "phone": "\u002B1 415-825-5315",
               "categorySet": [
                 {
                   "id": 9376002
@@ -483,123 +424,53 @@
               ]
             },
             "address": {
-              "streetName": "Zhongxiao East Road Section 4 Lane 553",
-              "municipalitySubdivision": "Xinyi District",
-              "municipality": "Taipei City",
-              "countrySubdivision": "Taipei City",
-              "postalCode": "110",
-              "countryCode": "TW",
-              "country": "Taiwan",
-              "countryCodeISO3": "TWN",
-              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553, Xinyi District, Taipei City 110",
-              "localName": "Xinyi District"
-            },
-            "position": {
-              "lat": 25.04431,
-              "lon": 121.56139
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 25.04558,
-                "lon": 121.55999
-              },
-              "btmRightPoint": {
-                "lat": 25.04304,
-                "lon": 121.56279
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": 25.04447,
-                  "lon": 121.56278
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "840069019418967",
-            "score": 2.145524025,
-            "info": "search:ta:840069019418967-US",
-            "poi": {
-              "name": "Cafe Seventy8",
-              "phone": "\u002B1 415-970-2233",
-              "categorySet": [
-                {
-                  "id": 9376002
-                }
-              ],
-              "url": "cafeseventy8.com",
-              "categories": [
-                "caf\u00E9",
-                "caf\u00E9/pub"
-              ],
-              "classifications": [
-                {
-                  "code": "CAFE_PUB",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9"
-                    },
-                    {
-                      "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetNumber": "78",
-              "streetName": "29th Street",
-              "municipalitySubdivision": "Bernal Heights",
+              "streetNumber": "2609",
+              "streetName": "San Bruno Avenue",
+              "municipalitySubdivision": "Portola",
               "municipality": "San Francisco",
               "countrySecondarySubdivision": "San Francisco",
               "countrySubdivision": "CA",
               "countrySubdivisionName": "California",
-              "postalCode": "94110",
-              "extendedPostalCode": "94110-4911",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-1506",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "78 29th Street, San Francisco, CA 94110",
+              "freeformAddress": "2609 San Bruno Avenue, San Francisco, CA 94134",
               "localName": "San Francisco"
             },
             "position": {
-              "lat": 37.74411,
-              "lon": -122.42175
+              "lat": 37.72868,
+              "lon": -122.40375
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 37.74501,
-                "lon": -122.42289
+                "lat": 37.72958,
+                "lon": -122.40489
               },
               "btmRightPoint": {
-                "lat": 37.74321,
-                "lon": -122.42061
+                "lat": 37.72778,
+                "lon": -122.40261
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 37.744,
-                  "lon": -122.42183
+                  "lat": 37.72861,
+                  "lon": -122.40401
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "158009001762518",
-            "score": 2.1455185413,
-            "info": "search:ta:158009001762518-TW",
+            "id": "158009001772576",
+            "score": 2.1455116272,
+            "info": "search:ta:158009001772576-TW",
             "poi": {
-              "name": "na tie zhuan mai dian",
-              "phone": "\u002B886 2 2749 5567",
+              "name": "bu lang ni ka fei",
+              "phone": "\u002B886 2 8786 0833",
               "categorySet": [
                 {
                   "id": 9376002
@@ -626,49 +497,50 @@
               ]
             },
             "address": {
-              "streetNumber": "12",
-              "streetName": "Zhongxiao East Road Section 4 Lane 559",
+              "streetNumber": "3",
+              "streetName": "Yixian Road Lane 42",
               "municipalitySubdivision": "Xinyi District",
               "municipality": "Taipei City",
               "countrySubdivision": "Taipei City",
               "postalCode": "110",
+              "extendedPostalCode": "11071",
               "countryCode": "TW",
               "country": "Taiwan",
               "countryCodeISO3": "TWN",
-              "freeformAddress": "12, Zhongxiao East Road Section 4 Lane 559, Xinyi District, Taipei City 110",
+              "freeformAddress": "3, Yixian Road Lane 42, Xinyi District, Taipei City 11071",
               "localName": "Xinyi District"
             },
             "position": {
-              "lat": 25.04206,
-              "lon": 121.56375
+              "lat": 25.04032,
+              "lon": 121.56207
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 25.04296,
-                "lon": 121.56276
+                "lat": 25.04122,
+                "lon": 121.56108
               },
               "btmRightPoint": {
-                "lat": 25.04116,
-                "lon": 121.56474
+                "lat": 25.03942,
+                "lon": 121.56306
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 25.04206,
-                  "lon": 121.56364
+                  "lat": 25.04022,
+                  "lon": 121.56206
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "158009001681280",
-            "score": 2.1455180645,
-            "info": "search:ta:158009001681280-TW",
+            "id": "158009001711080",
+            "score": 2.1455070972,
+            "info": "search:ta:158009001711080-TW",
             "poi": {
-              "name": "jiu shi xing fu ka fei fang",
+              "name": "fu hong ka fei bian li wu",
               "categorySet": [
                 {
                   "id": 9376006
@@ -695,8 +567,8 @@
               ]
             },
             "address": {
-              "streetNumber": "8-1",
-              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 16",
+              "streetNumber": "2-1",
+              "streetName": "Zhongxiao East Road Section 4 Lane 559 Alley 16",
               "municipalitySubdivision": "Xinyi District",
               "municipality": "Taipei City",
               "countrySubdivision": "Taipei City",
@@ -704,53 +576,48 @@
               "countryCode": "TW",
               "country": "Taiwan",
               "countryCodeISO3": "TWN",
-              "freeformAddress": "8-1, Zhongxiao East Road Section 4 Lane 553 Alley 16, Xinyi District, Taipei City 110",
+              "freeformAddress": "2-1, Zhongxiao East Road Section 4 Lane 559 Alley 16, Xinyi District, Taipei City 110",
               "localName": "Xinyi District"
             },
             "position": {
-              "lat": 25.04221,
-              "lon": 121.5632
+              "lat": 25.0422,
+              "lon": 121.56382
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 25.04311,
-                "lon": 121.56221
+                "lat": 25.0431,
+                "lon": 121.56283
               },
               "btmRightPoint": {
-                "lat": 25.04131,
-                "lon": 121.56419
+                "lat": 25.0413,
+                "lon": 121.56481
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 25.04274,
-                  "lon": 121.56322
+                  "lat": 25.04229,
+                  "lon": 121.56379
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "158009000763050",
-            "score": 2.1455111504,
-            "info": "search:ta:158009000763050-TW",
+            "id": "158007000162764",
+            "score": 2.1455070972,
+            "info": "search:ta:158007000162764-TW",
             "poi": {
-              "name": "tian ren ming cha cheng pin song yan dian",
-              "phone": "\u002B886 2 6638 5206",
-              "brands": [
-                {
-                  "name": "Ten Ren\u0027s Tea"
-                }
-              ],
+              "name": "\u5C0F\u78BA\u5E78\u7D05\u8336\u725B\u5976\u5408\u4F5C\u793E",
               "categorySet": [
                 {
-                  "id": 9376
+                  "id": 9376005
                 }
               ],
               "categories": [
-                "caf\u00E9/pub"
+                "caf\u00E9/pub",
+                "tea house"
               ],
               "classifications": [
                 {
@@ -759,45 +626,190 @@
                     {
                       "nameLocale": "en-US",
                       "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "tea house"
                     }
                   ]
                 }
               ]
             },
             "address": {
-              "streetNumber": "88",
-              "streetName": "Yanchang Road",
               "municipalitySubdivision": "Xinyi District",
               "municipality": "Taipei City",
               "countrySubdivision": "Taipei City",
               "postalCode": "110",
-              "extendedPostalCode": "11072",
               "countryCode": "TW",
               "country": "Taiwan",
               "countryCodeISO3": "TWN",
-              "freeformAddress": "88, Yanchang Road, Xinyi District, Taipei City 11072",
+              "freeformAddress": "Xinyi District, Taipei City 110",
               "localName": "Xinyi District"
             },
             "position": {
-              "lat": 25.04474,
-              "lon": 121.56111
+              "lat": 25.0443,
+              "lon": 121.56131
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 25.04564,
-                "lon": 121.56012
+                "lat": 25.0452,
+                "lon": 121.56032
               },
               "btmRightPoint": {
-                "lat": 25.04384,
-                "lon": 121.5621
+                "lat": 25.0434,
+                "lon": 121.5623
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": 25.04496,
-                  "lon": 121.56112
+                  "lat": 25.04474,
+                  "lon": 121.56169
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "158009002048140",
+            "score": 2.1455066204,
+            "info": "search:ta:158009002048140-TW",
+            "poi": {
+              "name": "Xie Xie Taipei",
+              "phone": "\u002B886 2 2753 1511",
+              "categorySet": [
+                {
+                  "id": 9376005
+                }
+              ],
+              "url": "www.xiexietea.com/cht/index.php",
+              "categories": [
+                "caf\u00E9/pub",
+                "tea house"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "tea house"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Zhongxiao East Road Section 4 Lane 553 Alley 22",
+              "municipalitySubdivision": "Xinyi District",
+              "municipality": "Taipei City",
+              "countrySubdivision": "Taipei City",
+              "postalCode": "110",
+              "countryCode": "TW",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "Zhongxiao East Road Section 4 Lane 553 Alley 22, Xinyi District, Taipei City 110",
+              "localName": "Xinyi District"
+            },
+            "position": {
+              "lat": 25.04316,
+              "lon": 121.56323
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 25.04406,
+                "lon": 121.56224
+              },
+              "btmRightPoint": {
+                "lat": 25.04226,
+                "lon": 121.56422
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 25.04325,
+                  "lon": 121.56323
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840061002135285",
+            "score": 2.145506382,
+            "info": "search:ta:840061002135285-US",
+            "poi": {
+              "name": "Monte Carlo",
+              "phone": "\u002B1 415-822-7338",
+              "categorySet": [
+                {
+                  "id": 9376003
+                }
+              ],
+              "url": "www.themontecarloclub.org/",
+              "categories": [
+                "caf\u00E9/pub",
+                "pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "1705",
+              "streetName": "Yosemite Avenue",
+              "municipalitySubdivision": "Bayview",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94124",
+              "extendedPostalCode": "94124-3239",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "1705 Yosemite Avenue, San Francisco, CA 94124",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.72621,
+              "lon": -122.39025
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.72711,
+                "lon": -122.39139
+              },
+              "btmRightPoint": {
+                "lat": 37.72531,
+                "lon": -122.38911
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72608,
+                  "lon": -122.39033
                 }
               }
             ]
@@ -810,6 +822,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "3066668"
+    "RandomSeed": "215943001"
   }
 }

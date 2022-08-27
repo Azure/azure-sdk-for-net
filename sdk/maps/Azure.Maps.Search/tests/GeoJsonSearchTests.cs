@@ -20,23 +20,23 @@ namespace Azure.Maps.Search.Tests
             CompareBodies = false;
         }
 
-        // [RecordedTest]
-        // public async Task CanDescribeSearchResultReferencedGeometry()
-        // {
-        //     var client = CreateClient();
-        //     var searchResult = await client.SearchAddressAsync("Seattle");
-        //     var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
-        //     var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
+        [RecordedTest]
+        public async Task CanDescribeSearchResultReferencedGeometry()
+        {
+            var client = CreateClient();
+            var searchResult = await client.SearchAddressAsync("Seattle");
+            var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
+            var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
-        //     // Seattle municipality geometry
-        //     PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
-        //     IReadOnlyList<PolygonObject> polygonList = polygonResponse.Polygons;
-        //     List<String> providerIds = new List<string>();
-        //     foreach (PolygonObject polygon in polygonList) {
-        //         providerIds.Add(polygon.ProviderId);
-        //     }
-        //     CollectionAssert.Contains(providerIds, geometry0Id);
-        // }
+            // Seattle municipality geometry
+            PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
+            IReadOnlyList<PolygonObject> polygonList = polygonResponse.Polygons;
+            List<String> providerIds = new List<string>();
+            foreach (PolygonObject polygon in polygonList) {
+                providerIds.Add(polygon.ProviderId);
+            }
+            CollectionAssert.Contains(providerIds, geometry0Id);
+        }
 
         [RecordedTest]
         public void InvalidSearchAddressTest()
@@ -47,14 +47,14 @@ namespace Azure.Maps.Search.Tests
             Assert.AreEqual(400, ex.Status);
         }
 
-        // [RecordedTest]
-        // public void InvalidGetPolygonsTest()
-        // {
-        //     var client = CreateClient();
-        //     RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-        //            async () => await client.GetPolygonsAsync(new string[] {}));
-        //     Assert.AreEqual(400, ex.Status);
-        // }
+        [RecordedTest]
+        public void InvalidGetPolygonsTest()
+        {
+            var client = CreateClient();
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.GetPolygonsAsync(new string[] {}));
+            Assert.AreEqual(400, ex.Status);
+        }
 
         [RecordedTest]
         public void InvalidSearchInsideGeometryTest()
@@ -120,7 +120,7 @@ namespace Azure.Maps.Search.Tests
             }";
             GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", polygon);
-            Assert.AreEqual("San Francisco", searchResponse.Value.Results.First().Address.Municipality);
+            Assert.AreEqual("Daly City", searchResponse.Value.Results.First().Address.Municipality);
             Assert.IsNotNull("CAFE_PUB", searchResponse.Value.Results.First().PointOfInterest.Classifications.First().Code);
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Maps.Search.Tests
             ";
             GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", polygon);
-            Assert.AreEqual("San Francisco", searchResponse.Value.Results.First().Address.Municipality);
+            Assert.AreEqual("Daly City", searchResponse.Value.Results.First().Address.Municipality);
             Assert.AreEqual("CAFE_PUB", searchResponse.Value.Results.First().PointOfInterest.Classifications.First().Code);
         }
 

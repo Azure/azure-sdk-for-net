@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5be8708d432019fc4c345d362e8063bf-7baaa5a02a12c61a-00",
+        "traceparent": "00-c8245e84b50dd73ae8f75ead7c1c3851-e45dea0991d17d53-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "cc6289fc856142a3ee760f21f368628f",
+        "x-ms-client-request-id": "f50de01021b12169c336d9618188929d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "4855",
+        "Content-Length": "4856",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Aug 2022 07:08:48 GMT",
+        "Date": "Sat, 27 Aug 2022 00:42:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 6CF12719BB7B407BB3C4FBF9AECD7C9D Ref B: PAOEDGE0516 Ref C: 2022-08-26T07:08:48Z"
+        "X-MSEdge-Ref": "Ref A: 947651A3BEFD420794D05D0444E98F31 Ref B: PAOEDGE0522 Ref C: 2022-08-27T00:42:07Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 10,
           "numResults": 10,
           "offset": 0,
           "totalResults": 386,
@@ -355,43 +355,43 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6f55b189717d20e8fe71dd0b66ff2c1d-900377f43b05e43c-00",
+        "traceparent": "00-5c35ff89292afc950e98a9b00d080685-e83565fb1e0b7200-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "e420a1da6091b35b624c7459a0eef30d",
+        "x-ms-client-request-id": "4f300b34fa3f58416eddd422ab869946",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6667",
+        "Content-Length": "7296",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Aug 2022 07:08:48 GMT",
+        "Date": "Sat, 27 Aug 2022 00:42:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 3C8F4C4CD89F4DD88725019BEABDC214 Ref B: PAOEDGE0516 Ref C: 2022-08-26T07:08:48Z"
+        "X-MSEdge-Ref": "Ref A: 45D73B99B979473FBC767A764712CA95 Ref B: PAOEDGE0522 Ref C: 2022-08-27T00:42:07Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 13,
+          "queryTime": 7,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 25966,
+          "totalResults": 25967,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/795",
+            "id": "NZ/GEO/p0/1829",
             "score": 2.3589038849,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8778741556780475
+              "score": 0.8763503357753656
             },
             "address": {
               "municipality": "Gorge Road",
@@ -435,11 +435,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3871",
+            "id": "NZ/GEO/p0/1161",
             "score": 2.3587200642,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8651104317926912
+              "score": 0.8635988019845473
             },
             "address": {
               "municipality": "Mill Road",
@@ -483,11 +483,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1903",
+            "id": "NZ/GEO/p0/3176",
             "score": 2.3586893082,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8596344333488454
+              "score": 0.8581376486545871
             },
             "address": {
               "municipality": "Inland Road",
@@ -531,11 +531,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2076",
+            "id": "NZ/GEO/p0/3268",
             "score": 2.3585665226,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8596344333488454
+              "score": 0.8581376486545871
             },
             "address": {
               "municipality": "Desert Road",
@@ -579,11 +579,11 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3063",
+            "id": "NZ/GEO/p0/214",
             "score": 2.3584132195,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.8596344333488454
+              "score": 0.8581376486545871
             },
             "address": {
               "municipality": "Bird Road",
@@ -627,11 +627,60 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1637",
+            "id": "NZ/GEO/p0/2334",
             "score": 2.0992157459,
             "entityType": "Neighbourhood",
             "matchConfidence": {
-              "score": 0.8596344333488454
+              "score": 0.8581376486545871
+            },
+            "address": {
+              "municipalitySubdivision": "Karangahape Road",
+              "municipality": "Auckland",
+              "countrySecondarySubdivision": "Auckland",
+              "countryTertiarySubdivision": "Auckland",
+              "countrySubdivision": "North Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Karangahape Road, Auckland"
+            },
+            "position": {
+              "lat": -36.85942,
+              "lon": 174.76007
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -36.85636,
+                "lon": 174.75547
+              },
+              "btmRightPoint": {
+                "lat": -36.86096,
+                "lon": 174.76616
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -36.85636,
+                "lon": 174.75547
+              },
+              "btmRightPoint": {
+                "lat": -36.86096,
+                "lon": 174.76616
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "c09c312b-a1d8-4b4e-833f-aca8b961db04"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/4448",
+            "score": 2.0992157459,
+            "entityType": "Neighbourhood",
+            "matchConfidence": {
+              "score": 0.8581376486545871
             },
             "address": {
               "municipalitySubdivision": "K\u0027Road",
@@ -676,127 +725,105 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/7058",
+            "id": "NZ/STR/p0/2",
+            "score": 2.0962057114,
+            "matchConfidence": {
+              "score": 0.7822994415778892
+            },
+            "address": {
+              "streetName": "Taylors Road",
+              "municipality": "Clarkville",
+              "countrySecondarySubdivision": "Canterbury",
+              "countryTertiarySubdivision": "Waimakariri",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Taylors Road, Clarkville, Clarkville",
+              "localName": "Clarkville"
+            },
+            "position": {
+              "lat": -43.42202,
+              "lon": 172.62215
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -43.41129,
+                "lon": 172.60854
+              },
+              "btmRightPoint": {
+                "lat": -43.42928,
+                "lon": 172.6333
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/5",
             "score": 2.0962057114,
             "matchConfidence": {
               "score": 0.7747879955854364
             },
             "address": {
-              "streetName": "Mataikona Road",
+              "streetName": "Ngarara Road",
+              "municipalitySubdivision": "Waikanae",
+              "municipality": "Paraparaumu",
               "countrySecondarySubdivision": "Wellington",
-              "countryTertiarySubdivision": "Masterton",
+              "countryTertiarySubdivision": "Kapiti Coast",
               "countrySubdivision": "North Island",
+              "postalCode": "5036, 5391",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Mataikona Road, Masterton"
+              "freeformAddress": "Ngarara Road, Waikanae, Paraparaumu 5036, 5391",
+              "localName": "Waikanae"
             },
             "position": {
-              "lat": -40.82083,
-              "lon": 176.25621
+              "lat": -40.86364,
+              "lon": 175.05138
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -40.81311,
-                "lon": 176.23241
+                "lat": -40.85558,
+                "lon": 175.04247
               },
               "btmRightPoint": {
-                "lat": -40.83109,
-                "lon": 176.25618
+                "lat": -40.87357,
+                "lon": 175.06626
               }
             }
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/7070",
+            "id": "NZ/STR/p0/23",
             "score": 2.0962057114,
             "matchConfidence": {
-              "score": 0.7790466922474246
+              "score": 0.7796675594422944
             },
             "address": {
-              "streetName": "Yeomans Road",
+              "streetName": "Winters Road",
+              "municipality": "Christchurch",
               "countrySecondarySubdivision": "Canterbury",
-              "countryTertiarySubdivision": "Selwyn",
+              "countryTertiarySubdivision": "Christchurch",
               "countrySubdivision": "South Island",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Yeomans Road, Selwyn"
+              "freeformAddress": "Winters Road, Christchurch, Christchurch",
+              "localName": "Christchurch"
             },
             "position": {
-              "lat": -43.49031,
-              "lon": 172.00612
+              "lat": -43.48787,
+              "lon": 172.62506
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -43.48125,
-                "lon": 171.99649
+                "lat": -43.47819,
+                "lon": 172.61277
               },
               "btmRightPoint": {
-                "lat": -43.49924,
-                "lon": 172.02129
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "NZ/STR/p0/7077",
-            "score": 2.0962057114,
-            "matchConfidence": {
-              "score": 0.7790466922474246
-            },
-            "address": {
-              "streetName": "Yeomans Road",
-              "countrySubdivision": "North Island",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "Yeomans Road, North Island"
-            },
-            "position": {
-              "lat": -39.71012,
-              "lon": 176.27647
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -39.70987,
-                "lon": 176.2719
-              },
-              "btmRightPoint": {
-                "lat": -39.71159,
-                "lon": 176.28063
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "NZ/STR/p0/7092",
-            "score": 2.0962057114,
-            "matchConfidence": {
-              "score": 0.7775963824799986
-            },
-            "address": {
-              "streetName": "Opouteke Road",
-              "countrySecondarySubdivision": "Northland",
-              "countryTertiarySubdivision": "Kaipara",
-              "countrySubdivision": "North Island",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "Opouteke Road, Kaipara"
-            },
-            "position": {
-              "lat": -35.71723,
-              "lon": 173.721
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -35.7213,
-                "lon": 173.70537
-              },
-              "btmRightPoint": {
-                "lat": -35.73929,
-                "lon": 173.72752
+                "lat": -43.49617,
+                "lon": 172.63756
               }
             }
           }
@@ -808,6 +835,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "150973074"
+    "RandomSeed": "1350526419"
   }
 }

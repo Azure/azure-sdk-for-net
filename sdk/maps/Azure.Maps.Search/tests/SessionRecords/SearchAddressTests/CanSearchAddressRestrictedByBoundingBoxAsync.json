@@ -6,24 +6,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6988b0c4020a4ad2cd2a81b8b65c497c-c962a0e976cc6a97-00",
+        "traceparent": "00-f3ea5d9a51de6d745e6535863dd1ae58-fba7c8d5906fa629-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "1951e5f9eeb82e519f20aa333f5d13e5",
+        "x-ms-client-request-id": "6376f7cb0a0dba1708f4a0314bbb7733",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "765",
+        "Content-Length": "766",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Aug 2022 07:08:52 GMT",
+        "Date": "Sat, 27 Aug 2022 00:42:10 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: FB166A49A1DD47148B77E1E96C519D38 Ref B: PAOEDGE0516 Ref C: 2022-08-26T07:08:52Z"
+        "X-MSEdge-Ref": "Ref A: 373808F9390A4687945376E8412D85A9 Ref B: PAOEDGE0522 Ref C: 2022-08-27T00:42:11Z"
       },
       "ResponseBody": {
         "summary": {
@@ -38,8 +38,8 @@
         "results": [
           {
             "type": "Street",
-            "id": "NZ/STR/p0/94870",
-            "score": 2.0553603172,
+            "id": "NZ/STR/p0/122946",
+            "score": 2.0553257465,
             "matchConfidence": {
               "score": 0.8924786087880523
             },
@@ -57,17 +57,17 @@
               "localName": "Closeburn"
             },
             "position": {
-              "lat": -44.99444,
-              "lon": 168.57535
+              "lat": -44.99791,
+              "lon": 168.57396
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.99355,
-                "lon": 168.57394
+                "lat": -44.99757,
+                "lon": 168.57261
               },
               "btmRightPoint": {
-                "lat": -44.99558,
-                "lon": 168.57587
+                "lat": -44.99862,
+                "lon": 168.57492
               }
             }
           }
@@ -79,6 +79,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "38293824"
+    "RandomSeed": "84698231"
   }
 }
