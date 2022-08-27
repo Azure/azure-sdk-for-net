@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "204",
         "Content-Type": "application/json",
-        "traceparent": "00-68f4f0559552ce3151625dd7ad542c48-3533c8f03d0ee2f4-00",
+        "traceparent": "00-549f0c2882c7a732a44a0a8e95a795b4-d01d65481f9c30ad-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "54e51c2f00c0c8eb591ff67ea4fb3bd3",
+        "x-ms-client-request-id": "afa755f47995a66bce05a418cb3c7b9f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -41,9 +41,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10752",
+        "Content-Length": "10753",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 27 Aug 2022 00:41:55 GMT",
+        "Date": "Sat, 27 Aug 2022 00:54:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -52,13 +52,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 8413295B33F64205823DCA18A955B6EC Ref B: PAOEDGE0522 Ref C: 2022-08-27T00:41:56Z"
+        "X-MSEdge-Ref": "Ref A: BCBBCA51340244AAAE4F49DCF58553C9 Ref B: PAOEDGE0512 Ref C: 2022-08-27T00:54:34Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 9,
+          "queryTime": 10,
           "numResults": 10,
           "offset": 0,
           "totalResults": 64,
@@ -817,6 +817,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1660144071"
+    "RandomSeed": "165905724"
   }
 }

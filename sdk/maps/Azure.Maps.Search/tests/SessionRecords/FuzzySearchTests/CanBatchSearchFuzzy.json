@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "traceparent": "00-1d6fbe2820e662387499738cf096f704-7ea2e628dcf2a738-00",
+        "traceparent": "00-9c3d484ef2c66b7760bb248daf34b346-3185c1c8950a10fe-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "4476d1ede3649c5e6057991f433c094d",
+        "x-ms-client-request-id": "e0453670091d4dbf6f9a82e3751af704",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Sat, 27 Aug 2022 00:41:49 GMT",
+        "Date": "Sat, 27 Aug 2022 00:54:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 98ACDC355F2A46ADBE5F945C44B29781 Ref B: PAOEDGE0522 Ref C: 2022-08-27T00:41:50Z"
+        "X-MSEdge-Ref": "Ref A: 4F41FABAFB2C4237A80A25E84D3FC832 Ref B: PAOEDGE0512 Ref C: 2022-08-27T00:54:26Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -43,7 +43,7 @@
               "summary": {
                 "query": "coffee",
                 "queryType": "NON_NEAR",
-                "queryTime": 9,
+                "queryTime": 10,
                 "numResults": 10,
                 "offset": 0,
                 "totalResults": 1792466,
@@ -79,11 +79,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -148,11 +148,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -219,11 +219,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -784,7 +784,7 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 9,
+                "queryTime": 11,
                 "numResults": 10,
                 "offset": 0,
                 "totalResults": 377227,
@@ -819,11 +819,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -889,11 +889,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -966,11 +966,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1036,11 +1036,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1108,11 +1108,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1180,11 +1180,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1256,11 +1256,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1328,11 +1328,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1399,11 +1399,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1470,11 +1470,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           }
                         ]
                       }
@@ -1531,6 +1531,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "250785423"
+    "RandomSeed": "1764160864"
   }
 }

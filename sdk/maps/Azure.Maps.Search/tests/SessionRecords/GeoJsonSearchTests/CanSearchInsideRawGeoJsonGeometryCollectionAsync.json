@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "365",
         "Content-Type": "application/json",
-        "traceparent": "00-58ac9ab7216884001c844ff55081d93d-ded2275238801944-00",
+        "traceparent": "00-f0b4ff5dbcb4b8b9e7983d66598272ed-dff39424123e5d72-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "aae606a49375caa4fb8d3f09c000d0f3",
+        "x-ms-client-request-id": "6032f6ecf120a45819e7e494d516e594",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -73,9 +73,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10064",
+        "Content-Length": "10063",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 27 Aug 2022 00:41:58 GMT",
+        "Date": "Sat, 27 Aug 2022 00:54:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,13 +84,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: A3F011E8FF3F482493697D35F0C5C8B9 Ref B: PAOEDGE0522 Ref C: 2022-08-27T00:41:59Z"
+        "X-MSEdge-Ref": "Ref A: 57FAE218904141FDA37D7A91378BD588 Ref B: PAOEDGE0512 Ref C: 2022-08-27T00:54:38Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 10,
+          "queryTime": 8,
           "numResults": 10,
           "offset": 0,
           "totalResults": 156,
@@ -822,6 +822,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "774672614"
+    "RandomSeed": "124021805"
   }
 }

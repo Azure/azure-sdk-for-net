@@ -172,7 +172,6 @@ namespace Azure.Maps.Search
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygons");
             scope.Start();
-            PolygonResult result = await RestClient.ListPolygonsAsync(geometryIds, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             try
             {
                 return await RestClient.ListPolygonsAsync(geometryIds, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
