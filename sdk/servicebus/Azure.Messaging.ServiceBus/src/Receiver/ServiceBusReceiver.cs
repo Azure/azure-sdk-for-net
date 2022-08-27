@@ -788,7 +788,6 @@ namespace Azure.Messaging.ServiceBus
                 message: message,
                 propertiesToModify: propertiesToModify,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Moves a message to the dead-letter subqueue.
