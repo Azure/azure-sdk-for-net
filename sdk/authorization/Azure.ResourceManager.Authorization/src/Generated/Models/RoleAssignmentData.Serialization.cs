@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> scope = default;
             Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<Guid> principalId = default;
-            Optional<RoleAssignmentPrincipalType> principalType = default;
+            Optional<ServicePrincipalType> principalType = default;
             Optional<string> description = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<DateTimeOffset> updatedOn = default;
             Optional<string> createdBy = default;
             Optional<string> updatedBy = default;
-            Optional<string> delegatedManagedIdentityResourceId = default;
+            Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            principalType = new RoleAssignmentPrincipalType(property0.Value.GetString());
+                            principalType = new ServicePrincipalType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -151,7 +151,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("delegatedManagedIdentityResourceId"))
                         {
-                            delegatedManagedIdentityResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                delegatedManagedIdentityResourceId = null;
+                                continue;
+                            }
+                            delegatedManagedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

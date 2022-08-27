@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="policyProperties"> Additional properties of scope. </param>
-        internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, RoleManagementPolicyProperties policyProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, ServicePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, RoleManagementPolicyProperties policyProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             DisplayName = displayName;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The role management policy is default policy. </summary>
         public bool? IsOrganizationDefault { get; set; }
         /// <summary> The name of the entity last modified it. </summary>
-        public RoleManagementPrincipal LastModifiedBy { get; }
+        public ServicePrincipal LastModifiedBy { get; }
         /// <summary> The last modified date time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>

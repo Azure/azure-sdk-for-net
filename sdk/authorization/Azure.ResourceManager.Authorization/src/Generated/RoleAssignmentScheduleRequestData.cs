@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expirationType"> Type of the role assignment schedule expiration. </param>
         /// <param name="endOn"> End DateTime of the role assignment schedule. </param>
         /// <param name="duration"> Duration of the role assignment schedule in TimeSpan. </param>
-        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleAssignmentSchedulePrincipalType? principalType, RoleAssignmentScheduleRequestType? requestType, RoleAssignmentScheduleStatus? status, string approvalId, Guid? targetRoleAssignmentScheduleId, Guid? targetRoleAssignmentScheduleInstanceId, Guid? linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, ExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleAssignmentScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, ServicePrincipalType? principalType, RoleManagementScheduleRequestType? requestType, RoleManagementScheduleStatus? status, string approvalId, Guid? targetRoleAssignmentScheduleId, Guid? targetRoleAssignmentScheduleInstanceId, Guid? linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, RoleManagementExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The principal ID. </summary>
         public Guid? PrincipalId { get; set; }
         /// <summary> The principal type of the assigned principal ID. </summary>
-        public RoleAssignmentSchedulePrincipalType? PrincipalType { get; }
+        public ServicePrincipalType? PrincipalType { get; }
         /// <summary> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </summary>
-        public RoleAssignmentScheduleRequestType? RequestType { get; set; }
+        public RoleManagementScheduleRequestType? RequestType { get; set; }
         /// <summary> The status of the role assignment schedule request. </summary>
-        public RoleAssignmentScheduleStatus? Status { get; }
+        public RoleManagementScheduleStatus? Status { get; }
         /// <summary> The approvalId of the role assignment schedule request. </summary>
         public string ApprovalId { get; }
         /// <summary> The resultant role assignment schedule id or the role assignment schedule id being updated. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Justification for the role assignment. </summary>
         public string Justification { get; set; }
         /// <summary> Ticket Info of the role assignment. </summary>
-        public RoleAssignmentScheduleRequestPropertiesTicketInfo TicketInfo { get; set; }
+        public RoleAssignmentScheduleTicketInfo TicketInfo { get; set; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
         public string Condition { get; set; }
         /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Id of the user who created this request. </summary>
         public Guid? RequestorId { get; }
         /// <summary> Additional properties of principal, scope and role definition. </summary>
-        public ExpandedProperties ExpandedProperties { get; }
+        public RoleManagementExpandedProperties ExpandedProperties { get; }
         /// <summary> Start DateTime of the role assignment schedule. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Type of the role assignment schedule expiration. </summary>
-        public RoleAssignmentScheduleExpirationType? ExpirationType { get; set; }
+        public RoleManagementScheduleExpirationType? ExpirationType { get; set; }
         /// <summary> End DateTime of the role assignment schedule. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Duration of the role assignment schedule in TimeSpan. </summary>
