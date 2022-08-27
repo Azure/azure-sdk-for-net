@@ -677,8 +677,8 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            await DeadLetterMessageAsync(
-                lockToken: message.LockTokenGuid,
+            await DeadLetterInternalAsync(
+                message: message,
                 propertiesToModify: propertiesToModify,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -725,69 +725,13 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            await DeadLetterMessageAsync(
-                lockToken: message.LockTokenGuid,
+            await DeadLetterInternalAsync(
+                message: message,
                 deadLetterReason: deadLetterReason,
                 deadLetterErrorDescription: deadLetterErrorDescription,
                 propertiesToModify: propertiesToModify,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// Moves a message to the dead-letter subqueue.
-        /// </summary>
-        ///
-        /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
-        /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
-        /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// In order to receive a message from the dead-letter queue or transfer dead-letter queue,
-        /// set the <see cref="ServiceBusReceiverOptions.SubQueue"/> property to <see cref="SubQueue.DeadLetter"/>
-        /// or <see cref="SubQueue.TransferDeadLetter"/> when calling
-        /// <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/> or
-        /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
-        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
-        /// </remarks>
-        internal virtual async Task DeadLetterMessageAsync(
-            Guid lockToken,
-            string deadLetterReason,
-            string deadLetterErrorDescription = default,
-            IDictionary<string, object> propertiesToModify = null,
-            CancellationToken cancellationToken = default) =>
-            await DeadLetterInternalAsync(
-                lockToken: lockToken,
-                deadLetterReason: deadLetterReason,
-                deadLetterErrorDescription: deadLetterErrorDescription,
-                propertiesToModify: propertiesToModify,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Moves a message to the dead-letter subqueue.
-        /// </summary>
-        ///
-        /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// In order to receive a message from the dead-letter queue or transfer dead-letter queue,
-        /// set the <see cref="ServiceBusReceiverOptions.SubQueue"/> property to <see cref="SubQueue.DeadLetter"/>
-        /// or <see cref="SubQueue.TransferDeadLetter"/> when calling
-        /// <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/> or
-        /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
-        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
-        /// </remarks>
-        internal virtual async Task DeadLetterMessageAsync(
-            Guid lockToken,
-            IDictionary<string, object> propertiesToModify = null,
-            CancellationToken cancellationToken = default) =>
-            await DeadLetterInternalAsync(
-                message: message,
-                propertiesToModify: propertiesToModify,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Moves a message to the dead-letter subqueue.
