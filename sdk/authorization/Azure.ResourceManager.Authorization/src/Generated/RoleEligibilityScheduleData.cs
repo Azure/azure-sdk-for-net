@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role eligibility schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleEligibilityScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleRequestId, RoleManagementScheduleMemberType? memberType, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, string roleEligibilityScheduleRequestId, RoleManagementScheduleMemberType? memberType, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The principal type of the assigned principal ID. </summary>
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> The id of roleEligibilityScheduleRequest used to create this roleAssignmentSchedule. </summary>
-        public ResourceIdentifier RoleEligibilityScheduleRequestId { get; }
+        public string RoleEligibilityScheduleRequestId { get; }
         /// <summary> Membership type of the role eligibility schedule. </summary>
         public RoleManagementScheduleMemberType? MemberType { get; }
         /// <summary> The status of the role eligibility schedule. </summary>

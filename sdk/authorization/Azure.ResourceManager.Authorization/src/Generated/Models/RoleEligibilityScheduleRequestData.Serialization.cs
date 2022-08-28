@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(TargetRoleEligibilityScheduleId))
             {
                 writer.WritePropertyName("targetRoleEligibilityScheduleId");
-                writer.WriteStringValue(TargetRoleEligibilityScheduleId.Value);
+                writer.WriteStringValue(TargetRoleEligibilityScheduleId);
             }
             if (Optional.IsDefined(TargetRoleEligibilityScheduleInstanceId))
             {
                 writer.WritePropertyName("targetRoleEligibilityScheduleInstanceId");
-                writer.WriteStringValue(TargetRoleEligibilityScheduleInstanceId.Value);
+                writer.WriteStringValue(TargetRoleEligibilityScheduleInstanceId);
             }
             if (Optional.IsDefined(Justification))
             {
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<RoleManagementScheduleRequestType> requestType = default;
             Optional<RoleManagementScheduleStatus> status = default;
             Optional<string> approvalId = default;
-            Optional<Guid> targetRoleEligibilityScheduleId = default;
-            Optional<Guid> targetRoleEligibilityScheduleInstanceId = default;
+            Optional<string> targetRoleEligibilityScheduleId = default;
+            Optional<string> targetRoleEligibilityScheduleInstanceId = default;
             Optional<string> justification = default;
             Optional<RoleEligibilityScheduleRequestPropertiesTicketInfo> ticketInfo = default;
             Optional<string> condition = default;
@@ -219,22 +219,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("targetRoleEligibilityScheduleId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            targetRoleEligibilityScheduleId = property0.Value.GetGuid();
+                            targetRoleEligibilityScheduleId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("targetRoleEligibilityScheduleInstanceId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            targetRoleEligibilityScheduleInstanceId = property0.Value.GetGuid();
+                            targetRoleEligibilityScheduleInstanceId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("justification"))
@@ -360,7 +350,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleEligibilityScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, Optional.ToNullable(targetRoleEligibilityScheduleId), Optional.ToNullable(targetRoleEligibilityScheduleInstanceId), justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(type0), Optional.ToNullable(endDateTime), Optional.ToNullable(duration));
+            return new RoleEligibilityScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, targetRoleEligibilityScheduleId.Value, targetRoleEligibilityScheduleInstanceId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(type0), Optional.ToNullable(endDateTime), Optional.ToNullable(duration));
         }
     }
 }
