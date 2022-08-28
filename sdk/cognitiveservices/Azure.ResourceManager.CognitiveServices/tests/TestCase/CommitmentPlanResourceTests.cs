@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
 
         private async Task<CommitmentPlanResource> CreateCommitmentPlanAsync(string planName)
         {
-            var accountContainer = (await CreateResourceGroupAsync()).GetAccounts();
+            var accountContainer = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var accountInput = ResourceDataHelper.GetBasicAccountData(AzureLocation.EastUS);
             accountInput.Sku = new CognitiveServicesSku("s0");
             accountInput.Kind = "OpenAI";

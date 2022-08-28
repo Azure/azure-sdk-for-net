@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         }
         private async Task<CommitmentPlanCollection> GetCommitmentPlanCollectionAsync()
         {
-            var container = (await CreateResourceGroupAsync()).GetAccounts();
+            var container = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input);
             var account = lro.Value;

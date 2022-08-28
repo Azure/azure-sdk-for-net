@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         {
         }
 
-        private async Task<DeploymentResource> CreateDeploymentAsync(string deploymentName)
+        private async Task<CognitiveServicesAccountDeploymentResource> CreateDeploymentAsync(string deploymentName)
         {
-            var accountContainer = (await CreateResourceGroupAsync()).GetAccounts();
+            var accountContainer = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var accountInput = ResourceDataHelper.GetBasicAccountData(AzureLocation.EastUS);
             accountInput.Kind = "OpenAI";
             accountInput.Sku = new CognitiveServicesSku("f0");
             var lro = await accountContainer.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), accountInput);
             var account = lro.Value;
-            var container = account.GetDeployments();
+            var container = account.GetCognitiveServicesAccountDeployments();
             var input = ResourceDataHelper.GetBasicDeploymentData();
             var lro_connection = await container.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
             return lro_connection.Value;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             //1.Get
             var deploymentName = Recording.GenerateAssetName("testDeployment-");
             var deployment1 = await CreateDeploymentAsync(deploymentName);
-            DeploymentResource deployment2 = await deployment1.GetAsync();
+            CognitiveServicesAccountDeploymentResource deployment2 = await deployment1.GetAsync();
 
             ResourceDataHelper.AssertDeployment(deployment1.Data, deployment2.Data);
             //2.Delete

@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-        private async Task<AccountCollection> GetAccountCollectionAsync()
+        private async Task<CognitiveServicesAccountCollection> GetAccountCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetAccounts();
+            return resourceGroup.GetCognitiveServicesAccounts();
         }
 
         [TestCase]
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             var name = Recording.GenerateAssetName("Account-");
             var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            AccountResource account1 = lro.Value;
+            CognitiveServicesAccountResource account1 = lro.Value;
             Assert.AreEqual(name, account1.Data.Name);
             //2.Get
-            AccountResource account2 = await container.GetAsync(name);
+            CognitiveServicesAccountResource account2 = await container.GetAsync(name);
             ResourceDataHelper.AssertAccount(account1.Data, account2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);

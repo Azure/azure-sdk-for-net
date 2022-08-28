@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         }
 
         #region Account
-        public static void AssertAccount(AccountData account1, AccountData account2)
+        public static void AssertAccount(CognitiveServicesAccountData account1, CognitiveServicesAccountData account2)
         {
             AssertTrackedResource(account1, account2);
             Assert.AreEqual(account1.ETag, account2.ETag);
         }
 
-        public static AccountData GetBasicAccountData(AzureLocation location)
+        public static CognitiveServicesAccountData GetBasicAccountData(AzureLocation location)
         {
-            var data = new AccountData(location)
+            var data = new CognitiveServicesAccountData(location)
             {
                 Sku = new CognitiveServicesSku("S0"),
                 Kind = "Face",
-                Properties = new AccountProperties()
+                Properties = new CognitiveServicesAccountProperties()
             };
             return data;
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
             {
                 Properties = new CommitmentPlanProperties()
                 {
-                    HostingModel = new HostingModel("Web"),
+                    HostingModel = ServiceAccountHostingModel.Web,
                     PlanType = "TA",
                     AutoRenew = false
                 }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         #endregion
 
         #region Deployment
-        public static void AssertDeployment(DeploymentData d1, DeploymentData d2)
+        public static void AssertDeployment(CognitiveServicesAccountDeploymentData d1, CognitiveServicesAccountDeploymentData d2)
         {
             Assert.AreEqual(d1.Name, d2.Name);
             Assert.AreEqual(d1.Id, d2.Id);
@@ -89,21 +89,21 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
             Assert.AreEqual(d1.ETag, d2.ETag);
         }
 
-        public static DeploymentData GetBasicDeploymentData()
+        public static CognitiveServicesAccountDeploymentData GetBasicDeploymentData()
         {
-            var data = new DeploymentData()
+            var data = new CognitiveServicesAccountDeploymentData()
             {
-                Properties = new DeploymentProperties
+                Properties = new CognitiveServicesAccountDeploymentProperties
                 {
-                    Model = new DeploymentModel()
+                    Model = new CognitiveServicesAccountDeploymentModel()
                     {
                         Name = "ada",
                         Format = "OpenAI",
                         Version = "1"
                     },
-                    ScaleSettings = new DeploymentScaleSettings()
+                    ScaleSettings = new CognitiveServicesAccountDeploymentScaleSettings()
                     {
-                         ScaleType = new DeploymentScaleType("Manual"),
+                         ScaleType = CognitiveServicesAccountDeploymentScaleType.Manual,
                          Capacity = 1
                     }
                 }
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         {
             var data = new CognitiveServicesPrivateEndpointConnectionData()
             {
-                Properties = new PrivateEndpointConnectionProperties(new CognitiveServicesPrivateLinkServiceConnectionState()
+                ConnectionState = new CognitiveServicesPrivateLinkServiceConnectionState
                 {
-                    Status = "Approved",
+                    Status = CognitiveServicesPrivateEndpointServiceConnectionStatus.Approved,
                     Description = "Auto-Approved"
-                }),
+                },
                 Location = AzureLocation.EastUS2
             };
             return data;

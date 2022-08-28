@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             : base(Async)//, RecordedTestMode.Record)
         {
         }
-        private async Task<AccountResource> CreateAccountResourceAsync(string accountName)
+        private async Task<CognitiveServicesAccountResource> CreateAccountResourceAsync(string accountName)
         {
-            var container = (await CreateResourceGroupAsync()).GetAccounts();
+            var container = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
             return lro.Value;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             //1.Get
             var accountName = Recording.GenerateAssetName("testAccount-");
             var account1 = await CreateAccountResourceAsync(accountName);
-            AccountResource account2 = await account1.GetAsync();
+            CognitiveServicesAccountResource account2 = await account1.GetAsync();
 
             ResourceDataHelper.AssertAccount(account1.Data, account2.Data);
             //2.Delete

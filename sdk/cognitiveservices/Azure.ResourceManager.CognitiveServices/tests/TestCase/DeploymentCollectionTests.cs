@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         {
         }
 
-        private async Task<DeploymentCollection> GetDeploymentCollectionAsync()
+        private async Task<CognitiveServicesAccountDeploymentCollection> GetDeploymentCollectionAsync()
         {
-            var container = (await CreateResourceGroupAsync()).GetAccounts();
+            var container = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var input = ResourceDataHelper.GetBasicAccountData(AzureLocation.WestUS2);
             input.Kind = "OpenAI";
             input.Sku = new CognitiveServicesSku("f0");
             var account = (await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input)).Value;
-            return account.GetDeployments();
+            return account.GetCognitiveServicesAccountDeployments();
         }
 
         [TestCase]
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             var name = Recording.GenerateAssetName("Deployment-");
             var input = ResourceDataHelper.GetBasicDeploymentData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            DeploymentResource deployment1 = lro.Value;
+            CognitiveServicesAccountDeploymentResource deployment1 = lro.Value;
             Assert.AreEqual(name, deployment1.Data.Name);
             //2.Get
-            DeploymentResource deployment2 = await container.GetAsync(name);
+            CognitiveServicesAccountDeploymentResource deployment2 = await container.GetAsync(name);
             ResourceDataHelper.AssertDeployment(deployment1.Data, deployment2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
