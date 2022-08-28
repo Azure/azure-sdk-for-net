@@ -6,120 +6,44 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.MediaComposition;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
     public partial class MediaOutput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
-            if (Optional.IsDefined(GroupCall))
-            {
-                writer.WritePropertyName("groupCall");
-                writer.WriteObjectValue(GroupCall);
-            }
-            if (Optional.IsDefined(Room))
-            {
-                writer.WritePropertyName("room");
-                writer.WriteObjectValue(Room);
-            }
-            if (Optional.IsDefined(TeamsMeeting))
-            {
-                writer.WritePropertyName("teamsMeeting");
-                writer.WriteObjectValue(TeamsMeeting);
-            }
-            if (Optional.IsDefined(Rtmp))
-            {
-                writer.WritePropertyName("rtmp");
-                writer.WriteObjectValue(Rtmp);
-            }
-            if (Optional.IsDefined(Srt))
-            {
-                writer.WritePropertyName("srt");
-                writer.WriteObjectValue(Srt);
-            }
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
         internal static MediaOutput DeserializeMediaOutput(JsonElement element)
         {
-            Optional<MediaOutputType> kind = default;
-            Optional<GroupCall> groupCall = default;
-            Optional<GroupCall> room = default;
-            Optional<TeamsMeeting> teamsMeeting = default;
-            Optional<RtmpStream> rtmp = default;
-            Optional<SrtStream> srt = default;
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "groupCall": return GroupCallOutput.DeserializeGroupCallOutput(element);
+                    case "room": return RoomOutput.DeserializeRoomOutput(element);
+                    case "rtmp": return RtmpOutput.DeserializeRtmpOutput(element);
+                    case "srt": return SrtOutput.DeserializeSrtOutput(element);
+                    case "teamsMeeting": return TeamsMeetingOutput.DeserializeTeamsMeetingOutput(element);
+                }
+            }
+            MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     kind = new MediaOutputType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupCall"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    groupCall = GroupCall.DeserializeGroupCall(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("room"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    room = GroupCall.DeserializeGroupCall(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("teamsMeeting"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    teamsMeeting = TeamsMeeting.DeserializeTeamsMeeting(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("rtmp"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    rtmp = RtmpStream.DeserializeRtmpStream(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("srt"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    srt = SrtStream.DeserializeSrtStream(property.Value);
-                    continue;
-                }
             }
-            return new MediaOutput(Optional.ToNullable(kind), groupCall.Value, room.Value, teamsMeeting.Value, rtmp.Value, srt.Value);
+            return new MediaOutput(kind);
         }
     }
 }

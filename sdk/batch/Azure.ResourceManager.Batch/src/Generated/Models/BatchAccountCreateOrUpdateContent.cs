@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -19,28 +20,28 @@ namespace Azure.ResourceManager.Batch.Models
         {
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
-            AllowedAuthenticationModes = new ChangeTrackingList<AuthenticationMode>();
+            AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
         }
 
         /// <summary> The region in which to create the account. </summary>
         public AzureLocation Location { get; }
         /// <summary> The user-specified tags associated with the account. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The identity of the Batch account. </summary>
-        public BatchAccountIdentity Identity { get; set; }
+        /// <summary> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The properties related to the auto-storage account. </summary>
-        public AutoStorageBaseProperties AutoStorage { get; set; }
+        public BatchAccountAutoStorageBaseConfiguration AutoStorage { get; set; }
         /// <summary> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Azure Active Directory. If the mode is UserSubscription, clients must use Azure Active Directory. The default is BatchService. </summary>
-        public PoolAllocationMode? PoolAllocationMode { get; set; }
+        public BatchAccountPoolAllocationMode? PoolAllocationMode { get; set; }
         /// <summary> A reference to the Azure key vault associated with the Batch account. </summary>
-        public KeyVaultReference KeyVaultReference { get; set; }
+        public BatchKeyVaultReference KeyVaultReference { get; set; }
         /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
-        public BatchVirtualMachineNetworkProfile NetworkProfile { get; set; }
+        public BatchNetworkProfile NetworkProfile { get; set; }
         /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
-        public EncryptionProperties Encryption { get; set; }
+        public BatchAccountEncryptionConfiguration Encryption { get; set; }
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IList<AuthenticationMode> AllowedAuthenticationModes { get; set; }
+        public IList<BatchAuthenticationMode> AllowedAuthenticationModes { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,12 +24,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId");
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             writer.WriteEndObject();
         }
@@ -36,8 +37,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         internal static ManagedClusterAddonProfileIdentity DeserializeManagedClusterAddonProfileIdentity(JsonElement element)
         {
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> clientId = default;
-            Optional<string> objectId = default;
+            Optional<Guid> clientId = default;
+            Optional<Guid> objectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -52,16 +53,26 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("clientId"))
                 {
-                    clientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("objectId"))
                 {
-                    objectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    objectId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ManagedClusterAddonProfileIdentity(resourceId.Value, clientId.Value, objectId.Value);
+            return new ManagedClusterAddonProfileIdentity(resourceId.Value, Optional.ToNullable(clientId), Optional.ToNullable(objectId));
         }
     }
 }

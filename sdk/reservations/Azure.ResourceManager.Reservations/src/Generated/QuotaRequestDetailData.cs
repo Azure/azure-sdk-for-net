@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
         internal QuotaRequestDetailData()
         {
-            QuotaRequestValue = new ChangeTrackingList<SubRequest>();
+            QuotaRequestValue = new ChangeTrackingList<SubContent>();
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="message"> User friendly status message. </param>
         /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="quotaRequestValue"> The quotaRequests. </param>
-        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubRequest> quotaRequestValue) : base(id, name, resourceType, systemData)
+        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubContent> quotaRequestValue) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Message = message;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         public DateTimeOffset? RequestSubmitOn { get; }
         /// <summary> The quotaRequests. </summary>
-        public IReadOnlyList<SubRequest> QuotaRequestValue { get; }
+        public IReadOnlyList<SubContent> QuotaRequestValue { get; }
     }
 }

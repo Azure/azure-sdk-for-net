@@ -24,7 +24,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;
-        private readonly SecureString _password;
+        private readonly string _password;
         private AuthenticationRecord _record;
         private readonly string _tenantId;
         internal MsalPublicClient Client { get; }
@@ -88,7 +88,7 @@ namespace Azure.Identity
             _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             _username = username;
-            _password = password.ToSecureString();
+            _password = password;
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
@@ -145,9 +145,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries.
-        /// You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token for a user account, authenticating them using the given username and password. Note: This will fail with an
+        /// <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. Acquired tokens are cached by the
+        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
+        /// optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -158,9 +159,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them using the given username and password.  Note: This will fail with
-        /// an <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. This method is called automatically by Azure SDK client libraries.
-        /// You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token for a user account, authenticating them using the given username and password. Note: This will fail with an
+        /// <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. Acquired tokens are cached by the
+        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
+        /// optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

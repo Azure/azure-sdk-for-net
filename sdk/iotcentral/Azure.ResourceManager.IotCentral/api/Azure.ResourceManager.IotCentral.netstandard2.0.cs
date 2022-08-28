@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotCentral
         public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.IotCentralAppSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
         public System.Guid? ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState? ProvisioningState { get { throw null; } }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public IotCentralAppPatch() { }
         public System.Guid? ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState? ProvisioningState { get { throw null; } }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public string ManifestId { get { throw null; } }
         public string ManifestVersion { get { throw null; } }
         public string Name { get { throw null; } }
-        public float? Order { get { throw null; } }
+        public int? Order { get { throw null; } }
         public string Title { get { throw null; } }
     }
     public partial class IotCentralAppTemplateLocation

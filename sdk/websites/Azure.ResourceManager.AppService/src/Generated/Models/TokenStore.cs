@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of TokenStore. </summary>
-        /// <param name="enabled">
+        /// <param name="isEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.
         /// </param>
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="fileSystem"> The configuration settings of the storage of the tokens if a file system is used. </param>
         /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
-        internal TokenStore(bool? enabled, double? tokenRefreshExtensionHours, FileSystemTokenStore fileSystem, BlobStorageTokenStore azureBlobStorage)
+        internal TokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, FileSystemTokenStore fileSystem, BlobStorageTokenStore azureBlobStorage)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             FileSystem = fileSystem;
             AzureBlobStorage = azureBlobStorage;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary>
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.

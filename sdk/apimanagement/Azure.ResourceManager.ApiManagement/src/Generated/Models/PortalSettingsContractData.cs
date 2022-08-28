@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="uri"> A delegation Url. </param>
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="subscriptions"> Subscriptions delegation settings. </param>
-        /// <param name="userRegistration"> User registration delegation settings. </param>
-        /// <param name="enabled"> Redirect Anonymous users to the Sign-In page. </param>
+        /// <param name="isSubscriptions"> Subscriptions delegation settings. </param>
+        /// <param name="isUserRegistration"> User registration delegation settings. </param>
+        /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        internal PortalSettingsContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionsDelegationSettingsProperties subscriptions, RegistrationDelegationSettingsProperties userRegistration, bool? enabled, TermsOfServiceProperties termsOfService) : base(id, name, resourceType, systemData)
+        internal PortalSettingsContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties isSubscriptions, RegistrationDelegationSettingProperties isUserRegistration, bool? isRedirectEnabled, TermsOfServiceProperties termsOfService) : base(id, name, resourceType, systemData)
         {
             Uri = uri;
             ValidationKey = validationKey;
-            Subscriptions = subscriptions;
-            UserRegistration = userRegistration;
-            Enabled = enabled;
+            IsSubscriptions = isSubscriptions;
+            IsUserRegistration = isUserRegistration;
+            IsRedirectEnabled = isRedirectEnabled;
             TermsOfService = termsOfService;
         }
 
@@ -45,35 +45,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
         public string ValidationKey { get; set; }
         /// <summary> Subscriptions delegation settings. </summary>
-        internal SubscriptionsDelegationSettingsProperties Subscriptions { get; set; }
+        internal SubscriptionDelegationSettingProperties IsSubscriptions { get; set; }
         /// <summary> Enable or disable delegation for subscriptions. </summary>
-        public bool? SubscriptionsEnabled
+        public bool? IsSubscriptionDelegationEnabled
         {
-            get => Subscriptions is null ? default : Subscriptions.Enabled;
+            get => IsSubscriptions is null ? default : IsSubscriptions.IsSubscriptionDelegationEnabled;
             set
             {
-                if (Subscriptions is null)
-                    Subscriptions = new SubscriptionsDelegationSettingsProperties();
-                Subscriptions.Enabled = value;
+                if (IsSubscriptions is null)
+                    IsSubscriptions = new SubscriptionDelegationSettingProperties();
+                IsSubscriptions.IsSubscriptionDelegationEnabled = value;
             }
         }
 
         /// <summary> User registration delegation settings. </summary>
-        internal RegistrationDelegationSettingsProperties UserRegistration { get; set; }
+        internal RegistrationDelegationSettingProperties IsUserRegistration { get; set; }
         /// <summary> Enable or disable delegation for user registration. </summary>
-        public bool? UserRegistrationEnabled
+        public bool? IsUserRegistrationDelegationEnabled
         {
-            get => UserRegistration is null ? default : UserRegistration.Enabled;
+            get => IsUserRegistration is null ? default : IsUserRegistration.IsUserRegistrationDelegationEnabled;
             set
             {
-                if (UserRegistration is null)
-                    UserRegistration = new RegistrationDelegationSettingsProperties();
-                UserRegistration.Enabled = value;
+                if (IsUserRegistration is null)
+                    IsUserRegistration = new RegistrationDelegationSettingProperties();
+                IsUserRegistration.IsUserRegistrationDelegationEnabled = value;
             }
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsRedirectEnabled { get; set; }
         /// <summary> Terms of service contract properties. </summary>
         public TermsOfServiceProperties TermsOfService { get; set; }
     }

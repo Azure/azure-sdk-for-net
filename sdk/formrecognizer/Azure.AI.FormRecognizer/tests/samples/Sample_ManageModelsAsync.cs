@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
-            AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
-            Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
-            Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
+            ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
+            Console.WriteLine($"Resource has {resourceDetails.DocumentModelCount} models.");
+            Console.WriteLine($"It can have at most {resourceDetails.DocumentModelLimit} models.");
 
             // List the first ten or fewer models currently stored in the account.
             AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
@@ -42,15 +42,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             // Create a new model to store in the account
 #if SNIPPET
-            Uri trainingFileUri = new Uri("<trainingFileUri>");
+            Uri blobContainerUri = new Uri("<blobContainerUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
-            DocumentModel model = operation.Value;
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+            DocumentModelDetails model = operation.Value;
 
             // Get the model that was just created
-            DocumentModel newCreatedModel = await client.GetModelAsync(model.ModelId);
+            DocumentModelDetails newCreatedModel = await client.GetModelAsync(model.ModelId);
 
             Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 

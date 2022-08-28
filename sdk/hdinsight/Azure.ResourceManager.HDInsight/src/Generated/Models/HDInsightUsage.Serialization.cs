@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> unit = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
-            Optional<LocalizedName> name = default;
+            Optional<HDInsightLocalizedName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = LocalizedName.DeserializeLocalizedName(property.Value);
+                    name = HDInsightLocalizedName.DeserializeHDInsightLocalizedName(property.Value);
                     continue;
                 }
             }

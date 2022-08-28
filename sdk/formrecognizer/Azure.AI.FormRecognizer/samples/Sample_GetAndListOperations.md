@@ -27,49 +27,62 @@ If the operation failed, the error information can be accessed using the `Error`
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Make sure there is at least one operation, so we are going to build a custom model.
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 
 // List the first ten or fewer operations that have been executed in the last 24h.
-AsyncPageable<ModelOperationInfo> modelOperations = client.GetOperationsAsync();
+AsyncPageable<DocumentModelOperationSummary> operationSummaries = client.GetOperationsAsync();
 
 string operationId = string.Empty;
 int count = 0;
-await foreach (ModelOperationInfo modelOperationInfo in modelOperations)
+await foreach (DocumentModelOperationSummary operationSummary in operationSummaries)
 {
-    Console.WriteLine($"Model operation info:");
-    Console.WriteLine($"  Id: {modelOperationInfo.OperationId}");
-    Console.WriteLine($"  Kind: {modelOperationInfo.Kind}");
-    Console.WriteLine($"  Status: {modelOperationInfo.Status}");
-    Console.WriteLine($"  Percent completed: {modelOperationInfo.PercentCompleted}");
-    Console.WriteLine($"  Created on: {modelOperationInfo.CreatedOn}");
-    Console.WriteLine($"  LastUpdated on: {modelOperationInfo.LastUpdatedOn}");
-    Console.WriteLine($"  Resource location of successful operation: {modelOperationInfo.ResourceLocation}");
+    Console.WriteLine($"Model operation summary:");
+    Console.WriteLine($"  Id: {operationSummary.OperationId}");
+    Console.WriteLine($"  Kind: {operationSummary.Kind}");
+    Console.WriteLine($"  Status: {operationSummary.Status}");
+    Console.WriteLine($"  Percent completed: {operationSummary.PercentCompleted}");
+    Console.WriteLine($"  Created on: {operationSummary.CreatedOn}");
+    Console.WriteLine($"  LastUpdated on: {operationSummary.LastUpdatedOn}");
+    Console.WriteLine($"  Resource location of successful operation: {operationSummary.ResourceLocation}");
 
     if (count == 0)
-        operationId = modelOperationInfo.OperationId;
+        operationId = operationSummary.OperationId;
 
     if (++count == 10)
         break;
 }
 
 // Get an operation by ID
-ModelOperation specificOperation = await client.GetOperationAsync(operationId);
+DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operationId);
 
-if (specificOperation.Status == DocumentOperationStatus.Succeeded)
+if (operationDetails.Status == DocumentOperationStatus.Succeeded)
 {
-    Console.WriteLine($"My {specificOperation.Kind} operation is completed.");
-    DocumentModel result = specificOperation.Result;
-    Console.WriteLine($"Model ID: {result.ModelId}");
+    Console.WriteLine($"My {operationDetails.Kind} operation is completed.");
+
+    // Extract the result based on the kind of operation. Currently only Build, CopyTo, and
+    // Compose operations are supported.
+    DocumentModelDetails result = operationDetails switch
+    {
+        DocumentModelBuildOperationDetails buildOp => buildOp.Result,
+        DocumentModelCopyToOperationDetails copyToOp => copyToOp.Result,
+        DocumentModelComposeOperationDetails composeOp => composeOp.Result,
+        _ => null
+    };
+
+    if (result != null)
+    {
+        Console.WriteLine($"Model ID: {result.ModelId}");
+    }
 }
-else if (specificOperation.Status == DocumentOperationStatus.Failed)
+else if (operationDetails.Status == DocumentOperationStatus.Failed)
 {
-    Console.WriteLine($"My {specificOperation.Kind} operation failed.");
-    ResponseError error = specificOperation.Error;
+    Console.WriteLine($"My {operationDetails.Kind} operation failed.");
+    ResponseError error = operationDetails.Error;
     Console.WriteLine($"Code: {error.Code}: Message: {error.Message}");
 }
 else
-    Console.WriteLine($"My {specificOperation.Kind} operation status is {specificOperation.Status}");
+    Console.WriteLine($"My {operationDetails.Kind} operation status is {operationDetails.Status}");
 ```
 
 To see the full example source files, see:

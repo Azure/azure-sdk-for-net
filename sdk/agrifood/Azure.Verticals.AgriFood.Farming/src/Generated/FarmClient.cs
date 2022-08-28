@@ -240,8 +240,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
-        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
+        ///     farmerId = "<farmerId>",
+        ///     authProviderId = "<authProviderId>",
         ///     startYear = 1234,
         /// };
         /// 
@@ -260,14 +260,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
-        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
+        ///     farmerId = "<farmerId>",
+        ///     authProviderId = "<authProviderId>",
         ///     operations = new[] {
-        ///         "<FarmOperationDataIngestionJobOperationsItem>"
+        ///         "<String>"
         ///     },
         ///     startYear = 1234,
-        ///     name = "<FarmOperationDataIngestionJobName>",
-        ///     description = "<FarmOperationDataIngestionJobDescription>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -385,8 +385,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
-        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
+        ///     farmerId = "<farmerId>",
+        ///     authProviderId = "<authProviderId>",
         ///     startYear = 1234,
         /// };
         /// 
@@ -405,14 +405,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<FarmOperationDataIngestionJobFarmerId>",
-        ///     authProviderId = "<FarmOperationDataIngestionJobAuthProviderId>",
+        ///     farmerId = "<farmerId>",
+        ///     authProviderId = "<authProviderId>",
         ///     operations = new[] {
-        ///         "<FarmOperationDataIngestionJobOperationsItem>"
+        ///         "<String>"
         ///     },
         ///     startYear = 1234,
-        ///     name = "<FarmOperationDataIngestionJobName>",
-        ///     description = "<FarmOperationDataIngestionJobDescription>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

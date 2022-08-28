@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IList<string>> zones = default;
             Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
             Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
-            Optional<string> publicIPAddressId = default;
+            Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<Uri> gatewayRegionalUri = default;
             Optional<bool> disableGateway = default;
@@ -121,7 +121,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("publicIpAddressId"))
                 {
-                    publicIPAddressId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    publicIPAddressId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkConfiguration"))

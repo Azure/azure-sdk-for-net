@@ -1958,7 +1958,7 @@ namespace Azure.Storage.Files.Shares
             return DownloadInternal(
                 range,
                 rangeGetContentHash
-                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
                     : default,
                 conditions,
                 async: false,
@@ -2010,7 +2010,7 @@ namespace Azure.Storage.Files.Shares
             return DownloadInternal(
                 range,
                 rangeGetContentHash
-                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
                     : default,
                 conditions: default,
                 async: false,
@@ -2067,7 +2067,7 @@ namespace Azure.Storage.Files.Shares
             return await DownloadInternal(
                 range,
                 rangeGetContentHash
-                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
                     : default,
                 conditions,
                 async: true,
@@ -2119,7 +2119,7 @@ namespace Azure.Storage.Files.Shares
             return await DownloadInternal(
                 range,
                 rangeGetContentHash
-                    ? new DownloadTransferValidationOptions { Algorithm = ValidationAlgorithm.MD5 }
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
                     : default,
                 conditions: default,
                 async: true,
@@ -2166,7 +2166,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.DownloadValidationOptions;
+            DownloadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Download;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -2239,7 +2239,7 @@ namespace Azure.Storage.Files.Shares
                     // buffer response stream and ensure it matches the transactional hash if any
                     // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
                     // hashing is opt-in, so this buffer is part of that opt-in
-                    if (validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None && validationOptions.Validate)
+                    if (validationOptions != default && validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && validationOptions.AutoValidateChecksum)
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
@@ -2253,7 +2253,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         readDestStream.Position = 0;
 
-                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.Algorithm, initialResponse.GetRawResponse());
+                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, initialResponse.GetRawResponse());
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
                         stream = readDestStream;
@@ -2313,7 +2313,7 @@ namespace Azure.Storage.Files.Shares
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            ShareErrors.AssertAlgorithmSupport(validationOptions?.Algorithm);
+            ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
 
             // calculation gets illegible with null coalesce; just pre-initialize
             var pageRange = range;
@@ -2330,7 +2330,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = await FileRestClient.DownloadAsync(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: validationOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2339,7 +2339,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = FileRestClient.Download(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: validationOptions?.Algorithm.ResolveAuto() == ValidationAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: validationOptions?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken);
             }
@@ -2655,7 +2655,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
-            DownloadTransferValidationOptions validaitonOptions = validationOptionsOverride ?? ClientConfiguration.DownloadValidationOptions;
+            DownloadTransferValidationOptions validaitonOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Download;
 
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
             try
@@ -4040,7 +4040,7 @@ namespace Azure.Storage.Files.Shares
                 validationOptionsOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = transactionalContentHash
                     }
                     : default,
@@ -4112,7 +4112,7 @@ namespace Azure.Storage.Files.Shares
                 validationOptionsOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = transactionalContentHash
                     }
                     : default,
@@ -4180,7 +4180,7 @@ namespace Azure.Storage.Files.Shares
                 validationOptionsOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = transactionalContentHash
                     }
                     : default,
@@ -4248,7 +4248,7 @@ namespace Azure.Storage.Files.Shares
                 validationOptionsOverride: transactionalContentHash != default
                     ? new UploadTransferValidationOptions()
                     {
-                        Algorithm = ValidationAlgorithm.MD5,
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                         PrecalculatedChecksum = transactionalContentHash
                     }
                     : default,
@@ -4312,8 +4312,8 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadValidationOptions;
-            ShareErrors.AssertAlgorithmSupport(validationOptions?.Algorithm);
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
+            ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -4344,7 +4344,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
-                            contentMD5: hashResult?.MD5,
+                            contentMD5: hashResult?.MD5AsArray,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4357,7 +4357,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
-                            contentMD5: hashResult?.MD5,
+                            contentMD5: hashResult?.MD5AsArray,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -5106,7 +5106,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.UploadValidationOptions;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             var uploader = GetPartitionedUploader(
                 new StorageTransferOptions

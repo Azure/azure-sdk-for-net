@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerInstanceUsage> GetUsageWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ContainerInstanceUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageWithLocation");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesWithLocation");
                 scope.Start();
                 try
                 {
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerInstanceUsage> GetUsageWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerInstanceUsage> GetUsagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ContainerInstanceUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageWithLocation");
+                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesWithLocation");
                 scope.Start();
                 try
                 {
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerInstanceCapabilities>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ContainerCapabilities>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesWithLocation");
                 scope.Start();
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     throw;
                 }
             }
-            async Task<Page<ContainerInstanceCapabilities>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ContainerCapabilities>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesWithLocation");
                 scope.Start();
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerInstanceCapabilities" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerInstanceCapabilities> GetCapabilitiesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<ContainerInstanceCapabilities> FirstPageFunc(int? pageSizeHint)
+            Page<ContainerCapabilities> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesWithLocation");
                 scope.Start();
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     throw;
                 }
             }
-            Page<ContainerInstanceCapabilities> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ContainerCapabilities> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesWithLocation");
                 scope.Start();

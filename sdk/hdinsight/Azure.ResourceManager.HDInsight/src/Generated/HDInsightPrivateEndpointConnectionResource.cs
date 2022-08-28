@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight
     /// A Class representing a HDInsightPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetHDInsightPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource" /> using the GetHDInsightPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource" /> using the GetHDInsightPrivateEndpointConnection method.
     /// </summary>
     public partial class HDInsightPrivateEndpointConnectionResource : ArmResource
     {

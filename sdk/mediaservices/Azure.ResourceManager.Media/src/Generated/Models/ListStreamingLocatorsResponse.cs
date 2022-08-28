@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The Streaming Locators associated with this Asset. </summary>
-    public partial class ListStreamingLocatorsResponse
+    internal partial class ListStreamingLocatorsResponse
     {
         /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
         internal ListStreamingLocatorsResponse()

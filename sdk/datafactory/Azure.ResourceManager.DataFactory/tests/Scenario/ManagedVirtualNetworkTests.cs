@@ -4,13 +4,11 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
-using Azure.ResourceManager.DataFactory.Tests;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.IotHub.Tests.Scenario
+namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class ManagedVirtualNetworkTests : DataFactoryManagementTestBase
     {
@@ -39,11 +37,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
         }
 
-        private async Task<ManagedVirtualNetworkResource> CreateDefaultManagedVirtualNetworkResource(string managedVirtualNetworkName)
+        private async Task<FactoryVirtualNetworkResource> CreateDefaultManagedVirtualNetworkResource(string managedVirtualNetworkName)
         {
             ManagedVirtualNetwork properties = new ManagedVirtualNetwork();
-            ManagedVirtualNetworkResourceData data = new ManagedVirtualNetworkResourceData(properties);
-            var managedVirtualNetwork = await _dataFactory.GetManagedVirtualNetworkResources().CreateOrUpdateAsync(WaitUntil.Completed, managedVirtualNetworkName, data);
+            FactoryVirtualNetworkData data = new FactoryVirtualNetworkData(properties);
+            var managedVirtualNetwork = await _dataFactory.GetFactoryVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, managedVirtualNetworkName, data);
             return managedVirtualNetwork.Value;
         }
 
@@ -61,7 +59,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task Exist()
         {
             await CreateDefaultManagedVirtualNetworkResource(_managedVirtualNetworkName);
-            bool flag = await _dataFactory.GetManagedVirtualNetworkResources().ExistsAsync(_managedVirtualNetworkName);
+            bool flag = await _dataFactory.GetFactoryVirtualNetworks().ExistsAsync(_managedVirtualNetworkName);
             Assert.IsTrue(flag);
         }
 
@@ -70,7 +68,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task Get()
         {
             await CreateDefaultManagedVirtualNetworkResource(_managedVirtualNetworkName);
-            var managedVirtualNetwork = await _dataFactory.GetManagedVirtualNetworkResources().GetAsync(_managedVirtualNetworkName);
+            var managedVirtualNetwork = await _dataFactory.GetFactoryVirtualNetworks().GetAsync(_managedVirtualNetworkName);
             Assert.IsNotNull(managedVirtualNetwork);
             Assert.AreEqual(_managedVirtualNetworkName, managedVirtualNetwork.Value.Data.Name);
         }
@@ -80,7 +78,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         public async Task GetAll()
         {
             await CreateDefaultManagedVirtualNetworkResource(_managedVirtualNetworkName);
-            var list = await _dataFactory.GetManagedVirtualNetworkResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetFactoryVirtualNetworks().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(1,list.Count);
         }

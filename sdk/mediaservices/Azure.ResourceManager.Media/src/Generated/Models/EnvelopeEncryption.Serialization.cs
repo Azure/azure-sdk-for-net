@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -36,20 +37,20 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("contentKeys");
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Optional.IsDefined(CustomKeyAcquisitionUrlTemplate))
+            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomKeyAcquisitionUrlTemplate);
+                writer.WriteStringValue(CustomKeyAcquisitionUriTemplate.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
         internal static EnvelopeEncryption DeserializeEnvelopeEncryption(JsonElement element)
         {
-            Optional<EnabledProtocols> enabledProtocols = default;
-            Optional<IList<TrackSelection>> clearTracks = default;
+            Optional<MediaEnabledProtocols> enabledProtocols = default;
+            Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<string> customKeyAcquisitionUrlTemplate = default;
+            Optional<Uri> customKeyAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"))
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enabledProtocols = EnabledProtocols.DeserializeEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"))
@@ -69,10 +70,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TrackSelection> array = new List<TrackSelection>();
+                    List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackSelection.DeserializeTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
                     }
                     clearTracks = array;
                     continue;
@@ -89,11 +90,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("customKeyAcquisitionUrlTemplate"))
                 {
-                    customKeyAcquisitionUrlTemplate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        customKeyAcquisitionUriTemplate = null;
+                        continue;
+                    }
+                    customKeyAcquisitionUriTemplate = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUrlTemplate.Value);
+            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value);
         }
     }
 }

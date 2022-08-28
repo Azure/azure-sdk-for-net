@@ -6,13 +6,51 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 csharp: true
-tag: package-2020-10-01
 library-name: Authorization
 namespace: Azure.ResourceManager.Authorization
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a416080c85111fbe4e0a483a1b99f1126ca6e97c/specification/authorization/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a436672b07fb1fe276c203b086b3f0e0d0c4aa24/specification/authorization/resource-manager/readme.md
+tag: package-2022-04-01
 output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
+
+rename-mapping:
+  ProviderOperation: ProviderOperationInfo
+  UserSet: RoleManagementUserInfo
+  UserType: RoleManagementUserType
+  PolicyProperties: RoleManagementPolicyProperties
+  Permission: RoleDefinitionPermission
+  PermissionGetResult: RoleDefinitionPermissionListResult
+  ApprovalSettings: RoleManagementApprovalSettings
+  ApprovalMode: RoleManagementApprovalMode
+  ApprovalStage: RoleManagementApprovalStage
+  AssignmentType: RoleAssignmentScheduleAssignmentType
+  EnablementRules: RoleAssignmentEnablementRuleType
+  Principal: RoleManagementPrincipal
+  NotificationLevel: RoleManagementPolicyNotificationLevel
+  RecipientType: RoleManagementPolicyRecipientType
+  DenyAssignment.properties.doNotApplyToChildScopes: IsAppliedToChildScopes
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'applicationId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'principalId': 'uuid'
+  'requestorId': 'uuid'
+  'targetRoleAssignmentScheduleId': 'uuid'
+  'targetRoleAssignmentScheduleInstanceId': 'uuid'
+  'linkedRoleEligibilityScheduleId': 'uuid'
+  'roleEligibilityScheduleId': 'arm-id'
+  'linkedRoleEligibilityScheduleInstanceId': 'uuid'
+  'roleAssignmentScheduleRequestId': 'arm-id'
+  'roleEligibilityScheduleRequestId': 'arm-id'
+  'originRoleAssignmentId': 'arm-id'
+  'roleAssignmentScheduleId': 'arm-id'
+  'roleDefinitionId': 'arm-id'
+  'policyId': 'arm-id'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -36,80 +74,30 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+generate-arm-resource-extensions:
+  - /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}
+  - /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+  - /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}
+  - /{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}
+  - /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
+  - /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
+  - /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
+  - /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
+
 request-path-to-resource-type:
   /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
-
-list-exception: 
-- /{roleDefinitionId}
-- /{roleAssignmentId}
 
 directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'
   - remove-operation: 'RoleManagementPolicyAssignments_Delete'
-
-  # Duplicate Schema name
-  - from: RoleAssignmentScheduleRequest.json
-    where: $.definitions.RoleAssignmentScheduleRequestProperties
-    transform: $['x-ms-client-name'] = 'RoleAssignmentScheduleRequestProperties' 
-
-  - from: RoleAssignmentScheduleRequest.json
-    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
-    transform: $['x-ms-client-name'] = 'RoleAssignmentExpirationType' 
-  - from: RoleAssignmentScheduleRequest.json
-    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
-    transform: $["format"] = "duration"
-  - from: RoleEligibilityScheduleRequest.json
-    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
-    transform: $['x-ms-client-name'] = 'RoleEligibilityExpirationType' 
-  - from: RoleEligibilityScheduleRequest.json
-    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
-    transform: $["format"] = "duration"
-  - from: common-types.json
-    where: $.definitions.RoleManagementPolicyExpirationRule.properties.maximumDuration
-    transform: $["format"] = "duration"
-
-  # change single class name
-  - from: authorization-RoleDefinitionsCalls.json
-    where: $.definitions.Permission
-    transform: $['x-ms-client-name'] = "AzurePermission"
-  - from: common-types.json
-    where: $.definitions.Principal
-    transform: $['x-ms-client-name'] = "AzurePrincipal"
-  - from: RoleAssignmentSchedule.json
-    where: $.definitions.RoleAssignmentScheduleProperties.properties.status
-    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleStatus"
-  - from: RoleAssignmentScheduleInstance.json
-    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.status
-    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleInstanceStatus"
-  - from: RoleAssignmentScheduleRequest.json
-    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.status
-    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleRequestStatus"
-  - from: RoleEligibilitySchedule.json
-    where: $.definitions.RoleEligibilityScheduleProperties.properties.status
-    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleStatus"
-  - from: RoleEligibilityScheduleInstance.json
-    where: $.definitions.RoleEligibilityScheduleInstanceProperties.properties.status
-    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleInstanceStatus"
-  - from: RoleEligibilityScheduleRequest.json
-    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.status
-    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleRequestStatus"
-  - from: RoleAssignmentScheduleRequest.json
-    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
-    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleType"
-  - from: RoleEligibilityScheduleRequest.json
-    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
-    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleType"
-
-  # Rename the name of the common class
-  - from: authorization-ProviderOperationsCalls.json
-    where: $.definitions.ResourceType
-    transform:  $['x-ms-client-name'] = "ProviderOperationsResourceType"
-
-  - from: authorization-ProviderOperationsCalls.json
-    where: $.definitions.ProviderOperation.properties.properties
-    transform:  $['x-nullable'] = true
-
+  # TODO: remove dup methods with scope method, here is another issue logged https://github.com/Azure/autorest.csharp/issues/2629
+  - remove-operation: 'RoleAssignments_ListForSubscription'
+  - remove-operation: 'RoleAssignments_ListForResourceGroup'
+  - remove-operation: 'RoleAssignments_ListForResource'
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
     where: $.paths['/{roleAssignmentId}']
@@ -117,112 +105,126 @@ directive:
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/{roleDefinitionId}']
     transform: $ = {}
+  - from: authorization-RoleDefinitionsCalls.json
+    where: $['x-ms-paths']['/{roleId}?disambiguation_dummy']
+    transform: $ = {}
+  - from: authorization-DenyAssignmentCalls.json
+    where: $.paths['/{denyAssignmentId}']
+    transform: $ = {}
 
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions'].get
-    transform: $.operationId = "AzurePermissionsForResourceGroup_List"
+    transform: $.operationId = 'AzurePermissionsForResourceGroup_List'
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions'].get
-    transform: $.operationId = "AzurePermissionsForResource_List" 
+    transform: $.operationId = 'AzurePermissionsForResource_List' 
 
-  # change type to ResourceIdentifier
+  - from: common-types.json
+    where: $.definitions
+    transform: >
+      $.RoleManagementPolicyExpirationRule.properties.maximumDuration['format'] = 'duration';
+      $.UserSet.properties.id['x-ms-format'] = 'uuid';
+      delete $.Permission;
+
   - from: authorization-RoleAssignmentsCalls.json
-    where: $.definitions.RoleAssignmentPropertiesWithScope.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
+    where: $.definitions
+    transform: >
+      $.RoleAssignmentProperties.properties.principalType['x-ms-enum']['name'] = 'RoleAssignmentPrincipalType';
   - from: RoleAssignmentSchedule.json
-    where: $.definitions.RoleAssignmentScheduleProperties.properties.roleAssignmentScheduleRequestId
-    transform: $['x-ms-format'] = 'arm-id'
+    where: $.definitions
+    transform: >
+      $.RoleAssignmentScheduleProperties.properties.status['x-ms-enum']['name'] = 'RoleAssignmentScheduleStatus';
+      $.RoleAssignmentScheduleProperties.properties.principalType['x-ms-enum']['name'] = 'RoleAssignmentSchedulePrincipalType';
+      $.RoleAssignmentScheduleProperties.properties.memberType['x-ms-enum']['name'] = 'RoleAssignmentScheduleMemberType';
   - from: RoleAssignmentScheduleInstance.json
-    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.originRoleAssignmentId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: RoleAssignmentScheduleInstance.json
-    where: $.definitions.RoleAssignmentScheduleInstanceFilter.properties.roleAssignmentScheduleId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: RoleAssignmentScheduleInstance.json
-    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.roleAssignmentScheduleId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleInstanceFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleRequestFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleInstanceFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleInstanceProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleRequestFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleManagementPolicyAssignmentProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleInstanceFilter.properties.roleEligibilityScheduleId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleInstanceProperties.properties.roleEligibilityScheduleId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleManagementPolicyAssignmentProperties.properties.policyId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleProperties.properties.roleEligibilityScheduleRequestId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.ExpandedProperties.properties.roleDefinition.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.PolicyAssignmentProperties.properties.roleDefinition.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.ExpandedProperties.properties.scope.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.PolicyAssignmentProperties.properties.scope.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.PolicyAssignmentProperties.properties.policy.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.PolicyProperties.properties.scope.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
+    where: $.definitions
+    transform: >
+      $.RoleAssignmentScheduleInstanceProperties.properties.status['x-ms-enum']['name'] = 'RoleAssignmentScheduleStatus';
+      $.RoleAssignmentScheduleInstanceProperties.properties.principalType['x-ms-enum']['name'] = 'RoleAssignmentSchedulePrincipalType';
+      $.RoleAssignmentScheduleInstanceProperties.properties.memberType['x-ms-enum']['name'] = 'RoleAssignmentScheduleMemberType';
+  - from: RoleAssignmentScheduleRequest.json
+    where: $.definitions
+    transform: >
+      $.RoleAssignmentScheduleRequestProperties.properties.status['x-ms-enum']['name'] = 'RoleAssignmentScheduleStatus';
+      $.RoleAssignmentScheduleRequestProperties.properties.principalType['x-ms-enum']['name'] = 'RoleAssignmentSchedulePrincipalType';
+      $.RoleAssignmentScheduleRequestProperties.properties.requestType['x-ms-enum']['name'] = 'RoleAssignmentScheduleRequestType';
+      $.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type['x-ms-enum']['name'] = 'RoleAssignmentScheduleExpirationType';
+      $.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type['x-ms-client-name'] = 'ExpirationType';
+      $.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration['format'] = 'duration';
+      $.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo['x-ms-client-flatten'] = true;
+      $.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration['x-ms-client-flatten'] = true;
+  - from: RoleEligibilitySchedule.json
+    where: $.definitions
+    transform: >
+      $.RoleEligibilityScheduleProperties.properties.status['x-ms-enum']['name'] = 'RoleEligibilityScheduleStatus';
+      $.RoleEligibilityScheduleProperties.properties.principalType['x-ms-enum']['name'] = 'RoleEligibilitySchedulePrincipalType';
+      $.RoleEligibilityScheduleProperties.properties.memberType['x-ms-enum']['name'] = 'RoleEligibilityScheduleMemberType';
+  - from: RoleEligibilityScheduleInstance.json
+    where: $.definitions
+    transform: >
+      $.RoleEligibilityScheduleInstanceProperties.properties.status['x-ms-enum']['name'] = 'RoleEligibilityScheduleStatus';
+      $.RoleEligibilityScheduleInstanceProperties.properties.principalType['x-ms-enum']['name'] = 'RoleEligibilitySchedulePrincipalType';
+      $.RoleEligibilityScheduleInstanceProperties.properties.memberType['x-ms-enum']['name'] = 'RoleEligibilityScheduleMemberType';
+  - from: RoleEligibilityScheduleRequest.json
+    where: $.definitions
+    transform: >
+      $.RoleEligibilityScheduleRequestProperties.properties.status['x-ms-enum']['name'] = 'RoleEligibilityScheduleStatus';
+      $.RoleEligibilityScheduleRequestProperties.properties.principalType['x-ms-enum']['name'] = 'RoleEligibilitySchedulePrincipalType';
+      $.RoleEligibilityScheduleRequestProperties.properties.requestType['x-ms-enum']['name'] = 'RoleEligibilityScheduleRequestType';
+      $.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type['x-ms-enum']['name'] = 'RoleEligibilityScheduleExpirationType';
+      $.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type['x-ms-client-name'] = 'ExpirationType';
+      $.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration['format'] = 'duration';
+      $.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo['x-ms-client-flatten'] = true;
+      $.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration['x-ms-client-flatten'] = true;
+  - from: RoleManagementPolicy.json
+    where: $.definitions
+    transform: >
+      $.PolicyProperties.properties.scope['x-ms-client-flatten'] = true;
+      $.PolicyProperties.properties.scope.properties.id['x-ms-format'] = 'arm-id';
+      $.PolicyProperties.properties.scope.properties.id['x-ms-client-name'] = 'ScopeId';
+      $.PolicyProperties.properties.scope.properties.displayName['x-ms-client-name'] = 'ScopeDisplayName';
+      $.PolicyProperties.properties.scope.properties.type['x-ms-client-name'] = 'ScopeType';
+
+  - from: authorization-ProviderOperationsCalls.json
+    where: $.definitions
+    transform: >
+      $.ResourceType['x-ms-client-name'] = 'ProviderOperationsResourceType';
+      $.ProviderOperation.properties.properties['x-nullable'] = true
 
   - from: swagger-document
-    where: $.definitions.RoleManagementPolicyRule.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.UserSet.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
+    where: $.definitions.ExpandedProperties.properties
+    transform: >
+      $.scope['x-ms-client-flatten'] = true;
+      $.scope.properties.id['x-ms-format'] = 'arm-id';
+      $.scope.properties.id['x-ms-client-name'] = 'ScopeId';
+      $.scope.properties.displayName['x-ms-client-name'] = 'ScopeDisplayName';
+      $.scope.properties.type['x-ms-client-name'] = 'ScopeType';
+      $.roleDefinition['x-ms-client-flatten'] = true;
+      $.roleDefinition.properties.id['x-ms-format'] = 'arm-id';
+      $.roleDefinition.properties.id['x-ms-client-name'] = 'RoleDefinitionId';
+      $.roleDefinition.properties.displayName['x-ms-client-name'] = 'RoleDefinitionDisplayName';
+      $.roleDefinition.properties.type['x-ms-client-name'] = 'RoleDefinitionType';
+      $.principal['x-ms-client-flatten'] = true;
+      $.principal.properties.id['x-ms-format'] = 'arm-id';
+      $.principal.properties.id['x-ms-client-name'] = 'PrincipalId';
+      $.principal.properties.displayName['x-ms-client-name'] = 'PrincipalDisplayName';
+      $.principal.properties.type['x-ms-client-name'] = 'PrincipalType';
 
-  # Rename models
-  - rename-model:
-      from: RoleAssignmentScheduleRequestProperties
-      to: RoleAssignmentSchedule
-  - rename-model:
-      from: UserSet
-      to: UserInfo
+  - from: swagger-document
+    where: $.definitions.PolicyAssignmentProperties.properties
+    transform: >
+      $.scope['x-ms-client-flatten'] = true;
+      $.scope.properties.id['x-ms-format'] = 'arm-id';
+      $.scope.properties.id['x-ms-client-name'] = 'ScopeId';
+      $.scope.properties.displayName['x-ms-client-name'] = 'ScopeDisplayName';
+      $.scope.properties.type['x-ms-client-name'] = 'ScopeType';
+      $.roleDefinition['x-ms-client-flatten'] = true;
+      $.roleDefinition.properties.id['x-ms-format'] = 'arm-id';
+      $.roleDefinition.properties.id['x-ms-client-name'] = 'RoleDefinitionId';
+      $.roleDefinition.properties.displayName['x-ms-client-name'] = 'RoleDefinitionDisplayName';
+      $.roleDefinition.properties.type['x-ms-client-name'] = 'RoleDefinitionType';
+      $.policy['x-ms-client-flatten'] = true;
+      $.policy.properties.id['x-ms-format'] = 'arm-id';
+      $.policy.properties.id['x-ms-client-name'] = 'PolicyId';
+
 ```

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowAccessControlConfigurationPolicy DeserializeFlowAccessControlConfigurationPolicy(JsonElement element)
         {
-            Optional<IList<IPAddressRange>> allowedCallerIPAddresses = default;
+            Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
             Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPAddressRange> array = new List<IPAddressRange>();
+                    List<FlowAccessControlIPAddressRange> array = new List<FlowAccessControlIPAddressRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressRange.DeserializeIPAddressRange(item));
+                        array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item));
                     }
                     allowedCallerIPAddresses = array;
                     continue;

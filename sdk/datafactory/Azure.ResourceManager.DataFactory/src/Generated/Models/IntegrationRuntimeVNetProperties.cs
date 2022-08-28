@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
-        /// <param name="vNetId"> The ID of the VNet that this integration runtime will join. </param>
+        /// <param name="vnetId"> The ID of the VNet that this integration runtime will join. </param>
         /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
         /// <param name="subnetId"> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, string subnetId, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeVNetProperties(Guid? vnetId, string subnet, IList<string> publicIPs, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalProperties)
         {
-            VNetId = vNetId;
+            VnetId = vnetId;
             Subnet = subnet;
             PublicIPs = publicIPs;
             SubnetId = subnetId;
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of the VNet that this integration runtime will join. </summary>
-        public string VNetId { get; set; }
+        public Guid? VnetId { get; set; }
         /// <summary> The name of the subnet this integration runtime will join. </summary>
         public string Subnet { get; set; }
         /// <summary> Resource IDs of the public IP addresses that this integration runtime will use. </summary>
         public IList<string> PublicIPs { get; }
         /// <summary> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

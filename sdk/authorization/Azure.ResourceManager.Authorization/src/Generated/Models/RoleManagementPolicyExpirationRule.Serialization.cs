@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<bool> isExpirationRequired = default;
             Optional<TimeSpan> maximumDuration = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
@@ -72,12 +72,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ruleType"))

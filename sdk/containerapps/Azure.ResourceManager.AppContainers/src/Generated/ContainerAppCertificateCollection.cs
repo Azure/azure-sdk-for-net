@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ContainerAppCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, ContainerAppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ContainerAppCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, ContainerAppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.CreateOrUpdate");
             scope.Start();

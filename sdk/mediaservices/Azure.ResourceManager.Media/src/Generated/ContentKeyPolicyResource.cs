@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a ContentKeyPolicy along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContentKeyPolicyResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetContentKeyPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaserviceResource" /> using the GetContentKeyPolicy method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetContentKeyPolicy method.
     /// </summary>
     public partial class ContentKeyPolicyResource : ArmResource
     {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
         /// <param name="key"> The key used for authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public LinkedIntegrationRuntimeKeyAuthorization(SecureString key)
+        public LinkedIntegrationRuntimeKeyAuthorization(FactorySecretString key)
         {
             if (key == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="key"> The key used for authorization. </param>
-        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, SecureString key) : base(authorizationType)
+        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, FactorySecretString key) : base(authorizationType)
         {
             Key = key;
             AuthorizationType = authorizationType ?? "Key";
         }
 
         /// <summary> The key used for authorization. </summary>
-        public SecureString Key { get; set; }
+        public FactorySecretString Key { get; set; }
     }
 }

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AzureStaticWebApps. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Azure Static Web Apps registration. </param>
-        internal AzureStaticWebApps(bool? enabled, AzureStaticWebAppsRegistration registration)
+        internal AzureStaticWebApps(bool? isEnabled, AzureStaticWebAppsRegistration registration)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the Azure Static Web Apps registration. </summary>
         internal AzureStaticWebAppsRegistration Registration { get; set; }
         /// <summary> The Client ID of the app used for login. </summary>

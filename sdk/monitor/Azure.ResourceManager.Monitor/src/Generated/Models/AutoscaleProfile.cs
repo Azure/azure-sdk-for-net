@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="capacity"> the number of instances that can be used during this profile. </param>
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="capacity"/> or <paramref name="rules"/> is null. </exception>
-        public AutoscaleProfile(string name, ScaleCapacity capacity, IEnumerable<ScaleRule> rules)
+        public AutoscaleProfile(string name, MonitorScaleCapacity capacity, IEnumerable<AutoscaleRule> rules)
         {
             if (name == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
         /// <param name="fixedDate"> the specific date-time for the profile. This element is not used if the Recurrence element is used. </param>
         /// <param name="recurrence"> the repeating times at which this profile begins. This element is not used if the FixedDate element is used. </param>
-        internal AutoscaleProfile(string name, ScaleCapacity capacity, IList<ScaleRule> rules, TimeWindow fixedDate, MonitorRecurrence recurrence)
+        internal AutoscaleProfile(string name, MonitorScaleCapacity capacity, IList<AutoscaleRule> rules, MonitorTimeWindow fixedDate, MonitorRecurrence recurrence)
         {
             Name = name;
             Capacity = capacity;
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the name of the profile. </summary>
         public string Name { get; set; }
         /// <summary> the number of instances that can be used during this profile. </summary>
-        public ScaleCapacity Capacity { get; set; }
+        public MonitorScaleCapacity Capacity { get; set; }
         /// <summary> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </summary>
-        public IList<ScaleRule> Rules { get; }
+        public IList<AutoscaleRule> Rules { get; }
         /// <summary> the specific date-time for the profile. This element is not used if the Recurrence element is used. </summary>
-        public TimeWindow FixedDate { get; set; }
+        public MonitorTimeWindow FixedDate { get; set; }
         /// <summary> the repeating times at which this profile begins. This element is not used if the FixedDate element is used. </summary>
         public MonitorRecurrence Recurrence { get; set; }
     }

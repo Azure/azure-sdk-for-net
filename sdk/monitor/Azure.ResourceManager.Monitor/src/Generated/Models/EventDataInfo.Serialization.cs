@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> id = default;
             Optional<string> eventDataId = default;
             Optional<string> correlationId = default;
-            Optional<LocalizableString> eventName = default;
-            Optional<LocalizableString> category = default;
-            Optional<HttpRequestInfo> httpRequest = default;
-            Optional<EventLevel> level = default;
+            Optional<MonitorLocalizableString> eventName = default;
+            Optional<MonitorLocalizableString> category = default;
+            Optional<EventDataHttpRequestInfo> httpRequest = default;
+            Optional<MonitorEventLevel> level = default;
             Optional<string> resourceGroupName = default;
-            Optional<LocalizableString> resourceProviderName = default;
+            Optional<MonitorLocalizableString> resourceProviderName = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<LocalizableString> resourceType = default;
+            Optional<MonitorLocalizableString> resourceType = default;
             Optional<string> operationId = default;
-            Optional<LocalizableString> operationName = default;
+            Optional<MonitorLocalizableString> operationName = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Optional<LocalizableString> status = default;
-            Optional<LocalizableString> subStatus = default;
+            Optional<MonitorLocalizableString> status = default;
+            Optional<MonitorLocalizableString> subStatus = default;
             Optional<DateTimeOffset> eventTimestamp = default;
             Optional<DateTimeOffset> submissionTimestamp = default;
             Optional<string> subscriptionId = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eventName = LocalizableString.DeserializeLocalizableString(property.Value);
+                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("category"))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    category = LocalizableString.DeserializeLocalizableString(property.Value);
+                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("httpRequest"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpRequest = HttpRequestInfo.DeserializeHttpRequestInfo(property.Value);
+                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("level"))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetString().ToEventLevel();
+                    level = property.Value.GetString().ToMonitorEventLevel();
                     continue;
                 }
                 if (property.NameEquals("resourceGroupName"))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceProviderName = LocalizableString.DeserializeLocalizableString(property.Value);
+                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = LocalizableString.DeserializeLocalizableString(property.Value);
+                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationName = LocalizableString.DeserializeLocalizableString(property.Value);
+                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = LocalizableString.DeserializeLocalizableString(property.Value);
+                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subStatus"))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subStatus = LocalizableString.DeserializeLocalizableString(property.Value);
+                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"))

@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\SkuUtility.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Common\tests\Shared\RetryOnExceptionAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,15 +4,14 @@
 using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.ServiceClients;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -25,7 +24,6 @@ namespace Azure.AI.TextAnalytics
         {
             TextAnalyticsClientOptions.ServiceVersion.V3_0,
             TextAnalyticsClientOptions.ServiceVersion.V3_1,
-            TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2
         };
 
         private readonly ServiceClient _serviceClient;
@@ -462,34 +460,6 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.RecognizeEntitiesBatch(documents, options, cancellationToken);
 
-        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, string language)
-        {
-            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
-            int id = 0;
-            foreach (var document in documents)
-            {
-                var input = new MultiLanguageInput(id: id.ToString(CultureInfo.InvariantCulture), text: document);
-                id++;
-                input.Language = language;
-                textEntityInputs.AnalysisInput.Documents.Add(input);
-            }
-
-            return textEntityInputs;
-        }
-
-        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents)
-        {
-            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
-            foreach (var document in documents)
-            {
-                var input = new MultiLanguageInput(document.Id, document.Text);
-                input.Language = document.Language;
-                textEntityInputs.AnalysisInput.Documents.Add(input);
-            }
-
-            return textEntityInputs;
-        }
-
         #endregion
 
         #region Recognize PII Entities
@@ -507,7 +477,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -540,7 +510,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -573,7 +543,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -606,7 +576,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -639,7 +609,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
@@ -667,7 +637,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
@@ -681,6 +651,132 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.RecognizePiiEntitiesBatch(documents, options, cancellationToken);
+
+        #endregion
+
+        #region Recognize Custom Entities
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, language, options, cancellationToken);
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, options, cancellationToken);
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
 
         #endregion
 
@@ -1317,7 +1413,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -1339,7 +1435,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -1368,7 +1464,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
@@ -1388,7 +1484,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
@@ -1410,14 +1506,14 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
@@ -1438,14 +1534,14 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
@@ -1466,14 +1562,14 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
@@ -1493,14 +1589,14 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and up.
         /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
@@ -1511,6 +1607,250 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
+
+        #endregion
+
+        #region Single Label Classify
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+
+        #endregion
+
+        #region Multi Label Classify
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
 
         #endregion
 

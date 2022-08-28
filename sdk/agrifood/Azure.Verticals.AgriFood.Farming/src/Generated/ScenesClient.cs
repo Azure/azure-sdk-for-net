@@ -257,14 +257,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DownloadAsync with required parameters.
+        /// This sample shows how to call DownloadAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = await client.DownloadAsync("<filePath>");
-        /// Console.WriteLine(response.Status);
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
         /// ]]></code>
         /// </example>
         public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context = null)
@@ -292,14 +298,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call Download with required parameters.
+        /// This sample shows how to call Download with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = client.Download("<filePath>");
-        /// Console.WriteLine(response.Status);
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
         /// ]]></code>
         /// </example>
         public virtual Response Download(string filePath, RequestContext context = null)
@@ -571,10 +583,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
-        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
         /// };
         /// 
         /// var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
@@ -593,25 +605,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
-        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     provider = "<Microsoft>",
-        ///     source = "<Sentinel_2_L2A>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     provider = "Microsoft",
+        ///     source = "Sentinel_2_L2A",
         ///     data = new {
         ///         imageNames = new[] {
-        ///             "<SatelliteDataImageNamesItem>"
+        ///             "<String>"
         ///         },
         ///         imageFormats = new[] {
-        ///             "<SatelliteDataImageFormatsItem>"
+        ///             "<String>"
         ///         },
         ///         imageResolutions = new[] {
-        ///             1234
+        ///             123.45d
         ///         },
         ///     },
-        ///     name = "<SatelliteDataIngestionJobName>",
-        ///     description = "<SatelliteDataIngestionJobDescription>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -748,10 +760,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
-        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
         /// };
         /// 
         /// var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
@@ -770,25 +782,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<SatelliteDataIngestionJobFarmerId>",
-        ///     boundaryId = "<SatelliteDataIngestionJobBoundaryId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     provider = "<Microsoft>",
-        ///     source = "<Sentinel_2_L2A>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     provider = "Microsoft",
+        ///     source = "Sentinel_2_L2A",
         ///     data = new {
         ///         imageNames = new[] {
-        ///             "<SatelliteDataImageNamesItem>"
+        ///             "<String>"
         ///         },
         ///         imageFormats = new[] {
-        ///             "<SatelliteDataImageFormatsItem>"
+        ///             "<String>"
         ///         },
         ///         imageResolutions = new[] {
-        ///             1234
+        ///             123.45d
         ///         },
         ///     },
-        ///     name = "<SatelliteDataIngestionJobName>",
-        ///     description = "<SatelliteDataIngestionJobDescription>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

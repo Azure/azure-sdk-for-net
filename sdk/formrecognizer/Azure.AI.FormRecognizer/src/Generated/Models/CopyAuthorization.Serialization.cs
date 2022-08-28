@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WritePropertyName("targetModelId");
             writer.WriteStringValue(TargetModelId);
             writer.WritePropertyName("targetModelLocation");
-            writer.WriteStringValue(TargetModelLocation);
+            writer.WriteStringValue(TargetModelLocation.AbsoluteUri);
             writer.WritePropertyName("accessToken");
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("expirationDateTime");
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string targetResourceId = default;
             string targetResourceRegion = default;
             string targetModelId = default;
-            string targetModelLocation = default;
+            Uri targetModelLocation = default;
             string accessToken = default;
             DateTimeOffset expirationDateTime = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("targetModelLocation"))
                 {
-                    targetModelLocation = property.Value.GetString();
+                    targetModelLocation = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accessToken"))

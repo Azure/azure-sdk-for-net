@@ -16,11 +16,11 @@ namespace Azure.Storage.Blobs
 
         public virtual CustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
-        public virtual UploadTransferValidationOptions UploadTransferValidationOptions { get; internal set; }
-
-        public virtual DownloadTransferValidationOptions DownloadTransferValidationOptions { get; internal set; }
+        public virtual TransferValidationOptions TransferValidation { get; internal set; }
 
         public string EncryptionScope { get; internal set; }
+
+        public bool PreserveBlobNameOuterSlashes { get; internal set; }
 
         public BlobClientConfiguration(
             HttpPipeline pipeline,
@@ -28,16 +28,16 @@ namespace Azure.Storage.Blobs
             ClientDiagnostics clientDiagnostics,
             BlobClientOptions.ServiceVersion version,
             CustomerProvidedKey? customerProvidedKey,
-            UploadTransferValidationOptions uploadTransferValidationOptions,
-            DownloadTransferValidationOptions downloadTransferValidationOptions,
-            string encryptionScope)
+            TransferValidationOptions transferValidation,
+            string encryptionScope,
+            bool preserveBlobNameOuterSlashes)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
-            UploadTransferValidationOptions = uploadTransferValidationOptions;
-            DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
+            PreserveBlobNameOuterSlashes = preserveBlobNameOuterSlashes;
         }
 
         internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)
@@ -47,8 +47,8 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 version: originalClientConfiguration.Version,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
-                uploadTransferValidationOptions: originalClientConfiguration.UploadTransferValidationOptions,
-                downloadTransferValidationOptions: originalClientConfiguration.DownloadTransferValidationOptions,
-                encryptionScope: originalClientConfiguration.EncryptionScope);
+                transferValidation: originalClientConfiguration.TransferValidation,
+                encryptionScope: originalClientConfiguration.EncryptionScope,
+                preserveBlobNameOuterSlashes: originalClientConfiguration.PreserveBlobNameOuterSlashes);
     }
 }

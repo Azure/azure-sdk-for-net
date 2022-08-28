@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(LinkedRedisCacheLocation))
             {
                 writer.WritePropertyName("linkedRedisCacheLocation");
-                writer.WriteStringValue(LinkedRedisCacheLocation);
+                writer.WriteStringValue(LinkedRedisCacheLocation.Value);
             }
             if (Optional.IsDefined(ServerRole))
             {
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> linkedRedisCacheId = default;
-            Optional<string> linkedRedisCacheLocation = default;
-            Optional<ReplicationRole> serverRole = default;
+            Optional<ResourceIdentifier> linkedRedisCacheId = default;
+            Optional<AzureLocation> linkedRedisCacheLocation = default;
+            Optional<RedisLinkedServerRole> serverRole = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,12 +86,22 @@ namespace Azure.ResourceManager.Redis
                     {
                         if (property0.NameEquals("linkedRedisCacheId"))
                         {
-                            linkedRedisCacheId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedRedisCacheId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("linkedRedisCacheLocation"))
                         {
-                            linkedRedisCacheLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedRedisCacheLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serverRole"))
@@ -101,7 +111,7 @@ namespace Azure.ResourceManager.Redis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverRole = property0.Value.GetString().ToReplicationRole();
+                            serverRole = property0.Value.GetString().ToRedisLinkedServerRole();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -113,7 +123,7 @@ namespace Azure.ResourceManager.Redis
                     continue;
                 }
             }
-            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, linkedRedisCacheLocation.Value, Optional.ToNullable(serverRole), provisioningState.Value);
+            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, Optional.ToNullable(linkedRedisCacheLocation), Optional.ToNullable(serverRole), provisioningState.Value);
         }
     }
 }
