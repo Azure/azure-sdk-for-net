@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<RoleManagementScheduleStatus> status = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
-            Optional<string> linkedRoleEligibilityScheduleId = default;
-            Optional<string> linkedRoleEligibilityScheduleInstanceId = default;
+            Optional<Guid> linkedRoleEligibilityScheduleId = default;
+            Optional<Guid> linkedRoleEligibilityScheduleInstanceId = default;
             Optional<RoleAssignmentScheduleAssignmentType> assignmentType = default;
             Optional<RoleManagementScheduleMemberType> memberType = default;
             Optional<string> condition = default;
@@ -161,12 +161,22 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("linkedRoleEligibilityScheduleId"))
                         {
-                            linkedRoleEligibilityScheduleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedRoleEligibilityScheduleId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("linkedRoleEligibilityScheduleInstanceId"))
                         {
-                            linkedRoleEligibilityScheduleInstanceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedRoleEligibilityScheduleInstanceId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("assignmentType"))
@@ -223,7 +233,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), linkedRoleEligibilityScheduleId.Value, linkedRoleEligibilityScheduleInstanceId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
+            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(linkedRoleEligibilityScheduleId), Optional.ToNullable(linkedRoleEligibilityScheduleInstanceId), Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
         }
     }
 }

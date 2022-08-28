@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role assignment schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, string roleAssignmentScheduleRequestId, string linkedRoleEligibilityScheduleId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, Guid? linkedRoleEligibilityScheduleId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The principal type of the assigned principal ID. </summary>
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> The id of roleAssignmentScheduleRequest used to create this roleAssignmentSchedule. </summary>
-        public string RoleAssignmentScheduleRequestId { get; }
+        public ResourceIdentifier RoleAssignmentScheduleRequestId { get; }
         /// <summary> The id of roleEligibilitySchedule used to activated this roleAssignmentSchedule. </summary>
-        public string LinkedRoleEligibilityScheduleId { get; }
+        public Guid? LinkedRoleEligibilityScheduleId { get; }
         /// <summary> Assignment type of the role assignment schedule. </summary>
         public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
         /// <summary> Membership type of the role assignment schedule. </summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
                 PrincipalId = Guid.Parse(TestEnvironment.ClientId),
                 RoleDefinitionId = Definition.Id,
                 RequestType = RoleManagementScheduleRequestType.SelfActivate,
-                LinkedRoleEligibilityScheduleId = "b1477448-2cc6-4ceb-93b4-54a202a89413",
+                LinkedRoleEligibilityScheduleId = new Guid("b1477448-2cc6-4ceb-93b4-54a202a89413"),
                 StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),
                 ExpirationType = RoleManagementScheduleExpirationType.AfterDuration,
                 EndOn = null,

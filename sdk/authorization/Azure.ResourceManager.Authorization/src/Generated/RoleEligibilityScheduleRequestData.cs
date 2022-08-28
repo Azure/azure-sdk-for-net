@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expirationType"> Type of the role eligibility schedule expiration. </param>
         /// <param name="endOn"> End DateTime of the role eligibility schedule. </param>
         /// <param name="duration"> Duration of the role eligibility schedule in TimeSpan. </param>
-        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, RoleManagementScheduleRequestType? requestType, RoleManagementScheduleStatus? status, string approvalId, string targetRoleEligibilityScheduleId, string targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, RoleManagementExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, RoleManagementScheduleRequestType? requestType, RoleManagementScheduleStatus? status, string approvalId, Guid? targetRoleEligibilityScheduleId, Guid? targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, RoleManagementExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The approvalId of the role eligibility schedule request. </summary>
         public string ApprovalId { get; }
         /// <summary> The resultant role eligibility schedule id or the role eligibility schedule id being updated. </summary>
-        public string TargetRoleEligibilityScheduleId { get; set; }
+        public Guid? TargetRoleEligibilityScheduleId { get; set; }
         /// <summary> The role eligibility schedule instance id being updated. </summary>
-        public string TargetRoleEligibilityScheduleInstanceId { get; set; }
+        public Guid? TargetRoleEligibilityScheduleInstanceId { get; set; }
         /// <summary> Justification for the role eligibility. </summary>
         public string Justification { get; set; }
         /// <summary> Ticket Info of the role eligibility. </summary>

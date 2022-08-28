@@ -17,19 +17,19 @@ skip-csproj: true
 rename-mapping:
   RoleAssignment.properties.delegatedManagedIdentityResourceId: -|arm-id
   DenyAssignment.properties.doNotApplyToChildScopes: IsAppliedToChildScopes
-#  RoleAssignmentSchedule.properties.linkedRoleEligibilityScheduleId: -|uuid
-#  RoleAssignmentSchedule.properties.roleAssignmentScheduleRequestId: -|arm-id
-#  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleId: -|uuid
-#  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleInstanceId: -|uuid
+  RoleAssignmentSchedule.properties.linkedRoleEligibilityScheduleId: -|uuid
+  RoleAssignmentSchedule.properties.roleAssignmentScheduleRequestId: -|arm-id
+  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleId: -|uuid
+  RoleAssignmentScheduleInstance.properties.linkedRoleEligibilityScheduleInstanceId: -|uuid
   RoleAssignmentScheduleInstance.properties.originRoleAssignmentId: -|arm-id
   RoleAssignmentScheduleInstance.properties.roleAssignmentScheduleId: -|arm-id
-#  RoleAssignmentScheduleRequest.properties.linkedRoleEligibilityScheduleId: -|uuid
-#  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleId: -|uuid
-#  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleInstanceId: -|uuid
-#  RoleEligibilitySchedule.properties.roleEligibilityScheduleRequestId: -|arm-id
+  RoleAssignmentScheduleRequest.properties.linkedRoleEligibilityScheduleId: -|uuid
+  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleId: -|uuid
+  RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleInstanceId: -|uuid
+  RoleEligibilitySchedule.properties.roleEligibilityScheduleRequestId: -|arm-id
   RoleEligibilityScheduleInstance.properties.roleEligibilityScheduleId: -|arm-id
-#  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId: -|uuid
-#  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleInstanceId: -|uuid
+  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId: -|uuid
+  RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleInstanceId: -|uuid
   RoleManagementPolicyApprovalRule.setting: Settings
   RoleManagementPolicyEnablementRule.enabledRules: EnablementRules
   RoleManagementPolicyNotificationRule.notificationType: NotificationDeliveryType
