@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MediaServiceData>> GetAsync(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaServicesAccountData>> GetAsync(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaServiceData value = default;
+                        MediaServicesAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaServiceData.DeserializeMediaServiceData(document.RootElement);
+                        value = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
                 case 404:
-                    return Response.FromValue((MediaServiceData)null, message.Response);
+                    return Response.FromValue((MediaServicesAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MediaServiceData> Get(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        public Response<MediaServicesAccountData> Get(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaServiceData value = default;
+                        MediaServicesAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaServiceData.DeserializeMediaServiceData(document.RootElement);
+                        value = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
                 case 404:
-                    return Response.FromValue((MediaServiceData)null, message.Response);
+                    return Response.FromValue((MediaServicesAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

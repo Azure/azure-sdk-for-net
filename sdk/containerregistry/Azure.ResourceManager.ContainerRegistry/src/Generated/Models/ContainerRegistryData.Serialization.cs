@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("zoneRedundancy");
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
+            if (Optional.IsDefined(IsAnonymousPullEnabled))
+            {
+                writer.WritePropertyName("anonymousPullEnabled");
+                writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -88,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         internal static ContainerRegistryData DeserializeContainerRegistryData(JsonElement element)
         {
             ContainerRegistrySku sku = default;
-            Optional<ContainerRegistryManagedIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
             Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
             Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
+            Optional<bool> anonymousPullEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -123,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ContainerRegistryManagedIdentity.DeserializeContainerRegistryManagedIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -325,11 +331,21 @@ namespace Azure.ResourceManager.ContainerRegistry
                             zoneRedundancy = new ContainerRegistryZoneRedundancy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("anonymousPullEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            anonymousPullEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity.Value, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToList(dataEndpointHostNames), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy));
+            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToList(dataEndpointHostNames), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy), Optional.ToNullable(anonymousPullEnabled));
         }
     }
 }

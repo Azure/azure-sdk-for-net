@@ -23,6 +23,8 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'ifMatch': 'etag'
+  'locationName': 'azure-location'
+  'thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
@@ -162,6 +164,7 @@ rename-mapping:
   IPAddressProvisioningType: BatchIPAddressProvisioningType
   IPRuleAction: BatchIPRuleAction
   NetworkConfiguration: BatchNetworkConfiguration
+  NetworkConfiguration.subnetId: -|arm-id
   NetworkSecurityGroupRule: BatchNetworkSecurityGroupRule
   NetworkSecurityGroupRuleAccess: BatchNetworkSecurityGroupRuleAccess
   NodePlacementPolicyType: BatchNodePlacementPolicyType
@@ -172,11 +175,20 @@ rename-mapping:
   UserIdentity: BatchUserIdentity
   ImageReference: BatchImageReference
   ImageReference.id: -|arm-id
+  CertificateCreateOrUpdateParameters.properties.data: -|any
+  KeyVaultProperties.keyIdentifier: -|uri
+  AzureFileShareConfiguration.azureFileUrl: FileUrl
+  MountConfiguration.azureBlobFileSystemConfiguration: BlobFileSystemConfiguration
+  MountConfiguration.azureFileShareConfiguration: FileShareConfiguration
+  ResourceFile.storageContainerUrl: BlobContainerUri
+  ResourceFile.autoStorageContainerName: AutoBlobContainerName
+  AccountKeyType: BatchAccountKeyType
+  BatchAccountRegenerateKeyParameters.keyName: KeyType
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
   - from: swagger-document
-    where: $.definitions.PublicIPAddressConfiguration.properties.ipAddressIds.item
+    where: $.definitions.PublicIPAddressConfiguration.properties.ipAddressIds.items
     transform: $["x-ms-format"] = "arm-id"
 # resume the setter on tags of BatchAccountData
   - from: swagger-document

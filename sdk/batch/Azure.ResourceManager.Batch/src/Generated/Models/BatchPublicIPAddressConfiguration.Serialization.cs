@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal static BatchPublicIPAddressConfiguration DeserializeBatchPublicIPAddressConfiguration(JsonElement element)
         {
             Optional<BatchIPAddressProvisioningType> provision = default;
-            Optional<IList<string>> ipAddressIds = default;
+            Optional<IList<ResourceIdentifier>> ipAddressIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provision"))
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     ipAddressIds = array;
                     continue;

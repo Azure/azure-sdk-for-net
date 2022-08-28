@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsPrivateLinkServiceConnection DeserializeStreamAnalyticsPrivateLinkServiceConnection(JsonElement element)
         {
-            Optional<string> privateLinkServiceId = default;
+            Optional<ResourceIdentifier> privateLinkServiceId = default;
             Optional<IList<string>> groupIds = default;
             Optional<string> requestMessage = default;
             Optional<StreamAnalyticsPrivateLinkConnectionState> privateLinkServiceConnectionState = default;
@@ -61,7 +61,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         if (property0.NameEquals("privateLinkServiceId"))
                         {
-                            privateLinkServiceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateLinkServiceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("groupIds"))

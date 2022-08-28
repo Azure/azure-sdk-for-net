@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryData DeserializeDataFactoryData(JsonElement element)
         {
-            Optional<FactoryIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -113,7 +114,8 @@ namespace Azure.ResourceManager.DataFactory
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = FactoryIdentity.DeserializeFactoryIdentity(property.Value);
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("eTag"))
@@ -261,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
+            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags)
         {
             OperationId = operationId;
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public int? PercentCompleted { get; }
         /// <summary> Type of operation. </summary>
         public DocumentOperationKind Kind { get; }
-        /// <summary> List of key-value tag attributes associated with the model. </summary>
+        /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

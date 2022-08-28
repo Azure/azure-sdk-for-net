@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="id"> The unique ID of the trigger. </param>
         /// <param name="timestamp"> The timestamp when the image update happened. </param>
         /// <param name="images"> The list of image updates that caused the build. </param>
-        internal ContainerRegistryImageUpdateTrigger(string id, DateTimeOffset? timestamp, IList<ContainerRegistryImageDescriptor> images)
+        internal ContainerRegistryImageUpdateTrigger(Guid? id, DateTimeOffset? timestamp, IList<ContainerRegistryImageDescriptor> images)
         {
             Id = id;
             Timestamp = timestamp;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The unique ID of the trigger. </summary>
-        public string Id { get; set; }
+        public Guid? Id { get; set; }
         /// <summary> The timestamp when the image update happened. </summary>
         public DateTimeOffset? Timestamp { get; set; }
         /// <summary> The list of image updates that caused the build. </summary>

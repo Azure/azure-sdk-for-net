@@ -1,0 +1,175 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/E2-F7-76-5B-DD-79-84-DD-B9-19-DD-64-CE-86-7C-39-D1?api-version=2022-07-18-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "214",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-48b4dbd15040fa49912b8e4fc2511864-89e429333d934344-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3daccaf9221204e10965a46b1757cdae",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:15:35 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "LongestIdleDistributionPolicyE2-F7-76-5B-DD-79-84-DD-B9-19-DD-64-CE-86-7C-39-D1",
+        "offerTtlSeconds": 30,
+        "mode": {
+          "kind": "longest-idle",
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 1,
+          "bypassSelectors": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:15:37 GMT",
+        "ETag": "\u00223107aab9-0000-0700-0000-62db75e90000\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:15:37 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "48b4dbd15040fa49912b8e4fc2511864",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "053XbYgAAAADzMQV3SPCES69hgmB2aJ8\u002BWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "E2-F7-76-5B-DD-79-84-DD-B9-19-DD-64-CE-86-7C-39-D1",
+        "name": "LongestIdleDistributionPolicyE2-F7-76-5B-DD-79-84-DD-B9-19-DD-64-CE-86-7C-39-D1",
+        "offerTtlSeconds": 30,
+        "mode": {
+          "kind": "longest-idle",
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 1,
+          "bypassSelectors": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/queues/21-7C-A9-A0-11-EE-E8-58-19-9A-B4-93-C2-EB-17-A9-82?api-version=2022-07-18-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "189",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-849e75cddc7a3445b16bc0679a9770cb-c654cdde5d114a4a-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c2dae0125f53b8638f2ccd9e54c16be4",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:15:37 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "DefaultQueue-Sdk-Test21-7C-A9-A0-11-EE-E8-58-19-9A-B4-93-C2-EB-17-A9-82",
+        "distributionPolicyId": "E2-F7-76-5B-DD-79-84-DD-B9-19-DD-64-CE-86-7C-39-D1",
+        "labels": {
+          "Label_1": "Value_1"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:15:38 GMT",
+        "ETag": "\u00225f007856-0000-0700-0000-62db75ea0000\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:15:38 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "849e75cddc7a3445b16bc0679a9770cb",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "06XXbYgAAAABV6HRQb7vXTLsrJdWm09PrWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "21-7C-A9-A0-11-EE-E8-58-19-9A-B4-93-C2-EB-17-A9-82",
+        "name": "DefaultQueue-Sdk-Test21-7C-A9-A0-11-EE-E8-58-19-9A-B4-93-C2-EB-17-A9-82",
+        "distributionPolicyId": "E2-F7-76-5B-DD-79-84-DD-B9-19-DD-64-CE-86-7C-39-D1",
+        "labels": {
+          "Label_1": "Value_1",
+          "Id": "21-7C-A9-A0-11-EE-E8-58-19-9A-B4-93-C2-EB-17-A9-82"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationPolicies/sdk-fdYUydv1XUqA-L9bYnusGA--CPEmpty?api-version=2022-07-18-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "42",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-ecc6f11a5eaf7242aa8220e6784ccc3c-ca1bd483417a1542-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ec04d3dfd78f4acee20822789e0a8844",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:15:38 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "queueSelectors": [],
+        "workerSelectors": []
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:15:40 GMT",
+        "ETag": "\u00224a01cc64-0000-0700-0000-62db75ec0000\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:15:40 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "ecc6f11a5eaf7242aa8220e6784ccc3c",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "063XbYgAAAABeUHhi917nQYF\u002BcTis/IcdWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-fdYUydv1XUqA-L9bYnusGA--CPEmpty",
+        "queueSelectors": [],
+        "workerSelectors": []
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationPolicies/sdk-fdYUydv1XUqA-L9bYnusGA--CPEmpty?api-version=2022-07-18-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-070e510028eb1e4ab544c929e872c0d6-6cf82fa32a18d445-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ebbf3d2c5df4990a66f4ade55543af47",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:15:40 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:15:40 GMT",
+        "ETag": "\u00224a01cc64-0000-0700-0000-62db75ec0000\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:15:40 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "070e510028eb1e4ab544c929e872c0d6",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "07HXbYgAAAAA2inraypNbSrlxnaYLndETWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-fdYUydv1XUqA-L9bYnusGA--CPEmpty",
+        "queueSelectors": [],
+        "workerSelectors": []
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-fdYUydv1XUqA-L9bYnusGA-",
+    "RandomSeed": "61702343"
+  }
+}

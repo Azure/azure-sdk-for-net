@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in custom format. </summary>
-    public partial class CustomClrFormatSerialization : DataSerialization
+    public partial class CustomClrFormatSerialization : StreamAnalyticsDataSerialization
     {
         /// <summary> Initializes a new instance of CustomClrFormatSerialization. </summary>
         public CustomClrFormatSerialization()

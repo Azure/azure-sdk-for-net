@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepoInformation");
             scope.Start();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataFactoryResource> ConfigureFactoryRepoInformation(ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryResource> ConfigureFactoryRepoInformation(AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepoInformation");
             scope.Start();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(ResourceIdentifier locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ExposureControlClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFeatureValueExposureControl");
             scope.Start();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExposureControlResult> GetFeatureValueExposureControl(ResourceIdentifier locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ExposureControlResult> GetFeatureValueExposureControl(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ExposureControlClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFeatureValueExposureControl");
             scope.Start();

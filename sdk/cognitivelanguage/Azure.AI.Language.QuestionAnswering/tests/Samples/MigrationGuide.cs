@@ -9,7 +9,8 @@ using Azure.AI.Language.QuestionAnswering.Projects;
 using Azure.Core;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models;
-using NUnit.Framework;
+
+#pragma warning disable IDE0051 // Remove unused private members
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {

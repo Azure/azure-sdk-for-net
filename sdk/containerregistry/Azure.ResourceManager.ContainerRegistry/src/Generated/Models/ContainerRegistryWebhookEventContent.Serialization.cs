@@ -15,18 +15,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventContent DeserializeContainerRegistryWebhookEventContent(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> action = default;
             Optional<ContainerRegistryWebhookEventTarget> target = default;
-            Optional<ContainerRegistryWebhookEventRequest> request = default;
+            Optional<ContainerRegistryWebhookEventRequestContent> request = default;
             Optional<ContainerRegistryWebhookEventActor> actor = default;
             Optional<ContainerRegistryWebhookEventSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("timestamp"))
@@ -61,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    request = ContainerRegistryWebhookEventRequest.DeserializeContainerRegistryWebhookEventRequest(property.Value);
+                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actor"))
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventContent(id.Value, Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value);
+            return new ContainerRegistryWebhookEventContent(Optional.ToNullable(id), Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value);
         }
     }
 }

@@ -2,6 +2,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     public static partial class ManagedServiceIdentitiesExtensions
     {
+        public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity(this Azure.ResourceManager.ArmResource armResource) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityCollection GetUserAssignedIdentities(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }

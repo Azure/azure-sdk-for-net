@@ -27,8 +27,8 @@ If the operation failed, the error information can be accessed using the `Error`
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Make sure there is at least one operation, so we are going to build a custom model.
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 
 // List the first ten or fewer operations that have been executed in the last 24h.
 AsyncPageable<DocumentModelOperationSummary> operationSummaries = client.GetOperationsAsync();
@@ -59,8 +59,21 @@ DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(
 if (operationDetails.Status == DocumentOperationStatus.Succeeded)
 {
     Console.WriteLine($"My {operationDetails.Kind} operation is completed.");
-    DocumentModelDetails result = operationDetails.Result;
-    Console.WriteLine($"Model ID: {result.ModelId}");
+
+    // Extract the result based on the kind of operation. Currently only Build, CopyTo, and
+    // Compose operations are supported.
+    DocumentModelDetails result = operationDetails switch
+    {
+        DocumentModelBuildOperationDetails buildOp => buildOp.Result,
+        DocumentModelCopyToOperationDetails copyToOp => copyToOp.Result,
+        DocumentModelComposeOperationDetails composeOp => composeOp.Result,
+        _ => null
+    };
+
+    if (result != null)
+    {
+        Console.WriteLine($"Model ID: {result.ModelId}");
+    }
 }
 else if (operationDetails.Status == DocumentOperationStatus.Failed)
 {

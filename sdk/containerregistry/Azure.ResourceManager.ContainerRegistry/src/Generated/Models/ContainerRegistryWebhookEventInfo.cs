@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The basic information of an event. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of ContainerRegistryWebhookEventInfo. </summary>
         /// <param name="id"> The event ID. </param>
-        internal ContainerRegistryWebhookEventInfo(string id)
+        internal ContainerRegistryWebhookEventInfo(Guid? id)
         {
             Id = id;
         }
 
         /// <summary> The event ID. </summary>
-        public string Id { get; }
+        public Guid? Id { get; }
     }
 }

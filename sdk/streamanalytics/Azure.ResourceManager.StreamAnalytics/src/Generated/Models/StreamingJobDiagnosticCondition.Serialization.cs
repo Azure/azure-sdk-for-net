@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,14 +15,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamingJobDiagnosticCondition DeserializeStreamingJobDiagnosticCondition(JsonElement element)
         {
-            Optional<string> since = default;
+            Optional<DateTimeOffset> since = default;
             Optional<string> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("since"))
                 {
-                    since = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    since = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("code"))
@@ -35,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobDiagnosticCondition(since.Value, code.Value, message.Value);
+            return new StreamingJobDiagnosticCondition(Optional.ToNullable(since), code.Value, message.Value);
         }
     }
 }

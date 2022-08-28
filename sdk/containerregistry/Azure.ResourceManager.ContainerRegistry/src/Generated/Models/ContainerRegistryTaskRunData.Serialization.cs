@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Location))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryTaskRunData DeserializeContainerRegistryTaskRunData(JsonElement element)
         {
-            Optional<ContainerRegistryManagedIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ContainerRegistryManagedIdentity.DeserializeContainerRegistryManagedIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRegistryTaskRunData(id, name, type, systemData.Value, identity.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), runRequest.Value, runResult.Value, forceUpdateTag.Value);
+            return new ContainerRegistryTaskRunData(id, name, type, systemData.Value, identity, Optional.ToNullable(location), Optional.ToNullable(provisioningState), runRequest.Value, runResult.Value, forceUpdateTag.Value);
         }
     }
 }

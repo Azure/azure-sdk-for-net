@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="keyVersion"> Specific key version that is used for enabling disk encryption. </param>
         /// <param name="encryptionAlgorithm"> Algorithm identifier for encryption, default RSA-OAEP. </param>
         /// <param name="msiResourceId"> Resource ID of Managed Identity that is used to access the key vault. </param>
-        /// <param name="encryptionAtHost"> Indicates whether or not resource disk encryption is enabled. </param>
-        internal HDInsightDiskEncryptionProperties(Uri vaultUri, string keyName, string keyVersion, JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm, ResourceIdentifier msiResourceId, bool? encryptionAtHost)
+        /// <param name="isEncryptionAtHostEnabled"> Indicates whether or not resource disk encryption is enabled. </param>
+        internal HDInsightDiskEncryptionProperties(Uri vaultUri, string keyName, string keyVersion, JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm, ResourceIdentifier msiResourceId, bool? isEncryptionAtHostEnabled)
         {
             VaultUri = vaultUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
             EncryptionAlgorithm = encryptionAlgorithm;
             MsiResourceId = msiResourceId;
-            EncryptionAtHost = encryptionAtHost;
+            IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
         }
 
         /// <summary> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </summary>
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Resource ID of Managed Identity that is used to access the key vault. </summary>
         public ResourceIdentifier MsiResourceId { get; set; }
         /// <summary> Indicates whether or not resource disk encryption is enabled. </summary>
-        public bool? EncryptionAtHost { get; set; }
+        public bool? IsEncryptionAtHostEnabled { get; set; }
     }
 }

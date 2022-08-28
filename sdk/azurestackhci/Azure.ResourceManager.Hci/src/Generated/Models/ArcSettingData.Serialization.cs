@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci
             Optional<Guid> arcServicePrincipalObjectId = default;
             Optional<Guid> arcApplicationObjectId = default;
             Optional<ArcSettingAggregateState> aggregateState = default;
-            Optional<IReadOnlyList<PerNodeState>> perNodeDetails = default;
+            Optional<IReadOnlyList<PerNodeArcState>> perNodeDetails = default;
             Optional<BinaryData> connectivityProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PerNodeState> array = new List<PerNodeState>();
+                            List<PerNodeArcState> array = new List<PerNodeArcState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PerNodeState.DeserializePerNodeState(item));
+                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item));
                             }
                             perNodeDetails = array;
                             continue;

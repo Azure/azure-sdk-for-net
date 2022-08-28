@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The event for a webhook. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="id"> The event ID. </param>
         /// <param name="eventRequestMessage"> The event request message sent to the service URI. </param>
         /// <param name="eventResponseMessage"> The event response message received from the service URI. </param>
-        internal ContainerRegistryWebhookEvent(string id, ContainerRegistryWebhookEventRequestMessage eventRequestMessage, ContainerRegistryWebhookEventResponseMessage eventResponseMessage) : base(id)
+        internal ContainerRegistryWebhookEvent(Guid? id, ContainerRegistryWebhookEventRequestMessage eventRequestMessage, ContainerRegistryWebhookEventResponseMessage eventResponseMessage) : base(id)
         {
             EventRequestMessage = eventRequestMessage;
             EventResponseMessage = eventResponseMessage;

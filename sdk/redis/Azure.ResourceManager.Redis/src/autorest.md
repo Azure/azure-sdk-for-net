@@ -38,6 +38,7 @@ rename-mapping:
   ReplicationRole: RedisLinkedServerRole
   RedisCommonPropertiesRedisConfiguration.rdb-backup-enabled: IsRdbBackupEnabled|boolean
   RedisCommonPropertiesRedisConfiguration.aof-backup-enabled: IsAofBackupEnabled|boolean
+  RedisCommonPropertiesRedisConfiguration.rdb-backup-max-snapshot-count: -|integer
   RedisForceRebootResponse: RedisForceRebootResult
 
 prepend-rp-prefix:
@@ -108,5 +109,8 @@ directive:
     where: $.definitions.OperationStatusResult
     transform: >
       $.properties.id['x-ms-format'] = 'arm-id';
-
+  - from: redis.json
+    where: $.definitions
+    transform: >
+      $.RedisProperties.properties.accessKeys["x-nullable"] = true;
 ```

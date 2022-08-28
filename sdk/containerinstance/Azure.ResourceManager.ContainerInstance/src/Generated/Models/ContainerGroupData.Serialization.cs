@@ -142,18 +142,18 @@ namespace Azure.ResourceManager.ContainerInstance
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            IList<Models.ContainerInstance> containers = default;
-            Optional<IList<ImageRegistryCredential>> imageRegistryCredentials = default;
+            IList<ContainerInstanceContainer> containers = default;
+            Optional<IList<ContainerGroupImageRegistryCredential>> imageRegistryCredentials = default;
             Optional<ContainerGroupRestartPolicy> restartPolicy = default;
             Optional<ContainerGroupIPAddress> ipAddress = default;
-            OperatingSystemType osType = default;
-            Optional<IList<ContainerInstanceVolume>> volumes = default;
+            ContainerInstanceOperatingSystemType osType = default;
+            Optional<IList<ContainerVolume>> volumes = default;
             Optional<ContainerGroupInstanceView> instanceView = default;
             Optional<ContainerGroupDiagnostics> diagnostics = default;
             Optional<IList<ContainerGroupSubnetId>> subnetIds = default;
-            Optional<DnsConfiguration> dnsConfig = default;
+            Optional<ContainerGroupDnsConfiguration> dnsConfig = default;
             Optional<ContainerGroupSku> sku = default;
-            Optional<Models.EncryptionProperties> encryptionProperties = default;
+            Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
             Optional<IList<InitContainerDefinitionContent>> initContainers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.ContainerInstance
                         }
                         if (property0.NameEquals("containers"))
                         {
-                            List<Models.ContainerInstance> array = new List<Models.ContainerInstance>();
+                            List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ContainerInstance.DeserializeContainerInstance(item));
+                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item));
                             }
                             containers = array;
                             continue;
@@ -258,10 +258,10 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ImageRegistryCredential> array = new List<ImageRegistryCredential>();
+                            List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ImageRegistryCredential.DeserializeImageRegistryCredential(item));
+                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item));
                             }
                             imageRegistryCredentials = array;
                             continue;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         }
                         if (property0.NameEquals("osType"))
                         {
-                            osType = new OperatingSystemType(property0.Value.GetString());
+                            osType = new ContainerInstanceOperatingSystemType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("volumes"))
@@ -298,10 +298,10 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ContainerInstanceVolume> array = new List<ContainerInstanceVolume>();
+                            List<ContainerVolume> array = new List<ContainerVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerInstanceVolume.DeserializeContainerInstanceVolume(item));
+                                array.Add(ContainerVolume.DeserializeContainerVolume(item));
                             }
                             volumes = array;
                             continue;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dnsConfig = DnsConfiguration.DeserializeDnsConfiguration(property0.Value);
+                            dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionProperties = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("initContainers"))

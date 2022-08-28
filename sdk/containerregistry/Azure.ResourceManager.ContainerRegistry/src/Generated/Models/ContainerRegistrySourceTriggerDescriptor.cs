@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="repositoryUri"> The repository URL. </param>
         /// <param name="branchName"> The branch name in the repository. </param>
         /// <param name="providerType"> The source control provider type. </param>
-        internal ContainerRegistrySourceTriggerDescriptor(string id, string eventType, string commitId, string pullRequestId, Uri repositoryUri, string branchName, string providerType)
+        internal ContainerRegistrySourceTriggerDescriptor(Guid? id, string eventType, string commitId, string pullRequestId, Uri repositoryUri, string branchName, string providerType)
         {
             Id = id;
             EventType = eventType;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The unique ID of the trigger. </summary>
-        public string Id { get; set; }
+        public Guid? Id { get; set; }
         /// <summary> The event type of the trigger. </summary>
         public string EventType { get; set; }
         /// <summary> The unique ID that identifies a commit. </summary>

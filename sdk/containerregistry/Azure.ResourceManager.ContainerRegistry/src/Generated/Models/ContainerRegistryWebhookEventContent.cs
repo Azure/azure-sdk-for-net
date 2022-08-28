@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="request"> The request that generated the event. </param>
         /// <param name="actor"> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </param>
         /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
-        internal ContainerRegistryWebhookEventContent(string id, DateTimeOffset? timestamp, string action, ContainerRegistryWebhookEventTarget target, ContainerRegistryWebhookEventRequest request, ContainerRegistryWebhookEventActor actor, ContainerRegistryWebhookEventSource source)
+        internal ContainerRegistryWebhookEventContent(Guid? id, DateTimeOffset? timestamp, string action, ContainerRegistryWebhookEventTarget target, ContainerRegistryWebhookEventRequestContent request, ContainerRegistryWebhookEventActor actor, ContainerRegistryWebhookEventSource source)
         {
             Id = id;
             Timestamp = timestamp;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The event ID. </summary>
-        public string Id { get; }
+        public Guid? Id { get; }
         /// <summary> The time at which the event occurred. </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The action that encompasses the provided event. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The target of the event. </summary>
         public ContainerRegistryWebhookEventTarget Target { get; }
         /// <summary> The request that generated the event. </summary>
-        public ContainerRegistryWebhookEventRequest Request { get; }
+        public ContainerRegistryWebhookEventRequestContent Request { get; }
         /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
         internal ContainerRegistryWebhookEventActor Actor { get; }
         /// <summary> The subject or username associated with the request context that generated the event. </summary>

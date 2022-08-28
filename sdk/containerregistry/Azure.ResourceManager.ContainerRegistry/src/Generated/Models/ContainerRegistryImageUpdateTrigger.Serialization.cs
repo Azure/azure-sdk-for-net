@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(Timestamp))
             {
@@ -42,14 +42,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryImageUpdateTrigger DeserializeContainerRegistryImageUpdateTrigger(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<IList<ContainerRegistryImageDescriptor>> images = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("timestamp"))
@@ -78,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryImageUpdateTrigger(id.Value, Optional.ToNullable(timestamp), Optional.ToList(images));
+            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), Optional.ToList(images));
         }
     }
 }

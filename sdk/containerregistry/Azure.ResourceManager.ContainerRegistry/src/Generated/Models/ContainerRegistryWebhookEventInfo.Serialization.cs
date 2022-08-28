@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,16 +15,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventInfo DeserializeContainerRegistryWebhookEventInfo(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventInfo(id.Value);
+            return new ContainerRegistryWebhookEventInfo(Optional.ToNullable(id));
         }
     }
 }

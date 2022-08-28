@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="zonalConfiguration"> Zonal Configuration. </param>
         /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, string rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, IDictionary<string, BinaryData> additionalProperties)
+        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, IDictionary<string, BinaryData> additionalProperties)
         {
             IsRdbBackupEnabled = isRdbBackupEnabled;
             RdbBackupFrequency = rdbBackupFrequency;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Specifies the frequency for creating rdb backup. </summary>
         public string RdbBackupFrequency { get; set; }
         /// <summary> Specifies the maximum number of snapshots for rdb backup. </summary>
-        public string RdbBackupMaxSnapshotCount { get; set; }
+        public int? RdbBackupMaxSnapshotCount { get; set; }
         /// <summary> The storage account connection string for storing rdb file. </summary>
         public string RdbStorageConnectionString { get; set; }
         /// <summary> Specifies whether the aof backup is enabled. </summary>

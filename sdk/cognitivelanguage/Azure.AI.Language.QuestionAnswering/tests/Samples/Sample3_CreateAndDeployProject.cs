@@ -38,6 +38,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 );
 
             Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
+#if !SNIPPET
+            EnqueueProjectDeletion(newProjectName);
+#endif
 
             // Projects can be retrieved as follows
             Pageable<BinaryData> projects = client.GetProjects();
@@ -148,6 +151,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 );
 
             Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
+#if !SNIPPET
+            EnqueueProjectDeletion(newProjectName);
+#endif
 
             // Projects can be retrieved as follows
             AsyncPageable<BinaryData> projects = client.GetProjectsAsync();

@@ -47,9 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
         protected void CreateProject(string projectName = default)
         {
-            if (projectName == default)
-                projectName = CreateTestProjectName();
-
+            projectName ??= CreateTestProjectName();
             RequestContent creationRequestContent = RequestContent.Create(
                 new
                 {
@@ -69,9 +67,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
         protected async Task<Response> CreateProjectAsync(string projectName = default)
         {
-            if (projectName == default)
-                projectName = CreateTestProjectName();
-
+            projectName ??= CreateTestProjectName();
             RequestContent creationRequestContent = RequestContent.Create(
                 new
                 {

@@ -33,20 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             string testProjectName = CreateTestProjectName();
 
-            RequestContent creationRequestContent = RequestContent.Create(
-                new
-                {
-                    description = "This is the description for a test project",
-                    language = "en",
-                    multilingualResource = false,
-                    settings = new
-                    {
-                        defaultAnswer = "No answer found for your question."
-                    }
-                }
-                );
-
-            Response createProjectResponse = await client.CreateProjectAsync(testProjectName, creationRequestContent);
+            Response createProjectResponse = await CreateProjectAsync(testProjectName);
             Response projectDetailsResponse = await client.GetProjectDetailsAsync(testProjectName);
 
             Assert.AreEqual(201, createProjectResponse.Status);
@@ -249,6 +236,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             });
 
             Operation<BinaryData> importOperation = await Client.ImportAsync(WaitUntil.Completed, testProjectName, importRequestContent, importFormat);
+            EnqueueProjectDeletion(testProjectName);
 
             Response projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
 

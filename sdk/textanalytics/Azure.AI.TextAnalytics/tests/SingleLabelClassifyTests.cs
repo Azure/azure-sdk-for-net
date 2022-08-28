@@ -255,6 +255,20 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, singleLabelClassifyActionsResults.Select(result => result.ActionName));
         }
 
+        [RecordedTest]
+        public async Task StartSingleLabelClassify()
+        {
+            TextAnalyticsClient client = GetClient();
+            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName);
+
+            await PollUntilTimeout(operation);
+            Assert.IsTrue(operation.HasCompleted);
+
+            // Take the first page.
+            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection);
+        }
+
         private void ValidateSummaryDocumentResult(ClassificationCategory? classification)
         {
             Assert.IsNotNull(classification);

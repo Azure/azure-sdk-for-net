@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             string type = default;
-            Optional<DataSerialization> serialization = default;
+            Optional<StreamAnalyticsDataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;
             Optional<ETag> etag = default;
             Optional<StreamingCompression> compression = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serialization = DataSerialization.DeserializeDataSerialization(property.Value);
+                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value);
+            return new UnknownStreamingJobInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value);
         }
     }
 }

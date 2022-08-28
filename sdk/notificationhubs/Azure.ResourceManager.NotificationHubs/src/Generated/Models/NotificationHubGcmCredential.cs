@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Description of a NotificationHub GcmCredential.
-    /// Serialized Name: GcmCredential
-    /// </summary>
+    /// <summary> Description of a NotificationHub GcmCredential. </summary>
     public partial class NotificationHubGcmCredential
     {
         /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
-        /// <param name="gcmEndpoint">
-        /// The FCM legacy endpoint. Default value is &apos;https://fcm.googleapis.com/fcm/send&apos;
-        /// Serialized Name: GcmCredential.properties.gcmEndpoint
-        /// </param>
-        /// <param name="googleApiKey">
-        /// The Google API key.
-        /// Serialized Name: GcmCredential.properties.googleApiKey
-        /// </param>
-        internal NotificationHubGcmCredential(Uri gcmEndpoint, string googleApiKey)
+        /// <param name="gcmEndpoint"> The FCM legacy endpoint. Default value is &apos;https://fcm.googleapis.com/fcm/send&apos;. </param>
+        /// <param name="gcmApiKey"> The Google API key. </param>
+        internal NotificationHubGcmCredential(Uri gcmEndpoint, string gcmApiKey)
         {
             GcmEndpoint = gcmEndpoint;
-            GoogleApiKey = googleApiKey;
+            GcmApiKey = gcmApiKey;
         }
 
-        /// <summary>
-        /// The FCM legacy endpoint. Default value is &apos;https://fcm.googleapis.com/fcm/send&apos;
-        /// Serialized Name: GcmCredential.properties.gcmEndpoint
-        /// </summary>
+        /// <summary> The FCM legacy endpoint. Default value is &apos;https://fcm.googleapis.com/fcm/send&apos;. </summary>
         public Uri GcmEndpoint { get; set; }
-        /// <summary>
-        /// The Google API key.
-        /// Serialized Name: GcmCredential.properties.googleApiKey
-        /// </summary>
-        public string GoogleApiKey { get; set; }
+        /// <summary> The Google API key. </summary>
+        public string GcmApiKey { get; set; }
     }
 }
