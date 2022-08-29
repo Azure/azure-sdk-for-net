@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Parameter group. </summary>
+    /// <summary>
+    /// Parameter group
+    /// Serialized Name: QueryOptions
+    /// </summary>
     public partial class QueryOptions
     {
         /// <summary> Initializes a new instance of QueryOptions. </summary>
@@ -17,23 +20,50 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
         }
 
-        /// <summary> Maximum number of records to return. </summary>
+        /// <summary>
+        /// Maximum number of records to return.
+        /// Serialized Name: QueryOptions.Top
+        /// </summary>
         public int? Top { get; set; }
-        /// <summary> OData filter expression. </summary>
+        /// <summary>
+        /// OData filter expression.
+        /// Serialized Name: QueryOptions.Filter
+        /// </summary>
         public string Filter { get; set; }
-        /// <summary> Ordering expression using OData notation. One or more comma-separated column names with an optional &quot;desc&quot; (the default) or &quot;asc&quot;, e.g. &quot;$orderby=PolicyAssignmentId, ResourceId asc&quot;. </summary>
+        /// <summary>
+        /// Ordering expression using OData notation. One or more comma-separated column names with an optional &quot;desc&quot; (the default) or &quot;asc&quot;, e.g. &quot;$orderby=PolicyAssignmentId, ResourceId asc&quot;.
+        /// Serialized Name: QueryOptions.OrderBy
+        /// </summary>
         public string OrderBy { get; set; }
-        /// <summary> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;. </summary>
+        /// <summary>
+        /// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;.
+        /// Serialized Name: QueryOptions.Select
+        /// </summary>
         public string Select { get; set; }
-        /// <summary> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </summary>
+        /// <summary>
+        /// ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day).
+        /// Serialized Name: QueryOptions.From
+        /// </summary>
         public DateTimeOffset? From { get; set; }
-        /// <summary> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </summary>
+        /// <summary>
+        /// ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time.
+        /// Serialized Name: QueryOptions.To
+        /// </summary>
         public DateTimeOffset? To { get; set; }
-        /// <summary> OData apply expression for aggregations. </summary>
+        /// <summary>
+        /// OData apply expression for aggregations.
+        /// Serialized Name: QueryOptions.Apply
+        /// </summary>
         public string Apply { get; set; }
-        /// <summary> Skiptoken is only provided if a previous response returned a partial result as a part of nextLink element. </summary>
+        /// <summary>
+        /// Skiptoken is only provided if a previous response returned a partial result as a part of nextLink element.
+        /// Serialized Name: QueryOptions.SkipToken
+        /// </summary>
         public string SkipToken { get; set; }
-        /// <summary> The $expand query parameter. For example, to expand components use $expand=components. </summary>
+        /// <summary>
+        /// The $expand query parameter. For example, to expand components use $expand=components
+        /// Serialized Name: QueryOptions.Expand
+        /// </summary>
         public string Expand { get; set; }
     }
 }

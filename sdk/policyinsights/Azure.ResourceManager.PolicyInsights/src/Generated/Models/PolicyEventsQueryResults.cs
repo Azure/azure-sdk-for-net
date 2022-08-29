@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Query results. </summary>
+    /// <summary>
+    /// Query results.
+    /// Serialized Name: PolicyEventsQueryResults
+    /// </summary>
     internal partial class PolicyEventsQueryResults
     {
         /// <summary> Initializes a new instance of PolicyEventsQueryResults. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyEventsQueryResults. </summary>
-        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
-        /// <param name="odataCount"> OData entity count; represents the number of policy event records returned. </param>
-        /// <param name="odataNextLink"> Odata next link; URL to get the next set of results. </param>
-        /// <param name="value"> Query results. </param>
+        /// <param name="odataContext">
+        /// OData context string; used by OData clients to resolve type information based on metadata.
+        /// Serialized Name: PolicyEventsQueryResults.@odata.context
+        /// </param>
+        /// <param name="odataCount">
+        /// OData entity count; represents the number of policy event records returned.
+        /// Serialized Name: PolicyEventsQueryResults.@odata.count
+        /// </param>
+        /// <param name="odataNextLink">
+        /// Odata next link; URL to get the next set of results.
+        /// Serialized Name: PolicyEventsQueryResults.@odata.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Query results.
+        /// Serialized Name: PolicyEventsQueryResults.value
+        /// </param>
         internal PolicyEventsQueryResults(string odataContext, int? odataCount, string odataNextLink, IReadOnlyList<PolicyEvent> value)
         {
             OdataContext = odataContext;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Value = value;
         }
 
-        /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
+        /// <summary>
+        /// OData context string; used by OData clients to resolve type information based on metadata.
+        /// Serialized Name: PolicyEventsQueryResults.@odata.context
+        /// </summary>
         public string OdataContext { get; }
-        /// <summary> OData entity count; represents the number of policy event records returned. </summary>
+        /// <summary>
+        /// OData entity count; represents the number of policy event records returned.
+        /// Serialized Name: PolicyEventsQueryResults.@odata.count
+        /// </summary>
         public int? OdataCount { get; }
-        /// <summary> Odata next link; URL to get the next set of results. </summary>
+        /// <summary>
+        /// Odata next link; URL to get the next set of results.
+        /// Serialized Name: PolicyEventsQueryResults.@odata.nextLink
+        /// </summary>
         public string OdataNextLink { get; }
-        /// <summary> Query results. </summary>
+        /// <summary>
+        /// Query results.
+        /// Serialized Name: PolicyEventsQueryResults.value
+        /// </summary>
         public IReadOnlyList<PolicyEvent> Value { get; }
     }
 }

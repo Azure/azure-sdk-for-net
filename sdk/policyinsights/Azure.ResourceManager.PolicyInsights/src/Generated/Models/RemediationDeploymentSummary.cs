@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The deployment status summary for all deployments created by the remediation. </summary>
+    /// <summary>
+    /// The deployment status summary for all deployments created by the remediation.
+    /// Serialized Name: RemediationDeploymentSummary
+    /// </summary>
     public partial class RemediationDeploymentSummary
     {
         /// <summary> Initializes a new instance of RemediationDeploymentSummary. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of RemediationDeploymentSummary. </summary>
-        /// <param name="totalDeployments"> The number of deployments required by the remediation. </param>
-        /// <param name="successfulDeployments"> The number of deployments required by the remediation that have succeeded. </param>
-        /// <param name="failedDeployments"> The number of deployments required by the remediation that have failed. </param>
+        /// <param name="totalDeployments">
+        /// The number of deployments required by the remediation.
+        /// Serialized Name: RemediationDeploymentSummary.totalDeployments
+        /// </param>
+        /// <param name="successfulDeployments">
+        /// The number of deployments required by the remediation that have succeeded.
+        /// Serialized Name: RemediationDeploymentSummary.successfulDeployments
+        /// </param>
+        /// <param name="failedDeployments">
+        /// The number of deployments required by the remediation that have failed.
+        /// Serialized Name: RemediationDeploymentSummary.failedDeployments
+        /// </param>
         internal RemediationDeploymentSummary(int? totalDeployments, int? successfulDeployments, int? failedDeployments)
         {
             TotalDeployments = totalDeployments;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             FailedDeployments = failedDeployments;
         }
 
-        /// <summary> The number of deployments required by the remediation. </summary>
+        /// <summary>
+        /// The number of deployments required by the remediation.
+        /// Serialized Name: RemediationDeploymentSummary.totalDeployments
+        /// </summary>
         public int? TotalDeployments { get; }
-        /// <summary> The number of deployments required by the remediation that have succeeded. </summary>
+        /// <summary>
+        /// The number of deployments required by the remediation that have succeeded.
+        /// Serialized Name: RemediationDeploymentSummary.successfulDeployments
+        /// </summary>
         public int? SuccessfulDeployments { get; }
-        /// <summary> The number of deployments required by the remediation that have failed. </summary>
+        /// <summary>
+        /// The number of deployments required by the remediation that have failed.
+        /// Serialized Name: RemediationDeploymentSummary.failedDeployments
+        /// </summary>
         public int? FailedDeployments { get; }
     }
 }

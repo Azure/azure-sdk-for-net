@@ -11,7 +11,10 @@ using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> List of attestations. </summary>
+    /// <summary>
+    /// List of attestations.
+    /// Serialized Name: AttestationListResult
+    /// </summary>
     internal partial class AttestationListResult
     {
         /// <summary> Initializes a new instance of AttestationListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of AttestationListResult. </summary>
-        /// <param name="value"> Array of attestation definitions. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// Array of attestation definitions.
+        /// Serialized Name: AttestationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: AttestationListResult.nextLink
+        /// </param>
         internal AttestationListResult(IReadOnlyList<AttestationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of attestation definitions. </summary>
+        /// <summary>
+        /// Array of attestation definitions.
+        /// Serialized Name: AttestationListResult.value
+        /// </summary>
         public IReadOnlyList<AttestationData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: AttestationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

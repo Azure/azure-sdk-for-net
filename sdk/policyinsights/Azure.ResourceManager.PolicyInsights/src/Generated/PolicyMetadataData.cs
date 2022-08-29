@@ -24,14 +24,38 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId"> The policy metadata identifier. </param>
-        /// <param name="category"> The category of the policy metadata. </param>
-        /// <param name="title"> The title of the policy metadata. </param>
-        /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
-        /// <param name="metadata"> Additional metadata. </param>
-        /// <param name="description"> The description of the policy metadata. </param>
-        /// <param name="requirements"> The requirements of the policy metadata. </param>
+        /// <param name="metadataId">
+        /// The policy metadata identifier.
+        /// Serialized Name: PolicyMetadata.properties.metadataId
+        /// </param>
+        /// <param name="category">
+        /// The category of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.category
+        /// </param>
+        /// <param name="title">
+        /// The title of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.title
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.owner
+        /// </param>
+        /// <param name="additionalContentUri">
+        /// Url for getting additional content about the resource metadata.
+        /// Serialized Name: PolicyMetadata.properties.additionalContentUrl
+        /// </param>
+        /// <param name="metadata">
+        /// Additional metadata.
+        /// Serialized Name: PolicyMetadata.properties.metadata
+        /// </param>
+        /// <param name="description">
+        /// The description of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.description
+        /// </param>
+        /// <param name="requirements">
+        /// The requirements of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.requirements
+        /// </param>
         internal PolicyMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, string description, string requirements) : base(id, name, resourceType, systemData)
         {
             MetadataId = metadataId;
@@ -44,18 +68,34 @@ namespace Azure.ResourceManager.PolicyInsights
             Requirements = requirements;
         }
 
-        /// <summary> The policy metadata identifier. </summary>
+        /// <summary>
+        /// The policy metadata identifier.
+        /// Serialized Name: PolicyMetadata.properties.metadataId
+        /// </summary>
         public string MetadataId { get; }
-        /// <summary> The category of the policy metadata. </summary>
+        /// <summary>
+        /// The category of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.category
+        /// </summary>
         public string Category { get; }
-        /// <summary> The title of the policy metadata. </summary>
+        /// <summary>
+        /// The title of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.title
+        /// </summary>
         public string Title { get; }
-        /// <summary> The owner of the policy metadata. </summary>
+        /// <summary>
+        /// The owner of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.owner
+        /// </summary>
         public string Owner { get; }
-        /// <summary> Url for getting additional content about the resource metadata. </summary>
+        /// <summary>
+        /// Url for getting additional content about the resource metadata.
+        /// Serialized Name: PolicyMetadata.properties.additionalContentUrl
+        /// </summary>
         public Uri AdditionalContentUri { get; }
         /// <summary>
         /// Additional metadata.
+        /// Serialized Name: PolicyMetadata.properties.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -85,9 +125,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; }
-        /// <summary> The description of the policy metadata. </summary>
+        /// <summary>
+        /// The description of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> The requirements of the policy metadata. </summary>
+        /// <summary>
+        /// The requirements of the policy metadata.
+        /// Serialized Name: PolicyMetadata.properties.requirements
+        /// </summary>
         public string Requirements { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Evaluation details of IfNotExists effect. </summary>
+    /// <summary>
+    /// Evaluation details of IfNotExists effect.
+    /// Serialized Name: IfNotExistsEvaluationDetails
+    /// </summary>
     public partial class IfNotExistsEvaluationDetails
     {
         /// <summary> Initializes a new instance of IfNotExistsEvaluationDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of IfNotExistsEvaluationDetails. </summary>
-        /// <param name="resourceId"> ID of the last evaluated resource for IfNotExists effect. </param>
-        /// <param name="totalResources"> Total number of resources to which the existence condition is applicable. </param>
+        /// <param name="resourceId">
+        /// ID of the last evaluated resource for IfNotExists effect.
+        /// Serialized Name: IfNotExistsEvaluationDetails.resourceId
+        /// </param>
+        /// <param name="totalResources">
+        /// Total number of resources to which the existence condition is applicable.
+        /// Serialized Name: IfNotExistsEvaluationDetails.totalResources
+        /// </param>
         internal IfNotExistsEvaluationDetails(string resourceId, int? totalResources)
         {
             ResourceId = resourceId;
             TotalResources = totalResources;
         }
 
-        /// <summary> ID of the last evaluated resource for IfNotExists effect. </summary>
+        /// <summary>
+        /// ID of the last evaluated resource for IfNotExists effect.
+        /// Serialized Name: IfNotExistsEvaluationDetails.resourceId
+        /// </summary>
         public string ResourceId { get; }
-        /// <summary> Total number of resources to which the existence condition is applicable. </summary>
+        /// <summary>
+        /// Total number of resources to which the existence condition is applicable.
+        /// Serialized Name: IfNotExistsEvaluationDetails.totalResources
+        /// </summary>
         public int? TotalResources { get; }
     }
 }

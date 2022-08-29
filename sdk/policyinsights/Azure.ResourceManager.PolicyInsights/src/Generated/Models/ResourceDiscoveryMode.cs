@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </summary>
+    /// <summary>
+    /// The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified.
+    /// Serialized Name: ResourceDiscoveryMode
+    /// </summary>
     public readonly partial struct ResourceDiscoveryMode : IEquatable<ResourceDiscoveryMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         private const string ExistingNonCompliantValue = "ExistingNonCompliant";
         private const string ReEvaluateComplianceValue = "ReEvaluateCompliance";
 
-        /// <summary> Remediate resources that are already known to be non-compliant. </summary>
+        /// <summary>
+        /// Remediate resources that are already known to be non-compliant.
+        /// Serialized Name: ResourceDiscoveryMode.ExistingNonCompliant
+        /// </summary>
         public static ResourceDiscoveryMode ExistingNonCompliant { get; } = new ResourceDiscoveryMode(ExistingNonCompliantValue);
-        /// <summary> Re-evaluate the compliance state of resources and then remediate the resources found to be non-compliant. </summary>
+        /// <summary>
+        /// Re-evaluate the compliance state of resources and then remediate the resources found to be non-compliant.
+        /// Serialized Name: ResourceDiscoveryMode.ReEvaluateCompliance
+        /// </summary>
         public static ResourceDiscoveryMode ReEvaluateCompliance { get; } = new ResourceDiscoveryMode(ReEvaluateComplianceValue);
         /// <summary> Determines if two <see cref="ResourceDiscoveryMode"/> values are the same. </summary>
         public static bool operator ==(ResourceDiscoveryMode left, ResourceDiscoveryMode right) => left.Equals(right);

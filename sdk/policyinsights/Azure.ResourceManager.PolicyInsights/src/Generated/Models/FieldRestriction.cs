@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The restrictions on a field imposed by a specific policy. </summary>
+    /// <summary>
+    /// The restrictions on a field imposed by a specific policy.
+    /// Serialized Name: FieldRestriction
+    /// </summary>
     public partial class FieldRestriction
     {
         /// <summary> Initializes a new instance of FieldRestriction. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of FieldRestriction. </summary>
-        /// <param name="result"> The type of restriction that is imposed on the field. </param>
-        /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
-        /// <param name="values"> The values that policy either requires or denies for the field. </param>
-        /// <param name="policy"> The details of the policy that is causing the field restriction. </param>
+        /// <param name="result">
+        /// The type of restriction that is imposed on the field.
+        /// Serialized Name: FieldRestriction.result
+        /// </param>
+        /// <param name="defaultValue">
+        /// The value that policy will set for the field if the user does not provide a value.
+        /// Serialized Name: FieldRestriction.defaultValue
+        /// </param>
+        /// <param name="values">
+        /// The values that policy either requires or denies for the field.
+        /// Serialized Name: FieldRestriction.values
+        /// </param>
+        /// <param name="policy">
+        /// The details of the policy that is causing the field restriction.
+        /// Serialized Name: FieldRestriction.policy
+        /// </param>
         internal FieldRestriction(FieldRestrictionResult? result, string defaultValue, IReadOnlyList<string> values, PolicyReference policy)
         {
             Result = result;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Policy = policy;
         }
 
-        /// <summary> The type of restriction that is imposed on the field. </summary>
+        /// <summary>
+        /// The type of restriction that is imposed on the field.
+        /// Serialized Name: FieldRestriction.result
+        /// </summary>
         public FieldRestrictionResult? Result { get; }
-        /// <summary> The value that policy will set for the field if the user does not provide a value. </summary>
+        /// <summary>
+        /// The value that policy will set for the field if the user does not provide a value.
+        /// Serialized Name: FieldRestriction.defaultValue
+        /// </summary>
         public string DefaultValue { get; }
-        /// <summary> The values that policy either requires or denies for the field. </summary>
+        /// <summary>
+        /// The values that policy either requires or denies for the field.
+        /// Serialized Name: FieldRestriction.values
+        /// </summary>
         public IReadOnlyList<string> Values { get; }
-        /// <summary> The details of the policy that is causing the field restriction. </summary>
+        /// <summary>
+        /// The details of the policy that is causing the field restriction.
+        /// Serialized Name: FieldRestriction.policy
+        /// </summary>
         public PolicyReference Policy { get; }
     }
 }

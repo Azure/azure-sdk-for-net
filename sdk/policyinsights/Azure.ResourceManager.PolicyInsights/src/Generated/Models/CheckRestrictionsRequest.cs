@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
+    /// <summary>
+    /// The check policy restrictions parameters describing the resource that is being evaluated.
+    /// Serialized Name: CheckRestrictionsRequest
+    /// </summary>
     public partial class CheckRestrictionsRequest
     {
         /// <summary> Initializes a new instance of CheckRestrictionsRequest. </summary>
-        /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
+        /// <param name="resourceDetails">
+        /// The information about the resource that will be evaluated.
+        /// Serialized Name: CheckRestrictionsRequest.resourceDetails
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> is null. </exception>
         public CheckRestrictionsRequest(CheckRestrictionsResourceDetails resourceDetails)
         {
@@ -28,9 +34,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PendingFields = new ChangeTrackingList<PendingField>();
         }
 
-        /// <summary> The information about the resource that will be evaluated. </summary>
+        /// <summary>
+        /// The information about the resource that will be evaluated.
+        /// Serialized Name: CheckRestrictionsRequest.resourceDetails
+        /// </summary>
         public CheckRestrictionsResourceDetails ResourceDetails { get; }
-        /// <summary> The list of fields and values that should be evaluated for potential restrictions. </summary>
+        /// <summary>
+        /// The list of fields and values that should be evaluated for potential restrictions.
+        /// Serialized Name: CheckRestrictionsRequest.pendingFields
+        /// </summary>
         public IList<PendingField> PendingFields { get; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> A piece of evidence supporting the compliance state set in the attestation. </summary>
+    /// <summary>
+    /// A piece of evidence supporting the compliance state set in the attestation.
+    /// Serialized Name: AttestationEvidence
+    /// </summary>
     public partial class AttestationEvidence
     {
         /// <summary> Initializes a new instance of AttestationEvidence. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of AttestationEvidence. </summary>
-        /// <param name="description"> The description for this piece of evidence. </param>
-        /// <param name="sourceUri"> The URI location of the evidence. </param>
+        /// <param name="description">
+        /// The description for this piece of evidence.
+        /// Serialized Name: AttestationEvidence.description
+        /// </param>
+        /// <param name="sourceUri">
+        /// The URI location of the evidence.
+        /// Serialized Name: AttestationEvidence.sourceUri
+        /// </param>
         internal AttestationEvidence(string description, Uri sourceUri)
         {
             Description = description;
             SourceUri = sourceUri;
         }
 
-        /// <summary> The description for this piece of evidence. </summary>
+        /// <summary>
+        /// The description for this piece of evidence.
+        /// Serialized Name: AttestationEvidence.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The URI location of the evidence. </summary>
+        /// <summary>
+        /// The URI location of the evidence.
+        /// Serialized Name: AttestationEvidence.sourceUri
+        /// </summary>
         public Uri SourceUri { get; set; }
     }
 }

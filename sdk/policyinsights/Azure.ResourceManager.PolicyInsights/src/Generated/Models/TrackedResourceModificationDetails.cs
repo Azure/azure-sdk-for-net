@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The details of the policy triggered deployment that created or modified the tracked resource. </summary>
+    /// <summary>
+    /// The details of the policy triggered deployment that created or modified the tracked resource.
+    /// Serialized Name: TrackedResourceModificationDetails
+    /// </summary>
     public partial class TrackedResourceModificationDetails
     {
         /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
-        /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
-        /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
-        /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
+        /// <param name="policyDetails">
+        /// The details of the policy that created or modified the tracked resource.
+        /// Serialized Name: TrackedResourceModificationDetails.policyDetails
+        /// </param>
+        /// <param name="deploymentId">
+        /// The ID of the deployment that created or modified the tracked resource.
+        /// Serialized Name: TrackedResourceModificationDetails.deploymentId
+        /// </param>
+        /// <param name="deploymentOn">
+        /// Timestamp of the deployment that created or modified the tracked resource.
+        /// Serialized Name: TrackedResourceModificationDetails.deploymentTime
+        /// </param>
         internal TrackedResourceModificationDetails(PolicyDetails policyDetails, string deploymentId, DateTimeOffset? deploymentOn)
         {
             PolicyDetails = policyDetails;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             DeploymentOn = deploymentOn;
         }
 
-        /// <summary> The details of the policy that created or modified the tracked resource. </summary>
+        /// <summary>
+        /// The details of the policy that created or modified the tracked resource.
+        /// Serialized Name: TrackedResourceModificationDetails.policyDetails
+        /// </summary>
         public PolicyDetails PolicyDetails { get; }
-        /// <summary> The ID of the deployment that created or modified the tracked resource. </summary>
+        /// <summary>
+        /// The ID of the deployment that created or modified the tracked resource.
+        /// Serialized Name: TrackedResourceModificationDetails.deploymentId
+        /// </summary>
         public string DeploymentId { get; }
-        /// <summary> Timestamp of the deployment that created or modified the tracked resource. </summary>
+        /// <summary>
+        /// Timestamp of the deployment that created or modified the tracked resource.
+        /// Serialized Name: TrackedResourceModificationDetails.deploymentTime
+        /// </summary>
         public DateTimeOffset? DeploymentOn { get; }
     }
 }

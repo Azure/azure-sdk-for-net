@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The PolicyEventsResourceType. </summary>
+    /// <summary>
+    /// The PolicyEventsResourceType.
+    /// Serialized Name: PolicyEventsResourceType
+    /// </summary>
     public readonly partial struct PolicyEventsResourceType : IEquatable<PolicyEventsResourceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary> default. </summary>
+        /// <summary>
+        /// default
+        /// Serialized Name: PolicyEventsResourceType.default
+        /// </summary>
         public static PolicyEventsResourceType Default { get; } = new PolicyEventsResourceType(DefaultValue);
         /// <summary> Determines if two <see cref="PolicyEventsResourceType"/> values are the same. </summary>
         public static bool operator ==(PolicyEventsResourceType left, PolicyEventsResourceType right) => left.Equals(right);

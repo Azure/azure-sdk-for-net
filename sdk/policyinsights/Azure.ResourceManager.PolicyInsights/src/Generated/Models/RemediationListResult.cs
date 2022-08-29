@@ -11,7 +11,10 @@ using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> List of remediations. </summary>
+    /// <summary>
+    /// List of remediations.
+    /// Serialized Name: RemediationListResult
+    /// </summary>
     internal partial class RemediationListResult
     {
         /// <summary> Initializes a new instance of RemediationListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of RemediationListResult. </summary>
-        /// <param name="value"> Array of remediation definitions. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// Array of remediation definitions.
+        /// Serialized Name: RemediationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: RemediationListResult.nextLink
+        /// </param>
         internal RemediationListResult(IReadOnlyList<RemediationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of remediation definitions. </summary>
+        /// <summary>
+        /// Array of remediation definitions.
+        /// Serialized Name: RemediationListResult.value
+        /// </summary>
         public IReadOnlyList<RemediationData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: RemediationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -54,6 +54,14 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+mgmt-debug:
+  show-serialized-names: true
+
+rename-mapping:
+  ComplianceState: PolicyComplianceState
+  Attestation.properties.expiresOn: ExpireOn
+  Attestation.properties.policyAssignmentId: -|arm-id
+
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.
   - from: remediations.json
@@ -79,16 +87,19 @@ directive:
       delete $['/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}'];
       delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations'];
       delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/attestations/{attestationName}'];
+# resolving duplicate schemas
   - from: remediations.json
     where: $.definitions
     transform: >
       $.ErrorResponse['x-ms-client-name'] = 'RemediationErrorResponse';
       $.ErrorDefinition['x-ms-client-name'] = 'RemediationErrorDefinition';
+# resolving duplicate schemas
   - from: attestations.json
     where: $.definitions
     transform: >
       $.ErrorResponse['x-ms-client-name'] = 'AttestationErrorResponse';
       $.ErrorDefinition['x-ms-client-name'] = 'AttestationErrorDefinition';
+# resolving duplicate schemas
   - from: policyMetadata.json
     where: $.definitions
     transform: >

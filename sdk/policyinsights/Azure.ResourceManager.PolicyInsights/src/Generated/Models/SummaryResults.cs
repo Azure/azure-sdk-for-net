@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Compliance summary on a particular summary level. </summary>
+    /// <summary>
+    /// Compliance summary on a particular summary level.
+    /// Serialized Name: SummaryResults
+    /// </summary>
     public partial class SummaryResults
     {
         /// <summary> Initializes a new instance of SummaryResults. </summary>
@@ -23,12 +26,30 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of SummaryResults. </summary>
-        /// <param name="queryResultsUri"> HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly. </param>
-        /// <param name="nonCompliantResources"> Number of non-compliant resources. </param>
-        /// <param name="nonCompliantPolicies"> Number of non-compliant policies. </param>
-        /// <param name="resourceDetails"> The resources summary at this level. </param>
-        /// <param name="policyDetails"> The policy artifact summary at this level. For query scope level, it represents policy assignment summary. For policy assignment level, it represents policy definitions summary. </param>
-        /// <param name="policyGroupDetails"> The policy definition group summary at this level. </param>
+        /// <param name="queryResultsUri">
+        /// HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly.
+        /// Serialized Name: SummaryResults.queryResultsUri
+        /// </param>
+        /// <param name="nonCompliantResources">
+        /// Number of non-compliant resources.
+        /// Serialized Name: SummaryResults.nonCompliantResources
+        /// </param>
+        /// <param name="nonCompliantPolicies">
+        /// Number of non-compliant policies.
+        /// Serialized Name: SummaryResults.nonCompliantPolicies
+        /// </param>
+        /// <param name="resourceDetails">
+        /// The resources summary at this level.
+        /// Serialized Name: SummaryResults.resourceDetails
+        /// </param>
+        /// <param name="policyDetails">
+        /// The policy artifact summary at this level. For query scope level, it represents policy assignment summary. For policy assignment level, it represents policy definitions summary.
+        /// Serialized Name: SummaryResults.policyDetails
+        /// </param>
+        /// <param name="policyGroupDetails">
+        /// The policy definition group summary at this level.
+        /// Serialized Name: SummaryResults.policyGroupDetails
+        /// </param>
         internal SummaryResults(Uri queryResultsUri, int? nonCompliantResources, int? nonCompliantPolicies, IReadOnlyList<ComplianceDetail> resourceDetails, IReadOnlyList<ComplianceDetail> policyDetails, IReadOnlyList<ComplianceDetail> policyGroupDetails)
         {
             QueryResultsUri = queryResultsUri;
@@ -39,17 +60,35 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PolicyGroupDetails = policyGroupDetails;
         }
 
-        /// <summary> HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly. </summary>
+        /// <summary>
+        /// HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly.
+        /// Serialized Name: SummaryResults.queryResultsUri
+        /// </summary>
         public Uri QueryResultsUri { get; }
-        /// <summary> Number of non-compliant resources. </summary>
+        /// <summary>
+        /// Number of non-compliant resources.
+        /// Serialized Name: SummaryResults.nonCompliantResources
+        /// </summary>
         public int? NonCompliantResources { get; }
-        /// <summary> Number of non-compliant policies. </summary>
+        /// <summary>
+        /// Number of non-compliant policies.
+        /// Serialized Name: SummaryResults.nonCompliantPolicies
+        /// </summary>
         public int? NonCompliantPolicies { get; }
-        /// <summary> The resources summary at this level. </summary>
+        /// <summary>
+        /// The resources summary at this level.
+        /// Serialized Name: SummaryResults.resourceDetails
+        /// </summary>
         public IReadOnlyList<ComplianceDetail> ResourceDetails { get; }
-        /// <summary> The policy artifact summary at this level. For query scope level, it represents policy assignment summary. For policy assignment level, it represents policy definitions summary. </summary>
+        /// <summary>
+        /// The policy artifact summary at this level. For query scope level, it represents policy assignment summary. For policy assignment level, it represents policy definitions summary.
+        /// Serialized Name: SummaryResults.policyDetails
+        /// </summary>
         public IReadOnlyList<ComplianceDetail> PolicyDetails { get; }
-        /// <summary> The policy definition group summary at this level. </summary>
+        /// <summary>
+        /// The policy definition group summary at this level.
+        /// Serialized Name: SummaryResults.policyGroupDetails
+        /// </summary>
         public IReadOnlyList<ComplianceDetail> PolicyGroupDetails { get; }
     }
 }

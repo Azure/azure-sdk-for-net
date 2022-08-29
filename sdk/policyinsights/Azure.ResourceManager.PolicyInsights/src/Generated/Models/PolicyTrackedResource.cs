@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Policy tracked resource record. </summary>
+    /// <summary>
+    /// Policy tracked resource record.
+    /// Serialized Name: PolicyTrackedResource
+    /// </summary>
     public partial class PolicyTrackedResource
     {
         /// <summary> Initializes a new instance of PolicyTrackedResource. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyTrackedResource. </summary>
-        /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
-        /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
-        /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>
-        /// <param name="lastModifiedBy"> The details of the policy triggered deployment that modified the tracked resource. </param>
-        /// <param name="lastUpdateUtc"> Timestamp of the last update to the tracked resource. </param>
+        /// <param name="trackedResourceId">
+        /// The ID of the policy tracked resource.
+        /// Serialized Name: PolicyTrackedResource.trackedResourceId
+        /// </param>
+        /// <param name="policyDetails">
+        /// The details of the policy that require the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.policyDetails
+        /// </param>
+        /// <param name="createdBy">
+        /// The details of the policy triggered deployment that created the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.createdBy
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// The details of the policy triggered deployment that modified the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.lastModifiedBy
+        /// </param>
+        /// <param name="lastUpdateUtc">
+        /// Timestamp of the last update to the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.lastUpdateUtc
+        /// </param>
         internal PolicyTrackedResource(string trackedResourceId, PolicyDetails policyDetails, TrackedResourceModificationDetails createdBy, TrackedResourceModificationDetails lastModifiedBy, DateTimeOffset? lastUpdateUtc)
         {
             TrackedResourceId = trackedResourceId;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             LastUpdateUtc = lastUpdateUtc;
         }
 
-        /// <summary> The ID of the policy tracked resource. </summary>
+        /// <summary>
+        /// The ID of the policy tracked resource.
+        /// Serialized Name: PolicyTrackedResource.trackedResourceId
+        /// </summary>
         public string TrackedResourceId { get; }
-        /// <summary> The details of the policy that require the tracked resource. </summary>
+        /// <summary>
+        /// The details of the policy that require the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.policyDetails
+        /// </summary>
         public PolicyDetails PolicyDetails { get; }
-        /// <summary> The details of the policy triggered deployment that created the tracked resource. </summary>
+        /// <summary>
+        /// The details of the policy triggered deployment that created the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.createdBy
+        /// </summary>
         public TrackedResourceModificationDetails CreatedBy { get; }
-        /// <summary> The details of the policy triggered deployment that modified the tracked resource. </summary>
+        /// <summary>
+        /// The details of the policy triggered deployment that modified the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.lastModifiedBy
+        /// </summary>
         public TrackedResourceModificationDetails LastModifiedBy { get; }
-        /// <summary> Timestamp of the last update to the tracked resource. </summary>
+        /// <summary>
+        /// Timestamp of the last update to the tracked resource.
+        /// Serialized Name: PolicyTrackedResource.lastUpdateUtc
+        /// </summary>
         public DateTimeOffset? LastUpdateUtc { get; }
     }
 }

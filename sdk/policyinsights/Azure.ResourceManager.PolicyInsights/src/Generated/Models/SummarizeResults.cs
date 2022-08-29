@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Summarize action results. </summary>
+    /// <summary>
+    /// Summarize action results.
+    /// Serialized Name: SummarizeResults
+    /// </summary>
     internal partial class SummarizeResults
     {
         /// <summary> Initializes a new instance of SummarizeResults. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of SummarizeResults. </summary>
-        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
-        /// <param name="odataCount"> OData entity count; represents the number of summaries returned; always set to 1. </param>
-        /// <param name="value"> Summarize action results. </param>
+        /// <param name="odataContext">
+        /// OData context string; used by OData clients to resolve type information based on metadata.
+        /// Serialized Name: SummarizeResults.@odata.context
+        /// </param>
+        /// <param name="odataCount">
+        /// OData entity count; represents the number of summaries returned; always set to 1.
+        /// Serialized Name: SummarizeResults.@odata.count
+        /// </param>
+        /// <param name="value">
+        /// Summarize action results.
+        /// Serialized Name: SummarizeResults.value
+        /// </param>
         internal SummarizeResults(string odataContext, int? odataCount, IReadOnlyList<Summary> value)
         {
             OdataContext = odataContext;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Value = value;
         }
 
-        /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
+        /// <summary>
+        /// OData context string; used by OData clients to resolve type information based on metadata.
+        /// Serialized Name: SummarizeResults.@odata.context
+        /// </summary>
         public string OdataContext { get; }
-        /// <summary> OData entity count; represents the number of summaries returned; always set to 1. </summary>
+        /// <summary>
+        /// OData entity count; represents the number of summaries returned; always set to 1.
+        /// Serialized Name: SummarizeResults.@odata.count
+        /// </summary>
         public int? OdataCount { get; }
-        /// <summary> Summarize action results. </summary>
+        /// <summary>
+        /// Summarize action results.
+        /// Serialized Name: SummarizeResults.value
+        /// </summary>
         public IReadOnlyList<Summary> Value { get; }
     }
 }

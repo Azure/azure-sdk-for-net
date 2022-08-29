@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Policy event record. </summary>
+    /// <summary>
+    /// Policy event record.
+    /// Serialized Name: PolicyEvent
+    /// </summary>
     public partial class PolicyEvent
     {
         /// <summary> Initializes a new instance of PolicyEvent. </summary>
@@ -22,37 +25,130 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyEvent. </summary>
-        /// <param name="odataId"> OData entity ID; always set to null since policy event records do not have an entity ID. </param>
-        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
-        /// <param name="timestamp"> Timestamp for the policy event record. </param>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyAssignmentId"> Policy assignment ID. </param>
-        /// <param name="policyDefinitionId"> Policy definition ID. </param>
-        /// <param name="effectiveParameters"> Effective parameters for the policy assignment. </param>
-        /// <param name="isCompliant"> Flag which states whether the resource is compliant against the policy assignment it was evaluated against. </param>
-        /// <param name="subscriptionId"> Subscription ID. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceLocation"> Resource location. </param>
-        /// <param name="resourceGroup"> Resource group name. </param>
-        /// <param name="resourceTags"> List of resource tags. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyAssignmentOwner"> Policy assignment owner. </param>
-        /// <param name="policyAssignmentParameters"> Policy assignment parameters. </param>
-        /// <param name="policyAssignmentScope"> Policy assignment scope. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
-        /// <param name="policyDefinitionCategory"> Policy definition category. </param>
-        /// <param name="policySetDefinitionId"> Policy set definition ID, if the policy assignment is for a policy set. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name, if the policy assignment is for a policy set. </param>
-        /// <param name="policySetDefinitionOwner"> Policy set definition owner, if the policy assignment is for a policy set. </param>
-        /// <param name="policySetDefinitionCategory"> Policy set definition category, if the policy assignment is for a policy set. </param>
-        /// <param name="policySetDefinitionParameters"> Policy set definition parameters, if the policy assignment is for a policy set. </param>
-        /// <param name="managementGroupIds"> Comma separated list of management group IDs, which represent the hierarchy of the management groups the resource is under. </param>
-        /// <param name="policyDefinitionReferenceId"> Reference ID for the policy definition inside the policy set, if the policy assignment is for a policy set. </param>
-        /// <param name="complianceState"> Compliance state of the resource. </param>
-        /// <param name="tenantId"> Tenant ID for the policy event record. </param>
-        /// <param name="principalOid"> Principal object ID for the user who initiated the resource operation that triggered the policy event. </param>
-        /// <param name="components"> Components events records populated only when URL contains $expand=components clause. </param>
+        /// <param name="odataId">
+        /// OData entity ID; always set to null since policy event records do not have an entity ID.
+        /// Serialized Name: PolicyEvent.@odata.id
+        /// </param>
+        /// <param name="odataContext">
+        /// OData context string; used by OData clients to resolve type information based on metadata.
+        /// Serialized Name: PolicyEvent.@odata.context
+        /// </param>
+        /// <param name="timestamp">
+        /// Timestamp for the policy event record.
+        /// Serialized Name: PolicyEvent.timestamp
+        /// </param>
+        /// <param name="resourceId">
+        /// Resource ID.
+        /// Serialized Name: PolicyEvent.resourceId
+        /// </param>
+        /// <param name="policyAssignmentId">
+        /// Policy assignment ID.
+        /// Serialized Name: PolicyEvent.policyAssignmentId
+        /// </param>
+        /// <param name="policyDefinitionId">
+        /// Policy definition ID.
+        /// Serialized Name: PolicyEvent.policyDefinitionId
+        /// </param>
+        /// <param name="effectiveParameters">
+        /// Effective parameters for the policy assignment.
+        /// Serialized Name: PolicyEvent.effectiveParameters
+        /// </param>
+        /// <param name="isCompliant">
+        /// Flag which states whether the resource is compliant against the policy assignment it was evaluated against.
+        /// Serialized Name: PolicyEvent.isCompliant
+        /// </param>
+        /// <param name="subscriptionId">
+        /// Subscription ID.
+        /// Serialized Name: PolicyEvent.subscriptionId
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type.
+        /// Serialized Name: PolicyEvent.resourceType
+        /// </param>
+        /// <param name="resourceLocation">
+        /// Resource location.
+        /// Serialized Name: PolicyEvent.resourceLocation
+        /// </param>
+        /// <param name="resourceGroup">
+        /// Resource group name.
+        /// Serialized Name: PolicyEvent.resourceGroup
+        /// </param>
+        /// <param name="resourceTags">
+        /// List of resource tags.
+        /// Serialized Name: PolicyEvent.resourceTags
+        /// </param>
+        /// <param name="policyAssignmentName">
+        /// Policy assignment name.
+        /// Serialized Name: PolicyEvent.policyAssignmentName
+        /// </param>
+        /// <param name="policyAssignmentOwner">
+        /// Policy assignment owner.
+        /// Serialized Name: PolicyEvent.policyAssignmentOwner
+        /// </param>
+        /// <param name="policyAssignmentParameters">
+        /// Policy assignment parameters.
+        /// Serialized Name: PolicyEvent.policyAssignmentParameters
+        /// </param>
+        /// <param name="policyAssignmentScope">
+        /// Policy assignment scope.
+        /// Serialized Name: PolicyEvent.policyAssignmentScope
+        /// </param>
+        /// <param name="policyDefinitionName">
+        /// Policy definition name.
+        /// Serialized Name: PolicyEvent.policyDefinitionName
+        /// </param>
+        /// <param name="policyDefinitionAction">
+        /// Policy definition action, i.e. effect.
+        /// Serialized Name: PolicyEvent.policyDefinitionAction
+        /// </param>
+        /// <param name="policyDefinitionCategory">
+        /// Policy definition category.
+        /// Serialized Name: PolicyEvent.policyDefinitionCategory
+        /// </param>
+        /// <param name="policySetDefinitionId">
+        /// Policy set definition ID, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionId
+        /// </param>
+        /// <param name="policySetDefinitionName">
+        /// Policy set definition name, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionName
+        /// </param>
+        /// <param name="policySetDefinitionOwner">
+        /// Policy set definition owner, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionOwner
+        /// </param>
+        /// <param name="policySetDefinitionCategory">
+        /// Policy set definition category, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionCategory
+        /// </param>
+        /// <param name="policySetDefinitionParameters">
+        /// Policy set definition parameters, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionParameters
+        /// </param>
+        /// <param name="managementGroupIds">
+        /// Comma separated list of management group IDs, which represent the hierarchy of the management groups the resource is under.
+        /// Serialized Name: PolicyEvent.managementGroupIds
+        /// </param>
+        /// <param name="policyDefinitionReferenceId">
+        /// Reference ID for the policy definition inside the policy set, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policyDefinitionReferenceId
+        /// </param>
+        /// <param name="complianceState">
+        /// Compliance state of the resource.
+        /// Serialized Name: PolicyEvent.complianceState
+        /// </param>
+        /// <param name="tenantId">
+        /// Tenant ID for the policy event record.
+        /// Serialized Name: PolicyEvent.tenantId
+        /// </param>
+        /// <param name="principalOid">
+        /// Principal object ID for the user who initiated the resource operation that triggered the policy event.
+        /// Serialized Name: PolicyEvent.principalOid
+        /// </param>
+        /// <param name="components">
+        /// Components events records populated only when URL contains $expand=components clause.
+        /// Serialized Name: PolicyEvent.components
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal PolicyEvent(string odataId, string odataContext, DateTimeOffset? timestamp, string resourceId, string policyAssignmentId, string policyDefinitionId, string effectiveParameters, bool? isCompliant, string subscriptionId, string resourceType, string resourceLocation, string resourceGroup, string resourceTags, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, string policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string managementGroupIds, string policyDefinitionReferenceId, string complianceState, Guid? tenantId, string principalOid, IReadOnlyList<ComponentEventDetails> components, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -90,67 +186,160 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> OData entity ID; always set to null since policy event records do not have an entity ID. </summary>
+        /// <summary>
+        /// OData entity ID; always set to null since policy event records do not have an entity ID.
+        /// Serialized Name: PolicyEvent.@odata.id
+        /// </summary>
         public string OdataId { get; }
-        /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
+        /// <summary>
+        /// OData context string; used by OData clients to resolve type information based on metadata.
+        /// Serialized Name: PolicyEvent.@odata.context
+        /// </summary>
         public string OdataContext { get; }
-        /// <summary> Timestamp for the policy event record. </summary>
+        /// <summary>
+        /// Timestamp for the policy event record.
+        /// Serialized Name: PolicyEvent.timestamp
+        /// </summary>
         public DateTimeOffset? Timestamp { get; }
-        /// <summary> Resource ID. </summary>
+        /// <summary>
+        /// Resource ID.
+        /// Serialized Name: PolicyEvent.resourceId
+        /// </summary>
         public string ResourceId { get; }
-        /// <summary> Policy assignment ID. </summary>
+        /// <summary>
+        /// Policy assignment ID.
+        /// Serialized Name: PolicyEvent.policyAssignmentId
+        /// </summary>
         public string PolicyAssignmentId { get; }
-        /// <summary> Policy definition ID. </summary>
+        /// <summary>
+        /// Policy definition ID.
+        /// Serialized Name: PolicyEvent.policyDefinitionId
+        /// </summary>
         public string PolicyDefinitionId { get; }
-        /// <summary> Effective parameters for the policy assignment. </summary>
+        /// <summary>
+        /// Effective parameters for the policy assignment.
+        /// Serialized Name: PolicyEvent.effectiveParameters
+        /// </summary>
         public string EffectiveParameters { get; }
-        /// <summary> Flag which states whether the resource is compliant against the policy assignment it was evaluated against. </summary>
+        /// <summary>
+        /// Flag which states whether the resource is compliant against the policy assignment it was evaluated against.
+        /// Serialized Name: PolicyEvent.isCompliant
+        /// </summary>
         public bool? IsCompliant { get; }
-        /// <summary> Subscription ID. </summary>
+        /// <summary>
+        /// Subscription ID.
+        /// Serialized Name: PolicyEvent.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; }
-        /// <summary> Resource type. </summary>
+        /// <summary>
+        /// Resource type.
+        /// Serialized Name: PolicyEvent.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> Resource location. </summary>
+        /// <summary>
+        /// Resource location.
+        /// Serialized Name: PolicyEvent.resourceLocation
+        /// </summary>
         public string ResourceLocation { get; }
-        /// <summary> Resource group name. </summary>
+        /// <summary>
+        /// Resource group name.
+        /// Serialized Name: PolicyEvent.resourceGroup
+        /// </summary>
         public string ResourceGroup { get; }
-        /// <summary> List of resource tags. </summary>
+        /// <summary>
+        /// List of resource tags.
+        /// Serialized Name: PolicyEvent.resourceTags
+        /// </summary>
         public string ResourceTags { get; }
-        /// <summary> Policy assignment name. </summary>
+        /// <summary>
+        /// Policy assignment name.
+        /// Serialized Name: PolicyEvent.policyAssignmentName
+        /// </summary>
         public string PolicyAssignmentName { get; }
-        /// <summary> Policy assignment owner. </summary>
+        /// <summary>
+        /// Policy assignment owner.
+        /// Serialized Name: PolicyEvent.policyAssignmentOwner
+        /// </summary>
         public string PolicyAssignmentOwner { get; }
-        /// <summary> Policy assignment parameters. </summary>
+        /// <summary>
+        /// Policy assignment parameters.
+        /// Serialized Name: PolicyEvent.policyAssignmentParameters
+        /// </summary>
         public string PolicyAssignmentParameters { get; }
-        /// <summary> Policy assignment scope. </summary>
+        /// <summary>
+        /// Policy assignment scope.
+        /// Serialized Name: PolicyEvent.policyAssignmentScope
+        /// </summary>
         public string PolicyAssignmentScope { get; }
-        /// <summary> Policy definition name. </summary>
+        /// <summary>
+        /// Policy definition name.
+        /// Serialized Name: PolicyEvent.policyDefinitionName
+        /// </summary>
         public string PolicyDefinitionName { get; }
-        /// <summary> Policy definition action, i.e. effect. </summary>
+        /// <summary>
+        /// Policy definition action, i.e. effect.
+        /// Serialized Name: PolicyEvent.policyDefinitionAction
+        /// </summary>
         public string PolicyDefinitionAction { get; }
-        /// <summary> Policy definition category. </summary>
+        /// <summary>
+        /// Policy definition category.
+        /// Serialized Name: PolicyEvent.policyDefinitionCategory
+        /// </summary>
         public string PolicyDefinitionCategory { get; }
-        /// <summary> Policy set definition ID, if the policy assignment is for a policy set. </summary>
+        /// <summary>
+        /// Policy set definition ID, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionId
+        /// </summary>
         public string PolicySetDefinitionId { get; }
-        /// <summary> Policy set definition name, if the policy assignment is for a policy set. </summary>
+        /// <summary>
+        /// Policy set definition name, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionName
+        /// </summary>
         public string PolicySetDefinitionName { get; }
-        /// <summary> Policy set definition owner, if the policy assignment is for a policy set. </summary>
+        /// <summary>
+        /// Policy set definition owner, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionOwner
+        /// </summary>
         public string PolicySetDefinitionOwner { get; }
-        /// <summary> Policy set definition category, if the policy assignment is for a policy set. </summary>
+        /// <summary>
+        /// Policy set definition category, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionCategory
+        /// </summary>
         public string PolicySetDefinitionCategory { get; }
-        /// <summary> Policy set definition parameters, if the policy assignment is for a policy set. </summary>
+        /// <summary>
+        /// Policy set definition parameters, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policySetDefinitionParameters
+        /// </summary>
         public string PolicySetDefinitionParameters { get; }
-        /// <summary> Comma separated list of management group IDs, which represent the hierarchy of the management groups the resource is under. </summary>
+        /// <summary>
+        /// Comma separated list of management group IDs, which represent the hierarchy of the management groups the resource is under.
+        /// Serialized Name: PolicyEvent.managementGroupIds
+        /// </summary>
         public string ManagementGroupIds { get; }
-        /// <summary> Reference ID for the policy definition inside the policy set, if the policy assignment is for a policy set. </summary>
+        /// <summary>
+        /// Reference ID for the policy definition inside the policy set, if the policy assignment is for a policy set.
+        /// Serialized Name: PolicyEvent.policyDefinitionReferenceId
+        /// </summary>
         public string PolicyDefinitionReferenceId { get; }
-        /// <summary> Compliance state of the resource. </summary>
+        /// <summary>
+        /// Compliance state of the resource.
+        /// Serialized Name: PolicyEvent.complianceState
+        /// </summary>
         public string ComplianceState { get; }
-        /// <summary> Tenant ID for the policy event record. </summary>
+        /// <summary>
+        /// Tenant ID for the policy event record.
+        /// Serialized Name: PolicyEvent.tenantId
+        /// </summary>
         public Guid? TenantId { get; }
-        /// <summary> Principal object ID for the user who initiated the resource operation that triggered the policy event. </summary>
+        /// <summary>
+        /// Principal object ID for the user who initiated the resource operation that triggered the policy event.
+        /// Serialized Name: PolicyEvent.principalOid
+        /// </summary>
         public string PrincipalOid { get; }
-        /// <summary> Components events records populated only when URL contains $expand=components clause. </summary>
+        /// <summary>
+        /// Components events records populated only when URL contains $expand=components clause.
+        /// Serialized Name: PolicyEvent.components
+        /// </summary>
         public IReadOnlyList<ComponentEventDetails> Components { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

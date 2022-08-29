@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Evaluation results for the provided partial resource content. </summary>
+    /// <summary>
+    /// Evaluation results for the provided partial resource content.
+    /// Serialized Name: CheckRestrictionsResultContentEvaluationResult
+    /// </summary>
     internal partial class CheckRestrictionsResultContentEvaluationResult
     {
         /// <summary> Initializes a new instance of CheckRestrictionsResultContentEvaluationResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of CheckRestrictionsResultContentEvaluationResult. </summary>
-        /// <param name="policyEvaluations"> Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is. </param>
+        /// <param name="policyEvaluations">
+        /// Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is.
+        /// Serialized Name: CheckRestrictionsResultContentEvaluationResult.policyEvaluations
+        /// </param>
         internal CheckRestrictionsResultContentEvaluationResult(IReadOnlyList<PolicyEvaluationResult> policyEvaluations)
         {
             PolicyEvaluations = policyEvaluations;
         }
 
-        /// <summary> Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is. </summary>
+        /// <summary>
+        /// Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is.
+        /// Serialized Name: CheckRestrictionsResultContentEvaluationResult.policyEvaluations
+        /// </summary>
         public IReadOnlyList<PolicyEvaluationResult> PolicyEvaluations { get; }
     }
 }

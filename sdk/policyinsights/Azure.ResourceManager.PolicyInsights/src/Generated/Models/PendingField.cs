@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> A field that should be evaluated against Azure Policy to determine restrictions. </summary>
+    /// <summary>
+    /// A field that should be evaluated against Azure Policy to determine restrictions.
+    /// Serialized Name: PendingField
+    /// </summary>
     public partial class PendingField
     {
         /// <summary> Initializes a new instance of PendingField. </summary>
-        /// <param name="field"> The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias. </param>
+        /// <param name="field">
+        /// The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias.
+        /// Serialized Name: PendingField.field
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> is null. </exception>
         public PendingField(string field)
         {
@@ -28,9 +34,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias. </summary>
+        /// <summary>
+        /// The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias.
+        /// Serialized Name: PendingField.field
+        /// </summary>
         public string Field { get; }
-        /// <summary> The list of potential values for the field that should be evaluated against Azure Policy. </summary>
+        /// <summary>
+        /// The list of potential values for the field that should be evaluated against Azure Policy.
+        /// Serialized Name: PendingField.values
+        /// </summary>
         public IList<string> Values { get; }
     }
 }

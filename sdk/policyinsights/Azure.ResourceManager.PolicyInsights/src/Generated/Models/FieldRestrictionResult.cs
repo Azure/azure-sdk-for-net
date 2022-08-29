@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The type of restriction that is imposed on the field. </summary>
+    /// <summary>
+    /// The type of restriction that is imposed on the field.
+    /// Serialized Name: FieldRestrictionResult
+    /// </summary>
     public readonly partial struct FieldRestrictionResult : IEquatable<FieldRestrictionResult>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         private const string RemovedValue = "Removed";
         private const string DenyValue = "Deny";
 
-        /// <summary> The field and/or values are required by policy. </summary>
+        /// <summary>
+        /// The field and/or values are required by policy.
+        /// Serialized Name: FieldRestrictionResult.Required
+        /// </summary>
         public static FieldRestrictionResult Required { get; } = new FieldRestrictionResult(RequiredValue);
-        /// <summary> The field will be removed by policy. </summary>
+        /// <summary>
+        /// The field will be removed by policy.
+        /// Serialized Name: FieldRestrictionResult.Removed
+        /// </summary>
         public static FieldRestrictionResult Removed { get; } = new FieldRestrictionResult(RemovedValue);
-        /// <summary> The field and/or values will be denied by policy. </summary>
+        /// <summary>
+        /// The field and/or values will be denied by policy.
+        /// Serialized Name: FieldRestrictionResult.Deny
+        /// </summary>
         public static FieldRestrictionResult Deny { get; } = new FieldRestrictionResult(DenyValue);
         /// <summary> Determines if two <see cref="FieldRestrictionResult"/> values are the same. </summary>
         public static bool operator ==(FieldRestrictionResult left, FieldRestrictionResult right) => left.Equals(right);

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Policy evaluation details. </summary>
+    /// <summary>
+    /// Policy evaluation details.
+    /// Serialized Name: PolicyEvaluationDetails
+    /// </summary>
     public partial class PolicyEvaluationDetails
     {
         /// <summary> Initializes a new instance of PolicyEvaluationDetails. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyEvaluationDetails. </summary>
-        /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
-        /// <param name="ifNotExistsDetails"> Evaluation details of IfNotExists effect. </param>
+        /// <param name="evaluatedExpressions">
+        /// Details of the evaluated expressions.
+        /// Serialized Name: PolicyEvaluationDetails.evaluatedExpressions
+        /// </param>
+        /// <param name="ifNotExistsDetails">
+        /// Evaluation details of IfNotExists effect.
+        /// Serialized Name: PolicyEvaluationDetails.ifNotExistsDetails
+        /// </param>
         internal PolicyEvaluationDetails(IReadOnlyList<ExpressionEvaluationDetails> evaluatedExpressions, IfNotExistsEvaluationDetails ifNotExistsDetails)
         {
             EvaluatedExpressions = evaluatedExpressions;
             IfNotExistsDetails = ifNotExistsDetails;
         }
 
-        /// <summary> Details of the evaluated expressions. </summary>
+        /// <summary>
+        /// Details of the evaluated expressions.
+        /// Serialized Name: PolicyEvaluationDetails.evaluatedExpressions
+        /// </summary>
         public IReadOnlyList<ExpressionEvaluationDetails> EvaluatedExpressions { get; }
-        /// <summary> Evaluation details of IfNotExists effect. </summary>
+        /// <summary>
+        /// Evaluation details of IfNotExists effect.
+        /// Serialized Name: PolicyEvaluationDetails.ifNotExistsDetails
+        /// </summary>
         public IfNotExistsEvaluationDetails IfNotExistsDetails { get; }
     }
 }

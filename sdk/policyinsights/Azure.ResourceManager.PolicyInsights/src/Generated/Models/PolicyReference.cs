@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Resource identifiers for a policy. </summary>
+    /// <summary>
+    /// Resource identifiers for a policy.
+    /// Serialized Name: PolicyReference
+    /// </summary>
     public partial class PolicyReference
     {
         /// <summary> Initializes a new instance of PolicyReference. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyReference. </summary>
-        /// <param name="policyDefinitionId"> The resource identifier of the policy definition. </param>
-        /// <param name="policySetDefinitionId"> The resource identifier of the policy set definition. </param>
-        /// <param name="policyDefinitionReferenceId"> The reference identifier of a specific policy definition within a policy set definition. </param>
-        /// <param name="policyAssignmentId"> The resource identifier of the policy assignment. </param>
+        /// <param name="policyDefinitionId">
+        /// The resource identifier of the policy definition.
+        /// Serialized Name: PolicyReference.policyDefinitionId
+        /// </param>
+        /// <param name="policySetDefinitionId">
+        /// The resource identifier of the policy set definition.
+        /// Serialized Name: PolicyReference.policySetDefinitionId
+        /// </param>
+        /// <param name="policyDefinitionReferenceId">
+        /// The reference identifier of a specific policy definition within a policy set definition.
+        /// Serialized Name: PolicyReference.policyDefinitionReferenceId
+        /// </param>
+        /// <param name="policyAssignmentId">
+        /// The resource identifier of the policy assignment.
+        /// Serialized Name: PolicyReference.policyAssignmentId
+        /// </param>
         internal PolicyReference(string policyDefinitionId, string policySetDefinitionId, string policyDefinitionReferenceId, string policyAssignmentId)
         {
             PolicyDefinitionId = policyDefinitionId;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PolicyAssignmentId = policyAssignmentId;
         }
 
-        /// <summary> The resource identifier of the policy definition. </summary>
+        /// <summary>
+        /// The resource identifier of the policy definition.
+        /// Serialized Name: PolicyReference.policyDefinitionId
+        /// </summary>
         public string PolicyDefinitionId { get; }
-        /// <summary> The resource identifier of the policy set definition. </summary>
+        /// <summary>
+        /// The resource identifier of the policy set definition.
+        /// Serialized Name: PolicyReference.policySetDefinitionId
+        /// </summary>
         public string PolicySetDefinitionId { get; }
-        /// <summary> The reference identifier of a specific policy definition within a policy set definition. </summary>
+        /// <summary>
+        /// The reference identifier of a specific policy definition within a policy set definition.
+        /// Serialized Name: PolicyReference.policyDefinitionReferenceId
+        /// </summary>
         public string PolicyDefinitionReferenceId { get; }
-        /// <summary> The resource identifier of the policy assignment. </summary>
+        /// <summary>
+        /// The resource identifier of the policy assignment.
+        /// Serialized Name: PolicyReference.policyAssignmentId
+        /// </summary>
         public string PolicyAssignmentId { get; }
     }
 }

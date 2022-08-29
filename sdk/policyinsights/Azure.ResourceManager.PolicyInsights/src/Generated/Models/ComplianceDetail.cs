@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The compliance state rollup. </summary>
+    /// <summary>
+    /// The compliance state rollup.
+    /// Serialized Name: ComplianceDetail
+    /// </summary>
     public partial class ComplianceDetail
     {
         /// <summary> Initializes a new instance of ComplianceDetail. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of ComplianceDetail. </summary>
-        /// <param name="complianceState"> The compliance state. </param>
-        /// <param name="count"> Summarized count value for this compliance state. </param>
+        /// <param name="complianceState">
+        /// The compliance state.
+        /// Serialized Name: ComplianceDetail.complianceState
+        /// </param>
+        /// <param name="count">
+        /// Summarized count value for this compliance state.
+        /// Serialized Name: ComplianceDetail.count
+        /// </param>
         internal ComplianceDetail(string complianceState, int? count)
         {
             ComplianceState = complianceState;
             Count = count;
         }
 
-        /// <summary> The compliance state. </summary>
+        /// <summary>
+        /// The compliance state.
+        /// Serialized Name: ComplianceDetail.complianceState
+        /// </summary>
         public string ComplianceState { get; }
-        /// <summary> Summarized count value for this compliance state. </summary>
+        /// <summary>
+        /// Summarized count value for this compliance state.
+        /// Serialized Name: ComplianceDetail.count
+        /// </summary>
         public int? Count { get; }
     }
 }

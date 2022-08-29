@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The policy details. </summary>
+    /// <summary>
+    /// The policy details.
+    /// Serialized Name: PolicyDetails
+    /// </summary>
     public partial class PolicyDetails
     {
         /// <summary> Initializes a new instance of PolicyDetails. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of PolicyDetails. </summary>
-        /// <param name="policyDefinitionId"> The ID of the policy definition. </param>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
-        /// <param name="policyAssignmentDisplayName"> The display name of the policy assignment. </param>
-        /// <param name="policyAssignmentScope"> The scope of the policy assignment. </param>
-        /// <param name="policySetDefinitionId"> The ID of the policy set definition. </param>
-        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID within the policy set definition. </param>
+        /// <param name="policyDefinitionId">
+        /// The ID of the policy definition.
+        /// Serialized Name: PolicyDetails.policyDefinitionId
+        /// </param>
+        /// <param name="policyAssignmentId">
+        /// The ID of the policy assignment.
+        /// Serialized Name: PolicyDetails.policyAssignmentId
+        /// </param>
+        /// <param name="policyAssignmentDisplayName">
+        /// The display name of the policy assignment.
+        /// Serialized Name: PolicyDetails.policyAssignmentDisplayName
+        /// </param>
+        /// <param name="policyAssignmentScope">
+        /// The scope of the policy assignment.
+        /// Serialized Name: PolicyDetails.policyAssignmentScope
+        /// </param>
+        /// <param name="policySetDefinitionId">
+        /// The ID of the policy set definition.
+        /// Serialized Name: PolicyDetails.policySetDefinitionId
+        /// </param>
+        /// <param name="policyDefinitionReferenceId">
+        /// The policy definition reference ID within the policy set definition.
+        /// Serialized Name: PolicyDetails.policyDefinitionReferenceId
+        /// </param>
         internal PolicyDetails(string policyDefinitionId, string policyAssignmentId, string policyAssignmentDisplayName, string policyAssignmentScope, string policySetDefinitionId, string policyDefinitionReferenceId)
         {
             PolicyDefinitionId = policyDefinitionId;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
         }
 
-        /// <summary> The ID of the policy definition. </summary>
+        /// <summary>
+        /// The ID of the policy definition.
+        /// Serialized Name: PolicyDetails.policyDefinitionId
+        /// </summary>
         public string PolicyDefinitionId { get; }
-        /// <summary> The ID of the policy assignment. </summary>
+        /// <summary>
+        /// The ID of the policy assignment.
+        /// Serialized Name: PolicyDetails.policyAssignmentId
+        /// </summary>
         public string PolicyAssignmentId { get; }
-        /// <summary> The display name of the policy assignment. </summary>
+        /// <summary>
+        /// The display name of the policy assignment.
+        /// Serialized Name: PolicyDetails.policyAssignmentDisplayName
+        /// </summary>
         public string PolicyAssignmentDisplayName { get; }
-        /// <summary> The scope of the policy assignment. </summary>
+        /// <summary>
+        /// The scope of the policy assignment.
+        /// Serialized Name: PolicyDetails.policyAssignmentScope
+        /// </summary>
         public string PolicyAssignmentScope { get; }
-        /// <summary> The ID of the policy set definition. </summary>
+        /// <summary>
+        /// The ID of the policy set definition.
+        /// Serialized Name: PolicyDetails.policySetDefinitionId
+        /// </summary>
         public string PolicySetDefinitionId { get; }
-        /// <summary> The policy definition reference ID within the policy set definition. </summary>
+        /// <summary>
+        /// The policy definition reference ID within the policy set definition.
+        /// Serialized Name: PolicyDetails.policyDefinitionReferenceId
+        /// </summary>
         public string PolicyDefinitionReferenceId { get; }
     }
 }
