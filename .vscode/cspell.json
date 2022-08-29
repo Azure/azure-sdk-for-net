@@ -508,6 +508,13 @@
       ]
     },
     {
+      "filename": "**/sdk/privatedns/**/*.cs",
+      "words": [
+        "cname",
+        "ptrdname"
+      ]
+    },
+    {
       "filename": "**/sdk/redis/**/*.cs",
       "words": [
         "hana",
