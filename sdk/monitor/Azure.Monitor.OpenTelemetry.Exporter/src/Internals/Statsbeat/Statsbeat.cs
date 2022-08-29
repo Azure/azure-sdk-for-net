@@ -83,7 +83,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (s_statsBeat_ConnectionString == null)
                 {
-                    SetStatsBeatConnectionStringAndCustomerIkey(connectionString);
+                    ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
+                    SetCustomerIkey(instrumentationKey);
+                    SetStatsBeatConnectionString(ingestionEndpoint);
                 }
 
                 s_myMeter.CreateObservableGauge("AttachStatsBeat", () => GetAttachStatsBeat());
@@ -101,6 +103,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsBeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+            }
+        }
+
+        internal static void SetCustomerIkey(string instrumentationKey)
+        {
+            s_customer_Ikey = instrumentationKey;
+        }
+
+        internal static void SetStatsbeatConnectionString(string ingestionEndpoint)
+        {
+            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
+            if (patternMatch.Success)
+            {
+                var endpoint = patternMatch.Groups[1].Value;
+                if (EU_Endpoints.Contains(endpoint))
+                {
+                    s_statsBeat_ConnectionString = StatsBeat_ConnectionString_EU;
+                }
+                else
+                {
+                    s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
+                }
             }
         }
 
@@ -141,30 +165,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex.ToInvariantString());
                 return null;
-            }
-        }
-
-        internal static void SetStatsBeatConnectionStringAndCustomerIkey(string connectionString)
-        {
-            if (s_statsBeat_ConnectionString == null)
-            {
-                ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
-
-                s_customer_Ikey = instrumentationKey;
-
-                var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
-                if (patternMatch.Success)
-                {
-                    var endpoint = patternMatch.Groups[1].Value;
-                    if (EU_Endpoints.Contains(endpoint))
-                    {
-                        s_statsBeat_ConnectionString = StatsBeat_ConnectionString_EU;
-                    }
-                    else
-                    {
-                        s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
-                    }
-                }
             }
         }
 
