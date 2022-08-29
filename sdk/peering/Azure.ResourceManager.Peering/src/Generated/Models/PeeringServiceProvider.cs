@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> PeeringService provider. </summary>
+    /// <summary>
+    /// PeeringService provider
+    /// Serialized Name: PeeringServiceProvider
+    /// </summary>
     public partial class PeeringServiceProvider : ResourceData
     {
         /// <summary> Initializes a new instance of PeeringServiceProvider. </summary>
@@ -25,17 +28,29 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceProviderName"> The name of the service provider. </param>
-        /// <param name="peeringLocations"> The list of locations at which the service provider peers with Microsoft. </param>
+        /// <param name="serviceProviderName">
+        /// The name of the service provider.
+        /// Serialized Name: PeeringServiceProvider.properties.serviceProviderName
+        /// </param>
+        /// <param name="peeringLocations">
+        /// The list of locations at which the service provider peers with Microsoft.
+        /// Serialized Name: PeeringServiceProvider.properties.peeringLocations
+        /// </param>
         internal PeeringServiceProvider(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceProviderName, IList<string> peeringLocations) : base(id, name, resourceType, systemData)
         {
             ServiceProviderName = serviceProviderName;
             PeeringLocations = peeringLocations;
         }
 
-        /// <summary> The name of the service provider. </summary>
+        /// <summary>
+        /// The name of the service provider.
+        /// Serialized Name: PeeringServiceProvider.properties.serviceProviderName
+        /// </summary>
         public string ServiceProviderName { get; set; }
-        /// <summary> The list of locations at which the service provider peers with Microsoft. </summary>
+        /// <summary>
+        /// The list of locations at which the service provider peers with Microsoft.
+        /// Serialized Name: PeeringServiceProvider.properties.peeringLocations
+        /// </summary>
         public IList<string> PeeringLocations { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The properties that define a peering bandwidth offer. </summary>
+    /// <summary>
+    /// The properties that define a peering bandwidth offer.
+    /// Serialized Name: PeeringBandwidthOffer
+    /// </summary>
     public partial class PeeringBandwidthOffer
     {
         /// <summary> Initializes a new instance of PeeringBandwidthOffer. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringBandwidthOffer. </summary>
-        /// <param name="offerName"> The name of the bandwidth offer. </param>
-        /// <param name="valueInMbps"> The value of the bandwidth offer in Mbps. </param>
+        /// <param name="offerName">
+        /// The name of the bandwidth offer.
+        /// Serialized Name: PeeringBandwidthOffer.offerName
+        /// </param>
+        /// <param name="valueInMbps">
+        /// The value of the bandwidth offer in Mbps.
+        /// Serialized Name: PeeringBandwidthOffer.valueInMbps
+        /// </param>
         internal PeeringBandwidthOffer(string offerName, int? valueInMbps)
         {
             OfferName = offerName;
             ValueInMbps = valueInMbps;
         }
 
-        /// <summary> The name of the bandwidth offer. </summary>
+        /// <summary>
+        /// The name of the bandwidth offer.
+        /// Serialized Name: PeeringBandwidthOffer.offerName
+        /// </summary>
         public string OfferName { get; set; }
-        /// <summary> The value of the bandwidth offer in Mbps. </summary>
+        /// <summary>
+        /// The value of the bandwidth offer in Mbps.
+        /// Serialized Name: PeeringBandwidthOffer.valueInMbps
+        /// </summary>
         public int? ValueInMbps { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> Looking glass output model. </summary>
+    /// <summary>
+    /// Looking glass output model
+    /// Serialized Name: LookingGlassOutput
+    /// </summary>
     public partial class LookingGlassOutput
     {
         /// <summary> Initializes a new instance of LookingGlassOutput. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of LookingGlassOutput. </summary>
-        /// <param name="command"> Invoked command. </param>
-        /// <param name="output"> Output of the command. </param>
-        internal LookingGlassOutput(Command? command, string output)
+        /// <param name="command">
+        /// Invoked command
+        /// Serialized Name: LookingGlassOutput.command
+        /// </param>
+        /// <param name="output">
+        /// Output of the command
+        /// Serialized Name: LookingGlassOutput.output
+        /// </param>
+        internal LookingGlassOutput(LookingGlassCommand? command, string output)
         {
             Command = command;
             Output = output;
         }
 
-        /// <summary> Invoked command. </summary>
-        public Command? Command { get; }
-        /// <summary> Output of the command. </summary>
+        /// <summary>
+        /// Invoked command
+        /// Serialized Name: LookingGlassOutput.command
+        /// </summary>
+        public LookingGlassCommand? Command { get; }
+        /// <summary>
+        /// Output of the command
+        /// Serialized Name: LookingGlassOutput.output
+        /// </summary>
         public string Output { get; }
     }
 }

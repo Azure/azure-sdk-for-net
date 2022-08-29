@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The properties that define an exchange peering location. </summary>
+    /// <summary>
+    /// The properties that define an exchange peering location.
+    /// Serialized Name: PeeringLocationPropertiesExchange
+    /// </summary>
     internal partial class PeeringLocationPropertiesExchange
     {
         /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>
-        /// <param name="peeringFacilities"> The list of exchange peering facilities at the peering location. </param>
+        /// <param name="peeringFacilities">
+        /// The list of exchange peering facilities at the peering location.
+        /// Serialized Name: PeeringLocationPropertiesExchange.peeringFacilities
+        /// </param>
         internal PeeringLocationPropertiesExchange(IList<ExchangePeeringFacility> peeringFacilities)
         {
             PeeringFacilities = peeringFacilities;
         }
 
-        /// <summary> The list of exchange peering facilities at the peering location. </summary>
+        /// <summary>
+        /// The list of exchange peering facilities at the peering location.
+        /// Serialized Name: PeeringLocationPropertiesExchange.peeringFacilities
+        /// </summary>
         public IList<ExchangePeeringFacility> PeeringFacilities { get; }
     }
 }

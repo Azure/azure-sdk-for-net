@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> Peering location is where connectivity could be established to the Microsoft Cloud Edge. </summary>
+    /// <summary>
+    /// Peering location is where connectivity could be established to the Microsoft Cloud Edge.
+    /// Serialized Name: PeeringLocation
+    /// </summary>
     public partial class PeeringLocation : ResourceData
     {
         /// <summary> Initializes a new instance of PeeringLocation. </summary>
@@ -24,13 +27,31 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of peering that the peering location supports. </param>
-        /// <param name="direct"> The properties that define a direct peering location. </param>
-        /// <param name="exchange"> The properties that define an exchange peering location. </param>
-        /// <param name="peeringLocationValue"> The name of the peering location. </param>
-        /// <param name="country"> The country in which the peering location exists. </param>
-        /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
-        internal PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeeringKind? kind, PeeringLocationPropertiesDirect direct, PeeringLocationPropertiesExchange exchange, string peeringLocationValue, string country, string azureRegion) : base(id, name, resourceType, systemData)
+        /// <param name="kind">
+        /// The kind of peering that the peering location supports.
+        /// Serialized Name: PeeringLocation.kind
+        /// </param>
+        /// <param name="direct">
+        /// The properties that define a direct peering location.
+        /// Serialized Name: PeeringLocation.properties.direct
+        /// </param>
+        /// <param name="exchange">
+        /// The properties that define an exchange peering location.
+        /// Serialized Name: PeeringLocation.properties.exchange
+        /// </param>
+        /// <param name="peeringLocationValue">
+        /// The name of the peering location.
+        /// Serialized Name: PeeringLocation.properties.peeringLocation
+        /// </param>
+        /// <param name="country">
+        /// The country in which the peering location exists.
+        /// Serialized Name: PeeringLocation.properties.country
+        /// </param>
+        /// <param name="azureRegion">
+        /// The Azure region associated with the peering location.
+        /// Serialized Name: PeeringLocation.properties.azureRegion
+        /// </param>
+        internal PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeeringKind? kind, DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string peeringLocationValue, string country, string azureRegion) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Direct = direct;
@@ -40,13 +61,25 @@ namespace Azure.ResourceManager.Peering.Models
             AzureRegion = azureRegion;
         }
 
-        /// <summary> The kind of peering that the peering location supports. </summary>
+        /// <summary>
+        /// The kind of peering that the peering location supports.
+        /// Serialized Name: PeeringLocation.kind
+        /// </summary>
         public PeeringKind? Kind { get; set; }
-        /// <summary> The properties that define a direct peering location. </summary>
-        public PeeringLocationPropertiesDirect Direct { get; set; }
-        /// <summary> The properties that define an exchange peering location. </summary>
+        /// <summary>
+        /// The properties that define a direct peering location.
+        /// Serialized Name: PeeringLocation.properties.direct
+        /// </summary>
+        public DirectPeeringLocationProperties Direct { get; set; }
+        /// <summary>
+        /// The properties that define an exchange peering location.
+        /// Serialized Name: PeeringLocation.properties.exchange
+        /// </summary>
         internal PeeringLocationPropertiesExchange Exchange { get; set; }
-        /// <summary> The list of exchange peering facilities at the peering location. </summary>
+        /// <summary>
+        /// The list of exchange peering facilities at the peering location.
+        /// Serialized Name: PeeringLocationPropertiesExchange.peeringFacilities
+        /// </summary>
         public IList<ExchangePeeringFacility> ExchangePeeringFacilities
         {
             get
@@ -57,11 +90,20 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        /// <summary> The name of the peering location. </summary>
+        /// <summary>
+        /// The name of the peering location.
+        /// Serialized Name: PeeringLocation.properties.peeringLocation
+        /// </summary>
         public string PeeringLocationValue { get; set; }
-        /// <summary> The country in which the peering location exists. </summary>
+        /// <summary>
+        /// The country in which the peering location exists.
+        /// Serialized Name: PeeringLocation.properties.country
+        /// </summary>
         public string Country { get; set; }
-        /// <summary> The Azure region associated with the peering location. </summary>
+        /// <summary>
+        /// The Azure region associated with the peering location.
+        /// Serialized Name: PeeringLocation.properties.azureRegion
+        /// </summary>
         public string AzureRegion { get; set; }
     }
 }

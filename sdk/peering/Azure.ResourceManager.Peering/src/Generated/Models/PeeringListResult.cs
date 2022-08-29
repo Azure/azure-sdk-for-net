@@ -11,7 +11,10 @@ using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of peerings. </summary>
+    /// <summary>
+    /// The paginated list of peerings.
+    /// Serialized Name: PeeringListResult
+    /// </summary>
     internal partial class PeeringListResult
     {
         /// <summary> Initializes a new instance of PeeringListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringListResult. </summary>
-        /// <param name="value"> The list of peerings. </param>
-        /// <param name="nextLink"> The link to fetch the next page of peerings. </param>
+        /// <param name="value">
+        /// The list of peerings.
+        /// Serialized Name: PeeringListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to fetch the next page of peerings.
+        /// Serialized Name: PeeringListResult.nextLink
+        /// </param>
         internal PeeringListResult(IReadOnlyList<PeeringData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of peerings. </summary>
+        /// <summary>
+        /// The list of peerings.
+        /// Serialized Name: PeeringListResult.value
+        /// </summary>
         public IReadOnlyList<PeeringData> Value { get; }
-        /// <summary> The link to fetch the next page of peerings. </summary>
+        /// <summary>
+        /// The link to fetch the next page of peerings.
+        /// Serialized Name: PeeringListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -28,14 +28,35 @@ namespace Azure.ResourceManager.Peering
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The SKU that defines the type of the peering service. </param>
-        /// <param name="peeringServiceLocation"> The location (state/province) of the customer. </param>
-        /// <param name="peeringServiceProvider"> The name of the service provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="providerPrimaryPeeringLocation"> The primary peering (Microsoft/service provider) location to be used for customer traffic. </param>
-        /// <param name="providerBackupPeeringLocation"> The backup peering (Microsoft/service provider) location to be used for customer traffic. </param>
-        /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
-        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringServiceSku sku, string peeringServiceLocation, string peeringServiceProvider, ProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, LogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="sku">
+        /// The SKU that defines the type of the peering service.
+        /// Serialized Name: PeeringService.sku
+        /// </param>
+        /// <param name="peeringServiceLocation">
+        /// The location (state/province) of the customer.
+        /// Serialized Name: PeeringService.properties.peeringServiceLocation
+        /// </param>
+        /// <param name="peeringServiceProvider">
+        /// The name of the service provider.
+        /// Serialized Name: PeeringService.properties.peeringServiceProvider
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        /// Serialized Name: PeeringService.properties.provisioningState
+        /// </param>
+        /// <param name="providerPrimaryPeeringLocation">
+        /// The primary peering (Microsoft/service provider) location to be used for customer traffic.
+        /// Serialized Name: PeeringService.properties.providerPrimaryPeeringLocation
+        /// </param>
+        /// <param name="providerBackupPeeringLocation">
+        /// The backup peering (Microsoft/service provider) location to be used for customer traffic.
+        /// Serialized Name: PeeringService.properties.providerBackupPeeringLocation
+        /// </param>
+        /// <param name="logAnalyticsWorkspaceProperties">
+        /// The Log Analytics Workspace Properties
+        /// Serialized Name: PeeringService.properties.logAnalyticsWorkspaceProperties
+        /// </param>
+        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringServiceSku sku, string peeringServiceLocation, string peeringServiceProvider, PeeringProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             PeeringServiceLocation = peeringServiceLocation;
@@ -46,9 +67,15 @@ namespace Azure.ResourceManager.Peering
             LogAnalyticsWorkspaceProperties = logAnalyticsWorkspaceProperties;
         }
 
-        /// <summary> The SKU that defines the type of the peering service. </summary>
+        /// <summary>
+        /// The SKU that defines the type of the peering service.
+        /// Serialized Name: PeeringService.sku
+        /// </summary>
         internal PeeringServiceSku Sku { get; set; }
-        /// <summary> The name of the peering service SKU. </summary>
+        /// <summary>
+        /// The name of the peering service SKU.
+        /// Serialized Name: PeeringServiceSku.name
+        /// </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -60,17 +87,35 @@ namespace Azure.ResourceManager.Peering
             }
         }
 
-        /// <summary> The location (state/province) of the customer. </summary>
+        /// <summary>
+        /// The location (state/province) of the customer.
+        /// Serialized Name: PeeringService.properties.peeringServiceLocation
+        /// </summary>
         public string PeeringServiceLocation { get; set; }
-        /// <summary> The name of the service provider. </summary>
+        /// <summary>
+        /// The name of the service provider.
+        /// Serialized Name: PeeringService.properties.peeringServiceProvider
+        /// </summary>
         public string PeeringServiceProvider { get; set; }
-        /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The primary peering (Microsoft/service provider) location to be used for customer traffic. </summary>
+        /// <summary>
+        /// The provisioning state of the resource.
+        /// Serialized Name: PeeringService.properties.provisioningState
+        /// </summary>
+        public PeeringProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// The primary peering (Microsoft/service provider) location to be used for customer traffic.
+        /// Serialized Name: PeeringService.properties.providerPrimaryPeeringLocation
+        /// </summary>
         public string ProviderPrimaryPeeringLocation { get; set; }
-        /// <summary> The backup peering (Microsoft/service provider) location to be used for customer traffic. </summary>
+        /// <summary>
+        /// The backup peering (Microsoft/service provider) location to be used for customer traffic.
+        /// Serialized Name: PeeringService.properties.providerBackupPeeringLocation
+        /// </summary>
         public string ProviderBackupPeeringLocation { get; set; }
-        /// <summary> The Log Analytics Workspace Properties. </summary>
-        public LogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get; set; }
+        /// <summary>
+        /// The Log Analytics Workspace Properties
+        /// Serialized Name: PeeringService.properties.logAnalyticsWorkspaceProperties
+        /// </summary>
+        public PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get; set; }
     }
 }

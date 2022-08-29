@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The CDN peering prefix. </summary>
+    /// <summary>
+    /// The CDN peering prefix
+    /// Serialized Name: CdnPeeringPrefix
+    /// </summary>
     public partial class CdnPeeringPrefix : ResourceData
     {
         /// <summary> Initializes a new instance of CdnPeeringPrefix. </summary>
@@ -23,11 +26,26 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The prefix. </param>
-        /// <param name="azureRegion"> The Azure region. </param>
-        /// <param name="azureService"> The Azure service. </param>
-        /// <param name="isPrimaryRegion"> The flag that indicates whether or not this is the primary region. </param>
-        /// <param name="bgpCommunity"> The BGP Community. </param>
+        /// <param name="prefix">
+        /// The prefix.
+        /// Serialized Name: CdnPeeringPrefix.properties.prefix
+        /// </param>
+        /// <param name="azureRegion">
+        /// The Azure region.
+        /// Serialized Name: CdnPeeringPrefix.properties.azureRegion
+        /// </param>
+        /// <param name="azureService">
+        /// The Azure service.
+        /// Serialized Name: CdnPeeringPrefix.properties.azureService
+        /// </param>
+        /// <param name="isPrimaryRegion">
+        /// The flag that indicates whether or not this is the primary region.
+        /// Serialized Name: CdnPeeringPrefix.properties.isPrimaryRegion
+        /// </param>
+        /// <param name="bgpCommunity">
+        /// The BGP Community
+        /// Serialized Name: CdnPeeringPrefix.properties.bgpCommunity
+        /// </param>
         internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, string azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
@@ -37,15 +55,30 @@ namespace Azure.ResourceManager.Peering.Models
             BgpCommunity = bgpCommunity;
         }
 
-        /// <summary> The prefix. </summary>
+        /// <summary>
+        /// The prefix.
+        /// Serialized Name: CdnPeeringPrefix.properties.prefix
+        /// </summary>
         public string Prefix { get; }
-        /// <summary> The Azure region. </summary>
+        /// <summary>
+        /// The Azure region.
+        /// Serialized Name: CdnPeeringPrefix.properties.azureRegion
+        /// </summary>
         public string AzureRegion { get; }
-        /// <summary> The Azure service. </summary>
+        /// <summary>
+        /// The Azure service.
+        /// Serialized Name: CdnPeeringPrefix.properties.azureService
+        /// </summary>
         public string AzureService { get; }
-        /// <summary> The flag that indicates whether or not this is the primary region. </summary>
+        /// <summary>
+        /// The flag that indicates whether or not this is the primary region.
+        /// Serialized Name: CdnPeeringPrefix.properties.isPrimaryRegion
+        /// </summary>
         public bool? IsPrimaryRegion { get; }
-        /// <summary> The BGP Community. </summary>
+        /// <summary>
+        /// The BGP Community
+        /// Serialized Name: CdnPeeringPrefix.properties.bgpCommunity
+        /// </summary>
         public string BgpCommunity { get; }
     }
 }

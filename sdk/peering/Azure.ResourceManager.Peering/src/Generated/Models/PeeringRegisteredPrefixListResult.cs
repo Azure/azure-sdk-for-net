@@ -11,7 +11,10 @@ using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of peering registered prefixes. </summary>
+    /// <summary>
+    /// The paginated list of peering registered prefixes.
+    /// Serialized Name: PeeringRegisteredPrefixListResult
+    /// </summary>
     internal partial class PeeringRegisteredPrefixListResult
     {
         /// <summary> Initializes a new instance of PeeringRegisteredPrefixListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringRegisteredPrefixListResult. </summary>
-        /// <param name="value"> The list of peering registered prefixes. </param>
-        /// <param name="nextLink"> The link to fetch the next page of peering registered prefixes. </param>
+        /// <param name="value">
+        /// The list of peering registered prefixes.
+        /// Serialized Name: PeeringRegisteredPrefixListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to fetch the next page of peering registered prefixes.
+        /// Serialized Name: PeeringRegisteredPrefixListResult.nextLink
+        /// </param>
         internal PeeringRegisteredPrefixListResult(IReadOnlyList<PeeringRegisteredPrefixData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of peering registered prefixes. </summary>
+        /// <summary>
+        /// The list of peering registered prefixes.
+        /// Serialized Name: PeeringRegisteredPrefixListResult.value
+        /// </summary>
         public IReadOnlyList<PeeringRegisteredPrefixData> Value { get; }
-        /// <summary> The link to fetch the next page of peering registered prefixes. </summary>
+        /// <summary>
+        /// The link to fetch the next page of peering registered prefixes.
+        /// Serialized Name: PeeringRegisteredPrefixListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

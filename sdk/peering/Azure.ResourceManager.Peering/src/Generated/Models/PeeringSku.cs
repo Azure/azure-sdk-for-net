@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The SKU that defines the tier and kind of the peering. </summary>
+    /// <summary>
+    /// The SKU that defines the tier and kind of the peering.
+    /// Serialized Name: PeeringSku
+    /// </summary>
     public partial class PeeringSku
     {
         /// <summary> Initializes a new instance of PeeringSku. </summary>
@@ -16,11 +19,23 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringSku. </summary>
-        /// <param name="name"> The name of the peering SKU. </param>
-        /// <param name="tier"> The tier of the peering SKU. </param>
-        /// <param name="family"> The family of the peering SKU. </param>
-        /// <param name="size"> The size of the peering SKU. </param>
-        internal PeeringSku(string name, Tier? tier, Family? family, Size? size)
+        /// <param name="name">
+        /// The name of the peering SKU.
+        /// Serialized Name: PeeringSku.name
+        /// </param>
+        /// <param name="tier">
+        /// The tier of the peering SKU.
+        /// Serialized Name: PeeringSku.tier
+        /// </param>
+        /// <param name="family">
+        /// The family of the peering SKU.
+        /// Serialized Name: PeeringSku.family
+        /// </param>
+        /// <param name="size">
+        /// The size of the peering SKU.
+        /// Serialized Name: PeeringSku.size
+        /// </param>
+        internal PeeringSku(string name, PeeringTier? tier, PeeringFamily? family, PeeringSize? size)
         {
             Name = name;
             Tier = tier;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Peering.Models
             Size = size;
         }
 
-        /// <summary> The name of the peering SKU. </summary>
+        /// <summary>
+        /// The name of the peering SKU.
+        /// Serialized Name: PeeringSku.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The tier of the peering SKU. </summary>
-        public Tier? Tier { get; }
-        /// <summary> The family of the peering SKU. </summary>
-        public Family? Family { get; }
-        /// <summary> The size of the peering SKU. </summary>
-        public Size? Size { get; }
+        /// <summary>
+        /// The tier of the peering SKU.
+        /// Serialized Name: PeeringSku.tier
+        /// </summary>
+        public PeeringTier? Tier { get; }
+        /// <summary>
+        /// The family of the peering SKU.
+        /// Serialized Name: PeeringSku.family
+        /// </summary>
+        public PeeringFamily? Family { get; }
+        /// <summary>
+        /// The size of the peering SKU.
+        /// Serialized Name: PeeringSku.size
+        /// </summary>
+        public PeeringSize? Size { get; }
     }
 }

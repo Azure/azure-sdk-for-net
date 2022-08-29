@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The peering service location. </summary>
+    /// <summary>
+    /// The peering service location.
+    /// Serialized Name: PeeringServiceLocation
+    /// </summary>
     public partial class PeeringServiceLocation : ResourceData
     {
         /// <summary> Initializes a new instance of PeeringServiceLocation. </summary>
@@ -23,9 +26,18 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="country"> Country of the customer. </param>
-        /// <param name="state"> State of the customer. </param>
-        /// <param name="azureRegion"> Azure region for the location. </param>
+        /// <param name="country">
+        /// Country of the customer
+        /// Serialized Name: PeeringServiceLocation.properties.country
+        /// </param>
+        /// <param name="state">
+        /// State of the customer
+        /// Serialized Name: PeeringServiceLocation.properties.state
+        /// </param>
+        /// <param name="azureRegion">
+        /// Azure region for the location
+        /// Serialized Name: PeeringServiceLocation.properties.azureRegion
+        /// </param>
         internal PeeringServiceLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string country, string state, string azureRegion) : base(id, name, resourceType, systemData)
         {
             Country = country;
@@ -33,11 +45,20 @@ namespace Azure.ResourceManager.Peering.Models
             AzureRegion = azureRegion;
         }
 
-        /// <summary> Country of the customer. </summary>
+        /// <summary>
+        /// Country of the customer
+        /// Serialized Name: PeeringServiceLocation.properties.country
+        /// </summary>
         public string Country { get; set; }
-        /// <summary> State of the customer. </summary>
+        /// <summary>
+        /// State of the customer
+        /// Serialized Name: PeeringServiceLocation.properties.state
+        /// </summary>
         public string State { get; set; }
-        /// <summary> Azure region for the location. </summary>
+        /// <summary>
+        /// Azure region for the location
+        /// Serialized Name: PeeringServiceLocation.properties.azureRegion
+        /// </summary>
         public string AzureRegion { get; set; }
     }
 }

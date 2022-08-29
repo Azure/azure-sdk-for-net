@@ -11,7 +11,10 @@ using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of peering service prefixes. </summary>
+    /// <summary>
+    /// The paginated list of peering service prefixes.
+    /// Serialized Name: PeeringServicePrefixListResult
+    /// </summary>
     internal partial class PeeringServicePrefixListResult
     {
         /// <summary> Initializes a new instance of PeeringServicePrefixListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringServicePrefixListResult. </summary>
-        /// <param name="value"> The list of peering service prefixes. </param>
-        /// <param name="nextLink"> The link to fetch the next page of peering service prefixes. </param>
+        /// <param name="value">
+        /// The list of peering service prefixes.
+        /// Serialized Name: PeeringServicePrefixListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to fetch the next page of peering service prefixes.
+        /// Serialized Name: PeeringServicePrefixListResult.nextLink
+        /// </param>
         internal PeeringServicePrefixListResult(IReadOnlyList<PeeringServicePrefixData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of peering service prefixes. </summary>
+        /// <summary>
+        /// The list of peering service prefixes.
+        /// Serialized Name: PeeringServicePrefixListResult.value
+        /// </summary>
         public IReadOnlyList<PeeringServicePrefixData> Value { get; }
-        /// <summary> The link to fetch the next page of peering service prefixes. </summary>
+        /// <summary>
+        /// The link to fetch the next page of peering service prefixes.
+        /// Serialized Name: PeeringServicePrefixListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

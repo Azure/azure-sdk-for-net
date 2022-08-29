@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The type of direct peering. </summary>
+    /// <summary>
+    /// The type of direct peering.
+    /// Serialized Name: DirectPeeringType
+    /// </summary>
     public readonly partial struct DirectPeeringType : IEquatable<DirectPeeringType>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.Peering.Models
         private const string VoiceValue = "Voice";
         private const string EdgeZoneForOperatorsValue = "EdgeZoneForOperators";
 
-        /// <summary> Edge. </summary>
+        /// <summary>
+        /// Edge
+        /// Serialized Name: DirectPeeringType.Edge
+        /// </summary>
         public static DirectPeeringType Edge { get; } = new DirectPeeringType(EdgeValue);
-        /// <summary> Transit. </summary>
+        /// <summary>
+        /// Transit
+        /// Serialized Name: DirectPeeringType.Transit
+        /// </summary>
         public static DirectPeeringType Transit { get; } = new DirectPeeringType(TransitValue);
-        /// <summary> Cdn. </summary>
+        /// <summary>
+        /// Cdn
+        /// Serialized Name: DirectPeeringType.Cdn
+        /// </summary>
         public static DirectPeeringType Cdn { get; } = new DirectPeeringType(CdnValue);
-        /// <summary> Internal. </summary>
+        /// <summary>
+        /// Internal
+        /// Serialized Name: DirectPeeringType.Internal
+        /// </summary>
         public static DirectPeeringType Internal { get; } = new DirectPeeringType(InternalValue);
-        /// <summary> Ix. </summary>
+        /// <summary>
+        /// Ix
+        /// Serialized Name: DirectPeeringType.Ix
+        /// </summary>
         public static DirectPeeringType Ix { get; } = new DirectPeeringType(IxValue);
-        /// <summary> IxRs. </summary>
+        /// <summary>
+        /// IxRs
+        /// Serialized Name: DirectPeeringType.IxRs
+        /// </summary>
         public static DirectPeeringType IxRs { get; } = new DirectPeeringType(IxRsValue);
-        /// <summary> Voice. </summary>
+        /// <summary>
+        /// Voice
+        /// Serialized Name: DirectPeeringType.Voice
+        /// </summary>
         public static DirectPeeringType Voice { get; } = new DirectPeeringType(VoiceValue);
-        /// <summary> EdgeZoneForOperators. </summary>
+        /// <summary>
+        /// EdgeZoneForOperators
+        /// Serialized Name: DirectPeeringType.EdgeZoneForOperators
+        /// </summary>
         public static DirectPeeringType EdgeZoneForOperators { get; } = new DirectPeeringType(EdgeZoneForOperatorsValue);
         /// <summary> Determines if two <see cref="DirectPeeringType"/> values are the same. </summary>
         public static bool operator ==(DirectPeeringType left, DirectPeeringType right) => left.Equals(right);

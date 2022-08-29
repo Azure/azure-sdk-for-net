@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The properties that define a received route. </summary>
+    /// <summary>
+    /// The properties that define a received route.
+    /// Serialized Name: PeeringReceivedRoute
+    /// </summary>
     public partial class PeeringReceivedRoute
     {
         /// <summary> Initializes a new instance of PeeringReceivedRoute. </summary>
@@ -16,13 +19,34 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringReceivedRoute. </summary>
-        /// <param name="prefix"> The prefix. </param>
-        /// <param name="nextHop"> The next hop for the prefix. </param>
-        /// <param name="asPath"> The AS path for the prefix. </param>
-        /// <param name="originAsValidationState"> The origin AS change information for the prefix. </param>
-        /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that&apos;s listed in the AS path. </param>
-        /// <param name="trustAnchor"> The authority which holds the Route Origin Authorization record for the prefix, if any. </param>
-        /// <param name="receivedTimestamp"> The received timestamp associated with the prefix. </param>
+        /// <param name="prefix">
+        /// The prefix.
+        /// Serialized Name: PeeringReceivedRoute.prefix
+        /// </param>
+        /// <param name="nextHop">
+        /// The next hop for the prefix.
+        /// Serialized Name: PeeringReceivedRoute.nextHop
+        /// </param>
+        /// <param name="asPath">
+        /// The AS path for the prefix.
+        /// Serialized Name: PeeringReceivedRoute.asPath
+        /// </param>
+        /// <param name="originAsValidationState">
+        /// The origin AS change information for the prefix.
+        /// Serialized Name: PeeringReceivedRoute.originAsValidationState
+        /// </param>
+        /// <param name="rpkiValidationState">
+        /// The RPKI validation state for the prefix and origin AS that&apos;s listed in the AS path.
+        /// Serialized Name: PeeringReceivedRoute.rpkiValidationState
+        /// </param>
+        /// <param name="trustAnchor">
+        /// The authority which holds the Route Origin Authorization record for the prefix, if any.
+        /// Serialized Name: PeeringReceivedRoute.trustAnchor
+        /// </param>
+        /// <param name="receivedTimestamp">
+        /// The received timestamp associated with the prefix.
+        /// Serialized Name: PeeringReceivedRoute.receivedTimestamp
+        /// </param>
         internal PeeringReceivedRoute(string prefix, string nextHop, string asPath, string originAsValidationState, string rpkiValidationState, string trustAnchor, string receivedTimestamp)
         {
             Prefix = prefix;
@@ -34,19 +58,40 @@ namespace Azure.ResourceManager.Peering.Models
             ReceivedTimestamp = receivedTimestamp;
         }
 
-        /// <summary> The prefix. </summary>
+        /// <summary>
+        /// The prefix.
+        /// Serialized Name: PeeringReceivedRoute.prefix
+        /// </summary>
         public string Prefix { get; }
-        /// <summary> The next hop for the prefix. </summary>
+        /// <summary>
+        /// The next hop for the prefix.
+        /// Serialized Name: PeeringReceivedRoute.nextHop
+        /// </summary>
         public string NextHop { get; }
-        /// <summary> The AS path for the prefix. </summary>
+        /// <summary>
+        /// The AS path for the prefix.
+        /// Serialized Name: PeeringReceivedRoute.asPath
+        /// </summary>
         public string AsPath { get; }
-        /// <summary> The origin AS change information for the prefix. </summary>
+        /// <summary>
+        /// The origin AS change information for the prefix.
+        /// Serialized Name: PeeringReceivedRoute.originAsValidationState
+        /// </summary>
         public string OriginAsValidationState { get; }
-        /// <summary> The RPKI validation state for the prefix and origin AS that&apos;s listed in the AS path. </summary>
+        /// <summary>
+        /// The RPKI validation state for the prefix and origin AS that&apos;s listed in the AS path.
+        /// Serialized Name: PeeringReceivedRoute.rpkiValidationState
+        /// </summary>
         public string RpkiValidationState { get; }
-        /// <summary> The authority which holds the Route Origin Authorization record for the prefix, if any. </summary>
+        /// <summary>
+        /// The authority which holds the Route Origin Authorization record for the prefix, if any.
+        /// Serialized Name: PeeringReceivedRoute.trustAnchor
+        /// </summary>
         public string TrustAnchor { get; }
-        /// <summary> The received timestamp associated with the prefix. </summary>
+        /// <summary>
+        /// The received timestamp associated with the prefix.
+        /// Serialized Name: PeeringReceivedRoute.receivedTimestamp
+        /// </summary>
         public string ReceivedTimestamp { get; }
     }
 }

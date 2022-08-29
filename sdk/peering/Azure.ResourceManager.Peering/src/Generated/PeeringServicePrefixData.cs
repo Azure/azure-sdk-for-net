@@ -26,14 +26,35 @@ namespace Azure.ResourceManager.Peering
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The prefix from which your traffic originates. </param>
-        /// <param name="prefixValidationState"> The prefix validation state. </param>
-        /// <param name="learnedType"> The prefix learned type. </param>
-        /// <param name="errorMessage"> The error message for validation state. </param>
-        /// <param name="events"> The list of events for peering service prefix. </param>
-        /// <param name="peeringServicePrefixKey"> The peering service prefix key. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringServicePrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PrefixValidationState? prefixValidationState, LearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="prefix">
+        /// The prefix from which your traffic originates.
+        /// Serialized Name: PeeringServicePrefix.properties.prefix
+        /// </param>
+        /// <param name="prefixValidationState">
+        /// The prefix validation state
+        /// Serialized Name: PeeringServicePrefix.properties.prefixValidationState
+        /// </param>
+        /// <param name="learnedType">
+        /// The prefix learned type
+        /// Serialized Name: PeeringServicePrefix.properties.learnedType
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message for validation state
+        /// Serialized Name: PeeringServicePrefix.properties.errorMessage
+        /// </param>
+        /// <param name="events">
+        /// The list of events for peering service prefix
+        /// Serialized Name: PeeringServicePrefix.properties.events
+        /// </param>
+        /// <param name="peeringServicePrefixKey">
+        /// The peering service prefix key
+        /// Serialized Name: PeeringServicePrefix.properties.peeringServicePrefixKey
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        /// Serialized Name: PeeringServicePrefix.properties.provisioningState
+        /// </param>
+        internal PeeringServicePrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, PeeringLearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
@@ -44,19 +65,40 @@ namespace Azure.ResourceManager.Peering
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The prefix from which your traffic originates. </summary>
+        /// <summary>
+        /// The prefix from which your traffic originates.
+        /// Serialized Name: PeeringServicePrefix.properties.prefix
+        /// </summary>
         public string Prefix { get; set; }
-        /// <summary> The prefix validation state. </summary>
-        public PrefixValidationState? PrefixValidationState { get; }
-        /// <summary> The prefix learned type. </summary>
-        public LearnedType? LearnedType { get; }
-        /// <summary> The error message for validation state. </summary>
+        /// <summary>
+        /// The prefix validation state
+        /// Serialized Name: PeeringServicePrefix.properties.prefixValidationState
+        /// </summary>
+        public PeeringPrefixValidationState? PrefixValidationState { get; }
+        /// <summary>
+        /// The prefix learned type
+        /// Serialized Name: PeeringServicePrefix.properties.learnedType
+        /// </summary>
+        public PeeringLearnedType? LearnedType { get; }
+        /// <summary>
+        /// The error message for validation state
+        /// Serialized Name: PeeringServicePrefix.properties.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> The list of events for peering service prefix. </summary>
+        /// <summary>
+        /// The list of events for peering service prefix
+        /// Serialized Name: PeeringServicePrefix.properties.events
+        /// </summary>
         public IReadOnlyList<PeeringServicePrefixEvent> Events { get; }
-        /// <summary> The peering service prefix key. </summary>
+        /// <summary>
+        /// The peering service prefix key
+        /// Serialized Name: PeeringServicePrefix.properties.peeringServicePrefixKey
+        /// </summary>
         public string PeeringServicePrefixKey { get; set; }
-        /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// The provisioning state of the resource.
+        /// Serialized Name: PeeringServicePrefix.properties.provisioningState
+        /// </summary>
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The LookingGlassSourceType. </summary>
+    /// <summary>
+    /// The LookingGlassSourceType.
+    /// Serialized Name: LookingGlassSourceType
+    /// </summary>
     public readonly partial struct LookingGlassSourceType : IEquatable<LookingGlassSourceType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Peering.Models
         private const string EdgeSiteValue = "EdgeSite";
         private const string AzureRegionValue = "AzureRegion";
 
-        /// <summary> EdgeSite. </summary>
+        /// <summary>
+        /// EdgeSite
+        /// Serialized Name: LookingGlassSourceType.EdgeSite
+        /// </summary>
         public static LookingGlassSourceType EdgeSite { get; } = new LookingGlassSourceType(EdgeSiteValue);
-        /// <summary> AzureRegion. </summary>
+        /// <summary>
+        /// AzureRegion
+        /// Serialized Name: LookingGlassSourceType.AzureRegion
+        /// </summary>
         public static LookingGlassSourceType AzureRegion { get; } = new LookingGlassSourceType(AzureRegionValue);
         /// <summary> Determines if two <see cref="LookingGlassSourceType"/> values are the same. </summary>
         public static bool operator ==(LookingGlassSourceType left, LookingGlassSourceType right) => left.Equals(right);

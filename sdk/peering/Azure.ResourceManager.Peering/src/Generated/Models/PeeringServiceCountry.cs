@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The peering service country. </summary>
+    /// <summary>
+    /// The peering service country.
+    /// Serialized Name: PeeringServiceCountry
+    /// </summary>
     public partial class PeeringServiceCountry : ResourceData
     {
         /// <summary> Initializes a new instance of PeeringServiceCountry. </summary>

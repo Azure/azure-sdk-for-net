@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The properties that define a direct peering facility. </summary>
+    /// <summary>
+    /// The properties that define a direct peering facility.
+    /// Serialized Name: DirectPeeringFacility
+    /// </summary>
     public partial class DirectPeeringFacility
     {
         /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
-        /// <param name="address"> The address of the direct peering facility. </param>
-        /// <param name="directPeeringType"> The type of the direct peering. </param>
-        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
-        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
+        /// <param name="address">
+        /// The address of the direct peering facility.
+        /// Serialized Name: DirectPeeringFacility.address
+        /// </param>
+        /// <param name="directPeeringType">
+        /// The type of the direct peering.
+        /// Serialized Name: DirectPeeringFacility.directPeeringType
+        /// </param>
+        /// <param name="peeringDBFacilityId">
+        /// The PeeringDB.com ID of the facility.
+        /// Serialized Name: DirectPeeringFacility.peeringDBFacilityId
+        /// </param>
+        /// <param name="peeringDBFacilityLink">
+        /// The PeeringDB.com URL of the facility.
+        /// Serialized Name: DirectPeeringFacility.peeringDBFacilityLink
+        /// </param>
         internal DirectPeeringFacility(string address, DirectPeeringType? directPeeringType, int? peeringDBFacilityId, string peeringDBFacilityLink)
         {
             Address = address;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Peering.Models
             PeeringDBFacilityLink = peeringDBFacilityLink;
         }
 
-        /// <summary> The address of the direct peering facility. </summary>
+        /// <summary>
+        /// The address of the direct peering facility.
+        /// Serialized Name: DirectPeeringFacility.address
+        /// </summary>
         public string Address { get; set; }
-        /// <summary> The type of the direct peering. </summary>
+        /// <summary>
+        /// The type of the direct peering.
+        /// Serialized Name: DirectPeeringFacility.directPeeringType
+        /// </summary>
         public DirectPeeringType? DirectPeeringType { get; set; }
-        /// <summary> The PeeringDB.com ID of the facility. </summary>
+        /// <summary>
+        /// The PeeringDB.com ID of the facility.
+        /// Serialized Name: DirectPeeringFacility.peeringDBFacilityId
+        /// </summary>
         public int? PeeringDBFacilityId { get; set; }
-        /// <summary> The PeeringDB.com URL of the facility. </summary>
+        /// <summary>
+        /// The PeeringDB.com URL of the facility.
+        /// Serialized Name: DirectPeeringFacility.peeringDBFacilityLink
+        /// </summary>
         public string PeeringDBFacilityLink { get; set; }
     }
 }
