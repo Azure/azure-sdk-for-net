@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
-        public StorageAccountTests(bool isAsync) : base(isAsync)
+        public StorageAccountTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
             AssertStorageAccountEqual(account1, await account1.GetAsync());
 
+            // Make sure a second create returns immediately
+            var createRequest = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
+            VerifyAccountProperties(createRequest, true);
+
             //validate if created successfully
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
             VerifyAccountProperties(account2, true);
@@ -132,10 +136,18 @@ namespace Azure.ResourceManager.Storage.Tests
             //delete storage account
             await account1.DeleteAsync(WaitUntil.Completed);
 
+            // Delete an account which was just deleted
+            await account1.DeleteAsync(WaitUntil.Completed);
+
             //validate if deleted successfully
             Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName));
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await storageAccountCollection.GetAsync(accountName); });
             Assert.AreEqual(404, exception.Status);
+
+            // Delete an account which does not exist
+            var falseId = account1.Id.ToString().Replace(accountName, "missingaccount");
+            var missingStorage = new StorageAccountResource(Client, new ResourceIdentifier(falseId));
+            await missingStorage.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
