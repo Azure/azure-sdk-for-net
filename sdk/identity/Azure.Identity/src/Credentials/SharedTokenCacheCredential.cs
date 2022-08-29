@@ -111,7 +111,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, TenantIdResolver.AllTenants);
                 IAccount account = await GetAccountAsync(tenantId, async, cancellationToken).ConfigureAwait(false);
                 AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

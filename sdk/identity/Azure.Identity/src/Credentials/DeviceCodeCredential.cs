@@ -201,7 +201,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, TenantIdResolver.AllTenants);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);

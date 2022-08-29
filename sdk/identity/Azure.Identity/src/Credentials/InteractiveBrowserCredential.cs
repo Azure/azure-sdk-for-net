@@ -181,7 +181,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext, TenantIdResolver.AllTenants);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);
@@ -215,7 +215,7 @@ namespace Azure.Identity
                 _ => Prompt.NoPrompt
             };
 
-            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context);
+            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context, TenantIdResolver.AllTenants);
             AuthenticationResult result = await Client
                 .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, async, cancellationToken)
                 .ConfigureAwait(false);

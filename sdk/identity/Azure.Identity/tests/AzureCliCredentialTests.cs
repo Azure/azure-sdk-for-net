@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             var options = new AzureCliCredentialOptions { TenantId = explicitTenantId };
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };

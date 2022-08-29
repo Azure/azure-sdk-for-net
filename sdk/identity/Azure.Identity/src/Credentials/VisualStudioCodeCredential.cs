@@ -65,7 +65,7 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
-                var tenantId = TenantIdResolver.Resolve(tenant, requestContext);
+                var tenantId = TenantIdResolver.Resolve(tenant, requestContext, TenantIdResolver.AllTenants);
 
                 if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {

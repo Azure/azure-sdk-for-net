@@ -226,7 +226,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             var options = new InteractiveBrowserCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
             var credential = InstrumentClient(
                 new InteractiveBrowserCredential(

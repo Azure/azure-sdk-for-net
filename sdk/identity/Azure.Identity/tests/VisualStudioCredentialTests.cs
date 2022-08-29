@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
             var options = new VisualStudioCredentialOptions();
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
             var token = await credential.GetTokenAsync(context, default);
 

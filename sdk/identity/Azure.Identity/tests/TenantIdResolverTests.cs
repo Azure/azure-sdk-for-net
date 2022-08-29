@@ -61,7 +61,7 @@ namespace Azure.Identity.Tests
                         disableMultiTenantAuth.Value.ToString());
                 }
 
-                result = TenantIdResolver.Resolve(tenantId, context);
+                result = TenantIdResolver.Resolve(tenantId, context, TenantIdResolver.AllTenants);
                 Assert.AreEqual(expectedresult, result);
                 Assert.AreEqual(expectedEvents, messages);
             }

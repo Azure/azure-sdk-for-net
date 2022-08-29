@@ -91,7 +91,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             options = new OnBehalfOfCredentialOptions();
             var context = new TokenRequestContext(new[] {Scope}, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
                     TenantId,

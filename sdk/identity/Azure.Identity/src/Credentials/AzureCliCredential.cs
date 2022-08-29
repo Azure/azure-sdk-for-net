@@ -115,7 +115,7 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
-            string tenantId = TenantIdResolver.Resolve(_tenantId, context);
+            string tenantId = TenantIdResolver.Resolve(_tenantId, context, TenantIdResolver.AllTenants);
 
             ScopeUtilities.ValidateScope(resource);
 

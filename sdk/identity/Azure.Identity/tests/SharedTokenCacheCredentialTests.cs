@@ -601,7 +601,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             var options = new SharedTokenCacheCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
             mockPublicMsalClient.Accounts = new List<IAccount> { new MockAccount(expectedUsername, expectedTenantId) };
 
             var credential = InstrumentClient(new SharedTokenCacheCredential(TenantId, null, options, null, mockPublicMsalClient));

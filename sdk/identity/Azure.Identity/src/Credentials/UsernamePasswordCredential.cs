@@ -27,6 +27,7 @@ namespace Azure.Identity
         private readonly SecureString _password;
         private AuthenticationRecord _record;
         private readonly string _tenantId;
+        private readonly string[] _additionallyAllowedTenantIds;
         internal MsalPublicClient Client { get; }
 
         /// <summary>
@@ -92,6 +93,8 @@ namespace Azure.Identity
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as UsernamePasswordCredentialOptions)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -175,7 +178,7 @@ namespace Azure.Identity
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(UsernamePasswordCredential)}.{nameof(Authenticate)}", requestContext);
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
 
                 AuthenticationResult result = await Client
                     .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
@@ -198,7 +201,7 @@ namespace Azure.Identity
                 AuthenticationResult result;
                 if (_record != null)
                 {
-                    var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                    var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
                     try
                     {
                         result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, async, cancellationToken)

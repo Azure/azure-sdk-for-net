@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -25,6 +26,7 @@ namespace Azure.Identity
         private readonly MsalConfidentialClient _client;
         private readonly string _redirectUri;
         private readonly string _tenantId;
+        private readonly string[] _additionallyAllowedTenantIds;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -101,6 +103,8 @@ namespace Azure.Identity
                           clientSecret,
                           _redirectUri,
                           options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as AuthorizationCodeCredentialOptions)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -134,7 +138,7 @@ namespace Azure.Identity
             try
             {
                 AccessToken token;
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
 
                 if (_record is null)
                 {

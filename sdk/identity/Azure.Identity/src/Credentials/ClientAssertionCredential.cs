@@ -17,6 +17,8 @@ namespace Azure.Identity
     /// </summary>
     public class ClientAssertionCredential : TokenCredential
     {
+        private readonly string[] _additionallyAllowedTenantIds;
+
         internal string TenantId { get; }
         internal string ClientId { get; }
         internal MsalConfidentialClient Client { get; }
@@ -43,6 +45,8 @@ namespace Azure.Identity
             ClientId = clientId;
 
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -60,6 +64,8 @@ namespace Azure.Identity
             ClientId = clientId;
 
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
+
+            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -74,7 +80,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _additionallyAllowedTenantIds);
 
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
@@ -98,7 +104,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _additionallyAllowedTenantIds);
 
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 
