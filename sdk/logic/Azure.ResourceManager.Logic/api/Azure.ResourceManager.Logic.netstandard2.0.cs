@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Logic
     {
         public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType mapType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public System.BinaryData Content { get { throw null; } set { } }
+        public string Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
-        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountMapType MapType { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.Logic
     {
         public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public System.BinaryData Content { get { throw null; } set { } }
+        public string Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
-        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DocumentName { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.Logic.Models
         public ArtifactContentProperties() { }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } set { } }
-        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
     }
     public partial class ArtifactProperties
     {
@@ -1493,7 +1493,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class FlowEndpointIPAddress
     {
         public FlowEndpointIPAddress() { }
-        public System.Net.IPAddress Address { get { throw null; } set { } }
+        public string Address { get { throw null; } set { } }
     }
     public partial class FlowEndpoints
     {
@@ -2110,7 +2110,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class LogicApiResourcePolicies
     {
         internal LogicApiResourcePolicies() { }
-        public System.BinaryData Content { get { throw null; } }
+        public string Content { get { throw null; } }
         public string ContentLink { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class LogicJsonSchema
     {
         internal LogicJsonSchema() { }
-        public System.BinaryData Content { get { throw null; } }
+        public string Content { get { throw null; } }
         public string Title { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

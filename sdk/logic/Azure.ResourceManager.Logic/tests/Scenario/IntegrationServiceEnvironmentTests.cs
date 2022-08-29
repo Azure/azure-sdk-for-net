@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Logic.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-rest-api-specs/issues/20428")]
         public async Task IntegrationServiceEnvironment_E2E()
         {
             var _vnet = await CreateDefaultNetwork(_resourceGroup, Recording.GenerateAssetName("vnet"));
