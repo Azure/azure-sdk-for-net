@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Azure.Core;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
 {
@@ -110,11 +111,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                 EventsLateArrivalMaxDelayInSeconds = 5,
                 DataLocale = "en-US",
                 CompatibilityLevel = CompatibilityLevel.One0,
-                //Transformation = new StreamingJobTransformationData()
-                //{
-                //    StreamingUnits = 1,
-                //    Query = "Select Id, Name from inputtest"
-                //}
             };
             return data;
         }
@@ -131,7 +127,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         {
             var data = new StreamingJobInputData()
             {
-                Properties = new InputProperties()
+                Properties = new StreamInputProperties()
+                {
+                    Serialization = new CsvSerialization()
+                    {
+                        FieldDelimiter = ",",
+                        Encoding = StreamEncoding.UTF8
+                    },
+                    Datasource = new BlobStreamInputDataSource()
+                    {
+                        StorageAccounts =
+                        {
+                            new StorageAccount()
+                        {
+                            AccountKey = "$testAccountName$",
+                            AccountName = "myhditest0811hdistorage"
+                        }
+                        },
+                        Container = "differentContainer",
+                        PathPattern = "{date}/{time}",
+                        DateFormat = "yyyy/MM/dd",
+                        TimeFormat = "HH",
+                        SourcePartitionCount = 16
+                    }
+                }
             };
             return data;
         }
@@ -146,7 +165,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         }
         public static StreamingJobOutputData GetStreamingJobOutputData()
         {
-            return new StreamingJobOutputData();
+            return new StreamingJobOutputData()
+            {
+                Serialization = new CsvSerialization()
+                {
+                    FieldDelimiter = ",",
+                    Encoding = StreamEncoding.UTF8,
+                },
+                Datasource = new BlobOutputDataSource()
+                {
+                    StorageAccounts =
+                    {
+                        new StorageAccount()
+                        {
+                            AccountKey = "$testAccountName$",
+                            AccountName = "myhditest0811hdistorage"
+                        }
+                    },
+                    Container = "differentContainer",
+                    PathPattern = "{date}/{time}",
+                    DateFormat = "yyyy/MM/dd",
+                    TimeFormat = "HH"
+                }
+            };
         }
         #endregion
 
@@ -161,16 +202,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         {
             return new StreamingJobFunctionData()
             {
-                Properties = new FunctionProperties()
+                Properties = new ScalarFunctionProperties()
                 {
-                    FunctionPropertiesType = "Scalar",
-                    Binding = new FunctionBinding()
+                    Binding = new JavaScriptFunctionBinding()
                     {
-                        FunctionBindingType = "Microsoft.StreamAnalytics/JavascriptUdf"
+                        Script = @"function (x, y) { return x + y; }"
                     },
                     Output = new FunctionOutput()
                     {
                         DataType = "Any"
+                    },
+                    Inputs =
+                    {
+                        new FunctionInput()
+                        {
+                            DataType = @"nvarchar(max)",
+                            IsConfigurationParameter = null
+                        }
                     }
                 }
             };

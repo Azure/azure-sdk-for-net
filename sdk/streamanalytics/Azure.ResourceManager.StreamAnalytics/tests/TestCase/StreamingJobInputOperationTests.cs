@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             var jobInput1 = await CreateStreamingJobInputResourceAsync(Name);
             StreamingJobInputResource jobInput2 = await jobInput1.GetAsync();
 
-            //ResourceDataHelpers.AssertInput(jobInput1.Data, jobInput2.Data);
+            ResourceDataHelpers.AssertInput(jobInput1.Data, jobInput2.Data);
             //2.Delete
             await jobInput1.DeleteAsync(WaitUntil.Completed);
         }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="contentStoragePolicy"> Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. . </param>
         /// <param name="externals"> The storage account where the custom code artifacts are located. </param>
         /// <param name="cluster"> The cluster which streaming jobs will run on. </param>
-        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedIdentity identity, StreamAnalyticsSku sku, string jobId, string provisioningState, string jobState, JobType? jobType, OutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, OutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, string dataLocale, CompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<StreamingJobInputData> inputs, StreamingJobTransformationData transformation, IList<StreamingJobOutputData> outputs, IList<StreamingJobFunctionData> functions, ETag? etag, JobStorageAccount jobStorageAccount, ContentStoragePolicy? contentStoragePolicy, ExternalStorageAccount externals, WritableSubResource cluster) : base(id, name, resourceType, systemData, tags, location)
+        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedIdentity identity, StreamAnalyticsSku sku, string jobId, string provisioningState, string jobState, JobType? jobType, OutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, OutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, string dataLocale, CompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<StreamingJobInputData> inputs, StreamingJobTransformationData transformation, IList<StreamingJobOutputData> outputs, IList<StreamingJobFunctionData> functions, ETag? etag, JobStorageAccount jobStorageAccount, ContentStoragePolicy? contentStoragePolicy, ExternalStorageAccount externals, ClusterInfo cluster) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -149,15 +148,15 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> The storage account where the custom code artifacts are located. </summary>
         public ExternalStorageAccount Externals { get; set; }
         /// <summary> The cluster which streaming jobs will run on. </summary>
-        internal WritableSubResource Cluster { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier ClusterId
+        internal ClusterInfo Cluster { get; set; }
+        /// <summary> The resource id of cluster. </summary>
+        public string ClusterId
         {
             get => Cluster is null ? default : Cluster.Id;
             set
             {
                 if (Cluster is null)
-                    Cluster = new WritableSubResource();
+                    Cluster = new ClusterInfo();
                 Cluster.Id = value;
             }
         }

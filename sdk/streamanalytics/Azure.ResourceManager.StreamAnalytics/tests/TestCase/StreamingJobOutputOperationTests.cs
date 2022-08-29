@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             var output1 = await CreateStreamingJobOutputResourceAsync(Name);
             StreamingJobOutputResource output2 = await output1.GetAsync();
 
-            //ResourceDataHelpers.AssertOutput(output1.Data, output2.Data);
+            ResourceDataHelpers.AssertOutput(output1.Data, output2.Data);
             //2.Delete
             await output1.DeleteAsync(WaitUntil.Completed);
         }

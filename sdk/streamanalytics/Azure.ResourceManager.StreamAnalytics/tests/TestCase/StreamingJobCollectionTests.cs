@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             var input = ResourceDataHelpers.GetStreamingJobData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             StreamingJobResource job1 = lro.Value;
-            //Assert.AreEqual(name, job1.Data.Name);
+            Assert.AreEqual(name, job1.Data.Name);
             //2.Get
             StreamingJobResource job2 = await container.GetAsync(name);
-            //ResourceDataHelpers.AssertJob(job1.Data, job2.Data);
+            ResourceDataHelpers.AssertJob(job1.Data, job2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);

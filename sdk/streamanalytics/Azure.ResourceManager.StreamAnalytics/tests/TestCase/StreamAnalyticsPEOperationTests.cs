@@ -13,9 +13,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
 {
-    public class StreamAnalyticsPrivateEndPointOperationTests : StreamAnalyticsManagementTestBase
+    public class StreamAnalyticsPEOperationTests : StreamAnalyticsManagementTestBase
     {
-        public StreamAnalyticsPrivateEndPointOperationTests(bool isAsync)
+        public StreamAnalyticsPEOperationTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
         }
 
         [TestCase]
-        public async Task StreamAnalyticsPrivateEndpointOperationApiTests()
+        public async Task PrivateEndpointOperationApiTests()
         {
             //1.Get
             var Name = Recording.GenerateAssetName("testCluser-");
             var endpoint1 = await CreateStreamAnalyticsPrivateEndpointResourceAsync(Name);
             StreamAnalyticsPrivateEndpointResource endpoint2 = await endpoint1.GetAsync();
 
-            //ResourceDataHelpers.AssertEndPoint(endpoint1.Data, endpoint2.Data);
+            ResourceDataHelpers.AssertEndPoint(endpoint1.Data, endpoint2.Data);
             //2.Delete
             await endpoint1.DeleteAsync(WaitUntil.Completed);
         }

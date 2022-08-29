@@ -22,8 +22,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsDefined(IsConfigurationParameter))
             {
-                writer.WritePropertyName("isConfigurationParameter");
-                writer.WriteBooleanValue(IsConfigurationParameter.Value);
+                if (IsConfigurationParameter != null)
+                {
+                    writer.WritePropertyName("isConfigurationParameter");
+                    writer.WriteBooleanValue(IsConfigurationParameter.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isConfigurationParameter");
+                }
             }
             writer.WriteEndObject();
         }
@@ -31,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static FunctionInput DeserializeFunctionInput(JsonElement element)
         {
             Optional<string> dataType = default;
-            Optional<bool> isConfigurationParameter = default;
+            Optional<bool?> isConfigurationParameter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataType"))
@@ -43,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        isConfigurationParameter = null;
                         continue;
                     }
                     isConfigurationParameter = property.Value.GetBoolean();

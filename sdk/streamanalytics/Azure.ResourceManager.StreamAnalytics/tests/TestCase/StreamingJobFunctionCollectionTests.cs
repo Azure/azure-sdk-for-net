@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             var input = ResourceDataHelpers.GetStreamingJobFunctionData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             StreamingJobFunctionResource function1 = lro.Value;
-            //Assert.AreEqual(name, function1.Data.Name);
+            Assert.AreEqual(name, function1.Data.Name);
             //2.Get
             StreamingJobFunctionResource function2 = await container.GetAsync(name);
-            //ResourceDataHelpers.AssertFunction(function1.Data, function2.Data);
+            ResourceDataHelpers.AssertFunction(function1.Data, function2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
