@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -25,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static readonly Meter s_myMeter = new("AttachStatsBeatMeter", "1.0");
 
-        private static string s_statsBeat_ConnectionString;
+        internal static string s_statsBeat_ConnectionString;
 
         private static string s_resourceProviderId;
 
@@ -40,6 +42,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static string s_customer_Ikey;
 
         internal static MeterProvider s_attachStatsBeatMeterProvider;
+
+        internal static Regex s_endpoint_pattern = new("^https?://(?:www\\.)?([^/.-]+)");
+
+        internal static readonly HashSet<string> EU_Endpoints = new()
+        {
+            "westeurope",
+            "northeurope",
+            "francecentral",
+            "francesouth",
+            "germanywestcentral",
+            "norwayeast",
+            "norwaywest",
+            "swedencentral",
+            "switzerlandnorth",
+            "switzerlandwest",
+        };
 
         private static string GetOS()
         {
@@ -126,7 +144,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static void SetStatsBeatConnectionStringAndCustomerIkey(string connectionString)
+        internal static void SetStatsBeatConnectionStringAndCustomerIkey(string connectionString)
         {
             if (s_statsBeat_ConnectionString == null)
             {
@@ -134,8 +152,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 s_customer_Ikey = instrumentationKey;
 
-                // TODO: adjust based on customer's endpoint EU vs Non-EU.
-                s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
+                var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
+                if (patternMatch.Success)
+                {
+                    var endpoint = patternMatch.Groups[1].Value;
+                    if (EU_Endpoints.Contains(endpoint))
+                    {
+                        s_statsBeat_ConnectionString = StatsBeat_ConnectionString_EU;
+                    }
+                    else
+                    {
+                        s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
+                    }
+                }
             }
         }
 
