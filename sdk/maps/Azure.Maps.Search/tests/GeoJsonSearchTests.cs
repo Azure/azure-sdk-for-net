@@ -23,10 +23,10 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanDescribeSearchResultReferencedGeometry()
         {
-            #region Snippet:GetPolygons
             // Get Client
             var client = CreateClient();
 
+            #region Snippet:GetPolygons
             // Get Addresses
             var searchResult = await client.SearchAddressAsync("Seattle");
 
@@ -168,9 +168,9 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanSearchInsideGeometryCollection()
         {
-            #region Snippet:SearchInsideGeometry
             var client = CreateClient();
 
+            #region Snippet:SearchInsideGeometry
             var sfPolygon = new GeoPolygon(new[]
             {
                 new GeoPosition(-122.43576049804686, 37.752415234354402),

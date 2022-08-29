@@ -19,8 +19,8 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanSearchAddress()
         {
-            #region Snippet:SearchAddress
             var client = CreateClient();
+            #region Snippet:SearchAddress
             var searchResult = await client.SearchAddressAsync("Seattle");
             #endregion
             Assert.AreEqual("Washington", searchResult.Value.Results[0].Address.CountrySubdivisionName);
@@ -81,8 +81,8 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanSearchStructuredAddress()
         {
-            #region Snippet:SearchStructuredAddress
             var client = CreateClient();
+            #region Snippet:SearchStructuredAddress
             var address = new StructuredAddress {
                 CountryCode = "US",
                 StreetNumber = "15127",

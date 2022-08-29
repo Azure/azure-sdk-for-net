@@ -39,8 +39,8 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanResolveCoordinatesToCrossStreetAddress()
         {
-            #region Snippet:ReverseSearchCrossStreetAddress
             var client = CreateClient();
+            #region Snippet:ReverseSearchCrossStreetAddress
             var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
                 coordinates = new GeoPosition(121.0, 24.0),
                 Language = "en"

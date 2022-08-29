@@ -29,8 +29,8 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanSearchFuzzyBiasedAroundCoordinates()
         {
-            #region Snippet:FuzzySearch
             var client = CreateClient();
+            #region Snippet:FuzzySearch
             var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
                 Coordinates = new GeoPosition(121.56, 25.04),
                 Language = "en"
