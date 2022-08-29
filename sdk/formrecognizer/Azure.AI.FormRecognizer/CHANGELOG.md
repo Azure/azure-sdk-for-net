@@ -7,7 +7,8 @@
 
 ### Breaking Changes
 - The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
-- Moved property `DocumentModelOperationDetails.Result` to each of its new derived classes. The property can't be accessed from the base class anymore.
+- Renames classes `DocumentModelOperationDetails` and `DocumentModelOperationSummary` to `OperationDetails` and `OperationSummary`, respectively.
+- Moved property `Result` in `DocumentModelOperationDetails` (now called `OperationDetails`) to each of its new derived classes. The property can't be accessed from the base class anymore.
 - Renamed class `DocTypeInfo` to `DocumentTypeDetails`.
 - Renamed property `Offset` to `Index` in the `DocumentSpan` class.
 - Renamed property `DocType` to `DocumentType` in the `AnalyzedDocument` class.

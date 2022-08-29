@@ -259,7 +259,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateOperationSummary(modelOperationFromList.FirstOrDefault());
 
-            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
+            OperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
             ValidateOperationDetails(operationDetails);
         }
@@ -279,14 +279,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
-            DocumentModelOperationSummary operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
+            OperationSummary operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(op => op.OperationId == operation.Id);
 
             Assert.NotNull(operationSummary);
 
             CollectionAssert.AreEquivalent(TestingTags, operationSummary.Tags);
 
-            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operation.Id);
+            OperationDetails operationDetails = await client.GetOperationAsync(operation.Id);
 
             CollectionAssert.AreEquivalent(TestingTags, operationDetails.Tags);
 
@@ -468,7 +468,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion Composed model
 
-        private void ValidateOperationSummary(DocumentModelOperationSummary operationSummary)
+        private void ValidateOperationSummary(OperationSummary operationSummary)
         {
             Assert.NotNull(operationSummary.OperationId);
             Assert.AreNotEqual(default(DateTimeOffset), operationSummary.CreatedOn);
@@ -482,7 +482,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
-        private void ValidateOperationDetails(DocumentModelOperationDetails operationDetails)
+        private void ValidateOperationDetails(OperationDetails operationDetails)
         {
             Assert.NotNull(operationDetails.OperationId);
             Assert.AreNotEqual(default(DateTimeOffset), operationDetails.CreatedOn);
