@@ -26,7 +26,8 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: privatedns
+    SdkType: mgmtclient
+    ServiceDirectory: search
     ArtifactName: packages
     Artifacts:
     - name: Azure.ResourceManager.Search
