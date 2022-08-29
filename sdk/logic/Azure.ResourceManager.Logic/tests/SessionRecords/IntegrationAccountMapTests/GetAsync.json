@@ -60,7 +60,7 @@
         "location": "centralus",
         "properties": {
           "mapType": "Xslt30",
-          "content": "\u003Cxsl:stylesheet xmlns:xsl=\u0027http://www.w3.org/1999/XSL/Transform\u0027 xmlns:xs=\u0027http://www.w3.org/2001/XMLSchema\u0027 version=\u00273.0\u0027\u003E\r\n  \u003Cxsl:output method=\u0027text\u0027/\u003E\r\n  \u003Cxsl:template match=\u0027/\u0027\u003E\r\n    \u003Cxsl:value-of select=\u0027company/employee/name\u0027/\u003E\r\n    \u003Cxsl:variable name=\u0027test\u0027\u003E\r\n      \u003Cxsl:text\u003Ecompany/employee/name\u003C/xsl:text\u003E\r\n    \u003C/xsl:variable\u003E\r\n    \u003Cxsl:evaluate xpath=\u0027$test\u0027/\u003E\r\n  \u003C/xsl:template\u003E\r\n\u003C/xsl:stylesheet\u003E\r\n",
+          "content": "\u003Cxsl:stylesheet xmlns:xsl=\u0027http://www.w3.org/1999/XSL/Transform\u0027 xmlns:xs=\u0027http://www.w3.org/2001/XMLSchema\u0027 version=\u00273.0\u0027\u003E\n  \u003Cxsl:output method=\u0027text\u0027/\u003E\n  \u003Cxsl:template match=\u0027/\u0027\u003E\n    \u003Cxsl:value-of select=\u0027company/employee/name\u0027/\u003E\n    \u003Cxsl:variable name=\u0027test\u0027\u003E\n      \u003Cxsl:text\u003Ecompany/employee/name\u003C/xsl:text\u003E\n    \u003C/xsl:variable\u003E\n    \u003Cxsl:evaluate xpath=\u0027$test\u0027/\u003E\n  \u003C/xsl:template\u003E\n\u003C/xsl:stylesheet\u003E\n",
           "contentType": "application/xml"
         }
       },
