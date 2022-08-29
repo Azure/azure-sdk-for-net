@@ -99,50 +99,50 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("Addresses"));
             Assert.True(document.Fields.ContainsKey("CompanyNames"));
 
-            var contactNames = document.Fields["ContactNames"].AsList();
+            var contactNames = document.Fields["ContactNames"].Value.AsList();
             Assert.AreEqual(1, contactNames.Count);
             Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().Content);
 
-            var contactNamesDict = contactNames.FirstOrDefault().AsDictionary();
+            var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
 
             Assert.True(contactNamesDict.ContainsKey("FirstName"));
-            Assert.AreEqual("Avery", contactNamesDict["FirstName"].AsString());
+            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
 
             Assert.True(contactNamesDict.ContainsKey("LastName"));
-            Assert.AreEqual("Smith", contactNamesDict["LastName"].AsString());
+            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
 
-            var jobTitles = document.Fields["JobTitles"].AsList();
+            var jobTitles = document.Fields["JobTitles"].Value.AsList();
             Assert.AreEqual(1, jobTitles.Count);
-            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().AsString());
+            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
 
-            var departments = document.Fields["Departments"].AsList();
+            var departments = document.Fields["Departments"].Value.AsList();
             Assert.AreEqual(1, departments.Count);
-            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().AsString());
+            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
 
-            var emails = document.Fields["Emails"].AsList();
+            var emails = document.Fields["Emails"].Value.AsList();
             Assert.AreEqual(1, emails.Count);
-            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().AsString());
+            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
 
-            var websites = document.Fields["Websites"].AsList();
+            var websites = document.Fields["Websites"].Value.AsList();
             Assert.AreEqual(1, websites.Count);
-            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().AsString());
+            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
 
-            var mobilePhones = document.Fields["MobilePhones"].AsList();
+            var mobilePhones = document.Fields["MobilePhones"].Value.AsList();
             Assert.AreEqual(1, mobilePhones.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, mobilePhones.FirstOrDefault().ValueType);
+            Assert.AreEqual(DocumentFieldType.PhoneNumber, mobilePhones.FirstOrDefault().Value.FieldType);
 
-            var otherPhones = document.Fields["WorkPhones"].AsList();
+            var otherPhones = document.Fields["WorkPhones"].Value.AsList();
             Assert.AreEqual(1, otherPhones.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, otherPhones.FirstOrDefault().ValueType);
+            Assert.AreEqual(DocumentFieldType.PhoneNumber, otherPhones.FirstOrDefault().Value.FieldType);
 
-            var faxes = document.Fields["Faxes"].AsList();
+            var faxes = document.Fields["Faxes"].Value.AsList();
             Assert.AreEqual(1, faxes.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, faxes.FirstOrDefault().ValueType);
+            Assert.AreEqual(DocumentFieldType.PhoneNumber, faxes.FirstOrDefault().Value.FieldType);
 
-            var addresses = document.Fields["Addresses"].AsList();
+            var addresses = document.Fields["Addresses"].Value.AsList();
             Assert.AreEqual(1, addresses.Count);
 
-            AddressValue address = addresses.First().AsAddress();
+            AddressValue address = addresses.First().Value.AsAddress();
             Assert.AreEqual("London", address.City);
             Assert.Null(address.CountryRegion);
             Assert.AreEqual("2", address.HouseNumber);
@@ -152,9 +152,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Null(address.State);
             Assert.AreEqual("2 Kingdom Street", address.StreetAddress);
 
-            var companyNames = document.Fields["CompanyNames"].AsList();
+            var companyNames = document.Fields["CompanyNames"].Value.AsList();
             Assert.AreEqual(1, companyNames.Count);
-            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().AsString());
+            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
         }
 
         [RecordedTest]
@@ -200,9 +200,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 DocumentField sampleField = analyzedDocument.Fields["Emails"];
 
-                Assert.AreEqual(DocumentFieldType.List, sampleField.ValueType);
+                Assert.AreEqual(DocumentFieldType.List, sampleField.Value.FieldType);
 
-                var field = sampleField.AsList().Single();
+                var field = sampleField.Value.AsList().Single();
 
                 if (documentIndex == 0)
                 {
@@ -267,7 +267,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(document.Fields);
             var name = "PurchaseOrderNumber";
             Assert.IsNotNull(document.Fields[name]);
-            Assert.AreEqual(DocumentFieldType.String, document.Fields[name].ValueType);
+            Assert.AreEqual(DocumentFieldType.String, document.Fields[name].Value.FieldType);
             Assert.AreEqual("948284", document.Fields[name].Content);
         }
 
@@ -303,8 +303,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(document.Fields);
             var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(document.Fields[name]);
-            Assert.AreEqual(DocumentFieldType.SelectionMark, document.Fields[name].ValueType);
-            Assert.AreEqual(SelectionMarkState.Selected, document.Fields[name].AsSelectionMarkState());
+            Assert.AreEqual(DocumentFieldType.SelectionMark, document.Fields[name].Value.FieldType);
+            Assert.AreEqual(SelectionMarkState.Selected, document.Fields[name].Value.AsSelectionMarkState());
         }
 
         [RecordedTest]
@@ -343,10 +343,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             // Check some values to make sure that fields from both pages are being populated.
 
-            Assert.AreEqual("Jamie@southridgevideo.com", document.Fields["Contact"].AsString());
-            Assert.AreEqual("Southridge Video", document.Fields["CompanyName"].AsString());
-            Assert.AreEqual("$1,500", document.Fields["Gold"].AsString());
-            Assert.AreEqual("$1,000", document.Fields["Bronze"].AsString());
+            Assert.AreEqual("Jamie@southridgevideo.com", document.Fields["Contact"].Value.AsString());
+            Assert.AreEqual("Southridge Video", document.Fields["CompanyName"].Value.AsString());
+            Assert.AreEqual("$1,500", document.Fields["Gold"].Value.AsString());
+            Assert.AreEqual("$1,000", document.Fields["Bronze"].Value.AsString());
 
             Assert.AreEqual(2, result.Pages.Count);
 
@@ -441,7 +441,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The missing field is returned with its value set to null.
 
             Assert.IsTrue(fields.Values.Any(field =>
-                field.ValueType == DocumentFieldType.String && field.AsString() == null));
+                field.Value.FieldType == DocumentFieldType.String && field.Value.AsString() == null));
         }
 
         [RecordedTest]
@@ -718,7 +718,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("Region"));
             Assert.True(document.Fields.ContainsKey("Sex"));
 
-            AddressValue address = document.Fields["Address"].AsAddress();
+            AddressValue address = document.Fields["Address"].Value.AsAddress();
             Assert.AreEqual("YOUR CITY", address.City);
             Assert.Null(address.CountryRegion);
             Assert.Null(address.HouseNumber);
@@ -728,14 +728,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("WA", address.State);
             Assert.AreEqual("123 STREET ADDRESS", address.StreetAddress);
 
-            Assert.That(document.Fields["CountryRegion"].AsCountryRegion(), Is.EqualTo("USA"));
+            Assert.That(document.Fields["CountryRegion"].Value.AsCountryRegion(), Is.EqualTo("USA"));
 
-            var dateOfBirth = document.Fields["DateOfBirth"].AsDate();
+            var dateOfBirth = document.Fields["DateOfBirth"].Value.AsDate();
             Assert.AreEqual(6, dateOfBirth.Day);
             Assert.AreEqual(1, dateOfBirth.Month);
             Assert.AreEqual(1958, dateOfBirth.Year);
 
-            var dateOfExpiration = document.Fields["DateOfExpiration"].AsDate();
+            var dateOfExpiration = document.Fields["DateOfExpiration"].Value.AsDate();
             Assert.AreEqual(12, dateOfExpiration.Day);
             Assert.AreEqual(8, dateOfExpiration.Month);
             Assert.AreEqual(2020, dateOfExpiration.Year);
@@ -814,9 +814,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("VendorAddressRecipient"));
             Assert.True(document.Fields.ContainsKey("VendorName"));
 
-            ValidateCurrencyValue(document.Fields["AmountDue"].AsCurrency(), 610.00, "$");
+            ValidateCurrencyValue(document.Fields["AmountDue"].Value.AsCurrency(), 610.00, "$");
 
-            AddressValue billingAddress = document.Fields["BillingAddress"].AsAddress();
+            AddressValue billingAddress = document.Fields["BillingAddress"].Value.AsAddress();
             Assert.AreEqual("Redmond", billingAddress.City);
             Assert.Null(billingAddress.CountryRegion);
             Assert.AreEqual("123", billingAddress.HouseNumber);
@@ -826,7 +826,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("WA", billingAddress.State);
             Assert.AreEqual("123 Bill St", billingAddress.StreetAddress);
 
-            AddressValue customerAddress = document.Fields["CustomerAddress"].AsAddress();
+            AddressValue customerAddress = document.Fields["CustomerAddress"].Value.AsAddress();
             Assert.AreEqual("Redmond", customerAddress.City);
             Assert.Null(customerAddress.CountryRegion);
             Assert.AreEqual("123", customerAddress.HouseNumber);
@@ -836,27 +836,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("WA", customerAddress.State);
             Assert.AreEqual("123 Other St", customerAddress.StreetAddress);
 
-            Assert.AreEqual("Microsoft Finance", document.Fields["BillingAddressRecipient"].AsString());
-            Assert.AreEqual("Microsoft Corp", document.Fields["CustomerAddressRecipient"].AsString());
-            Assert.AreEqual("CID-12345", document.Fields["CustomerId"].AsString());
-            Assert.AreEqual("MICROSOFT CORPORATION", document.Fields["CustomerName"].AsString());
+            Assert.AreEqual("Microsoft Finance", document.Fields["BillingAddressRecipient"].Value.AsString());
+            Assert.AreEqual("Microsoft Corp", document.Fields["CustomerAddressRecipient"].Value.AsString());
+            Assert.AreEqual("CID-12345", document.Fields["CustomerId"].Value.AsString());
+            Assert.AreEqual("MICROSOFT CORPORATION", document.Fields["CustomerName"].Value.AsString());
 
-            var dueDate = document.Fields["DueDate"].AsDate();
+            var dueDate = document.Fields["DueDate"].Value.AsDate();
             Assert.AreEqual(15, dueDate.Day);
             Assert.AreEqual(12, dueDate.Month);
             Assert.AreEqual(2019, dueDate.Year);
 
-            var invoiceDate = document.Fields["InvoiceDate"].AsDate();
+            var invoiceDate = document.Fields["InvoiceDate"].Value.AsDate();
             Assert.AreEqual(15, invoiceDate.Day);
             Assert.AreEqual(11, invoiceDate.Month);
             Assert.AreEqual(2019, invoiceDate.Year);
 
-            Assert.AreEqual("INV-100", document.Fields["InvoiceId"].AsString());
-            ValidateCurrencyValue(document.Fields["InvoiceTotal"].AsCurrency(), 110.00, "$");
-            ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].AsCurrency(), 500.00, "$");
-            Assert.AreEqual("PO-3333", document.Fields["PurchaseOrder"].AsString());
+            Assert.AreEqual("INV-100", document.Fields["InvoiceId"].Value.AsString());
+            ValidateCurrencyValue(document.Fields["InvoiceTotal"].Value.AsCurrency(), 110.00, "$");
+            ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].Value.AsCurrency(), 500.00, "$");
+            Assert.AreEqual("PO-3333", document.Fields["PurchaseOrder"].Value.AsString());
 
-            AddressValue remittanceAddress = document.Fields["RemittanceAddress"].AsAddress();
+            AddressValue remittanceAddress = document.Fields["RemittanceAddress"].Value.AsAddress();
             Assert.AreEqual("New York", remittanceAddress.City);
             Assert.Null(remittanceAddress.CountryRegion);
             Assert.AreEqual("123", remittanceAddress.HouseNumber);
@@ -866,9 +866,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("NY", remittanceAddress.State);
             Assert.AreEqual("123 Remit St", remittanceAddress.StreetAddress);
 
-            Assert.AreEqual("Contoso Billing", document.Fields["RemittanceAddressRecipient"].AsString());
+            Assert.AreEqual("Contoso Billing", document.Fields["RemittanceAddressRecipient"].Value.AsString());
 
-            AddressValue serviceAddress = document.Fields["ServiceAddress"].AsAddress();
+            AddressValue serviceAddress = document.Fields["ServiceAddress"].Value.AsAddress();
             Assert.AreEqual("Redmond", serviceAddress.City);
             Assert.Null(serviceAddress.CountryRegion);
             Assert.AreEqual("123", serviceAddress.HouseNumber);
@@ -878,19 +878,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("WA", serviceAddress.State);
             Assert.AreEqual("123 Service St", serviceAddress.StreetAddress);
 
-            Assert.AreEqual("Microsoft Services", document.Fields["ServiceAddressRecipient"].AsString());
+            Assert.AreEqual("Microsoft Services", document.Fields["ServiceAddressRecipient"].Value.AsString());
 
-            var serviceEndDate = document.Fields["ServiceEndDate"].AsDate();
+            var serviceEndDate = document.Fields["ServiceEndDate"].Value.AsDate();
             Assert.AreEqual(14, serviceEndDate.Day);
             Assert.AreEqual(11, serviceEndDate.Month);
             Assert.AreEqual(2019, serviceEndDate.Year);
 
-            var serviceStartDate = document.Fields["ServiceStartDate"].AsDate();
+            var serviceStartDate = document.Fields["ServiceStartDate"].Value.AsDate();
             Assert.AreEqual(14, serviceStartDate.Day);
             Assert.AreEqual(10, serviceStartDate.Month);
             Assert.AreEqual(2019, serviceStartDate.Year);
 
-            AddressValue shippingAddress = document.Fields["ShippingAddress"].AsAddress();
+            AddressValue shippingAddress = document.Fields["ShippingAddress"].Value.AsAddress();
             Assert.AreEqual("Redmond", shippingAddress.City);
             Assert.Null(shippingAddress.CountryRegion);
             Assert.AreEqual("123", shippingAddress.HouseNumber);
@@ -900,11 +900,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("WA", shippingAddress.State);
             Assert.AreEqual("123 Ship St", shippingAddress.StreetAddress);
 
-            Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].AsString());
-            ValidateCurrencyValue(document.Fields["SubTotal"].AsCurrency(), 100.00, "$");
-            ValidateCurrencyValue(document.Fields["TotalTax"].AsCurrency(), 10.00, "$");
+            Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].Value.AsString());
+            ValidateCurrencyValue(document.Fields["SubTotal"].Value.AsCurrency(), 100.00, "$");
+            ValidateCurrencyValue(document.Fields["TotalTax"].Value.AsCurrency(), 10.00, "$");
 
-            AddressValue vendorAddress = document.Fields["VendorAddress"].AsAddress();
+            AddressValue vendorAddress = document.Fields["VendorAddress"].Value.AsAddress();
             Assert.AreEqual("New York", vendorAddress.City);
             Assert.Null(vendorAddress.CountryRegion);
             Assert.AreEqual("123", vendorAddress.HouseNumber);
@@ -914,25 +914,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("NY", vendorAddress.State);
             Assert.AreEqual("123 456th St", vendorAddress.StreetAddress);
 
-            Assert.AreEqual("Contoso Headquarters", document.Fields["VendorAddressRecipient"].AsString());
-            Assert.AreEqual("CONTOSO LTD.", document.Fields["VendorName"].AsString());
+            Assert.AreEqual("Contoso Headquarters", document.Fields["VendorAddressRecipient"].Value.AsString());
+            Assert.AreEqual("CONTOSO LTD.", document.Fields["VendorName"].Value.AsString());
 
-            var expectedItems = new List<(double Amount, DateTime Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice)>()
+            var expectedItems = new List<(double Amount, DateTimeOffset Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice)>()
             {
-                (60f, DateTime.Parse("2021-03-04 00:00:00"), "Consulting Services", "A123", 2, "hours", 30),
-                (30f, DateTime.Parse("2021-03-05 00:00:00"), "Document Fee", "B456", 3, null, 10),
-                (10f, DateTime.Parse("2021-03-06 00:00:00"), "Printing Fee", "C789", 10, "pages", 1)
+                (60f, DateTimeOffset.Parse("2021-03-04 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30),
+                (30f, DateTimeOffset.Parse("2021-03-05 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10),
+                (10f, DateTimeOffset.Parse("2021-03-06 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1)
             };
 
             // Include a bit of tolerance when comparing double types.
 
-            var items = document.Fields["Items"].AsList();
+            var items = document.Fields["Items"].Value.AsList();
 
             Assert.AreEqual(expectedItems.Count, items.Count);
 
             for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
-                var receiptItemInfo = items[itemIndex].AsDictionary();
+                var receiptItemInfo = items[itemIndex].Value.AsDictionary();
 
                 receiptItemInfo.TryGetValue("Amount", out var amountField);
                 receiptItemInfo.TryGetValue("Date", out var dateField);
@@ -942,15 +942,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 receiptItemInfo.TryGetValue("UnitPrice", out var unitPricefield);
                 receiptItemInfo.TryGetValue("Unit", out var unitfield);
 
-                CurrencyValue amount = amountField.AsCurrency();
-                string description = descriptionField.AsString();
-                string productCode = productCodeField.AsString();
-                double quantity = quantityField.AsDouble();
-                CurrencyValue unitPrice = unitPricefield.AsCurrency();
-                string unit = unitfield?.AsString();
+                CurrencyValue amount = amountField.Value.AsCurrency();
+                string description = descriptionField.Value.AsString();
+                string productCode = productCodeField.Value.AsString();
+                double quantity = quantityField.Value.AsDouble();
+                CurrencyValue unitPrice = unitPricefield.Value.AsCurrency();
+                string unit = unitfield?.Value.AsString();
 
                 Assert.IsNotNull(dateField);
-                DateTimeOffset date = dateField.AsDate();
+                DateTimeOffset date = dateField.Value.AsDate();
 
                 var expectedItem = expectedItems[itemIndex];
 
@@ -1011,16 +1011,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentField vendorName = document.Fields["VendorName"];
             Assert.AreEqual(2, vendorName.BoundingRegions.First().PageNumber);
-            Assert.AreEqual("Southridge Video", vendorName.AsString());
+            Assert.AreEqual("Southridge Video", vendorName.Value.AsString());
 
             DocumentField addressRecipient = document.Fields["RemittanceAddressRecipient"];
             Assert.AreEqual(1, addressRecipient.BoundingRegions.First().PageNumber);
-            Assert.AreEqual("Contoso Ltd.", addressRecipient.AsString());
+            Assert.AreEqual("Contoso Ltd.", addressRecipient.Value.AsString());
 
             DocumentField addressField = document.Fields["RemittanceAddress"];
             Assert.AreEqual(1, addressField.BoundingRegions.First().PageNumber);
 
-            AddressValue address = addressField.AsAddress();
+            AddressValue address = addressField.Value.AsAddress();
             Assert.AreEqual("Birch", address.City);
             Assert.Null(address.CountryRegion);
             Assert.AreEqual("2345", address.HouseNumber);
@@ -1324,9 +1324,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("TotalTax"));
             Assert.True(document.Fields.ContainsKey("Total"));
 
-            Assert.AreEqual("Contoso", document.Fields["MerchantName"].AsString());
+            Assert.AreEqual("Contoso", document.Fields["MerchantName"].Value.AsString());
 
-            AddressValue merchantAddress = document.Fields["MerchantAddress"].AsAddress();
+            AddressValue merchantAddress = document.Fields["MerchantAddress"].Value.AsAddress();
             Assert.AreEqual("Redmond", merchantAddress.City);
             Assert.Null(merchantAddress.CountryRegion);
             Assert.AreEqual("123", merchantAddress.HouseNumber);
@@ -1338,8 +1338,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual("123-456-7890", document.Fields["MerchantPhoneNumber"].Content);
 
-            var date = document.Fields["TransactionDate"].AsDate();
-            var time = document.Fields["TransactionTime"].AsTime();
+            var date = document.Fields["TransactionDate"].Value.AsDate();
+            var time = document.Fields["TransactionTime"].Value.AsTime();
 
             Assert.AreEqual(10, date.Day);
             Assert.AreEqual(6, date.Month);
@@ -1357,23 +1357,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             // Include a bit of tolerance when comparing double types.
 
-            var items = document.Fields["Items"].AsList();
+            var items = document.Fields["Items"].Value.AsList();
 
             Assert.AreEqual(expectedItems.Count, items.Count);
 
             for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
-                var receiptItemInfo = items[itemIndex].AsDictionary();
+                var receiptItemInfo = items[itemIndex].Value.AsDictionary();
 
                 receiptItemInfo.TryGetValue("Quantity", out var quantityField);
                 receiptItemInfo.TryGetValue("Description", out var descriptionField);
                 receiptItemInfo.TryGetValue("Price", out var priceField);
                 receiptItemInfo.TryGetValue("TotalPrice", out var totalPriceField);
 
-                var quantity = quantityField == null ? null : (double?)quantityField.AsDouble();
-                var description = descriptionField == null ? null : descriptionField.AsString();
-                var price = priceField == null ? null : (double?)priceField.AsDouble();
-                var totalPrice = totalPriceField == null ? null : (double?)totalPriceField.AsDouble();
+                var quantity = quantityField == null ? null : (double?)quantityField.Value.AsDouble();
+                var description = descriptionField == null ? null : descriptionField.Value.AsString();
+                var price = priceField == null ? null : (double?)priceField.Value.AsDouble();
+                var totalPrice = totalPriceField == null ? null : (double?)totalPriceField.Value.AsDouble();
 
                 var expectedItem = expectedItems[itemIndex];
 
@@ -1383,9 +1383,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
             }
 
-            Assert.That(document.Fields["Subtotal"].AsDouble(), Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That(document.Fields["TotalTax"].AsDouble(), Is.EqualTo(104.40).Within(0.0001));
-            Assert.That(document.Fields["Total"].AsDouble(), Is.EqualTo(1203.39).Within(0.0001));
+            Assert.That(document.Fields["Subtotal"].Value.AsDouble(), Is.EqualTo(1098.99).Within(0.0001));
+            Assert.That(document.Fields["TotalTax"].Value.AsDouble(), Is.EqualTo(104.40).Within(0.0001));
+            Assert.That(document.Fields["Total"].Value.AsDouble(), Is.EqualTo(1203.39).Within(0.0001));
         }
 
         [RecordedTest]
