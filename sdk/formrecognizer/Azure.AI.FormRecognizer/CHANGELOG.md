@@ -8,6 +8,7 @@
 ### Breaking Changes
 - The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
 - Removed the `BoundingPolygon` type. All `BoundingPolygon` properties are now of type `IReadOnlyList<PointF>`.
+- Updated `DocumentField.AsDate` to return a `DateTimeOffset` instead of a `DateTime`.
 - Renamed classes `DocumentModelOperationDetails` and `DocumentModelOperationSummary` to `OperationDetails` and `OperationSummary`, respectively.
 - Moved property `Result` in `DocumentModelOperationDetails` (now called `OperationDetails`) to each of its new derived classes. The property can't be accessed from the base class anymore.
 - Renamed class `DocTypeInfo` to `DocumentTypeDetails`.

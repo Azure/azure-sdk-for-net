@@ -490,7 +490,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Azure.AI.FormRecognizer.DocumentAnalysis.AddressValue AsAddress() { throw null; }
         public string AsCountryRegion() { throw null; }
         public Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue AsCurrency() { throw null; }
-        public System.DateTime AsDate() { throw null; }
+        public System.DateTimeOffset AsDate() { throw null; }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField> AsDictionary() { throw null; }
         public double AsDouble() { throw null; }
         public long AsInt64() { throw null; }

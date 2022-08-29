@@ -950,7 +950,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 string unit = unitfield?.AsString();
 
                 Assert.IsNotNull(dateField);
-                DateTime date = dateField.AsDate();
+                DateTimeOffset date = dateField.AsDate();
 
                 var expectedItem = expectedItems[itemIndex];
 

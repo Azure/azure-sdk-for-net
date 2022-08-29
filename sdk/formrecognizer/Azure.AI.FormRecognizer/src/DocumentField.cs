@@ -153,11 +153,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Gets the value of the field as a <see cref="DateTime"/>.
+        /// Gets the value of the field as a <see cref="DateTimeOffset"/>.
         /// </summary>
-        /// <returns>The value of the field converted to a <see cref="DateTime"/>.</returns>
+        /// <returns>The value of the field converted to a <see cref="DateTimeOffset"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="DocumentFieldType.Date"/> or when the value is <c>null</c>.</exception>
-        public DateTime AsDate()
+        public DateTimeOffset AsDate()
         {
             if (ValueType != DocumentFieldType.Date)
             {
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Date)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
             }
 
-            return ValueDate.Value.UtcDateTime;
+            return ValueDate.Value;
         }
 
         /// <summary>
