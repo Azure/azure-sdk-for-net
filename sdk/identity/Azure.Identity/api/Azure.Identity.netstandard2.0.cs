@@ -39,6 +39,7 @@ namespace Azure.Identity
     public partial class AuthorizationCodeCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AuthorizationCodeCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public System.Uri RedirectUri { get { throw null; } set { } }
     }
     public static partial class AzureAuthorityHosts
@@ -89,6 +90,7 @@ namespace Azure.Identity
     public partial class ClientAssertionCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientAssertionCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
     }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
@@ -105,6 +107,7 @@ namespace Azure.Identity
     public partial class ClientCertificateCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientCertificateCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
@@ -120,6 +123,7 @@ namespace Azure.Identity
     public partial class ClientSecretCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientSecretCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
@@ -252,6 +256,7 @@ namespace Azure.Identity
     public partial class OnBehalfOfCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public OnBehalfOfCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
@@ -333,6 +338,7 @@ namespace Azure.Identity
     public partial class UsernamePasswordCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public UsernamePasswordCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class VisualStudioCodeCredential : Azure.Core.TokenCredential
