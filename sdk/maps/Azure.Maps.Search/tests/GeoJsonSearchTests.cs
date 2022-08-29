@@ -195,8 +195,8 @@ namespace Azure.Maps.Search.Tests
                 Language = "en"
             });
             #endregion
-            var taipeiCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.Type == "POI" && addressItem.Address.Municipality == "Taipei City").First();
-            var sfCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.Type == "POI" && addressItem.Address.Municipality == "San Francisco").First();
+            var taipeiCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
+            var sfCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
             Assert.AreEqual("CAFE_PUB", sfCaffe.PointOfInterest.Classifications.First().Code);
             Assert.AreEqual("CAFE_PUB", taipeiCaffe.PointOfInterest.Classifications.First().Code);
         }
@@ -239,8 +239,8 @@ namespace Azure.Maps.Search.Tests
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", geoCollection, new SearchInsideGeometryOptions {
                 Language = "en"
             });
-            var taipeiCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.Type == "POI" && addressItem.Address.Municipality == "Taipei City").First();
-            var sfCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.Type == "POI" && addressItem.Address.Municipality == "San Francisco").First();
+            var taipeiCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "Taipei City").First();
+            var sfCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.SearchAddressResultType == "POI" && addressItem.Address.Municipality == "San Francisco").First();
             Assert.AreEqual("CAFE_PUB", sfCaffe.PointOfInterest.Classifications.First().Code);
             Assert.AreEqual("CAFE_PUB", taipeiCaffe.PointOfInterest.Classifications.First().Code);
         }

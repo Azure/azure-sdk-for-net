@@ -21,24 +21,13 @@ namespace Azure.Maps.Search.Models
     /// </summary>
     public readonly partial struct SearchAddressResultType : IEquatable<SearchAddressResultType>
     {
-        private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SearchAddressResultType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SearchAddressResultType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string POIValue = "POI";
+        private const string PointOfInterestValue = "POI";
         private const string StreetValue = "Street";
         private const string GeographyValue = "Geography";
         private const string PointAddressValue = "Point Address";
         private const string AddressRangeValue = "Address Range";
         private const string CrossStreetValue = "Cross Street";
-
-        /// <summary> POI. </summary>
-        public static SearchAddressResultType POI { get; } = new SearchAddressResultType(POIValue);
         /// <summary> Street. </summary>
         public static SearchAddressResultType Street { get; } = new SearchAddressResultType(StreetValue);
         /// <summary> Geography. </summary>

@@ -712,7 +712,7 @@ namespace Azure.Maps.Search.Models
         public Azure.Maps.Search.Models.AddressRanges AddressRanges { get { throw null; } }
         public string DataSourceInfo { get { throw null; } }
         public Azure.Maps.Search.Models.MapsDataSource DataSources { get { throw null; } }
-        public int? DetourTime { get { throw null; } }
+        public System.TimeSpan DetourTime { get { throw null; } }
         public double? DistanceInMeters { get { throw null; } }
         public Azure.Maps.Search.Models.GeographicEntity? EntityType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.FacilityEntryPoint> EntryPoints { get { throw null; } }
@@ -721,7 +721,7 @@ namespace Azure.Maps.Search.Models
         public Azure.Maps.Search.Models.PointOfInterest PointOfInterest { get { throw null; } }
         public Azure.Core.GeoJson.GeoPosition Position { get { throw null; } }
         public double? Score { get { throw null; } }
-        public Azure.Maps.Search.Models.SearchAddressResultType? Type { get { throw null; } }
+        public Azure.Maps.Search.Models.SearchAddressResultType? SearchAddressResultType { get { throw null; } }
         public Azure.Core.GeoJson.GeoBoundingBox Viewport { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -729,12 +729,11 @@ namespace Azure.Maps.Search.Models
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SearchAddressResultType(string value) { throw null; }
         public static Azure.Maps.Search.Models.SearchAddressResultType AddressRange { get { throw null; } }
         public static Azure.Maps.Search.Models.SearchAddressResultType CrossStreet { get { throw null; } }
         public static Azure.Maps.Search.Models.SearchAddressResultType Geography { get { throw null; } }
-        public static Azure.Maps.Search.Models.SearchAddressResultType POI { get { throw null; } }
         public static Azure.Maps.Search.Models.SearchAddressResultType PointAddress { get { throw null; } }
+        public static Azure.Maps.Search.Models.SearchAddressResultType PointOfInterest { get { throw null; } }
         public static Azure.Maps.Search.Models.SearchAddressResultType Street { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.SearchAddressResultType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
-        /// <param name="type">
+        /// <param name="searchAddressResultType">
         /// One of:
         /// * POI
         /// * Street
@@ -49,10 +49,10 @@ namespace Azure.Maps.Search.Models
         ///   * HouseNumberRange
         ///   * Street
         /// </param>
-        /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntity? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTime)
+        /// <param name="detourTimeInternal"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
+        internal SearchAddressResultItem(SearchAddressResultType? searchAddressResultType, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntity? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTimeInternal)
         {
-            Type = type;
+            SearchAddressResultType = searchAddressResultType;
             Id = id;
             Score = score;
             DistanceInMeters = distanceInMeters;
@@ -66,19 +66,8 @@ namespace Azure.Maps.Search.Models
             AddressRanges = addressRanges;
             DataSources = dataSources;
             MatchType = matchType;
-            DetourTime = detourTime;
+            DetourTimeInternal = detourTimeInternal;
         }
-
-        /// <summary>
-        /// One of:
-        /// * POI
-        /// * Street
-        /// * Geography
-        /// * Point Address
-        /// * Address Range
-        /// * Cross Street
-        /// </summary>
-        public SearchAddressResultType? Type { get; }
         /// <summary> Id property. </summary>
         public string Id { get; }
         /// <summary> The value within a result set to indicate the relative matching score between results.  You can use this to  determine that result x is twice as likely to be as relevant as result y if the value of x is 2x the value of y.   The values vary between queries and is only meant as a relative value for one result set. </summary>
@@ -106,7 +95,5 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </summary>
         public MapsSearchMatchType? MatchType { get; }
-        /// <summary> Detour time in seconds. Only returned for calls to the Search Along Route API. </summary>
-        public int? DetourTime { get; }
     }
 }
