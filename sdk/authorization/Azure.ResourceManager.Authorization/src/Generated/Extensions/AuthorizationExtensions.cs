@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Authorization
             );
         }
 
-        /// <summary> Gets a collection of ProviderOperationsMetadataResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of AuthorizationProviderOperationsMetadataResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProviderOperationsMetadataResources and their operations over a ProviderOperationsMetadataResource. </returns>
-        public static ProviderOperationsMetadataCollection GetAllProviderOperationsMetadata(this TenantResource tenantResource)
+        /// <returns> An object representing collection of AuthorizationProviderOperationsMetadataResources and their operations over a AuthorizationProviderOperationsMetadataResource. </returns>
+        public static AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetAllProviderOperationsMetadata();
+            return GetExtensionClient(tenantResource).GetAllAuthorizationProviderOperationsMetadata();
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProviderOperationsMetadataResource>> GetProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<AuthorizationProviderOperationsMetadataResource>> GetAuthorizationProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetAllProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAllAuthorizationProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProviderOperationsMetadataResource> GetProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<AuthorizationProviderOperationsMetadataResource> GetAuthorizationProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetAllProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
+            return tenantResource.GetAllAuthorizationProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClassicAdministrator> GetClassicAdministratorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AuthorizationClassicAdministrator> GetClassicAdministratorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetClassicAdministratorsAsync(cancellationToken);
         }
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClassicAdministrator> GetClassicAdministrators(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AuthorizationClassicAdministrator> GetClassicAdministrators(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetClassicAdministrators(cancellationToken);
         }
@@ -394,21 +394,21 @@ namespace Azure.ResourceManager.Authorization
             return client.GetRoleAssignments(scope).Get(roleAssignmentName, tenantId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleDefinitionResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleDefinitionResources and their operations over a RoleDefinitionResource. </returns>
-        public static RoleDefinitionCollection GetRoleDefinitions(this ArmResource armResource)
+        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
+        public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmResource armResource)
         {
-            return GetExtensionClient(armResource).GetRoleDefinitions();
+            return GetExtensionClient(armResource).GetAuthorizationRoleDefinitions();
         }
 
-        /// <summary> Gets a collection of RoleDefinitionResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleDefinitionResources and their operations over a RoleDefinitionResource. </returns>
-        public static RoleDefinitionCollection GetRoleDefinitions(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
+        public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(client, scope).GetRoleDefinitions();
+            return GetExtensionClient(client, scope).GetAuthorizationRoleDefinitions();
         }
 
         /// <summary>
@@ -421,40 +421,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RoleDefinitionResource>> GetRoleDefinitionAsync(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_Get
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleDefinitionResource>> GetRoleDefinitionAsync(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return await client.GetRoleDefinitions(scope).GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_Get
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleDefinitionResource> GetRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleDefinitions().Get(roleDefinitionId, cancellationToken);
+            return await armResource.GetAuthorizationRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,9 +437,40 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RoleDefinitionResource> GetRoleDefinition(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleDefinitions(scope).Get(roleDefinitionId, cancellationToken);
+            return await client.GetAuthorizationRoleDefinitions(scope).GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+        /// Operation Id: RoleDefinitions_Get
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return armResource.GetAuthorizationRoleDefinitions().Get(roleDefinitionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+        /// Operation Id: RoleDefinitions_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return client.GetAuthorizationRoleDefinitions(scope).Get(roleDefinitionId, cancellationToken);
         }
 
         /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>
@@ -1156,20 +1156,20 @@ namespace Azure.ResourceManager.Authorization
         }
         #endregion
 
-        #region ProviderOperationsMetadataResource
+        #region AuthorizationProviderOperationsMetadataResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AuthorizationProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderOperationsMetadataResource" /> object. </returns>
-        public static ProviderOperationsMetadataResource GetProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource" /> object. </returns>
+        public static AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderOperationsMetadataResource.ValidateResourceId(id);
-                return new ProviderOperationsMetadataResource(client, id);
+                AuthorizationProviderOperationsMetadataResource.ValidateResourceId(id);
+                return new AuthorizationProviderOperationsMetadataResource(client, id);
             }
             );
         }
@@ -1194,20 +1194,20 @@ namespace Azure.ResourceManager.Authorization
         }
         #endregion
 
-        #region RoleDefinitionResource
+        #region AuthorizationRoleDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="RoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="RoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AuthorizationRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationRoleDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleDefinitionResource" /> object. </returns>
-        public static RoleDefinitionResource GetRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource" /> object. </returns>
+        public static AuthorizationRoleDefinitionResource GetAuthorizationRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RoleDefinitionResource.ValidateResourceId(id);
-                return new RoleDefinitionResource(client, id);
+                AuthorizationRoleDefinitionResource.ValidateResourceId(id);
+                return new AuthorizationRoleDefinitionResource(client, id);
             }
             );
         }
