@@ -435,11 +435,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
     }
     public partial class MoverResourceSetProperties
     {
-        public MoverResourceSetProperties(string sourceRegion, string targetRegion) { }
+        public MoverResourceSetProperties(Azure.Core.AzureLocation sourceRegion, Azure.Core.AzureLocation targetRegion) { }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
-        public string SourceRegion { get { throw null; } set { } }
-        public string TargetRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation SourceRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation TargetRegion { get { throw null; } set { } }
     }
     public partial class MoverResourceSettings
     {
@@ -599,10 +599,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class VirtualNetworkResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public VirtualNetworkResourceSettings(string targetResourceName) : base (default(string)) { }
-        public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } }
-        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
+        public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } set { } }
         public bool? EnableDdosProtection { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.SubnetResourceSettings> Subnets { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.SubnetResourceSettings> Subnets { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
 }

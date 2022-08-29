@@ -56,20 +56,20 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether gets or sets whether the
         /// DDOS protection should be switched on.
         /// </summary>
         public bool? EnableDdosProtection { get; set; }
         /// <summary> Gets or sets the address prefixes for the virtual network. </summary>
-        public IList<string> AddressSpace { get; }
+        public IList<string> AddressSpace { get; set; }
         /// <summary>
         /// Gets or sets DHCPOptions that contains an array of DNS servers available to VMs
         /// deployed in the virtual network.
         /// </summary>
-        public IList<string> DnsServers { get; }
+        public IList<string> DnsServers { get; set; }
         /// <summary> Gets or sets List of subnets in a VirtualNetwork. </summary>
-        public IList<SubnetResourceSettings> Subnets { get; }
+        public IList<SubnetResourceSettings> Subnets { get; set; }
     }
 }

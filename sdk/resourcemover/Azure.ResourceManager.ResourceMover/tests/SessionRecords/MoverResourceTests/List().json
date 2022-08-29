@@ -1,0 +1,1525 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-c79d42e14195ff4f9bc8b29a37f727ec-538f2020579c044e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "cdb099a61523a2bfb1b85a81b21405a5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9ab958bf-deee-4bcd-968e-de929245f25b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "9ab958bf-deee-4bcd-968e-de929245f25b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074528Z:9ab958bf-deee-4bcd-968e-de929245f25b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-ResourceMover?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-16ab7732aea2ed43a302a01d2dbf11b5-bd6c4e4ff825cf47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e6d64abd27b1faa1178607bf7b833193",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "247",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "907fc042-5927-4bc3-9b22-c098e439cbf8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "907fc042-5927-4bc3-9b22-c098e439cbf8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074528Z:907fc042-5927-4bc3-9b22-c098e439cbf8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover",
+        "name": "testRG-ResourceMover",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "traceparent": "00-c998fcc94da477409a54d2ea17188aed-89fe20870a00d942-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1ae5fa2deea65ebb33cf67f32fc2ec76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "Subnet-0824",
+              "properties": {
+                "addressPrefix": "10.0.0.0/24"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/d0f8f8a3-d99c-4fbd-a788-e61f5ac43ef1?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1242",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "3",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "9583872d-5511-4b66-b0dd-16b97ffbbbbc",
+        "x-ms-client-request-id": "1ae5fa2deea65ebb33cf67f32fc2ec76",
+        "x-ms-correlation-request-id": "9b7bcd51-7dff-4ef4-a195-83ba2a9e9725",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "d0f8f8a3-d99c-4fbd-a788-e61f5ac43ef1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074536Z:9b7bcd51-7dff-4ef4-a195-83ba2a9e9725"
+      },
+      "ResponseBody": {
+        "name": "Vnet-787",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787",
+        "etag": "W/\u002258f80a24-c06c-4109-8df7-01d7e534379f\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "0abe65dd-3913-475e-b61a-9e442e11393e",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "Subnet-0824",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787/subnets/Subnet-0824",
+              "etag": "W/\u002258f80a24-c06c-4109-8df7-01d7e534379f\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/d0f8f8a3-d99c-4fbd-a788-e61f5ac43ef1?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c998fcc94da477409a54d2ea17188aed-51e1a4758f487749-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1985c0c68a1f5b161a887d583907e8c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "30",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "b018814f-45c2-43bd-8d0c-ad1ecb4361dc",
+        "x-ms-client-request-id": "1985c0c68a1f5b161a887d583907e8c4",
+        "x-ms-correlation-request-id": "7e7f8feb-88cd-435e-b5dd-374712c5f201",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "50272811-590b-47f7-87d7-57d780de1df8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074536Z:7e7f8feb-88cd-435e-b5dd-374712c5f201"
+      },
+      "ResponseBody": {
+        "status": "InProgress"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/d0f8f8a3-d99c-4fbd-a788-e61f5ac43ef1?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c998fcc94da477409a54d2ea17188aed-bef53a2515dfe74c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d866491a82c0c61e7ced65f051ad5e0b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "78915bcc-3fc2-4faa-b02b-50108a6e0486",
+        "x-ms-client-request-id": "d866491a82c0c61e7ced65f051ad5e0b",
+        "x-ms-correlation-request-id": "44a9e50b-c40e-44f2-8801-de11bd1c78d0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "807ed4d9-196c-43ef-bc10-edcf2ff2cbfd",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074547Z:44a9e50b-c40e-44f2-8801-de11bd1c78d0"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c998fcc94da477409a54d2ea17188aed-95f1bbf0d52fe24c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6e2ce0a0d23c8a569315f519e826beae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1244",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:47 GMT",
+        "ETag": "W/\u00220310c43e-6d8b-4ccb-a831-a977d283f118\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "45b8e086-21d3-4a6d-8e84-cbed4cd03a8c",
+        "x-ms-client-request-id": "6e2ce0a0d23c8a569315f519e826beae",
+        "x-ms-correlation-request-id": "6897d192-884d-47b7-a59c-2cf5801e8c06",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "efa1c68d-92be-48e8-9de0-2e1549cf6457",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074548Z:6897d192-884d-47b7-a59c-2cf5801e8c06"
+      },
+      "ResponseBody": {
+        "name": "Vnet-787",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787",
+        "etag": "W/\u00220310c43e-6d8b-4ccb-a831-a977d283f118\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "0abe65dd-3913-475e-b61a-9e442e11393e",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "Subnet-0824",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787/subnets/Subnet-0824",
+              "etag": "W/\u00220310c43e-6d8b-4ccb-a831-a977d283f118\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-de487ce4ab9fa84f8b3ba5ec37fb39dd-9fe9cd8a781db245-00",
+        "User-Agent": "azsdk-net-ResourceManager.ResourceMover/1.0.0-alpha.20220825.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b6f2d9cd56c143c6a2be9d3225260a6c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "782",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:48 GMT",
+        "ETag": "\u00223700fa85-0000-0200-0000-6306d8750000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "798f8b2f-c1ac-47c0-8f4e-8b56c2353f93",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "f793a1f8-4333-4abb-9ea1-98d80ade88b6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074549Z:798f8b2f-c1ac-47c0-8f4e-8b56c2353f93"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection",
+        "name": "testMoveCollection",
+        "type": "Microsoft.Migrate/moveCollections",
+        "etag": "\u00223700fa85-0000-0200-0000-6306d8750000\u0022",
+        "location": "eastus2",
+        "properties": {
+          "sourceRegion": "eastus",
+          "targetRegion": "westus",
+          "provisioningState": "Succeeded",
+          "errors": null
+        },
+        "identity": {
+          "principalId": "030c5fc6-bca6-404d-a769-47087e9e436a",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "type": "SystemAssigned"
+        },
+        "systemData": {
+          "createdBy": "yaokou@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2022-08-25T02:03:30.8584381Z",
+          "lastModifiedBy": "yaokou@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-08-25T02:03:30.8584381Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-1997?api-version=2021-08-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "281",
+        "Content-Type": "application/json",
+        "traceparent": "00-5ef78e49946c5849a0250043eb3fc1fd-eb2f374d9647a44a-00",
+        "User-Agent": "azsdk-net-ResourceManager.ResourceMover/1.0.0-alpha.20220825.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7ada59b74887dcf244aa8c04de552eb6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787",
+          "resourceSettings": {
+            "resourceType": "Microsoft.Network/virtualNetworks",
+            "targetResourceName": "targetVnet-2081"
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/operations/14383c70-2cad-4764-87e9-2942848428df?api-version=2021-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e4a6e1ed-abcb-485d-a01b-ee3e9878ec29",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "1897a725-ff94-4687-9cf5-ab35c2101b36",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074550Z:e4a6e1ed-abcb-485d-a01b-ee3e9878ec29"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/operations/14383c70-2cad-4764-87e9-2942848428df?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5ef78e49946c5849a0250043eb3fc1fd-6f287837a55cf84a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "656e76ef53d4aa51c4e4111cb69ddf47",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/operations/14383c70-2cad-4764-87e9-2942848428df?api-version=2021-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "351",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:45:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "73b241f9-f47b-4799-affa-b9c22b258e30",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "abc0abb6-27e5-49b0-914a-d2dd9ad2672a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074551Z:73b241f9-f47b-4799-affa-b9c22b258e30"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/operations/14383c70-2cad-4764-87e9-2942848428df",
+        "name": "14383c70-2cad-4764-87e9-2942848428df",
+        "status": "Running",
+        "startTime": "8/25/2022 7:45:50 AM",
+        "endTime": null,
+        "error": null,
+        "properties": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/operations/14383c70-2cad-4764-87e9-2942848428df?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5ef78e49946c5849a0250043eb3fc1fd-7f5a81ae1b415149-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "93026e0481b16c273ff1ad0813ce77d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "371",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:46:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ef02ccc1-c060-414b-bf7b-8c26d67bac26",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "4ad65db4-2e51-4e9c-b58d-7662fa56c5aa",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074606Z:ef02ccc1-c060-414b-bf7b-8c26d67bac26"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/operations/14383c70-2cad-4764-87e9-2942848428df",
+        "name": "14383c70-2cad-4764-87e9-2942848428df",
+        "status": "Succeeded",
+        "startTime": "8/25/2022 7:45:50 AM",
+        "endTime": "8/25/2022 7:45:52 AM",
+        "error": null,
+        "properties": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-1997?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5ef78e49946c5849a0250043eb3fc1fd-6359f4f2a6f03448-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6814039fc9e7d0e22510e46539fd322e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1828",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:46:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "80659269-87e2-47ed-968f-26cb8beb60ee",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "5bb8b333-a2d6-4109-9ea7-2eee10a0451b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074607Z:80659269-87e2-47ed-968f-26cb8beb60ee"
+      },
+      "ResponseBody": {
+        "name": "MoverResource-1997",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-1997",
+        "type": null,
+        "properties": {
+          "provisioningState": "Succeeded",
+          "isResolveRequired": false,
+          "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787",
+          "targetId": null,
+          "existingTargetId": null,
+          "resourceSettings": {
+            "resourceType": "Microsoft.Network/virtualNetworks",
+            "enableDdosProtection": null,
+            "addressSpace": null,
+            "dnsServers": null,
+            "subnets": null,
+            "tags": null,
+            "targetResourceName": "targetVnet-2081"
+          },
+          "moveStatus": {
+            "moveState": "PreparePending",
+            "jobStatus": null,
+            "errors": {
+              "properties": {
+                "code": "DependencyComputationPending",
+                "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                "details": []
+              }
+            }
+          },
+          "dependsOn": [],
+          "dependsOnOverrides": [],
+          "errors": null,
+          "sourceResourceSettings": {
+            "resourceType": "Microsoft.Network/virtualNetworks",
+            "enableDdosProtection": null,
+            "addressSpace": [
+              "10.0.0.0/16"
+            ],
+            "dnsServers": [],
+            "subnets": [
+              {
+                "name": "Subnet-0824",
+                "addressPrefix": "10.0.0.0/24",
+                "networkSecurityGroup": null
+              }
+            ],
+            "tags": null,
+            "targetResourceName": "Vnet-787"
+          }
+        },
+        "systemData": {
+          "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+          "createdByType": "Application",
+          "createdAt": "2022-08-25T07:45:49.9156109Z",
+          "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-25T07:45:49.9156109Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-881b21076d73dc419d7c2b2caac6ce04-cff5fbc10a213141-00",
+        "User-Agent": "azsdk-net-ResourceManager.ResourceMover/1.0.0-alpha.20220825.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f51fec9e776b6dd74e0225e2a54896f5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "27536",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 07:46:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a6ccac71-1b48-4391-aebf-7a27de3e9b95",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "03dba777-9d6d-4fcc-b75a-afed024d247c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T074608Z:a6ccac71-1b48-4391-aebf-7a27de3e9b95"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "MoverResource-3959",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-3959",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8337",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-5387"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8337\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-8337"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T02:15:50.4650464Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T02:15:50.4650464Z"
+            }
+          },
+          {
+            "name": "MoverResource-4769",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-4769",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-3939",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-3320"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-3939\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-3939"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:03:31.0258255Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:03:31.0258255Z"
+            }
+          },
+          {
+            "name": "MoverResource-6232",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-6232",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-9129",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-719"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-9129\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-9129"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:05:54.272872Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:05:54.272872Z"
+            }
+          },
+          {
+            "name": "MoverResource-116",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-116",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-5817",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-8576"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-5817\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-5817"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:07:26.588517Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:07:26.588517Z"
+            }
+          },
+          {
+            "name": "MoverResource-7590",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-7590",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-7403",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-4560"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-7403\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-7403"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:11:06.0101154Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:11:06.0101154Z"
+            }
+          },
+          {
+            "name": "MoverResource-4569",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-4569",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-7156",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-3191"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-7156\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-7156"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:12:47.7598051Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:12:47.7598051Z"
+            }
+          },
+          {
+            "name": "MoverResource-6655",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-6655",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8565",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-7498"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8565\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-8565"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:16:08.1650721Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:16:08.1650721Z"
+            }
+          },
+          {
+            "name": "MoverResource-3579",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-3579",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-6014",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-2008"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-6014\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-6014"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:18:39.6649816Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:18:39.6649816Z"
+            }
+          },
+          {
+            "name": "MoverResource-4229",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-4229",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8765",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-5645"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8765\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-8765"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:21:25.9137103Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:21:25.9137103Z"
+            }
+          },
+          {
+            "name": "MoverResource-9223",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-9223",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-5818",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-3081"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-5818\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-5818"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:24:38.8517339Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:24:38.8517339Z"
+            }
+          },
+          {
+            "name": "MoverResource-4354",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-4354",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-2965",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-2263"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-2965\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-2965"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:26:22.2675015Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:26:22.2675015Z"
+            }
+          },
+          {
+            "name": "MoverResource-682",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-682",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8306",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-7141"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-8306\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-8306"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:33:10.6288318Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:33:10.6288318Z"
+            }
+          },
+          {
+            "name": "MoverResource-2344",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-2344",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-1707",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-7711"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-1707\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-1707"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:33:48.3477366Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:33:48.3477366Z"
+            }
+          },
+          {
+            "name": "MoverResource-7174",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-7174",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-9415",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-5529"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-9415\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-9415"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:34:24.2385143Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:34:24.2385143Z"
+            }
+          },
+          {
+            "name": "MoverResource-1997",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Migrate/moveCollections/testMoveCollection/moveResources/MoverResource-1997",
+            "type": null,
+            "properties": {
+              "provisioningState": "Succeeded",
+              "isResolveRequired": false,
+              "sourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787",
+              "targetId": null,
+              "existingTargetId": null,
+              "resourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": null,
+                "dnsServers": null,
+                "subnets": null,
+                "tags": null,
+                "targetResourceName": "targetVnet-2081"
+              },
+              "moveStatus": {
+                "moveState": "PreparePending",
+                "jobStatus": null,
+                "errors": {
+                  "properties": {
+                    "code": "DependencyComputationPending",
+                    "message": "The dependency computation is not completed for resource - /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-ResourceMover/providers/Microsoft.Network/virtualNetworks/Vnet-787\u0027.\n    Possible Causes: Dependency computation is pending for resource.\n    Recommended Action: Validate dependencies to compute the dependencies.\n    ",
+                    "details": []
+                  }
+                }
+              },
+              "dependsOn": [],
+              "dependsOnOverrides": [],
+              "errors": null,
+              "sourceResourceSettings": {
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "enableDdosProtection": null,
+                "addressSpace": [
+                  "10.0.0.0/16"
+                ],
+                "dnsServers": [],
+                "subnets": [
+                  {
+                    "name": "Subnet-0824",
+                    "addressPrefix": "10.0.0.0/24",
+                    "networkSecurityGroup": null
+                  }
+                ],
+                "tags": null,
+                "targetResourceName": "Vnet-787"
+              }
+            },
+            "systemData": {
+              "createdBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "createdByType": "Application",
+              "createdAt": "2022-08-25T07:45:49.9156109Z",
+              "lastModifiedBy": "ea0eddd2-3d60-47f8-b3bf-7ec8ae554d10",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-25T07:45:49.9156109Z"
+            }
+          }
+        ],
+        "nextLink": null,
+        "totalCount": 15,
+        "summaryCollection": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "895966878",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
