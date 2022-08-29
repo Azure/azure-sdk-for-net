@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                     {
                         new StreamAnalyticsPrivateLinkServiceConnection()
                         {
-                            //PrivateLinkServiceId = "/subscriptions/113d0adc-1017-40e9-84ff-763f52896cc2/resourceGroups/sjrg5830/providers/Microsoft.EventHub/namespaces/testeventhub4asacluster",
+                            PrivateLinkServiceId = new ResourceIdentifier("/subscriptions/113d0adc-1017-40e9-84ff-763f52896cc2/resourceGroups/sjrg5830/providers/Microsoft.EventHub/namespaces/testeventhub4asacluster"),
                             GroupIds =
                             {
                                 "namespace"
