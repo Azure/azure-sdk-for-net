@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private async Task<IntegrationAccountCertificateResource> CreateCertificate(string certificateName)
         {
-            var certContent = new X509Certificate2(@"..\..\..\..\..\sdk\logic\Azure.ResourceManager.Logic\tests\TestData\IntegrationAccountCertificate.cer");
+            var certContent = new X509Certificate2(@"TestData/IntegrationAccountCertificate.cer");
             string certContentStr = Convert.ToBase64String(certContent.RawData);
             IntegrationAccountCertificateData data = new IntegrationAccountCertificateData(_integrationAccount.Data.Location)
             {

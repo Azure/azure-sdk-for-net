@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private async Task<IntegrationAccountSchemaResource> CreateSchema(string schemaName)
         {
-            string content = File.ReadAllText(@"..\..\..\..\..\sdk\logic\Azure.ResourceManager.Logic\tests\TestData\OrderFile.xsd");
+            string content = File.ReadAllText(@"TestData/OrderFile.xsd");
             IntegrationAccountSchemaData data = new IntegrationAccountSchemaData(_integrationAccount.Data.Location, IntegrationAccountSchemaType.Xml)
             {
                 Content = content,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private async Task<IntegrationAccountAssemblyDefinitionResource> CreateAssemblyDefinition(string assemblyDefinitionName)
         {
-            byte[] dllDate = File.ReadAllBytes(@"..\..\..\..\..\sdk\logic\Azure.ResourceManager.Logic\tests\TestData\IntegrationAccountAssemblyContent.dll");
+            byte[] dllDate = File.ReadAllBytes(@"TestData/IntegrationAccountAssemblyContent.dll");
             IntegrationAccountAssemblyProperties properties = new IntegrationAccountAssemblyProperties(assemblyDefinitionName)
             {
                 Content = BinaryData.FromObjectAsJson(dllDate),

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Tests
 
         protected async Task<LogicWorkflowResource> CreateLogicWorkflow(ResourceGroupResource resourceGroup, ResourceIdentifier integrationAccountIdentifier, string logicWorkflowName)
         {
-            byte[] definition = File.ReadAllBytes(@"..\..\..\..\..\sdk\logic\Azure.ResourceManager.Logic\tests\TestData\WorkflowDefinition.json");
+            byte[] definition = File.ReadAllBytes(@"TestData/WorkflowDefinition.json");
             LogicWorkflowData data = new LogicWorkflowData(resourceGroup.Data.Location)
             {
                 Definition = new BinaryData(definition),
