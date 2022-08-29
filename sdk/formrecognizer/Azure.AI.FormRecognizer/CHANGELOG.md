@@ -16,6 +16,7 @@
 - Renamed property `DocType` to `DocumentType` in the `AnalyzedDocument` class.
 - Renamed property `DocTypes` to `DocumentTypes` in the `DocumentModelDetails` class.
 - Renamed properties `DocumentModelCount` and `DocumentModelLimit` to `CustomDocumentModelCount` and `CustomDocumentModelLimit` in the `ResourceDetails` class.
+- Removed property `BuildModelOptions.Prefix`. The prefix must now be set with the `prefix` parameter in the method `BuildModel`.
 - Removed class `DocumentPageKind` and related properties.
 - Made `BoundingRegion` a `struct` instead of a `class`.
 

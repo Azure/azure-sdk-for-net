@@ -146,6 +146,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="prefix">A case-sensitive prefix string to filter documents in the source path for building a model. For example, you may use the prefix to restrict subfolders.</param>
         /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -153,7 +154,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual BuildModelOperation BuildModel(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation BuildModel(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, string prefix = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
 
@@ -165,9 +166,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(options.Prefix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    source.Prefix = options.Prefix;
+                    source.Prefix = prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
@@ -234,6 +235,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="prefix">A case-sensitive prefix string to filter documents in the source path for building a model. For example, you may use the prefix to restrict subfolders.</param>
         /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -241,7 +243,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual async Task<BuildModelOperation> BuildModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> BuildModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, string prefix = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             options ??= new BuildModelOptions();
@@ -252,9 +254,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
-                if (!string.IsNullOrEmpty(options.Prefix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    source.Prefix = options.Prefix;
+                    source.Prefix = prefix;
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
