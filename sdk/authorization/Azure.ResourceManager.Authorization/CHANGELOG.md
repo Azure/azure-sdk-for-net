@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
-
-This is the first stable release of the Authorization Management client library.
+## 1.0.0-beta.2 (2022-08-29)
 
 ### Breaking Changes
 
