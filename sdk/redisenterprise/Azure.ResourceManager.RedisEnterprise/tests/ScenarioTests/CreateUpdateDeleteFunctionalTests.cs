@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.RedisEnterprise.Models;
@@ -32,6 +27,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/30766")]
         public async Task CreateUpdateDeleteTest()
         {
             await SetCollectionsAsync();
@@ -49,16 +45,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-            //Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
-            //Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
-            //Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse.Data.Sku.Name);
-            //Assert.AreEqual(2, clusterResponse.Data.Sku.Capacity);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
+            Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse.Data.Sku.Name);
+            Assert.AreEqual(2, clusterResponse.Data.Sku.Capacity);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-            //Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
-            //Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
-            //Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse.Data.Sku.Name);
-            //Assert.AreEqual(2, clusterResponse.Data.Sku.Capacity);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
+            Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse.Data.Sku.Name);
+            Assert.AreEqual(2, clusterResponse.Data.Sku.Capacity);
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";
@@ -87,18 +83,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-            //Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-            //Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-            //Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
-            //Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
-            //Assert.AreEqual(3, databaseResponse.Data.Modules.Count);
+            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            Assert.AreEqual(3, databaseResponse.Data.Modules.Count);
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
-            //Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-            //Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-            //Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
-            //Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
-            //Assert.AreEqual(3, databaseResponse.Data.Modules.Count);
+            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            Assert.AreEqual(3, databaseResponse.Data.Modules.Count);
 
             await databaseResponse.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;
