@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
                     SetCustomerIkey(instrumentationKey);
-                    SetStatsBeatConnectionString(ingestionEndpoint);
+                    SetStatsbeatConnectionString(ingestionEndpoint);
                 }
 
                 s_myMeter.CreateObservableGauge("AttachStatsBeat", () => GetAttachStatsBeat());
