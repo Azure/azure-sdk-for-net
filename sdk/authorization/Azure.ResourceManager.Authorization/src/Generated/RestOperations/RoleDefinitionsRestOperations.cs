@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public async Task<Response<RoleDefinitionData>> DeleteAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRoleDefinitionData>> DeleteAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        RoleDefinitionData value = default;
+                        AuthorizationRoleDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleDefinitionData.DeserializeRoleDefinitionData(document.RootElement);
+                        value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((RoleDefinitionData)null, message.Response);
+                    return Response.FromValue((AuthorizationRoleDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public Response<RoleDefinitionData> Delete(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public Response<AuthorizationRoleDefinitionData> Delete(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        RoleDefinitionData value = default;
+                        AuthorizationRoleDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleDefinitionData.DeserializeRoleDefinitionData(document.RootElement);
+                        value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((RoleDefinitionData)null, message.Response);
+                    return Response.FromValue((AuthorizationRoleDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public async Task<Response<RoleDefinitionData>> GetAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRoleDefinitionData>> GetAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -145,13 +145,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        RoleDefinitionData value = default;
+                        AuthorizationRoleDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleDefinitionData.DeserializeRoleDefinitionData(document.RootElement);
+                        value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoleDefinitionData)null, message.Response);
+                    return Response.FromValue((AuthorizationRoleDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public Response<RoleDefinitionData> Get(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public Response<AuthorizationRoleDefinitionData> Get(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -173,19 +173,19 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        RoleDefinitionData value = default;
+                        AuthorizationRoleDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleDefinitionData.DeserializeRoleDefinitionData(document.RootElement);
+                        value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoleDefinitionData)null, message.Response);
+                    return Response.FromValue((AuthorizationRoleDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, ResourceIdentifier roleDefinitionId, RoleDefinitionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="data"> The values for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response<RoleDefinitionData>> CreateOrUpdateAsync(string scope, ResourceIdentifier roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRoleDefinitionData>> CreateOrUpdateAsync(string scope, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 201:
                     {
-                        RoleDefinitionData value = default;
+                        AuthorizationRoleDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleDefinitionData.DeserializeRoleDefinitionData(document.RootElement);
+                        value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="data"> The values for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public Response<RoleDefinitionData> CreateOrUpdate(string scope, ResourceIdentifier roleDefinitionId, RoleDefinitionData data, CancellationToken cancellationToken = default)
+        public Response<AuthorizationRoleDefinitionData> CreateOrUpdate(string scope, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 201:
                     {
-                        RoleDefinitionData value = default;
+                        AuthorizationRoleDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleDefinitionData.DeserializeRoleDefinitionData(document.RootElement);
+                        value = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

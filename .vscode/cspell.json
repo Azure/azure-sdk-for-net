@@ -314,6 +314,14 @@
       ]
     },
     {
+      "filename": "**/sdk/devtestlabs/**/*.cs",
+      "words": [
+        "Vhds",
+        "Retarget",
+        "Sysprepped"
+      ]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
@@ -505,6 +513,13 @@
         "byok",
 		"vcore",
         "vcores"
+      ]
+    },
+    {
+      "filename": "**/sdk/privatedns/**/*.cs",
+      "words": [
+        "cname",
+        "ptrdname"
       ]
     },
     {
