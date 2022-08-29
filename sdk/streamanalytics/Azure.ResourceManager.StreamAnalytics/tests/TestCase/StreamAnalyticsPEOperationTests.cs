@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
     public class StreamAnalyticsPEOperationTests : StreamAnalyticsManagementTestBase
     {
         public StreamAnalyticsPEOperationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<StreamAnalyticsPrivateEndpointResource> CreateStreamAnalyticsPrivateEndpointResourceAsync(string Name)

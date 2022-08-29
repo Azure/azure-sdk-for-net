@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
     public class StreamingJobFunctionCollectionTests : StreamAnalyticsManagementTestBase
     {
         public StreamingJobFunctionCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

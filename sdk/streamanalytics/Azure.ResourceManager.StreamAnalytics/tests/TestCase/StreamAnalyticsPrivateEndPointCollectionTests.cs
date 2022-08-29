@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
     public class StreamAnalyticsPrivateEndPointCollectionTests : StreamAnalyticsManagementTestBase
     {
     public StreamAnalyticsPrivateEndPointCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
     {
     }
 
