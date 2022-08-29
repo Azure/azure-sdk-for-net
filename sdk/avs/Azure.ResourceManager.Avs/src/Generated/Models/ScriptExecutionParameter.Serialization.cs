@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new ScriptExecutionParameter(name, type);
+            return new UnknownScriptExecutionParameter(name, type);
         }
     }
 }

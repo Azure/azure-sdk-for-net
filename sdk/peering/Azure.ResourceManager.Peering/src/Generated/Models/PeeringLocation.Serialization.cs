@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Peering.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<PeeringLocationPropertiesDirect> direct = default;
+            Optional<DirectPeeringLocationProperties> direct = default;
             Optional<PeeringLocationPropertiesExchange> exchange = default;
             Optional<string> peeringLocation = default;
             Optional<string> country = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Peering.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            direct = PeeringLocationPropertiesDirect.DeserializePeeringLocationPropertiesDirect(property0.Value);
+                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("exchange"))

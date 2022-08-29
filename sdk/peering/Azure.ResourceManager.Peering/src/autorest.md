@@ -46,4 +46,68 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+- ProvisioningState
+- Family
+- Size
+- Tier
+- Role
+
+override-operation-name:
+  CheckServiceProviderAvailability: CheckPeeringServiceProviderAvailability
+  PeeringServices_InitializeConnectionMonitor: InitializePeeringServiceConnectionMonitor
+  LookingGlass_Invoke: InvokeLookingGlass
+
+rename-mapping:
+  ValidationState: PeerAsnValidationState
+  ContactDetail: PeerAsnContactDetail
+  PrefixValidationState: PeeringPrefixValidationState
+  LearnedType: PeeringLearnedType
+  CheckServiceProviderAvailabilityInput: CheckPeeringServiceProviderAvailabilityContent
+  Command: LookingGlassCommand
+  DirectConnection: PeeringDirectConnection
+  ExchangeConnection: PeeringExchangeConnection
+  PeeringPropertiesDirect: DirectPeeringProperties
+  PeeringPropertiesExchange: ExchangePeeringProperties
+  BgpSession: PeeringBgpSession
+  ConnectionState: PeeringConnectionState
+  SessionAddressProvider: PeeringSessionAddressProvider
+  PeeringLocationPropertiesDirect: DirectPeeringLocationProperties
+  ResourceTags: PeeringResourceTagsPatch
+  SessionStateV4: PeeringSessionStateV4
+  SessionStateV6: PeeringSessionStateV6
+  LogAnalyticsWorkspaceProperties: PeeringLogAnalyticsWorkspaceProperties
+
+directive:
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability"].post.responses.200.schema
+    transform: >
+      $["x-ms-enum"] = {
+        "name": "PeeringServiceProviderAvailability",
+        "modelAsString": true
+      }
+# there are multiple patch operations using the same definition of body parameter schema. This is very likely to be a source of future breaking changes.
+# here we add some directive to decouple them
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}"].patch.parameters[2].schema
+    transform: >
+      return {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/ResourceTags"
+          }
+        ]
+      }
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}"].patch.parameters[2].schema
+    transform: >
+      return {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/ResourceTags"
+          }
+        ]
+      }
 ```

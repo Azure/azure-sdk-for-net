@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("OperationInfo")]
+    [CodeGenModel("OperationSummary")]
     public partial class DocumentModelOperationSummary
     {
         /// <summary>

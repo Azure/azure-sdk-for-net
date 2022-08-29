@@ -924,9 +924,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public string SynchronizationId { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.SynchronizationMode? SynchronizationMode { get { throw null; } }
     }
-    public partial class SourceShareSynchronizationSetting
+    public abstract partial class SourceShareSynchronizationSetting
     {
-        internal SourceShareSynchronizationSetting() { }
+        protected SourceShareSynchronizationSetting() { }
     }
     public partial class SqlDBTableDataSet : Azure.ResourceManager.DataShare.DataSetData
     {

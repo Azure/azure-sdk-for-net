@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListAvailableSkusByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkuContent content)
+        internal HttpMessage CreateListAvailableSkusByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableSkusResult>> ListAvailableSkusByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableSkusResult>> ListAvailableSkusByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableSkusResult> ListAvailableSkusByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public Response<AvailableSkusResult> ListAvailableSkusByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
-        internal HttpMessage CreateValidateAddressRequest(string subscriptionId, AzureLocation location, ValidateAddress validateAddress)
+        internal HttpMessage CreateValidateAddressRequest(string subscriptionId, AzureLocation location, DataBoxValidateAddressContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.DataBox
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(validateAddress);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -148,16 +148,16 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any. </summary>
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validateAddress"> Shipping address of the customer. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validateAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AddressValidationOutput>> ValidateAddressAsync(string subscriptionId, AzureLocation location, ValidateAddress validateAddress, CancellationToken cancellationToken = default)
+        public async Task<Response<AddressValidationOutput>> ValidateAddressAsync(string subscriptionId, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(validateAddress, nameof(validateAddress));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateAddressRequest(subscriptionId, location, validateAddress);
+            using var message = CreateValidateAddressRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -176,16 +176,16 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any. </summary>
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validateAddress"> Shipping address of the customer. </param>
+        /// <param name="content"> Shipping address of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validateAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AddressValidationOutput> ValidateAddress(string subscriptionId, AzureLocation location, ValidateAddress validateAddress, CancellationToken cancellationToken = default)
+        public Response<AddressValidationOutput> ValidateAddress(string subscriptionId, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(validateAddress, nameof(validateAddress));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateAddressRequest(subscriptionId, location, validateAddress);
+            using var message = CreateValidateAddressRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
-        internal HttpMessage CreateValidateInputsByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, ValidationRequest validationRequest)
+        internal HttpMessage CreateValidateInputsByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, DataBoxValidationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.DataBox
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(validationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -230,25 +230,25 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="validationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidationResponse>> ValidateInputsByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxValidationResult>> ValidateInputsByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateInputsByResourceGroupRequest(subscriptionId, resourceGroupName, location, validationRequest);
+            using var message = CreateValidateInputsByResourceGroupRequest(subscriptionId, resourceGroupName, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ValidationResponse value = default;
+                        DataBoxValidationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ValidationResponse.DeserializeValidationResponse(document.RootElement);
+                        value = DataBoxValidationResult.DeserializeDataBoxValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -260,25 +260,25 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="validationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidationResponse> ValidateInputsByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public Response<DataBoxValidationResult> ValidateInputsByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateInputsByResourceGroupRequest(subscriptionId, resourceGroupName, location, validationRequest);
+            using var message = CreateValidateInputsByResourceGroupRequest(subscriptionId, resourceGroupName, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ValidationResponse value = default;
+                        DataBoxValidationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ValidationResponse.DeserializeValidationResponse(document.RootElement);
+                        value = DataBoxValidationResult.DeserializeDataBoxValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
-        internal HttpMessage CreateValidateInputsRequest(string subscriptionId, AzureLocation location, ValidationRequest validationRequest)
+        internal HttpMessage CreateValidateInputsRequest(string subscriptionId, AzureLocation location, DataBoxValidationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.DataBox
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(validationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -312,24 +312,24 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> This method does all necessary pre-job creation validation under subscription. </summary>
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidationResponse>> ValidateInputsAsync(string subscriptionId, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(string subscriptionId, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateInputsRequest(subscriptionId, location, validationRequest);
+            using var message = CreateValidateInputsRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ValidationResponse value = default;
+                        DataBoxValidationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ValidationResponse.DeserializeValidationResponse(document.RootElement);
+                        value = DataBoxValidationResult.DeserializeDataBoxValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -340,24 +340,24 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> This method does all necessary pre-job creation validation under subscription. </summary>
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidationResponse> ValidateInputs(string subscriptionId, AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public Response<DataBoxValidationResult> ValidateInputs(string subscriptionId, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(validationRequest, nameof(validationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateInputsRequest(subscriptionId, location, validationRequest);
+            using var message = CreateValidateInputsRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ValidationResponse value = default;
+                        DataBoxValidationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ValidationResponse.DeserializeValidationResponse(document.RootElement);
+                        value = DataBoxValidationResult.DeserializeDataBoxValidationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
-        internal HttpMessage CreateRegionConfigurationRequest(string subscriptionId, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest)
+        internal HttpMessage CreateRegionConfigurationRequest(string subscriptionId, AzureLocation location, RegionConfigurationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -381,9 +381,9 @@ namespace Azure.ResourceManager.DataBox
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regionConfigurationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -391,24 +391,24 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> This API provides configuration details specific to given region/location at Subscription level. </summary>
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="regionConfigurationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegionConfigurationResponse>> RegionConfigurationAsync(string subscriptionId, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<RegionConfigurationResult>> RegionConfigurationAsync(string subscriptionId, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegionConfigurationRequest(subscriptionId, location, regionConfigurationRequest);
+            using var message = CreateRegionConfigurationRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegionConfigurationResponse value = default;
+                        RegionConfigurationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegionConfigurationResponse.DeserializeRegionConfigurationResponse(document.RootElement);
+                        value = RegionConfigurationResult.DeserializeRegionConfigurationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -419,24 +419,24 @@ namespace Azure.ResourceManager.DataBox
         /// <summary> This API provides configuration details specific to given region/location at Subscription level. </summary>
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region. </param>
+        /// <param name="content"> Request body to get the configuration for the region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="regionConfigurationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegionConfigurationResponse> RegionConfiguration(string subscriptionId, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public Response<RegionConfigurationResult> RegionConfiguration(string subscriptionId, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegionConfigurationRequest(subscriptionId, location, regionConfigurationRequest);
+            using var message = CreateRegionConfigurationRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegionConfigurationResponse value = default;
+                        RegionConfigurationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegionConfigurationResponse.DeserializeRegionConfigurationResponse(document.RootElement);
+                        value = RegionConfigurationResult.DeserializeRegionConfigurationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
-        internal HttpMessage CreateRegionConfigurationByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest)
+        internal HttpMessage CreateRegionConfigurationByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.DataBox
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regionConfigurationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -473,25 +473,25 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region at resource group level. </param>
+        /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="regionConfigurationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegionConfigurationResponse>> RegionConfigurationByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<RegionConfigurationResult>> RegionConfigurationByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegionConfigurationByResourceGroupRequest(subscriptionId, resourceGroupName, location, regionConfigurationRequest);
+            using var message = CreateRegionConfigurationByResourceGroupRequest(subscriptionId, resourceGroupName, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegionConfigurationResponse value = default;
+                        RegionConfigurationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegionConfigurationResponse.DeserializeRegionConfigurationResponse(document.RootElement);
+                        value = RegionConfigurationResult.DeserializeRegionConfigurationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -503,25 +503,25 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="subscriptionId"> The Subscription Id. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region at resource group level. </param>
+        /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="regionConfigurationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegionConfigurationResponse> RegionConfigurationByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public Response<RegionConfigurationResult> RegionConfigurationByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(regionConfigurationRequest, nameof(regionConfigurationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegionConfigurationByResourceGroupRequest(subscriptionId, resourceGroupName, location, regionConfigurationRequest);
+            using var message = CreateRegionConfigurationByResourceGroupRequest(subscriptionId, resourceGroupName, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegionConfigurationResponse value = default;
+                        RegionConfigurationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegionConfigurationResponse.DeserializeRegionConfigurationResponse(document.RootElement);
+                        value = RegionConfigurationResult.DeserializeRegionConfigurationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
-        internal HttpMessage CreateListAvailableSkusByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkuContent content)
+        internal HttpMessage CreateListAvailableSkusByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvailableSkusResult>> ListAvailableSkusByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableSkusResult>> ListAvailableSkusByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvailableSkusResult> ListAvailableSkusByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public Response<AvailableSkusResult> ListAvailableSkusByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

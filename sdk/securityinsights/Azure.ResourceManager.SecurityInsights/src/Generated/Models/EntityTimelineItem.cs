@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// Please note <see cref="EntityTimelineItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActivityTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, <see cref="BookmarkTimelineItem"/> and <see cref="SecurityAlertTimelineItem"/>.
     /// </summary>
-    public partial class EntityTimelineItem
+    public abstract partial class EntityTimelineItem
     {
         /// <summary> Initializes a new instance of EntityTimelineItem. </summary>
-        internal EntityTimelineItem()
+        protected EntityTimelineItem()
         {
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
     /// A Class representing an ArmDeployment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArmDeploymentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetArmDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetArmDeployment method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" />, <see cref="ResourceGroupResource" />, <see cref="ManagementGroupResource" /> or <see cref="TenantResource" /> using the GetArmDeployment method.
     /// </summary>
     public partial class ArmDeploymentResource : ArmResource
     {

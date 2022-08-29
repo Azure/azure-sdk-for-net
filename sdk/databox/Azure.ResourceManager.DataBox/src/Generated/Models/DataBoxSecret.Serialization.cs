@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> devicePassword = default;
             Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;
             Optional<string> encodedValidationCertPubKey = default;
-            Optional<IReadOnlyList<AccountCredentialDetails>> accountCredentialDetails = default;
+            Optional<IReadOnlyList<DataBoxAccountCredentialDetails>> accountCredentialDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceSerialNumber"))
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccountCredentialDetails> array = new List<AccountCredentialDetails>();
+                    List<DataBoxAccountCredentialDetails> array = new List<DataBoxAccountCredentialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AccountCredentialDetails.DeserializeAccountCredentialDetails(item));
+                        array.Add(DataBoxAccountCredentialDetails.DeserializeDataBoxAccountCredentialDetails(item));
                     }
                     accountCredentialDetails = array;
                     continue;

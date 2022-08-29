@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2022-08-26)
+
+### Features Added
+
+- Added support for new resources of ConnectedRegistry, ImportPipeline, ExportPipeline, ContainerRegistryPipelineRun, ContainerRegistryToken and ScopeMap.
+- Added GenerateCredentials methods for ContainerRegistryResource.
 
 ## 1.0.0 (2022-08-12)
 

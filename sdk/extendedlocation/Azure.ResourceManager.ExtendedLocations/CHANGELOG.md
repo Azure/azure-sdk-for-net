@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.2 (2022-08-29)
 
 ### Breaking Changes
 
-### Bugs Fixed
+Polishing since last public beta release:
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Optimized the name of some models and functions.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.0
 
 ## 1.0.0-beta.1 (2022-07-12)
 

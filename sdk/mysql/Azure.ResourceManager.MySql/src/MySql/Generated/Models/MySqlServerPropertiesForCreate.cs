@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.MySql.Models
     /// Please note <see cref="MySqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MySqlServerPropertiesForDefaultCreate"/>, <see cref="MySqlServerPropertiesForGeoRestore"/>, <see cref="MySqlServerPropertiesForRestore"/> and <see cref="MySqlServerPropertiesForReplica"/>.
     /// </summary>
-    public partial class MySqlServerPropertiesForCreate
+    public abstract partial class MySqlServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of MySqlServerPropertiesForCreate. </summary>
-        public MySqlServerPropertiesForCreate()
+        protected MySqlServerPropertiesForCreate()
         {
         }
 

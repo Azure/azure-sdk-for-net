@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Authorization
         /// Operation Id: ClassicAdministrators_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClassicAdministrator> GetClassicAdministratorsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AuthorizationClassicAdministrator> GetClassicAdministratorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ClassicAdministrator>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AuthorizationClassicAdministrator>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
                 scope.Start();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            async Task<Page<ClassicAdministrator>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AuthorizationClassicAdministrator>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
                 scope.Start();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Authorization
         /// Operation Id: ClassicAdministrators_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClassicAdministrator> GetClassicAdministrators(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AuthorizationClassicAdministrator> GetClassicAdministrators(CancellationToken cancellationToken = default)
         {
-            Page<ClassicAdministrator> FirstPageFunc(int? pageSizeHint)
+            Page<AuthorizationClassicAdministrator> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
                 scope.Start();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            Page<ClassicAdministrator> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AuthorizationClassicAdministrator> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ClassicAdministratorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClassicAdministrators");
                 scope.Start();
