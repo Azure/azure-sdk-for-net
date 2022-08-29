@@ -149,7 +149,7 @@ using (var fileStream = File.Create(".\\HomeToWindsOverWashington.png"))
 }
 ```
 
-Voila! That's how we utilize `MapsSearchClient`, `MapsRouteClient` and `MapsRenderClient` at the same time. User can use whatever combinations within Azure Maps SDK or even integrate with other services' SDK.
+Voila! That's how we utilize `MapsSearchClient`, `MapsRouteClient` and `MapsRenderClient` at the same time. User can use whatever combinations within Azure Maps SDK or even integrate with other services' SDK. For more examples, please refer to each service's samples.
 
 ## Troubleshooting
 
@@ -157,7 +157,7 @@ Voila! That's how we utilize `MapsSearchClient`, `MapsRouteClient` and `MapsRend
 
 When you interact with the Azure Maps Services, errors returned by the Language service correspond to the same HTTP status codes returned for REST API requests.
 
-For example, if you pass wrong routing points, an error is returned, indicating "Bad Request".400
+For example, if you pass wrong routing points, an error is returned, indicating "Bad Request".
 
 ```C#
 try
@@ -177,7 +177,7 @@ catch (RequestFailedException e)
 
 ## Next steps
 
-Please refer tol each package's sample folder for more details.
+Please refer to each package's sample folder for more details.
 
 ## Contributing
 
