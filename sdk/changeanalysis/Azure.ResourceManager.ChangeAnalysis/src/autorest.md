@@ -16,7 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+override-operation-name:
+  Changes_ListChangesByResourceGroup: GetChangesByResourceGroup
+  Changes_ListChangesBySubscription: GetChangesBySubscription
 
 format-by-name-rules:
   'tenantId': 'uuid'

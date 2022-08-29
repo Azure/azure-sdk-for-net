@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Change" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Change> GetChangesBySubscriptionChangesAsync(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Change> GetChangesBySubscriptionAsync(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetChangesBySubscriptionChangesAsync(startTime, endTime, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Change" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Change> GetChangesBySubscriptionChanges(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<Change> GetChangesBySubscription(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetChangesBySubscriptionChanges(startTime, endTime, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Change" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Change> GetChangesByResourceGroupChangesAsync(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Change> GetChangesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroupChangesAsync(startTime, endTime, skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Change" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Change> GetChangesByResourceGroupChanges(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<Change> GetChangesByResourceGroup(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroupChanges(startTime, endTime, skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
         }
     }
 }
