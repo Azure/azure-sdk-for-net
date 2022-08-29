@@ -155,9 +155,10 @@ namespace Azure.Maps.Search
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get Polygon**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -183,9 +184,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get Polygon**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -211,8 +213,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Free Form Search**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -242,8 +246,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Free Form Search**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -273,8 +279,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get POI by Name**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -307,8 +315,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get POI by Name**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -341,8 +351,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Nearby Search**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -375,8 +387,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Nearby Search**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -409,8 +423,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get POI by Category**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -439,8 +455,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get POI by Category**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -469,8 +487,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get POI Category Tree**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -498,8 +518,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Get POI Category Tree**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -527,8 +549,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Address Geocoding**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -558,8 +582,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Address Geocoding**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -589,8 +615,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Reverse Geocode to an Address**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -623,8 +651,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Reverse Geocode to an Address**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -659,8 +689,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Reverse Geocode to a Cross Street**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -696,8 +728,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Reverse Geocode to a Cross Street**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -733,8 +767,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Structured Address Geocoding**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -764,8 +800,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Structured Address Geocoding**
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -795,6 +833,9 @@ namespace Azure.Maps.Search
             }
         }
 
+        /// <remarks>
+        /// **Search Inside Geometry**
+        /// </remarks>
         /// <summary>
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -824,6 +865,9 @@ namespace Azure.Maps.Search
             }
         }
 
+        /// <remarks>
+        /// **Search Inside Geometry**
+        /// </remarks>
         /// <summary>
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -853,6 +897,9 @@ namespace Azure.Maps.Search
             }
         }
 
+        /// <remarks>
+        /// **Search Inside Geometry**
+        /// </remarks>
         /// <summary>
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -882,6 +929,9 @@ namespace Azure.Maps.Search
             }
         }
 
+        /// <remarks>
+        /// **Search Inside Geometry**
+        /// </remarks>
         /// <summary>
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -911,6 +961,9 @@ namespace Azure.Maps.Search
             }
         }
 
+        /// <remarks>
+        /// **Search Point Of Interest Along Route**
+        /// </remarks>
         /// <summary>
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -942,6 +995,9 @@ namespace Azure.Maps.Search
             }
         }
 
+        /// <remarks>
+        /// **Search Point Of Interest Along Route**
+        /// </remarks>
         /// <summary>
         /// **Applies to**: S0 and S1 pricing tiers.
         ///
@@ -973,9 +1029,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Fuzzy Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -1143,9 +1200,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Fuzzy Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -1313,8 +1371,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Batch API**
+        /// </remarks>
+        /// <summary>
         ///
         ///
         /// **Applies to**: S1 pricing tier.
@@ -1475,9 +1535,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -1637,9 +1698,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Reverse Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -1801,9 +1863,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Reverse Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -1965,9 +2028,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Fuzzy Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -2142,9 +2206,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Fuzzy Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -2319,9 +2384,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -2488,9 +2554,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -2657,9 +2724,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Reverse Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///
@@ -2828,9 +2896,10 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
+        /// <remarks>
         /// **Search Address Reverse Batch API**
-        ///
+        /// </remarks>
+        /// <summary>
         ///
         /// **Applies to**: S1 pricing tier.
         ///

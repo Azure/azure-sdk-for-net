@@ -18,8 +18,8 @@ To use common module, import `Azure.Maps` namespace:
 using Azure.Maps;
 ```
 
-## Functionalities
+## Features
 
-Below is the functionalities we have in Azure.Maps.Common module:
+Below are the features of the Azure.Maps.Common module:
 
 [LocalizedMapView](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Common/samples/LocalizedMapView.md)

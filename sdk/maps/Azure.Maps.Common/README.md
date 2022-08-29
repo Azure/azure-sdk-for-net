@@ -57,8 +57,7 @@ Please see the examples for [Search](https://github.com/khmic5/azure-sdk-for-net
 
 ## Troubleshooting
 
-If instantiate a `null` `LocalizedMapView`, the program will throw a `ArgumentNullException` error.
-
+If a `null` `LocalizedMapView` is instantiated, the program will throw a `ArgumentNullException` error.
 ## Next steps
 
 Get started with our [Common samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/samples) and then continue on with our [Search](https://github.com/khmic5/azure-sdk-for-net/blob/khmic/search/sdk/maps/Azure.Maps.Search/tests/Samples/SearchClientSamples.HelloWorld.cs) samples.
