@@ -1,5 +1,24 @@
 # Release History
 
+## 4.0.0-beta.6 (Unreleased)
+
+### Features Added
+- Added derived classes to `DocumentModelOperationDetails` for each kind of operation: `DocumentModelBuildOperationDetails`, `DocumentModelCopyToOperationDetails`, and `DocumentModelComposeOperationDetails`.
+
+### Breaking Changes
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
+- Moved property `DocumentModelOperationDetails.Result` to each of its new derived classes. The property can't be accessed from the base class anymore.
+- Renamed class `DocTypeInfo` to `DocumentTypeDetails`.
+- Renamed property `Offset` to `Index` in the `DocumentSpan` class.
+- Renamed property `DocType` to `DocumentType` in the `AnalyzedDocument` class.
+- Renamed property `DocTypes` to `DocumentTypes` in the `DocumentModelDetails` class.
+- Removed class `DocumentPageKind` and related properties.
+- Made `BoundingRegion` a `struct` instead of a `class`.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.0.0-beta.5 (2022-08-09)
 
 ### Features Added

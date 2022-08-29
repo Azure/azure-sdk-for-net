@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<int> timeout = default;
             Optional<ContainerRegistryTaskStepProperties> step = default;
             Optional<ContainerRegistryTriggerProperties> trigger = default;
-            Optional<ContainerRegistryRunCredentials> credentials = default;
+            Optional<ContainerRegistryCredentials> credentials = default;
             Optional<string> logTemplate = default;
             Optional<bool> isSystemTask = default;
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credentials = ContainerRegistryRunCredentials.DeserializeContainerRegistryRunCredentials(property0.Value);
+                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logTemplate"))

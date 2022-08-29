@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_RetrieveRegistrationToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegistrationInfo>> RetrieveRegistrationTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RetrieveRegistrationToken");
             scope.Start();
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_RetrieveRegistrationToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegistrationInfo> RetrieveRegistrationToken(CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolRegistrationInfo> RetrieveRegistrationToken(CancellationToken cancellationToken = default)
         {
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RetrieveRegistrationToken");
             scope.Start();

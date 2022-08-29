@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Initializes a new instance of AutomaticResolutionProperties. </summary>
-        /// <param name="moveResourceId">
+        /// <param name="resourceId">
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </param>
-        internal AutomaticResolutionProperties(ResourceIdentifier moveResourceId)
+        internal AutomaticResolutionProperties(ResourceIdentifier resourceId)
         {
-            MoveResourceId = moveResourceId;
+            ResourceId = resourceId;
         }
 
         /// <summary>
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </summary>
-        public ResourceIdentifier MoveResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }

@@ -3,63 +3,49 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary>
-    /// Details about a document model long-running operation.
-    /// </summary>
-    public class DocumentModelOperationDetails
+    [CodeGenModel("OperationDetails")]
+    public partial class DocumentModelOperationDetails
     {
-        internal DocumentModelOperationDetails(GetOperationResponse response)
-            : this(response.OperationId, response.Status, response.PercentCompleted, response.CreatedOn, response.LastUpdatedOn, response.Kind, response.ResourceLocation, response.Tags, response.Error,
-                  response.Result == null ? null : new DocumentModelDetails(response.Result))
-        {
-        }
-
-        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModelDetails result)
+        /// <summary>
+        /// Initializes a new instance of DocumentModelOperationDetails. Used by the <see cref="DocumentAnalysisModelFactory"/>
+        /// for mocking.
+        /// </summary>
+        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error)
         {
             OperationId = operationId;
             Status = status;
             PercentCompleted = percentCompleted;
-            Kind = kind;
-            ResourceLocation = resourceLocation;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
+            Kind = kind;
+            ResourceLocation = resourceLocation;
+            ApiVersion = apiVersion;
             Tags = tags;
             Error = error;
-            Result = result;
         }
-
-        /// <summary>
-        /// Operation ID.
-        /// </summary>
-        public string OperationId { get; }
-
-        /// <summary>
-        /// Operation status.
-        /// </summary>
-        public DocumentOperationStatus Status { get; }
-
-        /// <summary>
-        /// Operation progress (0-100).
-        /// </summary>
-        public int? PercentCompleted { get; }
 
         /// <summary>
         /// Date and time (UTC) when the operation was created.
         /// </summary>
+        [CodeGenMember("CreatedDateTime")]
         public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
         /// Date and time (UTC) when the operation was last updated.
         /// </summary>
+        [CodeGenMember("LastUpdatedDateTime")]
         public DateTimeOffset LastUpdatedOn { get; }
 
         /// <summary>
         /// Type of operation.
         /// </summary>
-        public DocumentOperationKind Kind { get; }
+        [CodeGenMember("Kind")]
+        public DocumentOperationKind Kind { get; internal set; }
 
         /// <summary>
         /// URI of the resource targeted by this operation.
@@ -67,18 +53,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Uri ResourceLocation { get; }
 
         /// <summary>
-        /// A list of user-defined key-value tag attributes associated with the model.
-        /// </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
-
-        /// <summary>
         /// Gets the error that occurred during the operation. The value is <c>null</c> if the operation succeeds.
         /// </summary>
-        public ResponseError Error { get; }
+        public ResponseError Error { get; private set; }
 
-        /// <summary>
-        /// Operation result upon success.
-        /// </summary>
-        public DocumentModelDetails Result { get; }
+        // The service returns a custom DocumentAnalysis.Error object but we want to expose
+        // Core's ResponseError instead. To accomplish this, we keep the returned error as a
+        // JsonElement and manually serialize it to ResponseError.
+        [CodeGenMember("Error")]
+        internal JsonElement JsonError
+        {
+            get => throw new InvalidOperationException();
+            private set
+            {
+                Error = value.ValueKind == JsonValueKind.Undefined
+                    ? null
+                    : JsonSerializer.Deserialize<ResponseError>(value.GetRawText());
+            }
+        }
+
+        internal string ApiVersion { get; }
     }
 }

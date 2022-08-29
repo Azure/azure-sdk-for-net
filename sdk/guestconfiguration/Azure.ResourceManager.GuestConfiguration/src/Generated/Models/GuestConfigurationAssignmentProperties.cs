@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Type of the resource - VMSS / VM. </summary>
         public string ResourceType { get; }
         /// <summary> The list of VM Compliance data for VMSS. </summary>
-        public IList<VmssVmInfo> VmssVmList { get; }
+        public IList<VmssVmInfo> VmssVmList { get; set; }
     }
 }

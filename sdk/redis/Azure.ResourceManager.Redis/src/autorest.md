@@ -109,5 +109,8 @@ directive:
     where: $.definitions.OperationStatusResult
     transform: >
       $.properties.id['x-ms-format'] = 'arm-id';
-
+  - from: redis.json
+    where: $.definitions
+    transform: >
+      $.RedisProperties.properties.accessKeys["x-nullable"] = true;
 ```

@@ -51,8 +51,8 @@ await foreach (DocumentModelSummary modelSummary in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
@@ -93,8 +93,8 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created

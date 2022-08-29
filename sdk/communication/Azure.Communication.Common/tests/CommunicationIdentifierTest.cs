@@ -111,5 +111,41 @@ namespace Azure.Communication
                 Assert.AreNotEqual(baseType, implementation.GetProperty(nameof(CommunicationIdentifier.RawId))?.DeclaringType);
             }
         }
+
+        [Test]
+        public void EqualityOperatorOverrideDoesntThrow()
+        {
+            var identifier = new CommunicationUserIdentifier("123");
+            var sameIdentifier = new CommunicationUserIdentifier("123");
+            var otherIdentifier = new CommunicationUserIdentifier("124");
+            var otherTypeIdentifier = new MicrosoftTeamsUserIdentifier("123");
+            CommunicationIdentifier? nullIdentifier = null;
+
+            Assert.False(identifier == null);
+            Assert.False(null == identifier);
+            Assert.True(identifier != null);
+            Assert.True(null != identifier);
+
+            Assert.True(null as CommunicationIdentifier == null as CommunicationIdentifier);
+            Assert.False(identifier == null as CommunicationIdentifier);
+            Assert.False(null as CommunicationIdentifier == identifier);
+            Assert.True(identifier != null as CommunicationIdentifier);
+            Assert.True(null as CommunicationIdentifier != identifier);
+
+            Assert.True(null == nullIdentifier);
+            Assert.False(nullIdentifier == identifier);
+
+#pragma warning disable CS1718 // Comparison made to same variable
+            Assert.True(identifier == identifier);
+#pragma warning restore CS1718 // Comparison made to same variable
+            Assert.True(identifier == sameIdentifier);
+            Assert.False(identifier != sameIdentifier);
+            Assert.True(sameIdentifier == identifier);
+            Assert.False(sameIdentifier != identifier);
+            Assert.False(identifier == otherIdentifier);
+            Assert.True(identifier != otherIdentifier);
+            Assert.False(identifier == otherTypeIdentifier);
+            Assert.True(identifier != otherTypeIdentifier);
+        }
     }
 }
