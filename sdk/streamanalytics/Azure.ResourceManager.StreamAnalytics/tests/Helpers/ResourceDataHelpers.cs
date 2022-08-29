@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         {
             var data = new StreamAnalyticsClusterData(location)
             {
-                Sku = new ClusterSku()
+                Sku = new StreamAnalyticsClusterSku()
                 {
                     Name = "Default",
                     Capacity = 36
                 },
-                Properties = new ClusterProperties(),
+                Properties = new StreamAnalyticsClusterProperties(),
             };
             return data;
         }
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         {
             var data = new StreamAnalyticsPrivateEndpointData()
             {
-                Properties = new PrivateEndpointProperties()
+                Properties = new StreamAnalyticsPrivateEndpointProperties()
                 {
                     ManualPrivateLinkServiceConnections =
                     {
-                        new PrivateLinkServiceConnection()
+                        new StreamAnalyticsPrivateLinkServiceConnection()
                         {
-                            PrivateLinkServiceId = "/subscriptions/113d0adc-1017-40e9-84ff-763f52896cc2/resourceGroups/sjrg5830/providers/Microsoft.EventHub/namespaces/testeventhub4asacluster",
+                            //PrivateLinkServiceId = "/subscriptions/113d0adc-1017-40e9-84ff-763f52896cc2/resourceGroups/sjrg5830/providers/Microsoft.EventHub/namespaces/testeventhub4asacluster",
                             GroupIds =
                             {
                                 "namespace"
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                     Name = "Standard"
                 },
                 EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop,
-                OutputErrorPolicy = OutputErrorPolicy.Drop,
+                OutputErrorPolicy = StreamingJobOutputErrorPolicy.Drop,
                 EventsOutOfOrderMaxDelayInSeconds = 0,
                 EventsLateArrivalMaxDelayInSeconds = 5,
-                DataLocale = "en-US",
-                CompatibilityLevel = CompatibilityLevel.One0,
+                DataLocalion = "en-US",
+                CompatibilityLevel = StreamingJobCompatibilityLevel.Level1_0,
             };
             return data;
         }
         #endregion
 
-        #region StreamingJobInpt
+        #region StreamingJobInput
         public static void AssertInput(StreamingJobInputData input1, StreamingJobInputData  input2)
         {
             Assert.AreEqual(input1.Name, input2.Name);
@@ -129,16 +129,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
             {
                 Properties = new StreamInputProperties()
                 {
-                    Serialization = new CsvSerialization()
-                    {
-                        FieldDelimiter = ",",
-                        Encoding = StreamEncoding.UTF8
-                    },
                     Datasource = new BlobStreamInputDataSource()
                     {
                         StorageAccounts =
                         {
-                            new StorageAccount()
+                            new StreamAnalyticsStorageAccount()
                         {
                             AccountKey = "$testAccountName$",
                             AccountName = "myhditest0811hdistorage"
@@ -149,7 +144,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                         DateFormat = "yyyy/MM/dd",
                         TimeFormat = "HH",
                         SourcePartitionCount = 16
-                    }
+                    },
+                    Serialization = StreamAnalyticsDataSerialization
                 }
             };
             return data;
@@ -167,16 +163,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         {
             return new StreamingJobOutputData()
             {
-                Serialization = new CsvSerialization()
-                {
-                    FieldDelimiter = ",",
-                    Encoding = StreamEncoding.UTF8,
-                },
                 Datasource = new BlobOutputDataSource()
                 {
                     StorageAccounts =
                     {
-                        new StorageAccount()
+                        new StreamAnalyticsStorageAccount()
                         {
                             AccountKey = "$testAccountName$",
                             AccountName = "myhditest0811hdistorage"
@@ -208,13 +199,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                     {
                         Script = @"function (x, y) { return x + y; }"
                     },
-                    Output = new FunctionOutput()
+                    Output = new StreamingJobFunctionOutput()
                     {
                         DataType = "Any"
                     },
                     Inputs =
                     {
-                        new FunctionInput()
+                        new StreamingJobFunctionInput()
                         {
                             DataType = @"nvarchar(max)",
                             IsConfigurationParameter = null
