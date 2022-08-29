@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0.
-    /// Serialized Name: ClusterUpgradeCadence
-    /// </summary>
+    /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. </summary>
     public readonly partial struct ClusterUpgradeCadence : IEquatable<ClusterUpgradeCadence>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string Wave1Value = "Wave1";
         private const string Wave2Value = "Wave2";
 
-        /// <summary>
-        /// Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters.
-        /// Serialized Name: ClusterUpgradeCadence.Wave0
-        /// </summary>
+        /// <summary> Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters. </summary>
         public static ClusterUpgradeCadence Wave0 { get; } = new ClusterUpgradeCadence(Wave0Value);
-        /// <summary>
-        /// Cluster upgrade starts 7 days after a new version is rolled out. Recommended for Pre-prod clusters.
-        /// Serialized Name: ClusterUpgradeCadence.Wave1
-        /// </summary>
+        /// <summary> Cluster upgrade starts 7 days after a new version is rolled out. Recommended for Pre-prod clusters. </summary>
         public static ClusterUpgradeCadence Wave1 { get; } = new ClusterUpgradeCadence(Wave1Value);
-        /// <summary>
-        /// Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters.
-        /// Serialized Name: ClusterUpgradeCadence.Wave2
-        /// </summary>
+        /// <summary> Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters. </summary>
         public static ClusterUpgradeCadence Wave2 { get; } = new ClusterUpgradeCadence(Wave2Value);
         /// <summary> Determines if two <see cref="ClusterUpgradeCadence"/> values are the same. </summary>
         public static bool operator ==(ClusterUpgradeCadence left, ClusterUpgradeCadence right) => left.Equals(right);

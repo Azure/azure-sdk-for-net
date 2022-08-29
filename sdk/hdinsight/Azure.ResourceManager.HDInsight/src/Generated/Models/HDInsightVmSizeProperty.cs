@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The vm size property
-    /// Serialized Name: VmSizeProperty
-    /// </summary>
+    /// <summary> The vm size property. </summary>
     public partial class HDInsightVmSizeProperty
     {
         /// <summary> Initializes a new instance of HDInsightVmSizeProperty. </summary>
@@ -19,46 +16,16 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightVmSizeProperty. </summary>
-        /// <param name="name">
-        /// The vm size name.
-        /// Serialized Name: VmSizeProperty.name
-        /// </param>
-        /// <param name="cores">
-        /// The number of cores that the vm size has.
-        /// Serialized Name: VmSizeProperty.cores
-        /// </param>
-        /// <param name="dataDiskStorageTier">
-        /// The data disk storage tier of the vm size.
-        /// Serialized Name: VmSizeProperty.dataDiskStorageTier
-        /// </param>
-        /// <param name="label">
-        /// The label of the vm size.
-        /// Serialized Name: VmSizeProperty.label
-        /// </param>
-        /// <param name="maxDataDiskCount">
-        /// The max data disk count of the vm size.
-        /// Serialized Name: VmSizeProperty.maxDataDiskCount
-        /// </param>
-        /// <param name="memoryInMB">
-        /// The memory whose unit is MB of the vm size.
-        /// Serialized Name: VmSizeProperty.memoryInMb
-        /// </param>
-        /// <param name="supportedByVirtualMachines">
-        /// This indicates this vm size is supported by virtual machines or not
-        /// Serialized Name: VmSizeProperty.supportedByVirtualMachines
-        /// </param>
-        /// <param name="supportedByWebWorkerRoles">
-        /// The indicates this vm size is supported by web worker roles or not
-        /// Serialized Name: VmSizeProperty.supportedByWebWorkerRoles
-        /// </param>
-        /// <param name="virtualMachineResourceDiskSizeInMB">
-        /// The virtual machine resource disk size whose unit is MB of the vm size.
-        /// Serialized Name: VmSizeProperty.virtualMachineResourceDiskSizeInMb
-        /// </param>
-        /// <param name="webWorkerResourceDiskSizeInMB">
-        /// The web worker resource disk size whose unit is MB of the vm size.
-        /// Serialized Name: VmSizeProperty.webWorkerResourceDiskSizeInMb
-        /// </param>
+        /// <param name="name"> The vm size name. </param>
+        /// <param name="cores"> The number of cores that the vm size has. </param>
+        /// <param name="dataDiskStorageTier"> The data disk storage tier of the vm size. </param>
+        /// <param name="label"> The label of the vm size. </param>
+        /// <param name="maxDataDiskCount"> The max data disk count of the vm size. </param>
+        /// <param name="memoryInMB"> The memory whose unit is MB of the vm size. </param>
+        /// <param name="supportedByVirtualMachines"> This indicates this vm size is supported by virtual machines or not. </param>
+        /// <param name="supportedByWebWorkerRoles"> The indicates this vm size is supported by web worker roles or not. </param>
+        /// <param name="virtualMachineResourceDiskSizeInMB"> The virtual machine resource disk size whose unit is MB of the vm size. </param>
+        /// <param name="webWorkerResourceDiskSizeInMB"> The web worker resource disk size whose unit is MB of the vm size. </param>
         internal HDInsightVmSizeProperty(string name, int? cores, string dataDiskStorageTier, string label, long? maxDataDiskCount, long? memoryInMB, bool? supportedByVirtualMachines, bool? supportedByWebWorkerRoles, long? virtualMachineResourceDiskSizeInMB, long? webWorkerResourceDiskSizeInMB)
         {
             Name = name;
@@ -73,55 +40,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             WebWorkerResourceDiskSizeInMB = webWorkerResourceDiskSizeInMB;
         }
 
-        /// <summary>
-        /// The vm size name.
-        /// Serialized Name: VmSizeProperty.name
-        /// </summary>
+        /// <summary> The vm size name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The number of cores that the vm size has.
-        /// Serialized Name: VmSizeProperty.cores
-        /// </summary>
+        /// <summary> The number of cores that the vm size has. </summary>
         public int? Cores { get; }
-        /// <summary>
-        /// The data disk storage tier of the vm size.
-        /// Serialized Name: VmSizeProperty.dataDiskStorageTier
-        /// </summary>
+        /// <summary> The data disk storage tier of the vm size. </summary>
         public string DataDiskStorageTier { get; }
-        /// <summary>
-        /// The label of the vm size.
-        /// Serialized Name: VmSizeProperty.label
-        /// </summary>
+        /// <summary> The label of the vm size. </summary>
         public string Label { get; }
-        /// <summary>
-        /// The max data disk count of the vm size.
-        /// Serialized Name: VmSizeProperty.maxDataDiskCount
-        /// </summary>
+        /// <summary> The max data disk count of the vm size. </summary>
         public long? MaxDataDiskCount { get; }
-        /// <summary>
-        /// The memory whose unit is MB of the vm size.
-        /// Serialized Name: VmSizeProperty.memoryInMb
-        /// </summary>
+        /// <summary> The memory whose unit is MB of the vm size. </summary>
         public long? MemoryInMB { get; }
-        /// <summary>
-        /// This indicates this vm size is supported by virtual machines or not
-        /// Serialized Name: VmSizeProperty.supportedByVirtualMachines
-        /// </summary>
+        /// <summary> This indicates this vm size is supported by virtual machines or not. </summary>
         public bool? SupportedByVirtualMachines { get; }
-        /// <summary>
-        /// The indicates this vm size is supported by web worker roles or not
-        /// Serialized Name: VmSizeProperty.supportedByWebWorkerRoles
-        /// </summary>
+        /// <summary> The indicates this vm size is supported by web worker roles or not. </summary>
         public bool? SupportedByWebWorkerRoles { get; }
-        /// <summary>
-        /// The virtual machine resource disk size whose unit is MB of the vm size.
-        /// Serialized Name: VmSizeProperty.virtualMachineResourceDiskSizeInMb
-        /// </summary>
+        /// <summary> The virtual machine resource disk size whose unit is MB of the vm size. </summary>
         public long? VirtualMachineResourceDiskSizeInMB { get; }
-        /// <summary>
-        /// The web worker resource disk size whose unit is MB of the vm size.
-        /// Serialized Name: VmSizeProperty.webWorkerResourceDiskSizeInMb
-        /// </summary>
+        /// <summary> The web worker resource disk size whose unit is MB of the vm size. </summary>
         public long? WebWorkerResourceDiskSizeInMB { get; }
     }
 }

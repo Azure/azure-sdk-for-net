@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MySql
                 try
                 {
                     var response = await _mySqlConfigurationConfigurationsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlConfigurationResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Values.Select(value => new MySqlConfigurationResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MySql
                 try
                 {
                     var response = _mySqlConfigurationConfigurationsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlConfigurationResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Values.Select(value => new MySqlConfigurationResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

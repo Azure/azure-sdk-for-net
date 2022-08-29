@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     ///   - Silver - The infrastructure jobs can be paused for a duration of 10 minutes per UD.
     ///   - Gold - The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc.
     /// 
-    /// Serialized Name: DurabilityLevel
     /// </summary>
     public readonly partial struct ClusterDurabilityLevel : IEquatable<ClusterDurabilityLevel>
     {
@@ -34,20 +33,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string SilverValue = "Silver";
         private const string GoldValue = "Gold";
 
-        /// <summary>
-        /// Bronze
-        /// Serialized Name: DurabilityLevel.Bronze
-        /// </summary>
+        /// <summary> Bronze. </summary>
         public static ClusterDurabilityLevel Bronze { get; } = new ClusterDurabilityLevel(BronzeValue);
-        /// <summary>
-        /// Silver
-        /// Serialized Name: DurabilityLevel.Silver
-        /// </summary>
+        /// <summary> Silver. </summary>
         public static ClusterDurabilityLevel Silver { get; } = new ClusterDurabilityLevel(SilverValue);
-        /// <summary>
-        /// Gold
-        /// Serialized Name: DurabilityLevel.Gold
-        /// </summary>
+        /// <summary> Gold. </summary>
         public static ClusterDurabilityLevel Gold { get; } = new ClusterDurabilityLevel(GoldValue);
         /// <summary> Determines if two <see cref="ClusterDurabilityLevel"/> values are the same. </summary>
         public static bool operator ==(ClusterDurabilityLevel left, ClusterDurabilityLevel right) => left.Equals(right);

@@ -27,8 +27,10 @@ dotnet add package Azure.Identity.BrokeredAuthentication --prerelease
 This example demonstrates configuring the `InteractiveBrowserCredential` with the specialized options type `InteractiveBrowserCredentialBrokerOptions` to enable brokered authentication.
 
 ```C# Snippet:ConfigureInteractiveBrowserToUseBroker
+IntPtr parentWindowHandle = GetForegroundWindow();
+
 // Create an interactive browser credential which will use the system authentication broker
-var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions());
+var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
 
 // Use the credential to authenticate a secret client
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);

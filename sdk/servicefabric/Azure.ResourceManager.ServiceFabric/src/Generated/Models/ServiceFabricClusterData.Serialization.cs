@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(ManagementEndpoint))
             {
                 writer.WritePropertyName("managementEndpoint");
-                writer.WriteStringValue(ManagementEndpoint);
+                writer.WriteStringValue(ManagementEndpoint.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(NodeTypes))
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("vmImage");
                 writer.WriteStringValue(VmImage);
             }
-            if (Optional.IsDefined(SfZonalUpgradeMode))
+            if (Optional.IsDefined(ServiceFabricZonalUpgradeMode))
             {
                 writer.WritePropertyName("sfZonalUpgradeMode");
-                writer.WriteStringValue(SfZonalUpgradeMode.Value.ToString());
+                writer.WriteStringValue(ServiceFabricZonalUpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(VmssZonalUpgradeMode))
             {
@@ -175,15 +175,15 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("upgradeWave");
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradePauseStartTimestampUtc))
+            if (Optional.IsDefined(UpgradePauseStartOn))
             {
                 writer.WritePropertyName("upgradePauseStartTimestampUtc");
-                writer.WriteStringValue(UpgradePauseStartTimestampUtc.Value, "O");
+                writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
             }
-            if (Optional.IsDefined(UpgradePauseEndTimestampUtc))
+            if (Optional.IsDefined(UpgradePauseEndOn))
             {
                 writer.WritePropertyName("upgradePauseEndTimestampUtc");
-                writer.WriteStringValue(UpgradePauseEndTimestampUtc.Value, "O");
+                writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
             }
             if (Optional.IsDefined(IsWaveUpgradePaused))
             {
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<IList<ClusterClientCertificateCommonName>> clientCertificateCommonNames = default;
             Optional<IList<ClusterClientCertificateThumbprint>> clientCertificateThumbprints = default;
             Optional<string> clusterCodeVersion = default;
-            Optional<string> clusterEndpoint = default;
+            Optional<Uri> clusterEndpoint = default;
             Optional<Guid> clusterId = default;
             Optional<ServiceFabricClusterState> clusterState = default;
             Optional<DiagnosticsStorageAccountConfig> diagnosticsStorageAccountConfig = default;
             Optional<bool> eventStoreServiceEnabled = default;
             Optional<IList<SettingsSectionDescription>> fabricSettings = default;
-            Optional<string> managementEndpoint = default;
+            Optional<Uri> managementEndpoint = default;
             Optional<IList<ClusterNodeTypeDescription>> nodeTypes = default;
             Optional<ServiceFabricProvisioningState> provisioningState = default;
             Optional<ClusterReliabilityLevel> reliabilityLevel = default;
@@ -408,7 +408,12 @@ namespace Azure.ResourceManager.ServiceFabric
                         }
                         if (property0.NameEquals("clusterEndpoint"))
                         {
-                            clusterEndpoint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                clusterEndpoint = null;
+                                continue;
+                            }
+                            clusterEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterId"))
@@ -468,7 +473,12 @@ namespace Azure.ResourceManager.ServiceFabric
                         }
                         if (property0.NameEquals("managementEndpoint"))
                         {
-                            managementEndpoint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                managementEndpoint = null;
+                                continue;
+                            }
+                            managementEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("nodeTypes"))

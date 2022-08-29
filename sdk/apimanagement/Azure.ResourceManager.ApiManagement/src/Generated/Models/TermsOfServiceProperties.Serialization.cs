@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("text");
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsDisplayEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsDisplayEnabled.Value);
             }
             if (Optional.IsDefined(IsConsentRequired))
             {

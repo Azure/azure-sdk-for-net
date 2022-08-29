@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The provisioning state of the cluster resource.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state of the cluster resource. </summary>
     public readonly partial struct ServiceFabricProvisioningState : IEquatable<ServiceFabricProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static ServiceFabricProvisioningState Updating { get; } = new ServiceFabricProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ServiceFabricProvisioningState Succeeded { get; } = new ServiceFabricProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ServiceFabricProvisioningState Failed { get; } = new ServiceFabricProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ServiceFabricProvisioningState Canceled { get; } = new ServiceFabricProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ServiceFabricProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricProvisioningState left, ServiceFabricProvisioningState right) => left.Equals(right);

@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes a parameter in fabric settings of the cluster.
-    /// Serialized Name: SettingsParameterDescription
-    /// </summary>
+    /// <summary> Describes a parameter in fabric settings of the cluster. </summary>
     public partial class SettingsParameterDescription
     {
         /// <summary> Initializes a new instance of SettingsParameterDescription. </summary>
-        /// <param name="name">
-        /// The parameter name of fabric setting.
-        /// Serialized Name: SettingsParameterDescription.name
-        /// </param>
-        /// <param name="value">
-        /// The parameter value of fabric setting.
-        /// Serialized Name: SettingsParameterDescription.value
-        /// </param>
+        /// <param name="name"> The parameter name of fabric setting. </param>
+        /// <param name="value"> The parameter value of fabric setting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public SettingsParameterDescription(string name, string value)
         {
@@ -40,15 +31,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Value = value;
         }
 
-        /// <summary>
-        /// The parameter name of fabric setting.
-        /// Serialized Name: SettingsParameterDescription.name
-        /// </summary>
+        /// <summary> The parameter name of fabric setting. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The parameter value of fabric setting.
-        /// Serialized Name: SettingsParameterDescription.value
-        /// </summary>
+        /// <summary> The parameter value of fabric setting. </summary>
         public string Value { get; set; }
     }
 }

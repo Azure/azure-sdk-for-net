@@ -1,5 +1,15 @@
 # Release History
 
+## 3.0.0-preview.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 3.0.0-preview.3 (2022-07-22)
 - Support using multiple service client credentials to initialize the HDInsightJobClient.
 

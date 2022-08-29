@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of StartMenuItemList. </summary>
         internal StartMenuItemList()
         {
-            Value = new ChangeTrackingList<StartMenuItem>();
+            Value = new ChangeTrackingList<DesktopVirtualizationStartMenuItem>();
         }
 
         /// <summary> Initializes a new instance of StartMenuItemList. </summary>
         /// <param name="value"> List of StartMenuItem definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal StartMenuItemList(IReadOnlyList<StartMenuItem> value, string nextLink)
+        internal StartMenuItemList(IReadOnlyList<DesktopVirtualizationStartMenuItem> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of StartMenuItem definitions. </summary>
-        public IReadOnlyList<StartMenuItem> Value { get; }
+        public IReadOnlyList<DesktopVirtualizationStartMenuItem> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

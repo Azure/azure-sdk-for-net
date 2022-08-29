@@ -3,13 +3,7 @@
 ## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
+- Added DPG methods to `ConfigurationClient` based on [this](https://github.com/Azure/azure-rest-api-specs/blob/e01d8afe9be7633ed36db014af16d47fec01f737/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/stable/1.0/appconfiguration.json) swagger definition.
 ## 1.2.0 (2021-10-05)
 
 ### Features Added

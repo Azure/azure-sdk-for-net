@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
-        /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
             UserWhitelistedIPRanges = userWhitelistedIPRanges;
             HasLinuxWorkers = hasLinuxWorkers;
             DedicatedHostCount = dedicatedHostCount;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             Kind = kind;
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Dedicated Host Count. </summary>
         public int? DedicatedHostCount { get; set; }
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

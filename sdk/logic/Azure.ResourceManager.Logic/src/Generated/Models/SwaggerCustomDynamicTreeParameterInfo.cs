@@ -21,22 +21,51 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="selectedItemValuePath"> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </param>
         /// <param name="value"> The parameter value. </param>
         /// <param name="parameterReference"> The parameter reference. </param>
-        /// <param name="required"> Indicates whether the parameter is required. </param>
-        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? required)
+        /// <param name="isRequired"> Indicates whether the parameter is required. </param>
+        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? isRequired)
         {
             SelectedItemValuePath = selectedItemValuePath;
             Value = value;
             ParameterReference = parameterReference;
-            Required = required;
+            IsRequired = isRequired;
         }
 
         /// <summary> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </summary>
         public string SelectedItemValuePath { get; set; }
-        /// <summary> The parameter value. </summary>
+        /// <summary>
+        /// The parameter value.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Value { get; set; }
         /// <summary> The parameter reference. </summary>
         public string ParameterReference { get; set; }
         /// <summary> Indicates whether the parameter is required. </summary>
-        public bool? Required { get; set; }
+        public bool? IsRequired { get; set; }
     }
 }

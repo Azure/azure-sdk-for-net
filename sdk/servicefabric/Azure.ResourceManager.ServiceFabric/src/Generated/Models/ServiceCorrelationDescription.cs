@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Creates a particular correlation between services.
-    /// Serialized Name: ServiceCorrelationDescription
-    /// </summary>
+    /// <summary> Creates a particular correlation between services. </summary>
     public partial class ServiceCorrelationDescription
     {
         /// <summary> Initializes a new instance of ServiceCorrelationDescription. </summary>
-        /// <param name="scheme">
-        /// The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName.
-        /// Serialized Name: ServiceCorrelationDescription.scheme
-        /// </param>
-        /// <param name="serviceName">
-        /// The name of the service that the correlation relationship is established with.
-        /// Serialized Name: ServiceCorrelationDescription.serviceName
-        /// </param>
+        /// <param name="scheme"> The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName. </param>
+        /// <param name="serviceName"> The name of the service that the correlation relationship is established with. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public ServiceCorrelationDescription(ServiceCorrelationScheme scheme, string serviceName)
         {
@@ -36,15 +27,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ServiceName = serviceName;
         }
 
-        /// <summary>
-        /// The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName.
-        /// Serialized Name: ServiceCorrelationDescription.scheme
-        /// </summary>
+        /// <summary> The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName. </summary>
         public ServiceCorrelationScheme Scheme { get; set; }
-        /// <summary>
-        /// The name of the service that the correlation relationship is established with.
-        /// Serialized Name: ServiceCorrelationDescription.serviceName
-        /// </summary>
+        /// <summary> The name of the service that the correlation relationship is established with. </summary>
         public string ServiceName { get; set; }
     }
 }

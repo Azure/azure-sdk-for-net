@@ -38,19 +38,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
-        /// <param name="docType"> Document type. </param>
+        /// <param name="documentType"> Document type. </param>
         /// <param name="boundingRegions"> Bounding regions covering the document. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
         /// <returns> A new <see cref="DocumentAnalysis.AnalyzedDocument"/> instance for mocking. </returns>
-        public static AnalyzedDocument AnalyzedDocument(string docType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IReadOnlyDictionary<string, DocumentField> fields = null, float confidence = default)
+        public static AnalyzedDocument AnalyzedDocument(string documentType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IReadOnlyDictionary<string, DocumentField> fields = null, float confidence = default)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
             fields ??= new Dictionary<string, DocumentField>();
 
-            return new AnalyzedDocument(docType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
+            return new AnalyzedDocument(documentType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
@@ -103,18 +103,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new CurrencyValue(amount, symbol);
         }
 
-        /// <summary> Initializes a new instance of DocTypeInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
         /// <param name="description"> Model description. </param>
         /// <param name="buildMode"> Custom model build mode. </param>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <param name="fieldConfidence"> Estimated confidence for each field. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocTypeInfo"/> instance for mocking. </returns>
-        public static DocTypeInfo DocTypeInfo(string description = null, DocumentBuildMode? buildMode = null, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = null, IReadOnlyDictionary<string, float> fieldConfidence = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentTypeDetails"/> instance for mocking. </returns>
+        public static DocumentTypeDetails DocumentTypeDetails(string description = null, DocumentBuildMode? buildMode = null, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = null, IReadOnlyDictionary<string, float> fieldConfidence = null)
         {
             fieldSchema ??= new Dictionary<string, DocumentFieldSchema>();
             fieldConfidence ??= new Dictionary<string, float>();
 
-            return new DocTypeInfo(description, buildMode, fieldSchema, fieldConfidence);
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
         }
 
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
@@ -391,19 +391,73 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentLine(content, boundingPolygon, spans?.ToList());
         }
 
+        /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, resourceLocation, apiVersion: null, tags, error, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelComposeOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, resourceLocation, apiVersion: null, tags, error, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelCopyToOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, resourceLocation, apiVersion: null, tags, error, result);
+        }
+
         /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <param name="docTypes"> Supported document types. </param>
+        /// <param name="documentTypes"> Supported document types. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes = null)
         {
             tags ??= new Dictionary<string, string>();
-            docTypes ??= new Dictionary<string, DocTypeInfo>();
+            documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, apiVersion: null, tags, docTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, apiVersion: null, tags, documentTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
@@ -420,7 +474,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
-        /// <param name="kind"> Kind of document page. </param>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
@@ -431,14 +484,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(DocumentPageKind kind = default, int pageNumber = default, float? angle = null, float? width = null, float? height = null, LengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
+        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, LengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
         {
             spans ??= new List<DocumentSpan>();
             words ??= new List<DocumentWord>();
             selectionMarks ??= new List<DocumentSelectionMark>();
             lines ??= new List<DocumentLine>();
 
-            return new DocumentPage(kind, pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
+            return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentParagraph. </summary>
@@ -500,7 +553,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentTable(rowCount, columnCount, cells?.ToList(), caption: null, footnotes: new List<DocumentFootnote>(), boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>
@@ -539,16 +592,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="resourceLocation"> URI of the resource targeted by this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelOperationDetails DocumentModelOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
+        public static DocumentModelOperationDetails DocumentModelOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags, error, result);
+            return new DocumentModelOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags, error);
         }
 
         /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
@@ -558,10 +610,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="resourceLocation"> URI of the resource targeted by this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationSummary"/> instance for mocking. </returns>
-        public static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
+        public static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 

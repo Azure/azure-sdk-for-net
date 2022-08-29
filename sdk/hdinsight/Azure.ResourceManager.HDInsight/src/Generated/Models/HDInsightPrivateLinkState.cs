@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Indicates whether or not private link is enabled.
-    /// Serialized Name: PrivateLink
-    /// </summary>
+    /// <summary> Indicates whether or not private link is enabled. </summary>
     public readonly partial struct HDInsightPrivateLinkState : IEquatable<HDInsightPrivateLinkState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PrivateLink.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static HDInsightPrivateLinkState Disabled { get; } = new HDInsightPrivateLinkState(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PrivateLink.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static HDInsightPrivateLinkState Enabled { get; } = new HDInsightPrivateLinkState(EnabledValue);
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkState"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateLinkState left, HDInsightPrivateLinkState right) => left.Equals(right);

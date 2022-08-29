@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The result of the Service Fabric runtime versions
-    /// Serialized Name: ClusterCodeVersionsResult
-    /// </summary>
+    /// <summary> The result of the Service Fabric runtime versions. </summary>
     public partial class ClusterCodeVersionsResult : ResourceData
     {
         /// <summary> Initializes a new instance of ClusterCodeVersionsResult. </summary>
@@ -27,18 +24,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="codeVersion">
-        /// The Service Fabric runtime version of the cluster.
-        /// Serialized Name: ClusterCodeVersionsResult.properties.codeVersion
-        /// </param>
-        /// <param name="supportExpireOn">
-        /// The date of expiry of support of the version.
-        /// Serialized Name: ClusterCodeVersionsResult.properties.supportExpiryUtc
-        /// </param>
-        /// <param name="environment">
-        /// Indicates if this version is for Windows or Linux operating system.
-        /// Serialized Name: ClusterCodeVersionsResult.properties.environment
-        /// </param>
+        /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
+        /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
+        /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
         internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment) : base(id, name, resourceType, systemData)
         {
             CodeVersion = codeVersion;
@@ -46,20 +34,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Environment = environment;
         }
 
-        /// <summary>
-        /// The Service Fabric runtime version of the cluster.
-        /// Serialized Name: ClusterCodeVersionsResult.properties.codeVersion
-        /// </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. </summary>
         public string CodeVersion { get; }
-        /// <summary>
-        /// The date of expiry of support of the version.
-        /// Serialized Name: ClusterCodeVersionsResult.properties.supportExpiryUtc
-        /// </summary>
+        /// <summary> The date of expiry of support of the version. </summary>
         public DateTimeOffset? SupportExpireOn { get; }
-        /// <summary>
-        /// Indicates if this version is for Windows or Linux operating system.
-        /// Serialized Name: ClusterCodeVersionsResult.properties.environment
-        /// </summary>
+        /// <summary> Indicates if this version is for Windows or Linux operating system. </summary>
         public ClusterEnvironment? Environment { get; }
     }
 }

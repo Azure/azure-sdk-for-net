@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The streaming endpoint sku. </param>
         /// <param name="description"> The streaming endpoint description. </param>
-        /// <param name="scaleUnits"> The number of scale units. Use the Scale operation to adjust this value. </param>
+        /// <param name="scaleUnitsNumber"> The number of scale units. Use the Scale operation to adjust this value. </param>
         /// <param name="availabilitySetName"> This feature is deprecated, do not set a value for this property. </param>
         /// <param name="accessControl"> The access control definition of the streaming endpoint. </param>
         /// <param name="maxCacheAge"> Max cache age. </param>
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="freeTrialEndOn"> The free trial expiration time. </param>
         /// <param name="createdOn"> The exact time the streaming endpoint was created. </param>
         /// <param name="lastModifiedOn"> The exact time the streaming endpoint was last modified. </param>
-        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmStreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
+        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StreamingEndpointCurrentSku sku, string description, int? scaleUnitsNumber, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Description = description;
-            ScaleUnits = scaleUnits;
+            ScaleUnitsNumber = scaleUnitsNumber;
             AvailabilitySetName = availabilitySetName;
             AccessControl = accessControl;
             MaxCacheAge = maxCacheAge;
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary> The streaming endpoint sku. </summary>
-        public ArmStreamingEndpointCurrentSku Sku { get; set; }
+        public StreamingEndpointCurrentSku Sku { get; set; }
         /// <summary> The streaming endpoint description. </summary>
         public string Description { get; set; }
         /// <summary> The number of scale units. Use the Scale operation to adjust this value. </summary>
-        public int? ScaleUnits { get; set; }
+        public int? ScaleUnitsNumber { get; set; }
         /// <summary> This feature is deprecated, do not set a value for this property. </summary>
         public string AvailabilitySetName { get; set; }
         /// <summary> The access control definition of the streaming endpoint. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("suspendMessageOnFileNameGenerationError");
             writer.WriteBooleanValue(SuspendMessageOnFileNameGenerationError);
             writer.WritePropertyName("autogenerateFileName");
-            writer.WriteBooleanValue(AutogenerateFileName);
+            writer.WriteBooleanValue(AutoGenerateFileName);
             writer.WriteEndObject();
         }
 

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateConfigureFactoryRepoRequest(string subscriptionId, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate)
+        internal HttpMessage CreateConfigureFactoryRepoRequest(string subscriptionId, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -132,12 +132,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataFactoryData>> ConfigureFactoryRepoAsync(string subscriptionId, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryData>> ConfigureFactoryRepoAsync(string subscriptionId, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
             using var message = CreateConfigureFactoryRepoRequest(subscriptionId, locationId, factoryRepoUpdate);
@@ -161,12 +160,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataFactoryData> ConfigureFactoryRepo(string subscriptionId, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public Response<DataFactoryData> ConfigureFactoryRepo(string subscriptionId, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
             using var message = CreateConfigureFactoryRepoRequest(subscriptionId, locationId, factoryRepoUpdate);
@@ -701,9 +699,9 @@ namespace Azure.ResourceManager.DataFactory
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(policy);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(policy);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }

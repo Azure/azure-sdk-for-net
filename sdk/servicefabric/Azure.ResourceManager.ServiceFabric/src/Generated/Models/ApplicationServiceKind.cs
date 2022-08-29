@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The kind of service (Stateless or Stateful).
-    /// Serialized Name: ServiceKind
-    /// </summary>
+    /// <summary> The kind of service (Stateless or Stateful). </summary>
     internal readonly partial struct ApplicationServiceKind : IEquatable<ApplicationServiceKind>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string StatelessValue = "Stateless";
         private const string StatefulValue = "Stateful";
 
-        /// <summary>
-        /// Indicates the service kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero.
-        /// Serialized Name: ServiceKind.Invalid
-        /// </summary>
+        /// <summary> Indicates the service kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
         public static ApplicationServiceKind Invalid { get; } = new ApplicationServiceKind(InvalidValue);
-        /// <summary>
-        /// Does not use Service Fabric to make its state highly available or reliable. The value is 1.
-        /// Serialized Name: ServiceKind.Stateless
-        /// </summary>
+        /// <summary> Does not use Service Fabric to make its state highly available or reliable. The value is 1. </summary>
         public static ApplicationServiceKind Stateless { get; } = new ApplicationServiceKind(StatelessValue);
-        /// <summary>
-        /// Uses Service Fabric to make its state or part of its state highly available and reliable. The value is 2.
-        /// Serialized Name: ServiceKind.Stateful
-        /// </summary>
+        /// <summary> Uses Service Fabric to make its state or part of its state highly available and reliable. The value is 2. </summary>
         public static ApplicationServiceKind Stateful { get; } = new ApplicationServiceKind(StatefulValue);
         /// <summary> Determines if two <see cref="ApplicationServiceKind"/> values are the same. </summary>
         public static bool operator ==(ApplicationServiceKind left, ApplicationServiceKind right) => left.Equals(right);

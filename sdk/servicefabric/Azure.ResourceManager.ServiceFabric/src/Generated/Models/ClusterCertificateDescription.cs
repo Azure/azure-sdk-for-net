@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes the certificate details.
-    /// Serialized Name: CertificateDescription
-    /// </summary>
+    /// <summary> Describes the certificate details. </summary>
     public partial class ClusterCertificateDescription
     {
         /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
-        /// <param name="thumbprint">
-        /// Thumbprint of the primary certificate.
-        /// Serialized Name: CertificateDescription.thumbprint
-        /// </param>
+        /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> is null. </exception>
         public ClusterCertificateDescription(BinaryData thumbprint)
         {
@@ -32,18 +26,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
-        /// <param name="thumbprint">
-        /// Thumbprint of the primary certificate.
-        /// Serialized Name: CertificateDescription.thumbprint
-        /// </param>
-        /// <param name="thumbprintSecondary">
-        /// Thumbprint of the secondary certificate.
-        /// Serialized Name: CertificateDescription.thumbprintSecondary
-        /// </param>
-        /// <param name="x509StoreName">
-        /// The local certificate store location.
-        /// Serialized Name: CertificateDescription.x509StoreName
-        /// </param>
+        /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
+        /// <param name="thumbprintSecondary"> Thumbprint of the secondary certificate. </param>
+        /// <param name="x509StoreName"> The local certificate store location. </param>
         internal ClusterCertificateDescription(BinaryData thumbprint, string thumbprintSecondary, ClusterCertificateStoreName? x509StoreName)
         {
             Thumbprint = thumbprint;
@@ -53,18 +38,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary>
         /// Thumbprint of the primary certificate.
-        /// Serialized Name: CertificateDescription.thumbprint
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
         public BinaryData Thumbprint { get; set; }
-        /// <summary>
-        /// Thumbprint of the secondary certificate.
-        /// Serialized Name: CertificateDescription.thumbprintSecondary
-        /// </summary>
+        /// <summary> Thumbprint of the secondary certificate. </summary>
         public string ThumbprintSecondary { get; set; }
-        /// <summary>
-        /// The local certificate store location.
-        /// Serialized Name: CertificateDescription.x509StoreName
-        /// </summary>
+        /// <summary> The local certificate store location. </summary>
         public ClusterCertificateStoreName? X509StoreName { get; set; }
     }
 }

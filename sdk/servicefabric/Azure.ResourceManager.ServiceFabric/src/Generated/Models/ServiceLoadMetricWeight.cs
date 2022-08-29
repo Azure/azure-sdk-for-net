@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Determines the metric weight relative to the other metrics that are configured for this service. During runtime, if two metrics end up in conflict, the Cluster Resource Manager prefers the metric with the higher weight.
-    /// Serialized Name: ServiceLoadMetricWeight
-    /// </summary>
+    /// <summary> Determines the metric weight relative to the other metrics that are configured for this service. During runtime, if two metrics end up in conflict, the Cluster Resource Manager prefers the metric with the higher weight. </summary>
     public readonly partial struct ServiceLoadMetricWeight : IEquatable<ServiceLoadMetricWeight>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary>
-        /// Disables resource balancing for this metric. This value is zero.
-        /// Serialized Name: ServiceLoadMetricWeight.Zero
-        /// </summary>
+        /// <summary> Disables resource balancing for this metric. This value is zero. </summary>
         public static ServiceLoadMetricWeight Zero { get; } = new ServiceLoadMetricWeight(ZeroValue);
-        /// <summary>
-        /// Specifies the metric weight of the service load as Low. The value is 1.
-        /// Serialized Name: ServiceLoadMetricWeight.Low
-        /// </summary>
+        /// <summary> Specifies the metric weight of the service load as Low. The value is 1. </summary>
         public static ServiceLoadMetricWeight Low { get; } = new ServiceLoadMetricWeight(LowValue);
-        /// <summary>
-        /// Specifies the metric weight of the service load as Medium. The value is 2.
-        /// Serialized Name: ServiceLoadMetricWeight.Medium
-        /// </summary>
+        /// <summary> Specifies the metric weight of the service load as Medium. The value is 2. </summary>
         public static ServiceLoadMetricWeight Medium { get; } = new ServiceLoadMetricWeight(MediumValue);
-        /// <summary>
-        /// Specifies the metric weight of the service load as High. The value is 3.
-        /// Serialized Name: ServiceLoadMetricWeight.High
-        /// </summary>
+        /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
         public static ServiceLoadMetricWeight High { get; } = new ServiceLoadMetricWeight(HighValue);
         /// <summary> Determines if two <see cref="ServiceLoadMetricWeight"/> values are the same. </summary>
         public static bool operator ==(ServiceLoadMetricWeight left, ServiceLoadMetricWeight right) => left.Equals(right);

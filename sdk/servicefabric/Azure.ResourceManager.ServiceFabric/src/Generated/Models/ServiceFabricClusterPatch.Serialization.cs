@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("upgradeWave");
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradePauseStartTimestampUtc))
+            if (Optional.IsDefined(UpgradePauseStartOn))
             {
                 writer.WritePropertyName("upgradePauseStartTimestampUtc");
-                writer.WriteStringValue(UpgradePauseStartTimestampUtc.Value, "O");
+                writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
             }
-            if (Optional.IsDefined(UpgradePauseEndTimestampUtc))
+            if (Optional.IsDefined(UpgradePauseEndOn))
             {
                 writer.WritePropertyName("upgradePauseEndTimestampUtc");
-                writer.WriteStringValue(UpgradePauseEndTimestampUtc.Value, "O");
+                writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
             }
             if (Optional.IsDefined(IsWaveUpgradePaused))
             {

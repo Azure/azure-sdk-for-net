@@ -1974,7 +1974,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateNoRetryClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
 

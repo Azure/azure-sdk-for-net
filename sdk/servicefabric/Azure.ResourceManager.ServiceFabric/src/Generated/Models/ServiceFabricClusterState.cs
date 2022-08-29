@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     ///   - AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.
     ///   - Ready - Indicates that the cluster is in a stable state.
     /// 
-    /// Serialized Name: ClusterState
     /// </summary>
     public readonly partial struct ServiceFabricClusterState : IEquatable<ServiceFabricClusterState>
     {
@@ -48,55 +47,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string AutoScaleValue = "AutoScale";
         private const string ReadyValue = "Ready";
 
-        /// <summary>
-        /// WaitingForNodes
-        /// Serialized Name: ClusterState.WaitingForNodes
-        /// </summary>
+        /// <summary> WaitingForNodes. </summary>
         public static ServiceFabricClusterState WaitingForNodes { get; } = new ServiceFabricClusterState(WaitingForNodesValue);
-        /// <summary>
-        /// Deploying
-        /// Serialized Name: ClusterState.Deploying
-        /// </summary>
+        /// <summary> Deploying. </summary>
         public static ServiceFabricClusterState Deploying { get; } = new ServiceFabricClusterState(DeployingValue);
-        /// <summary>
-        /// BaselineUpgrade
-        /// Serialized Name: ClusterState.BaselineUpgrade
-        /// </summary>
+        /// <summary> BaselineUpgrade. </summary>
         public static ServiceFabricClusterState BaselineUpgrade { get; } = new ServiceFabricClusterState(BaselineUpgradeValue);
-        /// <summary>
-        /// UpdatingUserConfiguration
-        /// Serialized Name: ClusterState.UpdatingUserConfiguration
-        /// </summary>
+        /// <summary> UpdatingUserConfiguration. </summary>
         public static ServiceFabricClusterState UpdatingUserConfiguration { get; } = new ServiceFabricClusterState(UpdatingUserConfigurationValue);
-        /// <summary>
-        /// UpdatingUserCertificate
-        /// Serialized Name: ClusterState.UpdatingUserCertificate
-        /// </summary>
+        /// <summary> UpdatingUserCertificate. </summary>
         public static ServiceFabricClusterState UpdatingUserCertificate { get; } = new ServiceFabricClusterState(UpdatingUserCertificateValue);
-        /// <summary>
-        /// UpdatingInfrastructure
-        /// Serialized Name: ClusterState.UpdatingInfrastructure
-        /// </summary>
+        /// <summary> UpdatingInfrastructure. </summary>
         public static ServiceFabricClusterState UpdatingInfrastructure { get; } = new ServiceFabricClusterState(UpdatingInfrastructureValue);
-        /// <summary>
-        /// EnforcingClusterVersion
-        /// Serialized Name: ClusterState.EnforcingClusterVersion
-        /// </summary>
+        /// <summary> EnforcingClusterVersion. </summary>
         public static ServiceFabricClusterState EnforcingClusterVersion { get; } = new ServiceFabricClusterState(EnforcingClusterVersionValue);
-        /// <summary>
-        /// UpgradeServiceUnreachable
-        /// Serialized Name: ClusterState.UpgradeServiceUnreachable
-        /// </summary>
+        /// <summary> UpgradeServiceUnreachable. </summary>
         public static ServiceFabricClusterState UpgradeServiceUnreachable { get; } = new ServiceFabricClusterState(UpgradeServiceUnreachableValue);
-        /// <summary>
-        /// AutoScale
-        /// Serialized Name: ClusterState.AutoScale
-        /// </summary>
+        /// <summary> AutoScale. </summary>
         public static ServiceFabricClusterState AutoScale { get; } = new ServiceFabricClusterState(AutoScaleValue);
-        /// <summary>
-        /// Ready
-        /// Serialized Name: ClusterState.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         public static ServiceFabricClusterState Ready { get; } = new ServiceFabricClusterState(ReadyValue);
         /// <summary> Determines if two <see cref="ServiceFabricClusterState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricClusterState left, ServiceFabricClusterState right) => left.Equals(right);

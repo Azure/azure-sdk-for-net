@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("manifestName");
                 writer.WriteStringValue(ManifestName);
             }
-            if (Optional.IsDefined(Hls))
+            if (Optional.IsDefined(HttpLiveStreaming))
             {
                 writer.WritePropertyName("hls");
-                writer.WriteObjectValue(Hls);
+                writer.WriteObjectValue(HttpLiveStreaming);
             }
             if (Optional.IsDefined(OutputSnapTime))
             {

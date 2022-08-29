@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The UpgradableVersionsDescription.
-    /// Serialized Name: UpgradableVersionsDescription
-    /// </summary>
+    /// <summary> The UpgradableVersionsDescription. </summary>
     public partial class UpgradableVersionsDescription
     {
         /// <summary> Initializes a new instance of UpgradableVersionsDescription. </summary>
-        /// <param name="targetVersion">
-        /// The target code version.
-        /// Serialized Name: UpgradableVersionsDescription.targetVersion
-        /// </param>
+        /// <param name="targetVersion"> The target code version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetVersion"/> is null. </exception>
         public UpgradableVersionsDescription(string targetVersion)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TargetVersion = targetVersion;
         }
 
-        /// <summary>
-        /// The target code version.
-        /// Serialized Name: UpgradableVersionsDescription.targetVersion
-        /// </summary>
+        /// <summary> The target code version. </summary>
         public string TargetVersion { get; }
     }
 }

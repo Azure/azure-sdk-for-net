@@ -7,36 +7,21 @@
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Port range details
-    /// Serialized Name: EndpointRangeDescription
-    /// </summary>
+    /// <summary> Port range details. </summary>
     public partial class ClusterEndpointRangeDescription
     {
         /// <summary> Initializes a new instance of ClusterEndpointRangeDescription. </summary>
-        /// <param name="startPort">
-        /// Starting port of a range of ports
-        /// Serialized Name: EndpointRangeDescription.startPort
-        /// </param>
-        /// <param name="endPort">
-        /// End port of a range of ports
-        /// Serialized Name: EndpointRangeDescription.endPort
-        /// </param>
+        /// <param name="startPort"> Starting port of a range of ports. </param>
+        /// <param name="endPort"> End port of a range of ports. </param>
         public ClusterEndpointRangeDescription(int startPort, int endPort)
         {
             StartPort = startPort;
             EndPort = endPort;
         }
 
-        /// <summary>
-        /// Starting port of a range of ports
-        /// Serialized Name: EndpointRangeDescription.startPort
-        /// </summary>
+        /// <summary> Starting port of a range of ports. </summary>
         public int StartPort { get; set; }
-        /// <summary>
-        /// End port of a range of ports
-        /// Serialized Name: EndpointRangeDescription.endPort
-        /// </summary>
+        /// <summary> End port of a range of ports. </summary>
         public int EndPort { get; set; }
     }
 }

@@ -583,6 +583,22 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
+        #region Recognize Custom Entities
+
+        public override RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntities)} not supported by API versions v3.0, v3.1.");
+
+        public override RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntities)} not supported by API versions v3.0, v3.1.");
+
+        public override Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntitiesAsync)} not supported by API versions v3.0, v3.1.");
+
+        public override Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartRecognizeCustomEntitiesAsync)} not supported by API versions v3.0, v3.1.");
+
+        #endregion
+
         #region Analyze Sentiment
 
         public override async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
@@ -1428,6 +1444,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
+        public override Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+        }
+
+        public override void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+        }
+
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             options ??= new AnalyzeActionsOptions();
@@ -1502,6 +1528,45 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
             return tasks;
         }
+
+        #endregion
+
+        #region Single Label Classify
+
+        public override ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartSingleLabelClassify)} not supported by API versions v3.0, v3.1.");
+        public override ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartSingleLabelClassify)} not supported by API versions v3.0, v3.1.");
+        public override Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartSingleLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+        public override Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartSingleLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+
+        #endregion
+
+        #region Multi Label Classify
+
+        public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartMultiLabelClassify)} not supported by API versions v3.0, v3.1.");
+        public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartMultiLabelClassify)} not supported by API versions v3.0, v3.1.");
+        public override Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartMultiLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+        public override Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(StartMultiLabelClassifyAsync)} not supported by API versions v3.0, v3.1.");
+
+        #endregion
+
+        #region Long Running Operations
+
+        public override Task<Response<Models.AnalyzeTextJobState>> AnalyzeTextJobStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatusAsync)} not supported by API versions v3.0, v3.1.");
+        public override Response<Models.AnalyzeTextJobState> AnalyzeTextJobStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatus)} not supported by API versions v3.0, v3.1.");
+        public override Task<Response<Models.AnalyzeTextJobState>> AnalyzeTextJobStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatusNextPageAsync)} not supported by API versions v3.0, v3.1.");
+        public override Response<Models.AnalyzeTextJobState> AnalyzeTextJobStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException($"{nameof(AnalyzeTextJobStatusNextPage)} not supported by API versions v3.0, v3.1.");
 
         #endregion
 

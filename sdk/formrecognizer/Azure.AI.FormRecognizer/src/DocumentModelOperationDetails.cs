@@ -8,34 +8,70 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("GetOperationResponse")]
+    [CodeGenModel("OperationDetails")]
     public partial class DocumentModelOperationDetails
     {
-        // This property is set by the DocumentAnalysisModelFactory when mocking this class.
-        private readonly ResponseError _mockError;
-
         /// <summary>
-        /// Initializes a new instance of ModelOperation. Used by the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of DocumentModelOperationDetails. Used by the <see cref="DocumentAnalysisModelFactory"/>
+        /// for mocking.
         /// </summary>
-        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
+        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error)
         {
-            _mockError = error;
-            Result = result;
+            OperationId = operationId;
+            Status = status;
+            PercentCompleted = percentCompleted;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            Kind = kind;
+            ResourceLocation = resourceLocation;
+            ApiVersion = apiVersion;
+            Tags = tags;
+            Error = error;
         }
 
-        /// <summary> Operation result upon success. </summary>
-        //TODO service is looking into fixing this so it has different return types that we can adapt.
-        [CodeGenMember("Result")]
-        public DocumentModelDetails Result { get; }
+        /// <summary>
+        /// Date and time (UTC) when the operation was created.
+        /// </summary>
+        [CodeGenMember("CreatedDateTime")]
+        public DateTimeOffset CreatedOn { get; }
 
-        /// <summary> Encountered error. </summary>
-        [CodeGenMember("Error")]
-        private readonly JsonElement _error;
+        /// <summary>
+        /// Date and time (UTC) when the operation was last updated.
+        /// </summary>
+        [CodeGenMember("LastUpdatedDateTime")]
+        public DateTimeOffset LastUpdatedOn { get; }
+
+        /// <summary>
+        /// Type of operation.
+        /// </summary>
+        [CodeGenMember("Kind")]
+        public DocumentOperationKind Kind { get; internal set; }
+
+        /// <summary>
+        /// URI of the resource targeted by this operation.
+        /// </summary>
+        public Uri ResourceLocation { get; }
 
         /// <summary>
         /// Gets the error that occurred during the operation. The value is <c>null</c> if the operation succeeds.
         /// </summary>
-        public ResponseError Error => _mockError
-            ?? (_error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText()));
+        public ResponseError Error { get; private set; }
+
+        // The service returns a custom DocumentAnalysis.Error object but we want to expose
+        // Core's ResponseError instead. To accomplish this, we keep the returned error as a
+        // JsonElement and manually serialize it to ResponseError.
+        [CodeGenMember("Error")]
+        internal JsonElement JsonError
+        {
+            get => throw new InvalidOperationException();
+            private set
+            {
+                Error = value.ValueKind == JsonValueKind.Undefined
+                    ? null
+                    : JsonSerializer.Deserialize<ResponseError>(value.GetRawText());
+            }
+        }
+
+        internal string ApiVersion { get; }
     }
 }

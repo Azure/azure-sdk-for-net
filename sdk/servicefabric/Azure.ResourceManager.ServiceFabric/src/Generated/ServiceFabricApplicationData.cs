@@ -32,54 +32,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// Describes the managed identities for an Azure resource.
-        /// Serialized Name: ApplicationResource.identity
-        /// </param>
-        /// <param name="typeVersion">
-        /// The version of the application type as defined in the application manifest.
-        /// Serialized Name: ApplicationResource.properties.typeVersion
-        /// </param>
-        /// <param name="parameters">
-        /// List of application parameters with overridden values from their default values specified in the application manifest.
-        /// Serialized Name: ApplicationResource.properties.parameters
-        /// </param>
-        /// <param name="upgradePolicy">
-        /// Describes the policy for a monitored application upgrade.
-        /// Serialized Name: ApplicationResource.properties.upgradePolicy
-        /// </param>
-        /// <param name="minimumNodes">
-        /// The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property.
-        /// Serialized Name: ApplicationResource.properties.minimumNodes
-        /// </param>
-        /// <param name="maximumNodes">
-        /// The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node.
-        /// Serialized Name: ApplicationResource.properties.maximumNodes
-        /// </param>
-        /// <param name="removeApplicationCapacity">
-        /// Remove the current application capacity settings.
-        /// Serialized Name: ApplicationResource.properties.removeApplicationCapacity
-        /// </param>
-        /// <param name="metrics">
-        /// List of application capacity metric description.
-        /// Serialized Name: ApplicationResource.properties.metrics
-        /// </param>
-        /// <param name="managedIdentities">
-        /// List of user assigned identities for the application, each mapped to a friendly name.
-        /// Serialized Name: ApplicationResource.properties.managedIdentities
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current deployment or provisioning state, which only appears in the response
-        /// Serialized Name: ApplicationResource.properties.provisioningState
-        /// </param>
-        /// <param name="typeName">
-        /// The application type name as defined in the application manifest.
-        /// Serialized Name: ApplicationResource.properties.typeName
-        /// </param>
-        /// <param name="etag">
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </param>
+        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
+        /// <param name="typeVersion"> The version of the application type as defined in the application manifest. </param>
+        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
+        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
+        /// <param name="minimumNodes"> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </param>
+        /// <param name="maximumNodes"> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </param>
+        /// <param name="removeApplicationCapacity"> Remove the current application capacity settings. </param>
+        /// <param name="metrics"> List of application capacity metric description. </param>
+        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="typeName"> The application type name as defined in the application manifest. </param>
+        /// <param name="etag"> Azure resource etag. </param>
         internal ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -96,65 +60,29 @@ namespace Azure.ResourceManager.ServiceFabric
             ETag = etag;
         }
 
-        /// <summary>
-        /// Describes the managed identities for an Azure resource.
-        /// Serialized Name: ApplicationResource.identity
-        /// </summary>
+        /// <summary> Describes the managed identities for an Azure resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The version of the application type as defined in the application manifest.
-        /// Serialized Name: ApplicationResource.properties.typeVersion
-        /// </summary>
+        /// <summary> The version of the application type as defined in the application manifest. </summary>
         public string TypeVersion { get; set; }
-        /// <summary>
-        /// List of application parameters with overridden values from their default values specified in the application manifest.
-        /// Serialized Name: ApplicationResource.properties.parameters
-        /// </summary>
+        /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Describes the policy for a monitored application upgrade.
-        /// Serialized Name: ApplicationResource.properties.upgradePolicy
-        /// </summary>
+        /// <summary> Describes the policy for a monitored application upgrade. </summary>
         public ApplicationUpgradePolicy UpgradePolicy { get; set; }
-        /// <summary>
-        /// The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property.
-        /// Serialized Name: ApplicationResource.properties.minimumNodes
-        /// </summary>
+        /// <summary> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </summary>
         public long? MinimumNodes { get; set; }
-        /// <summary>
-        /// The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node.
-        /// Serialized Name: ApplicationResource.properties.maximumNodes
-        /// </summary>
+        /// <summary> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </summary>
         public long? MaximumNodes { get; set; }
-        /// <summary>
-        /// Remove the current application capacity settings.
-        /// Serialized Name: ApplicationResource.properties.removeApplicationCapacity
-        /// </summary>
+        /// <summary> Remove the current application capacity settings. </summary>
         public bool? RemoveApplicationCapacity { get; set; }
-        /// <summary>
-        /// List of application capacity metric description.
-        /// Serialized Name: ApplicationResource.properties.metrics
-        /// </summary>
+        /// <summary> List of application capacity metric description. </summary>
         public IList<ApplicationMetricDescription> Metrics { get; }
-        /// <summary>
-        /// List of user assigned identities for the application, each mapped to a friendly name.
-        /// Serialized Name: ApplicationResource.properties.managedIdentities
-        /// </summary>
+        /// <summary> List of user assigned identities for the application, each mapped to a friendly name. </summary>
         public IList<ApplicationUserAssignedIdentity> ManagedIdentities { get; }
-        /// <summary>
-        /// The current deployment or provisioning state, which only appears in the response
-        /// Serialized Name: ApplicationResource.properties.provisioningState
-        /// </summary>
+        /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The application type name as defined in the application manifest.
-        /// Serialized Name: ApplicationResource.properties.typeName
-        /// </summary>
+        /// <summary> The application type name as defined in the application manifest. </summary>
         public string TypeName { get; set; }
-        /// <summary>
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </summary>
+        /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }
 }

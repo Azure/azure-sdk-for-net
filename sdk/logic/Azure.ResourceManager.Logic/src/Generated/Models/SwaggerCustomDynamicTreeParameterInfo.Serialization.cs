@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("parameterReference");
                 writer.WriteStringValue(ParameterReference);
             }
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required");
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             writer.WriteEndObject();
         }

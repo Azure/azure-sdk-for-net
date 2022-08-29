@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The settings to enable AAD authentication on the cluster.
-    /// Serialized Name: AzureActiveDirectory
-    /// </summary>
+    /// <summary> The settings to enable AAD authentication on the cluster. </summary>
     public partial class ClusterAadSetting
     {
         /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
-        /// <param name="tenantId">
-        /// Azure active directory tenant id.
-        /// Serialized Name: AzureActiveDirectory.tenantId
-        /// </param>
-        /// <param name="clusterApplication">
-        /// Azure active directory cluster application id.
-        /// Serialized Name: AzureActiveDirectory.clusterApplication
-        /// </param>
-        /// <param name="clientApplication">
-        /// Azure active directory client application id.
-        /// Serialized Name: AzureActiveDirectory.clientApplication
-        /// </param>
+        /// <param name="tenantId"> Azure active directory tenant id. </param>
+        /// <param name="clusterApplication"> Azure active directory cluster application id. </param>
+        /// <param name="clientApplication"> Azure active directory client application id. </param>
         internal ClusterAadSetting(Guid? tenantId, string clusterApplication, string clientApplication)
         {
             TenantId = tenantId;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ClientApplication = clientApplication;
         }
 
-        /// <summary>
-        /// Azure active directory tenant id.
-        /// Serialized Name: AzureActiveDirectory.tenantId
-        /// </summary>
+        /// <summary> Azure active directory tenant id. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// Azure active directory cluster application id.
-        /// Serialized Name: AzureActiveDirectory.clusterApplication
-        /// </summary>
+        /// <summary> Azure active directory cluster application id. </summary>
         public string ClusterApplication { get; set; }
-        /// <summary>
-        /// Azure active directory client application id.
-        /// Serialized Name: AzureActiveDirectory.clientApplication
-        /// </summary>
+        /// <summary> Azure active directory client application id. </summary>
         public string ClientApplication { get; set; }
     }
 }

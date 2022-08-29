@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The regional quota capability.
-    /// Serialized Name: QuotaCapability
-    /// </summary>
+    /// <summary> The regional quota capability. </summary>
     public partial class QuotaCapability
     {
         /// <summary> Initializes a new instance of QuotaCapability. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of QuotaCapability. </summary>
-        /// <param name="coresUsed">
-        /// The number of cores used in the subscription.
-        /// Serialized Name: QuotaCapability.coresUsed
-        /// </param>
-        /// <param name="maxCoresAllowed">
-        /// The number of cores that the subscription allowed.
-        /// Serialized Name: QuotaCapability.maxCoresAllowed
-        /// </param>
-        /// <param name="regionalQuotas">
-        /// The list of region quota capabilities.
-        /// Serialized Name: QuotaCapability.regionalQuotas
-        /// </param>
+        /// <param name="coresUsed"> The number of cores used in the subscription. </param>
+        /// <param name="maxCoresAllowed"> The number of cores that the subscription allowed. </param>
+        /// <param name="regionalQuotas"> The list of region quota capabilities. </param>
         internal QuotaCapability(long? coresUsed, long? maxCoresAllowed, IReadOnlyList<RegionalQuotaCapability> regionalQuotas)
         {
             CoresUsed = coresUsed;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             RegionalQuotas = regionalQuotas;
         }
 
-        /// <summary>
-        /// The number of cores used in the subscription.
-        /// Serialized Name: QuotaCapability.coresUsed
-        /// </summary>
+        /// <summary> The number of cores used in the subscription. </summary>
         public long? CoresUsed { get; }
-        /// <summary>
-        /// The number of cores that the subscription allowed.
-        /// Serialized Name: QuotaCapability.maxCoresAllowed
-        /// </summary>
+        /// <summary> The number of cores that the subscription allowed. </summary>
         public long? MaxCoresAllowed { get; }
-        /// <summary>
-        /// The list of region quota capabilities.
-        /// Serialized Name: QuotaCapability.regionalQuotas
-        /// </summary>
+        /// <summary> The list of region quota capabilities. </summary>
         public IReadOnlyList<RegionalQuotaCapability> RegionalQuotas { get; }
     }
 }

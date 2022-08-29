@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public virtual async Task<Response<StringDictionary>> CreateOrUpdateAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateAppSettingsAsync(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public virtual Response<StringDictionary> CreateOrUpdateAppSettings(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceConfigurationDictionary> CreateOrUpdateAppSettings(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public virtual async Task<Response<StringDictionary>> CreateOrUpdateFunctionAppSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateFunctionAppSettingsAsync(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public virtual Response<StringDictionary> CreateOrUpdateFunctionAppSettings(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceConfigurationDictionary> CreateOrUpdateFunctionAppSettings(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -817,10 +817,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteFunctionOverviewARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StaticSiteFunctionOverviewARMResource> GetStaticSiteFunctionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteFunctionOverview> GetStaticSiteFunctionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StaticSiteFunctionOverviewARMResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StaticSiteFunctionOverview>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
                 scope.Start();
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<StaticSiteFunctionOverviewARMResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StaticSiteFunctionOverview>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
                 scope.Start();
@@ -859,10 +859,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteFunctionOverviewARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StaticSiteFunctionOverviewARMResource> GetStaticSiteFunctions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteFunctionOverview> GetStaticSiteFunctions(CancellationToken cancellationToken = default)
         {
-            Page<StaticSiteFunctionOverviewARMResource> FirstPageFunc(int? pageSizeHint)
+            Page<StaticSiteFunctionOverview> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
                 scope.Start();
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<StaticSiteFunctionOverviewARMResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StaticSiteFunctionOverview> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
                 scope.Start();
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StringDictionary>> GetAppSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceConfigurationDictionary>> GetAppSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetAppSettings");
             scope.Start();
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StringDictionary> GetAppSettings(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceConfigurationDictionary> GetAppSettings(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetAppSettings");
             scope.Start();
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteFunctionAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StringDictionary>> GetFunctionAppSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceConfigurationDictionary>> GetFunctionAppSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetFunctionAppSettings");
             scope.Start();
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteFunctionAppSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StringDictionary> GetFunctionAppSettings(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceConfigurationDictionary> GetFunctionAppSettings(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetFunctionAppSettings");
             scope.Start();
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StringDictionary>> GetStaticSiteSecretsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceConfigurationDictionary>> GetStaticSiteSecretsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteSecrets");
             scope.Start();
@@ -1055,7 +1055,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StringDictionary> GetStaticSiteSecrets(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceConfigurationDictionary> GetStaticSiteSecrets(CancellationToken cancellationToken = default)
         {
             using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteSecrets");
             scope.Start();

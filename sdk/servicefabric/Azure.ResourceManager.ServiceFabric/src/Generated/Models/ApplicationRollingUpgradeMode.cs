@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The mode used to monitor health during a rolling upgrade. The values are UnmonitoredAuto, UnmonitoredManual, and Monitored.
-    /// Serialized Name: RollingUpgradeMode
-    /// </summary>
+    /// <summary> The mode used to monitor health during a rolling upgrade. The values are UnmonitoredAuto, UnmonitoredManual, and Monitored. </summary>
     public readonly partial struct ApplicationRollingUpgradeMode : IEquatable<ApplicationRollingUpgradeMode>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string UnmonitoredManualValue = "UnmonitoredManual";
         private const string MonitoredValue = "Monitored";
 
-        /// <summary>
-        /// Indicates the upgrade mode is invalid. All Service Fabric enumerations have the invalid type. The value is zero.
-        /// Serialized Name: RollingUpgradeMode.Invalid
-        /// </summary>
+        /// <summary> Indicates the upgrade mode is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
         public static ApplicationRollingUpgradeMode Invalid { get; } = new ApplicationRollingUpgradeMode(InvalidValue);
-        /// <summary>
-        /// The upgrade will proceed automatically without performing any health monitoring. The value is 1
-        /// Serialized Name: RollingUpgradeMode.UnmonitoredAuto
-        /// </summary>
+        /// <summary> The upgrade will proceed automatically without performing any health monitoring. The value is 1. </summary>
         public static ApplicationRollingUpgradeMode UnmonitoredAuto { get; } = new ApplicationRollingUpgradeMode(UnmonitoredAutoValue);
-        /// <summary>
-        /// The upgrade will stop after completing each upgrade domain, giving the opportunity to manually monitor health before proceeding. The value is 2
-        /// Serialized Name: RollingUpgradeMode.UnmonitoredManual
-        /// </summary>
+        /// <summary> The upgrade will stop after completing each upgrade domain, giving the opportunity to manually monitor health before proceeding. The value is 2. </summary>
         public static ApplicationRollingUpgradeMode UnmonitoredManual { get; } = new ApplicationRollingUpgradeMode(UnmonitoredManualValue);
-        /// <summary>
-        /// The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. The value is 3
-        /// Serialized Name: RollingUpgradeMode.Monitored
-        /// </summary>
+        /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. The value is 3. </summary>
         public static ApplicationRollingUpgradeMode Monitored { get; } = new ApplicationRollingUpgradeMode(MonitoredValue);
         /// <summary> Determines if two <see cref="ApplicationRollingUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(ApplicationRollingUpgradeMode left, ApplicationRollingUpgradeMode right) => left.Equals(right);

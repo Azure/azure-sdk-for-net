@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Enumerates the ways that a service can be partitioned.
-    /// Serialized Name: PartitionScheme
-    /// </summary>
+    /// <summary> Enumerates the ways that a service can be partitioned. </summary>
     internal readonly partial struct ApplicationPartitionScheme : IEquatable<ApplicationPartitionScheme>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string UniformInt64RangeValue = "UniformInt64Range";
         private const string NamedValue = "Named";
 
-        /// <summary>
-        /// Indicates the partition kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero.
-        /// Serialized Name: PartitionScheme.Invalid
-        /// </summary>
+        /// <summary> Indicates the partition kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
         public static ApplicationPartitionScheme Invalid { get; } = new ApplicationPartitionScheme(InvalidValue);
-        /// <summary>
-        /// Indicates that the partition is based on string names, and is a SingletonPartitionSchemeDescription object, The value is 1.
-        /// Serialized Name: PartitionScheme.Singleton
-        /// </summary>
+        /// <summary> Indicates that the partition is based on string names, and is a SingletonPartitionSchemeDescription object, The value is 1. </summary>
         public static ApplicationPartitionScheme Singleton { get; } = new ApplicationPartitionScheme(SingletonValue);
-        /// <summary>
-        /// Indicates that the partition is based on Int64 key ranges, and is a UniformInt64RangePartitionSchemeDescription object. The value is 2.
-        /// Serialized Name: PartitionScheme.UniformInt64Range
-        /// </summary>
+        /// <summary> Indicates that the partition is based on Int64 key ranges, and is a UniformInt64RangePartitionSchemeDescription object. The value is 2. </summary>
         public static ApplicationPartitionScheme UniformInt64Range { get; } = new ApplicationPartitionScheme(UniformInt64RangeValue);
-        /// <summary>
-        /// Indicates that the partition is based on string names, and is a NamedPartitionSchemeDescription object. The value is 3
-        /// Serialized Name: PartitionScheme.Named
-        /// </summary>
+        /// <summary> Indicates that the partition is based on string names, and is a NamedPartitionSchemeDescription object. The value is 3. </summary>
         public static ApplicationPartitionScheme Named { get; } = new ApplicationPartitionScheme(NamedValue);
         /// <summary> Determines if two <see cref="ApplicationPartitionScheme"/> values are the same. </summary>
         public static bool operator ==(ApplicationPartitionScheme left, ApplicationPartitionScheme right) => left.Equals(right);

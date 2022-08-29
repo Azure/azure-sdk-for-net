@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Backend Description. </summary>
         public string Description { get; set; }
         /// <summary> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
-        public string ResourceId { get; set; }
+        public Uri ResourceUri { get; set; }
         /// <summary> Backend Properties contract. </summary>
         internal BackendProperties Properties { get; set; }
         /// <summary> Backend Service Fabric Cluster Properties. </summary>

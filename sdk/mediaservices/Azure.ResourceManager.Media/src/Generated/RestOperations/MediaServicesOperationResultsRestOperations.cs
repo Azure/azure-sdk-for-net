@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string locationName, string operationId)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation locationName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,12 +61,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MediaServiceData>> GetAsync(string subscriptionId, string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MediaServicesAccountData>> GetAsync(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetRequest(subscriptionId, locationName, operationId);
@@ -75,14 +74,14 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaServiceData value = default;
+                        MediaServicesAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaServiceData.DeserializeMediaServiceData(document.RootElement);
+                        value = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
                 case 404:
-                    return Response.FromValue((MediaServiceData)null, message.Response);
+                    return Response.FromValue((MediaServicesAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -93,12 +92,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MediaServiceData> Get(string subscriptionId, string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MediaServicesAccountData> Get(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetRequest(subscriptionId, locationName, operationId);
@@ -107,14 +105,14 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaServiceData value = default;
+                        MediaServicesAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaServiceData.DeserializeMediaServiceData(document.RootElement);
+                        value = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
                 case 404:
-                    return Response.FromValue((MediaServiceData)null, message.Response);
+                    return Response.FromValue((MediaServicesAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster.
-    /// Serialized Name: SfZonalUpgradeMode
-    /// </summary>
+    /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
     public readonly partial struct SfZonalUpgradeMode : IEquatable<SfZonalUpgradeMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string ParallelValue = "Parallel";
         private const string HierarchicalValue = "Hierarchical";
 
-        /// <summary>
-        /// VMs under the node type are grouped into UDs and ignore the zone info in five UDs. This setting causes UDs across all zones to be upgraded at the same time. This deployment mode is faster for upgrades, we don&apos;t recommend it because it goes against the SDP guidelines, which state that the updates should be applied to one zone at a time.
-        /// Serialized Name: SfZonalUpgradeMode.Parallel
-        /// </summary>
+        /// <summary> VMs under the node type are grouped into UDs and ignore the zone info in five UDs. This setting causes UDs across all zones to be upgraded at the same time. This deployment mode is faster for upgrades, we don&apos;t recommend it because it goes against the SDP guidelines, which state that the updates should be applied to one zone at a time. </summary>
         public static SfZonalUpgradeMode Parallel { get; } = new SfZonalUpgradeMode(ParallelValue);
-        /// <summary>
-        /// If this value is omitted or set to Hierarchical, VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone. This update process is safer for the cluster and the user application.
-        /// Serialized Name: SfZonalUpgradeMode.Hierarchical
-        /// </summary>
+        /// <summary> If this value is omitted or set to Hierarchical, VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone. This update process is safer for the cluster and the user application. </summary>
         public static SfZonalUpgradeMode Hierarchical { get; } = new SfZonalUpgradeMode(HierarchicalValue);
         /// <summary> Determines if two <see cref="SfZonalUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(SfZonalUpgradeMode left, SfZonalUpgradeMode right) => left.Equals(right);

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, AppServiceCertificateInfo>> certificates = default;
+            Optional<IDictionary<string, AppServiceCertificateProperties>> certificates = default;
             Optional<string> distinguishedName = default;
             Optional<string> domainVerificationToken = default;
             Optional<int> validityInYears = default;
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, AppServiceCertificateInfo> dictionary = new Dictionary<string, AppServiceCertificateInfo>();
+                            Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceCertificateInfo.DeserializeAppServiceCertificateInfo(property1.Value));
+                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
                             }
                             certificates = dictionary;
                             continue;

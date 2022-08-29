@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new AppServicePlanData(location)
             {
-                //Location = "AZURE_LOCATION",
-                Sku = new SkuDescription
+                Sku = new AppServiceSkuDescription
                 {
-                Name = "S1",
-                Tier = "STANDARD",
-                Capacity =  1
+                    Name = "S1",
+                    Tier = "STANDARD",
+                    Capacity =  1
                 },
                 IsPerSiteScaling = false,
                 IsXenon = false
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new WebSiteData(location)
             {
-                Reserved = false,
+                IsReserved = false,
                 IsXenon = false,
                 IsHyperV = false,
                 SiteConfig = new SiteConfigProperties
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new StaticSiteData(location)
             {
-                Sku = new SkuDescription()
+                Sku = new AppServiceSkuDescription()
                 {
                     Name = "Free",
                     //Tier = "Basic"
@@ -252,15 +251,15 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #endregion
 
         #region Certificate
-        public static void AssertCertificate(CertificateData certificate1, CertificateData certificate2)
+        public static void AssertCertificate(AppCertificateData certificate1, AppCertificateData certificate2)
         {
             AssertTrackedResource(certificate1, certificate2);
             Assert.AreEqual(certificate1.CanonicalName, certificate2.CanonicalName);
         }
 
-        public static CertificateData GetBasicCertificateData(AzureLocation location)
+        public static AppCertificateData GetBasicCertificateData(AzureLocation location)
         {
-            var data = new CertificateData(location)
+            var data = new AppCertificateData(location)
             {
                 Location = location,
                 HostNames =

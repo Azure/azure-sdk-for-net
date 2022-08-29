@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("vmTemplate");
                 writer.WriteStringValue(VmTemplate);
             }
-            if (Optional.IsDefined(SsoadfsAuthority))
+            if (Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority");
-                writer.WriteStringValue(SsoadfsAuthority);
+                writer.WriteStringValue(SsoAdfsAuthority);
             }
             if (Optional.IsDefined(SsoClientId))
             {
@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<string> customRdpProperty = default;
             Optional<int> maxSessionLimit = default;
             Optional<PersonalDesktopAssignmentType> personalDesktopAssignmentType = default;
-            Optional<LoadBalancerType> loadBalancerType = default;
+            Optional<HostPoolLoadBalancerType> loadBalancerType = default;
             Optional<int> ring = default;
             Optional<bool> validationEnvironment = default;
-            Optional<RegistrationInfoPatch> registrationInfo = default;
+            Optional<HostPoolRegistrationInfoPatch> registrationInfo = default;
             Optional<string> vmTemplate = default;
             Optional<string> ssoadfsAuthority = default;
             Optional<string> ssoClientId = default;
             Optional<string> ssoClientSecretKeyVaultPath = default;
-            Optional<SsoSecretType> ssoSecretType = default;
+            Optional<HostPoolSsoSecretType> ssoSecretType = default;
             Optional<PreferredAppGroupType> preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            loadBalancerType = new LoadBalancerType(property0.Value.GetString());
+                            loadBalancerType = new HostPoolLoadBalancerType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ring"))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            registrationInfo = RegistrationInfoPatch.DeserializeRegistrationInfoPatch(property0.Value);
+                            registrationInfo = HostPoolRegistrationInfoPatch.DeserializeHostPoolRegistrationInfoPatch(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vmTemplate"))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ssoSecretType = new SsoSecretType(property0.Value.GetString());
+                            ssoSecretType = new HostPoolSsoSecretType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("preferredAppGroupType"))

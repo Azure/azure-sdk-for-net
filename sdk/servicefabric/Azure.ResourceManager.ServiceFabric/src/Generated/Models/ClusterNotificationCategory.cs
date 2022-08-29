@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The category of notification.
-    /// Serialized Name: NotificationCategory
-    /// </summary>
+    /// <summary> The category of notification. </summary>
     public readonly partial struct ClusterNotificationCategory : IEquatable<ClusterNotificationCategory>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         private const string WaveProgressValue = "WaveProgress";
 
-        /// <summary>
-        /// Notification will be regarding wave progress.
-        /// Serialized Name: NotificationCategory.WaveProgress
-        /// </summary>
+        /// <summary> Notification will be regarding wave progress. </summary>
         public static ClusterNotificationCategory WaveProgress { get; } = new ClusterNotificationCategory(WaveProgressValue);
         /// <summary> Determines if two <see cref="ClusterNotificationCategory"/> values are the same. </summary>
         public static bool operator ==(ClusterNotificationCategory left, ClusterNotificationCategory right) => left.Equals(right);

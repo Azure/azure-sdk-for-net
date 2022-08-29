@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary>
     /// Describes capacity information for a custom resource balancing metric. This can be used to limit the total consumption of this metric by the services of this application.
     /// 
-    /// Serialized Name: ApplicationMetricDescription
     /// </summary>
     public partial class ApplicationMetricDescription
     {
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationMetricDescription. </summary>
-        /// <param name="name">
-        /// The name of the metric.
-        /// Serialized Name: ApplicationMetricDescription.name
-        /// </param>
+        /// <param name="name"> The name of the metric. </param>
         /// <param name="maximumCapacity">
         /// The maximum node capacity for Service Fabric application.
         /// This is the maximum Load for an instance of this application on a single node. Even if the capacity of node is greater than this value, Service Fabric will limit the total load of services within the application on each node to this value.
@@ -31,7 +27,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// When creating a new application with application capacity defined, the product of MaximumNodes and this value must always be smaller than or equal to TotalApplicationCapacity.
         /// When updating existing application with application capacity, the product of MaximumNodes and this value must always be smaller than or equal to TotalApplicationCapacity.
         /// 
-        /// Serialized Name: ApplicationMetricDescription.maximumCapacity
         /// </param>
         /// <param name="reservationCapacity">
         /// The node reservation capacity for Service Fabric application.
@@ -40,14 +35,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// If set to zero, no capacity is reserved for this metric.
         /// When setting application capacity or when updating application capacity; this value must be smaller than or equal to MaximumCapacity for each metric.
         /// 
-        /// Serialized Name: ApplicationMetricDescription.reservationCapacity
         /// </param>
         /// <param name="totalApplicationCapacity">
         /// The total metric capacity for Service Fabric application.
         /// This is the total metric capacity for this application in the cluster. Service Fabric will try to limit the sum of loads of services within the application to this value.
         /// When creating a new application with application capacity defined, the product of MaximumNodes and MaximumCapacity must always be smaller than or equal to this value.
         /// 
-        /// Serialized Name: ApplicationMetricDescription.totalApplicationCapacity
         /// </param>
         internal ApplicationMetricDescription(string name, long? maximumCapacity, long? reservationCapacity, long? totalApplicationCapacity)
         {
@@ -57,10 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TotalApplicationCapacity = totalApplicationCapacity;
         }
 
-        /// <summary>
-        /// The name of the metric.
-        /// Serialized Name: ApplicationMetricDescription.name
-        /// </summary>
+        /// <summary> The name of the metric. </summary>
         public string Name { get; set; }
         /// <summary>
         /// The maximum node capacity for Service Fabric application.
@@ -69,7 +59,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// When creating a new application with application capacity defined, the product of MaximumNodes and this value must always be smaller than or equal to TotalApplicationCapacity.
         /// When updating existing application with application capacity, the product of MaximumNodes and this value must always be smaller than or equal to TotalApplicationCapacity.
         /// 
-        /// Serialized Name: ApplicationMetricDescription.maximumCapacity
         /// </summary>
         public long? MaximumCapacity { get; set; }
         /// <summary>
@@ -79,7 +68,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// If set to zero, no capacity is reserved for this metric.
         /// When setting application capacity or when updating application capacity; this value must be smaller than or equal to MaximumCapacity for each metric.
         /// 
-        /// Serialized Name: ApplicationMetricDescription.reservationCapacity
         /// </summary>
         public long? ReservationCapacity { get; set; }
         /// <summary>
@@ -87,7 +75,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// This is the total metric capacity for this application in the cluster. Service Fabric will try to limit the sum of loads of services within the application to this value.
         /// When creating a new application with application capacity defined, the product of MaximumNodes and MaximumCapacity must always be smaller than or equal to this value.
         /// 
-        /// Serialized Name: ApplicationMetricDescription.totalApplicationCapacity
         /// </summary>
         public long? TotalApplicationCapacity { get; set; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Specifies the move cost for the service.
-    /// Serialized Name: MoveCost
-    /// </summary>
+    /// <summary> Specifies the move cost for the service. </summary>
     public readonly partial struct ApplicationMoveCost : IEquatable<ApplicationMoveCost>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary>
-        /// Zero move cost. This value is zero.
-        /// Serialized Name: MoveCost.Zero
-        /// </summary>
+        /// <summary> Zero move cost. This value is zero. </summary>
         public static ApplicationMoveCost Zero { get; } = new ApplicationMoveCost(ZeroValue);
-        /// <summary>
-        /// Specifies the move cost of the service as Low. The value is 1.
-        /// Serialized Name: MoveCost.Low
-        /// </summary>
+        /// <summary> Specifies the move cost of the service as Low. The value is 1. </summary>
         public static ApplicationMoveCost Low { get; } = new ApplicationMoveCost(LowValue);
-        /// <summary>
-        /// Specifies the move cost of the service as Medium. The value is 2.
-        /// Serialized Name: MoveCost.Medium
-        /// </summary>
+        /// <summary> Specifies the move cost of the service as Medium. The value is 2. </summary>
         public static ApplicationMoveCost Medium { get; } = new ApplicationMoveCost(MediumValue);
-        /// <summary>
-        /// Specifies the move cost of the service as High. The value is 3.
-        /// Serialized Name: MoveCost.High
-        /// </summary>
+        /// <summary> Specifies the move cost of the service as High. The value is 3. </summary>
         public static ApplicationMoveCost High { get; } = new ApplicationMoveCost(HighValue);
         /// <summary> Determines if two <see cref="ApplicationMoveCost"/> values are the same. </summary>
         public static bool operator ==(ApplicationMoveCost left, ApplicationMoveCost right) => left.Equals(right);

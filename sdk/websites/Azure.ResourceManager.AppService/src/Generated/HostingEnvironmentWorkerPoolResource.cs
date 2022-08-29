@@ -371,10 +371,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuInfo> GetWorkerPoolSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePoolSkuInfo> GetWorkerPoolSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServicePoolSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServicePoolSkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();
@@ -413,10 +413,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuInfo> GetWorkerPoolSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePoolSkuInfo> GetWorkerPoolSkus(CancellationToken cancellationToken = default)
         {
-            Page<SkuInfo> FirstPageFunc(int? pageSizeHint)
+            Page<AppServicePoolSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServicePoolSkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
                 scope.Start();

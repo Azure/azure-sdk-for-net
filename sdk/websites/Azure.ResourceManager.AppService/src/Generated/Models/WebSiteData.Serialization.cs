@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (Optional.IsDefined(AppServicePlanId))
             {
                 writer.WritePropertyName("serverFarmId");
-                writer.WriteStringValue(ServerFarmId);
+                writer.WriteStringValue(AppServicePlanId);
             }
-            if (Optional.IsDefined(Reserved))
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved");
-                writer.WriteBooleanValue(Reserved.Value);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsDefined(IsXenon))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
             Optional<UsageState> usageState = default;
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<string>> enabledHostNames = default;
-            Optional<SiteAvailabilityState> availabilityState = default;
+            Optional<WebSiteAvailabilityState> availabilityState = default;
             Optional<IList<HostNameSslState>> hostNameSslStates = default;
             Optional<string> serverFarmId = default;
             Optional<bool> reserved = default;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityState = property0.Value.GetString().ToSiteAvailabilityState();
+                            availabilityState = property0.Value.GetString().ToWebSiteAvailabilityState();
                             continue;
                         }
                         if (property0.NameEquals("hostNameSslStates"))

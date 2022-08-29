@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The activation Mode of the service package
-    /// Serialized Name: ArmUpgradeFailureAction
-    /// </summary>
+    /// <summary> The activation Mode of the service package. </summary>
     public readonly partial struct ArmUpgradeFailureAction : IEquatable<ArmUpgradeFailureAction>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string RollbackValue = "Rollback";
         private const string ManualValue = "Manual";
 
-        /// <summary>
-        /// Indicates that a rollback of the upgrade will be performed by Service Fabric if the upgrade fails.
-        /// Serialized Name: ArmUpgradeFailureAction.Rollback
-        /// </summary>
+        /// <summary> Indicates that a rollback of the upgrade will be performed by Service Fabric if the upgrade fails. </summary>
         public static ArmUpgradeFailureAction Rollback { get; } = new ArmUpgradeFailureAction(RollbackValue);
-        /// <summary>
-        /// Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically.
-        /// Serialized Name: ArmUpgradeFailureAction.Manual
-        /// </summary>
+        /// <summary> Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically. </summary>
         public static ArmUpgradeFailureAction Manual { get; } = new ArmUpgradeFailureAction(ManualValue);
         /// <summary> Determines if two <see cref="ArmUpgradeFailureAction"/> values are the same. </summary>
         public static bool operator ==(ArmUpgradeFailureAction left, ArmUpgradeFailureAction right) => left.Equals(right);

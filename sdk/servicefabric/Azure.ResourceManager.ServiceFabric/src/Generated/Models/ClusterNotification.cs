@@ -11,29 +11,14 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes the notification channel for cluster events.
-    /// Serialized Name: Notification
-    /// </summary>
+    /// <summary> Describes the notification channel for cluster events. </summary>
     public partial class ClusterNotification
     {
         /// <summary> Initializes a new instance of ClusterNotification. </summary>
-        /// <param name="isEnabled">
-        /// Indicates if the notification is enabled.
-        /// Serialized Name: Notification.isEnabled
-        /// </param>
-        /// <param name="notificationCategory">
-        /// The category of notification.
-        /// Serialized Name: Notification.notificationCategory
-        /// </param>
-        /// <param name="notificationLevel">
-        /// The level of notification.
-        /// Serialized Name: Notification.notificationLevel
-        /// </param>
-        /// <param name="notificationTargets">
-        /// List of targets that subscribe to the notification.
-        /// Serialized Name: Notification.notificationTargets
-        /// </param>
+        /// <param name="isEnabled"> Indicates if the notification is enabled. </param>
+        /// <param name="notificationCategory"> The category of notification. </param>
+        /// <param name="notificationLevel"> The level of notification. </param>
+        /// <param name="notificationTargets"> List of targets that subscribe to the notification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationTargets"/> is null. </exception>
         public ClusterNotification(bool isEnabled, ClusterNotificationCategory notificationCategory, ClusterNotificationLevel notificationLevel, IEnumerable<ClusterNotificationTarget> notificationTargets)
         {
@@ -49,22 +34,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ClusterNotification. </summary>
-        /// <param name="isEnabled">
-        /// Indicates if the notification is enabled.
-        /// Serialized Name: Notification.isEnabled
-        /// </param>
-        /// <param name="notificationCategory">
-        /// The category of notification.
-        /// Serialized Name: Notification.notificationCategory
-        /// </param>
-        /// <param name="notificationLevel">
-        /// The level of notification.
-        /// Serialized Name: Notification.notificationLevel
-        /// </param>
-        /// <param name="notificationTargets">
-        /// List of targets that subscribe to the notification.
-        /// Serialized Name: Notification.notificationTargets
-        /// </param>
+        /// <param name="isEnabled"> Indicates if the notification is enabled. </param>
+        /// <param name="notificationCategory"> The category of notification. </param>
+        /// <param name="notificationLevel"> The level of notification. </param>
+        /// <param name="notificationTargets"> List of targets that subscribe to the notification. </param>
         internal ClusterNotification(bool isEnabled, ClusterNotificationCategory notificationCategory, ClusterNotificationLevel notificationLevel, IList<ClusterNotificationTarget> notificationTargets)
         {
             IsEnabled = isEnabled;
@@ -73,25 +46,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             NotificationTargets = notificationTargets;
         }
 
-        /// <summary>
-        /// Indicates if the notification is enabled.
-        /// Serialized Name: Notification.isEnabled
-        /// </summary>
+        /// <summary> Indicates if the notification is enabled. </summary>
         public bool IsEnabled { get; set; }
-        /// <summary>
-        /// The category of notification.
-        /// Serialized Name: Notification.notificationCategory
-        /// </summary>
+        /// <summary> The category of notification. </summary>
         public ClusterNotificationCategory NotificationCategory { get; set; }
-        /// <summary>
-        /// The level of notification.
-        /// Serialized Name: Notification.notificationLevel
-        /// </summary>
+        /// <summary> The level of notification. </summary>
         public ClusterNotificationLevel NotificationLevel { get; set; }
-        /// <summary>
-        /// List of targets that subscribe to the notification.
-        /// Serialized Name: Notification.notificationTargets
-        /// </summary>
+        /// <summary> List of targets that subscribe to the notification. </summary>
         public IList<ClusterNotificationTarget> NotificationTargets { get; }
     }
 }

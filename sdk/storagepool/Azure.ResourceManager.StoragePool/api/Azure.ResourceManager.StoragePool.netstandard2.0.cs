@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         internal OutboundEndpointDetail() { }
         public System.Net.IPAddress IPAddress { get { throw null; } }
         public bool? IsAccessible { get { throw null; } }
-        public double? LatencyInMilliseconds { get { throw null; } }
+        public double? LatencyInMs { get { throw null; } }
         public int? Port { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

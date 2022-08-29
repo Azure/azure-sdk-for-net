@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Algorithm identifier for encryption, default RSA-OAEP.
-    /// Serialized Name: JsonWebKeyEncryptionAlgorithm
-    /// </summary>
+    /// <summary> Algorithm identifier for encryption, default RSA-OAEP. </summary>
     public readonly partial struct JsonWebKeyEncryptionAlgorithm : IEquatable<JsonWebKeyEncryptionAlgorithm>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string RsaOaep256Value = "RSA-OAEP-256";
         private const string Rsa15Value = "RSA1_5";
 
-        /// <summary>
-        /// RSA-OAEP
-        /// Serialized Name: JsonWebKeyEncryptionAlgorithm.RSA-OAEP
-        /// </summary>
+        /// <summary> RSA-OAEP. </summary>
         public static JsonWebKeyEncryptionAlgorithm RsaOaep { get; } = new JsonWebKeyEncryptionAlgorithm(RsaOaepValue);
-        /// <summary>
-        /// RSA-OAEP-256
-        /// Serialized Name: JsonWebKeyEncryptionAlgorithm.RSA-OAEP-256
-        /// </summary>
+        /// <summary> RSA-OAEP-256. </summary>
         public static JsonWebKeyEncryptionAlgorithm RsaOaep256 { get; } = new JsonWebKeyEncryptionAlgorithm(RsaOaep256Value);
-        /// <summary>
-        /// RSA1_5
-        /// Serialized Name: JsonWebKeyEncryptionAlgorithm.RSA1_5
-        /// </summary>
+        /// <summary> RSA1_5. </summary>
         public static JsonWebKeyEncryptionAlgorithm Rsa15 { get; } = new JsonWebKeyEncryptionAlgorithm(Rsa15Value);
         /// <summary> Determines if two <see cref="JsonWebKeyEncryptionAlgorithm"/> values are the same. </summary>
         public static bool operator ==(JsonWebKeyEncryptionAlgorithm left, JsonWebKeyEncryptionAlgorithm right) => left.Equals(right);

@@ -16,28 +16,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentPage
     {
         /// <summary> Initializes a new instance of DocumentPage. </summary>
-        /// <param name="kind"> Kind of document page. </param>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
-        internal DocumentPage(DocumentPageKind kind, int pageNumber, IEnumerable<DocumentSpan> spans)
+        internal DocumentPage(int pageNumber, IEnumerable<DocumentSpan> spans)
         {
             if (spans == null)
             {
                 throw new ArgumentNullException(nameof(spans));
             }
 
-            Kind = kind;
             PageNumber = pageNumber;
             Spans = spans.ToList();
             Words = new ChangeTrackingList<DocumentWord>();
             SelectionMarks = new ChangeTrackingList<DocumentSelectionMark>();
-            Images = new ChangeTrackingList<DocumentImage>();
             Lines = new ChangeTrackingList<DocumentLine>();
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
-        /// <param name="kind"> Kind of document page. </param>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
@@ -46,11 +42,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
         /// <param name="words"> Extracted words from the page. </param>
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
-        /// <param name="images"> Extracted images from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
-        internal DocumentPage(DocumentPageKind kind, int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentImage> images, IReadOnlyList<DocumentLine> lines)
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, V3LengthUnit? unitPrivate, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
         {
-            Kind = kind;
             PageNumber = pageNumber;
             Angle = angle;
             Width = width;
@@ -59,12 +53,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans;
             Words = words;
             SelectionMarks = selectionMarks;
-            Images = images;
             Lines = lines;
         }
 
-        /// <summary> Kind of document page. </summary>
-        public DocumentPageKind Kind { get; }
         /// <summary> 1-based page number in the input document. </summary>
         public int PageNumber { get; }
         /// <summary> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </summary>
