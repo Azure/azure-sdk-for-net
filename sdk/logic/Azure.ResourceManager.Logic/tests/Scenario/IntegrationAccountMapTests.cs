@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -36,28 +37,11 @@ namespace Azure.ResourceManager.Logic.Tests
             _integrationAccount = await Client.GetIntegrationAccountResource(_integrationAccountIdentifier).GetAsync();
         }
 
-        private string Xslt30MapContent
-        {
-            get
-            {
-                return @"<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='3.0'>
-	                        <xsl:output method='text'/>
-	                        <xsl:template match='/'>
-		                        <xsl:value-of select='company/employee/name'/>
-		                        <xsl:variable name='test'>
-			                        <xsl:text>company/employee/name</xsl:text>
-		                        </xsl:variable>
-		                        <xsl:evaluate xpath='$test'/>
-	                        </xsl:template>
-                        </xsl:stylesheet>";
-            }
-        }
-
         private async Task<IntegrationAccountMapResource> CreateMap(string mapName)
         {
             IntegrationAccountMapData data = new IntegrationAccountMapData(_integrationAccount.Data.Location, IntegrationAccountMapType.Xslt30)
             {
-                Content = Xslt30MapContent,
+                Content = File.ReadAllText(@"TestData/MapContent.xml"),
                 ContentType = "application/xml"
             };
             var map = await _mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, data);

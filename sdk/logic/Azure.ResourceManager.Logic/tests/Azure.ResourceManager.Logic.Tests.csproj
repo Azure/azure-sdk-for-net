@@ -12,6 +12,9 @@
     <None Update="TestData\IntegrationAccountCertificate.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\MapContent.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\OrderFile.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
