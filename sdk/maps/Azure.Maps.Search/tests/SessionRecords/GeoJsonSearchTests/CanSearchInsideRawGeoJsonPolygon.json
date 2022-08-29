@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "204",
         "Content-Type": "application/json",
-        "traceparent": "00-b6f1115a19127c2882a2cfa99202697a-9dd72fb08793f32a-00",
+        "traceparent": "00-f1bada20e954e81a53094138b635ff21-9f50d35524146bfa-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "3669677daf3997b46fbf78bb8adf8000",
+        "x-ms-client-request-id": "c0b987a2e1d1fffb83b993b237ba3600",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -41,9 +41,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10753",
+        "Content-Length": "10752",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Aug 2022 03:08:31 GMT",
+        "Date": "Mon, 29 Aug 2022 03:16:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -52,13 +52,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: C355B0CF31994F0AAD4B104F57D4BF56 Ref B: PAOEDGE0520 Ref C: 2022-08-29T03:08:31Z"
+        "X-MSEdge-Ref": "Ref A: 2618AE6B87164EE6B22F58B85CEA5322 Ref B: PAOEDGE0613 Ref C: 2022-08-29T03:16:39Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 10,
+          "queryTime": 9,
           "numResults": 10,
           "offset": 0,
           "totalResults": 64,
@@ -247,11 +247,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "pub"
+                      "name": "caf\u00E9/pub"
                     }
                   ]
                 }
@@ -817,6 +817,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1321762748"
+    "RandomSeed": "623930944"
   }
 }
