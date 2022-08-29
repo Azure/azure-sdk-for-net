@@ -5,7 +5,9 @@
     <Version>1.0.3-beta.20</Version>
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Search</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
-  <NoWarn>$(NoWarn);AZC0001;AZC0012;CA1835</NoWarn></PropertyGroup>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012;CA1835</NoWarn>
+    <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
@@ -36,6 +38,11 @@
     <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ExponentialDelayStrategy.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Maps -->
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
   </ItemGroup>
 
 </Project>
