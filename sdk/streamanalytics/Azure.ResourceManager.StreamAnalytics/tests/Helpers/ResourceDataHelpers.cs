@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                         StorageAccounts =
                         {
                             new StreamAnalyticsStorageAccount()
-                        {
-                            AccountKey = "$testAccountName$",
-                            AccountName = "myhditest0811hdistorage"
-                        }
+                            {
+                                AccountKey = "$testAccountName$",
+                                AccountName = "myhditest0811hdistorage"
+                            }
                         },
                         Container = "differentContainer",
                         PathPattern = "{date}/{time}",
@@ -145,7 +145,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
                         TimeFormat = "HH",
                         SourcePartitionCount = 16
                     },
-                    Serialization = StreamAnalyticsDataSerialization
+                    Serialization = new CsvFormatSerialization()
+                    {
+                        FieldDelimiter = ",",
+                        Encoding = StreamAnalyticsDataSerializationEncoding.Utf8
+                    }
                 }
             };
             return data;
@@ -163,6 +167,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         {
             return new StreamingJobOutputData()
             {
+                Serialization = new CsvFormatSerialization()
+                {
+                    FieldDelimiter = ",",
+                    Encoding = StreamAnalyticsDataSerializationEncoding.Utf8
+                },
                 Datasource = new BlobOutputDataSource()
                 {
                     StorageAccounts =

@@ -191,10 +191,6 @@ directive:
 - from: subscriptions.json
   where: $.definitions
   transform: >
-    $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
-    $.TestInput['x-ms-client-name'] = 'TestInputContent';
-    $.TestOutput['x-ms-client-name'] = 'TestOutputContent';
-    $.TestQuery['x-ms-client-name'] = 'TestQueryContent';
     $.TestQuery.properties.diagnostics['x-ms-client-flatten'] = true;
 # Manual fix the Identity model to match the common ManagedServiceIdentity
 - from: streamingjobs.json
