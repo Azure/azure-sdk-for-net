@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The prefix validation state.
-    /// Serialized Name: PrefixValidationState
-    /// </summary>
+    /// <summary> The prefix validation state. </summary>
     public readonly partial struct PeeringPrefixValidationState : IEquatable<PeeringPrefixValidationState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Peering.Models
         private const string WarningValue = "Warning";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: PrefixValidationState.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static PeeringPrefixValidationState None { get; } = new PeeringPrefixValidationState(NoneValue);
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: PrefixValidationState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static PeeringPrefixValidationState Invalid { get; } = new PeeringPrefixValidationState(InvalidValue);
-        /// <summary>
-        /// Verified
-        /// Serialized Name: PrefixValidationState.Verified
-        /// </summary>
+        /// <summary> Verified. </summary>
         public static PeeringPrefixValidationState Verified { get; } = new PeeringPrefixValidationState(VerifiedValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrefixValidationState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static PeeringPrefixValidationState Failed { get; } = new PeeringPrefixValidationState(FailedValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: PrefixValidationState.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static PeeringPrefixValidationState Pending { get; } = new PeeringPrefixValidationState(PendingValue);
-        /// <summary>
-        /// Warning
-        /// Serialized Name: PrefixValidationState.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         public static PeeringPrefixValidationState Warning { get; } = new PeeringPrefixValidationState(WarningValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: PrefixValidationState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static PeeringPrefixValidationState Unknown { get; } = new PeeringPrefixValidationState(UnknownValue);
         /// <summary> Determines if two <see cref="PeeringPrefixValidationState"/> values are the same. </summary>
         public static bool operator ==(PeeringPrefixValidationState left, PeeringPrefixValidationState right) => left.Equals(right);

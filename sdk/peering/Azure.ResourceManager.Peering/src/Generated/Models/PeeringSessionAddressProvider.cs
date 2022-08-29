@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The field indicating if Microsoft provides session ip addresses.
-    /// Serialized Name: SessionAddressProvider
-    /// </summary>
+    /// <summary> The field indicating if Microsoft provides session ip addresses. </summary>
     public readonly partial struct PeeringSessionAddressProvider : IEquatable<PeeringSessionAddressProvider>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Peering.Models
         private const string MicrosoftValue = "Microsoft";
         private const string PeerValue = "Peer";
 
-        /// <summary>
-        /// Microsoft
-        /// Serialized Name: SessionAddressProvider.Microsoft
-        /// </summary>
+        /// <summary> Microsoft. </summary>
         public static PeeringSessionAddressProvider Microsoft { get; } = new PeeringSessionAddressProvider(MicrosoftValue);
-        /// <summary>
-        /// Peer
-        /// Serialized Name: SessionAddressProvider.Peer
-        /// </summary>
+        /// <summary> Peer. </summary>
         public static PeeringSessionAddressProvider Peer { get; } = new PeeringSessionAddressProvider(PeerValue);
         /// <summary> Determines if two <see cref="PeeringSessionAddressProvider"/> values are the same. </summary>
         public static bool operator ==(PeeringSessionAddressProvider left, PeeringSessionAddressProvider right) => left.Equals(right);

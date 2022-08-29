@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The paginated list of peering service countries.
-    /// Serialized Name: PeeringServiceCountryListResult
-    /// </summary>
+    /// <summary> The paginated list of peering service countries. </summary>
     internal partial class PeeringServiceCountryListResult
     {
         /// <summary> Initializes a new instance of PeeringServiceCountryListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringServiceCountryListResult. </summary>
-        /// <param name="value">
-        /// The list of peering service countries.
-        /// Serialized Name: PeeringServiceCountryListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to fetch the next page of peering service countries.
-        /// Serialized Name: PeeringServiceCountryListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of peering service countries. </param>
+        /// <param name="nextLink"> The link to fetch the next page of peering service countries. </param>
         internal PeeringServiceCountryListResult(IReadOnlyList<PeeringServiceCountry> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of peering service countries.
-        /// Serialized Name: PeeringServiceCountryListResult.value
-        /// </summary>
+        /// <summary> The list of peering service countries. </summary>
         public IReadOnlyList<PeeringServiceCountry> Value { get; }
-        /// <summary>
-        /// The link to fetch the next page of peering service countries.
-        /// Serialized Name: PeeringServiceCountryListResult.nextLink
-        /// </summary>
+        /// <summary> The link to fetch the next page of peering service countries. </summary>
         public string NextLink { get; }
     }
 }

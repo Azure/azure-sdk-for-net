@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The paginated list of received routes for the peering.
-    /// Serialized Name: PeeringReceivedRouteListResult
-    /// </summary>
+    /// <summary> The paginated list of received routes for the peering. </summary>
     internal partial class PeeringReceivedRouteListResult
     {
         /// <summary> Initializes a new instance of PeeringReceivedRouteListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringReceivedRouteListResult. </summary>
-        /// <param name="value">
-        /// The list of received routes for the peering.
-        /// Serialized Name: PeeringReceivedRouteListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to fetch the next page of received routes for the peering.
-        /// Serialized Name: PeeringReceivedRouteListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of received routes for the peering. </param>
+        /// <param name="nextLink"> The link to fetch the next page of received routes for the peering. </param>
         internal PeeringReceivedRouteListResult(IReadOnlyList<PeeringReceivedRoute> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of received routes for the peering.
-        /// Serialized Name: PeeringReceivedRouteListResult.value
-        /// </summary>
+        /// <summary> The list of received routes for the peering. </summary>
         public IReadOnlyList<PeeringReceivedRoute> Value { get; }
-        /// <summary>
-        /// The link to fetch the next page of received routes for the peering.
-        /// Serialized Name: PeeringReceivedRouteListResult.nextLink
-        /// </summary>
+        /// <summary> The link to fetch the next page of received routes for the peering. </summary>
         public string NextLink { get; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The paginated list of peering service locations.
-    /// Serialized Name: PeeringServiceLocationListResult
-    /// </summary>
+    /// <summary> The paginated list of peering service locations. </summary>
     internal partial class PeeringServiceLocationListResult
     {
         /// <summary> Initializes a new instance of PeeringServiceLocationListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringServiceLocationListResult. </summary>
-        /// <param name="value">
-        /// The list of peering service locations.
-        /// Serialized Name: PeeringServiceLocationListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to fetch the next page of peering service locations.
-        /// Serialized Name: PeeringServiceLocationListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of peering service locations. </param>
+        /// <param name="nextLink"> The link to fetch the next page of peering service locations. </param>
         internal PeeringServiceLocationListResult(IReadOnlyList<PeeringServiceLocation> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of peering service locations.
-        /// Serialized Name: PeeringServiceLocationListResult.value
-        /// </summary>
+        /// <summary> The list of peering service locations. </summary>
         public IReadOnlyList<PeeringServiceLocation> Value { get; }
-        /// <summary>
-        /// The link to fetch the next page of peering service locations.
-        /// Serialized Name: PeeringServiceLocationListResult.nextLink
-        /// </summary>
+        /// <summary> The link to fetch the next page of peering service locations. </summary>
         public string NextLink { get; }
     }
 }

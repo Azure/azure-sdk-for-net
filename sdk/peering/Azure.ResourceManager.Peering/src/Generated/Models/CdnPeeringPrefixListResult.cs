@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The paginated list of CDN peering prefixes.
-    /// Serialized Name: CdnPeeringPrefixListResult
-    /// </summary>
+    /// <summary> The paginated list of CDN peering prefixes. </summary>
     internal partial class CdnPeeringPrefixListResult
     {
         /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>
-        /// <param name="value">
-        /// The list of CDN peering prefixes.
-        /// Serialized Name: CdnPeeringPrefixListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to fetch the next page of CDN peering prefixes.
-        /// Serialized Name: CdnPeeringPrefixListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of CDN peering prefixes. </param>
+        /// <param name="nextLink"> The link to fetch the next page of CDN peering prefixes. </param>
         internal CdnPeeringPrefixListResult(IReadOnlyList<CdnPeeringPrefix> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of CDN peering prefixes.
-        /// Serialized Name: CdnPeeringPrefixListResult.value
-        /// </summary>
+        /// <summary> The list of CDN peering prefixes. </summary>
         public IReadOnlyList<CdnPeeringPrefix> Value { get; }
-        /// <summary>
-        /// The link to fetch the next page of CDN peering prefixes.
-        /// Serialized Name: CdnPeeringPrefixListResult.nextLink
-        /// </summary>
+        /// <summary> The link to fetch the next page of CDN peering prefixes. </summary>
         public string NextLink { get; }
     }
 }

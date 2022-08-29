@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The role of the contact.
-    /// Serialized Name: Role
-    /// </summary>
+    /// <summary> The role of the contact. </summary>
     public readonly partial struct PeeringRole : IEquatable<PeeringRole>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Peering.Models
         private const string EscalationValue = "Escalation";
         private const string OtherValue = "Other";
 
-        /// <summary>
-        /// Noc
-        /// Serialized Name: Role.Noc
-        /// </summary>
+        /// <summary> Noc. </summary>
         public static PeeringRole Noc { get; } = new PeeringRole(NocValue);
-        /// <summary>
-        /// Policy
-        /// Serialized Name: Role.Policy
-        /// </summary>
+        /// <summary> Policy. </summary>
         public static PeeringRole Policy { get; } = new PeeringRole(PolicyValue);
-        /// <summary>
-        /// Technical
-        /// Serialized Name: Role.Technical
-        /// </summary>
+        /// <summary> Technical. </summary>
         public static PeeringRole Technical { get; } = new PeeringRole(TechnicalValue);
-        /// <summary>
-        /// Service
-        /// Serialized Name: Role.Service
-        /// </summary>
+        /// <summary> Service. </summary>
         public static PeeringRole Service { get; } = new PeeringRole(ServiceValue);
-        /// <summary>
-        /// Escalation
-        /// Serialized Name: Role.Escalation
-        /// </summary>
+        /// <summary> Escalation. </summary>
         public static PeeringRole Escalation { get; } = new PeeringRole(EscalationValue);
-        /// <summary>
-        /// Other
-        /// Serialized Name: Role.Other
-        /// </summary>
+        /// <summary> Other. </summary>
         public static PeeringRole Other { get; } = new PeeringRole(OtherValue);
         /// <summary> Determines if two <see cref="PeeringRole"/> values are the same. </summary>
         public static bool operator ==(PeeringRole left, PeeringRole right) => left.Equals(right);

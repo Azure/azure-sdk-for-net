@@ -11,10 +11,7 @@ using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The paginated list of peer ASNs.
-    /// Serialized Name: PeerAsnListResult
-    /// </summary>
+    /// <summary> The paginated list of peer ASNs. </summary>
     internal partial class PeerAsnListResult
     {
         /// <summary> Initializes a new instance of PeerAsnListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeerAsnListResult. </summary>
-        /// <param name="value">
-        /// The list of peer ASNs.
-        /// Serialized Name: PeerAsnListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to fetch the next page of peer ASNs.
-        /// Serialized Name: PeerAsnListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of peer ASNs. </param>
+        /// <param name="nextLink"> The link to fetch the next page of peer ASNs. </param>
         internal PeerAsnListResult(IReadOnlyList<PeerAsnData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of peer ASNs.
-        /// Serialized Name: PeerAsnListResult.value
-        /// </summary>
+        /// <summary> The list of peer ASNs. </summary>
         public IReadOnlyList<PeerAsnData> Value { get; }
-        /// <summary>
-        /// The link to fetch the next page of peer ASNs.
-        /// Serialized Name: PeerAsnListResult.nextLink
-        /// </summary>
+        /// <summary> The link to fetch the next page of peer ASNs. </summary>
         public string NextLink { get; }
     }
 }

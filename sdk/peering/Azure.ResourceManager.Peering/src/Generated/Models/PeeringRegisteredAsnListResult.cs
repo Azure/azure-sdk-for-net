@@ -11,10 +11,7 @@ using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The paginated list of peering registered ASNs.
-    /// Serialized Name: PeeringRegisteredAsnListResult
-    /// </summary>
+    /// <summary> The paginated list of peering registered ASNs. </summary>
     internal partial class PeeringRegisteredAsnListResult
     {
         /// <summary> Initializes a new instance of PeeringRegisteredAsnListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringRegisteredAsnListResult. </summary>
-        /// <param name="value">
-        /// The list of peering registered ASNs.
-        /// Serialized Name: PeeringRegisteredAsnListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to fetch the next page of peering registered ASNs.
-        /// Serialized Name: PeeringRegisteredAsnListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of peering registered ASNs. </param>
+        /// <param name="nextLink"> The link to fetch the next page of peering registered ASNs. </param>
         internal PeeringRegisteredAsnListResult(IReadOnlyList<PeeringRegisteredAsnData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of peering registered ASNs.
-        /// Serialized Name: PeeringRegisteredAsnListResult.value
-        /// </summary>
+        /// <summary> The list of peering registered ASNs. </summary>
         public IReadOnlyList<PeeringRegisteredAsnData> Value { get; }
-        /// <summary>
-        /// The link to fetch the next page of peering registered ASNs.
-        /// Serialized Name: PeeringRegisteredAsnListResult.nextLink
-        /// </summary>
+        /// <summary> The link to fetch the next page of peering registered ASNs. </summary>
         public string NextLink { get; }
     }
 }

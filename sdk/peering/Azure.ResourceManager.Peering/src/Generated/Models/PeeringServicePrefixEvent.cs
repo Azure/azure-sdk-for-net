@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The details of the event associated with a prefix.
-    /// Serialized Name: PeeringServicePrefixEvent
-    /// </summary>
+    /// <summary> The details of the event associated with a prefix. </summary>
     public partial class PeeringServicePrefixEvent
     {
         /// <summary> Initializes a new instance of PeeringServicePrefixEvent. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringServicePrefixEvent. </summary>
-        /// <param name="eventTimestamp">
-        /// The timestamp of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventTimestamp
-        /// </param>
-        /// <param name="eventType">
-        /// The type of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventType
-        /// </param>
-        /// <param name="eventSummary">
-        /// The summary of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventSummary
-        /// </param>
-        /// <param name="eventLevel">
-        /// The level of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventLevel
-        /// </param>
-        /// <param name="eventDescription">
-        /// The description of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventDescription
-        /// </param>
+        /// <param name="eventTimestamp"> The timestamp of the event associated with a prefix. </param>
+        /// <param name="eventType"> The type of the event associated with a prefix. </param>
+        /// <param name="eventSummary"> The summary of the event associated with a prefix. </param>
+        /// <param name="eventLevel"> The level of the event associated with a prefix. </param>
+        /// <param name="eventDescription"> The description of the event associated with a prefix. </param>
         internal PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp, string eventType, string eventSummary, string eventLevel, string eventDescription)
         {
             EventTimestamp = eventTimestamp;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.Peering.Models
             EventDescription = eventDescription;
         }
 
-        /// <summary>
-        /// The timestamp of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventTimestamp
-        /// </summary>
+        /// <summary> The timestamp of the event associated with a prefix. </summary>
         public DateTimeOffset? EventTimestamp { get; }
-        /// <summary>
-        /// The type of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventType
-        /// </summary>
+        /// <summary> The type of the event associated with a prefix. </summary>
         public string EventType { get; }
-        /// <summary>
-        /// The summary of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventSummary
-        /// </summary>
+        /// <summary> The summary of the event associated with a prefix. </summary>
         public string EventSummary { get; }
-        /// <summary>
-        /// The level of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventLevel
-        /// </summary>
+        /// <summary> The level of the event associated with a prefix. </summary>
         public string EventLevel { get; }
-        /// <summary>
-        /// The description of the event associated with a prefix.
-        /// Serialized Name: PeeringServicePrefixEvent.eventDescription
-        /// </summary>
+        /// <summary> The description of the event associated with a prefix. </summary>
         public string EventDescription { get; }
     }
 }

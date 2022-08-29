@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The properties that define a direct peering location.
-    /// Serialized Name: PeeringLocationPropertiesDirect
-    /// </summary>
+    /// <summary> The properties that define a direct peering location. </summary>
     public partial class DirectPeeringLocationProperties
     {
         /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>
-        /// <param name="peeringFacilities">
-        /// The list of direct peering facilities at the peering location.
-        /// Serialized Name: PeeringLocationPropertiesDirect.peeringFacilities
-        /// </param>
-        /// <param name="bandwidthOffers">
-        /// The list of bandwidth offers available at the peering location.
-        /// Serialized Name: PeeringLocationPropertiesDirect.bandwidthOffers
-        /// </param>
+        /// <param name="peeringFacilities"> The list of direct peering facilities at the peering location. </param>
+        /// <param name="bandwidthOffers"> The list of bandwidth offers available at the peering location. </param>
         internal DirectPeeringLocationProperties(IList<DirectPeeringFacility> peeringFacilities, IList<PeeringBandwidthOffer> bandwidthOffers)
         {
             PeeringFacilities = peeringFacilities;
             BandwidthOffers = bandwidthOffers;
         }
 
-        /// <summary>
-        /// The list of direct peering facilities at the peering location.
-        /// Serialized Name: PeeringLocationPropertiesDirect.peeringFacilities
-        /// </summary>
+        /// <summary> The list of direct peering facilities at the peering location. </summary>
         public IList<DirectPeeringFacility> PeeringFacilities { get; }
-        /// <summary>
-        /// The list of bandwidth offers available at the peering location.
-        /// Serialized Name: PeeringLocationPropertiesDirect.bandwidthOffers
-        /// </summary>
+        /// <summary> The list of bandwidth offers available at the peering location. </summary>
         public IList<PeeringBandwidthOffer> BandwidthOffers { get; }
     }
 }

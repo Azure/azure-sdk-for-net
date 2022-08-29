@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The properties that define an exchange peering.
-    /// Serialized Name: PeeringPropertiesExchange
-    /// </summary>
+    /// <summary> The properties that define an exchange peering. </summary>
     public partial class ExchangePeeringProperties
     {
         /// <summary> Initializes a new instance of ExchangePeeringProperties. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of ExchangePeeringProperties. </summary>
-        /// <param name="connections">
-        /// The set of connections that constitute an exchange peering.
-        /// Serialized Name: PeeringPropertiesExchange.connections
-        /// </param>
-        /// <param name="peerAsn">
-        /// The reference of the peer ASN.
-        /// Serialized Name: PeeringPropertiesExchange.peerAsn
-        /// </param>
+        /// <param name="connections"> The set of connections that constitute an exchange peering. </param>
+        /// <param name="peerAsn"> The reference of the peer ASN. </param>
         internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, WritableSubResource peerAsn)
         {
             Connections = connections;
             PeerAsn = peerAsn;
         }
 
-        /// <summary>
-        /// The set of connections that constitute an exchange peering.
-        /// Serialized Name: PeeringPropertiesExchange.connections
-        /// </summary>
+        /// <summary> The set of connections that constitute an exchange peering. </summary>
         public IList<PeeringExchangeConnection> Connections { get; }
-        /// <summary>
-        /// The reference of the peer ASN.
-        /// Serialized Name: PeeringPropertiesExchange.peerAsn
-        /// </summary>
+        /// <summary> The reference of the peer ASN. </summary>
         internal WritableSubResource PeerAsn { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PeerAsnId

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The properties that define a direct peering.
-    /// Serialized Name: PeeringPropertiesDirect
-    /// </summary>
+    /// <summary> The properties that define a direct peering. </summary>
     public partial class DirectPeeringProperties
     {
         /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>
@@ -24,22 +21,10 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>
-        /// <param name="connections">
-        /// The set of connections that constitute a direct peering.
-        /// Serialized Name: PeeringPropertiesDirect.connections
-        /// </param>
-        /// <param name="useForPeeringService">
-        /// The flag that indicates whether or not the peering is used for peering service.
-        /// Serialized Name: PeeringPropertiesDirect.useForPeeringService
-        /// </param>
-        /// <param name="peerAsn">
-        /// The reference of the peer ASN.
-        /// Serialized Name: PeeringPropertiesDirect.peerAsn
-        /// </param>
-        /// <param name="directPeeringType">
-        /// The type of direct peering.
-        /// Serialized Name: PeeringPropertiesDirect.directPeeringType
-        /// </param>
+        /// <param name="connections"> The set of connections that constitute a direct peering. </param>
+        /// <param name="useForPeeringService"> The flag that indicates whether or not the peering is used for peering service. </param>
+        /// <param name="peerAsn"> The reference of the peer ASN. </param>
+        /// <param name="directPeeringType"> The type of direct peering. </param>
         internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, WritableSubResource peerAsn, DirectPeeringType? directPeeringType)
         {
             Connections = connections;
@@ -48,20 +33,11 @@ namespace Azure.ResourceManager.Peering.Models
             DirectPeeringType = directPeeringType;
         }
 
-        /// <summary>
-        /// The set of connections that constitute a direct peering.
-        /// Serialized Name: PeeringPropertiesDirect.connections
-        /// </summary>
+        /// <summary> The set of connections that constitute a direct peering. </summary>
         public IList<PeeringDirectConnection> Connections { get; }
-        /// <summary>
-        /// The flag that indicates whether or not the peering is used for peering service.
-        /// Serialized Name: PeeringPropertiesDirect.useForPeeringService
-        /// </summary>
+        /// <summary> The flag that indicates whether or not the peering is used for peering service. </summary>
         public bool? UseForPeeringService { get; }
-        /// <summary>
-        /// The reference of the peer ASN.
-        /// Serialized Name: PeeringPropertiesDirect.peerAsn
-        /// </summary>
+        /// <summary> The reference of the peer ASN. </summary>
         internal WritableSubResource PeerAsn { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PeerAsnId
@@ -75,10 +51,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        /// <summary>
-        /// The type of direct peering.
-        /// Serialized Name: PeeringPropertiesDirect.directPeeringType
-        /// </summary>
+        /// <summary> The type of direct peering. </summary>
         public DirectPeeringType? DirectPeeringType { get; set; }
     }
 }

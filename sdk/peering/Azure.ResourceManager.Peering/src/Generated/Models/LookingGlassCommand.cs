@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The LookingGlassCommand.
-    /// Serialized Name: LookingGlassCommand
-    /// </summary>
+    /// <summary> The LookingGlassCommand. </summary>
     public readonly partial struct LookingGlassCommand : IEquatable<LookingGlassCommand>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Peering.Models
         private const string PingValue = "Ping";
         private const string BgpRouteValue = "BgpRoute";
 
-        /// <summary>
-        /// Traceroute
-        /// Serialized Name: LookingGlassCommand.Traceroute
-        /// </summary>
+        /// <summary> Traceroute. </summary>
         public static LookingGlassCommand Traceroute { get; } = new LookingGlassCommand(TracerouteValue);
-        /// <summary>
-        /// Ping
-        /// Serialized Name: LookingGlassCommand.Ping
-        /// </summary>
+        /// <summary> Ping. </summary>
         public static LookingGlassCommand Ping { get; } = new LookingGlassCommand(PingValue);
-        /// <summary>
-        /// BgpRoute
-        /// Serialized Name: LookingGlassCommand.BgpRoute
-        /// </summary>
+        /// <summary> BgpRoute. </summary>
         public static LookingGlassCommand BgpRoute { get; } = new LookingGlassCommand(BgpRouteValue);
         /// <summary> Determines if two <see cref="LookingGlassCommand"/> values are the same. </summary>
         public static bool operator ==(LookingGlassCommand left, LookingGlassCommand right) => left.Equals(right);

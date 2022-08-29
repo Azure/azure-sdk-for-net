@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The properties that define a direct connection.
-    /// Serialized Name: DirectConnection
-    /// </summary>
+    /// <summary> The properties that define a direct connection. </summary>
     public partial class PeeringDirectConnection
     {
         /// <summary> Initializes a new instance of PeeringDirectConnection. </summary>
@@ -19,46 +16,16 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringDirectConnection. </summary>
-        /// <param name="bandwidthInMbps">
-        /// The bandwidth of the connection.
-        /// Serialized Name: DirectConnection.bandwidthInMbps
-        /// </param>
-        /// <param name="provisionedBandwidthInMbps">
-        /// The bandwidth that is actually provisioned.
-        /// Serialized Name: DirectConnection.provisionedBandwidthInMbps
-        /// </param>
-        /// <param name="sessionAddressProvider">
-        /// The field indicating if Microsoft provides session ip addresses.
-        /// Serialized Name: DirectConnection.sessionAddressProvider
-        /// </param>
-        /// <param name="useForPeeringService">
-        /// The flag that indicates whether or not the connection is used for peering service.
-        /// Serialized Name: DirectConnection.useForPeeringService
-        /// </param>
-        /// <param name="microsoftTrackingId">
-        /// The ID used within Microsoft&apos;s peering provisioning system to track the connection
-        /// Serialized Name: DirectConnection.microsoftTrackingId
-        /// </param>
-        /// <param name="peeringDBFacilityId">
-        /// The PeeringDB.com ID of the facility at which the connection has to be set up.
-        /// Serialized Name: DirectConnection.peeringDBFacilityId
-        /// </param>
-        /// <param name="connectionState">
-        /// The state of the connection.
-        /// Serialized Name: DirectConnection.connectionState
-        /// </param>
-        /// <param name="bgpSession">
-        /// The BGP session associated with the connection.
-        /// Serialized Name: DirectConnection.bgpSession
-        /// </param>
-        /// <param name="connectionIdentifier">
-        /// The unique identifier (GUID) for the connection.
-        /// Serialized Name: DirectConnection.connectionIdentifier
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message related to the connection state, if any.
-        /// Serialized Name: DirectConnection.errorMessage
-        /// </param>
+        /// <param name="bandwidthInMbps"> The bandwidth of the connection. </param>
+        /// <param name="provisionedBandwidthInMbps"> The bandwidth that is actually provisioned. </param>
+        /// <param name="sessionAddressProvider"> The field indicating if Microsoft provides session ip addresses. </param>
+        /// <param name="useForPeeringService"> The flag that indicates whether or not the connection is used for peering service. </param>
+        /// <param name="microsoftTrackingId"> The ID used within Microsoft&apos;s peering provisioning system to track the connection. </param>
+        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility at which the connection has to be set up. </param>
+        /// <param name="connectionState"> The state of the connection. </param>
+        /// <param name="bgpSession"> The BGP session associated with the connection. </param>
+        /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
+        /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
         internal PeeringDirectConnection(int? bandwidthInMbps, int? provisionedBandwidthInMbps, PeeringSessionAddressProvider? sessionAddressProvider, bool? useForPeeringService, string microsoftTrackingId, int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, string connectionIdentifier, string errorMessage)
         {
             BandwidthInMbps = bandwidthInMbps;
@@ -73,55 +40,25 @@ namespace Azure.ResourceManager.Peering.Models
             ErrorMessage = errorMessage;
         }
 
-        /// <summary>
-        /// The bandwidth of the connection.
-        /// Serialized Name: DirectConnection.bandwidthInMbps
-        /// </summary>
+        /// <summary> The bandwidth of the connection. </summary>
         public int? BandwidthInMbps { get; set; }
-        /// <summary>
-        /// The bandwidth that is actually provisioned.
-        /// Serialized Name: DirectConnection.provisionedBandwidthInMbps
-        /// </summary>
+        /// <summary> The bandwidth that is actually provisioned. </summary>
         public int? ProvisionedBandwidthInMbps { get; }
-        /// <summary>
-        /// The field indicating if Microsoft provides session ip addresses.
-        /// Serialized Name: DirectConnection.sessionAddressProvider
-        /// </summary>
+        /// <summary> The field indicating if Microsoft provides session ip addresses. </summary>
         public PeeringSessionAddressProvider? SessionAddressProvider { get; set; }
-        /// <summary>
-        /// The flag that indicates whether or not the connection is used for peering service.
-        /// Serialized Name: DirectConnection.useForPeeringService
-        /// </summary>
+        /// <summary> The flag that indicates whether or not the connection is used for peering service. </summary>
         public bool? UseForPeeringService { get; set; }
-        /// <summary>
-        /// The ID used within Microsoft&apos;s peering provisioning system to track the connection
-        /// Serialized Name: DirectConnection.microsoftTrackingId
-        /// </summary>
+        /// <summary> The ID used within Microsoft&apos;s peering provisioning system to track the connection. </summary>
         public string MicrosoftTrackingId { get; }
-        /// <summary>
-        /// The PeeringDB.com ID of the facility at which the connection has to be set up.
-        /// Serialized Name: DirectConnection.peeringDBFacilityId
-        /// </summary>
+        /// <summary> The PeeringDB.com ID of the facility at which the connection has to be set up. </summary>
         public int? PeeringDBFacilityId { get; set; }
-        /// <summary>
-        /// The state of the connection.
-        /// Serialized Name: DirectConnection.connectionState
-        /// </summary>
+        /// <summary> The state of the connection. </summary>
         public PeeringConnectionState? ConnectionState { get; }
-        /// <summary>
-        /// The BGP session associated with the connection.
-        /// Serialized Name: DirectConnection.bgpSession
-        /// </summary>
+        /// <summary> The BGP session associated with the connection. </summary>
         public PeeringBgpSession BgpSession { get; set; }
-        /// <summary>
-        /// The unique identifier (GUID) for the connection.
-        /// Serialized Name: DirectConnection.connectionIdentifier
-        /// </summary>
+        /// <summary> The unique identifier (GUID) for the connection. </summary>
         public string ConnectionIdentifier { get; set; }
-        /// <summary>
-        /// The error message related to the connection state, if any.
-        /// Serialized Name: DirectConnection.errorMessage
-        /// </summary>
+        /// <summary> The error message related to the connection state, if any. </summary>
         public string ErrorMessage { get; }
     }
 }

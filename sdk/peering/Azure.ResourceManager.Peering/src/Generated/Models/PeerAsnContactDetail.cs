@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The contact detail class.
-    /// Serialized Name: ContactDetail
-    /// </summary>
+    /// <summary> The contact detail class. </summary>
     public partial class PeerAsnContactDetail
     {
         /// <summary> Initializes a new instance of PeerAsnContactDetail. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeerAsnContactDetail. </summary>
-        /// <param name="role">
-        /// The role of the contact.
-        /// Serialized Name: ContactDetail.role
-        /// </param>
-        /// <param name="email">
-        /// The e-mail address of the contact.
-        /// Serialized Name: ContactDetail.email
-        /// </param>
-        /// <param name="phone">
-        /// The phone number of the contact.
-        /// Serialized Name: ContactDetail.phone
-        /// </param>
+        /// <param name="role"> The role of the contact. </param>
+        /// <param name="email"> The e-mail address of the contact. </param>
+        /// <param name="phone"> The phone number of the contact. </param>
         internal PeerAsnContactDetail(PeeringRole? role, string email, string phone)
         {
             Role = role;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Peering.Models
             Phone = phone;
         }
 
-        /// <summary>
-        /// The role of the contact.
-        /// Serialized Name: ContactDetail.role
-        /// </summary>
+        /// <summary> The role of the contact. </summary>
         public PeeringRole? Role { get; set; }
-        /// <summary>
-        /// The e-mail address of the contact.
-        /// Serialized Name: ContactDetail.email
-        /// </summary>
+        /// <summary> The e-mail address of the contact. </summary>
         public string Email { get; set; }
-        /// <summary>
-        /// The phone number of the contact.
-        /// Serialized Name: ContactDetail.phone
-        /// </summary>
+        /// <summary> The phone number of the contact. </summary>
         public string Phone { get; set; }
     }
 }

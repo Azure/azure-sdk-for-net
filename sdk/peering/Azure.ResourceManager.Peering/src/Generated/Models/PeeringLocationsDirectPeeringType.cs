@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The PeeringLocationsDirectPeeringType.
-    /// Serialized Name: PeeringLocationsDirectPeeringType
-    /// </summary>
+    /// <summary> The PeeringLocationsDirectPeeringType. </summary>
     public readonly partial struct PeeringLocationsDirectPeeringType : IEquatable<PeeringLocationsDirectPeeringType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.Peering.Models
         private const string VoiceValue = "Voice";
         private const string EdgeZoneForOperatorsValue = "EdgeZoneForOperators";
 
-        /// <summary>
-        /// Edge
-        /// Serialized Name: PeeringLocationsDirectPeeringType.Edge
-        /// </summary>
+        /// <summary> Edge. </summary>
         public static PeeringLocationsDirectPeeringType Edge { get; } = new PeeringLocationsDirectPeeringType(EdgeValue);
-        /// <summary>
-        /// Transit
-        /// Serialized Name: PeeringLocationsDirectPeeringType.Transit
-        /// </summary>
+        /// <summary> Transit. </summary>
         public static PeeringLocationsDirectPeeringType Transit { get; } = new PeeringLocationsDirectPeeringType(TransitValue);
-        /// <summary>
-        /// Cdn
-        /// Serialized Name: PeeringLocationsDirectPeeringType.Cdn
-        /// </summary>
+        /// <summary> Cdn. </summary>
         public static PeeringLocationsDirectPeeringType Cdn { get; } = new PeeringLocationsDirectPeeringType(CdnValue);
-        /// <summary>
-        /// Internal
-        /// Serialized Name: PeeringLocationsDirectPeeringType.Internal
-        /// </summary>
+        /// <summary> Internal. </summary>
         public static PeeringLocationsDirectPeeringType Internal { get; } = new PeeringLocationsDirectPeeringType(InternalValue);
-        /// <summary>
-        /// Ix
-        /// Serialized Name: PeeringLocationsDirectPeeringType.Ix
-        /// </summary>
+        /// <summary> Ix. </summary>
         public static PeeringLocationsDirectPeeringType Ix { get; } = new PeeringLocationsDirectPeeringType(IxValue);
-        /// <summary>
-        /// IxRs
-        /// Serialized Name: PeeringLocationsDirectPeeringType.IxRs
-        /// </summary>
+        /// <summary> IxRs. </summary>
         public static PeeringLocationsDirectPeeringType IxRs { get; } = new PeeringLocationsDirectPeeringType(IxRsValue);
-        /// <summary>
-        /// Voice
-        /// Serialized Name: PeeringLocationsDirectPeeringType.Voice
-        /// </summary>
+        /// <summary> Voice. </summary>
         public static PeeringLocationsDirectPeeringType Voice { get; } = new PeeringLocationsDirectPeeringType(VoiceValue);
-        /// <summary>
-        /// EdgeZoneForOperators
-        /// Serialized Name: PeeringLocationsDirectPeeringType.EdgeZoneForOperators
-        /// </summary>
+        /// <summary> EdgeZoneForOperators. </summary>
         public static PeeringLocationsDirectPeeringType EdgeZoneForOperators { get; } = new PeeringLocationsDirectPeeringType(EdgeZoneForOperatorsValue);
         /// <summary> Determines if two <see cref="PeeringLocationsDirectPeeringType"/> values are the same. </summary>
         public static bool operator ==(PeeringLocationsDirectPeeringType left, PeeringLocationsDirectPeeringType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The properties that define a Log Analytics Workspace.
-    /// Serialized Name: LogAnalyticsWorkspaceProperties
-    /// </summary>
+    /// <summary> The properties that define a Log Analytics Workspace. </summary>
     public partial class PeeringLogAnalyticsWorkspaceProperties
     {
         /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
-        /// <param name="workspaceId">
-        /// The Workspace ID.
-        /// Serialized Name: LogAnalyticsWorkspaceProperties.workspaceID
-        /// </param>
-        /// <param name="key">
-        /// The Workspace Key.
-        /// Serialized Name: LogAnalyticsWorkspaceProperties.key
-        /// </param>
-        /// <param name="connectedAgents">
-        /// The list of connected agents.
-        /// Serialized Name: LogAnalyticsWorkspaceProperties.connectedAgents
-        /// </param>
+        /// <param name="workspaceId"> The Workspace ID. </param>
+        /// <param name="key"> The Workspace Key. </param>
+        /// <param name="connectedAgents"> The list of connected agents. </param>
         internal PeeringLogAnalyticsWorkspaceProperties(string workspaceId, string key, IReadOnlyList<string> connectedAgents)
         {
             WorkspaceId = workspaceId;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Peering.Models
             ConnectedAgents = connectedAgents;
         }
 
-        /// <summary>
-        /// The Workspace ID.
-        /// Serialized Name: LogAnalyticsWorkspaceProperties.workspaceID
-        /// </summary>
+        /// <summary> The Workspace ID. </summary>
         public string WorkspaceId { get; }
-        /// <summary>
-        /// The Workspace Key.
-        /// Serialized Name: LogAnalyticsWorkspaceProperties.key
-        /// </summary>
+        /// <summary> The Workspace Key. </summary>
         public string Key { get; }
-        /// <summary>
-        /// The list of connected agents.
-        /// Serialized Name: LogAnalyticsWorkspaceProperties.connectedAgents
-        /// </summary>
+        /// <summary> The list of connected agents. </summary>
         public IReadOnlyList<string> ConnectedAgents { get; }
     }
 }

@@ -24,26 +24,11 @@ namespace Azure.ResourceManager.Peering
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix">
-        /// The customer&apos;s prefix from which traffic originates.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.prefix
-        /// </param>
-        /// <param name="prefixValidationState">
-        /// The prefix validation state.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.prefixValidationState
-        /// </param>
-        /// <param name="peeringServicePrefixKey">
-        /// The peering service prefix key that is to be shared with the customer.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.peeringServicePrefixKey
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message associated with the validation state, if any.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.errorMessage
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the resource.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.provisioningState
-        /// </param>
+        /// <param name="prefix"> The customer&apos;s prefix from which traffic originates. </param>
+        /// <param name="prefixValidationState"> The prefix validation state. </param>
+        /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
+        /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
@@ -53,30 +38,15 @@ namespace Azure.ResourceManager.Peering
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// The customer&apos;s prefix from which traffic originates.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.prefix
-        /// </summary>
+        /// <summary> The customer&apos;s prefix from which traffic originates. </summary>
         public string Prefix { get; set; }
-        /// <summary>
-        /// The prefix validation state.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.prefixValidationState
-        /// </summary>
+        /// <summary> The prefix validation state. </summary>
         public PeeringPrefixValidationState? PrefixValidationState { get; }
-        /// <summary>
-        /// The peering service prefix key that is to be shared with the customer.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.peeringServicePrefixKey
-        /// </summary>
+        /// <summary> The peering service prefix key that is to be shared with the customer. </summary>
         public string PeeringServicePrefixKey { get; }
-        /// <summary>
-        /// The error message associated with the validation state, if any.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.errorMessage
-        /// </summary>
+        /// <summary> The error message associated with the validation state, if any. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// The provisioning state of the resource.
-        /// Serialized Name: PeeringRegisteredPrefix.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the resource. </summary>
         public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

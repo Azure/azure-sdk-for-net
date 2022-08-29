@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The kind of the peering.
-    /// Serialized Name: Kind
-    /// </summary>
+    /// <summary> The kind of the peering. </summary>
     public readonly partial struct PeeringKind : IEquatable<PeeringKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Peering.Models
         private const string DirectValue = "Direct";
         private const string ExchangeValue = "Exchange";
 
-        /// <summary>
-        /// Direct
-        /// Serialized Name: Kind.Direct
-        /// </summary>
+        /// <summary> Direct. </summary>
         public static PeeringKind Direct { get; } = new PeeringKind(DirectValue);
-        /// <summary>
-        /// Exchange
-        /// Serialized Name: Kind.Exchange
-        /// </summary>
+        /// <summary> Exchange. </summary>
         public static PeeringKind Exchange { get; } = new PeeringKind(ExchangeValue);
         /// <summary> Determines if two <see cref="PeeringKind"/> values are the same. </summary>
         public static bool operator ==(PeeringKind left, PeeringKind right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The size of the peering SKU.
-    /// Serialized Name: Size
-    /// </summary>
+    /// <summary> The size of the peering SKU. </summary>
     public readonly partial struct PeeringSize : IEquatable<PeeringSize>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Peering.Models
         private const string MeteredValue = "Metered";
         private const string UnlimitedValue = "Unlimited";
 
-        /// <summary>
-        /// Free
-        /// Serialized Name: Size.Free
-        /// </summary>
+        /// <summary> Free. </summary>
         public static PeeringSize Free { get; } = new PeeringSize(FreeValue);
-        /// <summary>
-        /// Metered
-        /// Serialized Name: Size.Metered
-        /// </summary>
+        /// <summary> Metered. </summary>
         public static PeeringSize Metered { get; } = new PeeringSize(MeteredValue);
-        /// <summary>
-        /// Unlimited
-        /// Serialized Name: Size.Unlimited
-        /// </summary>
+        /// <summary> Unlimited. </summary>
         public static PeeringSize Unlimited { get; } = new PeeringSize(UnlimitedValue);
         /// <summary> Determines if two <see cref="PeeringSize"/> values are the same. </summary>
         public static bool operator ==(PeeringSize left, PeeringSize right) => left.Equals(right);

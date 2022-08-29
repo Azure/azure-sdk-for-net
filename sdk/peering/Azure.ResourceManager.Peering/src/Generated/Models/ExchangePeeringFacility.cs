@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The properties that define an exchange peering facility.
-    /// Serialized Name: ExchangePeeringFacility
-    /// </summary>
+    /// <summary> The properties that define an exchange peering facility. </summary>
     public partial class ExchangePeeringFacility
     {
         /// <summary> Initializes a new instance of ExchangePeeringFacility. </summary>
@@ -19,38 +16,14 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of ExchangePeeringFacility. </summary>
-        /// <param name="exchangeName">
-        /// The name of the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.exchangeName
-        /// </param>
-        /// <param name="bandwidthInMbps">
-        /// The bandwidth of the connection between Microsoft and the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.bandwidthInMbps
-        /// </param>
-        /// <param name="microsoftIPv4Address">
-        /// The IPv4 address of Microsoft at the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.microsoftIPv4Address
-        /// </param>
-        /// <param name="microsoftIPv6Address">
-        /// The IPv6 address of Microsoft at the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.microsoftIPv6Address
-        /// </param>
-        /// <param name="facilityIPv4Prefix">
-        /// The IPv4 prefixes associated with the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.facilityIPv4Prefix
-        /// </param>
-        /// <param name="facilityIPv6Prefix">
-        /// The IPv6 prefixes associated with the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.facilityIPv6Prefix
-        /// </param>
-        /// <param name="peeringDBFacilityId">
-        /// The PeeringDB.com ID of the facility.
-        /// Serialized Name: ExchangePeeringFacility.peeringDBFacilityId
-        /// </param>
-        /// <param name="peeringDBFacilityLink">
-        /// The PeeringDB.com URL of the facility.
-        /// Serialized Name: ExchangePeeringFacility.peeringDBFacilityLink
-        /// </param>
+        /// <param name="exchangeName"> The name of the exchange peering facility. </param>
+        /// <param name="bandwidthInMbps"> The bandwidth of the connection between Microsoft and the exchange peering facility. </param>
+        /// <param name="microsoftIPv4Address"> The IPv4 address of Microsoft at the exchange peering facility. </param>
+        /// <param name="microsoftIPv6Address"> The IPv6 address of Microsoft at the exchange peering facility. </param>
+        /// <param name="facilityIPv4Prefix"> The IPv4 prefixes associated with the exchange peering facility. </param>
+        /// <param name="facilityIPv6Prefix"> The IPv6 prefixes associated with the exchange peering facility. </param>
+        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
+        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
         internal ExchangePeeringFacility(string exchangeName, int? bandwidthInMbps, string microsoftIPv4Address, string microsoftIPv6Address, string facilityIPv4Prefix, string facilityIPv6Prefix, int? peeringDBFacilityId, string peeringDBFacilityLink)
         {
             ExchangeName = exchangeName;
@@ -63,45 +36,21 @@ namespace Azure.ResourceManager.Peering.Models
             PeeringDBFacilityLink = peeringDBFacilityLink;
         }
 
-        /// <summary>
-        /// The name of the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.exchangeName
-        /// </summary>
+        /// <summary> The name of the exchange peering facility. </summary>
         public string ExchangeName { get; set; }
-        /// <summary>
-        /// The bandwidth of the connection between Microsoft and the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.bandwidthInMbps
-        /// </summary>
+        /// <summary> The bandwidth of the connection between Microsoft and the exchange peering facility. </summary>
         public int? BandwidthInMbps { get; set; }
-        /// <summary>
-        /// The IPv4 address of Microsoft at the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.microsoftIPv4Address
-        /// </summary>
+        /// <summary> The IPv4 address of Microsoft at the exchange peering facility. </summary>
         public string MicrosoftIPv4Address { get; set; }
-        /// <summary>
-        /// The IPv6 address of Microsoft at the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.microsoftIPv6Address
-        /// </summary>
+        /// <summary> The IPv6 address of Microsoft at the exchange peering facility. </summary>
         public string MicrosoftIPv6Address { get; set; }
-        /// <summary>
-        /// The IPv4 prefixes associated with the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.facilityIPv4Prefix
-        /// </summary>
+        /// <summary> The IPv4 prefixes associated with the exchange peering facility. </summary>
         public string FacilityIPv4Prefix { get; set; }
-        /// <summary>
-        /// The IPv6 prefixes associated with the exchange peering facility.
-        /// Serialized Name: ExchangePeeringFacility.facilityIPv6Prefix
-        /// </summary>
+        /// <summary> The IPv6 prefixes associated with the exchange peering facility. </summary>
         public string FacilityIPv6Prefix { get; set; }
-        /// <summary>
-        /// The PeeringDB.com ID of the facility.
-        /// Serialized Name: ExchangePeeringFacility.peeringDBFacilityId
-        /// </summary>
+        /// <summary> The PeeringDB.com ID of the facility. </summary>
         public int? PeeringDBFacilityId { get; set; }
-        /// <summary>
-        /// The PeeringDB.com URL of the facility.
-        /// Serialized Name: ExchangePeeringFacility.peeringDBFacilityLink
-        /// </summary>
+        /// <summary> The PeeringDB.com URL of the facility. </summary>
         public string PeeringDBFacilityLink { get; set; }
     }
 }

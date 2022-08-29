@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The family of the peering SKU.
-    /// Serialized Name: Family
-    /// </summary>
+    /// <summary> The family of the peering SKU. </summary>
     public readonly partial struct PeeringFamily : IEquatable<PeeringFamily>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Peering.Models
         private const string DirectValue = "Direct";
         private const string ExchangeValue = "Exchange";
 
-        /// <summary>
-        /// Direct
-        /// Serialized Name: Family.Direct
-        /// </summary>
+        /// <summary> Direct. </summary>
         public static PeeringFamily Direct { get; } = new PeeringFamily(DirectValue);
-        /// <summary>
-        /// Exchange
-        /// Serialized Name: Family.Exchange
-        /// </summary>
+        /// <summary> Exchange. </summary>
         public static PeeringFamily Exchange { get; } = new PeeringFamily(ExchangeValue);
         /// <summary> Determines if two <see cref="PeeringFamily"/> values are the same. </summary>
         public static bool operator ==(PeeringFamily left, PeeringFamily right) => left.Equals(right);

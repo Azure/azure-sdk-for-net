@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The properties that define a BGP session.
-    /// Serialized Name: BgpSession
-    /// </summary>
+    /// <summary> The properties that define a BGP session. </summary>
     public partial class PeeringBgpSession
     {
         /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
@@ -19,50 +16,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
-        /// <param name="sessionPrefixV4">
-        /// The IPv4 prefix that contains both ends&apos; IPv4 addresses.
-        /// Serialized Name: BgpSession.sessionPrefixV4
-        /// </param>
-        /// <param name="sessionPrefixV6">
-        /// The IPv6 prefix that contains both ends&apos; IPv6 addresses.
-        /// Serialized Name: BgpSession.sessionPrefixV6
-        /// </param>
-        /// <param name="microsoftSessionIPv4Address">
-        /// The IPv4 session address on Microsoft&apos;s end.
-        /// Serialized Name: BgpSession.microsoftSessionIPv4Address
-        /// </param>
-        /// <param name="microsoftSessionIPv6Address">
-        /// The IPv6 session address on Microsoft&apos;s end.
-        /// Serialized Name: BgpSession.microsoftSessionIPv6Address
-        /// </param>
-        /// <param name="peerSessionIPv4Address">
-        /// The IPv4 session address on peer&apos;s end.
-        /// Serialized Name: BgpSession.peerSessionIPv4Address
-        /// </param>
-        /// <param name="peerSessionIPv6Address">
-        /// The IPv6 session address on peer&apos;s end.
-        /// Serialized Name: BgpSession.peerSessionIPv6Address
-        /// </param>
-        /// <param name="sessionStateV4">
-        /// The state of the IPv4 session.
-        /// Serialized Name: BgpSession.sessionStateV4
-        /// </param>
-        /// <param name="sessionStateV6">
-        /// The state of the IPv6 session.
-        /// Serialized Name: BgpSession.sessionStateV6
-        /// </param>
-        /// <param name="maxPrefixesAdvertisedV4">
-        /// The maximum number of prefixes advertised over the IPv4 session.
-        /// Serialized Name: BgpSession.maxPrefixesAdvertisedV4
-        /// </param>
-        /// <param name="maxPrefixesAdvertisedV6">
-        /// The maximum number of prefixes advertised over the IPv6 session.
-        /// Serialized Name: BgpSession.maxPrefixesAdvertisedV6
-        /// </param>
-        /// <param name="md5AuthenticationKey">
-        /// The MD5 authentication key of the session.
-        /// Serialized Name: BgpSession.md5AuthenticationKey
-        /// </param>
+        /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends&apos; IPv4 addresses. </param>
+        /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends&apos; IPv6 addresses. </param>
+        /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft&apos;s end. </param>
+        /// <param name="microsoftSessionIPv6Address"> The IPv6 session address on Microsoft&apos;s end. </param>
+        /// <param name="peerSessionIPv4Address"> The IPv4 session address on peer&apos;s end. </param>
+        /// <param name="peerSessionIPv6Address"> The IPv6 session address on peer&apos;s end. </param>
+        /// <param name="sessionStateV4"> The state of the IPv4 session. </param>
+        /// <param name="sessionStateV6"> The state of the IPv6 session. </param>
+        /// <param name="maxPrefixesAdvertisedV4"> The maximum number of prefixes advertised over the IPv4 session. </param>
+        /// <param name="maxPrefixesAdvertisedV6"> The maximum number of prefixes advertised over the IPv6 session. </param>
+        /// <param name="md5AuthenticationKey"> The MD5 authentication key of the session. </param>
         internal PeeringBgpSession(string sessionPrefixV4, string sessionPrefixV6, string microsoftSessionIPv4Address, string microsoftSessionIPv6Address, string peerSessionIPv4Address, string peerSessionIPv6Address, PeeringSessionStateV4? sessionStateV4, PeeringSessionStateV6? sessionStateV6, int? maxPrefixesAdvertisedV4, int? maxPrefixesAdvertisedV6, string md5AuthenticationKey)
         {
             SessionPrefixV4 = sessionPrefixV4;
@@ -78,60 +42,27 @@ namespace Azure.ResourceManager.Peering.Models
             Md5AuthenticationKey = md5AuthenticationKey;
         }
 
-        /// <summary>
-        /// The IPv4 prefix that contains both ends&apos; IPv4 addresses.
-        /// Serialized Name: BgpSession.sessionPrefixV4
-        /// </summary>
+        /// <summary> The IPv4 prefix that contains both ends&apos; IPv4 addresses. </summary>
         public string SessionPrefixV4 { get; set; }
-        /// <summary>
-        /// The IPv6 prefix that contains both ends&apos; IPv6 addresses.
-        /// Serialized Name: BgpSession.sessionPrefixV6
-        /// </summary>
+        /// <summary> The IPv6 prefix that contains both ends&apos; IPv6 addresses. </summary>
         public string SessionPrefixV6 { get; set; }
-        /// <summary>
-        /// The IPv4 session address on Microsoft&apos;s end.
-        /// Serialized Name: BgpSession.microsoftSessionIPv4Address
-        /// </summary>
+        /// <summary> The IPv4 session address on Microsoft&apos;s end. </summary>
         public string MicrosoftSessionIPv4Address { get; set; }
-        /// <summary>
-        /// The IPv6 session address on Microsoft&apos;s end.
-        /// Serialized Name: BgpSession.microsoftSessionIPv6Address
-        /// </summary>
+        /// <summary> The IPv6 session address on Microsoft&apos;s end. </summary>
         public string MicrosoftSessionIPv6Address { get; set; }
-        /// <summary>
-        /// The IPv4 session address on peer&apos;s end.
-        /// Serialized Name: BgpSession.peerSessionIPv4Address
-        /// </summary>
+        /// <summary> The IPv4 session address on peer&apos;s end. </summary>
         public string PeerSessionIPv4Address { get; set; }
-        /// <summary>
-        /// The IPv6 session address on peer&apos;s end.
-        /// Serialized Name: BgpSession.peerSessionIPv6Address
-        /// </summary>
+        /// <summary> The IPv6 session address on peer&apos;s end. </summary>
         public string PeerSessionIPv6Address { get; set; }
-        /// <summary>
-        /// The state of the IPv4 session.
-        /// Serialized Name: BgpSession.sessionStateV4
-        /// </summary>
+        /// <summary> The state of the IPv4 session. </summary>
         public PeeringSessionStateV4? SessionStateV4 { get; }
-        /// <summary>
-        /// The state of the IPv6 session.
-        /// Serialized Name: BgpSession.sessionStateV6
-        /// </summary>
+        /// <summary> The state of the IPv6 session. </summary>
         public PeeringSessionStateV6? SessionStateV6 { get; }
-        /// <summary>
-        /// The maximum number of prefixes advertised over the IPv4 session.
-        /// Serialized Name: BgpSession.maxPrefixesAdvertisedV4
-        /// </summary>
+        /// <summary> The maximum number of prefixes advertised over the IPv4 session. </summary>
         public int? MaxPrefixesAdvertisedV4 { get; set; }
-        /// <summary>
-        /// The maximum number of prefixes advertised over the IPv6 session.
-        /// Serialized Name: BgpSession.maxPrefixesAdvertisedV6
-        /// </summary>
+        /// <summary> The maximum number of prefixes advertised over the IPv6 session. </summary>
         public int? MaxPrefixesAdvertisedV6 { get; set; }
-        /// <summary>
-        /// The MD5 authentication key of the session.
-        /// Serialized Name: BgpSession.md5AuthenticationKey
-        /// </summary>
+        /// <summary> The MD5 authentication key of the session. </summary>
         public string Md5AuthenticationKey { get; set; }
     }
 }

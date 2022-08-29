@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The LegacyPeeringsKind.
-    /// Serialized Name: LegacyPeeringsKind
-    /// </summary>
+    /// <summary> The LegacyPeeringsKind. </summary>
     public readonly partial struct LegacyPeeringsKind : IEquatable<LegacyPeeringsKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Peering.Models
         private const string DirectValue = "Direct";
         private const string ExchangeValue = "Exchange";
 
-        /// <summary>
-        /// Direct
-        /// Serialized Name: LegacyPeeringsKind.Direct
-        /// </summary>
+        /// <summary> Direct. </summary>
         public static LegacyPeeringsKind Direct { get; } = new LegacyPeeringsKind(DirectValue);
-        /// <summary>
-        /// Exchange
-        /// Serialized Name: LegacyPeeringsKind.Exchange
-        /// </summary>
+        /// <summary> Exchange. </summary>
         public static LegacyPeeringsKind Exchange { get; } = new LegacyPeeringsKind(ExchangeValue);
         /// <summary> Determines if two <see cref="LegacyPeeringsKind"/> values are the same. </summary>
         public static bool operator ==(LegacyPeeringsKind left, LegacyPeeringsKind right) => left.Equals(right);

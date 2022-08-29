@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The tier of the peering SKU.
-    /// Serialized Name: Tier
-    /// </summary>
+    /// <summary> The tier of the peering SKU. </summary>
     public readonly partial struct PeeringTier : IEquatable<PeeringTier>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Peering.Models
         private const string BasicValue = "Basic";
         private const string PremiumValue = "Premium";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: Tier.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static PeeringTier Basic { get; } = new PeeringTier(BasicValue);
-        /// <summary>
-        /// Premium
-        /// Serialized Name: Tier.Premium
-        /// </summary>
+        /// <summary> Premium. </summary>
         public static PeeringTier Premium { get; } = new PeeringTier(PremiumValue);
         /// <summary> Determines if two <see cref="PeeringTier"/> values are the same. </summary>
         public static bool operator ==(PeeringTier left, PeeringTier right) => left.Equals(right);

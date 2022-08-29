@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The SKU that defines the type of the peering service.
-    /// Serialized Name: PeeringServiceSku
-    /// </summary>
+    /// <summary> The SKU that defines the type of the peering service. </summary>
     internal partial class PeeringServiceSku
     {
         /// <summary> Initializes a new instance of PeeringServiceSku. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringServiceSku. </summary>
-        /// <param name="name">
-        /// The name of the peering service SKU.
-        /// Serialized Name: PeeringServiceSku.name
-        /// </param>
+        /// <param name="name"> The name of the peering service SKU. </param>
         internal PeeringServiceSku(string name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// The name of the peering service SKU.
-        /// Serialized Name: PeeringServiceSku.name
-        /// </summary>
+        /// <summary> The name of the peering service SKU. </summary>
         public string Name { get; set; }
     }
 }

@@ -26,26 +26,11 @@ namespace Azure.ResourceManager.Peering
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="peerAsn">
-        /// The Autonomous System Number (ASN) of the peer.
-        /// Serialized Name: PeerAsn.properties.peerAsn
-        /// </param>
-        /// <param name="peerContactDetail">
-        /// The contact details of the peer.
-        /// Serialized Name: PeerAsn.properties.peerContactDetail
-        /// </param>
-        /// <param name="peerName">
-        /// The name of the peer.
-        /// Serialized Name: PeerAsn.properties.peerName
-        /// </param>
-        /// <param name="validationState">
-        /// The validation state of the ASN associated with the peer.
-        /// Serialized Name: PeerAsn.properties.validationState
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message for the validation state
-        /// Serialized Name: PeerAsn.properties.errorMessage
-        /// </param>
+        /// <param name="peerAsn"> The Autonomous System Number (ASN) of the peer. </param>
+        /// <param name="peerContactDetail"> The contact details of the peer. </param>
+        /// <param name="peerName"> The name of the peer. </param>
+        /// <param name="validationState"> The validation state of the ASN associated with the peer. </param>
+        /// <param name="errorMessage"> The error message for the validation state. </param>
         internal PeerAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? peerAsn, IList<PeerAsnContactDetail> peerContactDetail, string peerName, PeerAsnValidationState? validationState, string errorMessage) : base(id, name, resourceType, systemData)
         {
             PeerAsn = peerAsn;
@@ -55,30 +40,15 @@ namespace Azure.ResourceManager.Peering
             ErrorMessage = errorMessage;
         }
 
-        /// <summary>
-        /// The Autonomous System Number (ASN) of the peer.
-        /// Serialized Name: PeerAsn.properties.peerAsn
-        /// </summary>
+        /// <summary> The Autonomous System Number (ASN) of the peer. </summary>
         public int? PeerAsn { get; set; }
-        /// <summary>
-        /// The contact details of the peer.
-        /// Serialized Name: PeerAsn.properties.peerContactDetail
-        /// </summary>
+        /// <summary> The contact details of the peer. </summary>
         public IList<PeerAsnContactDetail> PeerContactDetail { get; }
-        /// <summary>
-        /// The name of the peer.
-        /// Serialized Name: PeerAsn.properties.peerName
-        /// </summary>
+        /// <summary> The name of the peer. </summary>
         public string PeerName { get; set; }
-        /// <summary>
-        /// The validation state of the ASN associated with the peer.
-        /// Serialized Name: PeerAsn.properties.validationState
-        /// </summary>
+        /// <summary> The validation state of the ASN associated with the peer. </summary>
         public PeerAsnValidationState? ValidationState { get; }
-        /// <summary>
-        /// The error message for the validation state
-        /// Serialized Name: PeerAsn.properties.errorMessage
-        /// </summary>
+        /// <summary> The error message for the validation state. </summary>
         public string ErrorMessage { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The provisioning state of the resource.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state of the resource. </summary>
     public readonly partial struct PeeringProvisioningState : IEquatable<PeeringProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Peering.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static PeeringProvisioningState Succeeded { get; } = new PeeringProvisioningState(SucceededValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static PeeringProvisioningState Updating { get; } = new PeeringProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static PeeringProvisioningState Deleting { get; } = new PeeringProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static PeeringProvisioningState Failed { get; } = new PeeringProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="PeeringProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PeeringProvisioningState left, PeeringProvisioningState right) => left.Equals(right);

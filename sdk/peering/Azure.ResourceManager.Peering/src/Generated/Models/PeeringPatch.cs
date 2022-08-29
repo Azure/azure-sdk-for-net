@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The Paths1Sywd6ZSubscriptionsSubscriptionidResourcegroupsResourcegroupnameProvidersMicrosoftPeeringPeeringsPeeringnamePatchRequestbodyContentApplicationJsonSchema.
-    /// Serialized Name: Paths1Sywd6ZSubscriptionsSubscriptionidResourcegroupsResourcegroupnameProvidersMicrosoftPeeringPeeringsPeeringnamePatchRequestbodyContentApplicationJsonSchema
-    /// </summary>
+    /// <summary> The PeeringPatch. </summary>
     public partial class PeeringPatch : PeeringResourceTagsPatch
     {
         /// <summary> Initializes a new instance of PeeringPatch. </summary>

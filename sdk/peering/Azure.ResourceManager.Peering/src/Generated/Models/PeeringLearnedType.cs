@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The prefix learned type
-    /// Serialized Name: LearnedType
-    /// </summary>
+    /// <summary> The prefix learned type. </summary>
     public readonly partial struct PeeringLearnedType : IEquatable<PeeringLearnedType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Peering.Models
         private const string ViaServiceProviderValue = "ViaServiceProvider";
         private const string ViaSessionValue = "ViaSession";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: LearnedType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static PeeringLearnedType None { get; } = new PeeringLearnedType(NoneValue);
-        /// <summary>
-        /// ViaServiceProvider
-        /// Serialized Name: LearnedType.ViaServiceProvider
-        /// </summary>
+        /// <summary> ViaServiceProvider. </summary>
         public static PeeringLearnedType ViaServiceProvider { get; } = new PeeringLearnedType(ViaServiceProviderValue);
-        /// <summary>
-        /// ViaSession
-        /// Serialized Name: LearnedType.ViaSession
-        /// </summary>
+        /// <summary> ViaSession. </summary>
         public static PeeringLearnedType ViaSession { get; } = new PeeringLearnedType(ViaSessionValue);
         /// <summary> Determines if two <see cref="PeeringLearnedType"/> values are the same. </summary>
         public static bool operator ==(PeeringLearnedType left, PeeringLearnedType right) => left.Equals(right);

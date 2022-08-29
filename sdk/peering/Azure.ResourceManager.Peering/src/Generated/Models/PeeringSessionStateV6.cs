@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The state of the IPv6 session.
-    /// Serialized Name: SessionStateV6
-    /// </summary>
+    /// <summary> The state of the IPv6 session. </summary>
     public readonly partial struct PeeringSessionStateV6 : IEquatable<PeeringSessionStateV6>
     {
         private readonly string _value;
@@ -37,60 +34,27 @@ namespace Azure.ResourceManager.Peering.Models
         private const string PendingUpdateValue = "PendingUpdate";
         private const string PendingRemoveValue = "PendingRemove";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: SessionStateV6.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static PeeringSessionStateV6 None { get; } = new PeeringSessionStateV6(NoneValue);
-        /// <summary>
-        /// Idle
-        /// Serialized Name: SessionStateV6.Idle
-        /// </summary>
+        /// <summary> Idle. </summary>
         public static PeeringSessionStateV6 Idle { get; } = new PeeringSessionStateV6(IdleValue);
-        /// <summary>
-        /// Connect
-        /// Serialized Name: SessionStateV6.Connect
-        /// </summary>
+        /// <summary> Connect. </summary>
         public static PeeringSessionStateV6 Connect { get; } = new PeeringSessionStateV6(ConnectValue);
-        /// <summary>
-        /// Active
-        /// Serialized Name: SessionStateV6.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static PeeringSessionStateV6 Active { get; } = new PeeringSessionStateV6(ActiveValue);
-        /// <summary>
-        /// OpenSent
-        /// Serialized Name: SessionStateV6.OpenSent
-        /// </summary>
+        /// <summary> OpenSent. </summary>
         public static PeeringSessionStateV6 OpenSent { get; } = new PeeringSessionStateV6(OpenSentValue);
-        /// <summary>
-        /// OpenConfirm
-        /// Serialized Name: SessionStateV6.OpenConfirm
-        /// </summary>
+        /// <summary> OpenConfirm. </summary>
         public static PeeringSessionStateV6 OpenConfirm { get; } = new PeeringSessionStateV6(OpenConfirmValue);
-        /// <summary>
-        /// OpenReceived
-        /// Serialized Name: SessionStateV6.OpenReceived
-        /// </summary>
+        /// <summary> OpenReceived. </summary>
         public static PeeringSessionStateV6 OpenReceived { get; } = new PeeringSessionStateV6(OpenReceivedValue);
-        /// <summary>
-        /// Established
-        /// Serialized Name: SessionStateV6.Established
-        /// </summary>
+        /// <summary> Established. </summary>
         public static PeeringSessionStateV6 Established { get; } = new PeeringSessionStateV6(EstablishedValue);
-        /// <summary>
-        /// PendingAdd
-        /// Serialized Name: SessionStateV6.PendingAdd
-        /// </summary>
+        /// <summary> PendingAdd. </summary>
         public static PeeringSessionStateV6 PendingAdd { get; } = new PeeringSessionStateV6(PendingAddValue);
-        /// <summary>
-        /// PendingUpdate
-        /// Serialized Name: SessionStateV6.PendingUpdate
-        /// </summary>
+        /// <summary> PendingUpdate. </summary>
         public static PeeringSessionStateV6 PendingUpdate { get; } = new PeeringSessionStateV6(PendingUpdateValue);
-        /// <summary>
-        /// PendingRemove
-        /// Serialized Name: SessionStateV6.PendingRemove
-        /// </summary>
+        /// <summary> PendingRemove. </summary>
         public static PeeringSessionStateV6 PendingRemove { get; } = new PeeringSessionStateV6(PendingRemoveValue);
         /// <summary> Determines if two <see cref="PeeringSessionStateV6"/> values are the same. </summary>
         public static bool operator ==(PeeringSessionStateV6 left, PeeringSessionStateV6 right) => left.Equals(right);

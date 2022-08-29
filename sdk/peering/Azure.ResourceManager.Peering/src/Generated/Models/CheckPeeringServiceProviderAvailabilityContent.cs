@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// Class for CheckServiceProviderAvailabilityInput
-    /// Serialized Name: CheckServiceProviderAvailabilityInput
-    /// </summary>
+    /// <summary> Class for CheckServiceProviderAvailabilityInput. </summary>
     public partial class CheckPeeringServiceProviderAvailabilityContent
     {
         /// <summary> Initializes a new instance of CheckPeeringServiceProviderAvailabilityContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.Peering.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the peering service location.
-        /// Serialized Name: CheckServiceProviderAvailabilityInput.peeringServiceLocation
-        /// </summary>
+        /// <summary> Gets or sets the peering service location. </summary>
         public string PeeringServiceLocation { get; set; }
-        /// <summary>
-        /// Gets or sets the peering service provider.
-        /// Serialized Name: CheckServiceProviderAvailabilityInput.peeringServiceProvider
-        /// </summary>
+        /// <summary> Gets or sets the peering service provider. </summary>
         public string PeeringServiceProvider { get; set; }
     }
 }

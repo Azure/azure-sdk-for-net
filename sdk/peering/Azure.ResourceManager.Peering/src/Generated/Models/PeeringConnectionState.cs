@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The state of the connection.
-    /// Serialized Name: ConnectionState
-    /// </summary>
+    /// <summary> The state of the connection. </summary>
     public readonly partial struct PeeringConnectionState : IEquatable<PeeringConnectionState>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.Peering.Models
         private const string TypeChangeRequestedValue = "TypeChangeRequested";
         private const string TypeChangeInProgressValue = "TypeChangeInProgress";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: ConnectionState.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static PeeringConnectionState None { get; } = new PeeringConnectionState(NoneValue);
-        /// <summary>
-        /// PendingApproval
-        /// Serialized Name: ConnectionState.PendingApproval
-        /// </summary>
+        /// <summary> PendingApproval. </summary>
         public static PeeringConnectionState PendingApproval { get; } = new PeeringConnectionState(PendingApprovalValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: ConnectionState.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static PeeringConnectionState Approved { get; } = new PeeringConnectionState(ApprovedValue);
-        /// <summary>
-        /// ProvisioningStarted
-        /// Serialized Name: ConnectionState.ProvisioningStarted
-        /// </summary>
+        /// <summary> ProvisioningStarted. </summary>
         public static PeeringConnectionState ProvisioningStarted { get; } = new PeeringConnectionState(ProvisioningStartedValue);
-        /// <summary>
-        /// ProvisioningFailed
-        /// Serialized Name: ConnectionState.ProvisioningFailed
-        /// </summary>
+        /// <summary> ProvisioningFailed. </summary>
         public static PeeringConnectionState ProvisioningFailed { get; } = new PeeringConnectionState(ProvisioningFailedValue);
-        /// <summary>
-        /// ProvisioningCompleted
-        /// Serialized Name: ConnectionState.ProvisioningCompleted
-        /// </summary>
+        /// <summary> ProvisioningCompleted. </summary>
         public static PeeringConnectionState ProvisioningCompleted { get; } = new PeeringConnectionState(ProvisioningCompletedValue);
-        /// <summary>
-        /// Validating
-        /// Serialized Name: ConnectionState.Validating
-        /// </summary>
+        /// <summary> Validating. </summary>
         public static PeeringConnectionState Validating { get; } = new PeeringConnectionState(ValidatingValue);
-        /// <summary>
-        /// Active
-        /// Serialized Name: ConnectionState.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static PeeringConnectionState Active { get; } = new PeeringConnectionState(ActiveValue);
-        /// <summary>
-        /// TypeChangeRequested
-        /// Serialized Name: ConnectionState.TypeChangeRequested
-        /// </summary>
+        /// <summary> TypeChangeRequested. </summary>
         public static PeeringConnectionState TypeChangeRequested { get; } = new PeeringConnectionState(TypeChangeRequestedValue);
-        /// <summary>
-        /// TypeChangeInProgress
-        /// Serialized Name: ConnectionState.TypeChangeInProgress
-        /// </summary>
+        /// <summary> TypeChangeInProgress. </summary>
         public static PeeringConnectionState TypeChangeInProgress { get; } = new PeeringConnectionState(TypeChangeInProgressValue);
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are the same. </summary>
         public static bool operator ==(PeeringConnectionState left, PeeringConnectionState right) => left.Equals(right);

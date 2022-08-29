@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The validation state of the ASN associated with the peer.
-    /// Serialized Name: ValidationState
-    /// </summary>
+    /// <summary> The validation state of the ASN associated with the peer. </summary>
     public readonly partial struct PeerAsnValidationState : IEquatable<PeerAsnValidationState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Peering.Models
         private const string ApprovedValue = "Approved";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: ValidationState.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static PeerAsnValidationState None { get; } = new PeerAsnValidationState(NoneValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: ValidationState.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static PeerAsnValidationState Pending { get; } = new PeerAsnValidationState(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: ValidationState.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static PeerAsnValidationState Approved { get; } = new PeerAsnValidationState(ApprovedValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ValidationState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static PeerAsnValidationState Failed { get; } = new PeerAsnValidationState(FailedValue);
         /// <summary> Determines if two <see cref="PeerAsnValidationState"/> values are the same. </summary>
         public static bool operator ==(PeerAsnValidationState left, PeerAsnValidationState right) => left.Equals(right);

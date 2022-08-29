@@ -24,18 +24,9 @@ namespace Azure.ResourceManager.Peering
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="asn">
-        /// The customer&apos;s ASN from which traffic originates.
-        /// Serialized Name: PeeringRegisteredAsn.properties.asn
-        /// </param>
-        /// <param name="peeringServicePrefixKey">
-        /// The peering service prefix key that is to be shared with the customer.
-        /// Serialized Name: PeeringRegisteredAsn.properties.peeringServicePrefixKey
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the resource.
-        /// Serialized Name: PeeringRegisteredAsn.properties.provisioningState
-        /// </param>
+        /// <param name="asn"> The customer&apos;s ASN from which traffic originates. </param>
+        /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         internal PeeringRegisteredAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? asn, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Asn = asn;
@@ -43,20 +34,11 @@ namespace Azure.ResourceManager.Peering
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// The customer&apos;s ASN from which traffic originates.
-        /// Serialized Name: PeeringRegisteredAsn.properties.asn
-        /// </summary>
+        /// <summary> The customer&apos;s ASN from which traffic originates. </summary>
         public int? Asn { get; set; }
-        /// <summary>
-        /// The peering service prefix key that is to be shared with the customer.
-        /// Serialized Name: PeeringRegisteredAsn.properties.peeringServicePrefixKey
-        /// </summary>
+        /// <summary> The peering service prefix key that is to be shared with the customer. </summary>
         public string PeeringServicePrefixKey { get; }
-        /// <summary>
-        /// The provisioning state of the resource.
-        /// Serialized Name: PeeringRegisteredAsn.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the resource. </summary>
         public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary>
-    /// The paginated list of peering services.
-    /// Serialized Name: PeeringServiceListResult
-    /// </summary>
+    /// <summary> The paginated list of peering services. </summary>
     internal partial class PeeringServiceListResult
     {
         /// <summary> Initializes a new instance of PeeringServiceListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringServiceListResult. </summary>
-        /// <param name="value">
-        /// The list of peering services.
-        /// Serialized Name: PeeringServiceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to fetch the next page of peering services.
-        /// Serialized Name: PeeringServiceListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of peering services. </param>
+        /// <param name="nextLink"> The link to fetch the next page of peering services. </param>
         internal PeeringServiceListResult(IReadOnlyList<PeeringServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of peering services.
-        /// Serialized Name: PeeringServiceListResult.value
-        /// </summary>
+        /// <summary> The list of peering services. </summary>
         public IReadOnlyList<PeeringServiceData> Value { get; }
-        /// <summary>
-        /// The link to fetch the next page of peering services.
-        /// Serialized Name: PeeringServiceListResult.nextLink
-        /// </summary>
+        /// <summary> The link to fetch the next page of peering services. </summary>
         public string NextLink { get; }
     }
 }
