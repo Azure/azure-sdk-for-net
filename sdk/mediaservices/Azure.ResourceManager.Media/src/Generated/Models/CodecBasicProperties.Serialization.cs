@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new CodecBasicProperties(odataType, label.Value);
+            return new UnknownCodecBasicProperties(odataType, label.Value);
         }
     }
 }

@@ -15,9 +15,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
+using System.Linq;
 
 namespace Microsoft.Azure.Batch.FileStaging
 {
@@ -179,60 +182,83 @@ namespace Microsoft.Azure.Batch.FileStaging
         /// <param name="permissions">permission on the name</param>
         /// <param name="blobUri">blob URI</param>
         /// <returns>the SAS for the container, in full URI format.</returns>
-        private static string CreateContainerWithPolicySASIfNotExist(string account, string key, Uri blobUri, string container, string policy, DateTime start, DateTime end, SharedAccessBlobPermissions permissions)
+        private static string CreateContainerWithPolicySASIfNotExist(string account, string key, Uri blobUri, string container, string policy, DateTime start, DateTime end, string permissions)
         {
-            // 1. form the credentail and initial client
-            CloudStorageAccount storageaccount = new CloudStorageAccount(new WindowsAzure.Storage.Auth.StorageCredentials(account, key), 
-                                                                         blobEndpoint: blobUri,
-                                                                         queueEndpoint: null,
-                                                                         tableEndpoint: null,
-                                                                         fileEndpoint: null);
 
-            CloudBlobClient client = storageaccount.CreateCloudBlobClient();
+            // 1. form the credentail and initial client
+            BlobServiceClient blobServiceClient = new BlobServiceClient(blobUri, new StorageSharedKeyCredential(account, key));
 
             // 2. create container if it doesn't exist
-            CloudBlobContainer storagecontainer = client.GetContainerReference(container);
-            storagecontainer.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(container);
+            containerClient.CreateIfNotExistsAsync().GetAwaiter().GetResult();
 
-            // 3. validate policy, create/overwrite if doesn't match
-            bool policyFound = false;
-
-            SharedAccessBlobPolicy accesspolicy = new SharedAccessBlobPolicy()
+            BlobSignedIdentifier blobPolicyToAdd = new BlobSignedIdentifier
             {
-                SharedAccessExpiryTime = end,
-                SharedAccessStartTime = start,
-                Permissions = permissions
+                Id = policy,
+                AccessPolicy = new BlobAccessPolicy
+                {
+                    StartsOn = start,
+                    ExpiresOn = end,
+                    Permissions = permissions
+                }
             };
 
-            BlobContainerPermissions blobPermissions = storagecontainer.GetPermissionsAsync().GetAwaiter().GetResult();
+            //Retrieve current access policies on the container
+            BlobContainerAccessPolicy currentAccessPolicies = containerClient.GetAccessPolicyAsync().GetAwaiter().GetResult();
 
-            if (blobPermissions.SharedAccessPolicies.ContainsKey(policy))
+            List<BlobSignedIdentifier> currentSignedIdentifiers = currentAccessPolicies.SignedIdentifiers.ToList();
+
+            bool policyFound = false;
+            bool updatePolicy = false;
+
+            /*
+             * Loop through signed identifiers to see if policy already exists
+             * Need to check and update policy in place to preserve the other access policies when setting at the end
+            */
+            for (int index = 0; index < currentSignedIdentifiers.Count; index++)
             {
-                SharedAccessBlobPolicy containerpolicy = blobPermissions.SharedAccessPolicies[policy];
-                if (!(permissions == (containerpolicy.Permissions & permissions) && start <= containerpolicy.SharedAccessStartTime && end >= containerpolicy.SharedAccessExpiryTime))
+                BlobSignedIdentifier identity = currentSignedIdentifiers.ElementAt(index);
+
+                if (identity.Id.Equals(blobPolicyToAdd.Id))
                 {
-                    blobPermissions.SharedAccessPolicies[policy] = accesspolicy;
-                }
-                else
-                {
-                    policyFound = true;
+                    BlobAccessPolicy accessPolicy = identity.AccessPolicy;
+                    if (!(permissions.Equals(accessPolicy.Permissions, StringComparison.InvariantCultureIgnoreCase) && start <= accessPolicy.PolicyStartsOn && end >= accessPolicy.PolicyExpiresOn))
+                    {
+                        currentSignedIdentifiers[index].AccessPolicy = blobPolicyToAdd.AccessPolicy;        //Update signed identifier policy in place
+                        updatePolicy = true;
+                    }
+                    else
+                    {
+                        policyFound = true;     //Policy was found with no modifications to be made
+                    }
+                    break;
                 }
             }
-            else
+
+
+            // If the policy was not found (and inherently does not need an update), add the new policy
+            if (!updatePolicy && !policyFound)
             {
-                blobPermissions.SharedAccessPolicies.Add(policy, accesspolicy);
+                currentSignedIdentifiers.Add(blobPolicyToAdd);
             }
 
             if (!policyFound)
             {
-                storagecontainer.SetPermissionsAsync(blobPermissions).GetAwaiter().GetResult();
+                // Set the container's access policy if the policy was not found or was modified
+                containerClient.SetAccessPolicyAsync(permissions: currentSignedIdentifiers).GetAwaiter().GetResult();
             }
 
-            // 4. genereate SAS and return
-            string container_sas = storagecontainer.GetSharedAccessSignature(new SharedAccessBlobPolicy(), policy);
-            string container_url = storagecontainer.Uri.AbsoluteUri + container_sas;
+            // Create the SAS token
+            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            {
+                BlobContainerName = containerClient.Name,
+                Resource = "c",         //Specify Container as resource
+                Identifier = policy
+            };
 
-            return container_url;
+            string containerUrl = containerClient.GenerateSasUri(sasBuilder).AbsoluteUri;
+
+            return containerUrl;
         }
 
         private static void CreateDefaultBlobContainerAndSASIfNeededReturn(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifact)
@@ -260,7 +286,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                                                             policyName, 
                                                             startTime, 
                                                             expiredAtTime, 
-                                                            SharedAccessBlobPermissions.Read);
+                                                            "r");
 
                     return;  // done
                 }
@@ -279,9 +305,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             {
                 foreach(IFileStagingProvider curProvider in filesToStage)
                 {
-                    FileToStage thisIsReal = curProvider as FileToStage;
-
-                    if (null != thisIsReal)
+                    if (curProvider is FileToStage thisIsReal)
                     {
                         return thisIsReal;
                     }
@@ -306,9 +330,8 @@ namespace Microsoft.Azure.Batch.FileStaging
                 throw new ArgumentNullException("filesStagingArtifact");
             }
 
-            SequentialFileStagingArtifact seqArtifact = fileStagingArtifact as SequentialFileStagingArtifact;
 
-            if (null == seqArtifact)
+            if (fileStagingArtifact is not SequentialFileStagingArtifact seqArtifact)
             {
                 throw new ArgumentOutOfRangeException(ErrorMessages.FileStagingIncorrectArtifact);
             }
@@ -348,9 +371,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                 // for "retry" and/or "double calls" we ignore files that have already been staged
                 if (null == currentFile.StagedFiles)
                 {
-                    FileToStage fts = currentFile as FileToStage;
-
-                    if (null != fts)
+                    if (currentFile is FileToStage fts)
                     {
                         System.Threading.Tasks.Task stageTask = StageOneFileAsync(fts, seqArtifacts);
 
@@ -371,32 +392,23 @@ namespace Microsoft.Azure.Batch.FileStaging
             // TODO: this flattens all files to the top of the compute node/task relative file directory. solve the hiearchy problem (virt dirs?)
             string blobName = Path.GetFileName(stageThisFile.LocalFileToStage);
 
-            // Create the storage account with the connection string.
-            CloudStorageAccount storageAccount = new CloudStorageAccount(
-                                                        new WindowsAzure.Storage.Auth.StorageCredentials(storecreds.StorageAccount, storecreds.StorageAccountKey), 
-                                                        blobEndpoint: storecreds.BlobUri, 
-                                                        queueEndpoint: null,
-                                                        tableEndpoint: null,
-                                                        fileEndpoint: null);
-
-            CloudBlobClient client = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = client.GetContainerReference(containerName);
-            ICloudBlob blob = container.GetBlockBlobReference(blobName);  
+            // Form the intial blob service client
+            BlobServiceClient blobServiceClient = new BlobServiceClient(storecreds.BlobUri, new StorageSharedKeyCredential(storecreds.StorageAccount, storecreds.StorageAccountKey));
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+            BlobClient blob = containerClient.GetBlobClient(blobName);
+            BlobProperties blobProperties = null;
             bool doesBlobExist;
 
             try
             {
                 // fetch attributes so we can compare file lengths
-                System.Threading.Tasks.Task fetchTask = blob.FetchAttributesAsync();
-
-                await fetchTask.ConfigureAwait(continueOnCapturedContext: false);
-
+                blobProperties = await blob.GetPropertiesAsync().ConfigureAwait(continueOnCapturedContext: false);
                 doesBlobExist = true;
             }
-            catch (StorageException scex)
+            catch (RequestFailedException rfex)
             {
                 // check to see if blob does not exist
-                if ((int)System.Net.HttpStatusCode.NotFound == scex.RequestInformation.HttpStatusCode)
+                if ((int)System.Net.HttpStatusCode.NotFound == rfex.Status)
                 {
                     doesBlobExist = false;
                 }
@@ -413,7 +425,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                 FileInfo fi = new FileInfo(stageThisFile.LocalFileToStage);
 
                 // since we don't have a hash of the contents... we check length
-                if (blob.Properties.Length == fi.Length)
+                if (blobProperties.ContentLength == fi.Length)
                 {
                     mustUploadBlob = false;
                 }
@@ -422,7 +434,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             if (mustUploadBlob)
             {
                 // upload the file
-                System.Threading.Tasks.Task uploadTask = blob.UploadFromFileAsync(stageThisFile.LocalFileToStage);
+                System.Threading.Tasks.Task uploadTask = blob.UploadAsync(stageThisFile.LocalFileToStage);
 
                 await uploadTask.ConfigureAwait(continueOnCapturedContext: false);
             }
@@ -435,6 +447,8 @@ namespace Microsoft.Azure.Batch.FileStaging
             stageThisFile.StagedFiles = new ResourceFile[] { ResourceFile.FromUrl(blobSAS, nodeFileName) };
         }
 
-#endregion internal/private
+        #endregion internal/private
     }
+
+
 }

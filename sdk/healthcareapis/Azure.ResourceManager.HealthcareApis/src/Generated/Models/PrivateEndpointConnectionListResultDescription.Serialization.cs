@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static PrivateEndpointConnectionListResultDescription DeserializePrivateEndpointConnectionListResultDescription(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateEndpointConnectionDescriptionData>> value = default;
+            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnectionDescriptionData> array = new List<PrivateEndpointConnectionDescriptionData>();
+                    List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionDescriptionData.DeserializePrivateEndpointConnectionDescriptionData(item));
+                        array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

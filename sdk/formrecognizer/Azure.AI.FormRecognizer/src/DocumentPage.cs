@@ -13,9 +13,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentPage. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentPage(DocumentPageKind kind, int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
         {
-            Kind = kind;
             PageNumber = pageNumber;
             Angle = angle;
             Width = width;
@@ -32,8 +31,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// pixel. For PDF, the unit is inch.
         /// </summary>
         public LengthUnit? Unit { get; private set; }
-
-        private IReadOnlyList<DocumentImage> Images { get; }
 
         [CodeGenMember("Unit")]
         private V3LengthUnit? UnitPrivate

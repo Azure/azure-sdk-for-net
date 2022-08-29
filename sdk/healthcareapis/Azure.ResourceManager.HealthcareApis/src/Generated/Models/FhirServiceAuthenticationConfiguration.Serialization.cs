@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("audience");
                 writer.WriteStringValue(Audience);
             }
-            if (Optional.IsDefined(SmartProxyEnabled))
+            if (Optional.IsDefined(IsSmartProxyEnabled))
             {
                 writer.WritePropertyName("smartProxyEnabled");
-                writer.WriteBooleanValue(SmartProxyEnabled.Value);
+                writer.WriteBooleanValue(IsSmartProxyEnabled.Value);
             }
             writer.WriteEndObject();
         }

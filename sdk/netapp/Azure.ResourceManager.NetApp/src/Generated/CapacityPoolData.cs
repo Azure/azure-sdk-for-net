@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiply of 4398046511104). </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        public CapacityPoolData(AzureLocation location, long size, ServiceLevel serviceLevel) : base(location)
+        public CapacityPoolData(AzureLocation location, long size, NetAppFileServiceLevel serviceLevel) : base(location)
         {
             Size = size;
             ServiceLevel = serviceLevel;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
         /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
         /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="coolAccess"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
-        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string poolId, long size, ServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, QosType? qosType, bool? coolAccess, EncryptionType? encryptionType) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             PoolId = poolId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
             TotalThroughputMibps = totalThroughputMibps;
             UtilizedThroughputMibps = utilizedThroughputMibps;
             QosType = qosType;
-            CoolAccess = coolAccess;
+            IsCoolAccessEnabled = isCoolAccessEnabled;
             EncryptionType = encryptionType;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiply of 4398046511104). </summary>
         public long Size { get; set; }
         /// <summary> The service level of the file system. </summary>
-        public ServiceLevel ServiceLevel { get; set; }
+        public NetAppFileServiceLevel ServiceLevel { get; set; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
         /// <summary> Total throughput of pool in MiB/s. </summary>
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Utilized throughput of pool in MiB/s. </summary>
         public float? UtilizedThroughputMibps { get; }
         /// <summary> The qos type of the pool. </summary>
-        public QosType? QosType { get; set; }
+        public CapacityPoolQosType? QosType { get; set; }
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        public bool? CoolAccess { get; set; }
+        public bool? IsCoolAccessEnabled { get; set; }
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
-        public EncryptionType? EncryptionType { get; set; }
+        public CapacityPoolEncryptionType? EncryptionType { get; set; }
     }
 }

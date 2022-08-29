@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VaultList DeserializeVaultList(JsonElement element)
         {
-            Optional<IReadOnlyList<Vault>> value = default;
+            Optional<IReadOnlyList<NetAppVault>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Vault> array = new List<Vault>();
+                    List<NetAppVault> array = new List<NetAppVault>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Vault.DeserializeVault(item));
+                        array.Add(NetAppVault.DeserializeNetAppVault(item));
                     }
                     value = array;
                     continue;

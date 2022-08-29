@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of CustomerDiskJobSecrets. </summary>
         internal CustomerDiskJobSecrets()
         {
-            DiskSecrets = new ChangeTrackingList<DiskSecret>();
-            JobSecretsType = ClassDiscriminator.DataBoxCustomerDisk;
+            DiskSecrets = new ChangeTrackingList<DataBoxDiskSecret>();
+            JobSecretsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
         /// <summary> Initializes a new instance of CustomerDiskJobSecrets. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="carrierAccountNumber"> Carrier Account Number of the customer. </param>
-        internal CustomerDiskJobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DiskSecret> diskSecrets, string carrierAccountNumber) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal CustomerDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string carrierAccountNumber) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             DiskSecrets = diskSecrets;
             CarrierAccountNumber = carrierAccountNumber;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Contains the list of secrets object for that device. </summary>
-        public IReadOnlyList<DiskSecret> DiskSecrets { get; }
+        public IReadOnlyList<DataBoxDiskSecret> DiskSecrets { get; }
         /// <summary> Carrier Account Number of the customer. </summary>
         public string CarrierAccountNumber { get; }
     }

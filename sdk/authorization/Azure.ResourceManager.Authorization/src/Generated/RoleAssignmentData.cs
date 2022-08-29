@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <param name="delegatedManagedIdentityResourceId"> Id of the delegated managed identity resource. </param>
-        internal RoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleAssignmentPrincipalType? principalType, string description, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, string delegatedManagedIdentityResourceId) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, string description, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, ResourceIdentifier delegatedManagedIdentityResourceId) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The principal ID. </summary>
         public Guid? PrincipalId { get; }
         /// <summary> The principal type of the assigned principal ID. </summary>
-        public RoleAssignmentPrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Description of role assignment. </summary>
         public string Description { get; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Id of the user who updated the assignment. </summary>
         public string UpdatedBy { get; }
         /// <summary> Id of the delegated managed identity resource. </summary>
-        public string DelegatedManagedIdentityResourceId { get; }
+        public ResourceIdentifier DelegatedManagedIdentityResourceId { get; }
     }
 }

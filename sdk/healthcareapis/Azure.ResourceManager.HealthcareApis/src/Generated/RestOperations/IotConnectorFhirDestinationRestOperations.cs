@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IotFhirDestinationData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthcareApisIotFhirDestinationData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        IotFhirDestinationData value = default;
+                        HealthcareApisIotFhirDestinationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IotFhirDestinationData.DeserializeIotFhirDestinationData(document.RootElement);
+                        value = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IotFhirDestinationData)null, message.Response);
+                    return Response.FromValue((HealthcareApisIotFhirDestinationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IotFhirDestinationData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
+        public Response<HealthcareApisIotFhirDestinationData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        IotFhirDestinationData value = default;
+                        HealthcareApisIotFhirDestinationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IotFhirDestinationData.DeserializeIotFhirDestinationData(document.RootElement);
+                        value = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IotFhirDestinationData)null, message.Response);
+                    return Response.FromValue((HealthcareApisIotFhirDestinationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, IotFhirDestinationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/>, <paramref name="fhirDestinationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, IotFhirDestinationData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/>, <paramref name="fhirDestinationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, IotFhirDestinationData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleAssignmentSchedulePrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? linkedRoleEligibilityScheduleId, Guid? linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleAssignmentScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? linkedRoleEligibilityScheduleId, Guid? linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The principal ID. </summary>
         public Guid? PrincipalId { get; }
         /// <summary> The principal type of the assigned principal ID. </summary>
-        public RoleAssignmentSchedulePrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Id of the master role assignment schedule. </summary>
         public ResourceIdentifier RoleAssignmentScheduleId { get; }
         /// <summary> Role Assignment Id in external system. </summary>
         public ResourceIdentifier OriginRoleAssignmentId { get; }
         /// <summary> The status of the role assignment schedule instance. </summary>
-        public RoleAssignmentScheduleStatus? Status { get; }
+        public RoleManagementScheduleStatus? Status { get; }
         /// <summary> The startDateTime of the role assignment schedule instance. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The endDateTime of the role assignment schedule instance. </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Assignment type of the role assignment schedule. </summary>
         public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
         /// <summary> Membership type of the role assignment schedule. </summary>
-        public RoleAssignmentScheduleMemberType? MemberType { get; }
+        public RoleManagementScheduleMemberType? MemberType { get; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
         public string Condition { get; }
         /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> DateTime when role assignment schedule was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Additional properties of principal, scope and role definition. </summary>
-        public ExpandedProperties ExpandedProperties { get; }
+        public RoleManagementExpandedProperties ExpandedProperties { get; }
     }
 }
