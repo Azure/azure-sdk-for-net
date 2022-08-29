@@ -7,7 +7,7 @@ This is the first stable release of the Sql Virtual Machine Management client li
 ### Breaking Changes
 
 Polishing since last public beta release:
-- Prepended `ContainerInstance` prefix to all single / simple model names.
+- Prepended `SqlVirtualMachine` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `ResouceType` type properties / parameters.
