@@ -5,7 +5,18 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-``` yaml
+```yaml
+directive:
+- from: swagger-document
+  where: $.securityDefinitions
+  transform: |
+    $["azure_auth"] = $["AADToken"];
+    delete $["AADToken"];
+- from: swagger-document
+  where: '$.security[0]'
+  transform: |
+    $["azure_auth"] = $["AADToken"];
+    delete $["AADToken"];
 input-file:
 - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c1260c7a90d503c18b0aeaf29968dfc0b4bf9e11/specification/maps/data-plane/Search/preview/1.0/search.json
 title: SearchClient
@@ -26,7 +37,4 @@ public-clients: false
 clear-output-folder: true
 data-plane: true
 skip-csproj: true
-
-# modelerfour:
-#   lenient-model-deduplication: true
 ```

@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "364",
         "Content-Type": "application/json",
-        "traceparent": "00-85e4f1a339d3a6bfdf1f0e633704c479-ea51e2a5b288e374-00",
+        "traceparent": "00-f98b4d3ea100ce31516b66de9a4884ac-91a751e917ca0232-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "cc2c9c54235bb5083ce8f8772066d75d",
+        "x-ms-client-request-id": "b4e1d528e8829fe21f8f41ff9bcbfb93",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -73,9 +73,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10063",
+        "Content-Length": "10064",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Aug 2022 03:16:40 GMT",
+        "Date": "Mon, 29 Aug 2022 05:57:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,13 +84,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: DC17AE12BA1A4431AA65DEB82DA019A0 Ref B: PAOEDGE0613 Ref C: 2022-08-29T03:16:41Z"
+        "X-MSEdge-Ref": "Ref A: FD8459EF4453474A9F894E0917F0272E Ref B: PAOEDGE0622 Ref C: 2022-08-29T05:57:46Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 10,
           "numResults": 10,
           "offset": 0,
           "totalResults": 156,
@@ -822,6 +822,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "947809287"
+    "RandomSeed": "1107134707"
   }
 }

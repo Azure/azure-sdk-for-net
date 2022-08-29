@@ -1,4 +1,4 @@
----
+eng\scripts\CodeChecks.ps1 -ServiceDirectory maps---
 page_type: sample
 languages:
 - csharp

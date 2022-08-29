@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "204",
         "Content-Type": "application/json",
-        "traceparent": "00-6434d1b78857e05d87e357bcdfdf52f8-584dd8193a0f8d15-00",
+        "traceparent": "00-b0e892336eef4ec372539025c4518231-806cc4a0fede2da5-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "133fcdce31c1dce6a606d047a9a55303",
+        "x-ms-client-request-id": "ff2f29e1c61f6af411b384e23574253e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -43,12 +43,12 @@
       "ResponseHeaders": {
         "Content-Length": "73",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Aug 2022 03:16:43 GMT",
+        "Date": "Mon, 29 Aug 2022 05:57:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 2344DDCFFAD443E58FA92355788731AB Ref B: PAOEDGE0613 Ref C: 2022-08-29T03:16:44Z"
+        "X-MSEdge-Ref": "Ref A: 0A37003EE5454E0A8529270EC41772D6 Ref B: PAOEDGE0622 Ref C: 2022-08-29T05:57:48Z"
       },
       "ResponseBody": {
         "error": {
@@ -62,6 +62,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "2004194260"
+    "RandomSeed": "653392533"
   }
 }
