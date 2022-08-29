@@ -452,7 +452,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_NoMetrics_ReturnsVote_None()
+        public async Task GetScaleStatus_NoMetrics_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -468,7 +468,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_InstancesPerPartitionThresholdExceeded_ReturnsVote_ScaleIn()
+        public async Task GetScaleStatus_InstancesPerPartitionThresholdExceeded_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -504,11 +504,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 Metrics = serviceBusTriggerMetrics
             };
             status = await ((ITargetScaleMonitor)_scaleMonitor).GetScaleVoteAsync(context2);
-            Assert.AreEqual(-1, status);
+            Assert.AreEqual(1, status);
         }
 
         [Test]
-        public async void GetScaleStatus_MessagesPerWorkerThresholdExceeded_ReturnsVote_ScaleOut()
+        public async Task GetScaleStatus_MessagesPerWorkerThresholdExceeded_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -527,7 +527,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             context.Metrics = serviceBusTriggerMetrics;
 
             var status = await _scaleMonitor.GetScaleVoteAsync(context);
-            Assert.AreEqual(ScaleVote.ScaleOut, status);
+            Assert.AreEqual(1, status);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
@@ -549,7 +549,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_QueueLengthIncreasing_ReturnsVote_ScaleOut()
+        public async Task GetScaleStatus_QueueLengthIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -576,7 +576,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_QueueTimeIncreasing_ReturnsVote_ScaleOut()
+        public async Task GetScaleStatus_QueueTimeIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = await _scaleMonitor.GetScaleVoteAsync(context);
-            Assert.AreEqual(ScaleVote.ScaleOut, status);
+            Assert.AreEqual(1, status);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
@@ -603,7 +603,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_QueueLengthDecreasing_ReturnsVote_ScaleIn()
+        public async Task GetScaleStatus_QueueLengthDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -630,7 +630,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_QueueTimeDecreasing_ReturnsVote_ScaleIn()
+        public async Task GetScaleStatus_QueueTimeDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -657,7 +657,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_QueueSteady_ReturnsVote_None()
+        public async Task GetScaleStatus_QueueSteady_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_QueueIdle_ReturnsVote_ScaleIn()
+        public async Task GetScaleStatus_QueueIdle_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = await _scaleMonitor.GetScaleVoteAsync(context);
-            Assert.AreEqual(0, status);
+            Assert.AreEqual(-1, status);
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
@@ -711,7 +711,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async void GetScaleStatus_UnderSampleCountThreshold_ReturnsVote_None()
+        public async Task GetScaleStatus_UnderSampleCountThreshold_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
             {

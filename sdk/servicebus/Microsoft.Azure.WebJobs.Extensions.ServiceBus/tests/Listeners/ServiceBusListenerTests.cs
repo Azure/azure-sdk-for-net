@@ -39,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private readonly Mock<IConcurrencyThrottleManager> _mockConcurrencyThrottleManager;
         private readonly ServiceBusClient _client;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly Mock<IDynamicTargetValueProvider> _mockDynamicTargetValueProvider;
 
         public ServiceBusListenerTests()
         {
@@ -73,7 +74,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
             _mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
             _concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, _mockConcurrencyThrottleManager.Object);
-            var dynamicTargetValueProvider = new Mock<IDynamicTargetValueProvider>(MockBehavior.Strict);
+            _mockDynamicTargetValueProvider = new Mock<IDynamicTargetValueProvider>(MockBehavior.Strict);
+            _mockDynamicTargetValueProvider.Setup(p => p.GetDynamicTargetValueAsync(It.IsAny<string>())).ReturnsAsync(-1);
 
             _listener = new ServiceBusListener(
                 _functionId,
@@ -89,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 false,
                 _mockClientFactory.Object,
                 _concurrencyManager,
-                dynamicTargetValueProvider.Object);
+                _mockDynamicTargetValueProvider.Object);
         }
 
         [SetUp]
@@ -248,7 +250,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                _concurrencyManager);
+                _concurrencyManager,
+                _mockDynamicTargetValueProvider.Object);
 
             await listener.StartAsync(CancellationToken.None);
             await listener.StopAsync(CancellationToken.None);
@@ -292,7 +295,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                _concurrencyManager);
+                _concurrencyManager,
+                _mockDynamicTargetValueProvider.Object);
 
             await listener.StartAsync(CancellationToken.None);
             await listener.StopAsync(CancellationToken.None);

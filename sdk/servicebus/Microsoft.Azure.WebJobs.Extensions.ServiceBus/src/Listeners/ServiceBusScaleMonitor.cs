@@ -336,7 +336,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         (prev, next) => prev.QueueTime <= next.QueueTime);
                 if (queueTimeIncreasing)
                 {
-                    status = -1;
+                    status = 1;
                     _logger.LogInformation($"Queue time is increasing for '{_entityPath}'.");
                     return status;
                 }
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     (prev, next) => prev.MessageCount > next.MessageCount);
             if (messageCountDecreasing)
             {
-                status = 1;
+                status = -1;
                 _logger.LogInformation($"Message count is decreasing for '{_entityPath}'.");
                 return status;
             }
