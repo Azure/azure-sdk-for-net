@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Change" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Change> GetChangesByResourceGroupAsync(DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Change>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DetectedChangeData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
                 scope.Start();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                     throw;
                 }
             }
-            async Task<Page<Change>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DetectedChangeData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
                 scope.Start();
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Change" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Change> GetChangesByResourceGroup(DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DetectedChangeData> GetChangesByResourceGroup(DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<Change> FirstPageFunc(int? pageSizeHint)
+            Page<DetectedChangeData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
                 scope.Start();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                     throw;
                 }
             }
-            Page<Change> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DetectedChangeData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
                 scope.Start();

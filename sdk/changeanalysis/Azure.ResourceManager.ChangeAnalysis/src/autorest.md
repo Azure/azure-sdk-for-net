@@ -50,4 +50,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  Change: DetectedChangeData
+  ChangeProperties.resourceId: -|arm-id
+  ChangeProperties.timeStamp: ChangeDetectedOn
+  Level: PropertyChangeLevel
+
 ```
