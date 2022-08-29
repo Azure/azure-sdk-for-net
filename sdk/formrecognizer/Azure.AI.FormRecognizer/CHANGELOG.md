@@ -12,6 +12,7 @@
 - Renamed property `Offset` to `Index` in the `DocumentSpan` class.
 - Renamed property `DocType` to `DocumentType` in the `AnalyzedDocument` class.
 - Renamed property `DocTypes` to `DocumentTypes` in the `DocumentModelDetails` class.
+- Renamed properties `DocumentModelCount` and `DocumentModelLimit` to `CustomDocumentModelCount` and `CustomDocumentModelLimit` in the `ResourceDetails` class.
 - Removed class `DocumentPageKind` and related properties.
 - Made `BoundingRegion` a `struct` instead of a `class`.
 

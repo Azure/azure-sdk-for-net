@@ -180,8 +180,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
-            Assert.IsNotNull(resourceDetails.DocumentModelCount);
-            Assert.IsNotNull(resourceDetails.DocumentModelLimit);
+            Assert.IsNotNull(resourceDetails.CustomDocumentModelCount);
+            Assert.IsNotNull(resourceDetails.CustomDocumentModelLimit);
         }
 
         [RecordedTest]
