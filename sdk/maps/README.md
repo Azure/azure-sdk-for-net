@@ -1,4 +1,4 @@
-# Azure Maps libraries for .NET
+# Azure Maps library for .NET
 
 Azure Maps is a Microsoft-managed service providing maps service that user can nevigate, search, render many polygons on top of it and user also able to check timezone, weather or traffic information.
 
