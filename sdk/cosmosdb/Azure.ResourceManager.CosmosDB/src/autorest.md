@@ -133,6 +133,7 @@ rename-mapping:
   CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
   CassandraTableResource: CassandraTableResourceInfo
   CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
+  DatabaseRestoreResource: DatabaseRestoreResourceInfo
   GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
   GremlinDatabaseResource: GremlinDatabaseResourceInfo
   GremlinGraphPropertiesResource: ExtendedGremlinGraphResourceInfo
@@ -261,7 +262,6 @@ rename-mapping:
   ServiceStatus: CosmosDBServiceStatus
   ServiceSize: CosmosDBServiceSize
   ServiceType: CosmosDBServiceType
-  RestoreParameters.databasesToRestore: DatabasesToRestoreV2
 
 prepend-rp-prefix:
 - UniqueKey

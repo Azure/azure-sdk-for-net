@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         [Obsolete("This function is obsolete and will be removed in a future release.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(AzureLocation? restoreLocation, string restoreTimestampInUtc, CancellationToken cancellationToken)
+        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         [Obsolete("This function is obsolete and will be removed in a future release.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(AzureLocation? restoreLocation, string restoreTimestampInUtc, CancellationToken cancellationToken)
+        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
             {

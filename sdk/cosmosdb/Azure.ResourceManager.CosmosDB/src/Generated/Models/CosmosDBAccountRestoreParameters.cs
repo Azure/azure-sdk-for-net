@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBAccountRestoreParameters. </summary>
         public CosmosDBAccountRestoreParameters()
         {
-            DatabasesToRestoreV2 = new ChangeTrackingList<DatabaseRestoreResource>();
+            DatabasesToRestore = new ChangeTrackingList<DatabaseRestoreResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBAccountRestoreParameters. </summary>
         /// <param name="restoreMode"> Describes the mode of the restore. </param>
         /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
         /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
-        /// <param name="databasesToRestoreV2"> List of specific databases available for restore. </param>
-        internal CosmosDBAccountRestoreParameters(CosmosDBAccountRestoreMode? restoreMode, string restoreSource, DateTimeOffset? restoreTimestampInUtc, IList<DatabaseRestoreResource> databasesToRestoreV2)
+        /// <param name="databasesToRestore"> List of specific databases available for restore. </param>
+        internal CosmosDBAccountRestoreParameters(CosmosDBAccountRestoreMode? restoreMode, string restoreSource, DateTimeOffset? restoreTimestampInUtc, IList<DatabaseRestoreResourceInfo> databasesToRestore)
         {
             RestoreMode = restoreMode;
             RestoreSource = restoreSource;
             RestoreTimestampInUtc = restoreTimestampInUtc;
-            DatabasesToRestoreV2 = databasesToRestoreV2;
+            DatabasesToRestore = databasesToRestore;
         }
 
         /// <summary> Describes the mode of the restore. </summary>
@@ -39,5 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string RestoreSource { get; set; }
         /// <summary> Time to which the account has to be restored (ISO-8601 format). </summary>
         public DateTimeOffset? RestoreTimestampInUtc { get; set; }
+        /// <summary> List of specific databases available for restore. </summary>
+        public IList<DatabaseRestoreResourceInfo> DatabasesToRestore { get; }
     }
 }

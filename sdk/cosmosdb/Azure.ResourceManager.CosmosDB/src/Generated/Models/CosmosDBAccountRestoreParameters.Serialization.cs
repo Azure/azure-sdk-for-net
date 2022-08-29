@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc");
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(DatabasesToRestoreV2))
+            if (Optional.IsCollectionDefined(DatabasesToRestore))
             {
                 writer.WritePropertyName("databasesToRestore");
                 writer.WriteStartArray();
-                foreach (var item in DatabasesToRestoreV2)
+                foreach (var item in DatabasesToRestore)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<CosmosDBAccountRestoreMode> restoreMode = default;
             Optional<string> restoreSource = default;
             Optional<DateTimeOffset> restoreTimestampInUtc = default;
-            Optional<IList<DatabaseRestoreResource>> databasesToRestore = default;
+            Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreMode"))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseRestoreResource> array = new List<DatabaseRestoreResource>();
+                    List<DatabaseRestoreResourceInfo> array = new List<DatabaseRestoreResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseRestoreResource.DeserializeDatabaseRestoreResource(item));
+                        array.Add(DatabaseRestoreResourceInfo.DeserializeDatabaseRestoreResourceInfo(item));
                     }
                     databasesToRestore = array;
                     continue;

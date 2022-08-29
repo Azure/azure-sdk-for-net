@@ -1256,13 +1256,21 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase> GetRestorableMongoDBDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongoDBDatabase> GetRestorableMongoDBDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(Azure.Core.AzureLocation? restoreLocation, string restoreTimestampInUtc, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(Azure.Core.AzureLocation? restoreLocation, string restoreTimestampInUtc, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This function is obsolete and will be removed in a future release.", false)]
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This function is obsolete and will be removed in a future release.", false)]
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainers(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainersAsync(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase> GetRestorableSqlDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase> GetRestorableSqlDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This function is obsolete and will be removed in a future release.", false)]
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableSqlResources(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This function is obsolete and will be removed in a future release.", false)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ThroughputSettingData : Azure.ResourceManager.Models.TrackedResourceData
@@ -1881,10 +1889,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBAccountRestoreParameters
     {
         public CosmosDBAccountRestoreParameters() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use DatabasesToRestoreV2.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> DatabasesToRestore { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResource> DatabasesToRestoreV2 { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResourceInfo> DatabasesToRestore { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBAccountRestoreMode? RestoreMode { get { throw null; } set { } }
         public string RestoreSource { get { throw null; } set { } }
         public System.DateTimeOffset? RestoreTimestampInUtc { get { throw null; } set { } }
@@ -2537,12 +2542,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBVirtualNetworkRule() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
-    }
-    public partial class DatabaseRestoreResource
-    {
-        public DatabaseRestoreResource() { }
-        public System.Collections.Generic.IList<string> CollectionNames { get { throw null; } }
-        public string DatabaseName { get { throw null; } set { } }
     }
     public partial class DatabaseRestoreResourceInfo
     {
