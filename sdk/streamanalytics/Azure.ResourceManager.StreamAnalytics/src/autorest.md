@@ -19,6 +19,7 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
 
+# add this configuration to avoid the type of cluster is changed to writeablesubresource from ClusterInfo automatically,The writeableresource type cannot fail to have the null able attribute
 no-property-type-replacement:
 - ClusterInfo
 rename-mapping:
