@@ -75,21 +75,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new AnalyzeResult(apiVersion: default, modelId, StringIndexType.Utf16CodeUnit, content, pages?.ToList(), paragraphs: default, tables?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BoundingPolygon. </summary>
-        /// <param name="points"> The sequence of points defining this <see cref="DocumentAnalysis.BoundingPolygon"/>. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.BoundingPolygon"/> instance for mocking. </returns>
-        public static BoundingPolygon BoundingPolygon(IEnumerable<PointF> points = null)
-        {
-            points ??= new List<PointF>();
-
-            return new BoundingPolygon(points?.ToList());
-        }
-
         /// <summary> Initializes a new instance of BoundingRegion. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="boundingPolygon"> Bounding polygon on the page, or the entire page if not specified. </param>
         /// <returns> A new <see cref="DocumentAnalysis.BoundingRegion"/> instance for mocking. </returns>
-        public static BoundingRegion BoundingRegion(int pageNumber = default, BoundingPolygon boundingPolygon = default)
+        public static BoundingRegion BoundingRegion(int pageNumber = default, IReadOnlyList<PointF> boundingPolygon = default)
         {
             return new BoundingRegion(pageNumber, boundingPolygon);
         }
@@ -384,7 +374,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="boundingPolygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentLine"/> instance for mocking. </returns>
-        public static DocumentLine DocumentLine(string content = null, BoundingPolygon boundingPolygon = default, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentLine DocumentLine(string content = null, IReadOnlyList<PointF> boundingPolygon = default, IEnumerable<DocumentSpan> spans = null)
         {
             spans ??= new List<DocumentSpan>();
 
@@ -514,7 +504,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, BoundingPolygon boundingPolygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
         {
             return new DocumentSelectionMark(state, boundingPolygon, span, confidence);
         }
@@ -580,7 +570,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentWord"/> instance for mocking. </returns>
-        public static DocumentWord DocumentWord(string content = null, BoundingPolygon boundingPolygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentWord DocumentWord(string content = null, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
         {
             return new DocumentWord(content, boundingPolygon, span, confidence);
         }

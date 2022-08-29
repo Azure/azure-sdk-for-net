@@ -1749,11 +1749,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         private void ValidateBoundingRegion(BoundingRegion region, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
             Assert.NotNull(region);
-            Assert.NotNull(region.BoundingPolygon.Points);
+            Assert.NotNull(region.BoundingPolygon);
 
-            if (region.BoundingPolygon.Points.Length != 0)
+            if (region.BoundingPolygon.Count != 0)
             {
-                Assert.AreEqual(4, region.BoundingPolygon.Points.Length);
+                Assert.AreEqual(4, region.BoundingPolygon.Count);
             }
 
             Assert.That(region.PageNumber, Is.GreaterThanOrEqualTo(expectedFirstPageNumber).Or.LessThanOrEqualTo(expectedLastPageNumber));
@@ -1773,16 +1773,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (DocumentLine line in page.Lines)
             {
-                Assert.NotNull(line.BoundingPolygon.Points);
-                Assert.AreEqual(4, line.BoundingPolygon.Points.Length);
+                Assert.NotNull(line.BoundingPolygon);
+                Assert.AreEqual(4, line.BoundingPolygon.Count);
             }
 
             Assert.NotNull(page.Words);
 
             foreach (DocumentWord word in page.Words)
             {
-                Assert.NotNull(word.BoundingPolygon.Points);
-                Assert.AreEqual(4, word.BoundingPolygon.Points.Length);
+                Assert.NotNull(word.BoundingPolygon);
+                Assert.AreEqual(4, word.BoundingPolygon.Count);
 
                 Assert.That(word.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(word.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
@@ -1792,8 +1792,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (DocumentSelectionMark selectionMark in page.SelectionMarks)
             {
-                Assert.NotNull(selectionMark.BoundingPolygon.Points);
-                Assert.AreEqual(4, selectionMark.BoundingPolygon.Points.Length);
+                Assert.NotNull(selectionMark.BoundingPolygon);
+                Assert.AreEqual(4, selectionMark.BoundingPolygon.Count);
 
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
