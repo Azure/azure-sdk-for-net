@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Monitor;
+using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Monitor.Tests;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -15,14 +17,50 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class DiagnosticSettingsCollectionTests : MonitorTestBase
     {
         public DiagnosticSettingsCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync, RecordedTestMode.Record)
         {
         }
 
         private async Task<DiagnosticSettingCollection> GetDiagnosticSettingsCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return DefaultSubscription.GetDiagnosticSettings();
+            return resourceGroup.GetDiagnosticSettings();
+        }
+
+        [RecordedTest]
+        public async Task CreateOrUpdate_NewSignature()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            var scope = new ResourceIdentifier(resourceGroup.Id + "/providers/Microsoft.Compute/locations/westus/communityGalleries/vnet");
+            var collection = Client.GetDiagnosticSettings(scope);
+
+            var name = Recording.GenerateAssetName("testDiagnosticSettings-");
+            var input = new DiagnosticSettingData()
+            {
+                LogAnalyticsDestinationType = "Dedicated",
+                Metrics =
+                {
+                    new MetricSettings(true)
+                    {
+                        Category = "WorkflowMetrics",
+                        RetentionPolicy = new RetentionPolicy(false, 0),
+                    }
+                },
+                Logs =
+                {
+                    new LogSettings(true)
+                    {
+                        Category = "Alert",
+                        RetentionPolicy= new RetentionPolicy(false, 0)
+                    }
+                }
+            };
+            try
+            {
+                var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            var setting = lro.Value;
+            }
+            catch { }
         }
 
         [Ignore("Need to Update cleanup")]
