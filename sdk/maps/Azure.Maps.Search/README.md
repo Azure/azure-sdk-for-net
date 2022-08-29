@@ -83,13 +83,8 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search/tests/Samples).
 
-Before calling search APIs, instantiate a `SearchClient` first. Below use AAD to create the client instance:
-
-
+### Example Get Polygons
 ```C# Snippet:GetPolygons
-// Get Client
-var client = CreateClient();
-
 // Get Addresses
 var searchResult = await client.SearchAddressAsync("Seattle");
 
@@ -101,24 +96,24 @@ var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
 ```
 
+### Example Fuzzy Search
 ```C# Snippet:FuzzySearch
-var client = CreateClient();
 var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
     Coordinates = new GeoPosition(121.56, 25.04),
     Language = "en"
 });
 ```
 
+### Example Reverse Search Cross Street Address
 ```C# Snippet:ReverseSearchCrossStreetAddress
-var client = CreateClient();
 var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
     coordinates = new GeoPosition(121.0, 24.0),
     Language = "en"
 });
 ```
 
+### Example Search Structured Address
 ```C# Snippet:SearchStructuredAddress
-var client = CreateClient();
 var address = new StructuredAddress {
     CountryCode = "US",
     StreetNumber = "15127",
@@ -130,9 +125,8 @@ var address = new StructuredAddress {
 var searchResult = await client.SearchStructuredAddressAsync(address);
 ```
 
+### Example Search Inside Geometry
 ```C# Snippet:SearchInsideGeometry
-var client = CreateClient();
-
 var sfPolygon = new GeoPolygon(new[]
 {
     new GeoPosition(-122.43576049804686, 37.752415234354402),
@@ -155,8 +149,8 @@ var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCol
 });
 ```
 
+### Example Search Address
 ```C# Snippet:SearchAddress
-var client = CreateClient();
 var searchResult = await client.SearchAddressAsync("Seattle");
 ```
 
@@ -182,4 +176,4 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/template/Azure.Template/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Search/README.png)
