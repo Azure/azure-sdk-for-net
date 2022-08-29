@@ -548,6 +548,20 @@
       ]
     },
     {
+      "filename": "**/sdk/securitycenter/**/*.cs",
+      "words": [
+        "Cspm",
+        "Pricings",
+        "Kube",
+        "Exfiltration",
+        "Ngfw",
+        "Saas",
+        "Mcas",
+        "Wdatp",
+        "Qualys"
+      ]
+    },
+    {
       "filename": "**/sdk/securityinsights/**/*.cs",
       "words": [
         "Exfiltration",
