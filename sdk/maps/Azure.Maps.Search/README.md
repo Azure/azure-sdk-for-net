@@ -36,7 +36,7 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 ```C# Snippet:InstantiateSearchClientViaSubscriptionKey
 // Create a SearchClient that will authenticate through Subscription Key (Shared key)
 var credential = new AzureKeyCredential("<My Subscription Key>");
-SearchClient client = new SearchClient(credential);
+MapsSearchClient client = new MapsSearchClient(credential);
 ```
 
 #### Azure AD Authentication
@@ -48,7 +48,7 @@ To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to 
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
 ```C# Snippet:InstantiateSearchClientViaAAD
-// Create a MapsSearchClient that will authenticate through Active Directory
+// Create a MapsSearchClient that will authenticate through AAD
 var credential = new DefaultAzureCredential();
 var clientId = "<My Map Account Client Id>";
 MapsSearchClient client = new MapsSearchClient(credential, clientId);
@@ -88,23 +88,21 @@ Before calling search APIs, instantiate a `SearchClient` first. Below use AAD to
 
 ```C# Snippet:GetPolygons
 // Get Client
-var endpoint = TestEnvironment.Endpoint;
-var clientId = TestEnvironment.MapAccountClientId;
-var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var client = CreateClient();
+
 // Get Addresses
 var searchResult = await client.SearchAddressAsync("Seattle");
+
 // Extract geometry ids from addresses
 var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
 var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
+
 // Get polygons from geometry ids
-var polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
+PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
 ```
 
 ```C# Snippet:FuzzySearch
-// Get Client
-var endpoint = TestEnvironment.Endpoint;
-var clientId = TestEnvironment.MapAccountClientId;
-var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var client = CreateClient();
 var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
     Coordinates = new GeoPosition(121.56, 25.04),
     Language = "en"
@@ -112,10 +110,7 @@ var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearc
 ```
 
 ```C# Snippet:ReverseSearchCrossStreetAddress
-// Get Client
-var endpoint = TestEnvironment.Endpoint;
-var clientId = TestEnvironment.MapAccountClientId;
-var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var client = CreateClient();
 var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
     coordinates = new GeoPosition(121.0, 24.0),
     Language = "en"
@@ -123,10 +118,7 @@ var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new Revers
 ```
 
 ```C# Snippet:SearchStructuredAddress
-// Get Client
-var endpoint = TestEnvironment.Endpoint;
-var clientId = TestEnvironment.MapAccountClientId;
-var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var client = CreateClient();
 var address = new StructuredAddress {
     CountryCode = "US",
     StreetNumber = "15127",
@@ -139,10 +131,8 @@ var searchResult = await client.SearchStructuredAddressAsync(address);
 ```
 
 ```C# Snippet:SearchInsideGeometry
-// Get Client
-var endpoint = TestEnvironment.Endpoint;
-var clientId = TestEnvironment.MapAccountClientId;
-var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var client = CreateClient();
+
 var sfPolygon = new GeoPolygon(new[]
 {
     new GeoPosition(-122.43576049804686, 37.752415234354402),
@@ -166,16 +156,8 @@ var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCol
 ```
 
 ```C# Snippet:SearchAddress
-// Get Client
-var endpoint = TestEnvironment.Endpoint;
-var clientId = TestEnvironment.MapAccountClientId;
-
-var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
-SearchAddressResult searchResponse = client.SearchAddress("Seattle");
-
-var primaryResult = searchResponse.Results.First();
-Console.WriteLine("Country: " + primaryResult.Address.CountryCodeIso3);
-Console.WriteLine("State: " + primaryResult.Address.CountrySubdivision);
+var client = CreateClient();
+var searchResult = await client.SearchAddressAsync("Seattle");
 ```
 
 ## Troubleshooting

@@ -19,8 +19,10 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanSearchAddress()
         {
+            #region Snippet:SearchAddress
             var client = CreateClient();
             var searchResult = await client.SearchAddressAsync("Seattle");
+            #endregion
             Assert.AreEqual("Washington", searchResult.Value.Results[0].Address.CountrySubdivisionName);
         }
 
@@ -79,6 +81,7 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanSearchStructuredAddress()
         {
+            #region Snippet:SearchStructuredAddress
             var client = CreateClient();
             var address = new StructuredAddress {
                 CountryCode = "US",
@@ -89,6 +92,7 @@ namespace Azure.Maps.Search.Tests
                 PostalCode = "98052"
             };
             var searchResult = await client.SearchStructuredAddressAsync(address);
+            #endregion
             Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results[0].Address.FreeformAddress);
         }
 

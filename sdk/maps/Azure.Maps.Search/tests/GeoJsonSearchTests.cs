@@ -23,13 +23,20 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanDescribeSearchResultReferencedGeometry()
         {
+            #region Snippet:GetPolygons
+            // Get Client
             var client = CreateClient();
+
+            // Get Addresses
             var searchResult = await client.SearchAddressAsync("Seattle");
+
+            // Extract geometry ids from addresses
             var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
             var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
-            // Seattle municipality geometry
+            // Get polygons from geometry ids
             PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
+            #endregion
             IReadOnlyList<PolygonObject> polygonList = polygonResponse.Polygons;
             List<String> providerIds = new List<string>();
             foreach (PolygonObject polygon in polygonList) {
@@ -161,6 +168,7 @@ namespace Azure.Maps.Search.Tests
         [RecordedTest]
         public async Task CanSearchInsideGeometryCollection()
         {
+            #region Snippet:SearchInsideGeometry
             var client = CreateClient();
 
             var sfPolygon = new GeoPolygon(new[]
@@ -183,6 +191,7 @@ namespace Azure.Maps.Search.Tests
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
                 Language = "en"
             });
+            #endregion
             var taipeiCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.Type == "POI" && addressItem.Address.Municipality == "Taipei City").First();
             var sfCaffe = searchResponse.Value.Results.Where(addressItem => addressItem.Type == "POI" && addressItem.Address.Municipality == "San Francisco").First();
             Assert.AreEqual("CAFE_PUB", sfCaffe.PointOfInterest.Classifications.First().Code);

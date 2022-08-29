@@ -154,7 +154,7 @@ namespace Azure.Maps.Search
         public Azure.Core.GeoJson.GeoPosition? coordinates { get { throw null; } set { } }
         public int? Heading { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
         public int? RadiusInMeters { get { throw null; } set { } }
     }
     public partial class ReverseSearchCrossStreetOptions : Azure.Maps.Search.ReverseSearchBaseOptions
@@ -213,7 +213,7 @@ namespace Azure.Maps.Search
     {
         public SearchBaseOptions() { }
         public string Language { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
         public int? Skip { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
     }
@@ -221,7 +221,7 @@ namespace Azure.Maps.Search
     {
         public SearchGeometryBaseOptions() { }
         public System.Collections.Generic.IEnumerable<int> CategoryFilter { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
         public Azure.Maps.Search.Models.OperatingHoursRange? OperatingHours { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
     }
@@ -363,60 +363,10 @@ namespace Azure.Maps.Search.Models
         public static bool operator !=(Azure.Maps.Search.Models.GeographicEntity left, Azure.Maps.Search.Models.GeographicEntity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GeoJsonFeature : Azure.Maps.Search.Models.GeoJsonObject
-    {
-        public GeoJsonFeature(Azure.Maps.Search.Models.GeoJsonGeometry geometry) { }
-        public string FeatureType { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.GeoJsonGeometry Geometry { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public object Properties { get { throw null; } set { } }
-    }
-    public partial class GeoJsonFeatureCollection : Azure.Maps.Search.Models.GeoJsonObject
-    {
-        public GeoJsonFeatureCollection(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonFeature> features) { }
-        public System.Collections.Generic.IList<Azure.Maps.Search.Models.GeoJsonFeature> Features { get { throw null; } }
-    }
-    public partial class GeoJsonFeatureCollectionData
-    {
-        public GeoJsonFeatureCollectionData(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonFeature> features) { }
-        public System.Collections.Generic.IList<Azure.Maps.Search.Models.GeoJsonFeature> Features { get { throw null; } }
-    }
-    public partial class GeoJsonFeatureData
-    {
-        public GeoJsonFeatureData(Azure.Maps.Search.Models.GeoJsonGeometry geometry) { }
-        public string FeatureType { get { throw null; } set { } }
-        public Azure.Maps.Search.Models.GeoJsonGeometry Geometry { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public object Properties { get { throw null; } set { } }
-    }
-    public partial class GeoJsonGeometry : Azure.Maps.Search.Models.GeoJsonObject
-    {
-        public GeoJsonGeometry() { }
-    }
-    public partial class GeoJsonGeometryCollection : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        public GeoJsonGeometryCollection(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonGeometry> geometries) { }
-        public System.Collections.Generic.IList<Azure.Maps.Search.Models.GeoJsonGeometry> Geometries { get { throw null; } }
-    }
-    public partial class GeoJsonGeometryCollectionData
-    {
-        public GeoJsonGeometryCollectionData(System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeoJsonGeometry> geometries) { }
-        public System.Collections.Generic.IList<Azure.Maps.Search.Models.GeoJsonGeometry> Geometries { get { throw null; } }
-    }
-    public partial class GeoJsonLineString : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        public GeoJsonLineString(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
     public partial class GeoJsonLineStringData
     {
         public GeoJsonLineStringData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiLineString : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        public GeoJsonMultiLineString(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
     }
     public partial class GeoJsonMultiLineStringData
     {
@@ -427,11 +377,6 @@ namespace Azure.Maps.Search.Models
     {
         public GeoJsonMultiPointData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPolygon : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        public GeoJsonMultiPolygon(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
     }
     public partial class GeoJsonMultiPolygonData
     {
@@ -454,21 +399,10 @@ namespace Azure.Maps.Search.Models
         GeoJsonFeature = 7,
         GeoJsonFeatureCollection = 8,
     }
-    public partial class GeoJsonPoint : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        public GeoJsonPoint(System.Collections.Generic.IEnumerable<double> coordinates) { }
-        public System.Collections.Generic.IList<double> Coordinates { get { throw null; } }
-    }
     public partial class GeoJsonPointData
     {
         public GeoJsonPointData(System.Collections.Generic.IEnumerable<double> coordinates) { }
         public System.Collections.Generic.IList<double> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonPolygon : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        public GeoJsonPolygon(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-        public static Azure.Maps.Search.Models.GeoJsonPolygon FromJsonElement(System.Text.Json.JsonElement element) { throw null; }
     }
     public partial class GeoJsonPolygonData
     {
@@ -479,40 +413,6 @@ namespace Azure.Maps.Search.Models
     {
         internal GeometryIdentifier() { }
         public string Id { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LocalizedMapView : System.IEquatable<Azure.Maps.Search.Models.LocalizedMapView>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LocalizedMapView(string value) { throw null; }
-        public static Azure.Maps.Search.Models.LocalizedMapView AE { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView AR { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView Auto { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView BH { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView IN { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView IQ { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView JO { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView KW { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView LB { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView MA { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView OM { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView PK { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView PS { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView QA { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView SA { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView SY { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView Unified { get { throw null; } }
-        public static Azure.Maps.Search.Models.LocalizedMapView YE { get { throw null; } }
-        public bool Equals(Azure.Maps.Search.Models.LocalizedMapView other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Search.Models.LocalizedMapView left, Azure.Maps.Search.Models.LocalizedMapView right) { throw null; }
-        public static implicit operator Azure.Maps.Search.Models.LocalizedMapView (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Search.Models.LocalizedMapView left, Azure.Maps.Search.Models.LocalizedMapView right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class MapsAddress
     {
@@ -845,12 +745,6 @@ namespace Azure.Maps.Search.Models
         public static implicit operator Azure.Maps.Search.Models.SearchAddressResultType (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Search.Models.SearchAddressResultType left, Azure.Maps.Search.Models.SearchAddressResultType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SearchAlongRouteRequest
-    {
-        public SearchAlongRouteRequest() { }
-        public SearchAlongRouteRequest(Azure.Core.GeoJson.GeoLineString Route) { }
-        public Azure.Maps.Search.Models.GeoJsonLineString Route { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SearchIndex : System.IEquatable<Azure.Maps.Search.Models.SearchIndex>
