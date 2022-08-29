@@ -38,6 +38,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 );
 
             Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
+#if !SNIPPET
+            EnqueueProjectDeletion(newProjectName);
+#endif
 
             // Projects can be retrieved as follows
             Pageable<BinaryData> projects = client.GetProjects();
@@ -120,8 +123,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployments.Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            DeleteProject(newProjectName);
         }
 
         [RecordedTest]
@@ -150,6 +151,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 );
 
             Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
+#if !SNIPPET
+            EnqueueProjectDeletion(newProjectName);
+#endif
 
             // Projects can be retrieved as follows
             AsyncPageable<BinaryData> projects = client.GetProjectsAsync();
@@ -236,8 +240,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            await DeleteProjectAsync(newProjectName);
         }
     }
 }

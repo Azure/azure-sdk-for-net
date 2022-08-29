@@ -444,20 +444,25 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAccountGetKeysResult>> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
-            scope.Start();
-            try
+            async Task<Page<StorageAccountKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _storageAccountRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = await _storageAccountRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -467,20 +472,25 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAccountGetKeysResult> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
-            scope.Start();
-            try
+            Page<StorageAccountKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _storageAccountRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = _storageAccountRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -491,22 +501,27 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StorageAccountGetKeysResult>> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageAccountKey> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
-            scope.Start();
-            try
+            async Task<Page<StorageAccountKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _storageAccountRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
+                scope.Start();
+                try
+                {
+                    var response = await _storageAccountRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -517,22 +532,27 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StorageAccountGetKeysResult> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageAccountKey> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
-            scope.Start();
-            try
+            Page<StorageAccountKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _storageAccountRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
+                scope.Start();
+                try
+                {
+                    var response = _storageAccountRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -812,7 +832,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide for restore blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BlobRestoreStatus>> RestoreBlobRangesAsync(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<StorageAccountRestoreBlobRangesOperation> RestoreBlobRangesAsync(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -821,7 +841,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageAccountRestClient.RestoreBlobRangesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<BlobRestoreStatus>(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -842,7 +862,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide for restore blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BlobRestoreStatus> RestoreBlobRanges(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual StorageAccountRestoreBlobRangesOperation RestoreBlobRanges(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -851,7 +871,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageAccountRestClient.RestoreBlobRanges(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StorageArmOperation<BlobRestoreStatus>(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

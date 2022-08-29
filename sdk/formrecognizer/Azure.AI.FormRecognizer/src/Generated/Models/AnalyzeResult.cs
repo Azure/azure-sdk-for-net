@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
-        /// <param name="modelId"> Model ID used to produce this result. </param>
+        /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
-        /// <param name="modelId"> Model ID used to produce this result. </param>
+        /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Languages = languages;
             Documents = documents;
         }
-        /// <summary> Model ID used to produce this result. </summary>
+        /// <summary> Document model ID used to produce this result. </summary>
         public string ModelId { get; }
         /// <summary> Concatenate string representation of all textual and visual elements in reading order. </summary>
         public string Content { get; }

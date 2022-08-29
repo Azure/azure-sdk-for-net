@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        public RoleDefinitionResource Definition { get; set; }
+        public AuthorizationRoleDefinitionResource Definition { get; set; }
 
         private async Task<RoleAssignmentScheduleRequestCollection> GetRoleAssignmentScheduleRequestCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var definitionCollection = resourceGroup.GetRoleDefinitions();
+            var definitionCollection = resourceGroup.GetAuthorizationRoleDefinitions();
             Definition = (await definitionCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
             return resourceGroup.GetRoleAssignmentScheduleRequests();
         }
@@ -37,20 +37,14 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var name = "fea7a502-9a96-4806-a26f-eee560e52045";
             var data = new RoleAssignmentScheduleRequestData()
             {
-                PrincipalId = TestEnvironment.ClientId,
+                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
                 RoleDefinitionId = Definition.Id,
-                RequestType = RequestType.SelfActivate,
-                LinkedRoleEligibilityScheduleId = "b1477448-2cc6-4ceb-93b4-54a202a89413",
-                ScheduleInfo = new RoleAssignmentScheduleInfo()
-                {
-                    StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),
-                    Expiration = new RoleAssignmentScheduleInfoExpiration()
-                    {
-                        RoleAssignmentExpirationType = RoleAssignmentScheduleType.AfterDuration,
-                        EndOn = null,
-                        Duration = TypeFormatters.ParseTimeSpan("PT8H", "P")
-                    }
-                },
+                RequestType = RoleManagementScheduleRequestType.SelfActivate,
+                LinkedRoleEligibilityScheduleId = new Guid("b1477448-2cc6-4ceb-93b4-54a202a89413"),
+                StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),
+                ExpirationType = RoleManagementScheduleExpirationType.AfterDuration,
+                EndOn = null,
+                Duration = TypeFormatters.ParseTimeSpan("PT8H", "P"),
                 Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'",
                 ConditionVersion = "1.0"
             };

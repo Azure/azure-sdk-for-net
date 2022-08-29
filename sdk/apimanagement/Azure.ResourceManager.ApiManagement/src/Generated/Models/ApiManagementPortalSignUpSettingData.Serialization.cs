@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsSignUpDeveloperPortalEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsSignUpDeveloperPortalEnabled.Value);
             }
             if (Optional.IsDefined(TermsOfService))
             {

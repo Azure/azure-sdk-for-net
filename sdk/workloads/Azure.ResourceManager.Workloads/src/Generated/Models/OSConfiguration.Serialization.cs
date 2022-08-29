@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new OSConfiguration(osType);
+            return new UnknownOSConfiguration(osType);
         }
     }
 }

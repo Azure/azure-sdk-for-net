@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Event Hub output data source. </summary>
-    public partial class EventHubOutputDataSource : OutputDataSource
+    public partial class EventHubOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of EventHubOutputDataSource. </summary>
         public EventHubOutputDataSource()
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="partitionCount"> The partition count of the event hub data source. Range 1 - 256. </param>
         /// <param name="partitionKey"> The key/column that is used to determine to which partition to send event data. </param>
         /// <param name="propertyColumns"> The properties associated with this Event Hub output. </param>
-        internal EventHubOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, AuthenticationMode? authenticationMode, string eventHubName, int? partitionCount, string partitionKey, IList<string> propertyColumns) : base(outputDataSourceType)
+        internal EventHubOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string eventHubName, int? partitionCount, string partitionKey, IList<string> propertyColumns) : base(outputDataSourceType)
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </summary>
         public string SharedAccessPolicyKey { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
         /// <summary> The name of the Event Hub. Required on PUT (CreateOrReplace) requests. </summary>
         public string EventHubName { get; set; }
         /// <summary> The partition count of the event hub data source. Range 1 - 256. </summary>

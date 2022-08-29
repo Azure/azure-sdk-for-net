@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            Expression @on = default;
-            Optional<IList<SwitchCase>> cases = default;
-            Optional<IList<DataFactoryPipelineActivity>> defaultActivities = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
+            FactoryExpressionDefinition @on = default;
+            Optional<IList<SwitchCaseActivity>> cases = default;
+            Optional<IList<PipelineActivity>> defaultActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("on"))
                         {
-                            @on = Expression.DeserializeExpression(property0.Value);
+                            @on = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cases"))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SwitchCase> array = new List<SwitchCase>();
+                            List<SwitchCaseActivity> array = new List<SwitchCaseActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SwitchCase.DeserializeSwitchCase(item));
+                                array.Add(SwitchCaseActivity.DeserializeSwitchCaseActivity(item));
                             }
                             cases = array;
                             continue;
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DataFactoryPipelineActivity> array = new List<DataFactoryPipelineActivity>();
+                            List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeDataFactoryPipelineActivity(item));
+                                array.Add(DeserializePipelineActivity(item));
                             }
                             defaultActivities = array;
                             continue;

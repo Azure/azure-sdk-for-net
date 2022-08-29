@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCalculateRequest(PurchaseRequestContent content)
+        internal HttpMessage CreateCalculateRequest(ReservationPurchaseContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response<CalculatePriceResponse>> CalculateAsync(PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CalculatePriceResult>> CalculateAsync(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        CalculatePriceResponse value = default;
+                        CalculatePriceResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CalculatePriceResponse.DeserializeCalculatePriceResponse(document.RootElement);
+                        value = CalculatePriceResult.DeserializeCalculatePriceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response<CalculatePriceResponse> Calculate(PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public Response<CalculatePriceResult> Calculate(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        CalculatePriceResponse value = default;
+                        CalculatePriceResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CalculatePriceResponse.DeserializeCalculatePriceResponse(document.RootElement);
+                        value = CalculatePriceResult.DeserializeCalculatePriceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreatePurchaseRequest(string reservationOrderId, PurchaseRequestContent content)
+        internal HttpMessage CreatePurchaseRequest(Guid reservationOrderId, ReservationPurchaseContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -183,11 +183,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PurchaseAsync(string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response> PurchaseAsync(Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePurchaseRequest(reservationOrderId, content);
@@ -206,11 +204,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Purchase(string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response Purchase(Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePurchaseRequest(reservationOrderId, content);
@@ -225,7 +221,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreateGetRequest(string reservationOrderId, string expand)
+        internal HttpMessage CreateGetRequest(Guid reservationOrderId, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,25 +245,21 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationOrderResponseData>> GetAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReservationOrderData>> GetAsync(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var message = CreateGetRequest(reservationOrderId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReservationOrderResponseData value = default;
+                        ReservationOrderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReservationOrderResponseData.DeserializeReservationOrderResponseData(document.RootElement);
+                        value = ReservationOrderData.DeserializeReservationOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationOrderResponseData)null, message.Response);
+                    return Response.FromValue((ReservationOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -277,31 +269,27 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationOrderResponseData> Get(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ReservationOrderData> Get(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var message = CreateGetRequest(reservationOrderId, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReservationOrderResponseData value = default;
+                        ReservationOrderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReservationOrderResponseData.DeserializeReservationOrderResponseData(document.RootElement);
+                        value = ReservationOrderData.DeserializeReservationOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ReservationOrderResponseData)null, message.Response);
+                    return Response.FromValue((ReservationOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateChangeDirectoryRequest(string reservationOrderId, ChangeDirectoryContent content)
+        internal HttpMessage CreateChangeDirectoryRequest(Guid reservationOrderId, ChangeDirectoryContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -326,11 +314,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed to change directory of reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ChangeDirectoryResponse>> ChangeDirectoryAsync(string reservationOrderId, ChangeDirectoryContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<ChangeDirectoryDetail>> ChangeDirectoryAsync(Guid reservationOrderId, ChangeDirectoryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateChangeDirectoryRequest(reservationOrderId, content);
@@ -339,9 +325,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        ChangeDirectoryResponse value = default;
+                        ChangeDirectoryDetail value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChangeDirectoryResponse.DeserializeChangeDirectoryResponse(document.RootElement);
+                        value = ChangeDirectoryDetail.DeserializeChangeDirectoryDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -353,11 +339,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed to change directory of reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ChangeDirectoryResponse> ChangeDirectory(string reservationOrderId, ChangeDirectoryContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<ChangeDirectoryDetail> ChangeDirectory(Guid reservationOrderId, ChangeDirectoryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateChangeDirectoryRequest(reservationOrderId, content);
@@ -366,9 +350,9 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        ChangeDirectoryResponse value = default;
+                        ChangeDirectoryDetail value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChangeDirectoryResponse.DeserializeChangeDirectoryResponse(document.RootElement);
+                        value = ChangeDirectoryDetail.DeserializeChangeDirectoryDetail(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

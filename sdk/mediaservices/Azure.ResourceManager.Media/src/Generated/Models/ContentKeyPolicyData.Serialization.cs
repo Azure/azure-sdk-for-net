@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Options))
+            if (Optional.IsCollectionDefined(Preferences))
             {
                 writer.WritePropertyName("options");
                 writer.WriteStartArray();
-                foreach (var item in Options)
+                foreach (var item in Preferences)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> description = default;
-            Optional<IList<ContentKeyPolicyOption>> options = default;
+            Optional<IList<ContentKeyPolicyPreference>> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
+                            List<ContentKeyPolicyPreference> array = new List<ContentKeyPolicyPreference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                                array.Add(ContentKeyPolicyPreference.DeserializeContentKeyPolicyPreference(item));
                             }
                             options = array;
                             continue;

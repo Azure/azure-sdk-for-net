@@ -1,14 +1,17 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.5.0 (2022-08-24)
 
 ### Bugs Fixed
 
-### Other Changes
+- Hiding the new `AddAzureClientsCore` overload from IntelliSense, as its usage is not intuitive.
+
+## 1.4.0 (2022-08-11)
+
+### Features Added
+
+- Added the `AddAzureClientsCore` method overload that has a parameter to allow enabling log 
+  forwarding to `ILogger`.
 
 ## 1.3.0 (2022-07-12)
 

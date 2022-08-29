@@ -25,7 +25,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|-
-|4.0.0-beta.4 | 2.0, 2.1, 2022-06-30-preview
+|4.0.0-beta.5 | 2.0, 2.1, 2022-06-30-preview
 |3.1.X        | 2.0, 2.1
 |3.0.X        | 2.0
 
@@ -257,7 +257,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -346,7 +346,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -415,7 +415,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -545,14 +545,14 @@ Build a custom model on your own document type. The resulting model can be used 
 // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
 // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = new Uri("<trainingFileUri>");
+Uri blobContainerUri = new Uri("<blobContainerUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // We are selecting the Template build mode in this sample. For more information about the available
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
@@ -560,12 +560,12 @@ if (string.IsNullOrEmpty(model.Description))
     Console.WriteLine($"  Model description: {model.Description}");
 Console.WriteLine($"  Created on: {model.CreatedOn}");
 Console.WriteLine("  Doc types the model can recognize:");
-foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
 {
-    Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
-    foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+    Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+    foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
     {
-        Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+        Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
     }
 }
 ```
@@ -586,7 +586,7 @@ Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}")
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Document of type: {document.DocType}");
+    Console.WriteLine($"Document of type: {document.DocumentType}");
 
     foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
     {
@@ -630,8 +630,8 @@ await foreach (DocumentModelSummary modelSummary in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
@@ -675,8 +675,8 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created

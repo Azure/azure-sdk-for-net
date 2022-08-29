@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-04-01";
+            _apiVersion = apiVersion ?? "2021-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -181,6 +181,85 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal HttpMessage CreateListByDataCollectionEndpointRequest(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/dataCollectionEndpoints/", false);
+            uri.AppendPath(dataCollectionEndpointName, true);
+            uri.AppendPath("/associations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists associations for the specified data collection endpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByDataCollectionEndpointAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var message = CreateListByDataCollectionEndpointRequest(subscriptionId, resourceGroupName, dataCollectionEndpointName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataCollectionRuleAssociationProxyOnlyResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataCollectionRuleAssociationProxyOnlyResourceListResult.DeserializeDataCollectionRuleAssociationProxyOnlyResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists associations for the specified data collection endpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByDataCollectionEndpoint(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var message = CreateListByDataCollectionEndpointRequest(subscriptionId, resourceGroupName, dataCollectionEndpointName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataCollectionRuleAssociationProxyOnlyResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataCollectionRuleAssociationProxyOnlyResourceListResult.DeserializeDataCollectionRuleAssociationProxyOnlyResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateGetRequest(string resourceUri, string associationName)
         {
             var message = _pipeline.CreateMessage();
@@ -271,13 +350,10 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (data != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -287,12 +363,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataCollectionRuleAssociationData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataCollectionRuleAssociationData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(resourceUri, associationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -316,12 +393,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataCollectionRuleAssociationData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        public Response<DataCollectionRuleAssociationData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(resourceUri, associationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -531,6 +609,82 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
 
             using var message = CreateListByRuleNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataCollectionRuleName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataCollectionRuleAssociationProxyOnlyResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataCollectionRuleAssociationProxyOnlyResourceListResult.DeserializeDataCollectionRuleAssociationProxyOnlyResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByDataCollectionEndpointNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists associations for the specified data collection endpoint. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByDataCollectionEndpointNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var message = CreateListByDataCollectionEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataCollectionEndpointName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataCollectionRuleAssociationProxyOnlyResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataCollectionRuleAssociationProxyOnlyResourceListResult.DeserializeDataCollectionRuleAssociationProxyOnlyResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists associations for the specified data collection endpoint. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByDataCollectionEndpointNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var message = CreateListByDataCollectionEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataCollectionEndpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

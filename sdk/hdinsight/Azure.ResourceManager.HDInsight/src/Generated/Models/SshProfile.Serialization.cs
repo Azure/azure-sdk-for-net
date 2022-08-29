@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static SshProfile DeserializeSshProfile(JsonElement element)
         {
-            Optional<IList<SshPublicKey>> publicKeys = default;
+            Optional<IList<HDInsightSshPublicKey>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKeys"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SshPublicKey> array = new List<SshPublicKey>();
+                    List<HDInsightSshPublicKey> array = new List<HDInsightSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKey.DeserializeSshPublicKey(item));
+                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item));
                     }
                     publicKeys = array;
                     continue;

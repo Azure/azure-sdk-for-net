@@ -522,14 +522,14 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
+                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
+                {
+                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
+                };
+                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
                 return BlobContainerClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                    {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                        UploadTransferValidationOptions = clientConfiguration.UploadTransferValidationOptions,
-                        DownloadTransferValidationOptions = clientConfiguration.DownloadTransferValidationOptions,
-                    },
+                    options,
                     clientConfiguration.Pipeline);
             }
         }
@@ -3532,7 +3532,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 DataLakeUriBuilder datalakeUriBuilder = new DataLakeUriBuilder(Uri)
                 {
-                    // erase parameters unrelated to container
+                    // erase parameters unrelated to the endpoint
+                    FileSystemName = null,
                     DirectoryOrFilePath = null,
                     Snapshot = null,
                 };

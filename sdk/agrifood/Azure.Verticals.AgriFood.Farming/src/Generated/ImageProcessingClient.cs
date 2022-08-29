@@ -236,10 +236,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
-        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
+        ///     farmerId = "<farmerId>",
+        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
+        ///         "<String>"
         ///     },
         /// };
         /// 
@@ -258,13 +258,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
-        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
+        ///     farmerId = "<farmerId>",
+        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
+        ///         "<String>"
         ///     },
-        ///     name = "<ImageProcessingRasterizeJobName>",
-        ///     description = "<ImageProcessingRasterizeJobDescription>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -379,10 +379,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
-        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
+        ///     farmerId = "<farmerId>",
+        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
+        ///         "<String>"
         ///     },
         /// };
         /// 
@@ -401,13 +401,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmerId = "<ImageProcessingRasterizeJobFarmerId>",
-        ///     shapefileAttachmentId = "<ImageProcessingRasterizeJobShapefileAttachmentId>",
+        ///     farmerId = "<farmerId>",
+        ///     shapefileAttachmentId = "<shapefileAttachmentId>",
         ///     shapefileColumnNames = new[] {
-        ///         "<ImageProcessingRasterizeJobShapefileColumnNamesItem>"
+        ///         "<String>"
         ///     },
-        ///     name = "<ImageProcessingRasterizeJobName>",
-        ///     description = "<ImageProcessingRasterizeJobDescription>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

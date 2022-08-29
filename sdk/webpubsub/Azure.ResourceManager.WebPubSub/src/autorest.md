@@ -137,15 +137,4 @@ directive:
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
     transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
-
-  # Change ManagedIdentity to common identity type(ManagedServiceIdentity)
-  - from: swagger-document
-    where: $.definitions.ManagedIdentityType
-    transform: $.enum.push("SystemAssigned, UserAssigned")
-    reason: Temporary workaround to match with common type.
-  - from: webpubsub.json
-    where: $.definitions.WebPubSub.properties.identity
-    transform: >
-      $.description = "The managed identity response. Current supported identity types: SystemAssigned, UserAssigned, None.";
-    reason: Temporary workaround to update description.
 ```

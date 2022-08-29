@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -38,7 +37,6 @@ namespace Azure.Identity
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
         private readonly string _tenantId;
-        private const int ERROR_FILE_NOT_FOUND = 2;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
@@ -105,7 +103,10 @@ namespace Azure.Identity
                 }
                 return scope.Succeeded(token);
             }
-            catch (Win32Exception ex) when (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            // External execution is wrapped in a "cmd /c" command which will never throw a native Win32Exception ERROR_FILE_NOT_FOUND
+            // Check against the message for constant PowerShellNotInstalledError
+            // Do not retry if already using legacy PowerShell to prevent delays, also used in tests to ensure a single process result
+            catch (CredentialUnavailableException ex) when (UseLegacyPowerShell == false && ex.Message == PowerShellNotInstalledError && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 UseLegacyPowerShell = true;
                 try
@@ -175,10 +176,6 @@ namespace Azure.Identity
             if (output.IndexOf(AzurePowerShellNoAzAccountModule, StringComparison.OrdinalIgnoreCase) != -1)
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
-            }
-            if (output.IndexOf("is not recognized as an internal or external command", StringComparison.OrdinalIgnoreCase) != -1)
-            {
-                throw new Win32Exception(ERROR_FILE_NOT_FOUND);
             }
 
             var needsLogin = output.IndexOf(RunConnectAzAccountToLogin, StringComparison.OrdinalIgnoreCase) != -1 ||

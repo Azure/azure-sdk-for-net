@@ -5,20 +5,20 @@ namespace Azure.Storage
 {
     internal static class TransferValidationOptionsExtensions
     {
-        public static ValidationAlgorithm ResolveAuto(this ValidationAlgorithm validationAlgorithm)
+        public static StorageChecksumAlgorithm ResolveAuto(this StorageChecksumAlgorithm checksumAlgorithm)
         {
-            if (validationAlgorithm == ValidationAlgorithm.Auto)
+            if (checksumAlgorithm == StorageChecksumAlgorithm.Auto)
             {
 #if BlobSDK || DataLakeSDK
-                return ValidationAlgorithm.StorageCrc64;
+                return StorageChecksumAlgorithm.StorageCrc64;
 #elif FileSDK // file shares don't support crc64
-                return ValidationAlgorithm.MD5;
+                return StorageChecksumAlgorithm.MD5;
 #else
                 throw new System.NotSupportedException(
                     $"{typeof(TransferValidationOptionsExtensions).FullName}.{nameof(ResolveAuto)} is not supported.");
 #endif
             }
-            return validationAlgorithm;
+            return checksumAlgorithm;
         }
 
         public static UploadTransferValidationOptions ToValidationOptions(this byte[] md5)
@@ -26,7 +26,7 @@ namespace Azure.Storage
                 ? default
                 : new UploadTransferValidationOptions
                 {
-                    Algorithm = ValidationAlgorithm.MD5,
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                     PrecalculatedChecksum = md5
                 };
 
@@ -34,11 +34,29 @@ namespace Azure.Storage
             => requestTransactionalMD5
                 ? new DownloadTransferValidationOptions
                 {
-                    Algorithm = ValidationAlgorithm.MD5,
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
                     // legacy arg forced users to validate the hash themselves
                     // maintain this behavior to avoid perf hit of double-validation
-                    Validate = false
+                    AutoValidateChecksum = false
                 }
                 : default;
+
+        public static void CopyTo(this TransferValidationOptions source, TransferValidationOptions dest)
+        {
+            source.Upload.CopyTo(dest.Upload);
+            source.Download.CopyTo(dest.Download);
+        }
+
+        public static void CopyTo(this UploadTransferValidationOptions source, UploadTransferValidationOptions dest)
+        {
+            dest.ChecksumAlgorithm = source.ChecksumAlgorithm;
+            dest.PrecalculatedChecksum = source.PrecalculatedChecksum;
+        }
+
+        public static void CopyTo(this DownloadTransferValidationOptions source, DownloadTransferValidationOptions dest)
+        {
+            dest.ChecksumAlgorithm = source.ChecksumAlgorithm;
+            dest.AutoValidateChecksum = source.AutoValidateChecksum;
+        }
     }
 }

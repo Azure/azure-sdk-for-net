@@ -15,42 +15,42 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyProperties
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
-        /// <param name="options"> The Key Policy options. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyOption> options)
+        /// <param name="preferences"> The Key Policy options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="preferences"/> is null. </exception>
+        internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyPreference> preferences)
         {
-            if (options == null)
+            if (preferences == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(preferences));
             }
 
-            Options = options.ToList();
+            Preferences = preferences.ToList();
         }
 
         /// <summary> Initializes a new instance of ContentKeyPolicyProperties. </summary>
         /// <param name="policyId"> The legacy Policy ID. </param>
-        /// <param name="created"> The creation date of the Policy. </param>
-        /// <param name="lastModified"> The last modified date of the Policy. </param>
+        /// <param name="createdOn"> The creation date of the Policy. </param>
+        /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
-        /// <param name="options"> The Key Policy options. </param>
-        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? created, DateTimeOffset? lastModified, string description, IReadOnlyList<ContentKeyPolicyOption> options)
+        /// <param name="preferences"> The Key Policy options. </param>
+        internal ContentKeyPolicyProperties(Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IReadOnlyList<ContentKeyPolicyPreference> preferences)
         {
             PolicyId = policyId;
-            Created = created;
-            LastModified = lastModified;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             Description = description;
-            Options = options;
+            Preferences = preferences;
         }
 
         /// <summary> The legacy Policy ID. </summary>
         public Guid? PolicyId { get; }
         /// <summary> The creation date of the Policy. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The last modified date of the Policy. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> A description for the Policy. </summary>
         public string Description { get; }
         /// <summary> The Key Policy options. </summary>
-        public IReadOnlyList<ContentKeyPolicyOption> Options { get; }
+        public IReadOnlyList<ContentKeyPolicyPreference> Preferences { get; }
     }
 }

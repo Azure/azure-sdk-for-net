@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<SecretBase> accessToken = default;
-            Optional<SecretBase> refreshToken = default;
+            Optional<FactorySecretBaseDefinition> clientSecret = default;
+            Optional<FactorySecretBaseDefinition> accessToken = default;
+            Optional<FactorySecretBaseDefinition> refreshToken = default;
             Optional<BinaryData> useEncryptedEndpoints = default;
             Optional<BinaryData> useHostVerification = default;
             Optional<BinaryData> usePeerVerification = default;
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
+                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            clientSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessToken"))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("refreshToken"))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            refreshToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"))

@@ -76,5 +76,10 @@ namespace Azure.AI.TextAnalytics
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and up.
         /// </remarks>
         public IReadOnlyCollection<MultiLabelClassifyAction> MultiLabelClassifyActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="AnalyzeHealthcareEntitiesAction"/> that will get executed on the input documents.
+        /// </summary>
+        public IReadOnlyCollection<AnalyzeHealthcareEntitiesAction> AnalyzeHealthcareEntitiesActions { get; set; }
     }
 }

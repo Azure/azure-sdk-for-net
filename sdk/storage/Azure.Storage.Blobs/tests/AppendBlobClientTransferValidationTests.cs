@@ -23,13 +23,13 @@ namespace Azure.Storage.Blobs.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None,
             BlobClientOptions options = null)
         {
             options ??= ClientBuilder.GetOptions();
-            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
-            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            options.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
+            options.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
 
             container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
             var appendBlob = InstrumentClient(container.GetAppendBlobClient(resourceName ?? GetNewResourceName()));

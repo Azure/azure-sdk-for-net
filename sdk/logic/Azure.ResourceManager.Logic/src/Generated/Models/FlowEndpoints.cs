@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of FlowEndpoints. </summary>
         public FlowEndpoints()
         {
-            OutgoingIPAddresses = new ChangeTrackingList<IPAddress>();
-            AccessEndpointIPAddresses = new ChangeTrackingList<IPAddress>();
+            OutgoingIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
+            AccessEndpointIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
         }
 
         /// <summary> Initializes a new instance of FlowEndpoints. </summary>
         /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
         /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
-        internal FlowEndpoints(IList<IPAddress> outgoingIPAddresses, IList<IPAddress> accessEndpointIPAddresses)
+        internal FlowEndpoints(IList<FlowEndpointIPAddress> outgoingIPAddresses, IList<FlowEndpointIPAddress> accessEndpointIPAddresses)
         {
             OutgoingIPAddresses = outgoingIPAddresses;
             AccessEndpointIPAddresses = accessEndpointIPAddresses;
         }
 
         /// <summary> The outgoing ip address. </summary>
-        public IList<IPAddress> OutgoingIPAddresses { get; }
+        public IList<FlowEndpointIPAddress> OutgoingIPAddresses { get; }
         /// <summary> The access endpoint ip address. </summary>
-        public IList<IPAddress> AccessEndpointIPAddresses { get; }
+        public IList<FlowEndpointIPAddress> AccessEndpointIPAddresses { get; }
     }
 }

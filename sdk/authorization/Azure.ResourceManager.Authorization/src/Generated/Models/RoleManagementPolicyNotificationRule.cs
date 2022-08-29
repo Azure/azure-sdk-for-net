@@ -24,30 +24,30 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        /// <param name="notificationType"> The type of notification. </param>
+        /// <param name="notificationDeliveryType"> The type of notification. </param>
         /// <param name="notificationLevel"> The notification level. </param>
         /// <param name="recipientType"> The recipient type. </param>
         /// <param name="notificationRecipients"> The list of notification recipients. </param>
-        /// <param name="isDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
-        internal RoleManagementPolicyNotificationRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, NotificationDeliveryMechanism? notificationType, NotificationLevel? notificationLevel, RecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target)
+        /// <param name="areDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
+        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, NotificationDeliveryType? notificationDeliveryType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? areDefaultRecipientsEnabled) : base(id, ruleType, target)
         {
-            NotificationType = notificationType;
+            NotificationDeliveryType = notificationDeliveryType;
             NotificationLevel = notificationLevel;
             RecipientType = recipientType;
             NotificationRecipients = notificationRecipients;
-            IsDefaultRecipientsEnabled = isDefaultRecipientsEnabled;
+            AreDefaultRecipientsEnabled = areDefaultRecipientsEnabled;
             RuleType = ruleType;
         }
 
         /// <summary> The type of notification. </summary>
-        public NotificationDeliveryMechanism? NotificationType { get; set; }
+        public NotificationDeliveryType? NotificationDeliveryType { get; set; }
         /// <summary> The notification level. </summary>
-        public NotificationLevel? NotificationLevel { get; set; }
+        public RoleManagementPolicyNotificationLevel? NotificationLevel { get; set; }
         /// <summary> The recipient type. </summary>
-        public RecipientType? RecipientType { get; set; }
+        public RoleManagementPolicyRecipientType? RecipientType { get; set; }
         /// <summary> The list of notification recipients. </summary>
         public IList<string> NotificationRecipients { get; }
         /// <summary> Determines if the notification will be sent to the recipient type specified in the policy rule. </summary>
-        public bool? IsDefaultRecipientsEnabled { get; set; }
+        public bool? AreDefaultRecipientsEnabled { get; set; }
     }
 }

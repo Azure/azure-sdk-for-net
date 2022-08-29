@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing an AccountFilter along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AccountFilterResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAccountFilterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaserviceResource" /> using the GetAccountFilter method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetAccountFilter method.
     /// </summary>
     public partial class AccountFilterResource : ArmResource
     {

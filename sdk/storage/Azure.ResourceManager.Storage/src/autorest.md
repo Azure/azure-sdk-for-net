@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/storage/resource-manager/readme.md
-tag: package-2021-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/20b212e1ef41b1d49b83ba82b4cd2d3330e44742/specification/storage/resource-manager/readme.md
+tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -92,10 +92,6 @@ rename-mapping:
   TableServiceProperties: TableService
   StorageAccountCheckNameAvailabilityParameters: StorageAccountNameAvailabilityContent
   Multichannel.enabled: IsMultiChannelEnabled
-  DeletedAccount.properties.creationTime: CreatedOn
-  DeletedAccount.properties.deletionTime: DeletedOn
-  StorageAccount.properties.creationTime: CreatedOn
-  EncryptionScope.properties.creationTime: CreatedOn
   AccessPolicy.expiryTime: expireOn
   AccountStatus: StorageAccountStatus
   ResourceAccessRule: StorageAccountResourceAccessRule
@@ -166,7 +162,7 @@ rename-mapping:
   BlobInventoryPolicyRule.enabled: IsEnabled
   BlobInventoryPolicySchema.enabled: IsEnabled
   ActiveDirectoryProperties: StorageActiveDirectoryProperties
-  ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
+  AccountType: ActiveDirectoryAccountType
   StorageAccount.properties.failoverInProgress: IsFailoverInProgress
   StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
   StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
@@ -183,7 +179,7 @@ rename-mapping:
   ManagementPolicy: StorageAccountManagementPolicy
   AzureFilesIdentityBasedAuthentication: FilesIdentityBasedAuthentication
   BlobInventoryPolicyFilter.prefixMatch: IncludePrefix
-  CorsRuleAllowedMethodsItem: CorsRuleAllowedMethod
+  AllowedMethods: CorsRuleAllowedMethod
   DefaultSharePermission.StorageFileDataSmbShareReader: Reader
   DefaultSharePermission.StorageFileDataSmbShareContributor: Contributor
   DefaultSharePermission.StorageFileDataSmbShareElevatedContributor: ElevatedContributor
@@ -293,7 +289,26 @@ directive:
   - from: swagger-document
     where: $.definitions.Encryption
     transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357
+# this is a temporary fix
   - from: swagger-document
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}"].put.parameters
     transform: $[2].required = true
+# convenience change: expand the array result out
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys"].post
+    transform: >
+      $["x-ms-pageable"] = {
+        "itemName": "keys",
+        "nextLinkName": null
+      };
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey"].post
+    transform: >
+      $["x-ms-pageable"] = {
+        "itemName": "keys",
+        "nextLinkName": null
+      };
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges"].post
+    transform: $["x-ms-long-running-operation-options"]["enable-interim-state"] = true
 ```

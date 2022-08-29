@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new CustomSetupBase(type);
+            return new UnknownCustomSetupBase(type);
         }
     }
 }

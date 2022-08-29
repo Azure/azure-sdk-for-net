@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("principalId");
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsDirectAccessEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

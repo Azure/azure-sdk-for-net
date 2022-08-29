@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="text"> Comment text. </param>
         /// <param name="createdOn"> Date and time when the comment was created. </param>
         /// <param name="userId"> A resource identifier for the user who left the comment. </param>
-        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, string userId) : base(id, name, resourceType, systemData)
+        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, ResourceIdentifier userId) : base(id, name, resourceType, systemData)
         {
             Text = text;
             CreatedOn = createdOn;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Date and time when the comment was created. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> A resource identifier for the user who left the comment. </summary>
-        public string UserId { get; set; }
+        public ResourceIdentifier UserId { get; set; }
     }
 }

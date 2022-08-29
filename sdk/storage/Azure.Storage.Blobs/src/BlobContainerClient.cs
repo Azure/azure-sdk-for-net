@@ -187,7 +187,7 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder = new BlobUriBuilder(conn.BlobEndpoint) { BlobContainerName = blobContainerName };
+            var builder = new BlobUriBuilder(conn.BlobEndpoint, options?.PreserveBlobNameSlashes ?? false) { BlobContainerName = blobContainerName };
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
 
@@ -197,9 +197,9 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                uploadTransferValidationOptions: options.UploadTransferValidationOptions,
-                downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _containerRestClient = BuildContainerRestClient(_uri);
@@ -258,9 +258,9 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                uploadTransferValidationOptions: options.UploadTransferValidationOptions,
-                downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -348,9 +348,9 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                uploadTransferValidationOptions: options.UploadTransferValidationOptions,
-                downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -419,9 +419,9 @@ namespace Azure.Storage.Blobs
                     clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
-                    uploadTransferValidationOptions: options.UploadTransferValidationOptions,
-                    downloadTransferValidationOptions: options.DownloadTransferValidationOptions,
-                    encryptionScope: null),
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes),
                 clientSideEncryption: null);
         }
 
@@ -445,7 +445,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected internal virtual BlobBaseClient GetBlobBaseClientCore(string blobName)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
             {
                 BlobName = blobName
             };
@@ -466,7 +466,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
             {
                 BlobName = blobName
             };
@@ -494,7 +494,7 @@ namespace Azure.Storage.Blobs
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
             }
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
             {
                 BlobName = blobName
             };
@@ -521,7 +521,7 @@ namespace Azure.Storage.Blobs
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
             }
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
             {
                 BlobName = blobName
             };
@@ -548,7 +548,7 @@ namespace Azure.Storage.Blobs
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
             }
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
             {
                 BlobName = blobName
             };
@@ -575,7 +575,7 @@ namespace Azure.Storage.Blobs
         {
             if (_name == null || _accountName == null)
             {
-                var builder = new BlobUriBuilder(Uri);
+                var builder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes);
                 _name = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }
@@ -3350,7 +3350,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri)
+                    BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
                     {
                         BlobContainerName = destinationContainerName
                     };
@@ -3598,7 +3598,7 @@ namespace Azure.Storage.Blobs
                     nameof(builder.BlobName),
                     nameof(Constants.Blob.Container.Name));
             }
-            BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
@@ -3621,7 +3621,7 @@ namespace Azure.Storage.Blobs
         {
             if (_parentBlobServiceClient == null)
             {
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.PreserveBlobNameOuterSlashes)
                 {
                     // erase parameters unrelated to service
                     BlobContainerName = null,

@@ -177,7 +177,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (status == DocumentOperationStatus.Succeeded)
             {
-                return OperationState<DocumentModelDetails>.Success(rawResponse, response.Value.Result);
+                var buildOperation = response.Value as DocumentModelBuildOperationDetails;
+                return OperationState<DocumentModelDetails>.Success(rawResponse, buildOperation.Result);
             }
             else if (status == DocumentOperationStatus.Failed)
             {

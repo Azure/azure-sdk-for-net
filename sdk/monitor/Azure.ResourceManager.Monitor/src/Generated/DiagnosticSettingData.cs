@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="metrics"> The list of metric settings. </param>
         /// <param name="logs"> The list of logs settings. </param>
         /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
+        /// <param name="marketplacePartnerId"> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </param>
         /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
-        internal DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, ResourceIdentifier workspaceId, string logAnalyticsDestinationType) : base(id, name, resourceType, systemData)
+        internal DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string logAnalyticsDestinationType) : base(id, name, resourceType, systemData)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Monitor
             Metrics = metrics;
             Logs = logs;
             WorkspaceId = workspaceId;
+            MarketplacePartnerId = marketplacePartnerId;
             LogAnalyticsDestinationType = logAnalyticsDestinationType;
         }
 
@@ -61,6 +63,8 @@ namespace Azure.ResourceManager.Monitor
         public IList<LogSettings> Logs { get; }
         /// <summary> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </summary>
         public ResourceIdentifier WorkspaceId { get; set; }
+        /// <summary> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </summary>
+        public ResourceIdentifier MarketplacePartnerId { get; set; }
         /// <summary> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </summary>
         public string LogAnalyticsDestinationType { get; set; }
     }

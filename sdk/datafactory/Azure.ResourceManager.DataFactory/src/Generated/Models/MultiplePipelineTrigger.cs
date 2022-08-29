@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// Base class for all triggers that support one to many model for trigger to pipeline.
     /// Please note <see cref="MultiplePipelineTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="CustomEventsTrigger"/> and <see cref="ScheduleTrigger"/>.
+    /// The available derived classes include <see cref="AzureBlobEventsTrigger"/>, <see cref="AzureBlobTrigger"/>, <see cref="CustomEventsTrigger"/> and <see cref="ScheduleTrigger"/>.
     /// </summary>
-    public partial class MultiplePipelineTrigger : DataFactoryTriggerProperties
+    public partial class MultiplePipelineTrigger : FactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
         public MultiplePipelineTrigger()
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
-        internal MultiplePipelineTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal MultiplePipelineTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipelines = pipelines;
             TriggerType = triggerType ?? "MultiplePipelineTrigger";

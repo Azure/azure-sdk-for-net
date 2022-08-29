@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ScaleUnits))
+            if (Optional.IsDefined(ScaleUnitsNumber))
             {
                 writer.WritePropertyName("scaleUnits");
-                writer.WriteNumberValue(ScaleUnits.Value);
+                writer.WriteNumberValue(ScaleUnitsNumber.Value);
             }
             if (Optional.IsDefined(AvailabilitySetName))
             {
@@ -56,13 +56,27 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(AccessControl))
             {
-                writer.WritePropertyName("accessControl");
-                writer.WriteObjectValue(AccessControl);
+                if (AccessControl != null)
+                {
+                    writer.WritePropertyName("accessControl");
+                    writer.WriteObjectValue(AccessControl);
+                }
+                else
+                {
+                    writer.WriteNull("accessControl");
+                }
             }
             if (Optional.IsDefined(MaxCacheAge))
             {
-                writer.WritePropertyName("maxCacheAge");
-                writer.WriteNumberValue(MaxCacheAge.Value);
+                if (MaxCacheAge != null)
+                {
+                    writer.WritePropertyName("maxCacheAge");
+                    writer.WriteNumberValue(MaxCacheAge.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxCacheAge");
+                }
             }
             if (Optional.IsCollectionDefined(CustomHostNames))
             {
@@ -74,10 +88,10 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CdnEnabled))
+            if (Optional.IsDefined(IsCdnEnabled))
             {
                 writer.WritePropertyName("cdnEnabled");
-                writer.WriteBooleanValue(CdnEnabled.Value);
+                writer.WriteBooleanValue(IsCdnEnabled.Value);
             }
             if (Optional.IsDefined(CdnProvider))
             {
@@ -91,8 +105,15 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
-                writer.WritePropertyName("crossSiteAccessPolicies");
-                writer.WriteObjectValue(CrossSiteAccessPolicies);
+                if (CrossSiteAccessPolicies != null)
+                {
+                    writer.WritePropertyName("crossSiteAccessPolicies");
+                    writer.WriteObjectValue(CrossSiteAccessPolicies);
+                }
+                else
+                {
+                    writer.WriteNull("crossSiteAccessPolicies");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -100,7 +121,7 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingEndpointData DeserializeStreamingEndpointData(JsonElement element)
         {
-            Optional<ArmStreamingEndpointCurrentSku> sku = default;
+            Optional<StreamingEndpointCurrentSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -111,7 +132,7 @@ namespace Azure.ResourceManager.Media
             Optional<int> scaleUnits = default;
             Optional<string> availabilitySetName = default;
             Optional<StreamingEndpointAccessControl> accessControl = default;
-            Optional<long> maxCacheAge = default;
+            Optional<long?> maxCacheAge = default;
             Optional<IList<string>> customHostNames = default;
             Optional<string> hostName = default;
             Optional<bool> cdnEnabled = default;
@@ -132,7 +153,7 @@ namespace Azure.ResourceManager.Media
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ArmStreamingEndpointCurrentSku.DeserializeArmStreamingEndpointCurrentSku(property.Value);
+                    sku = StreamingEndpointCurrentSku.DeserializeStreamingEndpointCurrentSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -213,7 +234,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                accessControl = null;
                                 continue;
                             }
                             accessControl = StreamingEndpointAccessControl.DeserializeStreamingEndpointAccessControl(property0.Value);
@@ -223,7 +244,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                maxCacheAge = null;
                                 continue;
                             }
                             maxCacheAge = property0.Value.GetInt64();
@@ -288,7 +309,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                crossSiteAccessPolicies = null;
                                 continue;
                             }
                             crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value);

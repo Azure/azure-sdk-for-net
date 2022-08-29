@@ -1622,7 +1622,7 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            UploadTransferValidationOptions validationOptions = options?.TransferValidationOptions ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = options?.TransferValidationOptions ?? ClientConfiguration.TransferValidation.Upload;
 
             long? expectedContentLength = null;
             if (UsingClientSideEncryption)

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("needTechnicalAcknowledgement");
             writer.WriteBooleanValue(NeedTechnicalAcknowledgement);
             writer.WritePropertyName("batchTechnicalAcknowledgements");
-            writer.WriteBooleanValue(BatchTechnicalAcknowledgements);
+            writer.WriteBooleanValue(BatchTechnicalAcknowledgement);
             writer.WritePropertyName("needFunctionalAcknowledgement");
             writer.WriteBooleanValue(NeedFunctionalAcknowledgement);
             if (Optional.IsDefined(FunctionalAcknowledgementVersion))
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStringValue(FunctionalAcknowledgementVersion);
             }
             writer.WritePropertyName("batchFunctionalAcknowledgements");
-            writer.WriteBooleanValue(BatchFunctionalAcknowledgements);
+            writer.WriteBooleanValue(BatchFunctionalAcknowledgement);
             writer.WritePropertyName("needImplementationAcknowledgement");
             writer.WriteBooleanValue(NeedImplementationAcknowledgement);
             if (Optional.IsDefined(ImplementationAcknowledgementVersion))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStringValue(ImplementationAcknowledgementVersion);
             }
             writer.WritePropertyName("batchImplementationAcknowledgements");
-            writer.WriteBooleanValue(BatchImplementationAcknowledgements);
+            writer.WriteBooleanValue(BatchImplementationAcknowledgement);
             writer.WritePropertyName("needLoopForValidMessages");
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement");

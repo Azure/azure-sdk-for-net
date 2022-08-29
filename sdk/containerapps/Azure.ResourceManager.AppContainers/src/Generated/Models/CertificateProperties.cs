@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> PFX or PEM blob. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expirationOn"> Certificate expiration date. </param>
+        /// <param name="expireOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="valid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
-        internal CertificateProperties(CertificateProvisioningState? provisioningState, string password, string subjectName, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? valid, string publicKeyHash)
+        internal CertificateProperties(CertificateProvisioningState? provisioningState, string password, string subjectName, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? valid, string publicKeyHash)
         {
             ProvisioningState = provisioningState;
             Password = password;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value;
             Issuer = issuer;
             IssueOn = issueOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             Thumbprint = thumbprint;
             Valid = valid;
             PublicKeyHash = publicKeyHash;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Certificate issue Date. </summary>
         public DateTimeOffset? IssueOn { get; }
         /// <summary> Certificate expiration date. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> Certificate thumbprint. </summary>
         public string Thumbprint { get; }
         /// <summary> Is the certificate valid?. </summary>

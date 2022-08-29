@@ -1213,7 +1213,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -1251,8 +1251,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await AppendBlobRestClient.AppendBlockAsync(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,
@@ -1273,8 +1273,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = AppendBlobRestClient.AppendBlock(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             leaseId: conditions?.LeaseId,
                             maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                             appendPosition: conditions?.IfAppendPositionEqual,

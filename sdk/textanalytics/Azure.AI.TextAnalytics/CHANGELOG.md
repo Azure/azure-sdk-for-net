@@ -1,26 +1,41 @@
 # Release History
 
-## 5.2.0-beta.4 (Unreleased)
+## 5.2.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `LabelClassifyResult`.
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0-beta.4 (2022-08-12)
+
+### Features Added
+
+- Added `AnalyzeActionsOperation.Cancel` and `CancelAsync` to cancel a batch of actions.
+- Added `AnalyzeActionsResult.AnalyzeHealthcareEntitiesResults` to get healthcare entities from a batch of actions.
+- Added `TextAnalyticsActions.AnalyzeHealthcareEntitiesActions` to analyze healthcare entities in a batch of actions.
+- Added `TextAnalyticsClient.StartRecognizeCustomEntities` and `StartRecognizeCustomEntitiesAsync` to recognize custom entities in a collection of documents.
+- Added `TextAnalyticsClient.StartSingleLabelClassify` and `StartSingleLabelClassifyAsync` to classify documents with a single label.
+- Added `TextAnalyticsClient.StartMultiLabelClassify` and `StartMultiLabelClassifyAsync` to classify documents with multiple labels.
+
+### Breaking Changes
+
+- Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `ClassifyDocumentResult`.
 - Removed Extractive Text Summarization and related models. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
 - Removed Extractive Text Summarization, Multi Label Classification, and Single Label Classification from legacy client library.
 - Removed `HealthcareTaskParameters.FhirVersion` and `AnalyzeHealthcareEntitiesResult.FhirBundle`. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
 - Renamed `LabelClassifyResult.Classifications` to `LabelClassifyResult.ClassificationCategories`.
 - Renamed `MultiCategoryClassifyAction` to `MultiLabelClassifyAction`.
 - Renamed `MultiCategoryClassifyActionResult` to `MultiLabelClassifyActionResult`.
-- Renamed `MultiCategoryClassifyResult` to `MultiLabelClassifyResult`.
-- Renamed `MultiCategoryClassifyResultCollection` to `MultiLabelClassifyResultCollection`.
+- Renamed `MultiCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `MultiCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
 - Renamed `SingleCategoryClassifyAction` to `SingleLabelClassifyAction`.
 - Renamed `SingleCategoryClassifyActionResult` to `SingleLabelClassifyActionResult`.
-- Renamed `SingleCategoryClassifyResult` to `SingleLabelClassifyResult`.
-- Renamed `SingleCategoryClassifyResultCollection` to `SingleLabelClassifyResultCollection`.
-
-### Bugs Fixed
+- Renamed `SingleCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `SingleCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
 
 ### Other Changes
 
@@ -141,7 +156,7 @@ This is the first version of the client library that targets the Azure Cognitive
 - For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
 - Removed `RelatedEntities`.
 - `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
-- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level.
 
 ### Fixes
 - `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
@@ -300,7 +315,7 @@ This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/m
 
 ### Major changes from `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`
 - This library supports only the Text Analytics Service v3.0-preview.1 API, whereas the previous library supports only earlier versions.
-- The namespace/package name for Azure Text Analytics client library has changed from 
+- The namespace/package name for Azure Text Analytics client library has changed from
     `Microsoft.Azure.CognitiveServices.Language.TextAnalytics` to `Azure.AI.TextAnalytics`
 - Added support for:
   - Subscription key and AAD authentication for both synchronous and asynchronous clients.

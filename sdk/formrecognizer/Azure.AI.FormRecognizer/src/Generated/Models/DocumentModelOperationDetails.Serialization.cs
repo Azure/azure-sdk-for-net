@@ -16,34 +16,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentModelOperationDetails DeserializeDocumentModelOperationDetails(JsonElement element)
         {
-            Optional<JsonElement> error = default;
-            Optional<DocumentModelDetails> result = default;
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element);
+                    case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element);
+                    case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element);
+                }
+            }
             string operationId = default;
             DocumentOperationStatus status = default;
             Optional<int> percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = default;
-            string resourceLocation = default;
+            Uri resourceLocation = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
-                {
-                    error = property.Value.Clone();
-                    continue;
-                }
-                if (property.NameEquals("result"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("operationId"))
                 {
                     operationId = property.Value.GetString();
@@ -81,7 +74,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("resourceLocation"))
                 {
-                    resourceLocation = property.Value.GetString();
+                    resourceLocation = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))
@@ -104,8 +97,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("error"))
+                {
+                    error = property.Value.Clone();
+                    continue;
+                }
             }
-            return new DocumentModelOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new DocumentModelOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error);
         }
     }
 }

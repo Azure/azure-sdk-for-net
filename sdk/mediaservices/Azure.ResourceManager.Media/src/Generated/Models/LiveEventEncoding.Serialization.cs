@@ -28,13 +28,27 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(StretchMode))
             {
-                writer.WritePropertyName("stretchMode");
-                writer.WriteStringValue(StretchMode.Value.ToString());
+                if (StretchMode != null)
+                {
+                    writer.WritePropertyName("stretchMode");
+                    writer.WriteStringValue(StretchMode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("stretchMode");
+                }
             }
             if (Optional.IsDefined(KeyFrameInterval))
             {
-                writer.WritePropertyName("keyFrameInterval");
-                writer.WriteStringValue(KeyFrameInterval.Value, "P");
+                if (KeyFrameInterval != null)
+                {
+                    writer.WritePropertyName("keyFrameInterval");
+                    writer.WriteStringValue(KeyFrameInterval.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("keyFrameInterval");
+                }
             }
             writer.WriteEndObject();
         }
@@ -43,8 +57,8 @@ namespace Azure.ResourceManager.Media.Models
         {
             Optional<LiveEventEncodingType> encodingType = default;
             Optional<string> presetName = default;
-            Optional<StretchMode> stretchMode = default;
-            Optional<TimeSpan> keyFrameInterval = default;
+            Optional<InputVideoStretchMode?> stretchMode = default;
+            Optional<TimeSpan?> keyFrameInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodingType"))
@@ -66,17 +80,17 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        stretchMode = null;
                         continue;
                     }
-                    stretchMode = new StretchMode(property.Value.GetString());
+                    stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyFrameInterval"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        keyFrameInterval = null;
                         continue;
                     }
                     keyFrameInterval = property.Value.GetTimeSpan("P");

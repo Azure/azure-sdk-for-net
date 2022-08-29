@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,11 +26,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStringValue(ProtectedAccountKeyName2);
             }
             writer.WritePropertyName("blobEndpoint");
-            writer.WriteStringValue(BlobEndpoint);
+            writer.WriteStringValue(BlobEndpoint.AbsoluteUri);
             writer.WritePropertyName("queueEndpoint");
-            writer.WriteStringValue(QueueEndpoint);
+            writer.WriteStringValue(QueueEndpoint.AbsoluteUri);
             writer.WritePropertyName("tableEndpoint");
-            writer.WriteStringValue(TableEndpoint);
+            writer.WriteStringValue(TableEndpoint.AbsoluteUri);
             writer.WriteEndObject();
         }
 
@@ -38,9 +39,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             string storageAccountName = default;
             string protectedAccountKeyName = default;
             Optional<string> protectedAccountKeyName2 = default;
-            string blobEndpoint = default;
-            string queueEndpoint = default;
-            string tableEndpoint = default;
+            Uri blobEndpoint = default;
+            Uri queueEndpoint = default;
+            Uri tableEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountName"))
@@ -60,17 +61,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("blobEndpoint"))
                 {
-                    blobEndpoint = property.Value.GetString();
+                    blobEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("queueEndpoint"))
                 {
-                    queueEndpoint = property.Value.GetString();
+                    queueEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tableEndpoint"))
                 {
-                    tableEndpoint = property.Value.GetString();
+                    tableEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
             }

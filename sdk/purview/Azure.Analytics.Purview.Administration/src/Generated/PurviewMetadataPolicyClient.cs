@@ -65,25 +65,25 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// var data = new {
-        ///     name = "<MetadataPolicyName>",
-        ///     id = "<MetadataPolicyId>",
+        ///     name = "<name>",
+        ///     id = "<id>",
         ///     version = 1234,
         ///     properties = new {
-        ///         description = "<MetadataPolicyPropertiesDescription>",
+        ///         description = "<description>",
         ///         decisionRules = new[] {
         ///             new {
-        ///                 effect = "<Deny>",
+        ///                 effect = "Deny",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "<AttributeMatcherAttributeName>",
-        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
+        ///                                 "<String>"
         ///                             },
-        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
+        ///                                 "<String>"
         ///                             },
         ///                         }
         ///                     }
@@ -92,19 +92,19 @@ namespace Azure.Analytics.Purview.Administration
         ///         },
         ///         attributeRules = new[] {
         ///             new {
-        ///                 id = "<AttributeRuleId>",
-        ///                 name = "<AttributeRuleName>",
+        ///                 id = "<id>",
+        ///                 name = "<name>",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "<AttributeMatcherAttributeName>",
-        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
+        ///                                 "<String>"
         ///                             },
-        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
+        ///                                 "<String>"
         ///                             },
         ///                         }
         ///                     }
@@ -112,9 +112,9 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
+        ///             referenceName = "<referenceName>",
         ///         },
-        ///         parentCollectionName = "<MetadataPolicyPropertiesParentCollectionName>",
+        ///         parentCollectionName = "<parentCollectionName>",
         ///     },
         /// };
         /// 
@@ -262,25 +262,25 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// var data = new {
-        ///     name = "<MetadataPolicyName>",
-        ///     id = "<MetadataPolicyId>",
+        ///     name = "<name>",
+        ///     id = "<id>",
         ///     version = 1234,
         ///     properties = new {
-        ///         description = "<MetadataPolicyPropertiesDescription>",
+        ///         description = "<description>",
         ///         decisionRules = new[] {
         ///             new {
-        ///                 effect = "<Deny>",
+        ///                 effect = "Deny",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "<AttributeMatcherAttributeName>",
-        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
+        ///                                 "<String>"
         ///                             },
-        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
+        ///                                 "<String>"
         ///                             },
         ///                         }
         ///                     }
@@ -289,19 +289,19 @@ namespace Azure.Analytics.Purview.Administration
         ///         },
         ///         attributeRules = new[] {
         ///             new {
-        ///                 id = "<AttributeRuleId>",
-        ///                 name = "<AttributeRuleName>",
+        ///                 id = "<id>",
+        ///                 name = "<name>",
         ///                 dnfCondition = new[] {
         ///                     new[] {
         ///                         new {
-        ///                             attributeName = "<AttributeMatcherAttributeName>",
-        ///                             attributeValueIncludes = "<AttributeMatcherAttributeValueIncludes>",
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
         ///                             attributeValueIncludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueIncludedInItem>"
+        ///                                 "<String>"
         ///                             },
-        ///                             attributeValueExcludes = "<AttributeMatcherAttributeValueExcludes>",
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
         ///                             attributeValueExcludedIn = new[] {
-        ///                                 "<AttributeMatcherAttributeValueExcludedInItem>"
+        ///                                 "<String>"
         ///                             },
         ///                         }
         ///                     }
@@ -309,9 +309,9 @@ namespace Azure.Analytics.Purview.Administration
         ///             }
         ///         },
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
+        ///             referenceName = "<referenceName>",
         ///         },
-        ///         parentCollectionName = "<MetadataPolicyPropertiesParentCollectionName>",
+        ///         parentCollectionName = "<parentCollectionName>",
         ///     },
         /// };
         /// 

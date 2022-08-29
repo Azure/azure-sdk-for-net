@@ -282,21 +282,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmId = "<SeasonalFieldFarmId>",
-        ///     fieldId = "<SeasonalFieldId>",
-        ///     seasonId = "<SeasonalFieldSeasonId>",
+        ///     farmId = "<farmId>",
+        ///     fieldId = "<fieldId>",
+        ///     seasonId = "<seasonId>",
         ///     cropVarietyIds = new[] {
-        ///         "<SeasonalFieldCropVarietyIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     cropId = "<SeasonalFieldCropId>",
-        ///     avgYieldValue = 1234,
-        ///     avgYieldUnit = "<SeasonalFieldAvgYieldUnit>",
-        ///     avgSeedPopulationValue = 1234,
-        ///     avgSeedPopulationUnit = "<SeasonalFieldAvgSeedPopulationUnit>",
-        ///     plantingDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     status = "<SeasonalFieldStatus>",
-        ///     name = "<SeasonalFieldName>",
-        ///     description = "<SeasonalFieldDescription>",
+        ///     cropId = "<cropId>",
+        ///     avgYieldValue = 123.45d,
+        ///     avgYieldUnit = "<avgYieldUnit>",
+        ///     avgSeedPopulationValue = 123.45d,
+        ///     avgSeedPopulationUnit = "<avgSeedPopulationUnit>",
+        ///     plantingDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -443,21 +443,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new SeasonalFieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmId = "<SeasonalFieldFarmId>",
-        ///     fieldId = "<SeasonalFieldId>",
-        ///     seasonId = "<SeasonalFieldSeasonId>",
+        ///     farmId = "<farmId>",
+        ///     fieldId = "<fieldId>",
+        ///     seasonId = "<seasonId>",
         ///     cropVarietyIds = new[] {
-        ///         "<SeasonalFieldCropVarietyIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     cropId = "<SeasonalFieldCropId>",
-        ///     avgYieldValue = 1234,
-        ///     avgYieldUnit = "<SeasonalFieldAvgYieldUnit>",
-        ///     avgSeedPopulationValue = 1234,
-        ///     avgSeedPopulationUnit = "<SeasonalFieldAvgSeedPopulationUnit>",
-        ///     plantingDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     status = "<SeasonalFieldStatus>",
-        ///     name = "<SeasonalFieldName>",
-        ///     description = "<SeasonalFieldDescription>",
+        ///     cropId = "<cropId>",
+        ///     avgYieldValue = 123.45d,
+        ///     avgYieldUnit = "<avgYieldUnit>",
+        ///     avgSeedPopulationValue = 123.45d,
+        ///     avgSeedPopulationUnit = "<avgSeedPopulationUnit>",
+        ///     plantingDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

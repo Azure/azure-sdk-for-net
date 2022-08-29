@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("message");
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Failed))
+            if (Optional.IsDefined(IsFailed))
             {
                 writer.WritePropertyName("failed");
-                writer.WriteBooleanValue(Failed.Value);
+                writer.WriteBooleanValue(IsFailed.Value);
             }
             if (Optional.IsCollectionDefined(FailedTests))
             {

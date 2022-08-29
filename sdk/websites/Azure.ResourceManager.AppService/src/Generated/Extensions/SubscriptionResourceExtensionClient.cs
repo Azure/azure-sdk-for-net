@@ -32,12 +32,10 @@ namespace Azure.ResourceManager.AppService
         private AppServiceEnvironmentsRestOperations _appServiceEnvironmentRestClient;
         private ClientDiagnostics _appServicePlanClientDiagnostics;
         private AppServicePlansRestOperations _appServicePlanRestClient;
-        private ClientDiagnostics _certificateClientDiagnostics;
-        private CertificatesRestOperations _certificateRestClient;
+        private ClientDiagnostics _appCertificateCertificatesClientDiagnostics;
+        private CertificatesRestOperations _appCertificateCertificatesRestClient;
         private ClientDiagnostics _deletedSiteDeletedWebAppsClientDiagnostics;
         private DeletedWebAppsRestOperations _deletedSiteDeletedWebAppsRestClient;
-        private ClientDiagnostics _deletedSiteGlobalClientDiagnostics;
-        private GlobalRestOperations _deletedSiteGlobalRestClient;
         private ClientDiagnostics _kubeEnvironmentClientDiagnostics;
         private KubeEnvironmentsRestOperations _kubeEnvironmentRestClient;
         private ClientDiagnostics _providerClientDiagnostics;
@@ -50,8 +48,8 @@ namespace Azure.ResourceManager.AppService
         private WebSiteManagementRestOperations _defaultRestClient;
         private ClientDiagnostics _staticSitesClientDiagnostics;
         private StaticSitesRestOperations _staticSitesRestClient;
-        private ClientDiagnostics _staticSiteARMResourceStaticSitesClientDiagnostics;
-        private StaticSitesRestOperations _staticSiteARMResourceStaticSitesRestClient;
+        private ClientDiagnostics _staticSiteClientDiagnostics;
+        private StaticSitesRestOperations _staticSiteRestClient;
         private ClientDiagnostics _webSiteWebAppsClientDiagnostics;
         private WebAppsRestOperations _webSiteWebAppsRestClient;
 
@@ -79,12 +77,10 @@ namespace Azure.ResourceManager.AppService
         private AppServiceEnvironmentsRestOperations AppServiceEnvironmentRestClient => _appServiceEnvironmentRestClient ??= new AppServiceEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceEnvironmentResource.ResourceType));
         private ClientDiagnostics AppServicePlanClientDiagnostics => _appServicePlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlanResource.ResourceType.Namespace, Diagnostics);
         private AppServicePlansRestOperations AppServicePlanRestClient => _appServicePlanRestClient ??= new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServicePlanResource.ResourceType));
-        private ClientDiagnostics CertificateClientDiagnostics => _certificateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateResource.ResourceType.Namespace, Diagnostics);
-        private CertificatesRestOperations CertificateRestClient => _certificateRestClient ??= new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CertificateResource.ResourceType));
+        private ClientDiagnostics AppCertificateCertificatesClientDiagnostics => _appCertificateCertificatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppCertificateResource.ResourceType.Namespace, Diagnostics);
+        private CertificatesRestOperations AppCertificateCertificatesRestClient => _appCertificateCertificatesRestClient ??= new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppCertificateResource.ResourceType));
         private ClientDiagnostics DeletedSiteDeletedWebAppsClientDiagnostics => _deletedSiteDeletedWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
         private DeletedWebAppsRestOperations DeletedSiteDeletedWebAppsRestClient => _deletedSiteDeletedWebAppsRestClient ??= new DeletedWebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
-        private ClientDiagnostics DeletedSiteGlobalClientDiagnostics => _deletedSiteGlobalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
-        private GlobalRestOperations DeletedSiteGlobalRestClient => _deletedSiteGlobalRestClient ??= new GlobalRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
         private ClientDiagnostics KubeEnvironmentClientDiagnostics => _kubeEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
         private KubeEnvironmentsRestOperations KubeEnvironmentRestClient => _kubeEnvironmentRestClient ??= new KubeEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KubeEnvironmentResource.ResourceType));
         private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -97,8 +93,8 @@ namespace Azure.ResourceManager.AppService
         private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics StaticSitesClientDiagnostics => _staticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics StaticSiteARMResourceStaticSitesClientDiagnostics => _staticSiteARMResourceStaticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteARMResource.ResourceType.Namespace, Diagnostics);
-        private StaticSitesRestOperations StaticSiteARMResourceStaticSitesRestClient => _staticSiteARMResourceStaticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StaticSiteARMResource.ResourceType));
+        private ClientDiagnostics StaticSiteClientDiagnostics => _staticSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteResource.ResourceType.Namespace, Diagnostics);
+        private StaticSitesRestOperations StaticSiteRestClient => _staticSiteRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StaticSiteResource.ResourceType));
         private ClientDiagnostics WebSiteWebAppsClientDiagnostics => _webSiteWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteResource.ResourceType.Namespace, Diagnostics);
         private WebAppsRestOperations WebSiteWebAppsRestClient => _webSiteWebAppsRestClient ??= new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebSiteResource.ResourceType));
 
@@ -213,9 +209,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ValidateAppServiceCertificateOrderPurchaseInformationAsync(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidatePurchaseInformationAppServiceCertificateOrder");
+            using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAppServiceCertificateOrderPurchaseInformation");
             scope.Start();
             try
             {
@@ -236,9 +232,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ValidatePurchaseInformationAppServiceCertificateOrder(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
+        public virtual Response ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidatePurchaseInformationAppServiceCertificateOrder");
+            using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateAppServiceCertificateOrderPurchaseInformation");
             scope.Start();
             try
             {
@@ -259,9 +255,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvailabilityDomain");
+            using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
             try
             {
@@ -282,9 +278,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DomainAvailabilityCheckResult> CheckAvailabilityDomain(NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvailabilityDomain");
+            using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
             try
             {
@@ -388,7 +384,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_GetControlCenterSsoRequest
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetControlCenterSsoRequestDomain");
             scope.Start();
@@ -410,7 +406,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_GetControlCenterSsoRequest
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DomainControlCenterSsoRequest> GetControlCenterSsoRequestDomain(CancellationToken cancellationToken = default)
+        public virtual Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(CancellationToken cancellationToken = default)
         {
             using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetControlCenterSsoRequestDomain");
             scope.Start();
@@ -433,12 +429,12 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NameIdentifier> GetRecommendationsDomainsAsync(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceDomainNameIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendationsAsync(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NameIdentifier>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceDomainNameIdentifier>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationsDomains");
+                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDomainRecommendations");
                 scope.Start();
                 try
                 {
@@ -451,9 +447,9 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<NameIdentifier>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceDomainNameIdentifier>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationsDomains");
+                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDomainRecommendations");
                 scope.Start();
                 try
                 {
@@ -476,12 +472,12 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NameIdentifier> GetRecommendationsDomains(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceDomainNameIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendations(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            Page<NameIdentifier> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceDomainNameIdentifier> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationsDomains");
+                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDomainRecommendations");
                 scope.Start();
                 try
                 {
@@ -494,9 +490,9 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<NameIdentifier> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceDomainNameIdentifier> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationsDomains");
+                using var scope = DomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDomainRecommendations");
                 scope.Start();
                 try
                 {
@@ -695,17 +691,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CertificateResource> GetCertificatesAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<CertificateResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppCertificateResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = AppCertificateCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppCertificates");
                 scope.Start();
                 try
                 {
-                    var response = await CertificateRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AppCertificateCertificatesRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -713,14 +709,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<CertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppCertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = AppCertificateCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppCertificates");
                 scope.Start();
                 try
                 {
-                    var response = await CertificateRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AppCertificateCertificatesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -738,17 +734,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CertificateResource> GetCertificates(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppCertificateResource> GetAppCertificates(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<CertificateResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppCertificateResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = AppCertificateCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppCertificates");
                 scope.Start();
                 try
                 {
-                    var response = CertificateRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AppCertificateCertificatesRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -756,14 +752,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<CertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppCertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = AppCertificateCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppCertificates");
                 scope.Start();
                 try
                 {
-                    var response = CertificateRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AppCertificateCertificatesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -900,54 +896,6 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = DeletedSiteDeletedWebAppsRestClient.GetDeletedWebAppByLocation(Id.SubscriptionId, location, deletedSiteId, cancellationToken);
                 return Response.FromValue(new DeletedSiteResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Gets an operation in a subscription and given region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
-        /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
-        /// </summary>
-        /// <param name="location"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = DeletedSiteGlobalClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationWithAsyncResponseGlobal");
-            scope.Start();
-            try
-            {
-                var response = await DeletedSiteGlobalRestClient.GetSubscriptionOperationWithAsyncResponseAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Gets an operation in a subscription and given region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
-        /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
-        /// </summary>
-        /// <param name="location"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetSubscriptionOperationWithAsyncResponseGlobal(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = DeletedSiteGlobalClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationWithAsyncResponseGlobal");
-            scope.Start();
-            try
-            {
-                var response = DeletedSiteGlobalRestClient.GetSubscriptionOperationWithAsyncResponse(Id.SubscriptionId, location, operationId, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {
@@ -1220,9 +1168,9 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_ResetAllFilters
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ResetAllFiltersRecommendationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAllRecommendationFiltersAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ResetAllFiltersRecommendation");
+            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ResetAllRecommendationFilters");
             scope.Start();
             try
             {
@@ -1242,9 +1190,9 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_ResetAllFilters
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ResetAllFiltersRecommendation(CancellationToken cancellationToken = default)
+        public virtual Response ResetAllRecommendationFilters(CancellationToken cancellationToken = default)
         {
-            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ResetAllFiltersRecommendation");
+            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ResetAllRecommendationFilters");
             scope.Start();
             try
             {
@@ -1265,9 +1213,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableAppServiceRecommendationAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DisableRecommendationForSubscriptionRecommendation");
+            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DisableAppServiceRecommendation");
             scope.Start();
             try
             {
@@ -1288,9 +1236,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DisableRecommendationForSubscriptionRecommendation(string name, CancellationToken cancellationToken = default)
+        public virtual Response DisableAppServiceRecommendation(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DisableRecommendationForSubscriptionRecommendation");
+            using var scope = RecommendationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DisableAppServiceRecommendation");
             scope.Start();
             try
             {
@@ -1310,17 +1258,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteResourceHealthMetadataResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1328,14 +1276,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteResourceHealthMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1352,17 +1300,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
         {
-            Page<SiteResourceHealthMetadataResource> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1370,14 +1318,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteResourceHealthMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1528,9 +1476,9 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: GetSubscriptionDeploymentLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentLocations>> GetAppServiceDeploymentLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionDeploymentLocations");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDeploymentLocations");
             scope.Start();
             try
             {
@@ -1550,9 +1498,9 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: GetSubscriptionDeploymentLocations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentLocations> GetSubscriptionDeploymentLocations(CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentLocations> GetAppServiceDeploymentLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionDeploymentLocations");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppServiceDeploymentLocations");
             scope.Start();
             try
             {
@@ -1665,17 +1613,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostNameAsync(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteDomainOwnershipIdentifierResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IdentifierData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
                 scope.Start();
                 try
                 {
                     var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameAsync(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1683,14 +1631,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteDomainOwnershipIdentifierResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IdentifierData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
                 scope.Start();
                 try
                 {
                     var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPageAsync(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1708,17 +1656,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteDomainOwnershipIdentifierResource> GetSiteIdentifiersAssignedToHostName(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IdentifierData> GetSiteIdentifiersAssignedToHostName(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            Page<SiteDomainOwnershipIdentifierResource> FirstPageFunc(int? pageSizeHint)
+            Page<IdentifierData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
                 scope.Start();
                 try
                 {
                     var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostName(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1726,14 +1674,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteDomainOwnershipIdentifierResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IdentifierData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSiteIdentifiersAssignedToHostName");
                 scope.Start();
                 try
                 {
                     var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPage(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1834,7 +1782,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuInfos>> GetSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceSkuResult>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
             scope.Start();
@@ -1856,7 +1804,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuInfos> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceSkuResult> GetSkus(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
             scope.Start();
@@ -1926,9 +1874,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewWorkflowStaticSite");
+            using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewStaticSiteWorkflow");
             scope.Start();
             try
             {
@@ -1950,9 +1898,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewWorkflowStaticSite");
+            using var scope = StaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PreviewStaticSiteWorkflow");
             scope.Start();
             try
             {
@@ -1972,17 +1920,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StaticSiteARMResource> GetStaticSiteARMResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteResource> GetStaticSitesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StaticSiteARMResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StaticSiteResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = StaticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMResources");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = await StaticSiteARMResourceStaticSitesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await StaticSiteRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1990,14 +1938,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<StaticSiteARMResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StaticSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = StaticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMResources");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = await StaticSiteARMResourceStaticSitesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await StaticSiteRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2014,17 +1962,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StaticSiteARMResource> GetStaticSiteARMResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteResource> GetStaticSites(CancellationToken cancellationToken = default)
         {
-            Page<StaticSiteARMResource> FirstPageFunc(int? pageSizeHint)
+            Page<StaticSiteResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = StaticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMResources");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = StaticSiteARMResourceStaticSitesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = StaticSiteRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2032,14 +1980,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<StaticSiteARMResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StaticSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = StaticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMResources");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = StaticSiteARMResourceStaticSitesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = StaticSiteRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

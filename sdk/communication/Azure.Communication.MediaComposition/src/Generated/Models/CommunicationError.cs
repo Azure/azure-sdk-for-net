@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition
+namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationError
@@ -18,7 +18,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal CommunicationError(string code, string message)
+        public CommunicationError(string code, string message)
         {
             if (code == null)
             {
@@ -50,9 +50,9 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> The error code. </summary>
-        public string Code { get; }
+        public string Code { get; set; }
         /// <summary> The error message. </summary>
-        public string Message { get; }
+        public string Message { get; set; }
         /// <summary> The error target. </summary>
         public string Target { get; }
         /// <summary> Further details about specific errors that led to this error. </summary>

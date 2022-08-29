@@ -79,10 +79,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -95,12 +95,8 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: AdlsGen2AccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -109,17 +105,17 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
+        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: BlobAccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -128,6 +124,10 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the blob storage account asset mapping.
+        ///   kind: BlobAccount, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -170,10 +170,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -186,12 +186,8 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: AdlsGen2AccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -200,17 +196,17 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
+        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: BlobAccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -219,6 +215,10 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the blob storage account asset mapping.
+        ///   kind: BlobAccount, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -263,6 +263,7 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -274,10 +275,10 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -290,10 +291,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>AssetMappingListValue</c>:
         /// <code>{
+        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
         /// }
         /// </code>
         /// 
@@ -341,6 +342,7 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetAssetMappings("<receivedShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -352,10 +354,10 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -368,10 +370,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>AssetMappingListValue</c>:
         /// <code>{
+        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   kind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. Types of asset mapping.
         /// }
         /// </code>
         /// 
@@ -417,19 +419,20 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AdlsGen2Account",
         ///     properties = new {
-        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
-        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
-        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         containerName = "<containerName>",
+        ///         folder = "<folder>",
+        ///         storageAccountResourceId = "<storageAccountResourceId>",
         ///     },
+        ///     kind = "AdlsGen2Account",
         /// };
         /// 
         /// var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
@@ -438,24 +441,24 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AdlsGen2Account",
         ///     properties = new {
-        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
-        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
-        ///         mountPath = "<AdlsGen2AccountAssetMappingPropertiesMountPath>",
-        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         containerName = "<containerName>",
+        ///         folder = "<folder>",
+        ///         mountPath = "<mountPath>",
+        ///         storageAccountResourceId = "<storageAccountResourceId>",
         ///     },
+        ///     kind = "AdlsGen2Account",
         /// };
         /// 
         /// var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -468,12 +471,8 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: AdlsGen2AccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -482,17 +481,17 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
+        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: BlobAccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -501,6 +500,10 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the blob storage account asset mapping.
+        ///   kind: BlobAccount, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -511,12 +514,8 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: AdlsGen2AccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -525,17 +524,17 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
+        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: BlobAccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -544,6 +543,10 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the blob storage account asset mapping.
+        ///   kind: BlobAccount, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -587,19 +590,20 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AdlsGen2Account",
         ///     properties = new {
-        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
-        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
-        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         containerName = "<containerName>",
+        ///         folder = "<folder>",
+        ///         storageAccountResourceId = "<storageAccountResourceId>",
         ///     },
+        ///     kind = "AdlsGen2Account",
         /// };
         /// 
         /// var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Create with all parameters and request content, and how to parse the result.
@@ -608,24 +612,24 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AdlsGen2Account",
         ///     properties = new {
-        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
-        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
-        ///         mountPath = "<AdlsGen2AccountAssetMappingPropertiesMountPath>",
-        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///         assetId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         containerName = "<containerName>",
+        ///         folder = "<folder>",
+        ///         mountPath = "<mountPath>",
+        ///         storageAccountResourceId = "<storageAccountResourceId>",
         ///     },
+        ///     kind = "AdlsGen2Account",
         /// };
         /// 
         /// var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -638,12 +642,8 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: AdlsGen2AccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -652,17 +652,17 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
+        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: BlobAccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -671,6 +671,10 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the blob storage account asset mapping.
+        ///   kind: BlobAccount, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -681,12 +685,8 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AdlsGen2AccountAssetMapping</summary>Schema for <c>AdlsGen2AccountAssetMapping</c>:
         /// <code>{
-        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: AdlsGen2AccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -695,17 +695,17 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the adls gen2 storage account asset mapping.
+        ///   kind: AdlsGen2Account, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>BlobAccountAssetMapping</summary>Schema for <c>BlobAccountAssetMapping</c>:
         /// <code>{
-        ///   kind: BlobAccount, # Required. Types of asset mapping.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
-        ///     assetId: BlobAccountAssetMappingPropertiesAssetId, # Required. The id of the sender asset.
+        ///     assetId: Guid, # Required. The id of the sender asset.
         ///     assetMappingStatus: &quot;Ok&quot; | &quot;Broken&quot;, # Optional. State of asset mapping
         ///     containerName: string, # Required. Name of the container to received the shared paths.
         ///     folder: string, # Required. Folder under which the shared paths will be reflected.
@@ -714,6 +714,10 @@ namespace Azure.Analytics.Purview.Share
         ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
         ///     storageAccountResourceId: string, # Required. Resource id of the receiver storage account.
         ///   }, # Required. Properties of the blob storage account asset mapping.
+        ///   kind: BlobAccount, # Required. Types of asset mapping.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>

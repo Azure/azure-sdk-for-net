@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -85,6 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults;
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -94,6 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(singleLabelClassifyResults);
             Assert.IsNotNull(multiLabelClassifyResults);
             Assert.IsNotNull(recognizeCustomEntitiesActionResults);
+            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -299,6 +302,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextSentiment.Neutral, analyzeSentimentDocumentsResults[1].DocumentSentiment.Sentiment);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
@@ -323,7 +328,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     new ExtractKeyPhrasesAction()
                     { ActionName = "DisableServaiceLogsTrue", DisableServiceLogs = true },
                     new ExtractKeyPhrasesAction()
-                    { ActionName = "DisableServiceLogsFalse"},
+                    { ActionName = "DisableServiceLogsFalse" },
                 },
                 RecognizeEntitiesActions = new List<RecognizeEntitiesAction>()
                 {
@@ -372,9 +377,8 @@ namespace Azure.AI.TextAnalytics.Tests
                     new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
                     { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
                     new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
-                    { ActionName = "DisableServiceLogsFalse"},
+                    { ActionName = "DisableServiceLogsFalse" },
                 },
-                DisplayName = "AnalyzeOperationWithMultipleTasksOfSameType"
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
@@ -387,9 +391,9 @@ namespace Azure.AI.TextAnalytics.Tests
             await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(0, operation.ActionsFailed);
-            Assert.AreEqual(16, operation.ActionsSucceeded);
+            Assert.AreEqual(18, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(16, operation.ActionsTotal);
+            Assert.AreEqual(18, operation.ActionsTotal);
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
             Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
@@ -405,6 +409,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesResults = resultCollection.RecognizeCustomEntitiesResults;
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -414,6 +419,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(recognizeCustomEntitiesResults);
             Assert.IsNotNull(singleLabelClassifyResults);
             Assert.IsNotNull(multiLabelClassifyResults);
+            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
             Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
         }
 
@@ -732,6 +738,45 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, analyzeSentimentDocumentsResults.Count);
 
             Assert.AreEqual(TextSentiment.Mixed, analyzeSentimentDocumentsResults[0].DocumentSentiment.Sentiment);
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeOperationAnalyzeHealthcareEntities()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            List<string> documents = new()
+            {
+                "Prescribed 100mg ibuprofen to Jane Doe, taken twice daily.",
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizePiiEntitiesActions = new[]
+                {
+                    new RecognizePiiEntitiesAction(),
+                },
+                AnalyzeHealthcareEntitiesActions = new[]
+                {
+                    new AnalyzeHealthcareEntitiesAction(),
+                },
+                DisplayName = "AnalyzeOperationAnalyzeHealthcareEntities",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults = resultCollection.RecognizePiiEntitiesResults;
+            Assert.That(recognizePiiEntitiesActionResults, Has.Some.Matches<RecognizePiiEntitiesActionResult>(result => result.DocumentsResults.SelectMany(doc => doc.Entities).Any(e => e.Category == PiiEntityCategory.Person && e.Text == "Jane Doe")));
+
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
+            Assert.That(analyzeHealthcareEntitiesActionResults, Has.Some.Matches<AnalyzeHealthcareEntitiesActionResult>(result => result.DocumentsResults.SelectMany(doc => doc.Entities).Any(e => e.Category == HealthcareEntityCategory.Dosage && e.Text == "100mg")));
+
+            // BUGBUG: HealthcareEntityCategory is returned as PascalCase though both the 3.1 and 2022-05-01 swaggers define them as SCREAMING_SNAKE_CASE: https://github.com/Azure/azure-rest-api-specs/issues/20024
+            // Assert.That(analyzeHealthcareEntitiesActionResults, Has.Some.Matches<AnalyzeHealthcareEntitiesActionResult>(result => result.DocumentsResults.SelectMany(doc => doc.Entities).Any(e => e.Category == HealthcareEntityCategory.MedicationName && e.Text == "ibuprofen")));
         }
     }
 }

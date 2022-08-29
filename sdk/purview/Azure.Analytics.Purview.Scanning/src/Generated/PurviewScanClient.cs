@@ -88,10 +88,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.GetFilterAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -101,12 +101,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Filter</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     excludeUriPrefixes: [string], # Optional.
         ///     includeUriPrefixes: [string], # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -141,10 +141,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.GetFilter();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -154,12 +154,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Filter</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     excludeUriPrefixes: [string], # Optional.
         ///     includeUriPrefixes: [string], # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -208,10 +208,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// var data = new {
         ///     properties = new {
         ///         excludeUriPrefixes = new[] {
-        ///             "<FilterPropertiesExcludeUriPrefixesItem>"
+        ///             "<String>"
         ///         },
         ///         includeUriPrefixes = new[] {
-        ///             "<FilterPropertiesIncludeUriPrefixesItem>"
+        ///             "<String>"
         ///         },
         ///     },
         /// };
@@ -219,10 +219,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -232,12 +232,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Filter</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     excludeUriPrefixes: [string], # Optional.
         ///     includeUriPrefixes: [string], # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -245,12 +245,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Filter</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     excludeUriPrefixes: [string], # Optional.
         ///     includeUriPrefixes: [string], # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -299,10 +299,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// var data = new {
         ///     properties = new {
         ///         excludeUriPrefixes = new[] {
-        ///             "<FilterPropertiesExcludeUriPrefixesItem>"
+        ///             "<String>"
         ///         },
         ///         includeUriPrefixes = new[] {
-        ///             "<FilterPropertiesIncludeUriPrefixesItem>"
+        ///             "<String>"
         ///         },
         ///     },
         /// };
@@ -310,10 +310,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -323,12 +323,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Filter</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     excludeUriPrefixes: [string], # Optional.
         ///     includeUriPrefixes: [string], # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -336,12 +336,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Filter</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     excludeUriPrefixes: [string], # Optional.
         ///     includeUriPrefixes: [string], # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -382,6 +382,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
@@ -391,525 +392,523 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AzureSubscriptionCredential",
         ///     properties = new {
         ///         resourceTypes = new {
         ///             None = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSubscription = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureResourceGroup = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSynapseWorkspace = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSynapse = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AdlsGen1 = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AdlsGen2 = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonAccount = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonS3 = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonSql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureCosmosDb = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureDataExplorer = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureFileService = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSqlDatabase = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonPostgreSql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzurePostgreSql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             SqlServerDatabase = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSqlDatabaseManagedInstance = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSqlDataWarehouse = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureMySql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureStorage = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             Teradata = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             Oracle = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             SapS4Hana = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             SapEcc = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             PowerBI = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///         },
         ///         credential = new {
-        ///             referenceName = "<CredentialReferenceName>",
-        ///             credentialType = "<AccountKey>",
+        ///             referenceName = "<referenceName>",
+        ///             credentialType = "AccountKey",
         ///         },
-        ///         scanRulesetName = "<ScanPropertiesScanRulesetName>",
-        ///         scanRulesetType = "<Custom>",
+        ///         scanRulesetName = "<scanRulesetName>",
+        ///         scanRulesetType = "Custom",
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
+        ///             referenceName = "<referenceName>",
         ///         },
         ///         workers = 1234,
         ///         connectedVia = new {
-        ///             referenceName = "<ConnectedViaReferenceName>",
+        ///             referenceName = "<referenceName>",
         ///         },
         ///     },
+        ///     kind = "AzureSubscriptionCredential",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
@@ -936,6 +935,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -946,6 +947,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -991,6 +1051,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -1050,11 +1115,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -1100,6 +1160,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -1159,11 +1224,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -1209,6 +1269,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -1268,11 +1333,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -1318,6 +1378,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -1377,11 +1442,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -1427,6 +1487,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -1486,11 +1551,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -1536,6 +1596,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -1595,11 +1660,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -1645,6 +1705,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -1704,11 +1769,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -1754,47 +1814,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -1813,11 +1838,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -1863,11 +1883,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -1882,11 +1903,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -1932,7 +1948,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -1947,11 +1972,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -1997,11 +2017,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2016,11 +2037,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -2066,71 +2082,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -2190,11 +2146,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -2240,11 +2261,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -2260,11 +2282,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -2310,8 +2327,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2326,11 +2353,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -2376,12 +2398,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -2397,11 +2423,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -2447,12 +2468,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2467,11 +2493,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -2517,11 +2538,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -2537,11 +2559,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -2587,8 +2604,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2603,11 +2629,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -2653,12 +2674,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2673,11 +2700,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -2723,11 +2745,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -2744,11 +2767,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -2794,9 +2812,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2811,11 +2839,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -2861,6 +2884,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -2868,7 +2896,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2883,11 +2912,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -2933,6 +2957,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -2940,8 +2969,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -2956,11 +2983,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3006,6 +3028,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -3027,11 +3054,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3077,11 +3099,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -3098,11 +3121,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -3148,7 +3166,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -3165,11 +3192,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3215,11 +3237,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -3236,11 +3259,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -3286,9 +3304,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -3303,11 +3331,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3353,10 +3376,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -3375,11 +3400,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3425,11 +3445,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -3444,11 +3465,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -3494,7 +3510,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -3509,11 +3538,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3559,15 +3583,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -3582,11 +3605,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -3632,9 +3650,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -3649,11 +3676,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -3699,9 +3721,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -3720,11 +3749,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3770,11 +3794,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -3793,11 +3820,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -3843,11 +3865,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -3864,11 +3893,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -3914,12 +3938,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -3937,11 +3964,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -3987,10 +4009,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -4008,11 +4037,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -4058,12 +4082,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -4081,11 +4108,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -4131,13 +4153,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -4152,11 +4179,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -4202,12 +4224,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -4223,11 +4245,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -4273,22 +4290,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -4299,6 +4300,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -4344,6 +4404,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -4403,11 +4468,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -4453,6 +4513,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -4512,11 +4577,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -4562,6 +4622,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -4621,11 +4686,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -4671,6 +4731,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -4730,11 +4795,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -4780,6 +4840,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -4839,11 +4904,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -4889,6 +4949,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -4948,11 +5013,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -4998,6 +5058,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -5057,11 +5122,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -5107,47 +5167,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -5166,11 +5191,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -5216,11 +5236,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -5235,11 +5256,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -5285,7 +5301,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -5300,11 +5325,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -5350,11 +5370,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -5369,11 +5390,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -5419,71 +5435,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -5543,11 +5499,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -5593,11 +5614,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -5613,11 +5635,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -5663,8 +5680,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -5679,11 +5706,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -5729,12 +5751,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -5750,11 +5776,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -5800,12 +5821,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -5820,11 +5846,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -5870,11 +5891,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -5890,11 +5912,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -5940,8 +5957,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -5956,11 +5982,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6006,12 +6027,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6026,11 +6053,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6076,11 +6098,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -6097,11 +6120,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -6147,9 +6165,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6164,11 +6192,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6214,6 +6237,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -6221,7 +6249,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6236,11 +6265,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6286,6 +6310,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -6293,8 +6322,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6309,11 +6336,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6359,6 +6381,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -6380,11 +6407,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6430,11 +6452,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -6451,11 +6474,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -6501,7 +6519,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -6518,11 +6545,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6568,11 +6590,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -6589,11 +6612,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -6639,9 +6657,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6656,11 +6684,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6706,10 +6729,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -6728,11 +6753,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6778,11 +6798,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6797,11 +6818,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -6847,7 +6863,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6862,11 +6891,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -6912,15 +6936,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -6935,11 +6958,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -6985,9 +7003,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -7002,11 +7029,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -7052,9 +7074,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -7073,11 +7102,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -7123,11 +7147,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -7146,11 +7173,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -7196,11 +7218,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -7217,11 +7246,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -7267,12 +7291,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -7290,11 +7317,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -7340,10 +7362,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -7361,11 +7390,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -7411,12 +7435,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -7434,11 +7461,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -7484,13 +7506,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -7505,11 +7532,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -7555,12 +7577,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -7576,11 +7598,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -7626,22 +7643,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -7686,6 +7687,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
@@ -7695,525 +7697,523 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
-        ///     kind = "AzureSubscriptionCredential",
         ///     properties = new {
         ///         resourceTypes = new {
         ///             None = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSubscription = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureResourceGroup = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSynapseWorkspace = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSynapse = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AdlsGen1 = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AdlsGen2 = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonAccount = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonS3 = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonSql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureCosmosDb = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureDataExplorer = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureFileService = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSqlDatabase = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AmazonPostgreSql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzurePostgreSql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             SqlServerDatabase = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSqlDatabaseManagedInstance = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureSqlDataWarehouse = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureMySql = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             AzureStorage = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             Teradata = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             Oracle = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             SapS4Hana = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             SapEcc = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///             PowerBI = new {
-        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
-        ///                 scanRulesetType = "<Custom>",
+        ///                 scanRulesetName = "<scanRulesetName>",
+        ///                 scanRulesetType = "Custom",
         ///                 resourceNameFilter = new {
         ///                     excludePrefixes = new[] {
-        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     includePrefixes = new[] {
-        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                         "<String>"
         ///                     },
         ///                     resources = new[] {
-        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                         "<String>"
         ///                     },
         ///                 },
         ///                 credential = new {
-        ///                     referenceName = "<CredentialReferenceName>",
-        ///                     credentialType = "<AccountKey>",
+        ///                     referenceName = "<referenceName>",
+        ///                     credentialType = "AccountKey",
         ///                 },
         ///             },
         ///         },
         ///         credential = new {
-        ///             referenceName = "<CredentialReferenceName>",
-        ///             credentialType = "<AccountKey>",
+        ///             referenceName = "<referenceName>",
+        ///             credentialType = "AccountKey",
         ///         },
-        ///         scanRulesetName = "<ScanPropertiesScanRulesetName>",
-        ///         scanRulesetType = "<Custom>",
+        ///         scanRulesetName = "<scanRulesetName>",
+        ///         scanRulesetType = "Custom",
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
+        ///             referenceName = "<referenceName>",
         ///         },
         ///         workers = 1234,
         ///         connectedVia = new {
-        ///             referenceName = "<ConnectedViaReferenceName>",
+        ///             referenceName = "<referenceName>",
         ///         },
         ///     },
+        ///     kind = "AzureSubscriptionCredential",
         /// };
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
@@ -8240,6 +8240,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -8250,6 +8252,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -8295,6 +8356,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -8354,11 +8420,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -8404,6 +8465,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -8463,11 +8529,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -8513,6 +8574,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -8572,11 +8638,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -8622,6 +8683,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -8681,11 +8747,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -8731,6 +8792,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -8790,11 +8856,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -8840,6 +8901,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -8899,11 +8965,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -8949,6 +9010,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -9008,11 +9074,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -9058,47 +9119,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -9117,11 +9143,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -9167,11 +9188,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -9186,11 +9208,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -9236,7 +9253,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -9251,11 +9277,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -9301,11 +9322,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -9320,11 +9342,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -9370,71 +9387,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -9494,11 +9451,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -9544,11 +9566,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -9564,11 +9587,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -9614,8 +9632,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -9630,11 +9658,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -9680,12 +9703,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -9701,11 +9728,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -9751,12 +9773,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -9771,11 +9798,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -9821,11 +9843,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -9841,11 +9864,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -9891,8 +9909,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -9907,11 +9934,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -9957,12 +9979,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -9977,11 +10005,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10027,11 +10050,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -10048,11 +10072,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -10098,9 +10117,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10115,11 +10144,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10165,6 +10189,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -10172,7 +10201,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10187,11 +10217,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10237,6 +10262,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -10244,8 +10274,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10260,11 +10288,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10310,6 +10333,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -10331,11 +10359,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10381,11 +10404,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -10402,11 +10426,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -10452,7 +10471,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -10469,11 +10497,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10519,11 +10542,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -10540,11 +10564,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -10590,9 +10609,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10607,11 +10636,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10657,10 +10681,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -10679,11 +10705,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10729,11 +10750,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10748,11 +10770,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -10798,7 +10815,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10813,11 +10843,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -10863,15 +10888,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10886,11 +10910,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -10936,9 +10955,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -10953,11 +10981,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -11003,9 +11026,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -11024,11 +11054,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -11074,11 +11099,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -11097,11 +11125,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -11147,11 +11170,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -11168,11 +11198,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -11218,12 +11243,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -11241,11 +11269,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -11291,10 +11314,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -11312,11 +11342,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -11362,12 +11387,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -11385,11 +11413,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -11435,13 +11458,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -11456,11 +11484,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -11506,12 +11529,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -11527,11 +11550,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -11577,22 +11595,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -11603,6 +11605,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -11648,6 +11709,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -11707,11 +11773,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -11757,6 +11818,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -11816,11 +11882,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -11866,6 +11927,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -11925,11 +11991,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -11975,6 +12036,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -12034,11 +12100,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -12084,6 +12145,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -12143,11 +12209,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -12193,6 +12254,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -12252,11 +12318,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -12302,6 +12363,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -12361,11 +12427,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -12411,47 +12472,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -12470,11 +12496,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -12520,11 +12541,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -12539,11 +12561,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -12589,7 +12606,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -12604,11 +12630,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -12654,11 +12675,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -12673,11 +12695,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -12723,71 +12740,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -12847,11 +12804,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -12897,11 +12919,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -12917,11 +12940,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -12967,8 +12985,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -12983,11 +13011,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13033,12 +13056,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -13054,11 +13081,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13104,12 +13126,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -13124,11 +13151,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13174,11 +13196,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -13194,11 +13217,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -13244,8 +13262,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -13260,11 +13287,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13310,12 +13332,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -13330,11 +13358,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13380,11 +13403,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -13401,11 +13425,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -13451,9 +13470,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -13468,11 +13497,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13518,6 +13542,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -13525,7 +13554,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -13540,11 +13570,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13590,6 +13615,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -13597,8 +13627,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -13613,11 +13641,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13663,6 +13686,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -13684,11 +13712,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13734,11 +13757,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -13755,11 +13779,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -13805,7 +13824,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -13822,11 +13850,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -13872,11 +13895,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -13893,11 +13917,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -13943,9 +13962,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -13960,11 +13989,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -14010,10 +14034,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -14032,11 +14058,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -14082,11 +14103,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -14101,11 +14123,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -14151,7 +14168,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -14166,11 +14196,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -14216,15 +14241,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -14239,11 +14263,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -14289,9 +14308,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -14306,11 +14334,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -14356,9 +14379,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -14377,11 +14407,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -14427,11 +14452,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -14450,11 +14478,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -14500,11 +14523,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -14521,11 +14551,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -14571,12 +14596,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -14594,11 +14622,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -14644,10 +14667,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -14665,11 +14695,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -14715,12 +14740,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -14738,11 +14766,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -14788,13 +14811,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -14809,11 +14837,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -14859,12 +14882,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -14880,11 +14903,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -14930,22 +14948,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -14984,8 +14986,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.GetPropertiesAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
@@ -15012,6 +15012,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -15022,6 +15024,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -15067,6 +15128,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -15126,11 +15192,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -15176,6 +15237,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -15235,11 +15301,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -15285,6 +15346,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -15344,11 +15410,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -15394,6 +15455,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -15453,11 +15519,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -15503,6 +15564,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -15562,11 +15628,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -15612,6 +15673,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -15671,11 +15737,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -15721,6 +15782,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -15780,11 +15846,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -15830,47 +15891,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -15889,11 +15915,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -15939,11 +15960,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -15958,11 +15980,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -16008,7 +16025,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16023,11 +16049,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -16073,11 +16094,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16092,11 +16114,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -16142,71 +16159,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -16266,11 +16223,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -16316,11 +16338,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -16336,11 +16359,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -16386,8 +16404,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16402,11 +16430,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -16452,12 +16475,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -16473,11 +16500,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -16523,12 +16545,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16543,11 +16570,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -16593,11 +16615,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -16613,11 +16636,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -16663,8 +16681,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16679,11 +16706,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -16729,12 +16751,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16749,11 +16777,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -16799,11 +16822,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -16820,11 +16844,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -16870,9 +16889,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16887,11 +16916,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -16937,6 +16961,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -16944,7 +16973,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -16959,11 +16989,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17009,6 +17034,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -17016,8 +17046,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -17032,11 +17060,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17082,6 +17105,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -17103,11 +17131,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17153,11 +17176,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -17174,11 +17198,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -17224,7 +17243,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -17241,11 +17269,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17291,11 +17314,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -17312,11 +17336,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -17362,9 +17381,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -17379,11 +17408,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17429,10 +17453,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -17451,11 +17477,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17501,11 +17522,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -17520,11 +17542,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -17570,7 +17587,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -17585,11 +17615,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17635,15 +17660,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -17658,11 +17682,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -17708,9 +17727,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -17725,11 +17753,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -17775,9 +17798,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -17796,11 +17826,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17846,11 +17871,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -17869,11 +17897,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -17919,11 +17942,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -17940,11 +17970,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -17990,12 +18015,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -18013,11 +18041,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -18063,10 +18086,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -18084,11 +18114,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -18134,12 +18159,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -18157,11 +18185,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -18207,13 +18230,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -18228,11 +18256,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -18278,12 +18301,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -18299,11 +18322,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -18349,22 +18367,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -18401,8 +18403,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.GetProperties();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
@@ -18429,6 +18429,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -18439,6 +18441,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -18484,6 +18545,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -18543,11 +18609,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -18593,6 +18654,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -18652,11 +18718,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -18702,6 +18763,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -18761,11 +18827,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -18811,6 +18872,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -18870,11 +18936,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -18920,6 +18981,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -18979,11 +19045,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -19029,6 +19090,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -19088,11 +19154,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -19138,6 +19199,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -19197,11 +19263,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -19247,47 +19308,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -19306,11 +19332,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -19356,11 +19377,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -19375,11 +19397,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -19425,7 +19442,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -19440,11 +19466,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -19490,11 +19511,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -19509,11 +19531,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -19559,71 +19576,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -19683,11 +19640,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -19733,11 +19755,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -19753,11 +19776,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -19803,8 +19821,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -19819,11 +19847,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -19869,12 +19892,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -19890,11 +19917,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -19940,12 +19962,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -19960,11 +19987,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20010,11 +20032,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -20030,11 +20053,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -20080,8 +20098,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -20096,11 +20123,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20146,12 +20168,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -20166,11 +20194,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20216,11 +20239,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -20237,11 +20261,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -20287,9 +20306,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -20304,11 +20333,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20354,6 +20378,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -20361,7 +20390,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -20376,11 +20406,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20426,6 +20451,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -20433,8 +20463,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -20449,11 +20477,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20499,6 +20522,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -20520,11 +20548,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20570,11 +20593,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -20591,11 +20615,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -20641,7 +20660,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -20658,11 +20686,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20708,11 +20731,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -20729,11 +20753,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -20779,9 +20798,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -20796,11 +20825,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20846,10 +20870,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -20868,11 +20894,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -20918,11 +20939,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -20937,11 +20959,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -20987,7 +21004,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -21002,11 +21032,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -21052,15 +21077,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -21075,11 +21099,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -21125,9 +21144,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -21142,11 +21170,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -21192,9 +21215,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -21213,11 +21243,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -21263,11 +21288,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -21286,11 +21314,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -21336,11 +21359,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -21357,11 +21387,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -21407,12 +21432,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -21430,11 +21458,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -21480,10 +21503,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -21501,11 +21531,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -21551,12 +21576,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -21574,11 +21602,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -21624,13 +21647,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -21645,11 +21673,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -21695,12 +21718,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -21716,11 +21739,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -21766,22 +21784,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -21818,8 +21820,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.DeleteAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
@@ -21846,6 +21846,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -21856,6 +21858,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -21901,6 +21962,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -21960,11 +22026,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -22010,6 +22071,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -22069,11 +22135,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -22119,6 +22180,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -22178,11 +22244,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -22228,6 +22289,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -22287,11 +22353,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -22337,6 +22398,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -22396,11 +22462,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -22446,6 +22507,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -22505,11 +22571,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -22555,6 +22616,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -22614,11 +22680,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -22664,47 +22725,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -22723,11 +22749,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -22773,11 +22794,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -22792,11 +22814,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -22842,7 +22859,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -22857,11 +22883,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -22907,11 +22928,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -22926,11 +22948,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -22976,71 +22993,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -23100,11 +23057,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -23150,11 +23172,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -23170,11 +23193,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -23220,8 +23238,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -23236,11 +23264,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23286,12 +23309,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -23307,11 +23334,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23357,12 +23379,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -23377,11 +23404,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23427,11 +23449,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -23447,11 +23470,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -23497,8 +23515,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -23513,11 +23540,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23563,12 +23585,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -23583,11 +23611,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23633,11 +23656,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -23654,11 +23678,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -23704,9 +23723,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -23721,11 +23750,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23771,6 +23795,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -23778,7 +23807,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -23793,11 +23823,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23843,6 +23868,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -23850,8 +23880,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -23866,11 +23894,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23916,6 +23939,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -23937,11 +23965,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -23987,11 +24010,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -24008,11 +24032,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -24058,7 +24077,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -24075,11 +24103,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -24125,11 +24148,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -24146,11 +24170,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -24196,9 +24215,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -24213,11 +24242,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -24263,10 +24287,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -24285,11 +24311,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -24335,11 +24356,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -24354,11 +24376,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -24404,7 +24421,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -24419,11 +24449,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -24469,15 +24494,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -24492,11 +24516,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -24542,9 +24561,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -24559,11 +24587,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -24609,9 +24632,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -24630,11 +24660,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -24680,11 +24705,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -24703,11 +24731,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -24753,11 +24776,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -24774,11 +24804,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -24824,12 +24849,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -24847,11 +24875,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -24897,10 +24920,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -24918,11 +24948,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -24968,12 +24993,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -24991,11 +25019,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -25041,13 +25064,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -25062,11 +25090,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -25112,12 +25135,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -25133,11 +25156,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -25183,22 +25201,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -25235,8 +25237,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.Delete();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("kind").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
@@ -25263,6 +25263,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
         /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -25273,6 +25275,65 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionCredentialScan</summary>Schema for <c>AzureSubscriptionCredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     resourceTypes: {
+        ///       None: {
+        ///         scanRulesetName: string, # Optional.
+        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///         resourceNameFilter: {
+        ///           excludePrefixes: [string], # Optional.
+        ///           includePrefixes: [string], # Optional.
+        ///           resources: [string], # Optional.
+        ///         }, # Optional.
+        ///         credential: {
+        ///           referenceName: string, # Optional.
+        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///         }, # Optional.
+        ///       }, # Optional.
+        ///       AzureSubscription: ResourceTypeFilter, # Optional.
+        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
+        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
+        ///       AzureSynapse: ResourceTypeFilter, # Optional.
+        ///       AdlsGen1: ResourceTypeFilter, # Optional.
+        ///       AdlsGen2: ResourceTypeFilter, # Optional.
+        ///       AmazonAccount: ResourceTypeFilter, # Optional.
+        ///       AmazonS3: ResourceTypeFilter, # Optional.
+        ///       AmazonSql: ResourceTypeFilter, # Optional.
+        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
+        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
+        ///       AzureFileService: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
+        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
+        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
+        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
+        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
+        ///       AzureMySql: ResourceTypeFilter, # Optional.
+        ///       AzureStorage: ResourceTypeFilter, # Optional.
+        ///       Teradata: ResourceTypeFilter, # Optional.
+        ///       Oracle: ResourceTypeFilter, # Optional.
+        ///       SapS4Hana: ResourceTypeFilter, # Optional.
+        ///       SapEcc: ResourceTypeFilter, # Optional.
+        ///       PowerBI: ResourceTypeFilter, # Optional.
+        ///     }, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscriptionCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -25318,6 +25379,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -25377,11 +25443,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 42 more JSON objects</summary><details><summary>AzureSubscriptionMsiScan</summary>Schema for <c>AzureSubscriptionMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSubscriptionMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -25427,6 +25488,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -25486,11 +25552,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupCredentialScan</summary>Schema for <c>AzureResourceGroupCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -25536,6 +25597,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -25595,11 +25661,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureResourceGroupMsiScan</summary>Schema for <c>AzureResourceGroupMsiScan</c>:
-        /// <code>{
         ///   kind: AzureResourceGroupMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -25645,6 +25706,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -25704,11 +25770,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceCredentialScan</summary>Schema for <c>AzureSynapseWorkspaceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -25754,6 +25815,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -25813,11 +25879,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceMsiScan</summary>Schema for <c>AzureSynapseWorkspaceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspaceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -25863,6 +25924,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -25922,11 +25988,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseCredentialScan</summary>Schema for <c>AzureSynapseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -25972,6 +26033,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
+        /// <code>{
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -26031,11 +26097,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseMsiScan</summary>Schema for <c>AzureSynapseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSynapseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -26081,47 +26142,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     resourceTypes: {
-        ///       None: {
-        ///         scanRulesetName: string, # Optional.
-        ///         scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///         resourceNameFilter: {
-        ///           excludePrefixes: [string], # Optional.
-        ///           includePrefixes: [string], # Optional.
-        ///           resources: [string], # Optional.
-        ///         }, # Optional.
-        ///         credential: {
-        ///           referenceName: string, # Optional.
-        ///           credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///         }, # Optional.
-        ///       }, # Optional.
-        ///       AzureSubscription: ResourceTypeFilter, # Optional.
-        ///       AzureResourceGroup: ResourceTypeFilter, # Optional.
-        ///       AzureSynapseWorkspace: ResourceTypeFilter, # Optional.
-        ///       AzureSynapse: ResourceTypeFilter, # Optional.
-        ///       AdlsGen1: ResourceTypeFilter, # Optional.
-        ///       AdlsGen2: ResourceTypeFilter, # Optional.
-        ///       AmazonAccount: ResourceTypeFilter, # Optional.
-        ///       AmazonS3: ResourceTypeFilter, # Optional.
-        ///       AmazonSql: ResourceTypeFilter, # Optional.
-        ///       AzureCosmosDb: ResourceTypeFilter, # Optional.
-        ///       AzureDataExplorer: ResourceTypeFilter, # Optional.
-        ///       AzureFileService: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabase: ResourceTypeFilter, # Optional.
-        ///       AmazonPostgreSql: ResourceTypeFilter, # Optional.
-        ///       AzurePostgreSql: ResourceTypeFilter, # Optional.
-        ///       SqlServerDatabase: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDatabaseManagedInstance: ResourceTypeFilter, # Optional.
-        ///       AzureSqlDataWarehouse: ResourceTypeFilter, # Optional.
-        ///       AzureMySql: ResourceTypeFilter, # Optional.
-        ///       AzureStorage: ResourceTypeFilter, # Optional.
-        ///       Teradata: ResourceTypeFilter, # Optional.
-        ///       Oracle: ResourceTypeFilter, # Optional.
-        ///       SapS4Hana: ResourceTypeFilter, # Optional.
-        ///       SapEcc: ResourceTypeFilter, # Optional.
-        ///       PowerBI: ResourceTypeFilter, # Optional.
-        ///     }, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -26140,11 +26166,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1CredentialScan</summary>Schema for <c>AdlsGen1CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -26190,11 +26211,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -26209,11 +26231,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1MsiScan</summary>Schema for <c>AdlsGen1MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen1Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -26259,7 +26276,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -26274,11 +26300,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2CredentialScan</summary>Schema for <c>AdlsGen2CredentialScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -26324,11 +26345,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -26343,11 +26365,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2MsiScan</summary>Schema for <c>AdlsGen2MsiScan</c>:
-        /// <code>{
         ///   kind: AdlsGen2Msi, # Required.
         ///   scanResults: [
         ///     {
@@ -26393,71 +26410,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountCredentialScan</summary>Schema for <c>AmazonAccountCredentialScan</c>:
         /// <code>{
-        ///   kind: AmazonAccountCredential, # Required.
-        ///   scanResults: [
-        ///     {
-        ///       parentId: string, # Optional.
-        ///       id: string, # Optional.
-        ///       resourceId: string, # Optional.
-        ///       status: string, # Optional.
-        ///       assetsDiscovered: number, # Optional.
-        ///       assetsClassified: number, # Optional.
-        ///       diagnostics: {
-        ///         notifications: [
-        ///           {
-        ///             message: string, # Optional.
-        ///             code: number, # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
-        ///       }, # Optional.
-        ///       startTime: string (ISO 8601 Format), # Optional.
-        ///       queuedTime: string (ISO 8601 Format), # Optional.
-        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
-        ///       endTime: string (ISO 8601 Format), # Optional.
-        ///       scanRulesetVersion: number, # Optional.
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
-        ///       errorMessage: string, # Optional.
-        ///       error: {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [
-        ///           {
-        ///             code: string, # Optional.
-        ///             message: string, # Optional.
-        ///             target: string, # Optional.
-        ///             details: [ErrorModel], # Optional.
-        ///           }
-        ///         ], # Optional.
-        ///       }, # Optional.
-        ///       runType: string, # Optional.
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
-        ///     }
-        ///   ], # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     resourceTypes: {
         ///       None: {
@@ -26517,11 +26474,76 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
+        ///   kind: AmazonAccountCredential, # Required.
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number, # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///         exceptionCountMap: Dictionary&lt;string, number&gt;, # Optional. Dictionary of &lt;integer&gt;
+        ///       }, # Optional.
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel], # Optional.
+        ///           }
+        ///         ], # Optional.
+        ///       }, # Optional.
+        ///       runType: string, # Optional.
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
+        ///     }
+        ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3CredentialScan</summary>Schema for <c>AmazonS3CredentialScan</c>:
         /// <code>{
+        ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     roleARN: string, # Optional.
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///     collection: {
+        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///       referenceName: string, # Optional.
+        ///       type: string, # Optional.
+        ///     }, # Optional.
+        ///     workers: number, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///       referenceName: string, # Optional.
+        ///     }, # Optional.
+        ///   }, # Optional.
         ///   kind: AmazonS3Credential, # Required.
         ///   scanResults: [
         ///     {
@@ -26567,11 +26589,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     roleARN: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -26587,11 +26610,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3RoleARNScan</summary>Schema for <c>AmazonS3RoleARNScan</c>:
-        /// <code>{
         ///   kind: AmazonS3RoleARN, # Required.
         ///   scanResults: [
         ///     {
@@ -26637,8 +26655,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     roleARN: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -26653,11 +26681,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlCredentialScan</summary>Schema for <c>AmazonSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -26703,12 +26726,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -26724,11 +26751,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbCredentialScan</summary>Schema for <c>AzureCosmosDbCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureCosmosDbCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -26774,12 +26796,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     databaseName: string, # Optional.
+        ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -26794,11 +26821,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerCredentialScan</summary>Schema for <c>AzureDataExplorerCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -26844,11 +26866,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     database: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -26864,11 +26887,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerMsiScan</summary>Schema for <c>AzureDataExplorerMsiScan</c>:
-        /// <code>{
         ///   kind: AzureDataExplorerMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -26914,8 +26932,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     database: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     shareName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -26930,11 +26957,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceCredentialScan</summary>Schema for <c>AzureFileServiceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureFileServiceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -26980,12 +27002,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
         ///     }, # Optional.
-        ///     shareName: string, # Optional.
+        ///     serverEndpoint: string, # Optional.
+        ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27000,11 +27028,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseCredentialScan</summary>Schema for <c>AzureSqlDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27050,11 +27073,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -27071,11 +27095,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseMsiScan</summary>Schema for <c>AzureSqlDatabaseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -27121,9 +27140,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
+        ///     port: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27138,11 +27167,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlCredentialScan</summary>Schema for <c>AmazonPostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27188,6 +27212,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -27195,7 +27224,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: string, # Optional.
+        ///     port: number, # Optional.
+        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27210,11 +27240,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlCredentialScan</summary>Schema for <c>AzurePostgreSqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzurePostgreSqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27260,6 +27285,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -27267,8 +27297,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
-        ///     port: number, # Optional.
-        ///     sslMode: number, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27283,11 +27311,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseCredentialScan</summary>Schema for <c>SqlServerDatabaseCredentialScan</c>:
-        /// <code>{
         ///   kind: SqlServerDatabaseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27333,6 +27356,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     credential: {
         ///       referenceName: string, # Optional.
@@ -27354,11 +27382,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceCredentialScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27404,11 +27427,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -27425,11 +27449,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceMsiScan</summary>Schema for <c>AzureSqlDatabaseManagedInstanceMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstanceMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -27475,7 +27494,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -27492,11 +27520,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseCredentialScan</summary>Schema for <c>AzureSqlDataWarehouseCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27542,11 +27565,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     serverEndpoint: string, # Optional.
         ///     databaseName: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -27563,11 +27587,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseMsiScan</summary>Schema for <c>AzureSqlDataWarehouseMsiScan</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouseMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -27613,9 +27632,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     serverEndpoint: string, # Optional.
+        ///     port: number, # Optional.
         ///     databaseName: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27630,11 +27659,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlCredentialScan</summary>Schema for <c>AzureMySqlCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureMySqlCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27680,10 +27704,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     serverEndpoint: string, # Optional.
-        ///     port: number, # Optional.
-        ///     databaseName: string, # Optional.
         ///     credential: {
         ///       referenceName: string, # Optional.
         ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
@@ -27702,11 +27728,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageCredentialScan</summary>Schema for <c>AzureStorageCredentialScan</c>:
-        /// <code>{
         ///   kind: AzureStorageCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27752,11 +27773,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27771,11 +27793,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageMsiScan</summary>Schema for <c>AzureStorageMsiScan</c>:
-        /// <code>{
         ///   kind: AzureStorageMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -27821,7 +27838,20 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27836,11 +27866,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataCredentialScan</summary>Schema for <c>TeradataCredentialScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -27886,15 +27911,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27909,11 +27933,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataUserPassScan</summary>Schema for <c>TeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -27959,9 +27978,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     username: string, # Optional.
         ///     password: string, # Optional.
+        ///     schema: string, # Optional.
+        ///     driverLocation: string, # Optional.
+        ///     maximumMemoryAllowedInGb: string, # Optional.
+        ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -27976,11 +28004,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>TeradataTeradataUserPassScan</summary>Schema for <c>TeradataTeradataUserPassScan</c>:
-        /// <code>{
         ///   kind: TeradataTeradataUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -28026,9 +28049,16 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -28047,11 +28077,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleCredentialScan</summary>Schema for <c>OracleCredentialScan</c>:
-        /// <code>{
         ///   kind: OracleOracleCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -28097,11 +28122,14 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     schema: string, # Optional.
         ///     driverLocation: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
@@ -28120,11 +28148,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleUserPassScan</summary>Schema for <c>OracleUserPassScan</c>:
-        /// <code>{
         ///   kind: OracleOracleUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -28170,11 +28193,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
-        ///     schema: string, # Optional.
-        ///     driverLocation: string, # Optional.
+        ///     clientId: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
+        ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
         ///     scanRulesetName: string, # Optional.
@@ -28191,11 +28221,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaCredentialScan</summary>Schema for <c>SapS4HanaSapS4HanaCredentialScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -28241,12 +28266,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -28264,11 +28292,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaSapS4HanaUserPassScan</summary>Schema for <c>SapS4HanaSapS4HanaUserPassScan</c>:
-        /// <code>{
         ///   kind: SapS4HanaSapS4HanaUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -28314,10 +28337,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
-        ///     password: string, # Optional.
+        ///     credential: {
+        ///       referenceName: string, # Optional.
+        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
+        ///     }, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -28335,11 +28365,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccCredentialScan</summary>Schema for <c>SapEccCredentialScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccCredential, # Required.
         ///   scanResults: [
         ///     {
@@ -28385,12 +28410,15 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
+        /// <code>{
         ///   properties: {
         ///     clientId: string, # Optional.
-        ///     credential: {
-        ///       referenceName: string, # Optional.
-        ///       credentialType: &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;, # Optional.
-        ///     }, # Optional.
+        ///     username: string, # Optional.
+        ///     password: string, # Optional.
         ///     jCoLibraryPath: string, # Optional.
         ///     maximumMemoryAllowedInGb: string, # Optional.
         ///     mitiCache: string, # Optional.
@@ -28408,11 +28436,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccUserPassScan</summary>Schema for <c>SapEccUserPassScan</c>:
-        /// <code>{
         ///   kind: SapEccSapEccUserPass, # Required.
         ///   scanResults: [
         ///     {
@@ -28458,13 +28481,18 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
+        /// <code>{
         ///   properties: {
+        ///     tenant: string, # Optional.
+        ///     authenticationType: string, # Optional.
         ///     clientId: string, # Optional.
-        ///     username: string, # Optional.
+        ///     userName: string, # Optional.
         ///     password: string, # Optional.
-        ///     jCoLibraryPath: string, # Optional.
-        ///     maximumMemoryAllowedInGb: string, # Optional.
-        ///     mitiCache: string, # Optional.
+        ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///     collection: {
@@ -28479,11 +28507,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIDelegatedScan</summary>Schema for <c>PowerBIDelegatedScan</c>:
-        /// <code>{
         ///   kind: PowerBIDelegated, # Required.
         ///   scanResults: [
         ///     {
@@ -28529,12 +28552,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
+        /// <code>{
         ///   properties: {
-        ///     tenant: string, # Optional.
-        ///     authenticationType: string, # Optional.
-        ///     clientId: string, # Optional.
-        ///     userName: string, # Optional.
-        ///     password: string, # Optional.
         ///     includePersonalWorkspaces: boolean, # Optional.
         ///     scanRulesetName: string, # Optional.
         ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
@@ -28550,11 +28573,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///       referenceName: string, # Optional.
         ///     }, # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIMsiScan</summary>Schema for <c>PowerBIMsiScan</c>:
-        /// <code>{
         ///   kind: PowerBIMsi, # Required.
         ///   scanResults: [
         ///     {
@@ -28600,22 +28618,6 @@ namespace Azure.Analytics.Purview.Scanning
         ///   ], # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     includePersonalWorkspaces: boolean, # Optional.
-        ///     scanRulesetName: string, # Optional.
-        ///     scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///     collection: {
-        ///       lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///       referenceName: string, # Optional.
-        ///       type: string, # Optional.
-        ///     }, # Optional.
-        ///     workers: number, # Optional.
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///     connectedVia: {
-        ///       referenceName: string, # Optional.
-        ///     }, # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -28686,7 +28688,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   scanResultId: Guid, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
         ///   endTime: string (ISO 8601 Format), # Optional.
         ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
@@ -28773,7 +28775,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   scanResultId: Guid, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
         ///   endTime: string (ISO 8601 Format), # Optional.
         ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
@@ -28848,7 +28850,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   scanResultId: Guid, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
         ///   endTime: string (ISO 8601 Format), # Optional.
         ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
@@ -28923,7 +28925,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>OperationResponse</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   scanResultId: Guid, # Optional.
         ///   startTime: string (ISO 8601 Format), # Optional.
         ///   endTime: string (ISO 8601 Format), # Optional.
         ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
@@ -28976,8 +28978,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.GetTriggerAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
@@ -28997,6 +28997,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -29006,8 +29008,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29037,6 +29037,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -29071,8 +29073,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.GetTrigger();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
@@ -29092,6 +29092,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -29101,8 +29103,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29132,6 +29132,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -29181,10 +29183,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// var data = new {
         ///     properties = new {
         ///         recurrence = new {
-        ///             frequency = "<Week>",
+        ///             frequency = "Week",
         ///             interval = 1234,
-        ///             startTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///             endTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///             startTime = "2022-05-10T18:57:31.2311892Z",
+        ///             endTime = "2022-05-10T18:57:31.2311892Z",
         ///             schedule = new {
         ///                 additionalProperties = new {
         ///                     key = new {},
@@ -29196,7 +29198,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///                     1234
         ///                 },
         ///                 weekDays = new[] {
-        ///                     "<Sunday>"
+        ///                     "Sunday"
         ///                 },
         ///                 monthDays = new[] {
         ///                     1234
@@ -29206,24 +29208,22 @@ namespace Azure.Analytics.Purview.Scanning
         ///                         additionalProperties = new {
         ///                             key = new {},
         ///                         },
-        ///                         day = "<Sunday>",
+        ///                         day = "Sunday",
         ///                         occurrence = 1234,
         ///                     }
         ///                 },
         ///             },
-        ///             timeZone = "<TriggerRecurrenceTimeZone>",
+        ///             timeZone = "<timeZone>",
         ///         },
-        ///         recurrenceInterval = "<TriggerPropertiesRecurrenceInterval>",
-        ///         scanLevel = "<Full>",
-        ///         incrementalScanStartTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         recurrenceInterval = "<recurrenceInterval>",
+        ///         scanLevel = "Full",
+        ///         incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
         ///     },
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
@@ -29243,6 +29243,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -29252,8 +29254,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29283,6 +29283,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -29290,8 +29292,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29321,6 +29321,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -29372,10 +29374,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// var data = new {
         ///     properties = new {
         ///         recurrence = new {
-        ///             frequency = "<Week>",
+        ///             frequency = "Week",
         ///             interval = 1234,
-        ///             startTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///             endTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///             startTime = "2022-05-10T18:57:31.2311892Z",
+        ///             endTime = "2022-05-10T18:57:31.2311892Z",
         ///             schedule = new {
         ///                 additionalProperties = new {
         ///                     key = new {},
@@ -29387,7 +29389,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///                     1234
         ///                 },
         ///                 weekDays = new[] {
-        ///                     "<Sunday>"
+        ///                     "Sunday"
         ///                 },
         ///                 monthDays = new[] {
         ///                     1234
@@ -29397,24 +29399,22 @@ namespace Azure.Analytics.Purview.Scanning
         ///                         additionalProperties = new {
         ///                             key = new {},
         ///                         },
-        ///                         day = "<Sunday>",
+        ///                         day = "Sunday",
         ///                         occurrence = 1234,
         ///                     }
         ///                 },
         ///             },
-        ///             timeZone = "<TriggerRecurrenceTimeZone>",
+        ///             timeZone = "<timeZone>",
         ///         },
-        ///         recurrenceInterval = "<TriggerPropertiesRecurrenceInterval>",
-        ///         scanLevel = "<Full>",
-        ///         incrementalScanStartTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         recurrenceInterval = "<recurrenceInterval>",
+        ///         scanLevel = "Full",
+        ///         incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
         ///     },
         /// };
         /// 
         /// Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
@@ -29434,6 +29434,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -29443,8 +29445,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29474,6 +29474,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -29481,8 +29483,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29512,6 +29512,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -29548,8 +29550,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = await client.DeleteTriggerAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
@@ -29569,6 +29569,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -29578,8 +29580,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29609,6 +29609,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -29643,8 +29645,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// Response response = client.DeleteTrigger();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
@@ -29664,6 +29664,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -29673,8 +29675,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>Trigger</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     recurrence: {
         ///       frequency: &quot;Week&quot; | &quot;Month&quot;, # Optional.
@@ -29704,6 +29704,8 @@ namespace Azure.Analytics.Purview.Scanning
         ///     scanLevel: &quot;Full&quot; | &quot;Incremental&quot;, # Optional.
         ///     incrementalScanStartTime: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
