@@ -16,10 +16,6 @@ namespace Azure.Maps.Search.Models
     internal partial class SearchAlongRouteRequest {
         /// constructor takes in geolinestring
         public SearchAlongRouteRequest(GeoLineString Route) {
-            // convert from GeoLineString Route to GeoJsonLineString this.Route
-            // this.Route = do something (Route)
-            // GeoArray<GeoPosition> arr = Route.Coordinates;
-            // IList<IList<double>> list = this.Route.Coordinates;
             List<List<double>> listCoordinates = new List<List<double>>();
             foreach (GeoPosition coordinate in Route.Coordinates) {
                 List<double> result = new List<double>();
@@ -27,12 +23,7 @@ namespace Azure.Maps.Search.Models
                 result.Add(coordinate.Latitude);
                 listCoordinates.Add(result);
             }
-            // GeoLineString --> JSON --> GeoJsonLineString
             this.Route = new GeoJsonLineString(listCoordinates);
         }
-
-        // /// <summary> Represents a line geometry that consists of multiple coordinates. </summary>
-        // [CodeGenMember("Route")]
-        // public GeoLineString Route { get; }
     }
 }

@@ -92,6 +92,9 @@ var searchResult = await client.SearchAddressAsync("Seattle");
 var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
 var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
+// Extract position coordinates
+var positionCoordinates = searchResult.Value.Results.First().Position;
+
 // Get polygons from geometry ids
 PolygonResult polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
 ```
