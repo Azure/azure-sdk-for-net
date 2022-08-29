@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Peering
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> peerAsn = default;
-            Optional<IList<ContactDetail>> peerContactDetail = default;
+            Optional<IList<PeerAsnContactDetail>> peerContactDetail = default;
             Optional<string> peerName = default;
-            Optional<ValidationState> validationState = default;
+            Optional<PeerAsnValidationState> validationState = default;
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ContactDetail> array = new List<ContactDetail>();
+                            List<PeerAsnContactDetail> array = new List<PeerAsnContactDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContactDetail.DeserializeContactDetail(item));
+                                array.Add(PeerAsnContactDetail.DeserializePeerAsnContactDetail(item));
                             }
                             peerContactDetail = array;
                             continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            validationState = new ValidationState(property0.Value.GetString());
+                            validationState = new PeerAsnValidationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("errorMessage"))
