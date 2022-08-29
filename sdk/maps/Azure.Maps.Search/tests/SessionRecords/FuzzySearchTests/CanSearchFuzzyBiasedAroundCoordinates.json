@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-81b506ff2c59565a2a4e73cdb1c84511-84c10e502ac32615-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-161b78469d9d612d79e12a67d9f4ba6e-cd0ed5dd28a47c71-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "63c7f8720fe1b362b7056f2f2dc35aa4",
+        "x-ms-client-request-id": "aa9f501c35c8319581252cf4720b2d23",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10143",
+        "Content-Length": "10142",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Aug 2022 05:57:39 GMT",
+        "Date": "Mon, 29 Aug 2022 17:35:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 52A28F13001F4E8DB0CA30D06B6493F3 Ref B: PAOEDGE0622 Ref C: 2022-08-29T05:57:40Z"
+        "X-MSEdge-Ref": "Ref A: 9FA05D63763343CC9E16B6EE4F81DBE5 Ref B: PAOEDGE0606 Ref C: 2022-08-29T17:35:45Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 11,
+          "queryTime": 9,
           "numResults": 10,
           "offset": 0,
           "totalResults": 1792466,
@@ -769,6 +769,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1138611331"
+    "RandomSeed": "2146351616"
   }
 }
