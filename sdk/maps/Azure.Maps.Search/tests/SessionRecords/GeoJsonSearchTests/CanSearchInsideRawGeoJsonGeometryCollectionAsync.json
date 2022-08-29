@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "365",
         "Content-Type": "application/json",
-        "traceparent": "00-c6acedbab4848932a0a12fdc52d60d5d-05f5212476ceba22-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-b9c7c52662c9b368fd8957b7133cb080-5a5f408d0f496031-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "575db297166c67991a28638f4476c54f",
+        "x-ms-client-request-id": "0bab6e640c2dd7f9323c50938c0d740b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -73,9 +73,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "10063",
+        "Content-Length": "10064",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Aug 2022 02:11:16 GMT",
+        "Date": "Mon, 29 Aug 2022 03:08:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,13 +84,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: AE4ED8CAD31147029F861FFE2B7D96C3 Ref B: PAOEDGE0615 Ref C: 2022-08-29T02:11:16Z"
+        "X-MSEdge-Ref": "Ref A: C5E58B95950549F09A8C1729F05243B5 Ref B: PAOEDGE0520 Ref C: 2022-08-29T03:08:34Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 9,
+          "queryTime": 11,
           "numResults": 10,
           "offset": 0,
           "totalResults": 156,
@@ -822,6 +822,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1700809266"
+    "RandomSeed": "755482082"
   }
 }

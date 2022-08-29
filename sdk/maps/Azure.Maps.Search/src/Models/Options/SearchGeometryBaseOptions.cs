@@ -19,7 +19,7 @@ namespace Azure.Maps.Search
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </summary>
-        public LocalizedMapView? LocalizedMapView { get; set; }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get; set; }
 
         /// <summary>
         /// A comma-separated list of category set IDs which could be used to restrict the result to specific Points of Interest categories. ID order does not matter. When multiple category identifiers are provided, only POIs that belong to (at least) one of the categories from the provided list will be returned. The list of supported categories can be discovered using  [POI Categories API](https://aka.ms/AzureMapsPOICategoryTree). Usage examples:

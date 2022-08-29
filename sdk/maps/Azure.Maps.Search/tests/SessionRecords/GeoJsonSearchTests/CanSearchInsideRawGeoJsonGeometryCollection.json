@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "365",
         "Content-Type": "application/json",
-        "traceparent": "00-e25bb5310d68d34c0fdfcdd35ce185a3-2a327c7f2268b759-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-34af51d4e25c09aeb9f079a82ba9ce90-8e7f20b53ebf6c42-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220828.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "3518afe1efa6ab9e4d0b4d72fc7b172d",
+        "x-ms-client-request-id": "bca9b6eb1c03275b806da0ff92819116",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -75,7 +75,7 @@
       "ResponseHeaders": {
         "Content-Length": "10064",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Aug 2022 02:11:12 GMT",
+        "Date": "Mon, 29 Aug 2022 03:08:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -84,13 +84,13 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 77232F31D5C44B5A9511EE61976C6ED6 Ref B: PAOEDGE0615 Ref C: 2022-08-29T02:11:13Z"
+        "X-MSEdge-Ref": "Ref A: 077183E352064A0281D16F1DC7B7B769 Ref B: PAOEDGE0520 Ref C: 2022-08-29T03:08:31Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 10,
+          "queryTime": 52,
           "numResults": 10,
           "offset": 0,
           "totalResults": 156,
@@ -822,6 +822,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1903314000"
+    "RandomSeed": "644702294"
   }
 }

@@ -28,7 +28,7 @@ namespace Azure.Maps.Search
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </summary>
-        public LocalizedMapView? LocalizedMapView { get; set; }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get; set; }
 
         /// <summary> The directional heading of the vehicle in degrees, for travel along a segment of roadway. 0 is North, 90 is East and so on, values range from -360 to 360. The precision can include upto one decimal place. </summary>
         public int? Heading { get; set; }

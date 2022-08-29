@@ -26,6 +26,6 @@ namespace Azure.Maps.Search
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </summary>
-        public LocalizedMapView? LocalizedMapView { get; set; }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get; set; }
     }
 }
