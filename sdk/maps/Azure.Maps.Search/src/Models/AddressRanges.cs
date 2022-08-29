@@ -23,12 +23,14 @@ namespace Azure.Maps.Search.Models
         internal LatLongPairAbbreviated ToInternal { get; }
 
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public GeoPosition From {
+        public GeoPosition From 
+        {
             get { return new GeoPosition((double) FromInternal.Lon, (double) FromInternal.Lat); }
         }
 
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
-        public GeoPosition To {
+        public GeoPosition To 
+        {
             get { return new GeoPosition((double) ToInternal.Lon, (double) ToInternal.Lat); }
         }
     }
