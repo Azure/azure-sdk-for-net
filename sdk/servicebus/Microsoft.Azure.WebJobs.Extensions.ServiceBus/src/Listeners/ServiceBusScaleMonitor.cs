@@ -241,11 +241,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             if (_targetBasedScalingEnabled.Value)
             {
-                int targetValue = await _dynamicTargetValueProvider.GetDynamicTargetValue(_functionId, _concurrencyManager.Enabled).ConfigureAwait(false);
-                if (targetValue <= 0)
+                int targetValue = _staticTargetValue.Value;
+                if (_concurrencyManager.Enabled)
                 {
-                    // Fallback to default value
-                    targetValue = _staticTargetValue.Value;
+                    int dynamicTargetValue = await _dynamicTargetValueProvider.GetDynamicTargetValueAsync(_functionId).ConfigureAwait(false);
+                    targetValue = dynamicTargetValue > 0 ? dynamicTargetValue : targetValue;
                 }
                 return GetTargetScaleVote(targetValue, metrics);
             }

@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference  Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.34-target-scale" />
+    <PackageReference  Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.35-11966" />
   </ItemGroup>
 
 </Project>
