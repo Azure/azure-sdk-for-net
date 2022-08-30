@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="valueObject"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
         /// <param name="valueAddress"> Address value. </param>
-        internal DocumentFieldValue(DocumentFieldType fieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, int? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null)
+        internal DocumentFieldValue(DocumentFieldType fieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null)
         {
             FieldType = fieldType;
             ValueString = valueString;
@@ -78,7 +78,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private double? ValueNumber { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int? ValueInteger { get; }
+        private long? ValueInteger { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AddressValue ValueAddress { get; }
