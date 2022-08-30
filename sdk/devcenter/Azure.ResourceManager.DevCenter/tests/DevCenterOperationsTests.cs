@@ -68,17 +68,5 @@ namespace Azure.ResourceManager.DevCenter.Tests
             // Delete
             ArmOperation deleteOp = await updatedDevCenter.Value.DeleteAsync(WaitUntil.Completed);
         }
-
-        ////[Test]
-        ////public async Task KeyVaultManagementVaultCreateWithoutAccessPolicies()
-        ////{
-        ////    IgnoreTestInLiveMode();
-        ////    KeyVaultProperties vaultProperties = new KeyVaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
-        ////    KeyVaultCreateOrUpdateContent content = new KeyVaultCreateOrUpdateContent(Location, vaultProperties);
-        ////    ArmOperation<KeyVaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, content);
-        ////    KeyVaultData createdVault = rawVault.Value.Data;
-        ////    Assert.IsNotNull(createdVault);
-        ////    Assert.AreEqual(VaultName, createdVault.Name);
-        ////}
     }
 }
