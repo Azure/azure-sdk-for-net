@@ -4,7 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -19,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
-        public StorageAccountTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public StorageAccountTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -633,10 +636,24 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
+
+            // List keys
             var keys = await account1.GetKeysAsync().ToEnumerableAsync();
+            Assert.NotNull(keys);
+
+            // Validate Key1
+            StorageAccountKey key1 = keys.First(
+                t => t.KeyName.Equals("key1", StringComparison.OrdinalIgnoreCase));
+            Assert.NotNull(key1);
+            Assert.AreEqual(StorageAccountKeyPermission.Full, key1.Permissions);
+            Assert.NotNull(key1.Value);
+
+            // Validate Key2
             StorageAccountKey key2 = keys.First(
                 t => t.KeyName.Equals("key2", StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(key2);
+            Assert.AreEqual(StorageAccountKeyPermission.Full, key2.Permissions);
+            Assert.NotNull(key2.Value);
 
             //regenerate key and verify the key's change
             StorageAccountRegenerateKeyContent keyParameters = new StorageAccountRegenerateKeyContent("key2");
@@ -1728,6 +1745,109 @@ namespace Azure.ResourceManager.Storage.Tests
             // Validate
             account = await account.GetAsync();
             Assert.AreEqual(DirectoryServiceOption.None, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountUpdateWithCreateTest()
+        {
+            //create storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
+            Assert.AreEqual(accountName, account.Id.Name);
+
+            // Update storage account type
+            var data = GetDefaultStorageAccountParameters(new StorageSku(StorageSkuName.StandardLrs));
+            account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data)).Value;
+            Assert.AreEqual(StorageSkuName.StandardLrs, account.Data.Sku.Name);
+
+            // Validate
+            account = (await storageAccountCollection.GetAsync(accountName)).Value;
+            Assert.AreEqual(StorageSkuName.StandardLrs, account.Data.Sku.Name);
+
+            // Update storage tags
+            data = new StorageAccountCreateOrUpdateContent(DefaultSkuNameStandardGRS, DefaultKindStorage, DefaultLocationString)
+            {
+                Tags = {
+                        {"key3","value3"},
+                        {"key4","value4"},
+                        {"key5","value6"}
+                    }
+            };
+            account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data)).Value;
+            Assert.AreEqual(account.Data.Tags.Count, 3);
+
+            // Validate
+            account = (await storageAccountCollection.GetAsync(accountName)).Value;
+            Assert.AreEqual(account.Data.Tags.Count, 3);
+
+            // Update storage encryption
+            data = new StorageAccountCreateOrUpdateContent(DefaultSkuNameStandardGRS, DefaultKindStorage, DefaultLocationString)
+            {
+                Encryption = new StorageAccountEncryption()
+                {
+                    Services = new StorageAccountEncryptionServices()
+                    {
+                        Blob = new StorageEncryptionService() { IsEnabled = true },
+                        File = new StorageEncryptionService() { IsEnabled = true }
+                    },
+                    KeySource = StorageAccountKeySource.Storage
+                }
+            };
+
+            account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data)).Value;
+            Assert.NotNull(account.Data.Encryption);
+
+            // Validate
+            account = (await storageAccountCollection.GetAsync(accountName)).Value;
+            Assert.NotNull(account.Data.Encryption);
+            Assert.NotNull(account.Data.Encryption.Services.Blob);
+            Assert.IsTrue(account.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
+
+            Assert.NotNull(account.Data.Encryption.Services.File);
+            Assert.IsTrue(account.Data.Encryption.Services.File.IsEnabled);
+            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
+
+            if (null != account.Data.Encryption.Services.Table)
+            {
+                if (account.Data.Encryption.Services.Table.IsEnabled.HasValue)
+                {
+                    Assert.IsFalse(account.Data.Encryption.Services.Table.LastEnabledOn.HasValue);
+                }
+            }
+
+            if (null != account.Data.Encryption.Services.Queue)
+            {
+                if (account.Data.Encryption.Services.Queue.IsEnabled.HasValue)
+                {
+                    Assert.IsFalse(account.Data.Encryption.Services.Queue.LastEnabledOn.HasValue);
+                }
+            }
+
+            // Update storage custom domains
+            data = new StorageAccountCreateOrUpdateContent(DefaultSkuNameStandardGRS, DefaultKindStorage, DefaultLocationString)
+            {
+                CustomDomain = new StorageCustomDomain("foo.example.com")
+                {
+                    IsUseSubDomainNameEnabled = true
+                }
+            };
+
+            try
+            {
+                //should fail
+                await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(409, ex.Status);
+                Assert.AreEqual("StorageDomainNameCouldNotVerify", ex.ErrorCode);
+                Assert.True(ex.Message != null && ex.Message.StartsWith("The custom domain " +
+                        "name could not be verified. CNAME mapping from foo.example.com to "));
+            }
         }
     }
 }
