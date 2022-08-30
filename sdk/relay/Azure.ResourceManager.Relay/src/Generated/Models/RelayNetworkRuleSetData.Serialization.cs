@@ -5,62 +5,50 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relay.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class RelayPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class RelayNetworkRuleSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(DefaultAction))
             {
-                writer.WritePropertyName("privateEndpoint");
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                writer.WritePropertyName("defaultAction");
+                writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (Optional.IsCollectionDefined(IPRules))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(ConnectionState);
-            }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("ipRules");
+                writer.WriteStartArray();
+                foreach (var item in IPRules)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static RelayPrivateEndpointConnectionData DeserializeRelayPrivateEndpointConnectionData(JsonElement element)
+        internal static RelayNetworkRuleSetData DeserializeRelayNetworkRuleSetData(JsonElement element)
         {
-            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<RelayPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<RelayPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<RelayNetworkRuleSetDefaultAction> defaultAction = default;
+            Optional<IList<RelayNetworkRuleSetIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -95,41 +83,36 @@ namespace Azure.ResourceManager.Relay
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateEndpoint"))
+                        if (property0.NameEquals("defaultAction"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            defaultAction = new RelayNetworkRuleSetDefaultAction(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("ipRules"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RelayPrivateLinkServiceConnectionState.DeserializeRelayPrivateLinkServiceConnectionState(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            List<RelayNetworkRuleSetIPRule> array = new List<RelayNetworkRuleSetIPRule>();
+                            foreach (var item in property0.Value.EnumerateArray())
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
+                                array.Add(RelayNetworkRuleSetIPRule.DeserializeRelayNetworkRuleSetIPRule(item));
                             }
-                            provisioningState = new RelayPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            ipRules = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RelayPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location));
+            return new RelayNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(defaultAction), Optional.ToList(ipRules));
         }
     }
 }

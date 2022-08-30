@@ -5,50 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Relay.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class RelayPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class RelayHybridConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(IsClientAuthorizationRequired))
             {
-                writer.WritePropertyName("privateEndpoint");
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                writer.WritePropertyName("requiresClientAuthorization");
+                writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(UserMetadata))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(ConnectionState);
-            }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("userMetadata");
+                writer.WriteStringValue(UserMetadata);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static RelayPrivateEndpointConnectionData DeserializeRelayPrivateEndpointConnectionData(JsonElement element)
+        internal static RelayHybridConnectionData DeserializeRelayHybridConnectionData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<RelayPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<RelayPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<int> listenerCount = default;
+            Optional<bool> requiresClientAuthorization = default;
+            Optional<string> userMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -95,41 +91,56 @@ namespace Azure.ResourceManager.Relay
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateEndpoint"))
+                        if (property0.NameEquals("createdAt"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("updatedAt"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RelayPrivateLinkServiceConnectionState.DeserializeRelayPrivateLinkServiceConnectionState(property0.Value);
+                            updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("listenerCount"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new RelayPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            listenerCount = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("requiresClientAuthorization"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            requiresClientAuthorization = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("userMetadata"))
+                        {
+                            userMetadata = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RelayPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location));
+            return new RelayHybridConnectionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(requiresClientAuthorization), userMetadata.Value, Optional.ToNullable(location));
         }
     }
 }
