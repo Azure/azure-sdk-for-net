@@ -2106,7 +2106,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateClient(5);
+                await using var client = CreateClient(5, 1);
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 100;
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
@@ -2314,7 +2314,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient();
                 List<ServiceBusSessionProcessor> processors = new();
-                int numProcessors = 50;
+                int numProcessors = 10;
                 int processedCount = 0;
                 int sentCount = 0;
                 for (int i = 0; i < numProcessors; i++)
