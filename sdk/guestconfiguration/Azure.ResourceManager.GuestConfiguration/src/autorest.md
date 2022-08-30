@@ -24,7 +24,7 @@ request-path-to-resource-name:
 rename-mapping:
   'VmssvmInfo': 'VmssVmInfo'
 
-disable-resource-return:
+prevent-wrapping-return-type:
 - GuestConfigurationAssignments_SubscriptionList
 - GuestConfigurationAssignments_RGList
 
