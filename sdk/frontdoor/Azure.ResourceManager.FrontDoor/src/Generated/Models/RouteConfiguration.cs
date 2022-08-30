@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
     /// </summary>
-    public partial class RouteConfiguration
+    public abstract partial class RouteConfiguration
     {
         /// <summary> Initializes a new instance of RouteConfiguration. </summary>
-        public RouteConfiguration()
+        protected RouteConfiguration()
         {
         }
 

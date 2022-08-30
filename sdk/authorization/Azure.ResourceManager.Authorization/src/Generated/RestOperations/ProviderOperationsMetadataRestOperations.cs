@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async Task<Response<ProviderOperationsMetadataData>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationProviderOperationsMetadataData>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsMetadataData value = default;
+                        AuthorizationProviderOperationsMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderOperationsMetadataData.DeserializeProviderOperationsMetadataData(document.RootElement);
+                        value = AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProviderOperationsMetadataData)null, message.Response);
+                    return Response.FromValue((AuthorizationProviderOperationsMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public Response<ProviderOperationsMetadataData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public Response<AuthorizationProviderOperationsMetadataData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsMetadataData value = default;
+                        AuthorizationProviderOperationsMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderOperationsMetadataData.DeserializeProviderOperationsMetadataData(document.RootElement);
+                        value = AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProviderOperationsMetadataData)null, message.Response);
+                    return Response.FromValue((AuthorizationProviderOperationsMetadataData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Gets provider operations metadata for all resource providers. </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ProviderOperationsMetadataListResult>> ListAsync(string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationProviderOperationsMetadataListResult>> ListAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsMetadataListResult value = default;
+                        AuthorizationProviderOperationsMetadataListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderOperationsMetadataListResult.DeserializeProviderOperationsMetadataListResult(document.RootElement);
+                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Gets provider operations metadata for all resource providers. </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ProviderOperationsMetadataListResult> List(string expand = null, CancellationToken cancellationToken = default)
+        public Response<AuthorizationProviderOperationsMetadataListResult> List(string expand = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(expand);
             _pipeline.Send(message, cancellationToken);
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsMetadataListResult value = default;
+                        AuthorizationProviderOperationsMetadataListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderOperationsMetadataListResult.DeserializeProviderOperationsMetadataListResult(document.RootElement);
+                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ProviderOperationsMetadataListResult>> ListNextPageAsync(string nextLink, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationProviderOperationsMetadataListResult>> ListNextPageAsync(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsMetadataListResult value = default;
+                        AuthorizationProviderOperationsMetadataListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderOperationsMetadataListResult.DeserializeProviderOperationsMetadataListResult(document.RootElement);
+                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ProviderOperationsMetadataListResult> ListNextPage(string nextLink, string expand = null, CancellationToken cancellationToken = default)
+        public Response<AuthorizationProviderOperationsMetadataListResult> ListNextPage(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.Authorization
             {
                 case 200:
                     {
-                        ProviderOperationsMetadataListResult value = default;
+                        AuthorizationProviderOperationsMetadataListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderOperationsMetadataListResult.DeserializeProviderOperationsMetadataListResult(document.RootElement);
+                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

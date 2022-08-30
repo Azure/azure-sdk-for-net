@@ -17,9 +17,9 @@ modelerfour:
   flatten-payloads: false
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}: MediaServiceOperationResult
+  /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}: MediaServicesOperationResult
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}: MediaAssetTrackOperationResult
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}: MediaService
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}: MediaServicesAccount
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}: MediaAssetTrack
 
 override-operation-name:
@@ -96,7 +96,7 @@ rename-mapping:
   LiveOutput.properties.created: CreatedOn
   LiveOutput.properties.lastModified: LastModifiedOn
   PublicNetworkAccess: MediaPublicNetworkAccessStatus
-  StorageAccount: MediaServiceStorageAccount
+  StorageAccount: MediaServicesStorageAccount
   StorageAccount.id: -|arm-id
   StreamingEndpoint.properties.cdnEnabled: IsCdnEnabled
   StreamingEndpoint.properties.created: CreatedOn
@@ -136,7 +136,7 @@ rename-mapping:
   ListContainerSasInput.expiryTime: ExpiresOn
   ListEdgePoliciesInput: GetEdgePoliciesContent
   Preset: MediaPreset
-  StorageAccountType: MediaServiceStorageAccountType
+  StorageAccountType: MediaServicesStorageAccountType
   Visibility: PlayerVisibility
   AssetCollection: AssetListResult
   AccountFilterCollection: AccountFilterListResult
@@ -144,14 +144,15 @@ rename-mapping:
   AssetTrackCollection: AssetTrackListResult
   ContentKeyPolicyCollection: ContentKeyPolicyListResult
   JobCollection: MediaTransformJobListResult
-  MediaServiceCollection: MediaServiceListResult
+  MediaServiceCollection: MediaServicesAccountListResult
   StreamingLocatorCollection: StreamingLocatorListResult
   StreamingPolicyCollection: StreamingPolicyListResult
   TransformCollection: TransformListResult
   StorageEncryptedAssetDecryptionData: StorageEncryptedAssetDecryptionInfo
   AssetTrack: MediaAssetTrack
   TrackBase: AssetTrackInfo
-  PrivateLinkResource: MediaPrivateLinkResource
+  PrivateEndpointConnection: MediaServicesPrivateEndpointConnection
+  PrivateLinkResource: MediaServicesPrivateLinkResource
   ListPathsResponse: GetPathsResult
   AkamaiSignatureHeaderAuthenticationKey.expiration: ExpiresOn
   ContentKeyPolicyFairPlayOfflineRentalConfiguration.playbackDurationSeconds: PlaybackDurationInSeconds
@@ -184,7 +185,6 @@ rename-mapping:
   EntropyMode.Cavlc: ContextAdaptiveVariableLengthCoder
   TrackSelection: MediaTrackSelection
   TransformOutput: MediaTransformOutput
-  BlurType: FaceDetectorBlurType
   H264Layer.crf: ConstantRateFactor
   ImageFormat: OutputImageFileFormat
   InputDefinition: MediaTransformJobInputDefinition
@@ -205,8 +205,12 @@ rename-mapping:
   JobInputHttp: MediaTransformJobInputHttp
   JobInputs: MediaTransformJobInputs
   JobInputSequence: MediaTransformJobInputSequence
+  MediaService: MediaServicesAccount
+  MediaService.properties.mediaServiceId: MediaServicesAccountId
+  MediaServiceOperationStatus.id: -|arm-id
   MediaServiceOperationStatus.startTime: StartsOn
   MediaServiceOperationStatus.endTime: EndsOn
+  MediaServiceOperationStatus: MediaServicesOperationStatus
   OnErrorType: MediaTransformOutputErrorAction
   OutputFile: MultiBitrateOutputFile
   PresetConfigurations: EncoderPresetConfigurations
@@ -216,7 +220,6 @@ rename-mapping:
   TrackPropertyType.FourCC: FourCharacterCode
   FilterTrackPropertyType.FourCC: FourCharacterCode
   AssetTrackOperationStatus.id: -|arm-id
-  MediaServiceOperationStatus.id: -|arm-id
   ContentKeyPolicyPlayReadyPlayRight.digitalVideoOnlyContentRestriction: HasDigitalVideoOnlyContentRestriction
   ContentKeyPolicyPlayReadyPlayRight.imageConstraintForAnalogComponentVideoRestriction: HasImageConstraintForAnalogComponentVideoRestriction
   ContentKeyPolicyPlayReadyPlayRight.imageConstraintForAnalogComputerMonitorRestriction: HasImageConstraintForAnalogComputerMonitorRestriction
@@ -261,7 +264,12 @@ directive:
           "itemName": "contentKeys",
           "nextLinkName": null
         };
-  - from: swagger-document
+  # Service team is on the path to fast deprecate this feature in 12 months, so remove it
+  - from: Encoding.json
+    where: $.definitions
+    transform: >
+      delete $.FaceDetectorPreset;
+  - from: streamingservice.json
     where: $.definitions
     transform: >
       $.StreamingEndpointProperties.properties.maxCacheAge["x-nullable"] = true;

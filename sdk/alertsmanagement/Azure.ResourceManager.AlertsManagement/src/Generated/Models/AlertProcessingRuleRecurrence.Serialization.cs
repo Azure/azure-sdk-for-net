@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new AlertProcessingRuleRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new UnknownAlertProcessingRuleRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
         }
     }
 }

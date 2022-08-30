@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of ListReplications. </summary>
         internal ListReplications()
         {
-            Value = new ChangeTrackingList<Replication>();
+            Value = new ChangeTrackingList<NetAppVolumeReplication>();
         }
 
         /// <summary> Initializes a new instance of ListReplications. </summary>
         /// <param name="value"> A list of replications. </param>
-        internal ListReplications(IReadOnlyList<Replication> value)
+        internal ListReplications(IReadOnlyList<NetAppVolumeReplication> value)
         {
             Value = value;
         }
 
         /// <summary> A list of replications. </summary>
-        public IReadOnlyList<Replication> Value { get; }
+        public IReadOnlyList<NetAppVolumeReplication> Value { get; }
     }
 }

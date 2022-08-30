@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.Media.Tests
     public class MediaPrivateLinkTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
 
-        private MediaPrivateLinkResourceCollection mediaPrivateLinkResourceCollection => _mediaService.GetMediaPrivateLinkResources();
+        private MediaServicesPrivateLinkResourceCollection mediaPrivateLinkResourceCollection => _mediaService.GetMediaServicesPrivateLinkResources();
 
         public MediaPrivateLinkTests(bool isAsync) : base(isAsync)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
         }
 
         [Test]

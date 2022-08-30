@@ -20,12 +20,10 @@ namespace Azure.ResourceManager.HealthcareApis
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _servicesDescriptionServicesClientDiagnostics;
-        private ServicesRestOperations _servicesDescriptionServicesRestClient;
-        private ClientDiagnostics _workspaceClientDiagnostics;
-        private WorkspacesRestOperations _workspaceRestClient;
-        private ClientDiagnostics _operationResultsClientDiagnostics;
-        private OperationResultsRestOperations _operationResultsRestClient;
+        private ClientDiagnostics _healthcareApisServiceServicesClientDiagnostics;
+        private ServicesRestOperations _healthcareApisServiceServicesRestClient;
+        private ClientDiagnostics _healthcareApisWorkspaceWorkspacesClientDiagnostics;
+        private WorkspacesRestOperations _healthcareApisWorkspaceWorkspacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,12 +37,10 @@ namespace Azure.ResourceManager.HealthcareApis
         {
         }
 
-        private ClientDiagnostics ServicesDescriptionServicesClientDiagnostics => _servicesDescriptionServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ServicesDescriptionResource.ResourceType.Namespace, Diagnostics);
-        private ServicesRestOperations ServicesDescriptionServicesRestClient => _servicesDescriptionServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServicesDescriptionResource.ResourceType));
-        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", WorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkspaceResource.ResourceType));
-        private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics HealthcareApisServiceServicesClientDiagnostics => _healthcareApisServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisServiceResource.ResourceType.Namespace, Diagnostics);
+        private ServicesRestOperations HealthcareApisServiceServicesRestClient => _healthcareApisServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HealthcareApisServiceResource.ResourceType));
+        private ClientDiagnostics HealthcareApisWorkspaceWorkspacesClientDiagnostics => _healthcareApisWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private WorkspacesRestOperations HealthcareApisWorkspaceWorkspacesRestClient => _healthcareApisWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HealthcareApisWorkspaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -58,17 +54,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: Services_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServicesDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServicesDescriptionResource> GetServicesDescriptionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthcareApisServiceResource> GetHealthcareApisServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServicesDescriptionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HealthcareApisServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServicesDescriptionServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServicesDescriptions");
+                using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisServices");
                 scope.Start();
                 try
                 {
-                    var response = await ServicesDescriptionServicesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServicesDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HealthcareApisServiceServicesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -76,14 +72,14 @@ namespace Azure.ResourceManager.HealthcareApis
                     throw;
                 }
             }
-            async Task<Page<ServicesDescriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HealthcareApisServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServicesDescriptionServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServicesDescriptions");
+                using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisServices");
                 scope.Start();
                 try
                 {
-                    var response = await ServicesDescriptionServicesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServicesDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HealthcareApisServiceServicesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -100,17 +96,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: Services_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServicesDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServicesDescriptionResource> GetServicesDescriptions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthcareApisServiceResource> GetHealthcareApisServices(CancellationToken cancellationToken = default)
         {
-            Page<ServicesDescriptionResource> FirstPageFunc(int? pageSizeHint)
+            Page<HealthcareApisServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServicesDescriptionServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServicesDescriptions");
+                using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisServices");
                 scope.Start();
                 try
                 {
-                    var response = ServicesDescriptionServicesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServicesDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HealthcareApisServiceServicesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -118,14 +114,14 @@ namespace Azure.ResourceManager.HealthcareApis
                     throw;
                 }
             }
-            Page<ServicesDescriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HealthcareApisServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServicesDescriptionServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServicesDescriptions");
+                using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisServices");
                 scope.Start();
                 try
                 {
-                    var response = ServicesDescriptionServicesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServicesDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HealthcareApisServiceServicesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -143,13 +139,13 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServicesNameAvailabilityInfo>> CheckNameAvailabilityServiceAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServicesDescriptionServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckHealthcareApisNameAvailability");
             scope.Start();
             try
             {
-                var response = await ServicesDescriptionServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await HealthcareApisServiceServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -166,13 +162,13 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServicesNameAvailabilityInfo> CheckNameAvailabilityService(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServicesDescriptionServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckHealthcareApisNameAvailability");
             scope.Start();
             try
             {
-                var response = ServicesDescriptionServicesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = HealthcareApisServiceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -188,17 +184,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: Workspaces_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspaceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HealthcareApisWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
+                using var scope = HealthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisWorkspaces");
                 scope.Start();
                 try
                 {
-                    var response = await WorkspaceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HealthcareApisWorkspaceWorkspacesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,14 +202,14 @@ namespace Azure.ResourceManager.HealthcareApis
                     throw;
                 }
             }
-            async Task<Page<WorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HealthcareApisWorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
+                using var scope = HealthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisWorkspaces");
                 scope.Start();
                 try
                 {
-                    var response = await WorkspaceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await HealthcareApisWorkspaceWorkspacesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,17 +226,17 @@ namespace Azure.ResourceManager.HealthcareApis
         /// Operation Id: Workspaces_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<WorkspaceResource> FirstPageFunc(int? pageSizeHint)
+            Page<HealthcareApisWorkspaceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
+                using var scope = HealthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisWorkspaces");
                 scope.Start();
                 try
                 {
-                    var response = WorkspaceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HealthcareApisWorkspaceWorkspacesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,14 +244,14 @@ namespace Azure.ResourceManager.HealthcareApis
                     throw;
                 }
             }
-            Page<WorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HealthcareApisWorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
+                using var scope = HealthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthcareApisWorkspaces");
                 scope.Start();
                 try
                 {
-                    var response = WorkspaceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = HealthcareApisWorkspaceWorkspacesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HealthcareApisWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -264,54 +260,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="locationName"> The location of the operation. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationResultsDescription>> GetOperationResultAsync(string locationName, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, locationName, operationResultId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="locationName"> The location of the operation. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationResultsDescription> GetOperationResult(string locationName, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
-            scope.Start();
-            try
-            {
-                var response = OperationResultsRestClient.Get(Id.SubscriptionId, locationName, operationResultId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

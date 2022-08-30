@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RouteConfiguration(odataType);
+            return new UnknownRouteConfiguration(odataType);
         }
     }
 }

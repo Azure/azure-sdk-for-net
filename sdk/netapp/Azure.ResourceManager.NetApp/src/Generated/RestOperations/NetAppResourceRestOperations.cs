@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, ResourceNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, NetAppNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppCheckAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        CheckAvailabilityResponse value = default;
+                        NetAppCheckAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckAvailabilityResponse.DeserializeCheckAvailabilityResponse(document.RootElement);
+                        value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckAvailabilityResponse> CheckNameAvailability(string subscriptionId, AzureLocation location, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<NetAppCheckAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        CheckAvailabilityResponse value = default;
+                        NetAppCheckAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckAvailabilityResponse.DeserializeCheckAvailabilityResponse(document.RootElement);
+                        value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateCheckFilePathAvailabilityRequest(string subscriptionId, AzureLocation location, FilePathAvailabilityContent content)
+        internal HttpMessage CreateCheckFilePathAvailabilityRequest(string subscriptionId, AzureLocation location, NetAppFilePathAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckAvailabilityResponse>> CheckFilePathAvailabilityAsync(string subscriptionId, AzureLocation location, FilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppCheckAvailabilityResult>> CheckFilePathAvailabilityAsync(string subscriptionId, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        CheckAvailabilityResponse value = default;
+                        NetAppCheckAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckAvailabilityResponse.DeserializeCheckAvailabilityResponse(document.RootElement);
+                        value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckAvailabilityResponse> CheckFilePathAvailability(string subscriptionId, AzureLocation location, FilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<NetAppCheckAvailabilityResult> CheckFilePathAvailability(string subscriptionId, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        CheckAvailabilityResponse value = default;
+                        NetAppCheckAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckAvailabilityResponse.DeserializeCheckAvailabilityResponse(document.RootElement);
+                        value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateCheckQuotaAvailabilityRequest(string subscriptionId, AzureLocation location, QuotaAvailabilityContent content)
+        internal HttpMessage CreateCheckQuotaAvailabilityRequest(string subscriptionId, AzureLocation location, NetAppQuotaAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckAvailabilityResponse>> CheckQuotaAvailabilityAsync(string subscriptionId, AzureLocation location, QuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppCheckAvailabilityResult>> CheckQuotaAvailabilityAsync(string subscriptionId, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        CheckAvailabilityResponse value = default;
+                        NetAppCheckAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckAvailabilityResponse.DeserializeCheckAvailabilityResponse(document.RootElement);
+                        value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckAvailabilityResponse> CheckQuotaAvailability(string subscriptionId, AzureLocation location, QuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<NetAppCheckAvailabilityResult> CheckQuotaAvailability(string subscriptionId, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        CheckAvailabilityResponse value = default;
+                        NetAppCheckAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckAvailabilityResponse.DeserializeCheckAvailabilityResponse(document.RootElement);
+                        value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

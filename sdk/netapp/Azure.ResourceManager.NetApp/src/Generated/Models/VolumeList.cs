@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VolumeList. </summary>
         internal VolumeList()
         {
-            Value = new ChangeTrackingList<VolumeData>();
+            Value = new ChangeTrackingList<NetAppVolumeData>();
         }
 
         /// <summary> Initializes a new instance of VolumeList. </summary>
         /// <param name="value"> List of volumes. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal VolumeList(IReadOnlyList<VolumeData> value, string nextLink)
+        internal VolumeList(IReadOnlyList<NetAppVolumeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of volumes. </summary>
-        public IReadOnlyList<VolumeData> Value { get; }
+        public IReadOnlyList<NetAppVolumeData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

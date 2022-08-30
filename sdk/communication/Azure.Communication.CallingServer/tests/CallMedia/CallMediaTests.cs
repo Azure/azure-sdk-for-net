@@ -21,6 +21,18 @@ namespace Azure.Communication.CallingServer
             Loop = false,
             OperationContext = "context"
         };
+        private static readonly RecognizeConfigurations _recognizeConfigurations = new RecognizeConfigurations()
+        {
+            InterruptPromptAndStartRecognition = true,
+                DtmfConfigurations = new DtmfConfigurations()
+                {
+                    InterToneTimeoutInSeconds = TimeSpan.FromSeconds(10),
+                    MaxTonesToCollect = 5,
+                    StopTones = new StopTones[] { StopTones.Pound }
+                },
+                InitialSilenceTimeoutInSeconds = TimeSpan.FromSeconds(5),
+                TargetParticipant = new CommunicationUserIdentifier("targetUserId")
+            };
 
         private static CallMedia? _callMedia;
 
@@ -95,6 +107,10 @@ namespace Azure.Communication.CallingServer
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.CancelAllMediaOperationsAsync()
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.RecognizeAsync(new RecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
                 }
             };
         }
@@ -114,6 +130,10 @@ namespace Azure.Communication.CallingServer
                 new Func<CallMedia, Response>?[]
                 {
                    callMedia => callMedia.CancelAllMediaOperations()
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.Recognize(new RecognizeOptions(RecognizeInputType.Dtmf, _recognizeConfigurations))
                 }
             };
         }

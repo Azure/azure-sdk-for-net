@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ScalingTrigger(kind);
+            return new UnknownScalingTrigger(kind);
         }
     }
 }

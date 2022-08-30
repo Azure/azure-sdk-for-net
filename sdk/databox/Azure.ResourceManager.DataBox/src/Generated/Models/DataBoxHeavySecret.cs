@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         internal DataBoxHeavySecret()
         {
             NetworkConfigurations = new ChangeTrackingList<ApplianceNetworkConfiguration>();
-            AccountCredentialDetails = new ChangeTrackingList<AccountCredentialDetails>();
+            AccountCredentialDetails = new ChangeTrackingList<DataBoxAccountCredentialDetails>();
         }
 
         /// <summary> Initializes a new instance of DataBoxHeavySecret. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
         /// <param name="encodedValidationCertPubKey"> The base 64 encoded public key to authenticate with the device. </param>
         /// <param name="accountCredentialDetails"> Per account level access credentials. </param>
-        internal DataBoxHeavySecret(string deviceSerialNumber, string devicePassword, IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations, string encodedValidationCertPubKey, IReadOnlyList<AccountCredentialDetails> accountCredentialDetails)
+        internal DataBoxHeavySecret(string deviceSerialNumber, string devicePassword, IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations, string encodedValidationCertPubKey, IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails)
         {
             DeviceSerialNumber = deviceSerialNumber;
             DevicePassword = devicePassword;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> The base 64 encoded public key to authenticate with the device. </summary>
         public string EncodedValidationCertPubKey { get; }
         /// <summary> Per account level access credentials. </summary>
-        public IReadOnlyList<AccountCredentialDetails> AccountCredentialDetails { get; }
+        public IReadOnlyList<DataBoxAccountCredentialDetails> AccountCredentialDetails { get; }
     }
 }

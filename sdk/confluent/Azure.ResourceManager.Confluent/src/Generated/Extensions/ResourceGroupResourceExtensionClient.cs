@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationValidationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganizationValidation");
+            using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganization");
             scope.Start();
             try
             {
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfluentOrganizationResource> ValidateOrganizationValidation(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentOrganizationResource> ValidateOrganization(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganizationValidation");
+            using var scope = ValidationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOrganization");
             scope.Start();
             try
             {
