@@ -39,9 +39,10 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private async Task<IntegrationAccountMapResource> CreateMap(string mapName)
         {
+            string content = File.ReadAllText(@"TestData/MapContent.xsd");
             IntegrationAccountMapData data = new IntegrationAccountMapData(_integrationAccount.Data.Location, IntegrationAccountMapType.Xslt30)
             {
-                Content = File.ReadAllText(@"TestData/MapContent.xml"),
+                Content = content,
                 ContentType = "application/xml"
             };
             var map = await _mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, data);
