@@ -2141,8 +2141,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (count == 50)
                     {
-                        // tasks will generally be 100 here, but allow some forgiveness as this is not deterministic
-                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 50);
+                        // 20 tasks for the session, plus at least 1 more trying to accept other sessions.
+                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 20);
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
@@ -2303,6 +2303,86 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 // verify all messages were completed
                 await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName));
+            }
+        }
+
+        [Test]
+        public async Task CanUseMassiveSessionConcurrencyWithoutCausingThreadStarvation()
+        {
+            var lockDuration = TimeSpan.FromSeconds(20);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                List<ServiceBusSessionProcessor> processors = new();
+                int numProcessors = 50;
+                for (int i = 0; i < numProcessors; i++)
+                {
+                    ServiceBusSessionProcessorOptions options = new()
+                    {
+                        AutoCompleteMessages = true,
+                        MaxConcurrentSessions = 1,
+                        MaxConcurrentCallsPerSession = 100,
+                        PrefetchCount = 0,
+                        SessionIdleTimeout = TimeSpan.FromSeconds(4),
+                        MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(5)
+                    };
+                    ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName, options);
+                    processor.ProcessMessageAsync += ProcessMessageAsync;
+                    processor.ProcessErrorAsync += SessionErrorHandler;
+                    await processor.StartProcessingAsync();
+                    processors.Add(processor);
+                }
+
+                var sender = client.CreateSender(scope.QueueName);
+                CancellationTokenSource cts = new();
+                cts.CancelAfter(TimeSpan.FromMinutes(4));
+                await SendMessagesAsync(cts.Token);
+                foreach (var processor in processors)
+                {
+                    await processor.CloseAsync();
+                }
+
+                async Task SendMessagesAsync(CancellationToken cancellationToken)
+                {
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            await Task.Delay(10000, cancellationToken);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            return;
+                        }
+
+                        Random rnd = new Random();
+                        int numSessions = rnd.Next(0, 30);
+                        var messages = new List<ServiceBusMessage>();
+                        for (int i = 0; i < numSessions; i++)
+                        {
+                            var sessionId = Guid.NewGuid().ToString();
+                            messages.Add(new ServiceBusMessage("Hello World") { SessionId = sessionId });
+                            if (i % 2 == 0)
+                            {
+                                messages.Add(new ServiceBusMessage("Hello World") { SessionId = sessionId });
+                            }
+                        }
+
+                        await sender.ScheduleMessagesAsync(messages, DateTimeOffset.Now.AddSeconds(10));
+                    }
+                }
+
+                Task ProcessMessageAsync(ProcessSessionMessageEventArgs args)
+                {
+                    TimeSpan timeOnBus = DateTime.UtcNow - args.Message.EnqueuedTime.UtcDateTime;
+                    TestContext.Progress.WriteLine(timeOnBus.TotalSeconds);
+                    if (timeOnBus >= lockDuration)
+                    {
+                        Assert.Fail($"Session '{args.Message.SessionId}' has a time on bus greater than 30 seconds: {timeOnBus}");
+                    }
+
+                    return Task.CompletedTask;
+                }
             }
         }
 
