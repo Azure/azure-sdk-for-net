@@ -966,7 +966,6 @@ namespace Azure.Storage.Files.Shares.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed) { throw null; }
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClose) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.StringEncoded StringEncoded(bool? encoded = default(bool?), string content = null) { throw null; }
     }
     public partial class ShareProperties
     {
@@ -1093,12 +1092,6 @@ namespace Azure.Storage.Files.Shares.Models
         public string Marker { get { throw null; } }
         public int NumberOfHandlesClosed { get { throw null; } }
         public int NumberOfHandlesFailedToClose { get { throw null; } }
-    }
-    public partial class StringEncoded
-    {
-        internal StringEncoded() { }
-        public string Content { get { throw null; } }
-        public bool? Encoded { get { throw null; } }
     }
 }
 namespace Azure.Storage.Files.Shares.Specialized
