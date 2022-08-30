@@ -15,7 +15,7 @@ namespace Azure.Maps.Render
         /// <summary> Input longitude and latitude of the pushpin location. </summary>
         public PinPosition(double longitude, double latitude, string? label = null)
         {
-            this.geoPosition = new GeoPosition(longitude, latitude);
+            geoPosition = new GeoPosition(longitude, latitude);
             this.label = label;
         }
 
@@ -25,7 +25,7 @@ namespace Azure.Maps.Render
         /// </summary>
         public PinPosition(string dataStorageId, string? label = null)
         {
-            this.udid = dataStorageId;
+            udid = dataStorageId;
             this.label = label;
         }
 
@@ -38,18 +38,18 @@ namespace Azure.Maps.Render
         {
             StringBuilder sb = new StringBuilder(64);
 
-            if (this.label != null)
+            if (label != null)
             {
-                sb.Append($"'{this.label}'");
+                sb.Append($"'{label}'");
             }
 
-            if (this.geoPosition != null)
+            if (geoPosition != null)
             {
-                sb.Append($"{this.geoPosition?.Longitude} {this.geoPosition?.Latitude}");
+                sb.Append($"{geoPosition?.Longitude} {geoPosition?.Latitude}");
             }
             else
             {
-                sb.Append(this.udid);
+                sb.Append(udid);
             }
             return sb.ToString();
         }

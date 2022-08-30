@@ -257,12 +257,12 @@ namespace Azure.Maps.Render
 
         /// <summary>
         /// This API returns a map image tile with size 256x256, given the x and y coordinates and zoom
-        /// level. Zoom level ranges from 1 to 19. The current available style value is &apos;satellite&apos; which provides satellite
+        /// level. Zoom level ranges from 1 to 19. The current available style value is <c>satellite</c> which provides satellite
         /// imagery alone.
         /// </summary>
         /// <param name="tileIndex">
         /// Zoom level, and coordinate of the tile on zoom grid.
-        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
+        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, (2^zoom)-1].
         /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,7 +290,7 @@ namespace Azure.Maps.Render
         /// </summary>
         /// <param name="tileIndex">
         /// Zoom level, and coordinate of the tile on zoom grid.
-        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
+        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, (2^zoom)-1]].
         /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -369,7 +369,7 @@ namespace Azure.Maps.Render
 
         /// <summary>
         /// Fetches map tiles in vector or raster format typically to be integrated into a new map control or SDK. By default, Azure uses vector map tiles for its web map control (see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see>)
-        /// **Note**: Weather tiles are only available via <see href="https://aka.ms/AzureMapsWeatherTiles">Get Map Tile V2 API</see>. We recommend to start to use the new <see href="https://aka.ms/GetMapTileV2">Get Map Tile V2 API</see>.
+        /// Note: Weather tiles are only available via <see href="https://aka.ms/AzureMapsWeatherTiles">Get Map Tile V2 API</see>. We recommend to start to use the new <see href="https://aka.ms/GetMapTileV2">Get Map Tile V2 API</see>.
         /// </summary>
         /// <param name="options"> The options for configuring the static image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -407,7 +407,7 @@ namespace Azure.Maps.Render
 
         /// <summary>
         /// Fetches map tiles in vector or raster format typically to be integrated into a new map control or SDK. By default, Azure uses vector map tiles for its web map control (see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see>)
-        /// **Note**: Weather tiles are only available via <see href="https://aka.ms/AzureMapsWeatherTiles">Get Map Tile V2 API</see>. We recommend to start to use the new <see href="https://aka.ms/GetMapTileV2">Get Map Tile V2 API</see>.
+        /// Note: Weather tiles are only available via <see href="https://aka.ms/AzureMapsWeatherTiles">Get Map Tile V2 API</see>. We recommend to start to use the new <see href="https://aka.ms/GetMapTileV2">Get Map Tile V2 API</see>.
         /// </summary>
         /// <param name="options"> The options for configuring the static image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -546,7 +546,7 @@ namespace Azure.Maps.Render
         /// </summary>
         /// <param name="tileIndex">
         /// Zoom level, and coordinate of the tile on zoom grid.
-        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
+        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, (2^zoom)-1]].
         /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </param>
         /// <param name="includeText"> Boolean value to include or exclude textual data from response. Only images and country names will be in response. </param>
@@ -573,7 +573,7 @@ namespace Azure.Maps.Render
         /// </summary>
         /// <param name="tileIndex">
         /// Zoom level, and coordinate of the tile on zoom grid.
-        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
+        /// The value of X and Y coordinate in <c>tileIndex</c> must be in the range [0, (2^zoom)-1]].
         /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </param>
         /// <param name="includeText"> Boolean value to include or exclude textual data from response. Only images and country names will be in response. </param>

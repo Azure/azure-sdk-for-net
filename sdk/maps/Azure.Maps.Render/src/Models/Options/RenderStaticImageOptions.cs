@@ -37,23 +37,19 @@ namespace Azure.Maps.Render
         public MapImageLayer? TileLayer { get; set; }
         /// <summary> Map style to be returned. Possible values are <c>MapImageStyle.Main</c> and <c>MapImageStyle.Dark</c>. </summary>
         public MapImageStyle? TileStyle { get; set; }
-        /// <summary> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details. </summary>
+        /// <summary> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12. Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details. </summary>
         public int? ZoomLevel { get; set; }
         /// <summary>
-        /// Coordinates of the center point. Format: 'lon,lat'. Projection used
-        /// - EPSG:3857. Longitude range: -180 to 180. Latitude range: -85 to 85.
-        ///
-        /// Note: Either Center or BoundingBox are required parameters. They are
-        /// mutually exclusive.
+        /// Coordinates of the center point. Format: 'lon,lat'. Projection used EPSG:3857.
+        /// Longitude range: -180 to 180. Latitude range: -85 to 85.
+        /// Note: Either Center or BoundingBox are required parameters. They are mutually exclusive.
         /// </summary>
         public GeoPosition? CenterCoordinate { get; }
         /// <summary>
         /// Bounding box.
-        ///
         /// Note: Either BoundingBox or CenterCoordinate are required
         /// parameters. They are mutually exclusive. It shouldn't be used with
         /// HeightInPixels or WidthInPixels.
-        ///
         /// The maximum allowed ranges for Lat and Lon are defined for each zoom level
         /// in the table at the top of this page.
         /// </summary>

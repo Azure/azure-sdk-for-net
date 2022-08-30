@@ -30,7 +30,7 @@ namespace Azure.Maps.Render
                 throw new ArgumentException("pathPositions should not be empty list.");
             }
 
-            this.PathPositions = pathPositions;
+            PathPositions = pathPositions;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.Maps.Render
                 throw new ArgumentException("dataStorageId should not be empty string.");
             }
 
-            this.DataStorageId = dataStorageId;
+            DataStorageId = dataStorageId;
         }
 
         /// <summary> The point coordinate on the path. </summary>

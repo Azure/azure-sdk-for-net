@@ -19,7 +19,7 @@ namespace Azure.Maps.Render
         /// <summary>
         /// Zoom level, and coordinate of the tile on zoom grid.
         ///
-        /// The value of X and Y coordinate in <c>TileIndex</c> must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
+        /// The value of X and Y coordinate in <c>TileIndex</c> must be in the range [0, (2^zoom)-1]].
         /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </summary>
         public TileIndex TileIndex { get; set; }

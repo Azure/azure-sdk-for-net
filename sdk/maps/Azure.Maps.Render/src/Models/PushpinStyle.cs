@@ -37,15 +37,15 @@ namespace Azure.Maps.Render
                 throw new ArgumentException("pinPositions should not be empty list.");
             }
 
-            this.PinPositions = pinPositions;
-            this.PinAnchorShiftInPixels = pinAnchorShift;
-            this.PinColor = pinColor;
-            this.PinScale = pinScale;
-            this.CustomPinImage = customPinImage;
-            this.LabelAnchorShiftInPixels = labelAnchorShift;
-            this.LabelColor = labelColor;
-            this.LabelScale = labelScale;
-            this.RotationInDegrees = rotation;
+            PinPositions = pinPositions;
+            PinAnchorShiftInPixels = pinAnchorShift;
+            PinColor = pinColor;
+            PinScale = pinScale;
+            CustomPinImage = customPinImage;
+            LabelAnchorShiftInPixels = labelAnchorShift;
+            LabelColor = labelColor;
+            LabelScale = labelScale;
+            RotationInDegrees = rotation;
         }
 
         /// <summary> Pushpin coordinate on the map. </summary>
@@ -98,7 +98,7 @@ namespace Azure.Maps.Render
         public override string ToString() {
             StringBuilder sb = new StringBuilder(256);
 
-            if (this.CustomPinImage == null)
+            if (CustomPinImage == null)
             {
                 sb.Append("default");
             }
@@ -159,7 +159,7 @@ namespace Azure.Maps.Render
             }
 
             // The following is custom pushpin URL
-            if (this.CustomPinImage != null)
+            if (CustomPinImage != null)
             {
                 sb.Append($"||{CustomPinImage.AbsoluteUri}");
             }
