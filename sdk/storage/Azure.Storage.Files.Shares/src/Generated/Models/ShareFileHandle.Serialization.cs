@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares.Models
         internal static ShareFileHandle DeserializeShareFileHandle(XElement element)
         {
             string handleId = default;
-            StringEncoded path = default;
+            string path = default;
             string fileId = default;
             string parentId = default;
             string sessionId = default;
@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("Path") is XElement pathElement)
             {
-                path = StringEncoded.DeserializeStringEncoded(pathElement);
+                path = (string)pathElement;
             }
             if (element.Element("FileId") is XElement fileIdElement)
             {

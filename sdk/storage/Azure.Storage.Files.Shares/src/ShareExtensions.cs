@@ -858,7 +858,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileItem(
                 isDirectory: true,
-                name: directoryItem.Name,
+                name: directoryItem.Name.Encoded == true ? Uri.UnescapeDataString(directoryItem.Name.Content) : directoryItem.Name.Content,
                 id: directoryItem.FileId,
                 properties: directoryItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ToFileAttributes(directoryItem.Attributes),
@@ -875,7 +875,7 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileItem(
                 isDirectory: false,
-                name: fileItem.Name,
+                name: fileItem.Name.Encoded == true ? Uri.UnescapeDataString(fileItem.Name.Content) : fileItem.Name.Content,
                 id: fileItem.FileId,
                 properties: fileItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ToFileAttributes(fileItem.Attributes),

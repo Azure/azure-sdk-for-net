@@ -12,29 +12,5 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ShareModelFactory
     {
-
-        /// <summary> Initializes a new instance of StringEncoded. </summary>
-        /// <param name="encoded"></param>
-        /// <param name="content"></param>
-        /// <returns> A new <see cref="Models.StringEncoded"/> instance for mocking. </returns>
-        public static StringEncoded StringEncoded(bool? encoded = null, string content = null)
-        {
-            return new StringEncoded(encoded, content);
-        }
-
-        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
-        /// <param name="handleId"> XSMB service handle ID. </param>
-        /// <param name="path"></param>
-        /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
-        /// <param name="parentId"> ParentId uniquely identifies the parent directory of the object. </param>
-        /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
-        /// <param name="clientIp"> Client IP that opened the handle. </param>
-        /// <param name="openedOn"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
-        /// <param name="lastReconnectedOn"> Time handle was last connected to (UTC). </param>
-        /// <returns> A new <see cref="Models.ShareFileHandle"/> instance for mocking. </returns>
-        public static ShareFileHandle ShareFileHandle(string handleId = null, StringEncoded path = null, string fileId = null, string parentId = null, string sessionId = null, string clientIp = null, DateTimeOffset? openedOn = null, DateTimeOffset? lastReconnectedOn = null)
-        {
-            return new ShareFileHandle(handleId, path, fileId, parentId, sessionId, clientIp, openedOn, lastReconnectedOn);
-        }
     }
 }

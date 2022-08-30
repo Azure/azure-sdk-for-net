@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="shareName"/>, <paramref name="directoryPath"/>, <paramref name="prefix"/>, <paramref name="segment"/> or <paramref name="nextMarker"/> is null. </exception>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, StringEncoded directoryPath, StringEncoded prefix, FilesAndDirectoriesListSegment segment, StringEncoded nextMarker)
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, StringEncoded directoryPath, StringEncoded prefix, FilesAndDirectoriesListSegment segment, string nextMarker)
         {
             if (serviceEndpoint == null)
             {
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"></param>
         /// <param name="directoryId"></param>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, StringEncoded directoryPath, StringEncoded prefix, StringEncoded marker, int? maxResults, FilesAndDirectoriesListSegment segment, StringEncoded nextMarker, string directoryId)
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, StringEncoded directoryPath, StringEncoded prefix, StringEncoded marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
         {
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Abstract for entries that can be listed from Directory. </summary>
         public FilesAndDirectoriesListSegment Segment { get; }
         /// <summary> Gets the next marker. </summary>
-        public StringEncoded NextMarker { get; }
+        public string NextMarker { get; }
         /// <summary> Gets the directory id. </summary>
         public string DirectoryId { get; }
     }

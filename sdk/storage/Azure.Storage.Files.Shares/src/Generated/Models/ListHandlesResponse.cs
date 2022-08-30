@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
         /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextMarker"/> is null. </exception>
-        internal ListHandlesResponse(StringEncoded nextMarker)
+        internal ListHandlesResponse(string nextMarker)
         {
             if (nextMarker == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
         /// <param name="handleList"></param>
         /// <param name="nextMarker"></param>
-        internal ListHandlesResponse(IReadOnlyList<ShareFileHandle> handleList, StringEncoded nextMarker)
+        internal ListHandlesResponse(IReadOnlyList<ShareFileHandle> handleList, string nextMarker)
         {
             HandleList = handleList;
             NextMarker = nextMarker;
@@ -40,6 +40,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Gets the handle list. </summary>
         public IReadOnlyList<ShareFileHandle> HandleList { get; }
         /// <summary> Gets the next marker. </summary>
-        public StringEncoded NextMarker { get; }
+        public string NextMarker { get; }
     }
 }
