@@ -2,10 +2,12 @@ param resourceLocation string = resourceGroup().location
 
 var defaultDevCenterName = 'sdk-default-devcenter'
 var defaultProjectName = 'sdk-default-project'
+var defaultNetworkConnectionName = 'sdk-default-networkconnection'
+var defaultMarketplaceDefinition = 'sdk-default-devboxdefinition'
 
-// var devBoxSkuName = 'general_a_8c32gb_v1'
-// var devBoxStorage = 'ssd_1024gb'
-// var marketplaceImageName = 'MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
+var devBoxSkuName = 'general_a_8c32gb_v1'
+var devBoxStorage = 'ssd_1024gb'
+var marketplaceImageName = 'MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
 // var localAdminStatus = 'Enabled'
 
 resource devcenter 'Microsoft.DevCenter/devcenters@2022-08-01-preview' = {
@@ -68,35 +70,38 @@ resource vnet1 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   }
 }
 
-// resource net1 'Microsoft.DevCenter/networkConnections@2022-08-01-preview' = {
-//   name: 'NetworkConnection'
-//   location: resourceLocation
-//   properties: {
-//     domainJoinType: 'AzureADJoin'
-//     subnetId: vnet1.properties.subnets[0].id
-//   }
-// }
+resource networkConnection1 'Microsoft.DevCenter/networkConnections@2022-08-01-preview' = {
+  name: defaultNetworkConnectionName
+  location: resourceLocation
+  properties: {
+    domainJoinType: 'AzureADJoin'
+    subnetId: vnet1.properties.subnets[0].id
+  }
+}
 
-// resource attachedNetwork 'Microsoft.DevCenter/devcenters/attachednetworks@2022-08-01-preview' = {
-//   name: '${devcenter.name}/AttachedNetwork'
-//   properties: {
-//     networkConnectionResourceId: net1.id
-//   }
-// }
+resource attachedNetwork 'Microsoft.DevCenter/devcenters/attachednetworks@2022-08-01-preview' = {
+  name: '${devcenter.name}/${networkConnection1.name}'
+  properties: {
+    networkConnectionId: networkConnection1.id
+  }
+}
 
-// resource marketplaceDefinition 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-01-preview' = {
-//   name: '${devcenter.name}/MarketplaceDefinition'
-//   location: resourceLocation
-//   properties: {
-//     imageReference: {
-//       id: '${devcenter.id}/galleries/Default/images/${marketplaceImageName}'
-//     }
-//     sku: {
-//       name: devBoxSkuName
-//     }
-//     osStorageType: devBoxStorage
-//   }
-// }
+resource marketplaceDefinition 'Microsoft.DevCenter/devcenters/devboxdefinitions@2022-08-01-preview' = {
+  name: '${devcenter.name}/${defaultMarketplaceDefinition}'
+  location: resourceLocation
+  properties: {
+    imageReference: {
+      id: '${devcenter.id}/galleries/Default/images/${marketplaceImageName}'
+    }
+    sku: {
+      name: devBoxSkuName
+    }
+    osStorageType: devBoxStorage
+  }
+}
 
 output DefaultDevCenterId string = devcenter.id
 output DefaultProjectId string = project.id
+output DefaultMarketplaceDefinitionId string = marketplaceDefinition.id
+output DefaultNetworkConnectionId string = networkConnection1.id
+output DefaultAttachedNetworkName string = networkConnection1.name
