@@ -119,6 +119,10 @@ rename-rules:
 
 directive:
   - from: cognitiveservices.json
+    where: $.paths
+    transform: >
+      delete $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}"]["put"]
+  - from: cognitiveservices.json
     where: $.definitions
     transform: >
       $.CheckDomainAvailabilityParameter.properties.type['x-ms-format'] = 'resource-type';
@@ -126,7 +130,6 @@ directive:
       $.Encryption.properties.keyVaultProperties['x-ms-client-flatten'] = true;
       $.PrivateEndpointConnection.properties.properties['x-ms-client-flatten'] = true;
       delete $.AccountProperties.properties.internalId;
-
   # TODO, these configs will be replaced by the new rename-mapping
   - from: cognitiveservices.json
     where: $.definitions
@@ -149,5 +152,4 @@ directive:
       $.SkuChangeInfo.properties.lastChangeDate['x-ms-client-name'] = 'lastChangedOn';
       $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
       $.ApiProperties.properties.qnaAzureSearchEndpointId['x-ms-format'] = 'arm-id';
-
 ```

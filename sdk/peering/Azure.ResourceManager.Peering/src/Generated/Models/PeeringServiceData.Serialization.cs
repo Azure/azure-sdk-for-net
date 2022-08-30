@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Peering
             Optional<SystemData> systemData = default;
             Optional<string> peeringServiceLocation = default;
             Optional<string> peeringServiceProvider = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<PeeringProvisioningState> provisioningState = default;
             Optional<string> providerPrimaryPeeringLocation = default;
             Optional<string> providerBackupPeeringLocation = default;
-            Optional<LogAnalyticsWorkspaceProperties> logAnalyticsWorkspaceProperties = default;
+            Optional<PeeringLogAnalyticsWorkspaceProperties> logAnalyticsWorkspaceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new PeeringProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("providerPrimaryPeeringLocation"))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logAnalyticsWorkspaceProperties = LogAnalyticsWorkspaceProperties.DeserializeLogAnalyticsWorkspaceProperties(property0.Value);
+                            logAnalyticsWorkspaceProperties = PeeringLogAnalyticsWorkspaceProperties.DeserializePeeringLogAnalyticsWorkspaceProperties(property0.Value);
                             continue;
                         }
                     }

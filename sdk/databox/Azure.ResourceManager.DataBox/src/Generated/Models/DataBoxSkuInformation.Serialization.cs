@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataBoxSku> sku = default;
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<DataLocationToServiceLocationMap>> dataLocationToServiceLocationMap = default;
-            Optional<SkuCapacity> capacity = default;
-            Optional<IReadOnlyList<SkuCost>> costs = default;
+            Optional<DataBoxSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<DataBoxSkuCost>> costs = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<SkuDisabledReason> disabledReason = default;
             Optional<string> disabledReasonMessage = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBox.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            capacity = SkuCapacity.DeserializeSkuCapacity(property0.Value);
+                            capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("costs"))
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.DataBox.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SkuCost> array = new List<SkuCost>();
+                            List<DataBoxSkuCost> array = new List<DataBoxSkuCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SkuCost.DeserializeSkuCost(item));
+                                array.Add(DataBoxSkuCost.DeserializeDataBoxSkuCost(item));
                             }
                             costs = array;
                             continue;

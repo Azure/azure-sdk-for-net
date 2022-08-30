@@ -56,6 +56,10 @@ rename-mapping:
   FluidRelayServer.properties.storagesku: StorageSku
   CustomerManagedKeyEncryptionPropertiesKeyEncryptionKeyIdentity: CmkIdentity
   CustomerManagedKeyEncryptionProperties: CmkEncryptionProperties
+  FluidRelayServerKeys.key1: PrimaryKey
+  FluidRelayServerKeys.key2: SecondaryKey
+  KeyName.key1: PrimaryKey
+  KeyName.key2: SecondaryKey
 
 override-operation-name:
   FluidRelayServers_RegenerateKey: RegenerateKeys
