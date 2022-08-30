@@ -5,18 +5,14 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+[assembly: CodeGenSuppressType("ServiceVersion")]
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Options that allow users to configure the requests sent to the App Configuration service.
     /// </summary>
-    public class ConfigurationClientOptions : ClientOptions
+    public partial class ConfigurationClientOptions : ClientOptions
     {
-        /// <summary>
-        /// The latest service version supported by this client library.
-        /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
-
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
         /// </summary>
@@ -31,12 +27,6 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Gets the <see cref="ServiceVersion"/> of the service API used when
-        /// making requests.
-        /// </summary>
-        internal ServiceVersion Version { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClientOptions"/>
         /// class.
         /// </summary>
@@ -46,20 +36,12 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         public ConfigurationClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version;
-            this.ConfigureLogging();
-        }
-
-        internal string GetVersionString()
-        {
-            switch (Version)
+            Version = version switch
             {
-                case ServiceVersion.V1_0:
-                    return "1.0";
-
-                default:
-                    throw new ArgumentException(Version.ToString());
-            }
+                ServiceVersion.V1_0 => "1.0",
+                _ => throw new NotSupportedException()
+            };
+            this.ConfigureLogging();
         }
     }
 }

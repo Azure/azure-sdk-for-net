@@ -325,10 +325,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: StartMenuItems_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StartMenuItem" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StartMenuItem> GetStartMenuItemsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DesktopVirtualizationStartMenuItem" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DesktopVirtualizationStartMenuItem> GetStartMenuItemsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StartMenuItem>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DesktopVirtualizationStartMenuItem>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
                 scope.Start();
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<StartMenuItem>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DesktopVirtualizationStartMenuItem>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
                 scope.Start();
@@ -367,10 +367,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: StartMenuItems_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StartMenuItem" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StartMenuItem> GetStartMenuItems(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DesktopVirtualizationStartMenuItem" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DesktopVirtualizationStartMenuItem> GetStartMenuItems(CancellationToken cancellationToken = default)
         {
-            Page<StartMenuItem> FirstPageFunc(int? pageSizeHint)
+            Page<DesktopVirtualizationStartMenuItem> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
                 scope.Start();
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<StartMenuItem> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DesktopVirtualizationStartMenuItem> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
                 scope.Start();

@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
-        public virtual async Task<Response<PredictiveResponse>> GetPredictiveMetricAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutoscaleSettingPredicativeResult>> GetPredictiveMetricAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(timespan, nameof(timespan));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
-        public virtual Response<PredictiveResponse> GetPredictiveMetric(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public virtual Response<AutoscaleSettingPredicativeResult> GetPredictiveMetric(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(timespan, nameof(timespan));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));

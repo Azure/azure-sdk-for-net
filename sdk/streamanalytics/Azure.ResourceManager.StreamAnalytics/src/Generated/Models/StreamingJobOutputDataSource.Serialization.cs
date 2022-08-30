@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobOutputDataSource(type);
+            return new UnknownStreamingJobOutputDataSource(type);
         }
     }
 }

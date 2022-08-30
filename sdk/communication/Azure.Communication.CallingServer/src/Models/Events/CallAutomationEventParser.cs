@@ -103,6 +103,16 @@ namespace Azure.Communication.CallingServer
                     return CallTransferFailed.Deserialize(eventData);
                 case nameof(ParticipantsUpdated):
                     return ParticipantsUpdated.Deserialize(eventData);
+                case nameof(CallRecordingStateChanged):
+                    return CallRecordingStateChanged.Deserialize(eventData);
+                case nameof(PlayCompleted):
+                    return PlayCompleted.Deserialize(eventData);
+                case nameof(PlayFailed):
+                    return PlayFailed.Deserialize(eventData);
+                case nameof(RecognizeCompleted):
+                    return RecognizeCompleted.Deserialize(eventData);
+                case nameof(RecognizeFailed):
+                    return RecognizeFailed.Deserialize(eventData);
                 default:
                     return null;
             }

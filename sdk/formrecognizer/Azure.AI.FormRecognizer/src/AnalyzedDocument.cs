@@ -8,5 +8,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     [CodeGenModel("Document")]
     public partial class AnalyzedDocument
     {
+        /// <summary>
+        /// Document type.
+        /// </summary>
+        [CodeGenMember("DocType")]
+        public string DocumentType { get; }
     }
 }

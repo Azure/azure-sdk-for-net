@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.FluidRelay
             Optional<SystemData> systemData = default;
             Optional<Guid> frsTenantId = default;
             Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<FluidRelayProvisioningState> provisioningState = default;
             Optional<Models.EncryptionProperties> encryption = default;
-            Optional<StorageSku> storagesku = default;
+            Optional<FluidRelayStorageSku> storagesku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.FluidRelay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new FluidRelayProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.FluidRelay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storagesku = new StorageSku(property0.Value.GetString());
+                            storagesku = new FluidRelayStorageSku(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -28,11 +28,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // For the purpose of this sample, we are going to create a model to copy. Please note that
             // if you already have a model, this is not necessary.
 #if SNIPPET
-            Uri trainingFileUri = new Uri("<trainingFileUri>");
+            Uri blobContainerUri = new Uri("<blobContainerUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await sourceClient.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            BuildModelOperation operation = await sourceClient.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
             DocumentModelDetails model = operation.Value;
 
             #region Snippet:FormRecognizerSampleCreateCopyTargetClient
