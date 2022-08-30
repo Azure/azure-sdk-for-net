@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        public RoleDefinitionResource Definition { get; set; }
+        public AuthorizationRoleDefinitionResource Definition { get; set; }
 
         private async Task<RoleAssignmentScheduleRequestCollection> GetRoleAssignmentScheduleRequestCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var definitionCollection = resourceGroup.GetRoleDefinitions();
+            var definitionCollection = resourceGroup.GetAuthorizationRoleDefinitions();
             Definition = (await definitionCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
             return resourceGroup.GetRoleAssignmentScheduleRequests();
         }
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             {
                 PrincipalId = Guid.Parse(TestEnvironment.ClientId),
                 RoleDefinitionId = Definition.Id,
-                RequestType = RoleAssignmentScheduleRequestType.SelfActivate,
+                RequestType = RoleManagementScheduleRequestType.SelfActivate,
                 LinkedRoleEligibilityScheduleId = new Guid("b1477448-2cc6-4ceb-93b4-54a202a89413"),
                 StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),
-                ExpirationType = RoleAssignmentScheduleExpirationType.AfterDuration,
+                ExpirationType = RoleManagementScheduleExpirationType.AfterDuration,
                 EndOn = null,
                 Duration = TypeFormatters.ParseTimeSpan("PT8H", "P"),
                 Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'",

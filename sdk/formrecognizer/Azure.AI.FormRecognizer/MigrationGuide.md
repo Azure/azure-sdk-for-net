@@ -442,7 +442,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -530,7 +530,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -612,14 +612,14 @@ Train a custom model with `4.0.x`:
 // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
 // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = new Uri("<trainingFileUri>");
+Uri blobContainerUri = new Uri("<blobContainerUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // We are selecting the Template build mode in this sample. For more information about the available
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
@@ -627,12 +627,12 @@ if (string.IsNullOrEmpty(model.Description))
     Console.WriteLine($"  Model description: {model.Description}");
 Console.WriteLine($"  Created on: {model.CreatedOn}");
 Console.WriteLine("  Doc types the model can recognize:");
-foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
 {
-    Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
-    foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+    Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+    foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
     {
-        Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+        Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
     }
 }
 ```
@@ -714,7 +714,7 @@ Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}")
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Document of type: {document.DocType}");
+    Console.WriteLine($"Document of type: {document.DocumentType}");
 
     foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
     {

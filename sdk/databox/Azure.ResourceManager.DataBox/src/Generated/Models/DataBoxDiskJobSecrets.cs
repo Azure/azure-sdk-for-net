@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxDiskJobSecrets. </summary>
         internal DataBoxDiskJobSecrets()
         {
-            DiskSecrets = new ChangeTrackingList<DiskSecret>();
-            JobSecretsType = ClassDiscriminator.DataBoxDisk;
+            DiskSecrets = new ChangeTrackingList<DataBoxDiskSecret>();
+            JobSecretsType = DataBoxOrderType.DataBoxDisk;
         }
 
         /// <summary> Initializes a new instance of DataBoxDiskJobSecrets. </summary>
@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
-        /// <param name="passKey"> PassKey for the disk Job. </param>
+        /// <param name="passkey"> PassKey for the disk Job. </param>
         /// <param name="isPasskeyUserDefined"> Whether passkey was provided by user. </param>
-        internal DataBoxDiskJobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DiskSecret> diskSecrets, string passKey, bool? isPasskeyUserDefined) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal DataBoxDiskJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxDiskSecret> diskSecrets, string passkey, bool? isPasskeyUserDefined) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             DiskSecrets = diskSecrets;
-            PassKey = passKey;
+            Passkey = passkey;
             IsPasskeyUserDefined = isPasskeyUserDefined;
             JobSecretsType = jobSecretsType;
         }
 
         /// <summary> Contains the list of secrets object for that device. </summary>
-        public IReadOnlyList<DiskSecret> DiskSecrets { get; }
+        public IReadOnlyList<DataBoxDiskSecret> DiskSecrets { get; }
         /// <summary> PassKey for the disk Job. </summary>
-        public string PassKey { get; }
+        public string Passkey { get; }
         /// <summary> Whether passkey was provided by user. </summary>
         public bool? IsPasskeyUserDefined { get; }
     }

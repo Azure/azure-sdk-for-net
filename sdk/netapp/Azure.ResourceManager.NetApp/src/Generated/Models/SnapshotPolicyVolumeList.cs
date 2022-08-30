@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SnapshotPolicyVolumeList. </summary>
         internal SnapshotPolicyVolumeList()
         {
-            Value = new ChangeTrackingList<VolumeData>();
+            Value = new ChangeTrackingList<NetAppVolumeData>();
         }
 
         /// <summary> Initializes a new instance of SnapshotPolicyVolumeList. </summary>
         /// <param name="value"> List of volumes. </param>
-        internal SnapshotPolicyVolumeList(IReadOnlyList<VolumeData> value)
+        internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value)
         {
             Value = value;
         }
 
         /// <summary> List of volumes. </summary>
-        public IReadOnlyList<VolumeData> Value { get; }
+        public IReadOnlyList<NetAppVolumeData> Value { get; }
     }
 }

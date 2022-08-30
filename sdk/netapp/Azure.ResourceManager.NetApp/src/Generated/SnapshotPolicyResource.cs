@@ -255,17 +255,17 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: SnapshotPolicies_ListVolumes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VolumeResource> GetVolumesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppVolumeResource> GetVolumesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VolumeResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetAppVolumeResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyResource.GetVolumes");
                 scope.Start();
                 try
                 {
                     var response = await _snapshotPolicyRestClient.ListVolumesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VolumeResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetAppVolumeResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -282,17 +282,17 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: SnapshotPolicies_ListVolumes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VolumeResource> GetVolumes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppVolumeResource> GetVolumes(CancellationToken cancellationToken = default)
         {
-            Page<VolumeResource> FirstPageFunc(int? pageSizeHint)
+            Page<NetAppVolumeResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyResource.GetVolumes");
                 scope.Start();
                 try
                 {
                     var response = _snapshotPolicyRestClient.ListVolumes(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VolumeResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetAppVolumeResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

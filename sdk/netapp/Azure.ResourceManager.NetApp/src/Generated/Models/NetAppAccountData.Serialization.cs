@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<IList<ActiveDirectory>> activeDirectories = default;
+            Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
             Optional<AccountEncryption> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ActiveDirectory> array = new List<ActiveDirectory>();
+                            List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ActiveDirectory.DeserializeActiveDirectory(item));
+                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item));
                             }
                             activeDirectories = array;
                             continue;

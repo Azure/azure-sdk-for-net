@@ -23,7 +23,5 @@ namespace Azure.Communication.CallingServer
         public int? InterToneTimeoutInSeconds { get; set; }
         /// <summary> Maximum number of DTMFs to be collected. </summary>
         public int? MaxTonesToCollect { get; set; }
-        /// <summary> List of tones that will stop recognizing. </summary>
-        public IList<StopTones> StopTones { get; }
     }
 }

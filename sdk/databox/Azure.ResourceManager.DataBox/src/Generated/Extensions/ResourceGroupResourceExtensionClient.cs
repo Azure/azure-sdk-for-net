@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.DataBox
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public virtual JobResourceCollection GetJobResources()
+        /// <summary> Gets a collection of DataBoxJobResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DataBoxJobResources and their operations over a DataBoxJobResource. </returns>
+        public virtual DataBoxJobCollection GetDataBoxJobs()
         {
-            return GetCachedClient(Client => new JobResourceCollection(Client, Id));
+            return GetCachedClient(Client => new DataBoxJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusByResourceGroupServicesAsync(AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             async Task<Page<DataBoxSkuInformation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkusByResourceGroupServices");
+                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
                 scope.Start();
                 try
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBox
             }
             async Task<Page<DataBoxSkuInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkusByResourceGroupServices");
+                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
                 scope.Start();
                 try
                 {
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataBoxSkuInformation> GetAvailableSkusByResourceGroupServices(AzureLocation location, AvailableSkuContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Page<DataBoxSkuInformation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkusByResourceGroupServices");
+                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
                 scope.Start();
                 try
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox
             }
             Page<DataBoxSkuInformation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkusByResourceGroupServices");
+                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
                 scope.Start();
                 try
                 {
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_ValidateInputsByResourceGroup
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidationResponse>> ValidateInputsByResourceGroupServiceAsync(AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputsByResourceGroupService");
+            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
             {
-                var response = await ServiceRestClient.ValidateInputsByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, validationRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceRestClient.ValidateInputsByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_ValidateInputsByResourceGroup
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="validationRequest"> Inputs of the customer. </param>
+        /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidationResponse> ValidateInputsByResourceGroupService(AzureLocation location, ValidationRequest validationRequest, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputsByResourceGroupService");
+            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateInputs");
             scope.Start();
             try
             {
-                var response = ServiceRestClient.ValidateInputsByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, validationRequest, cancellationToken);
+                var response = ServiceRestClient.ValidateInputsByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -192,15 +192,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_RegionConfigurationByResourceGroup
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region at resource group level. </param>
+        /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegionConfigurationResponse>> RegionConfigurationByResourceGroupServiceAsync(AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RegionConfigurationByResourceGroupService");
+            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try
             {
-                var response = await ServiceRestClient.RegionConfigurationByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, regionConfigurationRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceRestClient.RegionConfigurationByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -216,15 +216,15 @@ namespace Azure.ResourceManager.DataBox
         /// Operation Id: Service_RegionConfigurationByResourceGroup
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="regionConfigurationRequest"> Request body to get the configuration for the region at resource group level. </param>
+        /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegionConfigurationResponse> RegionConfigurationByResourceGroupService(AzureLocation location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default)
+        public virtual Response<RegionConfigurationResult> GetRegionConfiguration(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RegionConfigurationByResourceGroupService");
+            using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionConfiguration");
             scope.Start();
             try
             {
-                var response = ServiceRestClient.RegionConfigurationByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, regionConfigurationRequest, cancellationToken);
+                var response = ServiceRestClient.RegionConfigurationByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

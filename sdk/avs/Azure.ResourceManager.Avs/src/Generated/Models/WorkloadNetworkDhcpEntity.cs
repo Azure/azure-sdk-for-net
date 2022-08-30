@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Avs.Models
     /// Please note <see cref="WorkloadNetworkDhcpEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
     /// </summary>
-    public partial class WorkloadNetworkDhcpEntity
+    public abstract partial class WorkloadNetworkDhcpEntity
     {
         /// <summary> Initializes a new instance of WorkloadNetworkDhcpEntity. </summary>
-        public WorkloadNetworkDhcpEntity()
+        protected WorkloadNetworkDhcpEntity()
         {
             Segments = new ChangeTrackingList<string>();
         }

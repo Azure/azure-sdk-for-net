@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("qosType");
                 writer.WriteStringValue(QosType.Value.ToString());
             }
-            if (Optional.IsDefined(CoolAccess))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess");
-                writer.WriteBooleanValue(CoolAccess.Value);
+                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(EncryptionType))
             {
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.NetApp
             Optional<SystemData> systemData = default;
             Optional<string> poolId = default;
             long size = default;
-            ServiceLevel serviceLevel = default;
+            NetAppFileServiceLevel serviceLevel = default;
             Optional<string> provisioningState = default;
             Optional<float> totalThroughputMibps = default;
             Optional<float> utilizedThroughputMibps = default;
-            Optional<QosType> qosType = default;
+            Optional<CapacityPoolQosType> qosType = default;
             Optional<bool> coolAccess = default;
-            Optional<EncryptionType?> encryptionType = default;
+            Optional<CapacityPoolEncryptionType?> encryptionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetApp
                         }
                         if (property0.NameEquals("serviceLevel"))
                         {
-                            serviceLevel = new ServiceLevel(property0.Value.GetString());
+                            serviceLevel = new NetAppFileServiceLevel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            qosType = new QosType(property0.Value.GetString());
+                            qosType = new CapacityPoolQosType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("coolAccess"))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetApp
                                 encryptionType = null;
                                 continue;
                             }
-                            encryptionType = new EncryptionType(property0.Value.GetString());
+                            encryptionType = new CapacityPoolEncryptionType(property0.Value.GetString());
                             continue;
                         }
                     }

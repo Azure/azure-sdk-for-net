@@ -42,11 +42,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             // Create a new model to store in the account
 #if SNIPPET
-            Uri trainingFileUri = new Uri("<trainingFileUri>");
+            Uri blobContainerUri = new Uri("<blobContainerUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
             DocumentModelDetails model = operation.Value;
 
             // Get the model that was just created
