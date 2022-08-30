@@ -75,6 +75,7 @@ rename-mapping:
   CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
   UnavailableReason: RelayNameUnavailableReason
   KeyType: RelayAccessKeyType
+  HybridConnection: RelayHybridConnection
 
 directive:
   from: NetworkRuleSets.json

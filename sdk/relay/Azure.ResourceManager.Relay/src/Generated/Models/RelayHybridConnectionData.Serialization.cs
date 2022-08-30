@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class HybridConnectionData : IUtf8JsonSerializable
+    public partial class RelayHybridConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Relay
             writer.WriteEndObject();
         }
 
-        internal static HybridConnectionData DeserializeHybridConnectionData(JsonElement element)
+        internal static RelayHybridConnectionData DeserializeRelayHybridConnectionData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new HybridConnectionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(requiresClientAuthorization), userMetadata.Value, Optional.ToNullable(location));
+            return new RelayHybridConnectionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(requiresClientAuthorization), userMetadata.Value, Optional.ToNullable(location));
         }
     }
 }

@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Relay
             return new RelayNetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
 
-        /// <summary> Gets a collection of HybridConnectionResources in the RelayNamespace. </summary>
-        /// <returns> An object representing collection of HybridConnectionResources and their operations over a HybridConnectionResource. </returns>
-        public virtual HybridConnectionCollection GetHybridConnections()
+        /// <summary> Gets a collection of RelayHybridConnectionResources in the RelayNamespace. </summary>
+        /// <returns> An object representing collection of RelayHybridConnectionResources and their operations over a RelayHybridConnectionResource. </returns>
+        public virtual RelayHybridConnectionCollection GetRelayHybridConnections()
         {
-            return GetCachedClient(Client => new HybridConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new RelayHybridConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HybridConnectionResource>> GetHybridConnectionAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelayHybridConnectionResource>> GetRelayHybridConnectionAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetHybridConnections().GetAsync(hybridConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetRelayHybridConnections().GetAsync(hybridConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HybridConnectionResource> GetHybridConnection(string hybridConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<RelayHybridConnectionResource> GetRelayHybridConnection(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetHybridConnections().Get(hybridConnectionName, cancellationToken);
+            return GetRelayHybridConnections().Get(hybridConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WcfRelayResources in the RelayNamespace. </summary>

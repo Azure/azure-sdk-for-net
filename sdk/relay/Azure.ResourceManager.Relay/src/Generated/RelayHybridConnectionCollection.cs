@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridConnectionResource" /> and their operations.
-    /// Each <see cref="HybridConnectionResource" /> in the collection will belong to the same instance of <see cref="RelayNamespaceResource" />.
-    /// To get a <see cref="HybridConnectionCollection" /> instance call the GetHybridConnections method from an instance of <see cref="RelayNamespaceResource" />.
+    /// A class representing a collection of <see cref="RelayHybridConnectionResource" /> and their operations.
+    /// Each <see cref="RelayHybridConnectionResource" /> in the collection will belong to the same instance of <see cref="RelayNamespaceResource" />.
+    /// To get a <see cref="RelayHybridConnectionCollection" /> instance call the GetRelayHybridConnections method from an instance of <see cref="RelayNamespaceResource" />.
     /// </summary>
-    public partial class HybridConnectionCollection : ArmCollection, IEnumerable<HybridConnectionResource>, IAsyncEnumerable<HybridConnectionResource>
+    public partial class RelayHybridConnectionCollection : ArmCollection, IEnumerable<RelayHybridConnectionResource>, IAsyncEnumerable<RelayHybridConnectionResource>
     {
-        private readonly ClientDiagnostics _hybridConnectionClientDiagnostics;
-        private readonly HybridConnectionsRestOperations _hybridConnectionRestClient;
+        private readonly ClientDiagnostics _relayHybridConnectionHybridConnectionsClientDiagnostics;
+        private readonly HybridConnectionsRestOperations _relayHybridConnectionHybridConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HybridConnectionCollection"/> class for mocking. </summary>
-        protected HybridConnectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="RelayHybridConnectionCollection"/> class for mocking. </summary>
+        protected RelayHybridConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelayHybridConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal HybridConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RelayHybridConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", HybridConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HybridConnectionResource.ResourceType, out string hybridConnectionApiVersion);
-            _hybridConnectionRestClient = new HybridConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectionApiVersion);
+            _relayHybridConnectionHybridConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", RelayHybridConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RelayHybridConnectionResource.ResourceType, out string relayHybridConnectionHybridConnectionsApiVersion);
+            _relayHybridConnectionHybridConnectionsRestClient = new HybridConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, relayHybridConnectionHybridConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hybridConnectionName, HybridConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RelayHybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hybridConnectionName, RelayHybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.CreateOrUpdate");
+            using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hybridConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<HybridConnectionResource>(Response.FromValue(new HybridConnectionResource(Client, response), response.GetRawResponse()));
+                var response = await _relayHybridConnectionHybridConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RelayArmOperation<RelayHybridConnectionResource>(Response.FromValue(new RelayHybridConnectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string hybridConnectionName, HybridConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RelayHybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string hybridConnectionName, RelayHybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.CreateOrUpdate");
+            using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, data, cancellationToken);
-                var operation = new RelayArmOperation<HybridConnectionResource>(Response.FromValue(new HybridConnectionResource(Client, response), response.GetRawResponse()));
+                var response = _relayHybridConnectionHybridConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, data, cancellationToken);
+                var operation = new RelayArmOperation<RelayHybridConnectionResource>(Response.FromValue(new RelayHybridConnectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
-        public virtual async Task<Response<HybridConnectionResource>> GetAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelayHybridConnectionResource>> GetAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
 
-            using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.Get");
+            using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hybridConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _relayHybridConnectionHybridConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
-        public virtual Response<HybridConnectionResource> Get(string hybridConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<RelayHybridConnectionResource> Get(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
 
-            using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.Get");
+            using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _hybridConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken);
+                var response = _relayHybridConnectionHybridConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.Relay
         /// Operation Id: HybridConnections_ListByNamespace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RelayHybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RelayHybridConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridConnectionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RelayHybridConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.GetAll");
+                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _hybridConnectionRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _relayHybridConnectionHybridConnectionsRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Relay
                     throw;
                 }
             }
-            async Task<Page<HybridConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RelayHybridConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.GetAll");
+                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _hybridConnectionRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _relayHybridConnectionHybridConnectionsRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +225,17 @@ namespace Azure.ResourceManager.Relay
         /// Operation Id: HybridConnections_ListByNamespace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RelayHybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RelayHybridConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridConnectionResource> FirstPageFunc(int? pageSizeHint)
+            Page<RelayHybridConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.GetAll");
+                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _hybridConnectionRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _relayHybridConnectionHybridConnectionsRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Relay
                     throw;
                 }
             }
-            Page<HybridConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RelayHybridConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.GetAll");
+                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _hybridConnectionRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _relayHybridConnectionHybridConnectionsRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
 
-            using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.Exists");
+            using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hybridConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _relayHybridConnectionHybridConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
 
-            using var scope = _hybridConnectionClientDiagnostics.CreateScope("HybridConnectionCollection.Exists");
+            using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hybridConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken: cancellationToken);
+                var response = _relayHybridConnectionHybridConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Relay
             }
         }
 
-        IEnumerator<HybridConnectionResource> IEnumerable<HybridConnectionResource>.GetEnumerator()
+        IEnumerator<RelayHybridConnectionResource> IEnumerable<RelayHybridConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Relay
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<HybridConnectionResource> IAsyncEnumerable<HybridConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RelayHybridConnectionResource> IAsyncEnumerable<RelayHybridConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

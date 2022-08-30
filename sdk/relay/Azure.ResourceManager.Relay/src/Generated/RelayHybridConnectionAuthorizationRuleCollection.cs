@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A class representing a collection of <see cref="RelayHybridConnectionAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="RelayHybridConnectionAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="HybridConnectionResource" />.
-    /// To get a <see cref="RelayHybridConnectionAuthorizationRuleCollection" /> instance call the GetRelayHybridConnectionAuthorizationRules method from an instance of <see cref="HybridConnectionResource" />.
+    /// Each <see cref="RelayHybridConnectionAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="RelayHybridConnectionResource" />.
+    /// To get a <see cref="RelayHybridConnectionAuthorizationRuleCollection" /> instance call the GetRelayHybridConnectionAuthorizationRules method from an instance of <see cref="RelayHybridConnectionResource" />.
     /// </summary>
     public partial class RelayHybridConnectionAuthorizationRuleCollection : ArmCollection, IEnumerable<RelayHybridConnectionAuthorizationRuleResource>, IAsyncEnumerable<RelayHybridConnectionAuthorizationRuleResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Relay
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HybridConnectionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HybridConnectionResource.ResourceType), nameof(id));
+            if (id.ResourceType != RelayHybridConnectionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RelayHybridConnectionResource.ResourceType), nameof(id));
         }
 
         /// <summary>

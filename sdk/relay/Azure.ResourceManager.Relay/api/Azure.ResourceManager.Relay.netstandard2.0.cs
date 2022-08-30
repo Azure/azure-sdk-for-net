@@ -1,47 +1,5 @@
 namespace Azure.ResourceManager.Relay
 {
-    public partial class HybridConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.HybridConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.HybridConnectionResource>, System.Collections.IEnumerable
-    {
-        protected HybridConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.HybridConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string hybridConnectionName, Azure.ResourceManager.Relay.HybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.HybridConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string hybridConnectionName, Azure.ResourceManager.Relay.HybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Relay.HybridConnectionResource> Get(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Relay.HybridConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.HybridConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.HybridConnectionResource>> GetAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.HybridConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.HybridConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.HybridConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.HybridConnectionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class HybridConnectionData : Azure.ResourceManager.Models.ResourceData
-    {
-        public HybridConnectionData() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public bool? IsClientAuthorizationRequired { get { throw null; } set { } }
-        public int? ListenerCount { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        public string UserMetadata { get { throw null; } set { } }
-    }
-    public partial class HybridConnectionResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected HybridConnectionResource() { }
-        public virtual Azure.ResourceManager.Relay.HybridConnectionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string hybridConnectionName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Relay.HybridConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.HybridConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> GetRelayHybridConnectionAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>> GetRelayHybridConnectionAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleCollection GetRelayHybridConnectionAuthorizationRules() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.HybridConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.HybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.HybridConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.HybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class RelayAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public RelayAuthorizationRuleData() { }
@@ -52,8 +10,8 @@ namespace Azure.ResourceManager.Relay
     {
         public static Azure.Response<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Relay.HybridConnectionResource GetHybridConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Relay.RelayHybridConnectionResource GetRelayHybridConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource> GetRelayNamespace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> GetRelayNamespaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -99,6 +57,48 @@ namespace Azure.ResourceManager.Relay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayAccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.Relay.Models.RelayRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RelayHybridConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionResource>, System.Collections.IEnumerable
+    {
+        protected RelayHybridConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string hybridConnectionName, Azure.ResourceManager.Relay.RelayHybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string hybridConnectionName, Azure.ResourceManager.Relay.RelayHybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionResource> Get(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayHybridConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayHybridConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> GetAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.RelayHybridConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayHybridConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RelayHybridConnectionData : Azure.ResourceManager.Models.ResourceData
+    {
+        public RelayHybridConnectionData() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public bool? IsClientAuthorizationRequired { get { throw null; } set { } }
+        public int? ListenerCount { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public string UserMetadata { get { throw null; } set { } }
+    }
+    public partial class RelayHybridConnectionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RelayHybridConnectionResource() { }
+        public virtual Azure.ResourceManager.Relay.RelayHybridConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string hybridConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> GetRelayHybridConnectionAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>> GetRelayHybridConnectionAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleCollection GetRelayHybridConnectionAuthorizationRules() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayHybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.RelayHybridConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RelayNamespaceAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>, System.Collections.IEnumerable
     {
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Relay
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Relay.HybridConnectionResource> GetHybridConnection(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.HybridConnectionResource>> GetHybridConnectionAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Relay.HybridConnectionCollection GetHybridConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionResource> GetRelayHybridConnection(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> GetRelayHybridConnectionAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayHybridConnectionCollection GetRelayHybridConnections() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> GetRelayNamespaceAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>> GetRelayNamespaceAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleCollection GetRelayNamespaceAuthorizationRules() { throw null; }

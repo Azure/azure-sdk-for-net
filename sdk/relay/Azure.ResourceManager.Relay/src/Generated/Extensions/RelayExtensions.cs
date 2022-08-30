@@ -230,20 +230,20 @@ namespace Azure.ResourceManager.Relay
         }
         #endregion
 
-        #region HybridConnectionResource
+        #region RelayHybridConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="HybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelayHybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelayHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RelayHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridConnectionResource" /> object. </returns>
-        public static HybridConnectionResource GetHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RelayHybridConnectionResource" /> object. </returns>
+        public static RelayHybridConnectionResource GetRelayHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                HybridConnectionResource.ValidateResourceId(id);
-                return new HybridConnectionResource(client, id);
+                RelayHybridConnectionResource.ValidateResourceId(id);
+                return new RelayHybridConnectionResource(client, id);
             }
             );
         }
