@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    public partial class Change
+    public partial class DetectedChangeData
     {
-        internal static Change DeserializeChange(JsonElement element)
+        internal static DetectedChangeData DeserializeDetectedChangeData(JsonElement element)
         {
             Optional<ChangeProperties> properties = default;
             ResourceIdentifier id = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     continue;
                 }
             }
-            return new Change(id, name, type, systemData.Value, properties.Value);
+            return new DetectedChangeData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

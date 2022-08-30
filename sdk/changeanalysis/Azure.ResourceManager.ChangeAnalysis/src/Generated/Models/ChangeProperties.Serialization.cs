@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static ChangeProperties DeserializeChangeProperties(JsonElement element)
         {
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<DateTimeOffset> timeStamp = default;
             Optional<IReadOnlyList<string>> initiatedByList = default;
             Optional<ChangeType> changeType = default;
@@ -25,7 +25,12 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeStamp"))

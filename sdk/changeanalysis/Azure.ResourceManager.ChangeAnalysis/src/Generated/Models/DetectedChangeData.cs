@@ -11,20 +11,20 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     /// <summary> The detected change. </summary>
-    public partial class Change : ResourceData
+    public partial class DetectedChangeData : ResourceData
     {
-        /// <summary> Initializes a new instance of Change. </summary>
-        internal Change()
+        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
+        internal DetectedChangeData()
         {
         }
 
-        /// <summary> Initializes a new instance of Change. </summary>
+        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a change. </param>
-        internal Change(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChangeProperties properties) : base(id, name, resourceType, systemData)
+        internal DetectedChangeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChangeProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

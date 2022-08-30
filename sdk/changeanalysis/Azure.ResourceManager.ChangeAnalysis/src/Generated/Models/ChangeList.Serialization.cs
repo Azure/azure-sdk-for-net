@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static ChangeList DeserializeChangeList(JsonElement element)
         {
-            Optional<IReadOnlyList<Change>> value = default;
+            Optional<IReadOnlyList<DetectedChangeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Change> array = new List<Change>();
+                    List<DetectedChangeData> array = new List<DetectedChangeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Change.DeserializeChange(item));
+                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item));
                     }
                     value = array;
                     continue;
