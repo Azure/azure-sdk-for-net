@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `DisplayName` property to the following classes to set the optional display name:
+- Added `DisplayName` property to the following classes to set the optional display name of the operations below:
   - `AnalyzeHealthcareEntitiesOptions`
   - `MultiLabelClassifyOptions`
   - `RecognizeCustomEntitiesOptions`
