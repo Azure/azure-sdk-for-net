@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
@@ -214,6 +215,54 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var finalDomains = await client.GetDomainsAsync().ConfigureAwait(false);
             Assert.AreEqual(TestData.DomainList.Count - 1, finalDomains.Value.Count());
             Assert.IsNull(finalDomains.Value.FirstOrDefault(x => x.DomainUri == TestData.DomainList[1].DomainUri));
+        }
+
+        [Test]
+        public async Task GetSipConfiguration_MockedData()
+        {
+            var client = CreateClient();
+            var domainsResponse = await client.GetDomainsAsync().ConfigureAwait(false);
+            var trunksResponse = await client.GetTrunksAsync().ConfigureAwait(false);
+            var routsResponse = await client.GetRoutesAsync().ConfigureAwait(false);
+            var domains = domainsResponse.Value;
+            var trunks = trunksResponse.Value;
+            var routes = routsResponse.Value;
+
+            Assert.IsNotNull(domains, "Domains are null");
+            Assert.IsNotNull(trunks, "Trunks are null");
+            Assert.IsNotNull(routes, "Routes are null");
+
+            Assert.AreEqual(TestData.DomainList_Mocked.Count, domains.Count());
+            Assert.AreEqual(TestData.TrunksList_Mocked.Count, trunks.Count());
+            Assert.AreEqual(TestData.RoutesList_Mocked.Count, routes.Count());
+
+            Assert.IsTrue(DomainAreEqual(TestData.DomainList_Mocked[0], domains[0]));
+            Assert.IsTrue(TrunkAreEqual(TestData.TrunksList_Mocked[0], trunks[0]));
+            Assert.IsTrue(RouteAreEqual(TestData.RoutesList_Mocked[0], routes[0]));
+        }
+
+        [Test]
+        public async Task PatchSipConfiguration_MockedData()
+        {
+            var client = CreateClient();
+            var domainsResponse = await client.SetDomainsAsync(TestData.DomainList_NewMocked).ConfigureAwait(false);
+            var trunksResponse = await client.SetTrunksAsync(TestData.TrunksList_NewMocked).ConfigureAwait(false);
+            var routsResponse = await client.SetRoutesAsync(TestData.RoutesList_NewMocked).ConfigureAwait(false);
+            var domains = domainsResponse;
+            var trunks = trunksResponse;
+            var routes = routsResponse;
+
+            Assert.IsNotNull(domains, "Domains are null");
+            Assert.IsNotNull(trunks, "Trunks are null");
+            Assert.IsNotNull(routes, "Routes are null");
+
+            //Assert.AreEqual(TestData.DomainList_Mocked.Count, domains.Count());
+            //Assert.AreEqual(TestData.TrunksList_Mocked.Count, trunks.Count());
+            //Assert.AreEqual(TestData.RoutesList_Mocked.Count, routes.Count());
+
+            //Assert.IsTrue(DomainAreEqual(TestData.DomainList_Mocked[0], domains[0]));
+            //Assert.IsTrue(TrunkAreEqual(TestData.TrunksList_Mocked[0], trunks[0]));
+            //Assert.IsTrue(RouteAreEqual(TestData.RoutesList_Mocked[0], routes[0]));
         }
     }
 }

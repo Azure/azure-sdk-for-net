@@ -1,0 +1,162 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://billtest171913new-communication.int.communication.azure.net/sip?api-version=2022-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-d1aafaddb2e6444c8e9afdaab490b562-6d82a31353d3b044-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220823.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1bca6f18a9406c6d4e20dc59a8c75d48",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 24 Aug 2022 13:30:38 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-useragent": "acs-mock-test"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 13:25:45 GMT",
+        "MS-CV": "mL1JFLSuok62tbvlo2R56w.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "02SYGYwAAAAAzyhGobmCKT7co/piQUpq4UFJHMDFFREdFMDkxNQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "39ms"
+      },
+      "ResponseBody": {
+        "domains": {
+          "contoso.com": {
+            "enabled": true
+          }
+        },
+        "trunks": {
+          "acs.contoso.com": {
+            "enabled": true,
+            "sipSignalingPort": 123
+          }
+        },
+        "routes": [
+          {
+            "description": null,
+            "name": "R1",
+            "numberPattern": ".*",
+            "trunks": [
+              "acs.contoso.com"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://billtest171913new-communication.int.communication.azure.net/sip?api-version=2022-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3169001dd9ffe14e899a4a1e813b3d3e-257a08b8281df341-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220823.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ca8cb3f5f39ffde650e7f04d83f5c4fc",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 24 Aug 2022 13:30:39 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-useragent": "acs-mock-test"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 13:25:45 GMT",
+        "MS-CV": "BnwCsWcADkeneSguqhYKXQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "02iYGYwAAAAATA5ILDmPVS7Ho7eoNNtBNUFJHMDFFREdFMDkxNQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "21ms"
+      },
+      "ResponseBody": {
+        "domains": {
+          "contoso.com": {
+            "enabled": true
+          }
+        },
+        "trunks": {
+          "acs.contoso.com": {
+            "enabled": true,
+            "sipSignalingPort": 123
+          }
+        },
+        "routes": [
+          {
+            "description": null,
+            "name": "R1",
+            "numberPattern": ".*",
+            "trunks": [
+              "acs.contoso.com"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://billtest171913new-communication.int.communication.azure.net/sip?api-version=2022-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-08dedc0918f7fb49b6749741bf5890fa-45085a9cb70fcf4b-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220823.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3d7de17aaa4958dd67aa05ed60332b5c",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 24 Aug 2022 13:30:40 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-useragent": "acs-mock-test"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Aug 2022 13:25:45 GMT",
+        "MS-CV": "G0nG4QjSA0KtUtnvpC6luw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "02iYGYwAAAADANCCgRPVzSIdQ1Wpiz\u002BZdUFJHMDFFREdFMDkxNQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "20ms"
+      },
+      "ResponseBody": {
+        "domains": {
+          "contoso.com": {
+            "enabled": true
+          }
+        },
+        "trunks": {
+          "acs.contoso.com": {
+            "enabled": true,
+            "sipSignalingPort": 123
+          }
+        },
+        "routes": [
+          {
+            "description": null,
+            "name": "R1",
+            "numberPattern": ".*",
+            "trunks": [
+              "acs.contoso.com"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://billtest171913new-communication.int.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1494992033"
+  }
+}

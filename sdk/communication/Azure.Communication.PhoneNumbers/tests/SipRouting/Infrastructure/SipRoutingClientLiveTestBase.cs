@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
-        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
+        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");

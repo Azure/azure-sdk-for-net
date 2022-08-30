@@ -589,11 +589,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
                 if (currentConfig.Value.Domains.Count > 0)
                 {
-                    var trunkFqdnsToRemove = currentConfig.Value.Domains.Keys.Where(x => !newDomains.ContainsKey(x));
+                    var domainsToRemove = currentConfig.Value.Domains.Keys.Where(x => !newDomains.ContainsKey(x));
 
-                    foreach (var fqdn in trunkFqdnsToRemove)
+                    foreach (var domain in domainsToRemove)
                     {
-                        newDomains.Add(fqdn, null);
+                        newDomains.Add(domain, null);
                     }
                 }
 
