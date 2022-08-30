@@ -191,8 +191,40 @@ namespace Azure.Storage.Files.Shares
             return new StorageHandlesSegment()
             {
                 NextMarker = listHandlesResponse.NextMarker,
-                Handles = listHandlesResponse.HandleList.ToList()
+                Handles = listHandlesResponse.HandleList.ToShareFileHandles()
             };
+        }
+
+        internal static List<ShareFileHandle> ToShareFileHandles(this IReadOnlyList<HandleItem> handleItems)
+        {
+            if (handleItems == null)
+            {
+                return null;
+            }
+            List<ShareFileHandle> list = new List<ShareFileHandle>();
+            foreach (HandleItem handleItem in handleItems)
+            {
+                list.Add(handleItem.ToShareFileHandle());
+            }
+            return list;
+        }
+
+        internal static ShareFileHandle ToShareFileHandle(this HandleItem handleItem)
+        {
+            if (handleItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileHandle(
+                handleId: handleItem.HandleId,
+                path: handleItem.Path.Encoded == true ? Uri.UnescapeDataString(handleItem.Path.Content) : handleItem.Path.Content,
+                fileId: handleItem.FileId,
+                parentId: handleItem.ParentId,
+                sessionId: handleItem.SessionId,
+                clientIp: handleItem.ClientIp,
+                openedOn: handleItem.OpenTime,
+                lastReconnectedOn: handleItem.LastReconnectTime);
         }
 
         internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> response)

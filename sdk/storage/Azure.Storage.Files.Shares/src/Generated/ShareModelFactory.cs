@@ -5,12 +5,19 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ShareModelFactory
     {
+
+        /// <summary> Initializes a new instance of StringEncoded. </summary>
+        /// <param name="encoded"></param>
+        /// <param name="content"></param>
+        /// <returns> A new <see cref="Models.StringEncoded"/> instance for mocking. </returns>
+        public static StringEncoded StringEncoded(bool? encoded = null, string content = null)
+        {
+            return new StringEncoded(encoded, content);
+        }
     }
 }

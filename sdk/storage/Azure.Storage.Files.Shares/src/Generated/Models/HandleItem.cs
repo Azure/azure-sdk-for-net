@@ -10,17 +10,17 @@ using System;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A listed Azure Storage handle item. </summary>
-    public partial class ShareFileHandle
+    internal partial class HandleItem
     {
-        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
+        /// <summary> Initializes a new instance of HandleItem. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"></param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
         /// <param name="clientIp"> Client IP that opened the handle. </param>
-        /// <param name="openedOn"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
+        /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/> or <paramref name="clientIp"/> is null. </exception>
-        internal ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, DateTimeOffset? openedOn)
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string sessionId, string clientIp, DateTimeOffset openTime)
         {
             if (handleId == null)
             {
@@ -48,19 +48,19 @@ namespace Azure.Storage.Files.Shares.Models
             FileId = fileId;
             SessionId = sessionId;
             ClientIp = clientIp;
-            OpenedOn = openedOn;
+            OpenTime = openTime;
         }
 
-        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
+        /// <summary> Initializes a new instance of HandleItem. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"></param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
         /// <param name="parentId"> ParentId uniquely identifies the parent directory of the object. </param>
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
         /// <param name="clientIp"> Client IP that opened the handle. </param>
-        /// <param name="openedOn"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
-        /// <param name="lastReconnectedOn"> Time handle was last connected to (UTC). </param>
-        internal ShareFileHandle(string handleId, string path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset? openedOn, DateTimeOffset? lastReconnectedOn)
+        /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
+        /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime)
         {
             HandleId = handleId;
             Path = path;
@@ -68,14 +68,14 @@ namespace Azure.Storage.Files.Shares.Models
             ParentId = parentId;
             SessionId = sessionId;
             ClientIp = clientIp;
-            OpenedOn = openedOn;
-            LastReconnectedOn = lastReconnectedOn;
+            OpenTime = openTime;
+            LastReconnectTime = lastReconnectTime;
         }
 
         /// <summary> XSMB service handle ID. </summary>
         public string HandleId { get; }
         /// <summary> Gets the path. </summary>
-        public string Path { get; }
+        public StringEncoded Path { get; }
         /// <summary> FileId uniquely identifies the file or directory. </summary>
         public string FileId { get; }
         /// <summary> ParentId uniquely identifies the parent directory of the object. </summary>
@@ -84,5 +84,9 @@ namespace Azure.Storage.Files.Shares.Models
         public string SessionId { get; }
         /// <summary> Client IP that opened the handle. </summary>
         public string ClientIp { get; }
+        /// <summary> Time when the session that previously opened the handle has last been reconnected. (UTC). </summary>
+        public DateTimeOffset OpenTime { get; }
+        /// <summary> Time handle was last connected to (UTC). </summary>
+        public DateTimeOffset? LastReconnectTime { get; }
     }
 }

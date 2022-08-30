@@ -8,7 +8,7 @@
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The StringEncoded. </summary>
-    internal partial class StringEncoded
+    public partial class StringEncoded
     {
         /// <summary> Initializes a new instance of StringEncoded. </summary>
         internal StringEncoded()
