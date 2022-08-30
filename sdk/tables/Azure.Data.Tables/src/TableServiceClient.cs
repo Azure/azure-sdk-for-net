@@ -976,7 +976,7 @@ namespace Azure.Data.Tables
         internal static RequestContext CreateContextForDelete(CancellationToken cancellationToken)
         {
             var context = new RequestContext() { CancellationToken = cancellationToken };
-            context.AddClassifier(404, false);
+            context.AddClassifier((int)HttpStatusCode.NotFound, false);
             return context;
         }
 

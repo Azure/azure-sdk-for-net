@@ -479,7 +479,7 @@ namespace Azure.Data.Tables
                 var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
                 context.AddClassifier((int)HttpStatusCode.Conflict, false);
                 var response = _tableOperations.Create(
-                    RequestContent.Create(new { TableName = Name }),
+                    RequestContent.Create(new TableProperties { TableName = Name }),
                     TableConstants.Odata.MinimalMetadata,
                     TableConstants.ReturnNoContent,
                     context);
@@ -515,7 +515,7 @@ namespace Azure.Data.Tables
             {
                 var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
                 var response = await _tableOperations.CreateAsync(
-                    RequestContent.Create(new { TableName = Name }),
+                    RequestContent.Create(new TableProperties { TableName = Name }),
                     TableConstants.Odata.MinimalMetadata,
                     TableConstants.ReturnNoContent,
                     context).ConfigureAwait(false);
