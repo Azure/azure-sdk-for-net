@@ -30,9 +30,7 @@ namespace Azure.Data.Tables
         private readonly string _version;
         private readonly bool _isCosmosEndpoint;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
-        private const string ReturnNoContent = "return-no-content";
         private readonly QueryOptions _defaultQueryOptions = new() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
-        private const string MinimalMetadata = "application/json;odata=minimalmetadata";
         private string _accountName;
         private readonly Uri _endpoint;
         private Guid? _batchGuid;
@@ -482,8 +480,8 @@ namespace Azure.Data.Tables
                 context.AddClassifier((int)HttpStatusCode.Conflict, false);
                 var response = _tableOperations.Create(
                     RequestContent.Create(new { TableName = Name }),
-                    MinimalMetadata,
-                    ReturnNoContent,
+                    TableConstants.Odata.MinimalMetadata,
+                    TableConstants.ReturnNoContent,
                     context);
 
                 if (response.IsError || response.Status == (int)HttpStatusCode.Conflict)
@@ -518,8 +516,8 @@ namespace Azure.Data.Tables
                 var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
                 var response = await _tableOperations.CreateAsync(
                     RequestContent.Create(new { TableName = Name }),
-                    MinimalMetadata,
-                    ReturnNoContent,
+                    TableConstants.Odata.MinimalMetadata,
+                    TableConstants.ReturnNoContent,
                     context).ConfigureAwait(false);
 
                 if (response.IsError)
@@ -550,7 +548,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.Delete(Name, CreateContextForDelete(cancellationToken));
+                return _tableOperations.Delete(Name, TableServiceClient.CreateContextForDelete(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -570,20 +568,13 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(Name, CreateContextForDelete(cancellationToken)).ConfigureAwait(false);
+                return await _tableOperations.DeleteAsync(Name, TableServiceClient.CreateContextForDelete(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private static RequestContext CreateContextForDelete(CancellationToken cancellationToken)
-        {
-            var context = new RequestContext() { CancellationToken = cancellationToken };
-            context.AddClassifier(404, false);
-            return context;
         }
 
         /// <summary>
