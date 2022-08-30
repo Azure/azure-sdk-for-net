@@ -2343,8 +2343,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     await processor.CloseAsync();
                 }
-                // add allowance for last batch of messages that may not be processed in time
-                Assert.GreaterOrEqual(processedCount, sentCount - 30);
+                // add allowance for last few batches of messages that may not be processed in time
+                Assert.GreaterOrEqual(processedCount, sentCount - 60);
 
                 async Task SendMessagesAsync(CancellationToken cancellationToken)
                 {
