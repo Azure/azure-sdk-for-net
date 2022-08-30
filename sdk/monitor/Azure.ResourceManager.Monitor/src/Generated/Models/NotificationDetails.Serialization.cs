@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AzNsActionGroup : IUtf8JsonSerializable
+    public partial class NotificationDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static AzNsActionGroup DeserializeAzNsActionGroup(JsonElement element)
+        internal static NotificationDetails DeserializeNotificationDetails(JsonElement element)
         {
             Optional<IList<string>> actionGroup = default;
             Optional<string> emailSubject = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AzNsActionGroup(Optional.ToList(actionGroup), emailSubject.Value, customWebhookPayload.Value);
+            return new NotificationDetails(Optional.ToList(actionGroup), emailSubject.Value, customWebhookPayload.Value);
         }
     }
 }

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PredictiveResponse
+    public partial class AutoscaleSettingPredicativeResult
     {
-        internal static PredictiveResponse DeserializePredictiveResponse(JsonElement element)
+        internal static AutoscaleSettingPredicativeResult DeserializeAutoscaleSettingPredicativeResult(JsonElement element)
         {
             Optional<string> timespan = default;
             Optional<TimeSpan> interval = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new PredictiveResponse(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, Optional.ToList(data));
+            return new AutoscaleSettingPredicativeResult(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, Optional.ToList(data));
         }
     }
 }
