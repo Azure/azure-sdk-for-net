@@ -301,12 +301,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTable> Tables { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BoundingRegion
+    public readonly partial struct BoundingRegion : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> BoundingPolygon { get { throw null; } }
         public int PageNumber { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BuildModelOperation : Azure.Operation<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails>
     {
@@ -696,11 +702,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DocumentSpan
+    public readonly partial struct DocumentSpan : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan>
     {
         private readonly int _dummyPrimitive;
         public int Index { get { throw null; } }
         public int Length { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DocumentStyle
     {

@@ -20,6 +20,10 @@
 - Removed property `BuildModelOptions.Prefix`. The prefix must now be set with the `prefix` parameter in the method `BuildModel`.
 - Removed class `DocumentPageKind` and related properties.
 - Made `BoundingRegion` a `struct` instead of a `class`.
+- `BoundingRegion` now implements the `IEquatable<BoundingRegion>` interface.
+- Overrode `BoundingRegion.ToString` to include information about its page number and its bounding polygon in its string representation.
+- `DocumentSpan` now implements the `IEquatable<DocumentSpan>` interface.
+- Overrode `DocumentSpan.ToString` to include information about its index and its length in its string representation.
 
 ### Bugs Fixed
 
