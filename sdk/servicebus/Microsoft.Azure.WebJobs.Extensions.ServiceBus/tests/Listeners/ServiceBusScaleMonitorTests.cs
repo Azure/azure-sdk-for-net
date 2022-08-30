@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public void ScaleMonitorDescriptor_ReturnsExpectedValue()
         {
-            Assert.AreEqual($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(), _scaleMonitor.Descriptor.Id);
+            Assert.AreEqual($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(), ((IScaleMonitor)_scaleMonitor).Descriptor.Id);
         }
 
         [Test]

@@ -16,17 +16,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         /// <summary>
         /// The number of messages currently in the queue/topic.
         /// </summary>
-        public long MessageCount { get; set; }
+        public long MessageCount { get; internal set; }
 
         /// <summary>
         /// The number of partitions.
         /// </summary>
-        public int PartitionCount { get; set; }
+        public int PartitionCount { get; internal set; }
 
         /// <summary>
         /// The length of time the next message has been
         /// sitting there.
         /// </summary>
-        public TimeSpan QueueTime { get; set; }
+        public TimeSpan QueueTime { get; internal set; }
     }
 }

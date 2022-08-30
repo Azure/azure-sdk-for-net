@@ -77,20 +77,24 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _receiver = new Lazy<ServiceBusReceiver>(() => _client.Value.CreateReceiver(entityPath));
         }
 
-        public ScaleMonitorDescriptor Descriptor
+        ScaleMonitorDescriptor IScaleMonitor.Descriptor
         {
             get
             {
                 return _scaleMonitorDescriptor;
             }
         }
-
         async Task<ScaleMetrics> IScaleMonitor.GetMetricsAsync()
         {
             return await GetMetricsAsync().ConfigureAwait(false);
         }
 
-        public async Task<ServiceBusTriggerMetrics> GetMetricsAsync()
+        async Task<ServiceBusTriggerMetrics> IScaleMonitor<ServiceBusTriggerMetrics>.GetMetricsAsync()
+        {
+            return await GetMetricsAsync().ConfigureAwait(false);
+        }
+
+        internal async Task<ServiceBusTriggerMetrics> GetMetricsAsync()
         {
             ServiceBusReceivedMessage activeMessage = null;
             string entityName = _serviceBusEntityType == ServiceBusEntityType.Queue ? "queue" : "topic";
@@ -233,7 +237,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<ServiceBusTriggerMetrics>().ToArray());
         }
 
-        public ScaleStatus GetScaleStatus(ScaleStatusContext<ServiceBusTriggerMetrics> context)
+        ScaleStatus IScaleMonitor<ServiceBusTriggerMetrics>.GetScaleStatus(ScaleStatusContext<ServiceBusTriggerMetrics> context)
+        {
+            return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<ServiceBusTriggerMetrics>().ToArray());
+        }
+
+        internal ScaleStatus GetScaleStatus(ScaleStatusContext<ServiceBusTriggerMetrics> context)
         {
             return GetScaleStatusCore(context.WorkerCount, context.Metrics?.ToArray());
         }
