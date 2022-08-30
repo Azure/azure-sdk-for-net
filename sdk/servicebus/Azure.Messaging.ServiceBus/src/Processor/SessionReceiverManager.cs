@@ -277,6 +277,8 @@ namespace Azure.Messaging.ServiceBus
                 }
                 finally
                 {
+                    // The lock is acquired in ServiceBusProcessor as part of the RunReceiveTaskAsync loop, but we release it here
+                    // once we've either accepted a new session or determined we don't need to accept one.
                     _concurrentAcceptSessionsSemaphore.Release();
                 }
 
