@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Route.Models
 {
-    /// <summary> An item returned from Batch API. Extend with &apos;response&apos; property. </summary>
+    /// <summary> An item returned from Batch API. Extend with <c>response</c> property. </summary>
     [CodeGenModel("BatchResultItem")]
     internal partial class BatchResultItem
     {

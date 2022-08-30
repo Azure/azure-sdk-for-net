@@ -33,21 +33,13 @@ namespace Azure.Maps.Route.Models
 
         /// <summary>
         /// All alternative routes returned will follow the reference route (see section POST Requests) from the origin point of the calculateRoute request for at least this number of seconds. Can only be used when reconstructing a route. The minDeviationTime parameter cannot be used in conjunction with arriveAt. Default value is 0. Setting )minDeviationTime_ to a value greater than zero has the following consequences:
-        ///   - The origin point of the _calculateRoute_ Request must be on
-        ///     (or very near) the input reference route.
-        ///     - If this is not the case, an error is returned.
-        ///     - However, the origin point does not need to be at the beginning
-        ///       of the input reference route (it can be thought of as the current
-        ///       vehicle position on the reference route).
-        ///   - The reference route, returned as the first route in the _calculateRoute_
-        ///     Response, will start at the origin point specified in the _calculateRoute_
-        ///     Request. The initial part of the input reference route up until the origin
-        ///     point will be excluded from the Response.
-        ///   - The values of _minDeviationDistance_ and _minDeviationTime_ determine
-        ///     how far alternative routes will be guaranteed to follow the reference
-        ///     route from the origin point onwards.
-        ///   - The route must use _departAt_.
-        ///   - The _vehicleHeading_ is ignored.
+        /// The origin point of the calculateRoute Request must be on (or very near) the input reference route.
+        /// If this is not the case, an error is returned. However, the origin point does not need to be at the beginning of the input reference route (it can be thought of as the current vehicle position on the reference route).
+        /// The reference route, returned as the first route in the calculateRoute response, will start at the origin point specified in the calculateRoute Request.
+        /// The initial part of the input reference route up until the origin point will be excluded from the Response.
+        /// The values of <c>minDeviationDistance</c> and <c>minDeviationTime</c> determine how far alternative routes will be guaranteed to follow the reference route from the origin point onwards.
+        /// The route must use <c>departAt</c>.
+        /// The <c>VehicleHeading</c> is ignored.
         /// </summary>
         public int? MinDeviationTime { get; set; }
 
@@ -55,8 +47,7 @@ namespace Azure.Maps.Route.Models
         public RouteInstructionsType? InstructionsType { get; set; }
 
         /// <summary>
-        /// The language parameter determines the language of the guidance messages. Proper nouns (the names of streets, plazas, etc.) are returned in the specified  language, or if that is not available, they are returned in an available language  that is close to it. Allowed values are (a subset of) the IETF language tags. The currently supported  languages are listed in the [Supported languages  section](https://docs.microsoft.com/azure/azure-maps/supported-languages).
-        ///
+        /// The language parameter determines the language of the guidance messages. Proper nouns (the names of streets, plazas, etc.) are returned in the specified  language, or if that is not available, they are returned in an available language  that is close to it. Allowed values are (a subset of) the IETF language tags. The currently supported  languages are listed in the <see href="https://docs.microsoft.com/azure/azure-maps/supported-languages">Supported languages  section</see>.
         /// Default value: en-GB
         /// </summary>
         public string Language { get; set; }
@@ -73,7 +64,7 @@ namespace Azure.Maps.Route.Models
         /// <summary> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </summary>
         public int? VehicleHeading { get; set; }
 
-        /// <summary> Specifies which data should be reported for diagnosis purposes. The only possible value is _effectiveSettings_. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </summary>
+        /// <summary> Specifies which data should be reported for diagnosis purposes. The only possible value is <c>EffectiveSettings</c>. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </summary>
         public Report? Report { get; set; }
 
         /// <summary> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </summary>
@@ -84,25 +75,27 @@ namespace Azure.Maps.Route.Models
 
         /// <summary>
         /// Possible values:
-        ///   * <c>true</c> - Do consider all available traffic information during routing
-        ///   * <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored
-        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
+        /// <list>
+        /// <item> <c>true</c> - Do consider all available traffic information during routing </item>
+        /// <item> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </item>
+        /// </list>
+        /// During routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </summary>
         public bool? UseTrafficData { get; set; }
 
-        /// <summary> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </summary>
+        /// <summary> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </summary>
         public IList<RouteAvoidType> Avoid { get; } = new List<RouteAvoidType>();
 
-        /// <summary> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </summary>
+        /// <summary> The mode of travel for the requested route. If not defined, default is <c>car</c>. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In <c>calculateReachableRange</c> requests, the values bicycle and pedestrian must not be used. </summary>
         public TravelMode? TravelMode { get; set; }
 
-        /// <summary> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </summary>
+        /// <summary> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with <c>routeType.Thrilling</c>. </summary>
         public InclineLevel? InclineLevel { get; set; }
 
-        /// <summary> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </summary>
+        /// <summary> Level of turns for thrilling route. This parameter can only be used in conjunction with <c>routeType.Thrilling</c>. </summary>
         public WindingnessLevel? Windingness { get; set; }
 
-        /// <summary> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </summary>
+        /// <summary> Weight per axle of the vehicle in kilogram. A value of 0 means that weight restrictions per axle are not considered. </summary>
         public int? VehicleAxleWeightInKilograms { get; set; }
 
         /// <summary> Width of the vehicle in meters. A value of 0 means that width restrictions are not considered. </summary>
@@ -116,25 +109,22 @@ namespace Azure.Maps.Route.Models
 
         /// <summary>
         /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        ///
-        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
-        ///
-        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
+        /// <list>
+        /// <item> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </item>
+        /// <item> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </item>
+        /// </list>
         /// </summary>
         public int? VehicleMaxSpeedInKmPerHour { get; set; }
 
         /// <summary>
         /// Weight of the vehicle in kilograms.
-        ///
-        /// * It is mandatory if any of the *Efficiency parameters are set.
-        ///
-        /// * It must be strictly positive when used in the context of the Consumption Model. Weight restrictions are considered.
-        ///
-        /// * If no detailed **Consumption Model** is specified and the value of **vehicleWeight** is non-zero, then weight restrictions are considered.
-        ///
-        /// * In all other cases, this parameter is ignored.
-        ///
-        /// Sensible Values : for **Combustion Model** : 1600, for **Electric Model** : 1900
+        /// <list>
+        /// <item> It is mandatory if any of the *Efficiency parameters are set. </item>
+        /// <item> It must be strictly positive when used in the context of the Consumption Model. Weight restrictions are considered. </item>
+        /// <item> If no detailed <c>Consumption Model</c> is specified and the value of <c>vehicleWeight</c> is non-zero, then weight restrictions are considered. </item>
+        /// <item> In all other cases, this parameter is ignored. </item>
+        /// </list>
+        /// Sensible Values : for Combustion Model : 1600, for Electric Model : 1900
         /// </summary>
         public int? VehicleWeightInKilograms { get; set; }
 
@@ -144,166 +134,126 @@ namespace Azure.Maps.Route.Models
         /// <summary> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </summary>
         public VehicleLoadType? VehicleLoadType { get; set; }
 
-        /// <summary> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of **vehicleEngineType**. </summary>
+        /// <summary> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of <c>vehicleEngineType</c>. </summary>
         public VehicleEngineType? VehicleEngineType { get; set; }
 
         /// <summary>
-        ///
         /// Specifies the speed-dependent component of consumption.
-        ///
         /// Provided as an unordered list of colon-delimited speed &amp; consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
-        ///
-        ///  * by linear interpolation, if the given speed lies in between two speeds in the list
-        ///
-        ///  * by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list
-        ///
+        /// <list>
+        /// <item> by linear interpolation, if the given speed lies in between two speeds in the list </item>
+        /// <item> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list </item>
+        /// </list>
         /// The list must contain between 1 and 25 points (inclusive), and may not contain duplicate points for the same speed. If it only contains a single point, then the consumption rate of that point is used without further processing.
-        ///
         /// Consumption specified for the largest speed must be greater than or equal to that of the penultimate largest speed. This ensures that extrapolation does not lead to negative consumption rates.
-        ///
         /// Similarly, consumption values specified for the two smallest speeds in the list cannot lead to a negative consumption rate for any smaller speed.
-        ///
         /// The valid range for the consumption values(expressed in l/100km) is between 0.01 and 100000.0.
-        ///
         /// Sensible Values : 50,6.3:130,11.5
-        ///
-        /// **Note** : This parameter is required for **The Combustion Consumption Model**.
+        /// Note : This parameter is required for the Combustion Consumption Model
         /// </summary>
         public string ConstantSpeedConsumptionInLitersPerHundredKm { get; set; }
 
         /// <summary>
         /// Specifies the current supply of fuel in liters.
-        ///
         /// Sensible Values : 55
         /// </summary>
         public double? CurrentFuelInLiters { get; set; }
 
         /// <summary>
         /// Specifies the amount of fuel consumed for sustaining auxiliary systems of the vehicle, in liters per hour.
-        ///
         /// It can be used to specify consumption due to devices and systems such as AC systems, radio, heating, etc.
-        ///
         /// Sensible Values : 0.2
         /// </summary>
         public double? AuxiliaryPowerInLitersPerHour { get; set; }
 
         /// <summary>
-        /// Specifies the amount of chemical energy stored in one liter of fuel in megajoules (MJ). It is used in conjunction with the ***Efficiency** parameters for conversions between saved or consumed energy and fuel. For example, energy density is 34.2 MJ/l for gasoline, and 35.8 MJ/l for Diesel fuel.
-        ///
-        /// This parameter is required if any ***Efficiency** parameter is set.
-        ///
+        /// Specifies the amount of chemical energy stored in one liter of fuel in megajoules (MJ). It is used in conjunction with the <c>Efficiency</c> parameters for conversions between saved or consumed energy and fuel. For example, energy density is 34.2 MJ/l for gasoline, and 35.8 MJ/l for Diesel fuel.
+        /// This parameter is required if any <c>Efficiency</c> parameter is set.
         /// Sensible Values : 34.2
         /// </summary>
         public double? FuelEnergyDensityInMegajoulesPerLiter { get; set; }
 
         /// <summary>
-        /// Specifies the efficiency of converting chemical energy stored in fuel to kinetic energy when the vehicle accelerates _(i.e. KineticEnergyGained/ChemicalEnergyConsumed). ChemicalEnergyConsumed_ is obtained by converting consumed fuel to chemical energy using **fuelEnergyDensityInMJoulesPerLiter**.
-        ///
-        /// Must be paired with **decelerationEfficiency**.
-        ///
-        /// The range of values allowed are 0.0 to 1/**decelerationEfficiency**.
-        ///
-        /// Sensible Values : for **Combustion Model** : 0.33, for **Electric Model** : 0.66
+        /// Specifies the efficiency of converting chemical energy stored in fuel to kinetic energy when the vehicle accelerates (i.e. KineticEnergyGained/ChemicalEnergyConsumed). ChemicalEnergyConsumed_ is obtained by converting consumed fuel to chemical energy using <c>fuelEnergyDensityInMJoulesPerLiter</c>.
+        /// Must be paired with <c>decelerationEfficiency</c>.
+        /// The range of values allowed are 0.0 to <c>1/decelerationEfficiency</c>.
+        /// Sensible Values : for Combustion Model : 0.33, for Electric Model : 0.66
         /// </summary>
         public double? AccelerationEfficiency { get; set; }
 
         /// <summary>
-        /// Specifies the efficiency of converting kinetic energy to saved (not consumed) fuel when the vehicle decelerates _(i.e. ChemicalEnergySaved/KineticEnergyLost). ChemicalEnergySaved_ is obtained by converting saved (not consumed) fuel to energy using **fuelEnergyDensityInMJoulesPerLiter**.
-        ///
-        /// Must be paired with **accelerationEfficiency**.
-        ///
-        /// The range of values allowed are 0.0 to 1/**accelerationEfficiency**.
-        ///
-        /// Sensible Values : for **Combustion Model** : 0.83, for **Electric Model** : 0.91
+        /// Specifies the efficiency of converting kinetic energy to saved (not consumed) fuel when the vehicle decelerates (i.e. ChemicalEnergySaved/KineticEnergyLost). ChemicalEnergySaved_ is obtained by converting saved (not consumed) fuel to energy using <c>fuelEnergyDensityInMJoulesPerLiter</c>.
+        /// Must be paired with <c>accelerationEfficiency</c>.
+        /// The range of values allowed are 0.0 to <c>1/accelerationEfficiency</c>.
+        /// Sensible Values : for Combustion Model : 0.83, for Electric Model : 0.91
         /// </summary>
         public double? DecelerationEfficiency { get; set; }
 
         /// <summary>
-        /// Specifies the efficiency of converting chemical energy stored in fuel to potential energy when the vehicle gains elevation _(i.e. PotentialEnergyGained/ChemicalEnergyConsumed). ChemicalEnergyConsumed_ is obtained by converting consumed fuel to chemical energy using **fuelEnergyDensityInMJoulesPerLiter**.
-        ///
-        /// Must be paired with **downhillEfficiency**.
-        ///
-        /// The range of values allowed are 0.0 to 1/**downhillEfficiency**.
-        ///
-        /// Sensible Values : for **Combustion Model** : 0.27, for **Electric Model** : 0.74
+        /// Specifies the efficiency of converting chemical energy stored in fuel to potential energy when the vehicle gains elevation (i.e. PotentialEnergyGained/ChemicalEnergyConsumed). ChemicalEnergyConsumed_ is obtained by converting consumed fuel to chemical energy using <c>fuelEnergyDensityInMJoulesPerLiter</c>.
+        /// Must be paired with <c>downhillEfficiency</c>.
+        /// The range of values allowed are 0.0 to 1/<c>downhillEfficiency</c>.
+        /// Sensible Values : for Combustion Model : 0.27, for Electric Model : 0.74
         /// </summary>
         public double? UphillEfficiency { get; set; }
 
         /// <summary>
-        /// Specifies the efficiency of converting potential energy to saved (not consumed) fuel when the vehicle loses elevation _(i.e. ChemicalEnergySaved/PotentialEnergyLost). ChemicalEnergySaved_ is obtained by converting saved (not consumed) fuel to energy using **fuelEnergyDensityInMJoulesPerLiter**.
-        ///
-        /// Must be paired with **uphillEfficiency**.
-        ///
-        /// The range of values allowed are 0.0 to 1/**uphillEfficiency**.
-        ///
-        /// Sensible Values : for **Combustion Model** : 0.51, for **Electric Model** : 0.73
+        /// Specifies the efficiency of converting potential energy to saved (not consumed) fuel when the vehicle loses elevation (i.e. ChemicalEnergySaved/PotentialEnergyLost). ChemicalEnergySaved_ is obtained by converting saved (not consumed) fuel to energy using <c>fuelEnergyDensityInMJoulesPerLiter</c>.
+        /// Must be paired with <c>uphillEfficiency</c>.
+        /// The range of values allowed are 0.0 to 1/<c>uphillEfficiency</c>.
+        /// Sensible Values : for Combustion Model : 0.51, for Electric Model : 0.73
         /// </summary>
         public double? DownhillEfficiency { get; set; }
 
         /// <summary>
         /// Specifies the speed-dependent component of consumption.
-        ///
         /// Provided as an unordered list of speed/consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
-        ///
-        /// * by linear interpolation, if the given speed lies in between two speeds in the list
-        ///
-        /// * by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list
-        ///
+        /// <list>
+        /// <item> by linear interpolation, if the given speed lies in between two speeds in the list </item>
+        /// <item> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list </item>
+        /// </list>
         /// The list must contain between 1 and 25 points (inclusive), and may not contain duplicate points for the same speed. If it only contains a single point, then the consumption rate of that point is used without further processing.
-        ///
         /// Consumption specified for the largest speed must be greater than or equal to that of the penultimate largest speed. This ensures that extrapolation does not lead to negative consumption rates.
-        ///
         /// Similarly, consumption values specified for the two smallest speeds in the list cannot lead to a negative consumption rate for any smaller  speed.
-        ///
         /// The valid range for the consumption values(expressed in kWh/100km) is between 0.01 and 100000.0.
-        ///
         /// Sensible Values : 50,8.2:130,21.3
-        ///
-        /// This parameter is required for **Electric consumption model**.
+        /// This parameter is required for <c>Electric consumption model</c>.
         /// </summary>
         public string ConstantSpeedConsumptionInKwHPerHundredKm { get; set; }
 
         /// <summary>
         /// Specifies the current electric energy supply in kilowatt hours (kWh).
-        ///
-        /// This parameter co-exists with **maxChargeInkWh** parameter.
-        ///
-        /// The range of values allowed are 0.0 to **maxChargeInkWh**.
-        ///
+        /// This parameter co-exists with <c>maxChargeInkWh</c> parameter.
+        /// The range of values allowed are 0.0 to <c>maxChargeInkWh</c>.
         /// Sensible Values : 43
         /// </summary>
         public double? CurrentChargeInKwH { get; set; }
 
         /// <summary>
-        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle&apos;s battery.
-        ///
-        /// This parameter co-exists with **currentChargeInkWh** parameter.
-        ///
-        /// Minimum value has to be greater than or equal to **currentChargeInkWh**.
-        ///
+        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
+        /// This parameter co-exists with <c>currentChargeInkWh</c> parameter.
+        /// Minimum value has to be greater than or equal to <c>currentChargeInkWh</c>.
         /// Sensible Values : 85
         /// </summary>
         public double? MaxChargeInKwH { get; set; }
 
         /// <summary>
         /// Specifies the amount of power consumed for sustaining auxiliary systems, in kilowatts (kW).
-        ///
         /// It can be used to specify consumption due to devices and systems such as AC systems, radio, heating, etc.
-        ///
         /// Sensible Values : 1.7
         /// </summary>
         public double? AuxiliaryPowerInKw { get; set; }
 
         /// <summary>
         /// Used for reconstructing a route and for calculating zero or more alternative routes to this reference route.  The provided sequence of coordinates is used as input for route reconstruction. The alternative routes  are calculated between the origin and destination points specified in the base path parameter locations.  If both minDeviationDistance and minDeviationTime are set to zero, then these origin and destination points  are expected to be at (or very near) the beginning and end of the reference route, respectively. Intermediate  locations (waypoints) are not supported when using supportingPoints.
-        ///
         /// Setting at least one of minDeviationDistance or minDeviationTime to a value greater than zero has the  following consequences:
-        ///
-        /// *  The origin point of the calculateRoute request must be on (or very near) the input reference route. If  this is not the case, an error is returned. However, the origin point does not need to be at the beginning of  the input reference route (it can be thought of as the current vehicle position on the reference route).
-        /// *  The reference route, returned as the first route in the calculateRoute response, will start at the origin  point specified in the calculateRoute request. The initial part of the input reference route up until the  origin point will be excluded from the response.
-        /// *  The values of minDeviationDistance and minDeviationTime determine how far alternative routes will be  guaranteed to follow the reference route from the origin point onwards.
-        /// *  The route must use departAt.
-        /// *  The vehicleHeading is ignored.
+        /// <list>
+        /// <item> The origin point of the calculateRoute request must be on (or very near) the input reference route. If  this is not the case, an error is returned. However, the origin point does not need to be at the beginning of  the input reference route (it can be thought of as the current vehicle position on the reference route). </item>
+        /// <item> The reference route, returned as the first route in the calculateRoute response, will start at the origin  point specified in the calculateRoute request. The initial part of the input reference route up until the  origin point will be excluded from the response. </item>
+        /// <item> The values of minDeviationDistance and minDeviationTime determine how far alternative routes will be  guaranteed to follow the reference route from the origin point onwards. </item>
+        /// <item> The route must use departAt. </item>
+        /// <item> The vehicleHeading is ignored. </item>
+        /// </list>
         /// </summary>
         public RouteDirectionParameters RouteDirectionParameters { get; set; }
     }

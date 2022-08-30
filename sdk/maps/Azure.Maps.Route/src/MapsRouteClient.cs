@@ -66,7 +66,10 @@ namespace Azure.Maps.Route
 
         /// <summary> Initializes a new instance of MapsRouteClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Route Service. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.
+        /// It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API.
+        /// To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="clientId"/> is null. </exception>
         public MapsRouteClient(TokenCredential credential, string clientId)
         {
@@ -82,7 +85,10 @@ namespace Azure.Maps.Route
 
         /// <summary> Initializes a new instance of MapsRouteClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Route Service. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.
+        /// It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API.
+        /// To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance.
+        /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="clientId"/> is null. </exception>
         public MapsRouteClient(TokenCredential credential, string clientId, MapsRouteClientOptions options)
@@ -98,9 +104,10 @@ namespace Azure.Maps.Route
         }
 
         /// <summary>
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request.
+        /// For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
-        /// The maximum size of a matrix for sync request is **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for sync request is <c>100</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
         /// <param name="routeMatrixQuery"> The route matrix to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,9 +151,11 @@ namespace Azure.Maps.Route
         }
 
         /// <summary>
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request.
+        /// For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of
+        /// a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
-        /// The maximum size of a matrix for sync request is **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for sync request is <c>100</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
         /// <param name="options"> The route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,9 +200,9 @@ namespace Azure.Maps.Route
         }
 
         /// <summary>
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
-        /// The maximum size of a matrix for sync request is **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for sync request is <c>100</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
         /// <param name="routeMatrixQuery"> The route matrix to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -237,9 +246,9 @@ namespace Azure.Maps.Route
         }
 
         /// <summary>
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
-        /// The maximum size of a matrix for sync request is **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for sync request is <c>100</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
         /// <param name="options"> The route direction options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -285,9 +294,7 @@ namespace Azure.Maps.Route
 
         /// <summary>
         /// Returns a route between an origin and a destination, passing through waypoints if they are specified. The route will take into account factors such as current traffic and the typical road speeds on the requested day of the week and time of day.
-        ///
         /// Information returned includes the distance, estimated travel time, and a representation of the route geometry. Additional routing information such as optimized waypoint order or turn by turn instructions is also available, depending on the options selected.
-        ///
         /// Routing service provides a set of parameters for a detailed description of vehicle-specific Consumption Model. Please check <see href="https://docs.microsoft.com/azure/azure-maps/consumption-model">Consumption Model</see> for detailed explanation of the concepts and parameters involved.
         /// </summary>
         /// <param name="routeDirectionQuery"> The route direction query, including a list of route points and route direction options. </param>
@@ -661,7 +668,7 @@ namespace Azure.Maps.Route
 
         /// <summary>
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
-        /// You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The sync API up to **100** queries.
+        /// You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The sync API up to <c>100</c> queries.
         /// </summary>
         /// <param name="routeDirectionQueries"> The list of route directions queries/requests to process. The list can contain 100 queries for sync version and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -686,7 +693,7 @@ namespace Azure.Maps.Route
 
         /// <summary>
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
-        /// You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The sync API up to **100** queries.
+        /// You can call Route Directions Batch API to run either asynchronously (async) or synchronously (sync). The sync API up to <c>100</c> queries.
         /// </summary>
         /// <param name="routeDirectionQueries"> The list of route directions queries/requests to process. The list can contain 100 queries for sync version and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -710,9 +717,10 @@ namespace Azure.Maps.Route
         }
 
         /// <summary>
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request.
+        /// For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell.
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
-        /// The maximum size of a matrix for async request is **700** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for async request is <c>700</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
         /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="options"> The route direction options. </param>
@@ -768,9 +776,10 @@ namespace Azure.Maps.Route
         }
 
         /// <summary>
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request.
+        /// For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell.
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
-        /// The maximum size of a matrix for async request is **700** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for async request is <c>700</c> (the number of origins multiplied by the number of destinations).
         /// </summary>
         /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="options"> The route direction options. </param>
@@ -827,7 +836,7 @@ namespace Azure.Maps.Route
 
         /// <summary>
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
-        /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to **700** queries.
+        /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to <c>700</c> queries.
         /// </summary>
         /// <param name="waitUntil"> If the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeDirectionsQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>
@@ -863,7 +872,7 @@ namespace Azure.Maps.Route
 
         /// <summary>
         /// The Route Directions Batch API sends batches of queries to <see href="https://docs.microsoft.com/rest/api/maps/route/getroutedirections">Route Directions API</see> using just a single API call.
-        /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to **700** queries.
+        /// TThis Route Directions Batch API will run asynchronously (async) and it allows caller to batch up to <c>700</c> queries.
         /// </summary>
         /// <param name="waitUntil"> Whether to return once method is invoked or wait for the server operation to fully complete before returning. Possible value: <c>WaitUntil.Completed</c> and <c>WaitUntil.Started</c> </param>
         /// <param name="routeDirectionsQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and must contain at least 1 query. </param>

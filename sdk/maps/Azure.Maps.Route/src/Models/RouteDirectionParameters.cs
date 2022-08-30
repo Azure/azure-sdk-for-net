@@ -26,17 +26,17 @@ namespace Azure.Maps.Route.Models
         private GeoCollection _SupportingPoints;
         /// <summary>
         /// A GeoJSON collection representing sequence of coordinates used as input for route reconstruction and for calculating zero or more alternative routes to this reference route.
-        ///   - The provided sequence of supporting points is used as input for route reconstruction.
-        ///   - The alternative routes are calculated between the origin and destination points specified in the base path parameter locations.
-        ///   - If both _minDeviationDistance_ and _minDeviationTime_ are set to zero, then these origin and destination points are
-        ///   expected to be at (or very near) the beginning and end of the reference route, respectively.
-        ///   - Intermediate locations (_waypoints_) are not supported when using &lt;_supportingPoints_&gt;.
-        ///   - The reference route may contain traffic incidents of type _ROAD_CLOSURE_, which are
-        ///   ignored for the calculation of the reference route&apos;s travel time and traffic delay.
-        ///  Current support type: `GeoPoint`, `GeoPointColletion`, `GeoPolygon`, `GeoPolygonCollection`, `GeoLineString`, `GeoLineStringCollection`
+        /// <list>
+        /// <item> The provided sequence of supporting points is used as input for route reconstruction. </item>
+        /// <item> The alternative routes are calculated between the origin and destination points specified in the base path parameter locations. </item>
+        /// <item> If both <c>MinDeviationDistance</c> and <c>MinDeviationTime</c> are set to zero, then these origin and destination points are expected to be at (or very near) the beginning and end of the reference route, respectively. </item>
+        /// <item> Intermediate locations (waypoints) are not supported when using <c>SupportingPoints</c>. </item>
+        /// <item> The reference route may contain traffic incidents of type _ROAD_CLOSURE_, which are ignored for the calculation of the reference route's travel time and traffic delay. </item>
+        /// </list>
+        ///  Current support type: <c>GeoPoint</c>, <c>GeoPointColletion</c>, <c>GeoPolygon</c>, <c>GeoPolygonCollection</c>, <c>GeoLineString</c>, <c>GeoLineStringCollection</c>
         ///  Please refer to <see ref="https://docs.microsoft.com/azure/azure-maps/how-to-use-best-practices-for-routing#calculate-and-bias-alternative-routes-using-supporting-points">Supporting Points</see> for details.
         /// </summary>
-        /// <exception cref="ArgumentException"> Unsupported GeoCollection type when assign to SupportingPoints. </exception>
+        /// <exception cref="ArgumentException"> Unsupported GeoCollection type when assign to <c>SupportingPoints</c>. </exception>
         public GeoCollection SupportingPoints {
             get => _SupportingPoints;
             set
@@ -72,13 +72,13 @@ namespace Azure.Maps.Route.Models
 
         private GeoPolygonCollection _AvoidAreas;
 
-        /// <summary> A GeoJSON PolygonCollection representing list of areas to avoid. Only rectangle polygons are supported. The maximum size of a rectangle is about 160x160 km. Maximum number of avoided areas is **10**. It cannot cross the 180th meridian. It must be between -80 and +80 degrees of latitude. </summary>
+        /// <summary> A GeoJSON PolygonCollection representing list of areas to avoid. Only rectangle polygons are supported. The maximum size of a rectangle is about 160x160 km. Maximum number of avoided areas is <c>10</c>. It cannot cross the 180th meridian. It must be between -80 and +80 degrees of latitude. </summary>
         public GeoPolygonCollection AvoidAreas {
             get => _AvoidAreas;
             set
             {
                 _AvoidAreas = value;
-                // Convert GeoPolygonCollection to GeoJsonMultiPolygon and store in `_AvoidAreas`
+                // Convert GeoPolygonCollection to GeoJsonMultiPolygon and store in AvoidAreas
                 IList<IList<IList<IList<double>>>> coordinates = new List<IList<IList<IList<double>>>>();
                 foreach (var avoidArea in _AvoidAreas)
                 {

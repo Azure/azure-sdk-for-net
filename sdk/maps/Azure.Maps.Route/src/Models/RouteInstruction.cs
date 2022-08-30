@@ -9,7 +9,7 @@ using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Route.Models
 {
-    /// <summary> A set of attributes describing a maneuver, e.g. &apos;Turn right&apos;, &apos;Keep left&apos;, &apos;Take the ferry&apos;, &apos;Take the motorway&apos;, &apos;Arrive&apos;. </summary>
+    /// <summary> A set of attributes describing a maneuver, e.g. "Turn right", "Keep left", "Take the ferry", "Take the motorway", "Arrive". </summary>
     public partial class RouteInstruction
     {
         /// <summary> Initializes a new instance of RouteInstruction. </summary>
@@ -22,21 +22,22 @@ namespace Azure.Maps.Route.Models
         /// <param name="exitNumber"> The number(s) of a highway exit taken by the current maneuver. If an exit has multiple exit numbers, they will be separated by &quot;,&quot; and possibly aggregated by &quot;-&quot;, e.g., &quot;10, 13-15&quot;. </param>
         /// <param name="street"> Street name of the next significant road segment after the maneuver, or of the street that should be followed. </param>
         /// <param name="signpostText"> The text on a signpost which is most relevant to the maneuver, or to the direction that should be followed. </param>
-        /// <param name="countryCode"> 3-character [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html) alpha-3 country code. E.g. USA. </param>
-        /// <param name="stateCode"> A subdivision (e.g., state) of the country, represented by the second part of an [ISO 3166-2](https://www.iso.org/standard/63546.html) code. This is only available for some countries like the US, Canada, and Mexico. </param>
+        /// <param name="countryCode"> 3-character <see href="https://www.iso.org/iso-3166-country-codes.html">ISO 3166-1</see> alpha-3 country code. E.g. USA. </param>
+        /// <param name="stateCode"> A subdivision (e.g., state) of the country, represented by the second part of an <see href="https://www.iso.org/standard/63546.html">ISO 3166-2</see> code. This is only available for some countries like the US, Canada, and Mexico. </param>
         /// <param name="junctionType"> The type of the junction where the maneuver takes place. For larger roundabouts, two separate instructions are generated for entering and leaving the roundabout. </param>
         /// <param name="turnAngleInDegrees">
         /// Indicates the direction of an instruction. If junctionType indicates a turn instruction:
-        ///
-        ///   * 180 = U-turn
-        ///   * [-179, -1] = Left turn
-        ///   * 0 = Straight on (a &apos;0 degree&apos; turn)
-        ///   * [1, 179] = Right turn
-        ///
+        /// <list>
+        /// <item> 180 = U-turn </item>
+        /// <item> [-179, -1] = Left turn </item>
+        /// <item> 0 = Straight on (a "0 degree" turn) </item>
+        /// <item> [1, 179] = Right turn </item>
+        /// </list>
         /// If junctionType indicates a bifurcation instruction:
-        ///
-        ///   * &lt;0 - keep left
-        ///   * \&gt;0 - keep right
+        /// <list>
+        /// <item> less than 0 - keep left </item>
+        /// <item> larger than 0 - keep right </item>
+        /// </list>
         /// </param>
         /// <param name="roundaboutExitNumber"> This indicates which exit to take at a roundabout. </param>
         /// <param name="possibleCombineWithNext"> It is possible to optionally combine the instruction with the next one. This can be used to build messages like &quot;Turn left and then turn right&quot;. </param>
@@ -46,17 +47,17 @@ namespace Azure.Maps.Route.Models
         /// <param name="combinedMessage">
         /// A human-readable message for the maneuver combined with the message from the next instruction. Sometimes it is possible to combine two successive instructions into a single instruction making it easier to follow. When this is the case the possibleCombineWithNext flag will be true. For example:
         ///
-        /// ```
+        /// <code>
         /// 10. Turn left onto Einsteinweg/A10/E22 towards Ring Amsterdam
         /// 11. Follow Einsteinweg/A10/E22 towards Ring Amsterdam
-        /// ```
+        /// </code>
         ///
         /// The possibleCombineWithNext flag on instruction 10 is true. This indicates to the clients of coded guidance that it can be combined with instruction 11. The instructions will be combined automatically for clients requesting human-readable guidance. The combinedMessage field contains the combined message:
         ///
-        /// ```
+        /// <code>
         /// Turn left onto Einsteinweg/A10/E22 towards Ring Amsterdam
         /// then follow Einsteinweg/A10/E22 towards Ring Amsterdam.
-        /// ```
+        /// </code>
         /// </param>
         internal RouteInstruction(int? routeOffsetInMeters, int? travelTimeInSeconds, LatLongPair point, int? pointIndex, GuidanceInstructionType? instructionType, IReadOnlyList<string> roadNumbers, string exitNumber, string street, string signpostText, string countryCode, string stateCode, JunctionType? junctionType, int? turnAngleInDegrees, string roundaboutExitNumber, bool? possibleCombineWithNext, DrivingSide? drivingSide, GuidanceManeuver? maneuver, string message, string combinedMessage)
         {

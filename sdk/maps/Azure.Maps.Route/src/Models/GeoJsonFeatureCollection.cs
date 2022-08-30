@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Route.Models
 {
-    /// <summary> A valid `GeoJSON FeatureCollection` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.3) for details. </summary>
+    /// <summary> A valid `GeoJSON FeatureCollection` object type. Please refer to <see href="https://tools.ietf.org/html/rfc7946#section-3.3">RFC 7946</see> for details. </summary>
     [CodeGenModel("GeoJsonFeatureCollection")]
     internal partial class GeoJsonFeatureCollection : GeoJsonObject
     {

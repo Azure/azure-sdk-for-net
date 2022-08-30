@@ -63,10 +63,10 @@ namespace Azure.Maps.Route.Models
 
         /// <summary>
         /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
-        ///
-        /// * A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning.
-        ///
-        /// * A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour.
+        /// <list>
+        /// <item> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </item>
+        /// <item> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </item>
+        /// </list>
         /// </summary>
         public int? VehicleMaxSpeedInKmPerHour { get; set; }
 
@@ -79,17 +79,19 @@ namespace Azure.Maps.Route.Models
         /// <summary> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. Allowed values: <c>InclineLevel.Low</c>, <c>InclineLevel.Normal</c>, or <c>InclineLevel.High</c>. </summary>
         public InclineLevel? InclineLevel { get; set; }
 
-        /// <summary> The mode of travel for the requested route. If not defined, default is <c>car</c>. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. Allowed values: <c>TravelModel.Car</c>, <c>TravelModel.Truck</c>, <c>TravelModel.Taxi</c>, <c>TravelModel.Bus</c>, <c>TravelModel.Van</c>, <c>TravelModel.Motorcycle</c>, <c>TravelModel.Bicycle</c>, or <c>TravelModel.Pedestrian</c>. </summary>
+        /// <summary> The mode of travel for the requested route. If not defined, default is <c>car</c>. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In <c>CalculateReachableRange</c> requests, the values bicycle and pedestrian must not be used. Allowed values: <c>TravelModel.Car</c>, <c>TravelModel.Truck</c>, <c>TravelModel.Taxi</c>, <c>TravelModel.Bus</c>, <c>TravelModel.Van</c>, <c>TravelModel.Motorcycle</c>, <c>TravelModel.Bicycle</c>, or <c>TravelModel.Pedestrian</c>. </summary>
         public TravelMode? TravelMode { get; set; }
 
-        /// <summary> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </summary>
+        /// <summary> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </summary>
         public IList<RouteAvoidType> Avoid { get; } = new List<RouteAvoidType>();
 
         /// <summary>
         /// Possible values:
-        ///   * <c>true</c> - Do consider all available traffic information during routing
-        ///   * <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored
-        ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
+        /// <list>
+        /// <item> <c>true</c> - Do consider all available traffic information during routing </item>
+        /// <item> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </item>
+        /// </list>
+        /// During routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </summary>
         public bool? UseTrafficData { get; set; }
 

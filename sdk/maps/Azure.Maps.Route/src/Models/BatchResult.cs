@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Route.Models
 {
-    /// <summary> This object is returned from a successful Batch service call. Extend with &apos;batchItems&apos; property. </summary>
+    /// <summary> This object is returned from a successful Batch service call. Extend with <c>batchItems</c> property. </summary>
     public partial class BatchResult
     {
         /// <summary> Summary of the results for the batch request. </summary>

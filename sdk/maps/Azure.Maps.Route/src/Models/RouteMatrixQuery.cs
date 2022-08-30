@@ -12,10 +12,10 @@ namespace Azure.Maps.Route.Models
     /// <summary> An object with a matrix of coordinates. </summary>
     public partial class RouteMatrixQuery
     {
-        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </summary>
+        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to <see href="https://tools.ietf.org/html/rfc7946#section-3.1.3">RFC 7946</see> for details. </summary>
         [CodeGenMember("Origins")]
         internal GeoJsonMultiPoint GeoJsonMultiPointOrigins { get; set; }
-        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </summary>
+        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to <see href="https://tools.ietf.org/html/rfc7946#section-3.1.3">RFC 7946</see> for details. </summary>
         [CodeGenMember("Destinations")]
         internal GeoJsonMultiPoint GeoJsonMultiPointDestinations { get; set; }
 
@@ -23,7 +23,7 @@ namespace Azure.Maps.Route.Models
         private IList<GeoPosition> _Destinations;
 
 #pragma warning disable CA2227
-        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </summary>
+        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to <see href="https://tools.ietf.org/html/rfc7946#section-3.1.3">RFC 7946</see> for details. </summary>
         public IList<GeoPosition> Origins {
             get => _Origins;
 
@@ -40,7 +40,7 @@ namespace Azure.Maps.Route.Models
                 GeoJsonMultiPointOrigins = new GeoJsonMultiPoint(multiPoint);
             }
         }
-        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </summary>
+        /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to <see href="https://tools.ietf.org/html/rfc7946#section-3.1.3">RFC 7946</see> for details. </summary>
         public IList<GeoPosition> Destinations {
             get => _Destinations;
 

@@ -10,7 +10,7 @@ using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Route.Models
 {
-    /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </summary>
+    /// <summary> A valid `GeoJSON MultiPoint` geometry type. Please refer to <see href="https://tools.ietf.org/html/rfc7946#section-3.1.3">RFC 7946</see> for details. </summary>
     [CodeGenModel("GeoJsonMultiPoint")]
     internal partial class GeoJsonMultiPoint : GeoJsonGeometry
     {
