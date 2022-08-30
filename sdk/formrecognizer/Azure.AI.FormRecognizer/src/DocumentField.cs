@@ -28,6 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="fieldType"> Data type of the field value. </param>
         internal DocumentField(DocumentFieldType fieldType)
         {
+            FieldType = fieldType;
             Value = new DocumentFieldValue(fieldType);
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = new ChangeTrackingList<DocumentSpan>();
@@ -54,6 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
+            FieldType = fieldType;
             Value = new DocumentFieldValue(fieldType, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMarkPrivate, valueSignature, valueCountryRegion, valueArray, valueObject, valueCurrency, valueAddress);
             Content = content;
             BoundingRegions = boundingRegions;
