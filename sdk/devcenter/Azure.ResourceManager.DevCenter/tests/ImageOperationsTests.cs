@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.DevCenter.Tests
         [PlaybackOnly("TODO")]
         public async Task ListImagesByDevCenter()
         {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-
-            ArmOperation<ResourceGroupResource> rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ResourceGroup, new ResourceGroupData(TestEnvironment.Location)).ConfigureAwait(false);
-            ResourceGroupResource rg = rgResponse.Value;
-
             ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);
 
             var devCenterResponse = await Client.GetDevCenterResource(devCenterId).GetAsync();
@@ -43,11 +38,6 @@ namespace Azure.ResourceManager.DevCenter.Tests
         [PlaybackOnly("TODO")]
         public async Task ListAndGetImagesByGallery()
         {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-
-            ArmOperation<ResourceGroupResource> rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ResourceGroup, new ResourceGroupData(TestEnvironment.Location)).ConfigureAwait(false);
-            ResourceGroupResource rg = rgResponse.Value;
-
             ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);
 
             var devCenterResponse = await Client.GetDevCenterResource(devCenterId).GetAsync();
