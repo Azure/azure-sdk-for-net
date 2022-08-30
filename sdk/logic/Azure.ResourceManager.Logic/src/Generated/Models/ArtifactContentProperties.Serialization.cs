@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
+                writer.WriteStringValue(ContentType.Value.ToString());
             }
             if (Optional.IsDefined(ContentLink))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
         internal static ArtifactContentProperties DeserializeArtifactContentProperties(JsonElement element)
         {
             Optional<BinaryData> content = default;
-            Optional<string> contentType = default;
+            Optional<ContentType> contentType = default;
             Optional<LogicContentLink> contentLink = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
@@ -79,7 +79,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("contentType"))
                 {
-                    contentType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    contentType = new ContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("contentLink"))
@@ -123,7 +128,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new ArtifactContentProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, contentType.Value, contentLink.Value);
+            return new ArtifactContentProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value);
         }
     }
 }

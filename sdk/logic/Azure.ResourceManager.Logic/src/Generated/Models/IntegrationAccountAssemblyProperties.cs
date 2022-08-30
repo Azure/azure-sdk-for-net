@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="assemblyVersion"> The assembly version. </param>
         /// <param name="assemblyCulture"> The assembly culture. </param>
         /// <param name="assemblyPublicKeyToken"> The assembly public key token. </param>
-        internal IntegrationAccountAssemblyProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicContentLink contentLink, string assemblyName, string assemblyVersion, string assemblyCulture, string assemblyPublicKeyToken) : base(createdOn, changedOn, metadata, content, contentType, contentLink)
+        internal IntegrationAccountAssemblyProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink, string assemblyName, string assemblyVersion, string assemblyCulture, string assemblyPublicKeyToken) : base(createdOn, changedOn, metadata, content, contentType, contentLink)
         {
             AssemblyName = assemblyName;
             AssemblyVersion = assemblyVersion;

@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public string Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountMapType MapType { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public string Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DocumentName { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.Logic.Models
         public ArtifactContentProperties() { }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
     }
     public partial class ArtifactProperties
     {

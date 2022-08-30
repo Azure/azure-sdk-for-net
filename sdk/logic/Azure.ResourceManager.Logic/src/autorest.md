@@ -171,6 +171,7 @@ format-by-name-rules:
   'MessageContentType': 'content-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'contentType': 'content-type'
 
 rename-rules:
   CPU: Cpu
