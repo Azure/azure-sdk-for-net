@@ -15,11 +15,11 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element)
         {
-            string nextMarker = default;
+            StringEncoded nextMarker = default;
             IReadOnlyList<ShareFileHandle> handleList = default;
             if (element.Element("NextMarker") is XElement nextMarkerElement)
             {
-                nextMarker = (string)nextMarkerElement;
+                nextMarker = StringEncoded.DeserializeStringEncoded(nextMarkerElement);
             }
             if (element.Element("Entries") is XElement entriesElement)
             {

@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class StringEncoded
+    public partial class StringEncoded
     {
         internal static StringEncoded DeserializeStringEncoded(XElement element)
         {

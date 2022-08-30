@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares.Models
             StringEncoded marker = default;
             int? maxResults = default;
             FilesAndDirectoriesListSegment segment = default;
-            string nextMarker = default;
+            StringEncoded nextMarker = default;
             string directoryId = default;
             if (element.Attribute("ServiceEndpoint") is XAttribute serviceEndpointAttribute)
             {
@@ -58,7 +58,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("NextMarker") is XElement nextMarkerElement)
             {
-                nextMarker = (string)nextMarkerElement;
+                nextMarker = StringEncoded.DeserializeStringEncoded(nextMarkerElement);
             }
             if (element.Element("DirectoryId") is XElement directoryIdElement)
             {
