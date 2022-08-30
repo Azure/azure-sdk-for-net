@@ -2106,7 +2106,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateClient();
+                await using var client = CreateClient(5);
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 100;
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
@@ -2309,7 +2309,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public async Task CanUseMassiveSessionConcurrencyWithoutCausingThreadStarvation()
         {
-            var lockDuration = TimeSpan.FromSeconds(20);
+            var lockDuration = TimeSpan.FromSeconds(30);
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
             {
                 await using var client = CreateClient();
