@@ -23,46 +23,45 @@ namespace Azure.Maps.Search
         public OperatingHoursRange? OperatingHours { get; set; }
         /// <summary>
         /// Specifies the level of filtering performed on geographies. Narrows the search for specified geography entity types, e.g. return only municipality. The resulting response will contain the geography ID as well as the entity type matched. If you provide more than one entity as a comma separated list, endpoint will return the &apos;smallest entity available&apos;. Returned Geometry ID can be used to get the geometry of that geography via [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. The following parameters are ignored when entityType is set:
-        ///
-        /// * heading
-        /// * number
-        /// * returnRoadUse
-        /// * returnSpeedLimit
-        /// * roadUse
-        /// * returnMatchType
         /// </summary>
+        /// <list>
+        /// <item> heading </item>
+        /// <item> number </item>
+        /// <item> returnRoadUse </item>
+        /// <item> returnSpeedLimit </item>
+        /// <item> roadUse </item>
+        /// <item> returnMatchType </item>
+        /// </list>
         public GeographicEntity? EntityType { get; set; }
         /// <summary>
         /// Minimum fuzziness level to be used. Default: 1, minimum: 1 and maximum: 4
+        /// </summary>
+        /// <list>
+        /// <item> Level 1 has no spell checking. </item>
         ///
-        /// * Level 1 has no spell checking.
+        /// <item> Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot; </item>
         ///
-        /// * Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot;
+        /// <item> Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching. </item>
         ///
-        /// * Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching.
-        ///
-        /// * Level 4 doesn’t add any more spell checking functions.
-        ///
-        ///
+        /// <item> Level 4 doesn’t add any more spell checking functions. </item>
         ///
         /// The search engine will start looking for a match on the level defined by minFuzzyLevel, and will stop searching at the level specified by maxFuzzyLevel.
-        /// </summary>
+        /// </list>
         public int? MinFuzzyLevel { get; set; }
         /// <summary>
         /// Maximum fuzziness level to be used. Default: 2, minimum: 1 and maximum: 4
-        ///
-        /// * Level 1 has no spell checking.
-        ///
-        /// * Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot;
-        ///
-        /// * Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching.
-        ///
-        /// * Level 4 doesn’t add any more spell checking functions.
-        ///
-        ///
-        ///
         /// The search engine will start looking for a match on the level defined by minFuzzyLevel, and will stop searching at the level specified by maxFuzzyLevel.
         /// </summary>
+        /// <list>
+        /// <item> Level 1 has no spell checking. </item>
+        ///
+        /// <item> Level 2 uses normal n-gram spell checking. For example, query &quot;restrant&quot; can be matched to &quot;restaurant.&quot; </item>
+        ///
+        /// <item> Level 3 uses sound-like spell checking, and shingle spell checking. Sound-like spell checking is for &quot;rstrnt&quot; to &quot;restaurant&quot; matching. Shingle spell checking is for &quot;mountainview&quot; to &quot;mountain view&quot; matching. </item>
+        ///
+        /// <item> Level 4 doesn’t add any more spell checking functions. </item>
+        ///
+        /// </list>
         public int? MaxFuzzyLevel { get; set; }
         /// <summary> A comma separated list of indexes which should be utilized for the search. Item order does not matter. Available indexes are: Addr = Address range interpolation, Geo = Geographies, PAD = Point Addresses, POI = Points of interest, Str = Streets, Xstr = Cross Streets (intersections). </summary>
         public IList<SearchIndex> IndexFilter { get; }
@@ -71,19 +70,19 @@ namespace Azure.Maps.Search
         /// Indexes for which extended postal codes should be included in the results.
         ///
         /// Available indexes are:
+        /// <list>
+        /// <item> Addr = Address ranges </item>
         ///
-        ///  **Addr** = Address ranges
+        ///  <item> Geo = Geographies </item>
         ///
-        ///  **Geo** = Geographies
+        ///  <item> PAD = Point Addresses </item>
         ///
-        ///  **PAD** = Point Addresses
+        ///  <item> POI = Points of Interest </item>
         ///
-        ///  **POI** = Points of Interest
+        ///  <item> Str = Streets </item>
         ///
-        ///  **Str** = Streets
-        ///
-        ///  **XStr** = Cross Streets (intersections)
-        ///
+        ///  <item> XStr = Cross Streets (intersections) </item>
+        /// </list>
         /// Value should be a comma separated list of index types (in any order) or **None** for no indexes.
         ///
         /// By default extended postal codes are included for all indexes except Geo. Extended postal code lists for geographies can be quite long so they have to be explicitly requested when needed.

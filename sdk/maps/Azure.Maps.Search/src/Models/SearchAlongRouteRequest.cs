@@ -23,7 +23,7 @@ namespace Azure.Maps.Search.Models
                 result.Add(coordinate.Latitude);
                 listCoordinates.Add(result);
             }
-            Route = new GeoJsonLineString(listCoordinates);
+            this.Route = new GeoJsonLineString(listCoordinates);
         }
     }
 }
