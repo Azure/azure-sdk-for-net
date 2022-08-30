@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -116,7 +116,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2022-05-15",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -142,7 +142,7 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/66566ecd-413a-4353-b682-2682dfc90388?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/66566ecd-413a-4353-b682-2682dfc90388?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -150,7 +150,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 14:29:19 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147/operationResults/66566ecd-413a-4353-b682-2682dfc90388?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147/operationResults/66566ecd-413a-4353-b682-2682dfc90388?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -166,7 +166,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/66566ecd-413a-4353-b682-2682dfc90388?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/66566ecd-413a-4353-b682-2682dfc90388?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -199,7 +199,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -244,7 +244,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2022-05-15",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -255,7 +255,7 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/b91edf2c-cf8b-4657-9a5e-b54691fa78b2?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/b91edf2c-cf8b-4657-9a5e-b54691fa78b2?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -264,7 +264,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 14:29:26 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147/operationResults/b91edf2c-cf8b-4657-9a5e-b54691fa78b2?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147/operationResults/b91edf2c-cf8b-4657-9a5e-b54691fa78b2?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -280,7 +280,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/b91edf2c-cf8b-4657-9a5e-b54691fa78b2?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/b91edf2c-cf8b-4657-9a5e-b54691fa78b2?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -313,7 +313,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -348,7 +348,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8036/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2993/sqlDatabases/sql-db-1087/containers/sql-container-7519/userDefinedFunctions/sql-stored-procedure-5147?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
