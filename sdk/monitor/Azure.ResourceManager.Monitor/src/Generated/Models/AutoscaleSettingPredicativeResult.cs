@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The response to a metrics query. </summary>
-    public partial class PredictiveResponse
+    public partial class AutoscaleSettingPredicativeResult
     {
-        /// <summary> Initializes a new instance of PredictiveResponse. </summary>
-        internal PredictiveResponse()
+        /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>
+        internal AutoscaleSettingPredicativeResult()
         {
             Data = new ChangeTrackingList<PredictiveValue>();
         }
 
-        /// <summary> Initializes a new instance of PredictiveResponse. </summary>
+        /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="metricName"> The metrics being queried. </param>
         /// <param name="targetResourceId"> resource of the predictive metric. </param>
         /// <param name="data"> the value of the collection. </param>
-        internal PredictiveResponse(string timespan, TimeSpan? interval, string metricName, ResourceIdentifier targetResourceId, IReadOnlyList<PredictiveValue> data)
+        internal AutoscaleSettingPredicativeResult(string timespan, TimeSpan? interval, string metricName, ResourceIdentifier targetResourceId, IReadOnlyList<PredictiveValue> data)
         {
             Timespan = timespan;
             Interval = interval;
