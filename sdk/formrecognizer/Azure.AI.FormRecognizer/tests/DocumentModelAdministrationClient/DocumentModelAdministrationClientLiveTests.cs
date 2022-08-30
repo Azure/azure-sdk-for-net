@@ -69,12 +69,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateDocumentModelDetails(model);
 
-            Assert.AreEqual(1, model.DocTypes.Count);
-            Assert.IsTrue(model.DocTypes.ContainsKey(modelId));
+            Assert.AreEqual(1, model.DocumentTypes.Count);
+            Assert.IsTrue(model.DocumentTypes.ContainsKey(modelId));
 
-            DocTypeInfo docType = model.DocTypes[modelId];
+            DocumentTypeDetails documentType = model.DocumentTypes[modelId];
 
-            Assert.AreEqual(DocumentBuildMode.Template, docType.BuildMode);
+            Assert.AreEqual(DocumentBuildMode.Template, documentType.BuildMode);
         }
 
         [RecordedTest]
@@ -103,12 +103,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateDocumentModelDetails(model);
 
-            Assert.AreEqual(1, model.DocTypes.Count);
-            Assert.IsTrue(model.DocTypes.ContainsKey(modelId));
+            Assert.AreEqual(1, model.DocumentTypes.Count);
+            Assert.IsTrue(model.DocumentTypes.ContainsKey(modelId));
 
-            DocTypeInfo docType = model.DocTypes[modelId];
+            DocumentTypeDetails documentType = model.DocumentTypes[modelId];
 
-            Assert.AreEqual(DocumentBuildMode.Neural, docType.BuildMode);
+            Assert.AreEqual(DocumentBuildMode.Neural, documentType.BuildMode);
         }
 
         [RecordedTest]
@@ -329,12 +329,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(targetAuth.TargetModelId, copiedModel.ModelId);
             Assert.AreNotEqual(trainedModel.ModelId, copiedModel.ModelId);
 
-            Assert.AreEqual(1, copiedModel.DocTypes.Count);
-            Assert.IsTrue(copiedModel.DocTypes.ContainsKey(modelId));
+            Assert.AreEqual(1, copiedModel.DocumentTypes.Count);
+            Assert.IsTrue(copiedModel.DocumentTypes.ContainsKey(modelId));
 
-            DocTypeInfo docType = copiedModel.DocTypes[modelId];
+            DocumentTypeDetails documentType = copiedModel.DocumentTypes[modelId];
 
-            Assert.AreEqual(DocumentBuildMode.Template, docType.BuildMode);
+            Assert.AreEqual(DocumentBuildMode.Template, documentType.BuildMode);
         }
 
         [RecordedTest]
@@ -415,15 +415,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateDocumentModelDetails(composedModel);
 
-            Assert.AreEqual(2, composedModel.DocTypes.Count);
-            Assert.IsTrue(composedModel.DocTypes.ContainsKey(modelAId));
-            Assert.IsTrue(composedModel.DocTypes.ContainsKey(modelBId));
+            Assert.AreEqual(2, composedModel.DocumentTypes.Count);
+            Assert.IsTrue(composedModel.DocumentTypes.ContainsKey(modelAId));
+            Assert.IsTrue(composedModel.DocumentTypes.ContainsKey(modelBId));
 
-            DocTypeInfo docTypeA = composedModel.DocTypes[modelAId];
-            DocTypeInfo docTypeB = composedModel.DocTypes[modelBId];
+            DocumentTypeDetails documentTypeA = composedModel.DocumentTypes[modelAId];
+            DocumentTypeDetails documentTypeB = composedModel.DocumentTypes[modelBId];
 
-            Assert.AreEqual(DocumentBuildMode.Template, docTypeA.BuildMode);
-            Assert.AreEqual(DocumentBuildMode.Template, docTypeB.BuildMode);
+            Assert.AreEqual(DocumentBuildMode.Template, documentTypeA.BuildMode);
+            Assert.AreEqual(DocumentBuildMode.Template, documentTypeB.BuildMode);
         }
 
         [RecordedTest]
@@ -493,7 +493,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             if (operationDetails.Status == DocumentOperationStatus.Succeeded)
             {
                 Assert.AreEqual(100, operationDetails.PercentCompleted);
-                ValidateDocumentModelDetails(operationDetails.Result);
+
+                DocumentModelDetails result = operationDetails switch
+                {
+                    DocumentModelBuildOperationDetails buildOp => buildOp.Result,
+                    DocumentModelCopyToOperationDetails copyToOp => copyToOp.Result,
+                    DocumentModelComposeOperationDetails composeOp => composeOp.Result,
+                    _ => null
+                };
+
+                if (result != null)
+                {
+                    ValidateDocumentModelDetails(result);
+                }
             }
             else if (operationDetails.Status == DocumentOperationStatus.Failed)
             {

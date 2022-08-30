@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new WorkloadNetworkDhcpEntity(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
+            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
         }
     }
 }

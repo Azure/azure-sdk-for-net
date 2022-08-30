@@ -4,6 +4,7 @@
 
 ### Features Added
 - Added support for "secondary then primary" read operations when using geo-redundant accounts.
+- Added support for leading and trailing '/' characters in blob names when constructing URIs via builder.
 
 ### Breaking Changes
 

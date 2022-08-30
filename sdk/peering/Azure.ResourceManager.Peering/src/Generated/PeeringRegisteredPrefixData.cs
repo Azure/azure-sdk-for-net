@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The customer&apos;s prefix from which traffic originates. </summary>
         public string Prefix { get; set; }
         /// <summary> The prefix validation state. </summary>
-        public PrefixValidationState? PrefixValidationState { get; }
+        public PeeringPrefixValidationState? PrefixValidationState { get; }
         /// <summary> The peering service prefix key that is to be shared with the customer. </summary>
         public string PeeringServicePrefixKey { get; }
         /// <summary> The error message associated with the validation state, if any. </summary>
         public string ErrorMessage { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

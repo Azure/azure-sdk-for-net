@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Authorization
             );
         }
 
-        /// <summary> Gets a collection of ProviderOperationsMetadataResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of AuthorizationProviderOperationsMetadataResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProviderOperationsMetadataResources and their operations over a ProviderOperationsMetadataResource. </returns>
-        public static ProviderOperationsMetadataCollection GetAllProviderOperationsMetadata(this TenantResource tenantResource)
+        /// <returns> An object representing collection of AuthorizationProviderOperationsMetadataResources and their operations over a AuthorizationProviderOperationsMetadataResource. </returns>
+        public static AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetAllProviderOperationsMetadata();
+            return GetExtensionClient(tenantResource).GetAllAuthorizationProviderOperationsMetadata();
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProviderOperationsMetadataResource>> GetProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<AuthorizationProviderOperationsMetadataResource>> GetAuthorizationProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetAllProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAllAuthorizationProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProviderOperationsMetadataResource> GetProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<AuthorizationProviderOperationsMetadataResource> GetAuthorizationProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetAllProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
+            return tenantResource.GetAllAuthorizationProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClassicAdministrator> GetClassicAdministratorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AuthorizationClassicAdministrator> GetClassicAdministratorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetClassicAdministratorsAsync(cancellationToken);
         }
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClassicAdministrator> GetClassicAdministrators(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AuthorizationClassicAdministrator> GetClassicAdministrators(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetClassicAdministrators(cancellationToken);
         }
@@ -210,6 +210,15 @@ namespace Azure.ResourceManager.Authorization
             return GetExtensionClient(resourceGroupResource).GetAzurePermissionsForResources(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
         }
 
+        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ArmResourceExtensionClient(client, scope);
+            }
+            );
+        }
+
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
         {
             return armResource.GetCachedClient((client) =>
@@ -225,6 +234,15 @@ namespace Azure.ResourceManager.Authorization
         public static DenyAssignmentCollection GetDenyAssignments(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetDenyAssignments();
+        }
+
+        /// <summary> Gets a collection of DenyAssignmentResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
+        public static DenyAssignmentCollection GetDenyAssignments(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetDenyAssignments();
         }
 
         /// <summary>
@@ -248,6 +266,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}
         /// Operation Id: DenyAssignments_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetDenyAssignments(scope).GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified deny assignment.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}
+        /// Operation Id: DenyAssignments_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,12 +294,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetDenyAssignments().Get(denyAssignmentId, cancellationToken);
         }
 
+        /// <summary>
+        /// Get the specified deny assignment.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}
+        /// Operation Id: DenyAssignments_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DenyAssignmentResource> GetDenyAssignment(this ArmClient client, ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            return client.GetDenyAssignments(scope).Get(denyAssignmentId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
         public static RoleAssignmentCollection GetRoleAssignments(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleAssignments();
+        }
+
+        /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
+        public static RoleAssignmentCollection GetRoleAssignments(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleAssignments();
         }
 
         /// <summary>
@@ -288,6 +349,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
         /// Operation Id: RoleAssignments_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleAssignments(scope).GetAsync(roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a role assignment by scope and name.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
+        /// Operation Id: RoleAssignments_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
@@ -299,12 +377,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleAssignments().Get(roleAssignmentName, tenantId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleDefinitionResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleDefinitionResources and their operations over a RoleDefinitionResource. </returns>
-        public static RoleDefinitionCollection GetRoleDefinitions(this ArmResource armResource)
+        /// <summary>
+        /// Get a role assignment by scope and name.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
+        /// Operation Id: RoleAssignments_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentResource> GetRoleAssignment(this ArmClient client, ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(armResource).GetRoleDefinitions();
+            return client.GetRoleAssignments(scope).Get(roleAssignmentName, tenantId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
+        public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmResource armResource)
+        {
+            return GetExtensionClient(armResource).GetAuthorizationRoleDefinitions();
+        }
+
+        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
+        public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetAuthorizationRoleDefinitions();
         }
 
         /// <summary>
@@ -317,9 +421,25 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RoleDefinitionResource>> GetRoleDefinitionAsync(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
+            return await armResource.GetAuthorizationRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+        /// Operation Id: RoleDefinitions_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetAuthorizationRoleDefinitions(scope).GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -332,9 +452,25 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RoleDefinitionResource> GetRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return armResource.GetRoleDefinitions().Get(roleDefinitionId, cancellationToken);
+            return armResource.GetAuthorizationRoleDefinitions().Get(roleDefinitionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+        /// Operation Id: RoleDefinitions_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return client.GetAuthorizationRoleDefinitions(scope).Get(roleDefinitionId, cancellationToken);
         }
 
         /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>
@@ -343,6 +479,15 @@ namespace Azure.ResourceManager.Authorization
         public static RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleAssignmentSchedules();
+        }
+
+        /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
+        public static RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleAssignmentSchedules();
         }
 
         /// <summary>
@@ -366,6 +511,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
         /// Operation Id: RoleAssignmentSchedules_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentScheduleResource>> GetRoleAssignmentScheduleAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleAssignmentSchedules(scope).GetAsync(roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role assignment schedule for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
+        /// Operation Id: RoleAssignmentSchedules_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -377,12 +539,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleAssignmentSchedules().Get(roleAssignmentScheduleName, cancellationToken);
         }
 
+        /// <summary>
+        /// Get the specified role assignment schedule for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
+        /// Operation Id: RoleAssignmentSchedules_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentScheduleResource> GetRoleAssignmentSchedule(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleAssignmentSchedules(scope).Get(roleAssignmentScheduleName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
         public static RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleAssignmentScheduleInstances();
+        }
+
+        /// <summary> Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
+        public static RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleAssignmentScheduleInstances();
         }
 
         /// <summary>
@@ -406,6 +594,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}
         /// Operation Id: RoleAssignmentScheduleInstances_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentScheduleInstanceResource>> GetRoleAssignmentScheduleInstanceAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleAssignmentScheduleInstances(scope).GetAsync(roleAssignmentScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified role assignment schedule instance.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}
+        /// Operation Id: RoleAssignmentScheduleInstances_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -417,12 +622,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleAssignmentScheduleInstances().Get(roleAssignmentScheduleInstanceName, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the specified role assignment schedule instance.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}
+        /// Operation Id: RoleAssignmentScheduleInstances_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentScheduleInstanceResource> GetRoleAssignmentScheduleInstance(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleAssignmentScheduleInstances(scope).Get(roleAssignmentScheduleInstanceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleAssignmentScheduleRequestResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
         public static RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleAssignmentScheduleRequests();
+        }
+
+        /// <summary> Gets a collection of RoleAssignmentScheduleRequestResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
+        public static RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleAssignmentScheduleRequests();
         }
 
         /// <summary>
@@ -446,6 +677,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}
         /// Operation Id: RoleAssignmentScheduleRequests_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentScheduleRequestResource>> GetRoleAssignmentScheduleRequestAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleAssignmentScheduleRequests(scope).GetAsync(roleAssignmentScheduleRequestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role assignment schedule request.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}
+        /// Operation Id: RoleAssignmentScheduleRequests_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -457,12 +705,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleAssignmentScheduleRequests().Get(roleAssignmentScheduleRequestName, cancellationToken);
         }
 
+        /// <summary>
+        /// Get the specified role assignment schedule request.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}
+        /// Operation Id: RoleAssignmentScheduleRequests_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentScheduleRequestResource> GetRoleAssignmentScheduleRequest(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleAssignmentScheduleRequests(scope).Get(roleAssignmentScheduleRequestName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleEligibilityScheduleResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
         public static RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleEligibilitySchedules();
+        }
+
+        /// <summary> Gets a collection of RoleEligibilityScheduleResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
+        public static RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleEligibilitySchedules();
         }
 
         /// <summary>
@@ -486,6 +760,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}
         /// Operation Id: RoleEligibilitySchedules_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleEligibilityScheduleResource>> GetRoleEligibilityScheduleAsync(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleEligibilitySchedules(scope).GetAsync(roleEligibilityScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role eligibility schedule for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}
+        /// Operation Id: RoleEligibilitySchedules_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -497,12 +788,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleEligibilitySchedules().Get(roleEligibilityScheduleName, cancellationToken);
         }
 
+        /// <summary>
+        /// Get the specified role eligibility schedule for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}
+        /// Operation Id: RoleEligibilitySchedules_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleEligibilityScheduleResource> GetRoleEligibilitySchedule(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleEligibilitySchedules(scope).Get(roleEligibilityScheduleName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
         public static RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleEligibilityScheduleInstances();
+        }
+
+        /// <summary> Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
+        public static RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleEligibilityScheduleInstances();
         }
 
         /// <summary>
@@ -526,6 +843,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
         /// Operation Id: RoleEligibilityScheduleInstances_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleEligibilityScheduleInstanceResource>> GetRoleEligibilityScheduleInstanceAsync(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleEligibilityScheduleInstances(scope).GetAsync(roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified role eligibility schedule instance.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
+        /// Operation Id: RoleEligibilityScheduleInstances_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -537,12 +871,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleEligibilityScheduleInstances().Get(roleEligibilityScheduleInstanceName, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the specified role eligibility schedule instance.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
+        /// Operation Id: RoleEligibilityScheduleInstances_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleEligibilityScheduleInstanceResource> GetRoleEligibilityScheduleInstance(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleEligibilityScheduleInstances(scope).Get(roleEligibilityScheduleInstanceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleEligibilityScheduleRequestResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
         public static RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleEligibilityScheduleRequests();
+        }
+
+        /// <summary> Gets a collection of RoleEligibilityScheduleRequestResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
+        public static RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleEligibilityScheduleRequests();
         }
 
         /// <summary>
@@ -566,6 +926,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
         /// Operation Id: RoleEligibilityScheduleRequests_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleEligibilityScheduleRequestResource>> GetRoleEligibilityScheduleRequestAsync(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleEligibilityScheduleRequests(scope).GetAsync(roleEligibilityScheduleRequestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role eligibility schedule request.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
+        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -577,12 +954,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleEligibilityScheduleRequests().Get(roleEligibilityScheduleRequestName, cancellationToken);
         }
 
+        /// <summary>
+        /// Get the specified role eligibility schedule request.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
+        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleEligibilityScheduleRequestResource> GetRoleEligibilityScheduleRequest(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleEligibilityScheduleRequests(scope).Get(roleEligibilityScheduleRequestName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleManagementPolicyResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
         public static RoleManagementPolicyCollection GetRoleManagementPolicies(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleManagementPolicies();
+        }
+
+        /// <summary> Gets a collection of RoleManagementPolicyResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
+        public static RoleManagementPolicyCollection GetRoleManagementPolicies(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleManagementPolicies();
         }
 
         /// <summary>
@@ -606,6 +1009,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
         /// Operation Id: RoleManagementPolicies_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleManagementPolicies(scope).GetAsync(roleManagementPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role management policy for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
+        /// Operation Id: RoleManagementPolicies_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -617,12 +1037,38 @@ namespace Azure.ResourceManager.Authorization
             return armResource.GetRoleManagementPolicies().Get(roleManagementPolicyName, cancellationToken);
         }
 
+        /// <summary>
+        /// Get the specified role management policy for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
+        /// Operation Id: RoleManagementPolicies_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleManagementPolicyResource> GetRoleManagementPolicy(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleManagementPolicies(scope).Get(roleManagementPolicyName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of RoleManagementPolicyAssignmentResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
         public static RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(this ArmResource armResource)
         {
             return GetExtensionClient(armResource).GetRoleManagementPolicyAssignments();
+        }
+
+        /// <summary> Gets a collection of RoleManagementPolicyAssignmentResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
+        public static RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetExtensionClient(client, scope).GetRoleManagementPolicyAssignments();
         }
 
         /// <summary>
@@ -646,6 +1092,23 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
         /// Operation Id: RoleManagementPolicyAssignments_Get
         /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleManagementPolicyAssignmentResource>> GetRoleManagementPolicyAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return await client.GetRoleManagementPolicyAssignments(scope).GetAsync(roleManagementPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role management policy assignment for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
+        /// Operation Id: RoleManagementPolicyAssignments_Get
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -655,6 +1118,23 @@ namespace Azure.ResourceManager.Authorization
         public static Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(this ArmResource armResource, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
             return armResource.GetRoleManagementPolicyAssignments().Get(roleManagementPolicyAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the specified role management policy assignment for a resource scope
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
+        /// Operation Id: RoleManagementPolicyAssignments_Get
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return client.GetRoleManagementPolicyAssignments(scope).Get(roleManagementPolicyAssignmentName, cancellationToken);
         }
 
         #region DenyAssignmentResource
@@ -676,20 +1156,20 @@ namespace Azure.ResourceManager.Authorization
         }
         #endregion
 
-        #region ProviderOperationsMetadataResource
+        #region AuthorizationProviderOperationsMetadataResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AuthorizationProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderOperationsMetadataResource" /> object. </returns>
-        public static ProviderOperationsMetadataResource GetProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource" /> object. </returns>
+        public static AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderOperationsMetadataResource.ValidateResourceId(id);
-                return new ProviderOperationsMetadataResource(client, id);
+                AuthorizationProviderOperationsMetadataResource.ValidateResourceId(id);
+                return new AuthorizationProviderOperationsMetadataResource(client, id);
             }
             );
         }
@@ -714,20 +1194,20 @@ namespace Azure.ResourceManager.Authorization
         }
         #endregion
 
-        #region RoleDefinitionResource
+        #region AuthorizationRoleDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="RoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="RoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AuthorizationRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationRoleDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleDefinitionResource" /> object. </returns>
-        public static RoleDefinitionResource GetRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource" /> object. </returns>
+        public static AuthorizationRoleDefinitionResource GetAuthorizationRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RoleDefinitionResource.ValidateResourceId(id);
-                return new RoleDefinitionResource(client, id);
+                AuthorizationRoleDefinitionResource.ValidateResourceId(id);
+                return new AuthorizationRoleDefinitionResource(client, id);
             }
             );
         }

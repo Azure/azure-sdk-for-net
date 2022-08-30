@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
         internal DataBoxAccountCopyLogDetails()
         {
-            CopyLogDetailsType = ClassDiscriminator.DataBox;
+            CopyLogDetailsType = DataBoxOrderType.DataBox;
         }
 
         /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
-        internal DataBoxAccountCopyLogDetails(ClassDiscriminator copyLogDetailsType, string accountName, string copyLogLink, string copyVerboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, string accountName, string copyLogLink, string copyVerboseLogLink) : base(copyLogDetailsType)
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;

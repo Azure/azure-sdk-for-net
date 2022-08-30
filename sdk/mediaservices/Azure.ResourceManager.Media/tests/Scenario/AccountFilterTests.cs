@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Tests
     public class AccountFilterTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaServiceResource _mediaService;
+        private MediaServicesAccountResource _mediaService;
 
         private AccountFilterCollection accountFilterCollection => _mediaService.GetAccountFilters();
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServiceResource(_mediaServiceIdentifier).GetAsync();
+            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
         }
 
         [Test]

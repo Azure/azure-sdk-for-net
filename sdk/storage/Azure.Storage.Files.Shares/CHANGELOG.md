@@ -3,6 +3,7 @@
 ## 12.12.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added support for StorageTransferOptions on ShareFile upload (concurrency not supported).
 
 ### Breaking Changes
 

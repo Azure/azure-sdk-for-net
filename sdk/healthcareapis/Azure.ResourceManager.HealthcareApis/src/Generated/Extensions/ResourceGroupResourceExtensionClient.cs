@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.HealthcareApis
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServicesDescriptionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServicesDescriptionResources and their operations over a ServicesDescriptionResource. </returns>
-        public virtual ServicesDescriptionCollection GetServicesDescriptions()
+        /// <summary> Gets a collection of HealthcareApisServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HealthcareApisServiceResources and their operations over a HealthcareApisServiceResource. </returns>
+        public virtual HealthcareApisServiceCollection GetHealthcareApisServices()
         {
-            return GetCachedClient(Client => new ServicesDescriptionCollection(Client, Id));
+            return GetCachedClient(Client => new HealthcareApisServiceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
+        public virtual HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces()
         {
-            return GetCachedClient(Client => new WorkspaceCollection(Client, Id));
+            return GetCachedClient(Client => new HealthcareApisWorkspaceCollection(Client, Id));
         }
     }
 }
