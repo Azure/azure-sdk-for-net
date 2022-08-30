@@ -768,6 +768,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string deadLetterReason = null,
             string deadLetterDescription = null)
         {
+            ThrowIfSessionLockLost();
+
             // Create an AmqpRequest Message to update disposition
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.UpdateDispositionOperation, timeout, null);
 
@@ -1348,6 +1350,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         innerException: exception);
                 }
                 LinkException = exception;
+            }
+
+            if (IsSessionLinkClosed)
+            {
+                // Clean up and dispose the underlying resources. The receive link should already be closed, but management link may need to be
+                // closed as well.
+                _ = CloseAsync(CancellationToken.None);
             }
 
             ServiceBusEventSource.Log.ReceiveLinkClosed(
