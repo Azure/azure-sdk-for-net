@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2560d0a692cbbd69b7ef51ef5a0b60b9-2c3fef931a529a5c-00",
+        "traceparent": "00-8a0921fa267e2ab7cee74bec0f3edbae-0f4b5511c116f04d-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "9dba240a0d4478f1c9c7e046442d9039",
+        "x-ms-client-request-id": "befe6ed32365397828deac80b85b42e7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,13 +17,13 @@
       "ResponseHeaders": {
         "Content-Length": "10143",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Aug 2022 19:17:29 GMT",
+        "Date": "Tue, 30 Aug 2022 05:39:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: D93FEC51773D442DB210F700911B56BF Ref B: PAOEDGE0513 Ref C: 2022-08-29T19:17:30Z"
+        "X-MSEdge-Ref": "Ref A: 8CD736EFA14C46F5BADFE8079BBEEC69 Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:32Z"
       },
       "ResponseBody": {
         "summary": {
@@ -32,7 +32,7 @@
           "queryTime": 10,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 1792466,
+          "totalResults": 1792342,
           "fuzzyLevel": 1,
           "geoBias": {
             "lat": 25.04,
@@ -65,11 +65,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     }
                   ]
                 }
@@ -134,11 +134,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     }
                   ]
                 }
@@ -205,11 +205,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "caf\u00E9"
                     }
                   ]
                 }
@@ -331,12 +331,12 @@
           },
           {
             "type": "POI",
-            "id": "158009001817937",
+            "id": "158009001710928",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
-            "info": "search:ta:158009001817937-TW",
+            "info": "search:ta:158009001710928-TW",
             "poi": {
-              "name": "da lun ka fei guo ji you xian gong si",
+              "name": "ou li jiang ka fei guan",
               "categorySet": [
                 {
                   "id": 9376006
@@ -473,12 +473,13 @@
           },
           {
             "type": "POI",
-            "id": "158009001710928",
+            "id": "158009001789613",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
-            "info": "search:ta:158009001710928-TW",
+            "info": "search:ta:158009001789613-TW",
             "poi": {
-              "name": "ou li jiang ka fei guan",
+              "name": "louisacoffee yi xian dian",
+              "phone": "\u002B886 2 8780 4613",
               "categorySet": [
                 {
                   "id": 9376006
@@ -544,13 +545,12 @@
           },
           {
             "type": "POI",
-            "id": "158009001789613",
+            "id": "158009001817937",
             "score": 2.5745120049,
             "dist": 220.2243834162837,
-            "info": "search:ta:158009001789613-TW",
+            "info": "search:ta:158009001817937-TW",
             "poi": {
-              "name": "louisacoffee yi xian dian",
-              "phone": "\u002B886 2 8780 4613",
+              "name": "da lun ka fei guo ji you xian gong si",
               "categorySet": [
                 {
                   "id": 9376006
@@ -769,6 +769,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1855041297"
+    "RandomSeed": "1085646779"
   }
 }

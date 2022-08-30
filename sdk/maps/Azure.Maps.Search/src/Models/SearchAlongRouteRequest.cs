@@ -15,15 +15,15 @@ namespace Azure.Maps.Search.Models
     [CodeGenModel("SearchAlongRouteRequest")]
     internal partial class SearchAlongRouteRequest {
         /// constructor takes in geolinestring
-        public SearchAlongRouteRequest(GeoLineString Route) {
+        public SearchAlongRouteRequest(GeoLineString route) {
             List<List<double>> listCoordinates = new List<List<double>>();
-            foreach (GeoPosition coordinate in Route.Coordinates) {
+            foreach (GeoPosition coordinate in route.Coordinates) {
                 List<double> result = new List<double>();
                 result.Add(coordinate.Longitude);
                 result.Add(coordinate.Latitude);
                 listCoordinates.Add(result);
             }
-            this.Route = new GeoJsonLineString(listCoordinates);
+            Route = new GeoJsonLineString(listCoordinates);
         }
     }
 }

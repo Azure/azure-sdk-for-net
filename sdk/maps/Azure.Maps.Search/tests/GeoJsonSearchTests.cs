@@ -130,7 +130,7 @@ namespace Azure.Maps.Search.Tests
             }";
             GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", polygon);
-            Assert.AreEqual("Daly City", searchResponse.Value.Results.First().Address.Municipality);
+            Assert.AreEqual("San Francisco", searchResponse.Value.Results.First().Address.Municipality);
             Assert.IsNotNull("CAFE_PUB", searchResponse.Value.Results.First().PointOfInterest.Classifications.First().Code);
         }
 
@@ -164,7 +164,7 @@ namespace Azure.Maps.Search.Tests
             ";
             GeoPolygon polygon = JsonSerializer.Deserialize<GeoPolygon>(polygonString);
             var searchResponse = await client.SearchInsideGeometryAsync("coffee", polygon);
-            Assert.AreEqual("Daly City", searchResponse.Value.Results.First().Address.Municipality);
+            Assert.AreEqual("San Francisco", searchResponse.Value.Results.First().Address.Municipality);
             Assert.AreEqual("CAFE_PUB", searchResponse.Value.Results.First().PointOfInterest.Classifications.First().Code);
         }
 

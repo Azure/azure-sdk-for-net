@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "traceparent": "00-2d3612408479dfa28e061674d39538cf-44cf73ac46d274bc-00",
+        "traceparent": "00-dae2f7551fc63f404b1d6bcdc66cb133-5f200ed3ec51b5a7-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "4199f33a4363b950d72a023ec745cc0d",
+        "x-ms-client-request-id": "6a4e35519ffe87ad7e9306186e655b01",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,13 +27,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 29 Aug 2022 19:17:27 GMT",
+        "Date": "Tue, 30 Aug 2022 05:39:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 1E77D41406F14C2EA3CBACCA2E94D323 Ref B: PAOEDGE0513 Ref C: 2022-08-29T19:17:28Z"
+        "X-MSEdge-Ref": "Ref A: 2FF53E5AB1354FF7BB17B707A1823F0A Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:29Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -43,10 +43,10 @@
               "summary": {
                 "query": "coffee",
                 "queryType": "NON_NEAR",
-                "queryTime": 10,
+                "queryTime": 8,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 1792466,
+                "totalResults": 1792342,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -79,11 +79,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           }
                         ]
                       }
@@ -148,11 +148,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           }
                         ]
                       }
@@ -219,11 +219,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           }
                         ]
                       }
@@ -345,12 +345,12 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001817937",
+                  "id": "158009001710928",
                   "score": 2.5745120049,
                   "dist": 220.2243834162837,
-                  "info": "search:ta:158009001817937-TW",
+                  "info": "search:ta:158009001710928-TW",
                   "poi": {
-                    "name": "da lun ka fei guo ji you xian gong si",
+                    "name": "ou li jiang ka fei guan",
                     "categorySet": [
                       {
                         "id": 9376006
@@ -487,12 +487,13 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001710928",
+                  "id": "158009001789613",
                   "score": 2.5745120049,
                   "dist": 220.2243834162837,
-                  "info": "search:ta:158009001710928-TW",
+                  "info": "search:ta:158009001789613-TW",
                   "poi": {
-                    "name": "ou li jiang ka fei guan",
+                    "name": "louisacoffee yi xian dian",
+                    "phone": "\u002B886 2 8780 4613",
                     "categorySet": [
                       {
                         "id": 9376006
@@ -558,13 +559,12 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001789613",
+                  "id": "158009001817937",
                   "score": 2.5745120049,
                   "dist": 220.2243834162837,
-                  "info": "search:ta:158009001789613-TW",
+                  "info": "search:ta:158009001817937-TW",
                   "poi": {
-                    "name": "louisacoffee yi xian dian",
-                    "phone": "\u002B886 2 8780 4613",
+                    "name": "da lun ka fei guo ji you xian gong si",
                     "categorySet": [
                       {
                         "id": 9376006
@@ -784,10 +784,10 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 7,
+                "queryTime": 9,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 377227,
+                "totalResults": 377233,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -1531,6 +1531,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1567659490"
+    "RandomSeed": "254251838"
   }
 }
