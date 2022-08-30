@@ -116,18 +116,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
     public partial class ServiceBusScaleMonitor : Microsoft.Azure.WebJobs.Host.Scale.IScaleMonitor, Microsoft.Azure.WebJobs.Host.Scale.IScaleMonitor<Microsoft.Azure.WebJobs.ServiceBus.Listeners.ServiceBusTriggerMetrics>
     {
         public ServiceBusScaleMonitor(string functionId, Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Microsoft.Extensions.Logging.ILoggerFactory loggerFactory, Microsoft.Extensions.Configuration.IConfiguration configuration, Microsoft.Extensions.Azure.AzureComponentFactory componentFactory, Microsoft.Azure.WebJobs.ServiceBus.MessagingProvider messagingProvider, Microsoft.Extensions.Azure.AzureEventSourceLogForwarder logForwarder, Microsoft.Extensions.Options.IOptions<Microsoft.Azure.WebJobs.ServiceBus.ServiceBusOptions> options) { }
-        public Microsoft.Azure.WebJobs.Host.Scale.ScaleMonitorDescriptor Descriptor { get { throw null; } }
-        public System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.ServiceBus.Listeners.ServiceBusTriggerMetrics> GetMetricsAsync() { throw null; }
-        public Microsoft.Azure.WebJobs.Host.Scale.ScaleStatus GetScaleStatus(Microsoft.Azure.WebJobs.Host.Scale.ScaleStatusContext<Microsoft.Azure.WebJobs.ServiceBus.Listeners.ServiceBusTriggerMetrics> context) { throw null; }
+        Microsoft.Azure.WebJobs.Host.Scale.ScaleMonitorDescriptor Microsoft.Azure.WebJobs.Host.Scale.IScaleMonitor.Descriptor { get { throw null; } }
         System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Host.Scale.ScaleMetrics> Microsoft.Azure.WebJobs.Host.Scale.IScaleMonitor.GetMetricsAsync() { throw null; }
         Microsoft.Azure.WebJobs.Host.Scale.ScaleStatus Microsoft.Azure.WebJobs.Host.Scale.IScaleMonitor.GetScaleStatus(Microsoft.Azure.WebJobs.Host.Scale.ScaleStatusContext context) { throw null; }
+        System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.ServiceBus.Listeners.ServiceBusTriggerMetrics> Microsoft.Azure.WebJobs.Host.Scale.IScaleMonitor<Microsoft.Azure.WebJobs.ServiceBus.Listeners.ServiceBusTriggerMetrics>.GetMetricsAsync() { throw null; }
+        Microsoft.Azure.WebJobs.Host.Scale.ScaleStatus Microsoft.Azure.WebJobs.Host.Scale.IScaleMonitor<Microsoft.Azure.WebJobs.ServiceBus.Listeners.ServiceBusTriggerMetrics>.GetScaleStatus(Microsoft.Azure.WebJobs.Host.Scale.ScaleStatusContext<Microsoft.Azure.WebJobs.ServiceBus.Listeners.ServiceBusTriggerMetrics> context) { throw null; }
     }
     public partial class ServiceBusTriggerMetrics : Microsoft.Azure.WebJobs.Host.Scale.ScaleMetrics
     {
         public ServiceBusTriggerMetrics() { }
-        public long MessageCount { get { throw null; } set { } }
-        public int PartitionCount { get { throw null; } set { } }
-        public System.TimeSpan QueueTime { get { throw null; } set { } }
+        public long MessageCount { get { throw null; } }
+        public int PartitionCount { get { throw null; } }
+        public System.TimeSpan QueueTime { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Hosting
