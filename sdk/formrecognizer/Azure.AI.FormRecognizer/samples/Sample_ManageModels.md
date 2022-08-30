@@ -30,10 +30,10 @@ Operations related to models that can be executed are:
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
 ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
-Console.WriteLine($"Resource has {resourceDetails.DocumentModelCount} models.");
-Console.WriteLine($"It can have at most {resourceDetails.DocumentModelLimit} models.");
+Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
+Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
 AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
@@ -74,10 +74,10 @@ await client.DeleteModelAsync(newCreatedModel.ModelId);
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
+// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
 ResourceDetails resourceDetails = client.GetResourceDetails();
-Console.WriteLine($"Resource has {resourceDetails.DocumentModelCount} models.");
-Console.WriteLine($"It can have at most {resourceDetails.DocumentModelLimit} models.");
+Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
+Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
 Pageable<DocumentModelSummary> models = client.GetModels();
