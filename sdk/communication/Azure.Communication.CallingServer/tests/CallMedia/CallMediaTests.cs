@@ -95,11 +95,11 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartPlayingAsync(_fileSource, _target, _options)
+                   callMedia => callMedia.PlayAsync(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartPlayingToAllAsync(_fileSource, _options)
+                   callMedia => callMedia.PlayToAllAsync(_fileSource, _options)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
@@ -118,11 +118,11 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartPlaying(_fileSource, _target, _options)
+                   callMedia => callMedia.Play(_fileSource, _target, _options)
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartPlayingToAll(_fileSource, _options)
+                   callMedia => callMedia.PlayToAll(_fileSource, _options)
                 },
                 new Func<CallMedia, Response>?[]
                 {
