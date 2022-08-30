@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
     public class ImageOperationsTests : DevCenterManagementTestBase
     {
         public ImageOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
