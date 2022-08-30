@@ -57,23 +57,28 @@ rename-rules:
 rename-mapping:
   AuthorizationRule: RelayAuthorizationRule
   AccessRights: RelayAccessRight
-  HybridConnection.requiresClientAuthorization: IsClientAuthorizationRequired
+  HybridConnection.properties.requiresClientAuthorization: IsClientAuthorizationRequired
   AccessKeys: RelayAccessKeys
   RegenerateAccessKeyParameters: RelayRegenerateAccessKeyContent
   NetworkRuleSet: RelayNetworkRuleSet
   DefaultAction: RelayNetworkRuleSetDefaultAction
-  NWRuleSetIPRules: RelayNetworkRuleSetIPRule
   NetworkRuleIPAction: RelayNetworkRuleIPAction
   PublicNetworkAccess: RelayPublicNetworkAccess
   ConnectionState: RelayPrivateLinkServiceConnectionState
   PrivateLinkConnectionStatus: RelayPrivateLinkConnectionStatus
   EndPointProvisioningState: RelayPrivateEndpointConnectionProvisioningState
-  WcfRelay.requiresClientAuthorization: IsClientAuthorizationRequired
-  WcfRelay.requiresTransportSecurity: IsTransportSecurityRequired
+  WcfRelay.properties.requiresClientAuthorization: IsClientAuthorizationRequired
+  WcfRelay.properties.requiresTransportSecurity: IsTransportSecurityRequired
   Relaytype: RelayType
   CheckNameAvailability: RelayNameAvailabilityContent
   CheckNameAvailabilityResult: RelayNameAvailabilityResult
   CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
   UnavailableReason: RelayNameUnavailableReason
   KeyType: RelayAccessKeyType
+
+directive:
+  from: NetworkRuleSets.json
+  where: $.definitions
+  transform: >
+    $.NWRuleSetIpRules['x-ms-client-name'] = 'RelayNetworkRuleSetIPRule';
 ```
