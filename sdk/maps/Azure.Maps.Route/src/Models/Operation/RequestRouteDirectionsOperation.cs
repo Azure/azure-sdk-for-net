@@ -69,19 +69,19 @@ namespace Azure.Maps.Route.Models
 
         /// <inheritdoc />
         public override async ValueTask<Response<RouteDirectionsBatchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            await this.WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
+            await WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
         public override async ValueTask<Response<RouteDirectionsBatchResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            await this.WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
+            await WaitForCompletionAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
         public override Response<RouteDirectionsBatchResult> WaitForCompletion(CancellationToken cancellationToken = default) =>
-            this.WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
+            WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc />
         public override Response<RouteDirectionsBatchResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
+            WaitForCompletionAsync(false, cancellationToken).EnsureCompleted();
 
         private async ValueTask<Response<RouteDirectionsBatchResult>> WaitForCompletionAsync(bool async, CancellationToken cancellationToken = default)
         {

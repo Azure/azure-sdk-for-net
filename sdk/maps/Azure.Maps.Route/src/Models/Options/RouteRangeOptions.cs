@@ -25,7 +25,7 @@ namespace Azure.Maps.Route.Models
         /// <param name="latitude"> The latitude for route range query coordinate. </param>
         public RouteRangeOptions(double longitude, double latitude)
         {
-            this.Query = new List<double>() { latitude, longitude };
+            Query = new List<double>() { latitude, longitude };
         }
 
         /// <summary> RouteRangeOptions constructor. </summary>
@@ -35,7 +35,7 @@ namespace Azure.Maps.Route.Models
         {
             Argument.AssertNotNull(routeRangePoint, nameof(routeRangePoint));
 
-            this.Query = new List<double>() {
+            Query = new List<double>() {
                 routeRangePoint.Latitude,
                 routeRangePoint.Longitude
             };

@@ -26,10 +26,10 @@ namespace Azure.Maps.Route.Models
         {
             Argument.AssertNotNull(routePoints, nameof(routePoints));
 
-            this.RoutePoints = routePoints;
+            RoutePoints = routePoints;
             if (options != null)
             {
-                this.RouteDirectionOptions = options;
+                RouteDirectionOptions = options;
             }
         }
 
