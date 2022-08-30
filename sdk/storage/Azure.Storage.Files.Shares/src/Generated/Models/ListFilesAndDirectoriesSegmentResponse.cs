@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="shareName"/>, <paramref name="directoryPath"/>, <paramref name="prefix"/>, <paramref name="segment"/> or <paramref name="nextMarker"/> is null. </exception>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string directoryPath, string prefix, FilesAndDirectoriesListSegment segment, string nextMarker)
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, StringEncoded directoryPath, StringEncoded prefix, FilesAndDirectoriesListSegment segment, string nextMarker)
         {
             if (serviceEndpoint == null)
             {
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"></param>
         /// <param name="directoryId"></param>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, string directoryPath, string prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, StringEncoded directoryPath, StringEncoded prefix, StringEncoded marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
         {
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
@@ -87,11 +87,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Gets the share snapshot. </summary>
         public string ShareSnapshot { get; }
         /// <summary> Gets the directory path. </summary>
-        public string DirectoryPath { get; }
+        public StringEncoded DirectoryPath { get; }
         /// <summary> Gets the prefix. </summary>
-        public string Prefix { get; }
+        public StringEncoded Prefix { get; }
         /// <summary> Gets the marker. </summary>
-        public string Marker { get; }
+        public StringEncoded Marker { get; }
         /// <summary> Gets the max results. </summary>
         public int? MaxResults { get; }
         /// <summary> Abstract for entries that can be listed from Directory. </summary>
