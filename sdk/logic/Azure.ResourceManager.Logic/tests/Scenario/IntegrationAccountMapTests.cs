@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Logic.Tests
 {
     internal class IntegrationAccountMapTests : LogicManagementTestBase
     {
-        private ResourceIdentifier _integrationAccountIdentifier;
         private IntegrationAccountResource _integrationAccount;
 
         private IntegrationAccountMapCollection _mapCollection => _integrationAccount.GetIntegrationAccountMaps();
@@ -22,34 +21,31 @@ namespace Azure.ResourceManager.Logic.Tests
         {
         }
 
-        [OneTimeSetUp]
+        [SetUp]
         public async Task GlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.CentralUS));
-            var integrationAccount = await CreateIntegrationAccount(rgLro.Value, SessionRecording.GenerateAssetName("intergrationAccount"));
-            _integrationAccountIdentifier = integrationAccount.Data.Id;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task SetUp()
-        {
-            _integrationAccount = await Client.GetIntegrationAccountResource(_integrationAccountIdentifier).GetAsync();
+            var resourceGroup = await CreateResourceGroup(AzureLocation.CentralUS);
+            _integrationAccount = await CreateIntegrationAccount(resourceGroup, Recording.GenerateAssetName("intergrationAccount"));
         }
 
         private async Task<IntegrationAccountMapResource> CreateMap(string mapName)
         {
-            string content = File.ReadAllText(@"TestData/MapContent.xsd");
             IntegrationAccountMapData data = new IntegrationAccountMapData(_integrationAccount.Data.Location, IntegrationAccountMapType.Xslt30)
             {
-                Content = content,
+                Content = File.ReadAllText(@"TestData/MapContent.xsd"),
                 ContentType = "application/xml"
             };
+            // Due to the different test servers in the pipeline, the line break encoding is also different causing the playback result to fail, changing the record file content to "Santize"
+            if (SessionEnvironment.Mode == RecordedTestMode.Playback)
+            {
+                data.Content = "Sanitized";
+            }
             var map = await _mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, data);
             return map.Value;
         }
 
         [RecordedTest]
+        [PlaybackOnly("Need to manually change the content value to Sanitized")]
         public async Task CreateOrUpdate()
         {
             string mapName = Recording.GenerateAssetName("map");
@@ -59,6 +55,7 @@ namespace Azure.ResourceManager.Logic.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Need to manually change the content value to Sanitized")]
         public async Task Exist()
         {
             string mapName = Recording.GenerateAssetName("map");
@@ -68,6 +65,7 @@ namespace Azure.ResourceManager.Logic.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Need to manually change the content value to Sanitized")]
         public async Task Get()
         {
             string mapName = Recording.GenerateAssetName("map");
@@ -78,6 +76,7 @@ namespace Azure.ResourceManager.Logic.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Need to manually change the content value to Sanitized")]
         public async Task GetAll()
         {
             string mapName = Recording.GenerateAssetName("map");
@@ -87,6 +86,7 @@ namespace Azure.ResourceManager.Logic.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Need to manually change the content value to Sanitized")]
         public async Task Delete()
         {
             string mapName = Recording.GenerateAssetName("map");
