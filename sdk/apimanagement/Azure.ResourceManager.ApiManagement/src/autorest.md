@@ -313,8 +313,6 @@ directive:
       $.PortalSettingsContractProperties.properties.subscriptions['x-ms-client-name'] = 'IsSubscriptions';
       $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
       $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
-      delete $.ContentTypeContract.allOf;
-      delete $.ContentItemContract.allOf;
   - from: apimskus.json
     where: $.definitions
     transform: >
@@ -334,6 +332,160 @@ directive:
       $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
       $.IfMatchOptionalParameter['x-ms-format'] = 'etag';
       $.IfMatchRequiredParameter['x-ms-format'] = 'etag';
+  - from: apimgroups.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementGroupUserListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "ApiManagementGroupUserData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/UserContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values."
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any."
+              }
+          },
+          "description": "Paged Group Users list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementGroupUserData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/UserContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "ApiManagementGroupUserData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/UserContract"
+              }
+          ]
+        }
+  - from: apimgateways.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementGatewayApiListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "GatewayApiData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/ApiContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values.",
+                  "readOnly": true
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any.",
+                  "readOnly": true
+              }
+          },
+          "description": "Paged API list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis/{apiId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "GatewayApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis/{apiId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "GatewayApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
+  - from: apimproducts.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis'].get.responses['200'].schema = {
+          "x-ms-client-name": "ApiManagementProductApiListResult",
+          "type": "object",
+          "properties": {
+              "value": {
+                  "type": "array",
+                  "items": {
+                      "x-ms-client-name": "ProductApiData",
+                      "type": "object",
+                      "allOf": [
+                          {
+                              "$ref": "./definitions.json#/definitions/ApiContract"
+                          }
+                      ]
+                  },
+                  "description": "Page values.",
+                  "readOnly": true
+              },
+              "count": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Total record count number across all pages."
+              },
+              "nextLink": {
+                  "type": "string",
+                  "description": "Next page link if any.",
+                  "readOnly": true
+              }
+          },
+          "description": "Paged API list representation."
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis/{apiId}'].put.responses['200'].schema = {
+          "x-ms-client-name": "ProductApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis/{apiId}'].put.responses['201'].schema = {
+          "x-ms-client-name": "ProductApiData",
+          "type": "object",
+          "allOf": [
+              {
+                  "$ref": "./definitions.json#/definitions/ApiContract"
+              }
+          ]
+        }
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy' 

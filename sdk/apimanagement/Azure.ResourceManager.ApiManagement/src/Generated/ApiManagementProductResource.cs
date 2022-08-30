@@ -339,17 +339,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiResource> GetProductApisAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProductApiData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProductApiData> GetProductApisAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ProductApiData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = await _productApiRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -357,14 +357,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<ApiResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ProductApiData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = await _productApiRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -384,17 +384,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiResource> GetProductApis(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProductApiData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProductApiData> GetProductApis(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiResource> FirstPageFunc(int? pageSizeHint)
+            Page<ProductApiData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = _productApiRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -402,14 +402,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<ApiResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ProductApiData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = _productApiRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public virtual async Task<Response<ApiResource>> CreateOrUpdateProductApiAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProductApiData>> CreateOrUpdateProductApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _productApiRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public virtual Response<ApiResource> CreateOrUpdateProductApi(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ProductApiData> CreateOrUpdateProductApi(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _productApiRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, cancellationToken);
-                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {

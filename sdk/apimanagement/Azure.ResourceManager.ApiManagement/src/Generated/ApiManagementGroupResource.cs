@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -257,17 +256,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementUserResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementUserResource> GetGroupUsersAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiManagementGroupUserData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGroupUserData> GetGroupUsersAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementUserResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApiManagementGroupUserData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.GetGroupUsers");
                 scope.Start();
                 try
                 {
                     var response = await _groupUserRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,14 +274,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<ApiManagementUserResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApiManagementGroupUserData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.GetGroupUsers");
                 scope.Start();
                 try
                 {
                     var response = await _groupUserRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -302,17 +301,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementUserResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementUserResource> GetGroupUsers(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementGroupUserData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGroupUserData> GetGroupUsers(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementUserResource> FirstPageFunc(int? pageSizeHint)
+            Page<ApiManagementGroupUserData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.GetGroupUsers");
                 scope.Start();
                 try
                 {
                     var response = _groupUserRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,14 +319,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<ApiManagementUserResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ApiManagementGroupUserData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.GetGroupUsers");
                 scope.Start();
                 try
                 {
                     var response = _groupUserRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -401,7 +400,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementUserResource>> CreateGroupUserAsync(string userId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGroupUserData>> CreateGroupUserAsync(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -410,7 +409,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _groupUserRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -428,7 +427,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual Response<ApiManagementUserResource> CreateGroupUser(string userId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGroupUserData> CreateGroupUser(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -437,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _groupUserRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken);
-                return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {

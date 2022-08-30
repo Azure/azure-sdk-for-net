@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiResource" /> object. </returns>
         public static ApiResource GetApiResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<ApiResource>(() =>
+            return client.GetResourceClient(() =>
             {
                 ApiResource.ValidateResourceId(id);
                 return new ApiResource(client, id);
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserResource" /> object. </returns>
         public static ApiManagementUserResource GetApiManagementUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<ApiManagementUserResource>(() =>
+            return client.GetResourceClient(() =>
             {
                 ApiManagementUserResource.ValidateResourceId(id);
                 return new ApiManagementUserResource(client, id);

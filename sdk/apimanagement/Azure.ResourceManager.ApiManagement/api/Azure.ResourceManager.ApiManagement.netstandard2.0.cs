@@ -635,8 +635,8 @@ namespace Azure.ResourceManager.ApiManagement
         protected ApiManagementGatewayResource() { }
         public virtual Azure.ResourceManager.ApiManagement.ApiManagementGatewayData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiResource> CreateOrUpdateGatewayApi(string apiId, Azure.ResourceManager.ApiManagement.Models.AssociationContract associationContract = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiResource>> CreateOrUpdateGatewayApiAsync(string apiId, Azure.ResourceManager.ApiManagement.Models.AssociationContract associationContract = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.GatewayApiData> CreateOrUpdateGatewayApi(string apiId, Azure.ResourceManager.ApiManagement.Models.AssociationContract associationContract = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.GatewayApiData>> CreateOrUpdateGatewayApiAsync(string apiId, Azure.ResourceManager.ApiManagement.Models.AssociationContract associationContract = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string gatewayId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -656,8 +656,8 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GetEntityTagAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> GetGatewayApiEntityTag(string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GetGatewayApiEntityTagAsync(string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiResource> GetGatewayApisByService(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiResource> GetGatewayApisByServiceAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.GatewayApiData> GetGatewayApisByService(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.GatewayApiData> GetGatewayApisByServiceAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.GatewayKeysContract> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.GatewayKeysContract>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RegenerateKey(Azure.ResourceManager.ApiManagement.Models.GatewayKeyRegenerateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -736,8 +736,8 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<bool> CheckGroupUserEntityExists(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckGroupUserEntityExistsAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementUserResource> CreateGroupUser(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementUserResource>> CreateGroupUserAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupUserData> CreateGroupUser(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupUserData>> CreateGroupUserAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string groupId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -747,8 +747,8 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> GetEntityTag(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GetEntityTagAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiManagementUserResource> GetGroupUsers(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiManagementUserResource> GetGroupUsersAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupUserData> GetGroupUsers(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupUserData> GetGroupUsersAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementGroupResource> Update(Azure.ETag ifMatch, Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementGroupResource>> UpdateAsync(Azure.ETag ifMatch, Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1270,8 +1270,8 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckProductApiEntityExistsAsync(string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> CheckProductGroupEntityExists(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckProductGroupEntityExistsAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiResource> CreateOrUpdateProductApi(string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiResource>> CreateOrUpdateProductApiAsync(string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ProductApiData> CreateOrUpdateProductApi(string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ProductApiData>> CreateOrUpdateProductApiAsync(string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementGroupResource> CreateOrUpdateProductGroup(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementGroupResource>> CreateOrUpdateProductGroupAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string productId) { throw null; }
@@ -1291,8 +1291,8 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementProductResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> GetEntityTag(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GetEntityTagAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiResource> GetProductApis(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiResource> GetProductApisAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.ProductApiData> GetProductApis(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.ProductApiData> GetProductApisAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiManagementGroupResource> GetProductGroups(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiManagementGroupResource> GetProductGroupsAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.SubscriptionContractData> GetProductSubscriptions(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2394,17 +2394,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     }
     public partial class ApiManagementContentItem
     {
-        internal ApiManagementContentItem() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Properties { get { throw null; } }
+        public ApiManagementContentItem() { }
+        public string ContentItemId { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Properties { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
     public partial class ApiManagementContentType
     {
-        internal ApiManagementContentType() { }
-        public string ContentTypeIdentifier { get { throw null; } }
-        public string ContentTypeName { get { throw null; } }
-        public string Description { get { throw null; } }
-        public System.BinaryData Schema { get { throw null; } }
-        public string Version { get { throw null; } }
+        public ApiManagementContentType() { }
+        public string ContentTypeId { get { throw null; } }
+        public string ContentTypeIdentifier { get { throw null; } set { } }
+        public string ContentTypeName { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        public System.BinaryData Schema { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public string Version { get { throw null; } set { } }
     }
     public partial class ApiManagementEmailTemplateCreateOrUpdateContent
     {
@@ -2436,6 +2444,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         Custom = 0,
         System = 1,
         External = 2,
+    }
+    public partial class ApiManagementGroupUserData : Azure.ResourceManager.Models.ResourceData
+    {
+        public ApiManagementGroupUserData() { }
+        public string Email { get { throw null; } set { } }
+        public string FirstName { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApiManagement.Models.GroupContractProperties> Groups { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.UserIdentityContract> Identities { get { throw null; } }
+        public string LastName { get { throw null; } set { } }
+        public string Note { get { throw null; } set { } }
+        public System.DateTimeOffset? RegistriesOn { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState? State { get { throw null; } set { } }
     }
     public partial class ApiManagementIdentityProviderCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
@@ -3536,6 +3556,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ErrorFieldContract> Details { get { throw null; } }
         public string Message { get { throw null; } set { } }
     }
+    public partial class GatewayApiData : Azure.ResourceManager.Models.ResourceData
+    {
+        public GatewayApiData() { }
+        public string ApiRevision { get { throw null; } set { } }
+        public string ApiRevisionDescription { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiType? ApiType { get { throw null; } set { } }
+        public string ApiVersion { get { throw null; } set { } }
+        public string ApiVersionDescription { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails ApiVersionSet { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ApiVersionSetId { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract AuthenticationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiContactInformation Contact { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IsCurrent { get { throw null; } set { } }
+        public bool? IsOnline { get { throw null; } }
+        public bool? IsSubscriptionRequired { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
+        public System.Uri ServiceUri { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
+        public System.Uri TermsOfServiceUri { get { throw null; } set { } }
+    }
     public partial class GatewayKeyRegenerateContent
     {
         public GatewayKeyRegenerateContent(Azure.ResourceManager.ApiManagement.Models.GatewayRegenerateKeyType keyType) { }
@@ -4086,6 +4131,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion left, Azure.ResourceManager.ApiManagement.Models.PreferredIPVersion right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ProductApiData : Azure.ResourceManager.Models.ResourceData
+    {
+        public ProductApiData() { }
+        public string ApiRevision { get { throw null; } set { } }
+        public string ApiRevisionDescription { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiType? ApiType { get { throw null; } set { } }
+        public string ApiVersion { get { throw null; } set { } }
+        public string ApiVersionDescription { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails ApiVersionSet { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ApiVersionSetId { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract AuthenticationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiContactInformation Contact { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IsCurrent { get { throw null; } set { } }
+        public bool? IsOnline { get { throw null; } }
+        public bool? IsSubscriptionRequired { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation License { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> Protocols { get { throw null; } }
+        public System.Uri ServiceUri { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceApiId { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get { throw null; } set { } }
+        public System.Uri TermsOfServiceUri { get { throw null; } set { } }
     }
     public partial class ProductEntityBaseProperties
     {
