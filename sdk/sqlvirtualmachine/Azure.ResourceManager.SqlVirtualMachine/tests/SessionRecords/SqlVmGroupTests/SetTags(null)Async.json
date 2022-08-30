@@ -326,7 +326,7 @@
             "clusterOperatorAccount": "myvmadmin@Domain.com",
             "sqlServiceAccount": "sqlService@Domain.com",
             "storageAccountUrl": "https://sqlvmteststorage917.blob.core.windows.net/",
-            "storageAccountPrimaryKey": "3UCkY\u002BHtbb0dcWgqfSwt\u002B0eG1dtH\u002BHjS2MnND1xJwGoCYVEpQ5jmUHW9hSPaZa6Mj8D4Ugpp7/e3\u002BAStjEhs6g==",
+            "storageAccountPrimaryKey": "Sanitized",
             "clusterSubnetType": "SingleSubnet"
           }
         }
