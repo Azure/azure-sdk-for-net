@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string content = File.ReadAllText(@"TestData/OrderFile.xsd");
             IntegrationAccountSchemaData data = new IntegrationAccountSchemaData(_integrationAccount.Data.Location, IntegrationAccountSchemaType.Xml)
             {
-                Content = content,
+                Content = BinaryData.FromObjectAsJson<string>(content),
                 ContentType = "application/xml",
             };
             var schema = await _schemaCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaName, data);

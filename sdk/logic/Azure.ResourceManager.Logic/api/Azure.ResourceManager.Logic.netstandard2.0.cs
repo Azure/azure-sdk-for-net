@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Logic
     {
         public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType mapType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public string Content { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
         public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Logic
     {
         public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public string Content { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
         public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -2110,7 +2110,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class LogicApiResourcePolicies
     {
         internal LogicApiResourcePolicies() { }
-        public string Content { get { throw null; } }
+        public System.BinaryData Content { get { throw null; } }
         public string ContentLink { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class LogicJsonSchema
     {
         internal LogicJsonSchema() { }
-        public string Content { get { throw null; } }
+        public System.BinaryData Content { get { throw null; } }
         public string Title { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

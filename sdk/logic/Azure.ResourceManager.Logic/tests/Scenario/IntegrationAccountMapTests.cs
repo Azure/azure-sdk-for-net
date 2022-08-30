@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -30,15 +31,16 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private async Task<IntegrationAccountMapResource> CreateMap(string mapName)
         {
+            string content = File.ReadAllText(@"TestData/MapContent.xsd");
             IntegrationAccountMapData data = new IntegrationAccountMapData(_integrationAccount.Data.Location, IntegrationAccountMapType.Xslt30)
             {
-                Content = File.ReadAllText(@"TestData/MapContent.xsd"),
+                Content = BinaryData.FromObjectAsJson<string>(content),
                 ContentType = "application/xml"
             };
             // Due to the different test servers in the pipeline, the line break encoding is also different causing the playback result to fail, changing the record file content to "Santize"
             if (SessionEnvironment.Mode == RecordedTestMode.Playback)
             {
-                data.Content = "Sanitized";
+                data.Content = BinaryData.FromString("\"Sanitized\"");
             }
             var map = await _mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, data);
             return map.Value;

@@ -168,10 +168,11 @@ format-by-name-rules:
   'trackingId': 'uuid'
   'actionTrackingId': 'uuid'
   'PublicCertificate': 'any'
+  'content': 'any'
+  'contentType': 'content-type'
   'MessageContentType': 'content-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'contentType': 'content-type'
 
 rename-rules:
   CPU: Cpu
