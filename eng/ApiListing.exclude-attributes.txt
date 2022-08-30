@@ -6,3 +6,4 @@ T:System.Runtime.CompilerServices.NullableAttribute
 T:Azure.Core.CodeGenSuppressAttribute
 T:Azure.Core.CodeGenMemberAttribute
 T:Azure.Core.PropertyReferenceTypeAttribute
+T:Azure.Core.CodeGenModelAttribute
