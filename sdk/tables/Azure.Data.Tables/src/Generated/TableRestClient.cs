@@ -213,7 +213,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content, string responsePreference, QueryOptions queryOptions, RequestContext context)
+        internal HttpMessage CreateCreateRequest(RequestContent content, string format, string responsePreference, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201204);
             var request = message.Request;
@@ -240,13 +240,13 @@ namespace Azure.Data.Tables
 
         /// <summary> Creates a new table under the given account. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: &quot;return-no-content&quot; | &quot;return-content&quot;. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(RequestContent content, string responsePreference = null, QueryOptions queryOptions = null, RequestContext context = null)
+        public virtual async Task<Response> CreateAsync(RequestContent content, string format = null, string responsePreference = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -254,7 +254,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content, responsePreference, queryOptions, context);
+                using HttpMessage message = CreateCreateRequest(content, format, responsePreference, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -266,13 +266,13 @@ namespace Azure.Data.Tables
 
         /// <summary> Creates a new table under the given account. </summary>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: &quot;return-no-content&quot; | &quot;return-content&quot;. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(RequestContent content, string responsePreference = null, QueryOptions queryOptions = null, RequestContext context = null)
+        public virtual Response Create(RequestContent content, string format = null, string responsePreference = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -280,7 +280,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content, responsePreference, queryOptions, context);
+                using HttpMessage message = CreateCreateRequest(content, format, responsePreference, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -654,7 +654,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(string table, string partitionKey, string rowKey, int? timeout, QueryOptions queryOptions, RequestContext context)
+        internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(string table, string partitionKey, string rowKey, int? timeout, string format, string select, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -696,13 +696,15 @@ namespace Azure.Data.Tables
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
+        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;. </param>
+        /// <param name="filter"> OData filter expression. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, RequestContext context = null)
+        public virtual async Task<Response> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, string format = null, string select = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(table, nameof(table));
             Argument.AssertNotNullOrEmpty(partitionKey, nameof(partitionKey));
@@ -712,7 +714,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, queryOptions, context);
+                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -727,13 +729,15 @@ namespace Azure.Data.Tables
         /// <param name="partitionKey"> The partition key of the entity. </param>
         /// <param name="rowKey"> The row key of the entity. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
+        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;. </param>
+        /// <param name="filter"> OData filter expression. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, RequestContext context = null)
+        public virtual Response QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, string format = null, string select = null, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(table, nameof(table));
             Argument.AssertNotNullOrEmpty(partitionKey, nameof(partitionKey));
@@ -743,7 +747,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, queryOptions, context);
+                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
