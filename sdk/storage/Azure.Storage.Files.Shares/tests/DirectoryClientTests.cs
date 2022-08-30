@@ -971,6 +971,33 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task ListFilesAndDirectories_Encoded_Prefix()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            string specialCharDirectoryName = "directory\uFFFE";
+            ShareDirectoryClient specialCharDirectoryClient =  await directoryClient.CreateSubdirectoryAsync(specialCharDirectoryName);
+
+            // Act
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            ShareDirectoryGetFilesAndDirectoriesOptions options = new ShareDirectoryGetFilesAndDirectoriesOptions
+            {
+                Prefix = specialCharDirectoryName
+            };
+
+            await foreach (ShareFileItem item in directoryClient.GetFilesAndDirectoriesAsync(options))
+            {
+                shareFileItems.Add(item);
+            }
+
+            // Assert
+            Assert.AreEqual(1, shareFileItems.Count);
+            Assert.AreEqual(specialCharDirectoryName, shareFileItems[0].Name);
+        }
+
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListHandles()
         {
