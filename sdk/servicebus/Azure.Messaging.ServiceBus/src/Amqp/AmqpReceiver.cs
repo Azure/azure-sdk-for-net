@@ -416,6 +416,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Guid lockToken,
             TimeSpan timeout)
         {
+            ThrowIfSessionLockLost();
             if (RequestResponseLockedMessages.Contains(lockToken))
             {
                 await DisposeMessageRequestResponseAsync(
@@ -440,8 +441,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Outcome outcome,
             TimeSpan timeout)
         {
-            ThrowIfSessionLockLost();
-
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
             if (!MemoryMarshal.TryWrite(bufferForLockToken, ref lockToken))
             {
@@ -565,6 +564,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
+            ThrowIfSessionLockLost();
             if (RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
@@ -621,6 +621,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
+            ThrowIfSessionLockLost();
             if (RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
@@ -691,6 +692,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             Argument.AssertNotTooLong(deadLetterReason, Constants.MaxDeadLetterReasonLength, nameof(deadLetterReason));
             Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
+            ThrowIfSessionLockLost();
 
             if (RequestResponseLockedMessages.Contains(lockToken))
             {
@@ -768,8 +770,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string deadLetterReason = null,
             string deadLetterDescription = null)
         {
-            ThrowIfSessionLockLost();
-
             // Create an AmqpRequest Message to update disposition
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.UpdateDispositionOperation, timeout, null);
 
