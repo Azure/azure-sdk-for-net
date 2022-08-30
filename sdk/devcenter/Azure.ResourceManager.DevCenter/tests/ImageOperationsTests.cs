@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
     public class ImageOperationsTests : DevCenterManagementTestBase
     {
         public ImageOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
         [Test]
         [PlaybackOnly("TODO")]
-        public async Task ListImagesByGallery()
+        public async Task ListAndGetImagesByGallery()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.DevCenter.Tests
             List<ImageResource> images = await galleryResource.GetImages().GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(images.Count > 0);
+
+            // Get one of the images
+            var image = (await galleryResource.GetImageAsync(images.First().Data.Name)).Value;
+            Assert.IsNotNull(image);
         }
     }
 }
