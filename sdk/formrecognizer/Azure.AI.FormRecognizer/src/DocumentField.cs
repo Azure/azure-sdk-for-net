@@ -10,7 +10,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("DocumentField")]
     [CodeGenSuppress(nameof(DocumentField), typeof(DocumentFieldType), typeof(string), typeof(DateTimeOffset?), typeof(TimeSpan?), typeof(string), typeof(double?), typeof(long?), typeof(V3SelectionMarkState?), typeof(DocumentSignatureType?), typeof(string), typeof(IReadOnlyList<DocumentField>), typeof(IReadOnlyDictionary<string, DocumentField>), typeof(CurrencyValue?), typeof(AddressValue), typeof(string), typeof(IReadOnlyList<BoundingRegion>), typeof(IReadOnlyList<DocumentSpan>), typeof(float?))]
-    [CodeGenSuppress("Type")]
     [CodeGenSuppress("ValueString")]
     [CodeGenSuppress("ValueDate")]
     [CodeGenSuppress("ValueTime")]
@@ -26,16 +25,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentField
     {
         /// <summary> Initializes a new instance of DocumentField. </summary>
-        /// <param name="valueType"> Data type of the field value. </param>
-        internal DocumentField(DocumentFieldType valueType)
+        /// <param name="fieldType"> Data type of the field value. </param>
+        internal DocumentField(DocumentFieldType fieldType)
         {
-            Value = new DocumentFieldValue(valueType);
+            Value = new DocumentFieldValue(fieldType);
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = new ChangeTrackingList<DocumentSpan>();
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
-        /// <param name="valueType"> Data type of the field value. </param>
+        /// <param name="fieldType"> Data type of the field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
         /// <param name="valueTime"> Time value in hh:mm:ss format (ISO 8601). </param>
@@ -53,9 +52,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="boundingRegions"> Bounding regions covering the field. </param>
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        internal DocumentField(DocumentFieldType valueType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
-            Value = new DocumentFieldValue(valueType, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMarkPrivate, valueSignature, valueCountryRegion, valueArray, valueObject, valueCurrency, valueAddress);
+            Value = new DocumentFieldValue(fieldType, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMarkPrivate, valueSignature, valueCountryRegion, valueArray, valueObject, valueCurrency, valueAddress);
             Content = content;
             BoundingRegions = boundingRegions;
             Spans = spans;
@@ -65,14 +64,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentField. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentField(DocumentFieldValue value, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        internal DocumentField(DocumentFieldType fieldType, DocumentFieldValue value, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
+            FieldType = fieldType;
             Value = value;
             Content = content;
             BoundingRegions = boundingRegions;
             Spans = spans;
             Confidence = confidence;
         }
+
+        /// <summary>
+        /// The data type of the field value.
+        /// </summary>
+        [CodeGenMember("Type")]
+        public DocumentFieldType FieldType { get; }
 
         /// <summary>
         /// The value of this <see cref="DocumentField"/>.

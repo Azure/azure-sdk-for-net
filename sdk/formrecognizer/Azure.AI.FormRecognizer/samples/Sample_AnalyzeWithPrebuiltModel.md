@@ -41,7 +41,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField))
     {
-        if (vendorNameField.Value.FieldType == DocumentFieldType.String)
+        if (vendorNameField.FieldType == DocumentFieldType.String)
         {
             string vendorName = vendorNameField.Value.AsString();
             Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
@@ -50,7 +50,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField))
     {
-        if (customerNameField.Value.FieldType == DocumentFieldType.String)
+        if (customerNameField.FieldType == DocumentFieldType.String)
         {
             string customerName = customerNameField.Value.AsString();
             Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
@@ -59,19 +59,19 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField))
     {
-        if (itemsField.Value.FieldType == DocumentFieldType.List)
+        if (itemsField.FieldType == DocumentFieldType.List)
         {
             foreach (DocumentField itemField in itemsField.Value.AsList())
             {
                 Console.WriteLine("Item:");
 
-                if (itemField.Value.FieldType == DocumentFieldType.Dictionary)
+                if (itemField.FieldType == DocumentFieldType.Dictionary)
                 {
                     IReadOnlyDictionary<string, DocumentField> itemFields = itemField.Value.AsDictionary();
 
                     if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField))
                     {
-                        if (itemDescriptionField.Value.FieldType == DocumentFieldType.String)
+                        if (itemDescriptionField.FieldType == DocumentFieldType.String)
                         {
                             string itemDescription = itemDescriptionField.Value.AsString();
 
@@ -81,7 +81,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
                     if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                     {
-                        if (itemAmountField.Value.FieldType == DocumentFieldType.Currency)
+                        if (itemAmountField.FieldType == DocumentFieldType.Currency)
                         {
                             CurrencyValue itemAmount = itemAmountField.Value.AsCurrency();
 
@@ -95,7 +95,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
     {
-        if (subTotalField.Value.FieldType == DocumentFieldType.Currency)
+        if (subTotalField.FieldType == DocumentFieldType.Currency)
         {
             CurrencyValue subTotal = subTotalField.Value.AsCurrency();
             Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
@@ -104,7 +104,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
     {
-        if (totalTaxField.Value.FieldType == DocumentFieldType.Currency)
+        if (totalTaxField.FieldType == DocumentFieldType.Currency)
         {
             CurrencyValue totalTax = totalTaxField.Value.AsCurrency();
             Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
@@ -113,7 +113,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
     {
-        if (invoiceTotalField.Value.FieldType == DocumentFieldType.Currency)
+        if (invoiceTotalField.FieldType == DocumentFieldType.Currency)
         {
             CurrencyValue invoiceTotal = invoiceTotalField.Value.AsCurrency();
             Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
@@ -148,7 +148,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField))
     {
-        if (vendorNameField.Value.FieldType == DocumentFieldType.String)
+        if (vendorNameField.FieldType == DocumentFieldType.String)
         {
             string vendorName = vendorNameField.Value.AsString();
             Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
@@ -157,7 +157,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField))
     {
-        if (customerNameField.Value.FieldType == DocumentFieldType.String)
+        if (customerNameField.FieldType == DocumentFieldType.String)
         {
             string customerName = customerNameField.Value.AsString();
             Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
@@ -166,19 +166,19 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField))
     {
-        if (itemsField.Value.FieldType == DocumentFieldType.List)
+        if (itemsField.FieldType == DocumentFieldType.List)
         {
             foreach (DocumentField itemField in itemsField.Value.AsList())
             {
                 Console.WriteLine("Item:");
 
-                if (itemField.Value.FieldType == DocumentFieldType.Dictionary)
+                if (itemField.FieldType == DocumentFieldType.Dictionary)
                 {
                     IReadOnlyDictionary<string, DocumentField> itemFields = itemField.Value.AsDictionary();
 
                     if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField))
                     {
-                        if (itemDescriptionField.Value.FieldType == DocumentFieldType.String)
+                        if (itemDescriptionField.FieldType == DocumentFieldType.String)
                         {
                             string itemDescription = itemDescriptionField.Value.AsString();
 
@@ -188,7 +188,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
                     if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                     {
-                        if (itemAmountField.Value.FieldType == DocumentFieldType.Currency)
+                        if (itemAmountField.FieldType == DocumentFieldType.Currency)
                         {
                             CurrencyValue itemAmount = itemAmountField.Value.AsCurrency();
 
@@ -202,7 +202,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
     {
-        if (subTotalField.Value.FieldType == DocumentFieldType.Currency)
+        if (subTotalField.FieldType == DocumentFieldType.Currency)
         {
             CurrencyValue subTotal = subTotalField.Value.AsCurrency();
             Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
@@ -211,7 +211,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
     {
-        if (totalTaxField.Value.FieldType == DocumentFieldType.Currency)
+        if (totalTaxField.FieldType == DocumentFieldType.Currency)
         {
             CurrencyValue totalTax = totalTaxField.Value.AsCurrency();
             Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
@@ -220,7 +220,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
     {
-        if (invoiceTotalField.Value.FieldType == DocumentFieldType.Currency)
+        if (invoiceTotalField.FieldType == DocumentFieldType.Currency)
         {
             CurrencyValue invoiceTotal = invoiceTotalField.Value.AsCurrency();
             Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");

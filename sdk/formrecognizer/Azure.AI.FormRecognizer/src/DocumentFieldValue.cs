@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// The data type of the field value.
         /// </summary>
-        public DocumentFieldType FieldType { get; }
+        private DocumentFieldType FieldType { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValueString { get; }

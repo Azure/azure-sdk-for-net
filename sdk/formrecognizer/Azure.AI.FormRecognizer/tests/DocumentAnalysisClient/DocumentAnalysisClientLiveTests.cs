@@ -129,15 +129,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var mobilePhones = document.Fields["MobilePhones"].Value.AsList();
             Assert.AreEqual(1, mobilePhones.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, mobilePhones.FirstOrDefault().Value.FieldType);
+            Assert.AreEqual(DocumentFieldType.PhoneNumber, mobilePhones.FirstOrDefault().FieldType);
 
             var otherPhones = document.Fields["WorkPhones"].Value.AsList();
             Assert.AreEqual(1, otherPhones.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, otherPhones.FirstOrDefault().Value.FieldType);
+            Assert.AreEqual(DocumentFieldType.PhoneNumber, otherPhones.FirstOrDefault().FieldType);
 
             var faxes = document.Fields["Faxes"].Value.AsList();
             Assert.AreEqual(1, faxes.Count);
-            Assert.AreEqual(DocumentFieldType.PhoneNumber, faxes.FirstOrDefault().Value.FieldType);
+            Assert.AreEqual(DocumentFieldType.PhoneNumber, faxes.FirstOrDefault().FieldType);
 
             var addresses = document.Fields["Addresses"].Value.AsList();
             Assert.AreEqual(1, addresses.Count);
@@ -200,7 +200,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 DocumentField sampleField = analyzedDocument.Fields["Emails"];
 
-                Assert.AreEqual(DocumentFieldType.List, sampleField.Value.FieldType);
+                Assert.AreEqual(DocumentFieldType.List, sampleField.FieldType);
 
                 var field = sampleField.Value.AsList().Single();
 
@@ -267,7 +267,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(document.Fields);
             var name = "PurchaseOrderNumber";
             Assert.IsNotNull(document.Fields[name]);
-            Assert.AreEqual(DocumentFieldType.String, document.Fields[name].Value.FieldType);
+            Assert.AreEqual(DocumentFieldType.String, document.Fields[name].FieldType);
             Assert.AreEqual("948284", document.Fields[name].Content);
         }
 
@@ -303,7 +303,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(document.Fields);
             var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(document.Fields[name]);
-            Assert.AreEqual(DocumentFieldType.SelectionMark, document.Fields[name].Value.FieldType);
+            Assert.AreEqual(DocumentFieldType.SelectionMark, document.Fields[name].FieldType);
             Assert.AreEqual(SelectionMarkState.Selected, document.Fields[name].Value.AsSelectionMarkState());
         }
 
@@ -441,7 +441,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The missing field is returned with its value set to null.
 
             Assert.IsTrue(fields.Values.Any(field =>
-                field.Value.FieldType == DocumentFieldType.String && field.Value.AsString() == null));
+                field.FieldType == DocumentFieldType.String && field.Value.AsString() == null));
         }
 
         [RecordedTest]

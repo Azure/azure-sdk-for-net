@@ -107,6 +107,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
         }
 
+        /// <summary> Initializes a new instance of DocumentField. </summary>
+        /// <param name="fieldType"> Data type of the field value. </param>
+        /// <param name="value">The value of this <see cref="DocumentField"/>.</param>
+        /// <param name="content"> Field content. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the field. </param>
+        /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the field. </param>
+        public static DocumentField DocumentField(DocumentFieldType fieldType, DocumentFieldValue value, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentField(fieldType, value, content, boundingRegions, spans, confidence);
+        }
+
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="description"> Field description. </param>
