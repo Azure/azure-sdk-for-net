@@ -2315,6 +2315,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = CreateClient();
                 List<ServiceBusSessionProcessor> processors = new();
                 int numProcessors = 50;
+                int processedCount = 0;
+                int sentCount = 0;
                 for (int i = 0; i < numProcessors; i++)
                 {
                     ServiceBusSessionProcessorOptions options = new()
@@ -2341,6 +2343,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     await processor.CloseAsync();
                 }
+                // add allowance for last batch of messages that may not be processed in time
+                Assert.GreaterOrEqual(processedCount, sentCount - 30);
 
                 async Task SendMessagesAsync(CancellationToken cancellationToken)
                 {
@@ -2368,6 +2372,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             }
                         }
 
+                        sentCount += messages.Count;
                         await sender.ScheduleMessagesAsync(messages, DateTimeOffset.Now.AddSeconds(10));
                     }
                 }
@@ -2375,12 +2380,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Task ProcessMessageAsync(ProcessSessionMessageEventArgs args)
                 {
                     TimeSpan timeOnBus = DateTime.UtcNow - args.Message.EnqueuedTime.UtcDateTime;
-                    TestContext.Progress.WriteLine(timeOnBus.TotalSeconds);
                     if (timeOnBus >= lockDuration)
                     {
                         Assert.Fail($"Session '{args.Message.SessionId}' has a time on bus greater than 30 seconds: {timeOnBus}");
                     }
-
+                    Interlocked.Increment(ref processedCount);
                     return Task.CompletedTask;
                 }
             }
