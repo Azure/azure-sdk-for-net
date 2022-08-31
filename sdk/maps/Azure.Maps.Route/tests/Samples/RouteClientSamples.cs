@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Core;
 #region Snippet:RouteImportNamespace
 using Azure.Core.GeoJson;
 using Azure.Maps.Route;
@@ -20,8 +21,8 @@ namespace Azure.Maps.Route.Tests
         {
             #region Snippet:InstantiateRouteClientViaAAD
             // Create a MapsRouteClient that will authenticate through Active Directory
-            var credential = TestEnvironment.Credential;
-            var clientId = "<My Map Account Client Id>";
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = "<My Map Account Client Id>";
             MapsRouteClient client = new MapsRouteClient(credential, clientId);
             #endregion
         }
@@ -30,7 +31,7 @@ namespace Azure.Maps.Route.Tests
         {
             #region Snippet:InstantiateRouteClientViaSubscriptionKey
             // Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
-            var credential = new AzureKeyCredential("<My Subscription Key>");
+            AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
             MapsRouteClient client = new MapsRouteClient(credential);
             #endregion
         }
@@ -38,13 +39,13 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteDirections()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:GetDirections
             // Create origin and destination routing points
-            var routePoints = new List<GeoPosition>()
+            List<GeoPosition> routePoints = new List<GeoPosition>()
             {
                 new GeoPosition(123.751, 45.9375),
                 new GeoPosition(123.791, 45.96875),
@@ -52,8 +53,8 @@ namespace Azure.Maps.Route.Tests
             };
 
             // Create Route direction query object
-            var query = new RouteDirectionQuery(routePoints);
-            var result = client.GetDirections(query);
+            RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
+            Response<RouteDirections> result = client.GetDirections(query);
 
             // Route direction result
             Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
@@ -77,20 +78,20 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteDirectionsWithOptions()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:RouteDirectionsWithOptions
             // Create origin and destination routing points
-            var routePoints = new List<GeoPosition>()
+            List<GeoPosition> routePoints = new List<GeoPosition>()
             {
                 new GeoPosition(123.751, 45.9375),
                 new GeoPosition(123.791, 45.96875),
                 new GeoPosition(123.767, 45.90625)
             };
 
-            var options = new RouteDirectionOptions()
+            RouteDirectionOptions options = new RouteDirectionOptions()
             {
                 RouteType = RouteType.Fastest,
                 UseTrafficData = true,
@@ -99,8 +100,8 @@ namespace Azure.Maps.Route.Tests
             };
 
             // Create Route direction query object
-            var query = new RouteDirectionQuery(routePoints);
-            var result = client.GetDirections(query);
+            RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
+            Response<RouteDirections> result = client.GetDirections(query);
 
             // Route direction result
             Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
@@ -124,18 +125,18 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteDirectionsError()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:CatchRouteException
             try
             {
                 // An empty route points list
-                var routePoints = new List<GeoPosition>() { };
-                var query = new RouteDirectionQuery(routePoints);
+                List<GeoPosition> routePoints = new List<GeoPosition>() { };
+                RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
 
-                var result = client.GetDirections(query);
+                Response<RouteDirections> result = client.GetDirections(query);
                 // Do something with result ...
             }
             catch (RequestFailedException e)
@@ -147,9 +148,9 @@ namespace Azure.Maps.Route.Tests
 
         public void SyncRequestRouteDirectionsBatch()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:SyncRequestRouteDirectionsBatch
             // Create a list of route direction queries
@@ -172,16 +173,16 @@ namespace Azure.Maps.Route.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             // Call synchronous route direction batch request
-            var response = client.SyncRequestRouteDirectionsBatch(queries);
+            Response<RouteDirectionsBatchResult> response = client.SyncRequestRouteDirectionsBatch(queries);
             #endregion
 
             #region Snippet:RouteDirectionsBatchResult
             for (int i = 0; i < response.Value.Results.Count; i++)
             {
-                var result = response.Value.Results[i];
+                RouteDirectionsBatchItemResponse result = response.Value.Results[i];
                 Console.WriteLine($"Batch item result {0}:", i);
 
-                foreach (var route in result.Routes)
+                foreach (RouteData route in result.Routes)
                 {
                     Console.WriteLine($"Total length: {0} meters, travel time: {1} seconds",
                         route.Summary.LengthInMeters, route.Summary.TravelTimeInSeconds
@@ -191,7 +192,7 @@ namespace Azure.Maps.Route.Tests
                     for (int legIndex = 0; legIndex < route.Legs.Count; legIndex++)
                     {
                         Console.WriteLine($"Leg {0}", legIndex);
-                        foreach (var point in route.Legs[legIndex].Points)
+                        foreach (GeoPosition point in route.Legs[legIndex].Points)
                         {
                             Console.WriteLine($"point({point.Latitude}, {point.Longitude})");
                         }
@@ -203,9 +204,9 @@ namespace Azure.Maps.Route.Tests
 
         public async void RequestRouteDirectionsBatch()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:AsyncRequestRouteDirectionsBatch
             // Create a list of route direction queries
@@ -228,19 +229,19 @@ namespace Azure.Maps.Route.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             // Invoke asynchronous route direction batch request, we can get the result later via assigning `WaitUntil.Started`
-            var operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
+            RequestRouteDirectionsOperation operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
 
             // After a while, get the result back
-            var result = operation.WaitForCompletion();
+            Response<RouteDirectionsBatchResult> result = operation.WaitForCompletion();
             #endregion
         }
 
         [Test]
         public void RequestRouteDirectionsBatchWithOperationId()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:AsyncRequestRouteDirectionsBatchWithOperationId
             // Create a list of route direction queries
@@ -263,10 +264,10 @@ namespace Azure.Maps.Route.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
             // Invoke asynchronous route direction batch request
-            var operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
+            RequestRouteDirectionsOperation operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
 
             // Get the operation ID and store somewhere
-            var operationId = operation.Id;
+            string operationId = operation.Id;
             #endregion
 
             // Sleep a while to prevent live test failure
@@ -275,21 +276,21 @@ namespace Azure.Maps.Route.Tests
             #region Snippet:AsyncRequestRouteDirectionsBatchWithOperationId2
             // Within 14 days, users can retrive the cached result with operation ID
             // The `endpoint` argument in `client` should be the same!
-            var newRouteDirectionOperation = new RequestRouteDirectionsOperation(client, operationId);
-            var result = newRouteDirectionOperation.WaitForCompletion();
+            RequestRouteDirectionsOperation newRouteDirectionOperation = new RequestRouteDirectionsOperation(client, operationId);
+            Response<RouteDirectionsBatchResult> result = newRouteDirectionOperation.WaitForCompletion();
             #endregion
         }
 
         [Test]
         public void SimpleRequestRouteMatrix()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:SimpleSyncRouteMatrix
             // A simple route matrix request
-            var routeMatrixQuery = new RouteMatrixQuery
+            RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
                 Origins = new List<GeoPosition>()
@@ -300,7 +301,7 @@ namespace Azure.Maps.Route.Tests
                 // one destination point
                 Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
             };
-            var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
+            Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(routeMatrixQuery);
             #endregion
 
             Assert.AreEqual(2, result.Value.Matrix.Count);
@@ -312,13 +313,13 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void RequestRouteMatrixWithOptions()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:SyncRouteMatrixWithOptions
             // route matrix query
-            var routeMatrixQuery = new RouteMatrixQuery
+            RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
                 Origins = new List<GeoPosition>()
@@ -331,7 +332,7 @@ namespace Azure.Maps.Route.Tests
             };
 
             // Add more options for route matrix request
-            var options = new RouteMatrixOptions(routeMatrixQuery)
+            RouteMatrixOptions options = new RouteMatrixOptions(routeMatrixQuery)
             {
                 UseTrafficData = true,
                 RouteType = RouteType.Economy
@@ -339,20 +340,20 @@ namespace Azure.Maps.Route.Tests
             options.Avoid.Add(RouteAvoidType.Ferries);
             options.Avoid.Add(RouteAvoidType.UnpavedRoads);
 
-            var result = client.SyncRequestRouteMatrix(options);
+            Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(options);
             #endregion
         }
 
         [Test]
         public void RequestRouteMatrix()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:SimpleAsyncRouteMatrixRequest
             // Instantiate route matrix query
-            var routeMatrixQuery = new RouteMatrixQuery
+            RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
                 Origins = new List<GeoPosition>()
@@ -365,13 +366,13 @@ namespace Azure.Maps.Route.Tests
             };
 
             // Instantiate route matrix options
-            var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
+            RouteMatrixOptions routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
             {
                 TravelTimeType = TravelTimeType.All,
             };
 
             // Invoke an async route matrix request and directly wait for completion
-            var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
+            RequestRouteMatrixOperation result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
             #endregion
 
             Assert.AreEqual(2, result.Value.Matrix.Count);
@@ -383,12 +384,12 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void RequestRouteMatrixWithOperationId()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             // Instantiate route matrix query
-            var routeMatrixQuery = new RouteMatrixQuery
+            RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
                 Origins = new List<GeoPosition>()
@@ -401,14 +402,14 @@ namespace Azure.Maps.Route.Tests
             };
 
             // Instantiate route matrix options
-            var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery);
+            RouteMatrixOptions routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery);
 
             #region Snippet:AsyncRouteMatrixRequestWithOperationId
             // Invoke an async route matrix request and get the result later via assigning `WaitUntil.Started`
-            var operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions);
+            RequestRouteMatrixOperation operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions);
 
             // Get the operation ID and store somewhere
-            var operationId = operation.Id;
+            string operationId = operation.Id;
             #endregion
 
             // Sleep a while to prevent live test failure
@@ -417,8 +418,8 @@ namespace Azure.Maps.Route.Tests
             #region Snippet:AsyncRouteMatrixRequestWithOperationId2
             // Within 14 days, users can retrive the cached result with operation ID
             // The `endpoint` argument in `client` should be the same!
-            var newRouteMatrixOperation = new RequestRouteMatrixOperation(client, operationId);
-            var result = newRouteMatrixOperation.WaitForCompletion();
+            RequestRouteMatrixOperation newRouteMatrixOperation = new RequestRouteMatrixOperation(client, operationId);
+            Response<RouteMatrixResult> result = newRouteMatrixOperation.WaitForCompletion();
             #endregion
 
             #region Snippet:RouteMatrixResult
@@ -428,12 +429,12 @@ namespace Azure.Maps.Route.Tests
                 result.Value.Summary.SuccessfulRoutes);
 
             // Route matrix result
-            foreach (var routeResult in result.Value.Matrix)
+            foreach (IList<RouteMatrix> routeResult in result.Value.Matrix)
             {
                 Console.WriteLine("Route result:");
-                foreach (var route in routeResult)
+                foreach (RouteMatrix route in routeResult)
                 {
-                    var summary = route.Summary;
+                    RouteLegSummary summary = route.Summary;
                     Console.WriteLine($"Travel time: {summary.TravelTimeInSeconds} seconds");
                     Console.WriteLine($"Travel length: {summary.LengthInMeters} meters");
                     Console.WriteLine($"Departure at: {summary.DepartureTime.ToString()} meters");
@@ -446,17 +447,17 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteRange()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:SimpleRouteRange
             // Search from a point of time budget that can be reached in 2000 seconds
-            var options = new RouteRangeOptions(123.75, 46)
+            RouteRangeOptions options = new RouteRangeOptions(123.75, 46)
             {
                 TimeBudget = new TimeSpan(0, 20, 0)
             };
-            var result = client.GetRouteRange(options);
+            Response<RouteRangeResult> result = client.GetRouteRange(options);
             #endregion
 
             Assert.IsNotNull(result.Value.ReachableRange.Center);
@@ -466,22 +467,22 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteRangeWithComplexOptions()
         {
-            var credential = TestEnvironment.Credential;
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsRouteClient(credential, clientId);
+            TokenCredential credential = TestEnvironment.Credential;
+            string clientId = TestEnvironment.MapAccountClientId;
+            MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:ComplexRouteRange
-            var GeoPosition = new GeoPosition(123.75, 46);
+            GeoPosition geoPosition = new GeoPosition(123.75, 46);
             // Search from a point of distance budget that can be reached in 6075.35 meters,
             // And departure time after 2 hours later in car
-            var options = new RouteRangeOptions(GeoPosition)
+            RouteRangeOptions options = new RouteRangeOptions(geoPosition)
             {
                 DistanceBudgetInMeters = 6075.38,
                 DepartAt = DateTimeOffset.Now.AddHours(2),
                 RouteType = RouteType.Shortest,
                 TravelMode = TravelMode.Car
             };
-            var result = client.GetRouteRange(options);
+            Response<RouteRangeResult> result = client.GetRouteRange(options);
             #endregion
 
             #region Snippet:ReachableRouteRangeResult
@@ -491,7 +492,7 @@ namespace Azure.Maps.Route.Tests
                 result.Value.ReachableRange.Center.Latitude);
 
             Console.WriteLine("Reachable route range polygon:");
-            foreach (var point in result.Value.ReachableRange.Boundary)
+            foreach (GeoPosition point in result.Value.ReachableRange.Boundary)
             {
                 Console.WriteLine($"({point.Longitude}, {point.Latitude})");
             }

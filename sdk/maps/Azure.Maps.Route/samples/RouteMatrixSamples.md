@@ -18,7 +18,7 @@ Instantiate route client with subscription key:
 
 ```C# Snippet:InstantiateRouteClientViaSubscriptionKey
 // Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsRouteClient client = new MapsRouteClient(credential);
 ```
 
@@ -26,8 +26,8 @@ Instantiate route client via AAD authentication:
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = TestEnvironment.Credential;
+string clientId = "<My Map Account Client Id>";
 MapsRouteClient client = new MapsRouteClient(credential, clientId);
 ```
 
@@ -37,7 +37,7 @@ You can send synchronous Route Matrix request when `origins * destination <= 100
 
 ```C# Snippet:SimpleSyncRouteMatrix
 // A simple route matrix request
-var routeMatrixQuery = new RouteMatrixQuery
+RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
     Origins = new List<GeoPosition>()
@@ -48,14 +48,14 @@ var routeMatrixQuery = new RouteMatrixQuery
     // one destination point
     Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
 };
-var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
+Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(routeMatrixQuery);
 ```
 
 To add more options to route matrix request, one can use `RouteMatrixOptions` as argument to the request:
 
 ```C# Snippet:SyncRouteMatrixWithOptions
 // route matrix query
-var routeMatrixQuery = new RouteMatrixQuery
+RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
     Origins = new List<GeoPosition>()
@@ -68,7 +68,7 @@ var routeMatrixQuery = new RouteMatrixQuery
 };
 
 // Add more options for route matrix request
-var options = new RouteMatrixOptions(routeMatrixQuery)
+RouteMatrixOptions options = new RouteMatrixOptions(routeMatrixQuery)
 {
     UseTrafficData = true,
     RouteType = RouteType.Economy
@@ -76,7 +76,7 @@ var options = new RouteMatrixOptions(routeMatrixQuery)
 options.Avoid.Add(RouteAvoidType.Ferries);
 options.Avoid.Add(RouteAvoidType.UnpavedRoads);
 
-var result = client.SyncRequestRouteMatrix(options);
+Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(options);
 ```
 
 ## Asynchronous Route Matrix Request
@@ -85,7 +85,7 @@ If the route matrix request is large (`origins * destination > 100`), one can us
 
 ```C# Snippet:SimpleAsyncRouteMatrixRequest
 // Instantiate route matrix query
-var routeMatrixQuery = new RouteMatrixQuery
+RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
     Origins = new List<GeoPosition>()
@@ -98,23 +98,23 @@ var routeMatrixQuery = new RouteMatrixQuery
 };
 
 // Instantiate route matrix options
-var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
+RouteMatrixOptions routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
 {
     TravelTimeType = TravelTimeType.All,
 };
 
 // Invoke an async route matrix request and directly wait for completion
-var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
+RequestRouteMatrixOperation result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 
 The asynchronous route matrix result will be cached for 14 days. You can fetch the result from server via a `RouteMatrixOperation` with the same `Id`:
 
 ```C# Snippet:AsyncRouteMatrixRequestWithOperationId
 // Invoke an async route matrix request and get the result later via assigning `WaitUntil.Started`
-var operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions);
+RequestRouteMatrixOperation operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions);
 
 // Get the operation ID and store somewhere
-var operationId = operation.Id;
+string operationId = operation.Id;
 ```
 
 Within 14 days, You can use the same operation ID to fetch the same result. One precondition is the client endpoint should be the same:
@@ -122,8 +122,8 @@ Within 14 days, You can use the same operation ID to fetch the same result. One 
 ```C# Snippet:AsyncRouteMatrixRequestWithOperationId2
 // Within 14 days, users can retrive the cached result with operation ID
 // The `endpoint` argument in `client` should be the same!
-var newRouteMatrixOperation = new RequestRouteMatrixOperation(client, operationId);
-var result = newRouteMatrixOperation.WaitForCompletion();
+RequestRouteMatrixOperation newRouteMatrixOperation = new RequestRouteMatrixOperation(client, operationId);
+Response<RouteMatrixResult> result = newRouteMatrixOperation.WaitForCompletion();
 ```
 
 ## Route Matrix Result
@@ -137,12 +137,12 @@ Console.WriteLine($"Total request routes: {0}, Successful routes: {1}",
     result.Value.Summary.SuccessfulRoutes);
 
 // Route matrix result
-foreach (var routeResult in result.Value.Matrix)
+foreach (IList<RouteMatrix> routeResult in result.Value.Matrix)
 {
     Console.WriteLine("Route result:");
-    foreach (var route in routeResult)
+    foreach (RouteMatrix route in routeResult)
     {
-        var summary = route.Summary;
+        RouteLegSummary summary = route.Summary;
         Console.WriteLine($"Travel time: {summary.TravelTimeInSeconds} seconds");
         Console.WriteLine($"Travel length: {summary.LengthInMeters} meters");
         Console.WriteLine($"Departure at: {summary.DepartureTime.ToString()} meters");

@@ -18,7 +18,7 @@ Instantiate route client with subscription key:
 
 ```C# Snippet:InstantiateRouteClientViaSubscriptionKey
 // Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsRouteClient client = new MapsRouteClient(credential);
 ```
 
@@ -26,8 +26,8 @@ Instantiate route client via AAD authentication:
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = TestEnvironment.Credential;
+string clientId = "<My Map Account Client Id>";
 MapsRouteClient client = new MapsRouteClient(credential, clientId);
 ```
 
@@ -37,7 +37,7 @@ Most of the time, we want to get a route direction, we can call `GetRouteDirecti
 
 ```C# Snippet:GetDirections
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>()
+List<GeoPosition> routePoints = new List<GeoPosition>()
 {
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
@@ -45,8 +45,8 @@ var routePoints = new List<GeoPosition>()
 };
 
 // Create Route direction query object
-var query = new RouteDirectionQuery(routePoints);
-var result = client.GetDirections(query);
+RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
+Response<RouteDirections> result = client.GetDirections(query);
 
 // Route direction result
 Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
@@ -68,14 +68,14 @@ You can also specify the travel mode, route type, language, and other options wh
 
 ```C# Snippet:RouteDirectionsWithOptions
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>()
+List<GeoPosition> routePoints = new List<GeoPosition>()
 {
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
     new GeoPosition(123.767, 45.90625)
 };
 
-var options = new RouteDirectionOptions()
+RouteDirectionOptions options = new RouteDirectionOptions()
 {
     RouteType = RouteType.Fastest,
     UseTrafficData = true,
@@ -84,8 +84,8 @@ var options = new RouteDirectionOptions()
 };
 
 // Create Route direction query object
-var query = new RouteDirectionQuery(routePoints);
-var result = client.GetDirections(query);
+RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
+Response<RouteDirections> result = client.GetDirections(query);
 
 // Route direction result
 Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
@@ -128,7 +128,7 @@ queries.Add(new RouteDirectionQuery(
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
 // Call synchronous route direction batch request
-var response = client.SyncRequestRouteDirectionsBatch(queries);
+Response<RouteDirectionsBatchResult> response = client.SyncRequestRouteDirectionsBatch(queries);
 ```
 
 ## Asynchronous Route Direction Batch Request
@@ -156,10 +156,10 @@ queries.Add(new RouteDirectionQuery(
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
 // Invoke asynchronous route direction batch request, we can get the result later via assigning `WaitUntil.Started`
-var operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
+RequestRouteDirectionsOperation operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started, queries);
 
 // After a while, get the result back
-var result = operation.WaitForCompletion();
+Response<RouteDirectionsBatchResult> result = operation.WaitForCompletion();
 ```
 
 The asynchronous route direction result will be cached for 14 days. You can fetch the result from server via a `RequestRouteDirectionsOperation` with the same `Id`:
@@ -185,10 +185,10 @@ queries.Add(new RouteDirectionQuery(
 queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
 
 // Invoke asynchronous route direction batch request
-var operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
+RequestRouteDirectionsOperation operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
 
 // Get the operation ID and store somewhere
-var operationId = operation.Id;
+string operationId = operation.Id;
 ```
 
 Within 14 days, you can use the same operation ID to fetch the same result. One precondition is the client endpoint should be the same:
@@ -196,8 +196,8 @@ Within 14 days, you can use the same operation ID to fetch the same result. One 
 ```C# Snippet:AsyncRequestRouteDirectionsBatchWithOperationId2
 // Within 14 days, users can retrive the cached result with operation ID
 // The `endpoint` argument in `client` should be the same!
-var newRouteDirectionOperation = new RequestRouteDirectionsOperation(client, operationId);
-var result = newRouteDirectionOperation.WaitForCompletion();
+RequestRouteDirectionsOperation newRouteDirectionOperation = new RequestRouteDirectionsOperation(client, operationId);
+Response<RouteDirectionsBatchResult> result = newRouteDirectionOperation.WaitForCompletion();
 ```
 
 ## Route Direction Result
@@ -207,10 +207,10 @@ Route direction result is stored in `RouteDirectionsBatchResult` type. You can a
 ```C# Snippet:RouteDirectionsBatchResult
 for (int i = 0; i < response.Value.Results.Count; i++)
 {
-    var result = response.Value.Results[i];
+    RouteDirectionsBatchItemResponse result = response.Value.Results[i];
     Console.WriteLine($"Batch item result {0}:", i);
 
-    foreach (var route in result.Routes)
+    foreach (RouteData route in result.Routes)
     {
         Console.WriteLine($"Total length: {0} meters, travel time: {1} seconds",
             route.Summary.LengthInMeters, route.Summary.TravelTimeInSeconds
@@ -220,7 +220,7 @@ for (int i = 0; i < response.Value.Results.Count; i++)
         for (int legIndex = 0; legIndex < route.Legs.Count; legIndex++)
         {
             Console.WriteLine($"Leg {0}", legIndex);
-            foreach (var point in route.Legs[legIndex].Points)
+            foreach (GeoPosition point in route.Legs[legIndex].Points)
             {
                 Console.WriteLine($"point({point.Latitude}, {point.Longitude})");
             }

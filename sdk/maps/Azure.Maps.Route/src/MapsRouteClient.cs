@@ -309,7 +309,7 @@ namespace Azure.Maps.Route
             scope.Start();
             try
             {
-                var stringRoutePoints = MapsRouteClient.geoPointsToString(routeDirectionQuery.RoutePoints);
+                var stringRoutePoints = MapsRouteClient.GeoPointsToString(routeDirectionQuery.RoutePoints);
                 var options = routeDirectionQuery.RouteDirectionOptions;
 
                 if (options?.RouteDirectionParameters == null)
@@ -436,7 +436,7 @@ namespace Azure.Maps.Route
             scope.Start();
             try
             {
-                var stringRoutePoints = MapsRouteClient.geoPointsToString(routeDirectionQuery.RoutePoints);
+                var stringRoutePoints = MapsRouteClient.GeoPointsToString(routeDirectionQuery.RoutePoints);
                 var options = routeDirectionQuery.RouteDirectionOptions;
 
                 if (options?.RouteDirectionParameters == null)
@@ -681,7 +681,7 @@ namespace Azure.Maps.Route
             scope.Start();
             try
             {
-                var batchItems = MapsRouteClient.routeDirectionsQueriesToBatchItems(routeDirectionQueries);
+                var batchItems = MapsRouteClient.RouteDirectionsQueriesToBatchItems(routeDirectionQueries);
                 return await RestClient.RequestRouteDirectionsBatchSyncAsync(batchItems, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -706,7 +706,7 @@ namespace Azure.Maps.Route
             scope.Start();
             try
             {
-                var batchItems = MapsRouteClient.routeDirectionsQueriesToBatchItems(routeDirectionQueries);
+                var batchItems = MapsRouteClient.RouteDirectionsQueriesToBatchItems(routeDirectionQueries);
                 return RestClient.RequestRouteDirectionsBatchSync(batchItems, null, cancellationToken);
             }
             catch (Exception e)
@@ -850,7 +850,7 @@ namespace Azure.Maps.Route
             scope.Start();
             try
             {
-                var batchItems = MapsRouteClient.routeDirectionsQueriesToBatchItems(routeDirectionsQueries);
+                var batchItems = MapsRouteClient.RouteDirectionsQueriesToBatchItems(routeDirectionsQueries);
                 var response = await RestClient.RequestRouteDirectionsBatchAsync(
                     batchItems, null, cancellationToken).ConfigureAwait(false);
 
@@ -886,7 +886,7 @@ namespace Azure.Maps.Route
             scope.Start();
             try
             {
-                var batchItems = MapsRouteClient.routeDirectionsQueriesToBatchItems(routeDirectionsQueries);
+                var batchItems = MapsRouteClient.RouteDirectionsQueriesToBatchItems(routeDirectionsQueries);
                 var response = RestClient.RequestRouteDirectionsBatch(
                     batchItems, null, cancellationToken);
 
@@ -914,7 +914,7 @@ namespace Azure.Maps.Route
             BatchRequest batchItems = new BatchRequest();
             foreach (var query in routeDirectionsQueries)
             {
-                var stringRoutePoints = MapsRouteClient.geoPointsToString(query.RoutePoints);
+                var stringRoutePoints = MapsRouteClient.GeoPointsToString(query.RoutePoints);
                 var options = query.RouteDirectionOptions;
                 var uri = new RawRequestUriBuilder();
                 uri.AppendQuery("query", stringRoutePoints, false);

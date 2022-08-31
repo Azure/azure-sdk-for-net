@@ -18,7 +18,7 @@ Instantiate route client with subscription key:
 
 ```C# Snippet:InstantiateRouteClientViaSubscriptionKey
 // Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsRouteClient client = new MapsRouteClient(credential);
 ```
 
@@ -26,8 +26,8 @@ Instantiate route client via AAD authentication:
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = TestEnvironment.Credential;
+string clientId = "<My Map Account Client Id>";
 MapsRouteClient client = new MapsRouteClient(credential, clientId);
 ```
 
@@ -39,27 +39,27 @@ The sample below search for the route range for a coordinate that can be reached
 
 ```C# Snippet:SimpleRouteRange
 // Search from a point of time budget that can be reached in 2000 seconds
-var options = new RouteRangeOptions(123.75, 46)
+RouteRangeOptions options = new RouteRangeOptions(123.75, 46)
 {
     TimeBudget = new TimeSpan(0, 20, 0)
 };
-var result = client.GetRouteRange(options);
+Response<RouteRangeResult> result = client.GetRouteRange(options);
 ```
 
 You can fine tune the route range via different options:
 
 ```C# Snippet:ComplexRouteRange
-var GeoPosition = new GeoPosition(123.75, 46);
+GeoPosition geoPosition = new GeoPosition(123.75, 46);
 // Search from a point of distance budget that can be reached in 6075.35 meters,
 // And departure time after 2 hours later in car
-var options = new RouteRangeOptions(GeoPosition)
+RouteRangeOptions options = new RouteRangeOptions(geoPosition)
 {
     DistanceBudgetInMeters = 6075.38,
     DepartAt = DateTimeOffset.Now.AddHours(2),
     RouteType = RouteType.Shortest,
     TravelMode = TravelMode.Car
 };
-var result = client.GetRouteRange(options);
+Response<RouteRangeResult> result = client.GetRouteRange(options);
 ```
 
 The result is stored in `ReachableRange` in the return value:
@@ -71,7 +71,7 @@ Console.WriteLine("Center point (Lat, Long): ({0}, {1})",
     result.Value.ReachableRange.Center.Latitude);
 
 Console.WriteLine("Reachable route range polygon:");
-foreach (var point in result.Value.ReachableRange.Boundary)
+foreach (GeoPosition point in result.Value.ReachableRange.Boundary)
 {
     Console.WriteLine($"({point.Longitude}, {point.Latitude})");
 }

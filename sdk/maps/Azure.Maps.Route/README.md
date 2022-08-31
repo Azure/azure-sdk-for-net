@@ -35,7 +35,7 @@ There are 2 ways to authenticate the client: Shared key authentication and Azure
 
 ```C# Snippet:InstantiateRouteClientViaSubscriptionKey
 // Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
-var credential = new AzureKeyCredential("<My Subscription Key>");
+AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsRouteClient client = new MapsRouteClient(credential);
 ```
 
@@ -51,8 +51,8 @@ We also need an **Azure Maps Client ID** which can be found on the Azure Maps pa
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = TestEnvironment.Credential;
+string clientId = "<My Map Account Client Id>";
 MapsRouteClient client = new MapsRouteClient(credential, clientId);
 ```
 
@@ -89,8 +89,8 @@ Before calling route APIs, instantiate a `MapsRouteClient` first. This example u
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
-var credential = new DefaultAzureCredential();
-var clientId = "<My Map Account Client Id>";
+TokenCredential credential = TestEnvironment.Credential;
+string clientId = "<My Map Account Client Id>";
 MapsRouteClient client = new MapsRouteClient(credential, clientId);
 ```
 
@@ -100,7 +100,7 @@ Here is a simple example of routing to a location:
 
 ```C# Snippet:GetDirections
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>()
+List<GeoPosition> routePoints = new List<GeoPosition>()
 {
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
@@ -108,8 +108,8 @@ var routePoints = new List<GeoPosition>()
 };
 
 // Create Route direction query object
-var query = new RouteDirectionQuery(routePoints);
-var result = client.GetDirections(query);
+RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
+Response<RouteDirections> result = client.GetDirections(query);
 
 // Route direction result
 Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
@@ -131,14 +131,14 @@ You can also specify the travel mode, route type, language, and other options wh
 
 ```C# Snippet:RouteDirectionsWithOptions
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>()
+List<GeoPosition> routePoints = new List<GeoPosition>()
 {
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
     new GeoPosition(123.767, 45.90625)
 };
 
-var options = new RouteDirectionOptions()
+RouteDirectionOptions options = new RouteDirectionOptions()
 {
     RouteType = RouteType.Fastest,
     UseTrafficData = true,
@@ -147,8 +147,8 @@ var options = new RouteDirectionOptions()
 };
 
 // Create Route direction query object
-var query = new RouteDirectionQuery(routePoints);
-var result = client.GetDirections(query);
+RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
+Response<RouteDirections> result = client.GetDirections(query);
 
 // Route direction result
 Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
@@ -174,7 +174,7 @@ To find the route matrix between multiple origins and destinations, Azure Maps r
 
 ```C# Snippet:SimpleSyncRouteMatrix
 // A simple route matrix request
-var routeMatrixQuery = new RouteMatrixQuery
+RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
     Origins = new List<GeoPosition>()
@@ -185,14 +185,14 @@ var routeMatrixQuery = new RouteMatrixQuery
     // one destination point
     Destinations = new List<GeoPosition>() { new GeoPosition(123.767, 45.90625) },
 };
-var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
+Response<RouteMatrixResult> result = client.SyncRequestRouteMatrix(routeMatrixQuery);
 ```
 
 An async route matrix request looks like below. This is useful when you have `origin * destination > 100` data points.
 
 ```C# Snippet:SimpleAsyncRouteMatrixRequest
 // Instantiate route matrix query
-var routeMatrixQuery = new RouteMatrixQuery
+RouteMatrixQuery routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
     Origins = new List<GeoPosition>()
@@ -205,13 +205,13 @@ var routeMatrixQuery = new RouteMatrixQuery
 };
 
 // Instantiate route matrix options
-var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
+RouteMatrixOptions routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
 {
     TravelTimeType = TravelTimeType.All,
 };
 
 // Invoke an async route matrix request and directly wait for completion
-var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
+RequestRouteMatrixOperation result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 
 For more detailed examples, please see the [route matrix samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteMatrixSamples.md) page.
@@ -222,11 +222,11 @@ The route range API helps to find a set of locations that can be reached from th
 
 ```C# Snippet:SimpleRouteRange
 // Search from a point of time budget that can be reached in 2000 seconds
-var options = new RouteRangeOptions(123.75, 46)
+RouteRangeOptions options = new RouteRangeOptions(123.75, 46)
 {
     TimeBudget = new TimeSpan(0, 20, 0)
 };
-var result = client.GetRouteRange(options);
+Response<RouteRangeResult> result = client.GetRouteRange(options);
 ```
 
 For more detailed examples, please see the [route range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteMatrixSamples.md) page.
@@ -243,10 +243,10 @@ For example, if you pass wrong routing points, an error is returned, indicating 
 try
 {
     // An empty route points list
-    var routePoints = new List<GeoPosition>() { };
-    var query = new RouteDirectionQuery(routePoints);
+    List<GeoPosition> routePoints = new List<GeoPosition>() { };
+    RouteDirectionQuery query = new RouteDirectionQuery(routePoints);
 
-    var result = client.GetDirections(query);
+    Response<RouteDirections> result = client.GetDirections(query);
     // Do something with result ...
 }
 catch (RequestFailedException e)

@@ -16,7 +16,7 @@ namespace Azure.Maps.Route.Models
         /// <summary> Initializes a new instance of RouteRange. </summary>
         internal RouteRange()
         {
-            _Boundary = new ChangeTrackingList<LatLongPair>();
+            BoundaryInternal = new ChangeTrackingList<LatLongPair>();
         }
     }
 }
