@@ -27,6 +27,7 @@ rename-mapping:
   StreamingJob.properties.dataLocale: dataLocalion|azure-location
   StreamingJob.properties.jobId: -|uuid
   ClusterJob.id: -|arm-id
+  ClusterInfo.id: -|arm-id
   ClusterProperties.clusterId: -|uuid
   LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|datetime
   LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|datetime
@@ -229,8 +230,5 @@ directive:
   where: $.definitions.FunctionInput.properties.isConfigurationParameter
   transform: >
         $["x-nullable"] = true;
-- from: streamingjobs.json
-  where: $.definitions.ClusterInfo.properties.id
-  transform: $["x-ms-format"] = "arm-id"
 
 ```
