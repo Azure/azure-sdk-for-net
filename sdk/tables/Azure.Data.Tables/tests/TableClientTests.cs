@@ -467,11 +467,11 @@ namespace Azure.Data.Tables.Tests
         }
 
         [TestCaseSource(nameof(TableClientsWithTableNameInUri))]
-        public void CreateIfNotExistsDoesNotThrowWhenClientConstructedWithUriContainingTableName(TableClient tableClient, MockTransport transport)
+        public async Task CreateIfNotExistsDoesNotThrowWhenClientConstructedWithUriContainingTableName(TableClient tableClient, MockTransport transport)
         {
             client = InstrumentClient(tableClient);
 
-            client.CreateIfNotExistsAsync();
+            await client.CreateIfNotExistsAsync();
 
             Assert.That(transport.SingleRequest.Uri.Path, Does.Not.Contain(TableName), "Path should not contain the table name");
         }

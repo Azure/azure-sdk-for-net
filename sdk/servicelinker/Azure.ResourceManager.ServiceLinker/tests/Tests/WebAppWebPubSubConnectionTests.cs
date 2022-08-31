@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             WebPubSubCollection webPubSubs = resourceGroup.GetWebPubSubs();
             WebPubSubData webPubSubData = new WebPubSubData(DefaultLocation)
             {
-                Sku = new WebPubSub.Models.WebPubSubSku("Standard_S1"),
+                Sku = new WebPubSub.Models.BillingInfoSku("Standard_S1"),
                 LiveTraceConfiguration = new WebPubSub.Models.LiveTraceConfiguration(),
                 NetworkAcls = new WebPubSub.Models.WebPubSubNetworkAcls
                 {
-                    PublicNetwork = new WebPubSub.Models.NetworkAcl(),
+                    PublicNetwork = new WebPubSub.Models.PublicNetworkAcls(),
                 },
             };
             webPubSubData.LiveTraceConfiguration.Categories.Clear();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             LinkerResourceCollection linkers = webapp.GetLinkerResources();
             var linkerData = new LinkerResourceData
             {
-                TargetService = new Models.AzureResource
+                TargetService = new Models.AzureResourceInfo
                 {
                     Id = webPubSub.Id,
                 },
                 AuthInfo = new SecretAuthInfo(),
-                ClientType = ClientType.Dotnet,
+                ClientType = LinkerClientType.Dotnet,
             };
             await linkers.CreateOrUpdateAsync(WaitUntil.Completed, linkerName, linkerData);
 
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             // get service linker
             LinkerResource linker = await linkers.GetAsync(linkerName);
             Assert.IsTrue(linker.Id.ToString().StartsWith(webapp.Id.ToString(), StringComparison.InvariantCultureIgnoreCase));
-            Assert.AreEqual(webPubSub.Id.ToString(), (linker.Data.TargetService as AzureResource).Id);
-            Assert.AreEqual(AuthType.Secret, linker.Data.AuthInfo.AuthType);
+            Assert.AreEqual(webPubSub.Id, (linker.Data.TargetService as AzureResourceInfo).Id);
+            Assert.AreEqual(LinkerAuthType.Secret, linker.Data.AuthInfo.AuthType);
 
             // get service linker configurations
             SourceConfigurationResult configurations = await linker.GetConfigurationsAsync();

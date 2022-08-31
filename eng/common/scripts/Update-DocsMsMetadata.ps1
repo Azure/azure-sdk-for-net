@@ -95,7 +95,7 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
 
   $foundTitle = ""
   if ($ReadmeContent -match $TITLE_REGEX) {
-    $ReadmeContent = $ReadmeContent -replace $TITLE_REGEX, "`${0} - Version $($PackageInfo.Version) `n"
+    $ReadmeContent = $ReadmeContent -replace $TITLE_REGEX, "`${0} - version $($PackageInfo.Version) `n"
     $foundTitle = $matches["filetitle"]
   }
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SkuInfoCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SkuInfoCollection(IEnumerable<SkuInfo> value)
+        internal SkuInfoCollection(IEnumerable<AppServicePoolSkuInfo> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SkuInfoCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal SkuInfoCollection(IReadOnlyList<SkuInfo> value, string nextLink)
+        internal SkuInfoCollection(IReadOnlyList<AppServicePoolSkuInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<SkuInfo> Value { get; }
+        public IReadOnlyList<AppServicePoolSkuInfo> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

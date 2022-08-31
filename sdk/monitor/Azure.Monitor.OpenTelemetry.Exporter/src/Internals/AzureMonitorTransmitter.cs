@@ -13,7 +13,8 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
+using OpenTelemetry.Extensions.PersistentStorage;
+using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -23,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
-        internal IPersistentStorage _storage;
+        internal PersistentBlobProvider _fileBlobProvider;
         private readonly string _instrumentationKey;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
@@ -41,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 try
                 {
-                    _storage = new FileStorage(options.StorageDirectory);
+                    _fileBlobProvider = new FileBlobProvider(options.StorageDirectory);
                 }
                 catch (Exception ex)
                 {
@@ -78,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 result = IsSuccess(httpMessage);
 
-                if (result == ExportResult.Failure && _storage != null)
+                if (result == ExportResult.Failure && _fileBlobProvider != null)
                 {
                     result = HandleFailures(httpMessage);
                 }
@@ -108,15 +109,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 try
                 {
                     // TODO: Do we need more lease time?
-                    var blob = _storage.GetBlob()?.Lease(10000);
-                    if (blob == null)
+                    if (_fileBlobProvider.TryGetBlob(out var blob) && blob.TryLease(1000))
                     {
-                        // no files to transmit
-                        return;
-                    }
-                    else
-                    {
-                        var data = blob.Read();
+                        blob.TryRead(out var data);
                         using var httpMessage = async ?
                             await _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).ConfigureAwait(false) :
                             _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).Result;
@@ -125,13 +120,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                         if (result == ExportResult.Success)
                         {
-                            blob.Delete();
                             AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
+
+                            // In case if the delete fails, there is a possibility
+                            // that the current batch will be transmitted more than once resulting in duplicates.
+                            blob.TryDelete();
                         }
                         else
                         {
                             HandleFailures(httpMessage, blob);
                         }
+                    }
+                    else
+                    {
+                        // no files to process
+                        return;
                     }
                 }
                 catch (Exception ex)
@@ -164,7 +167,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
             }
             else
             {
@@ -179,7 +182,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (content != null)
                         {
                             retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                            result = _storage.SaveTelemetry(content, retryInterval);
+                            result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
@@ -189,7 +192,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        result = _storage.SaveTelemetry(content, retryInterval);
+                        result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         break;
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
@@ -197,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     case ResponseStatusCodes.GatewayTimeout:
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        result = _fileBlobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
                         break;
                     default:
                         // Log Non-Retriable Status and don't retry or store;
@@ -217,7 +220,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return result;
         }
 
-        private void HandleFailures(HttpMessage httpMessage, IPersistentBlob blob)
+        private void HandleFailures(HttpMessage httpMessage, PersistentBlob blob)
         {
             int retryInterval;
             int statusCode = 0;
@@ -227,7 +230,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 // HttpRequestException
                 // Extend lease time so that it is not picked again for retry.
-                blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
+                blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
             }
             else
             {
@@ -243,8 +246,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (content != null)
                         {
                             retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                            blob.Delete();
-                            _storage.SaveTelemetry(content, retryInterval);
+                            blob.TryDelete();
+                            _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
@@ -253,14 +256,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         // Extend lease time using retry interval period
                         // so that it is not picked up again before that.
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        blob.Lease(retryInterval);
+                        blob.TryLease(retryInterval);
                         break;
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:
                     case ResponseStatusCodes.GatewayTimeout:
                         // Extend lease time so that it is not picked up again
-                        blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
+                        blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
                         break;
                     default:
                         // Log Non-Retriable Status and don't retry or store;

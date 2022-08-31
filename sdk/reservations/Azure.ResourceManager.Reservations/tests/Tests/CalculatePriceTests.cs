@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             TestCalculatePriceResponse(response, billingPlan);
         }
 
-        private void TestCalculatePriceResponse(Response<CalculatePriceResponse> response, string billingPlan)
+        private void TestCalculatePriceResponse(Response<CalculatePriceResult> response, string billingPlan)
         {
             var price = response.Value;
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsTrue(price.Properties.BillingCurrencyTotal.Amount > 0);
             Assert.AreEqual("USD", price.Properties.PricingCurrencyTotal.CurrencyCode);
             Assert.IsTrue(price.Properties.PricingCurrencyTotal.Amount > 0);
-            Assert.IsNotEmpty(price.Properties.ReservationOrderId);
+            Assert.IsNotEmpty(price.Properties.ReservationOrderId.ToString());
 
             if (billingPlan.Equals("Upfront"))
             {
@@ -97,20 +97,20 @@ namespace Azure.ResourceManager.Reservations.Tests
             }
         }
 
-        private PurchaseRequestContent CreatePurchaseRequestContent(string scope, string billingPlan)
+        private ReservationPurchaseContent CreatePurchaseRequestContent(string scope, string billingPlan)
         {
-            var request = new PurchaseRequestContent
+            var request = new ReservationPurchaseContent
             {
                 Sku = new ReservationsSkuName("Standard_B1ls"),
                 Location = new Core.AzureLocation("westus"),
                 ReservedResourceType = new ReservedResourceType("VirtualMachines"),
-                BillingScopeId = "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+                BillingScopeId = new Core.ResourceIdentifier("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93"),
                 Term = new ReservationTerm("P1Y"),
                 BillingPlan = new ReservationBillingPlan(billingPlan),
                 Quantity = 1,
                 DisplayName = "testVM",
                 AppliedScopeType = new AppliedScopeType(scope),
-                Renew = false,
+                IsRenewEnabled = false,
                 ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
             };
 

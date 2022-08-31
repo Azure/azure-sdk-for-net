@@ -15,15 +15,35 @@ namespace Azure.Storage.Shared
 
         public virtual StorageSharedKeyCredential SharedKeyCredential { get; private set; }
 
+        public virtual AzureSasCredential SasCredential { get; private set; }
+
         public virtual ClientDiagnostics ClientDiagnostics { get; private set; }
 
         public StorageClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics)
+        {
+        }
+
+        public StorageClientConfiguration(
+            HttpPipeline pipeline,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics)
+            : this (pipeline, default, sasCredential, clientDiagnostics)
+        {
+        }
+
+        internal StorageClientConfiguration(
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics)
         {
             Pipeline = pipeline;
             SharedKeyCredential = sharedKeyCredential;
+            SasCredential = sasCredential;
             ClientDiagnostics = clientDiagnostics;
         }
 

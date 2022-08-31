@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
         private async Task<StorageAccountResource> createStorageAccount()
         {
             var name = Recording.GenerateAssetName("testsa");
-            var parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLRS), StorageKind.Storage,TestEnvironment.Location);
+            var parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.Storage,TestEnvironment.Location);
             return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, name,parameters)).Value;
             //var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 PrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = TestEnvironment.Location,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 PrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network

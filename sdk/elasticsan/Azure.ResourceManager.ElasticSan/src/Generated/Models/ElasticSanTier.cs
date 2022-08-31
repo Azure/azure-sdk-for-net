@@ -22,16 +22,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string HeroValue = "Hero";
-        private const string SatelliteValue = "Satellite";
-        private const string HubValue = "Hub";
+        private const string PremiumValue = "Premium";
 
-        /// <summary> Hero. </summary>
-        public static ElasticSanTier Hero { get; } = new ElasticSanTier(HeroValue);
-        /// <summary> Satellite. </summary>
-        public static ElasticSanTier Satellite { get; } = new ElasticSanTier(SatelliteValue);
-        /// <summary> Hub. </summary>
-        public static ElasticSanTier Hub { get; } = new ElasticSanTier(HubValue);
+        /// <summary> Premium Tier. </summary>
+        public static ElasticSanTier Premium { get; } = new ElasticSanTier(PremiumValue);
         /// <summary> Determines if two <see cref="ElasticSanTier"/> values are the same. </summary>
         public static bool operator ==(ElasticSanTier left, ElasticSanTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanTier"/> values are not the same. </summary>

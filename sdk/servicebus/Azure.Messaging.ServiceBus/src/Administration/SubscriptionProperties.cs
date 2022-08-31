@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private string _userMetadata;
 
         /// <summary>
-        /// Initializes a new instance of SubscriptionDescription class with the specified name and topic name.
+        /// Initializes a new instance of <see cref="SubscriptionProperties"/> with the specified name and topic name.
         /// </summary>
         /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
         /// <param name="subscriptionName">Name of the subscription.</param>
@@ -73,7 +73,8 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// This indicates whether the subscription supports the concept of session. Sessionful-messages follow FIFO ordering.
         /// </summary>
         /// <remarks>
-        /// If true, the receiver can only receive messages using <see cref="ServiceBusSessionProcessor"/>.
+        /// If true, the <see cref="ServiceBusSessionProcessor"/> or <see cref="ServiceBusSessionReceiver"/> must be used to receive
+        /// messages from the subscription.
         /// Defaults to false.
         /// </remarks>
         public bool RequiresSession { get; set; }
@@ -266,8 +267,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// List of properties that were retrieved using GetSubscription but are not understood by this version of client is stored here.
-        /// The list will be sent back when an already retrieved SubscriptionDescription will be used in UpdateSubscription call.
+        /// List of properties that were retrieved using <see cref="ServiceBusAdministrationClient.GetSubscriptionAsync"/> but are not understood by
+        /// this version of client is stored here. The list will be sent back when an already retrieved <see cref="SubscriptionProperties"/> is used in an
+        /// <see cref="ServiceBusAdministrationClient.UpdateSubscriptionAsync"/> call.
         /// </summary>
         internal List<XElement> UnknownProperties { get; set; }
 

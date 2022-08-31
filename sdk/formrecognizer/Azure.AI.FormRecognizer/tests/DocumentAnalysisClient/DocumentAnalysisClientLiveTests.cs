@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// </remarks>
     [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     [ClientTestFixture(
-     DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_preview)]
+     DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31)]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedBusinessCardJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedBusinessCardJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -49,16 +49,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-businessCard", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-businessCard", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.BusinessCardJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-businessCard", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-businessCard", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -70,7 +68,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.AreEqual(5, result.Paragraphs.Count);
+            Assert.AreEqual(4, result.Paragraphs.Count);
 
             // Check just one paragraph to make sure we're parsing them.
 
@@ -86,7 +84,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the business card. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("businessCard", document.DocType);
+            Assert.AreEqual("businessCard", document.DocumentType);
 
             Assert.NotNull(document.Fields);
 
@@ -143,7 +141,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var addresses = document.Fields["Addresses"].AsList();
             Assert.AreEqual(1, addresses.Count);
-            Assert.AreEqual("2 Kingdom Street\nPaddington, London, W2 6BD", addresses.FirstOrDefault().AsString());
+
+            AddressValue address = addresses.First().AsAddress();
+            Assert.AreEqual("London", address.City);
+            Assert.Null(address.CountryRegion);
+            Assert.AreEqual("2", address.HouseNumber);
+            Assert.Null(address.PoBox);
+            Assert.AreEqual("W2 6BD", address.PostalCode);
+            Assert.AreEqual("Kingdom Street", address.Road);
+            Assert.Null(address.State);
+            Assert.AreEqual("2 Kingdom Street", address.StreetAddress);
 
             var companyNames = document.Fields["CompanyNames"].AsList();
             Assert.AreEqual(1, companyNames.Count);
@@ -153,7 +160,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanParseMultipageBusinessCard(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageBusinessCard(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -163,16 +170,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.BusinessMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-businessCard", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-businessCard", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.BusinessMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-businessCard", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-businessCard", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(2, result.Documents.Count);
 
@@ -215,7 +222,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentWithCustomModel(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModel(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -228,16 +235,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Form1);
-                operation = await client.StartAnalyzeDocumentFromUriAsync(customModel.ModelId, uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, customModel.ModelId, uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -253,12 +258,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
-            Assert.IsNotEmpty(document.DocType);
+            Assert.IsNotEmpty(document.DocumentType);
             Assert.AreEqual(2200, page.Height);
             Assert.AreEqual(1, page.PageNumber);
             Assert.AreEqual(LengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
-            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
 
             Assert.IsNotNull(document.Fields);
             var name = "PurchaseOrderNumber";
@@ -268,7 +272,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelWithLabelsAndSelectionMarks()
+        public async Task AnalyzeDocumentWithCustomModelWithLabelsAndSelectionMarks()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -279,18 +283,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
             DocumentPage page = result.Pages.Single();
-
-            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
 
             ValidateAnalyzeResult(
                 result,
@@ -299,7 +299,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 expectedLastPageNumber: 1);
 
             // Testing that we shuffle things around correctly so checking only once per property.
-            Assert.IsNotEmpty(document.DocType);
+            Assert.IsNotEmpty(document.DocumentType);
             Assert.IsNotNull(document.Fields);
             var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(document.Fields[name]);
@@ -310,7 +310,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseMultipageForm(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageForm(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -323,16 +323,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync(customModel.ModelId, uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, customModel.ModelId, uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
@@ -368,7 +366,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -381,16 +379,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipageBlank);
-                operation = await client.StartAnalyzeDocumentFromUriAsync(customModel.ModelId, uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, customModel.ModelId, uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
@@ -414,13 +410,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage blankPage = result.Pages[1];
 
-            Assert.AreEqual(DocumentPageKind.Document, blankPage.Kind);
             Assert.AreEqual(0, blankPage.Lines.Count);
             Assert.AreEqual(0, blankPage.Words.Count);
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
+        public async Task AnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -436,10 +431,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
             var fields = result.Documents.Single().Fields;
@@ -452,7 +445,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelWithTableDynamicRows()
+        public async Task AnalyzeDocumentWithCustomModelWithTableDynamicRows()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -463,10 +456,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
 
@@ -478,7 +469,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelWithTableFixedRows()
+        public async Task AnalyzeDocumentWithCustomModelWithTableFixedRows()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -489,10 +480,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
 
@@ -505,7 +494,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         [RecordedTest]
         [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
-        public async Task StartAnalyzeDocumentWithCustomModelCanParseBlankPage()
+        public async Task AnalyzeDocumentWithCustomModelCanParseBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -516,10 +505,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(modelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -538,14 +527,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage blankPage = result.Pages.Single();
 
-            Assert.AreEqual(DocumentPageKind.Document, blankPage.Kind);
             Assert.IsEmpty(blankPage.Lines);
             Assert.IsEmpty(blankPage.Words);
             Assert.IsEmpty(blankPage.SelectionMarks);
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentWithCustomModelThrowsForDamagedFile()
+        public async Task AnalyzeDocumentWithCustomModelThrowsForDamagedFile()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -557,12 +545,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentFromUriWithCustomModelThrowsForNonExistingContent()
+        public async Task AnalyzeDocumentFromUriWithCustomModelThrowsForNonExistingContent()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -571,7 +559,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentFromUriAsync(modelId, invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, modelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -582,7 +570,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesDocumentPageJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesDocumentPageJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -592,16 +580,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-document", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Form1);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", uri);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -610,7 +597,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
             Assert.AreEqual(LengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
             Assert.AreEqual(2200, page.Height);
@@ -632,7 +618,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.True(style.IsHandwritten);
 
-            Assert.AreEqual(41, result.Paragraphs.Count);
+            Assert.AreEqual(38, result.Paragraphs.Count);
 
             DocumentParagraph sampleParagraph = result.Paragraphs[1];
 
@@ -643,18 +629,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentTable sampleTable = result.Tables[1];
 
-            Assert.AreEqual(4, sampleTable.RowCount);
+            Assert.AreEqual(3, sampleTable.RowCount);
             Assert.AreEqual(2, sampleTable.ColumnCount);
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(8, cells.Count);
+            Assert.AreEqual(6, cells.Count);
 
-            var expectedContent = new string[4, 2]
+            var expectedContent = new string[3, 2]
             {
                 { "SUBTOTAL", "$140.00" },
                 { "TAX", "$4.00" },
-                { string.Empty, string.Empty },
                 { "TOTAL", "$144.00" }
             };
 
@@ -685,7 +670,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedIdDocumentJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedIdDocumentJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -695,16 +680,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-idDocument", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-idDocument", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.DriverLicenseJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-idDocument", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-idDocument", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -721,7 +704,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the ID document. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("idDocument.driverLicense", document.DocType);
+            Assert.AreEqual("idDocument.driverLicense", document.DocumentType);
 
             Assert.NotNull(document.Fields);
 
@@ -735,12 +718,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("Region"));
             Assert.True(document.Fields.ContainsKey("Sex"));
 
-            Assert.AreEqual("123 STREET ADDRESS\nYOUR CITY WA 99999-1234", document.Fields["Address"].AsString());
-            Assert.AreEqual("WDLABCD456DG", document.Fields["DocumentNumber"].AsString());
-            Assert.AreEqual("LIAM R.", document.Fields["FirstName"].AsString());
-            Assert.AreEqual("TALBOT", document.Fields["LastName"].AsString());
-            Assert.AreEqual("Washington", document.Fields["Region"].AsString());
-            Assert.AreEqual("M", document.Fields["Sex"].AsString());
+            AddressValue address = document.Fields["Address"].AsAddress();
+            Assert.AreEqual("YOUR CITY", address.City);
+            Assert.Null(address.CountryRegion);
+            Assert.Null(address.HouseNumber);
+            Assert.Null(address.PoBox);
+            Assert.AreEqual("99999-1234", address.PostalCode);
+            Assert.AreEqual("123 STREET ADDRESS", address.Road);
+            Assert.AreEqual("WA", address.State);
+            Assert.AreEqual("123 STREET ADDRESS", address.StreetAddress);
 
             Assert.That(document.Fields["CountryRegion"].AsCountryRegion(), Is.EqualTo("USA"));
 
@@ -762,7 +748,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedInvoiceJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedInvoiceJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -772,16 +758,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -798,7 +782,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("invoice", document.DocType);
+            Assert.AreEqual("invoice", document.DocumentType);
 
             Assert.NotNull(document.Fields);
 
@@ -831,9 +815,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("VendorName"));
 
             ValidateCurrencyValue(document.Fields["AmountDue"].AsCurrency(), 610.00, "$");
-            Assert.AreEqual("123 Bill St,\nRedmond WA, 98052", document.Fields["BillingAddress"].AsString());
+
+            AddressValue billingAddress = document.Fields["BillingAddress"].AsAddress();
+            Assert.AreEqual("Redmond", billingAddress.City);
+            Assert.Null(billingAddress.CountryRegion);
+            Assert.AreEqual("123", billingAddress.HouseNumber);
+            Assert.Null(billingAddress.PoBox);
+            Assert.AreEqual("98052", billingAddress.PostalCode);
+            Assert.AreEqual("Bill St", billingAddress.Road);
+            Assert.AreEqual("WA", billingAddress.State);
+            Assert.AreEqual("123 Bill St", billingAddress.StreetAddress);
+
+            AddressValue customerAddress = document.Fields["CustomerAddress"].AsAddress();
+            Assert.AreEqual("Redmond", customerAddress.City);
+            Assert.Null(customerAddress.CountryRegion);
+            Assert.AreEqual("123", customerAddress.HouseNumber);
+            Assert.Null(customerAddress.PoBox);
+            Assert.AreEqual("98052", customerAddress.PostalCode);
+            Assert.AreEqual("Other St", customerAddress.Road);
+            Assert.AreEqual("WA", customerAddress.State);
+            Assert.AreEqual("123 Other St", customerAddress.StreetAddress);
+
             Assert.AreEqual("Microsoft Finance", document.Fields["BillingAddressRecipient"].AsString());
-            Assert.AreEqual("123 Other St,\nRedmond WA, 98052", document.Fields["CustomerAddress"].AsString());
             Assert.AreEqual("Microsoft Corp", document.Fields["CustomerAddressRecipient"].AsString());
             Assert.AreEqual("CID-12345", document.Fields["CustomerId"].AsString());
             Assert.AreEqual("MICROSOFT CORPORATION", document.Fields["CustomerName"].AsString());
@@ -852,9 +855,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             ValidateCurrencyValue(document.Fields["InvoiceTotal"].AsCurrency(), 110.00, "$");
             ValidateCurrencyValue(document.Fields["PreviousUnpaidBalance"].AsCurrency(), 500.00, "$");
             Assert.AreEqual("PO-3333", document.Fields["PurchaseOrder"].AsString());
-            Assert.AreEqual("123 Remit St\nNew York, NY, 10001", document.Fields["RemittanceAddress"].AsString());
+
+            AddressValue remittanceAddress = document.Fields["RemittanceAddress"].AsAddress();
+            Assert.AreEqual("New York", remittanceAddress.City);
+            Assert.Null(remittanceAddress.CountryRegion);
+            Assert.AreEqual("123", remittanceAddress.HouseNumber);
+            Assert.Null(remittanceAddress.PoBox);
+            Assert.AreEqual("10001", remittanceAddress.PostalCode);
+            Assert.AreEqual("Remit St", remittanceAddress.Road);
+            Assert.AreEqual("NY", remittanceAddress.State);
+            Assert.AreEqual("123 Remit St", remittanceAddress.StreetAddress);
+
             Assert.AreEqual("Contoso Billing", document.Fields["RemittanceAddressRecipient"].AsString());
-            Assert.AreEqual("123 Service St,\nRedmond WA, 98052", document.Fields["ServiceAddress"].AsString());
+
+            AddressValue serviceAddress = document.Fields["ServiceAddress"].AsAddress();
+            Assert.AreEqual("Redmond", serviceAddress.City);
+            Assert.Null(serviceAddress.CountryRegion);
+            Assert.AreEqual("123", serviceAddress.HouseNumber);
+            Assert.Null(serviceAddress.PoBox);
+            Assert.AreEqual("98052", serviceAddress.PostalCode);
+            Assert.AreEqual("Service St", serviceAddress.Road);
+            Assert.AreEqual("WA", serviceAddress.State);
+            Assert.AreEqual("123 Service St", serviceAddress.StreetAddress);
+
             Assert.AreEqual("Microsoft Services", document.Fields["ServiceAddressRecipient"].AsString());
 
             var serviceEndDate = document.Fields["ServiceEndDate"].AsDate();
@@ -867,11 +890,30 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(10, serviceStartDate.Month);
             Assert.AreEqual(2019, serviceStartDate.Year);
 
-            Assert.AreEqual("123 Ship St,\nRedmond WA, 98052", document.Fields["ShippingAddress"].AsString());
+            AddressValue shippingAddress = document.Fields["ShippingAddress"].AsAddress();
+            Assert.AreEqual("Redmond", shippingAddress.City);
+            Assert.Null(shippingAddress.CountryRegion);
+            Assert.AreEqual("123", shippingAddress.HouseNumber);
+            Assert.Null(shippingAddress.PoBox);
+            Assert.AreEqual("98052", shippingAddress.PostalCode);
+            Assert.AreEqual("Ship St", shippingAddress.Road);
+            Assert.AreEqual("WA", shippingAddress.State);
+            Assert.AreEqual("123 Ship St", shippingAddress.StreetAddress);
+
             Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].AsString());
             ValidateCurrencyValue(document.Fields["SubTotal"].AsCurrency(), 100.00, "$");
             ValidateCurrencyValue(document.Fields["TotalTax"].AsCurrency(), 10.00, "$");
-            Assert.AreEqual("123 456th St\nNew York, NY, 10001", document.Fields["VendorAddress"].AsString());
+
+            AddressValue vendorAddress = document.Fields["VendorAddress"].AsAddress();
+            Assert.AreEqual("New York", vendorAddress.City);
+            Assert.Null(vendorAddress.CountryRegion);
+            Assert.AreEqual("123", vendorAddress.HouseNumber);
+            Assert.Null(vendorAddress.PoBox);
+            Assert.AreEqual("10001", vendorAddress.PostalCode);
+            Assert.AreEqual("456th St", vendorAddress.Road);
+            Assert.AreEqual("NY", vendorAddress.State);
+            Assert.AreEqual("123 456th St", vendorAddress.StreetAddress);
+
             Assert.AreEqual("Contoso Headquarters", document.Fields["VendorAddressRecipient"].AsString());
             Assert.AreEqual("CONTOSO LTD.", document.Fields["VendorName"].AsString());
 
@@ -925,7 +967,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanParseMultipageInvoice(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageInvoice(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -935,16 +977,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -959,7 +1001,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the invoice. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("invoice", document.DocType);
+            Assert.AreEqual("invoice", document.DocumentType);
 
             Assert.NotNull(document.Fields);
 
@@ -971,13 +1013,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(2, vendorName.BoundingRegions.First().PageNumber);
             Assert.AreEqual("Southridge Video", vendorName.AsString());
 
-            DocumentField addressRecepient = document.Fields["RemittanceAddressRecipient"];
-            Assert.AreEqual(1, addressRecepient.BoundingRegions.First().PageNumber);
-            Assert.AreEqual("Contoso Ltd.", addressRecepient.AsString());
+            DocumentField addressRecipient = document.Fields["RemittanceAddressRecipient"];
+            Assert.AreEqual(1, addressRecipient.BoundingRegions.First().PageNumber);
+            Assert.AreEqual("Contoso Ltd.", addressRecipient.AsString());
 
-            DocumentField address = document.Fields["RemittanceAddress"];
-            Assert.AreEqual(1, address.BoundingRegions.First().PageNumber);
-            Assert.AreEqual("2345 Dogwood Lane\nBirch, Kansas 98123", address.AsString());
+            DocumentField addressField = document.Fields["RemittanceAddress"];
+            Assert.AreEqual(1, addressField.BoundingRegions.First().PageNumber);
+
+            AddressValue address = addressField.AsAddress();
+            Assert.AreEqual("Birch", address.City);
+            Assert.Null(address.CountryRegion);
+            Assert.AreEqual("2345", address.HouseNumber);
+            Assert.Null(address.PoBox);
+            Assert.AreEqual("98123", address.PostalCode);
+            Assert.AreEqual("Dogwood Lane", address.Road);
+            Assert.AreEqual("Kansas", address.State);
+            Assert.AreEqual("2345 Dogwood Lane", address.StreetAddress);
         }
 
         #endregion
@@ -987,7 +1038,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesLayoutPagePdf(bool useStream)
+        public async Task AnalyzeDocumentPopulatesLayoutPagePdf(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -997,16 +1048,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", uri);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -1022,7 +1072,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
             Assert.AreEqual(LengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
@@ -1068,7 +1117,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanParseMultipageLayout(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageLayout(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1078,16 +1127,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(2, result.Pages.Count);
 
@@ -1109,7 +1158,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentCanParseMultipageLayoutWithBlankPage()
+        public async Task AnalyzeDocumentCanParseMultipageLayoutWithBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1117,10 +1166,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(3, result.Pages.Count);
 
@@ -1149,7 +1198,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentLayoutWithSelectionMarks()
+        public async Task AnalyzeDocumentLayoutWithSelectionMarks()
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1157,10 +1206,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -1177,7 +1225,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanReadPageAndLanguage(bool useStream)
+        public async Task AnalyzeDocumentCanReadPageAndLanguage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1187,16 +1235,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", uri);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -1212,7 +1259,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(DocumentPageKind.Document, page.Kind);
             Assert.AreEqual(LengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
@@ -1230,7 +1276,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
+        public async Task AnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1240,16 +1286,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceiptJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -1266,7 +1310,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("receipt.retailMeal", document.DocType);
+            Assert.AreEqual("receipt.retailMeal", document.DocumentType);
 
             Assert.NotNull(document.Fields);
 
@@ -1281,7 +1325,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("Total"));
 
             Assert.AreEqual("Contoso", document.Fields["MerchantName"].AsString());
-            Assert.AreEqual("123 Main Street\nRedmond, WA 98052", document.Fields["MerchantAddress"].AsString());
+
+            AddressValue merchantAddress = document.Fields["MerchantAddress"].AsAddress();
+            Assert.AreEqual("Redmond", merchantAddress.City);
+            Assert.Null(merchantAddress.CountryRegion);
+            Assert.AreEqual("123", merchantAddress.HouseNumber);
+            Assert.Null(merchantAddress.PoBox);
+            Assert.AreEqual("98052", merchantAddress.PostalCode);
+            Assert.AreEqual("Main Street", merchantAddress.Road);
+            Assert.AreEqual("WA", merchantAddress.State);
+            Assert.AreEqual("123 Main Street", merchantAddress.StreetAddress);
+
             Assert.AreEqual("123-456-7890", document.Fields["MerchantPhoneNumber"].Content);
 
             var date = document.Fields["TransactionDate"].AsDate();
@@ -1297,7 +1351,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var expectedItems = new List<(int? Quantity, string Description, double? Price, double? TotalPrice)>()
             {
-                (1, "Surface Pro 6\n256GB /Intel Core i5 /\n8GB RAM (Black)", null, 999.00),
+                (1, "Surface Pro 6", null, 999.00),
                 (1, "SurfacePen", null, 99.99)
             };
 
@@ -1337,26 +1391,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartAnalyzeDocumentCanParseMultipageReceipt(bool useStream)
+        public async Task AnalyzeDocumentCanParseMultipageReceipt(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
 
             if (useStream)
             {
-                using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceipMultipage);
+                using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
                 }
             }
             else
             {
-                var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceipMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", uri);
+                var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceiptMultipage);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(2, result.Documents.Count);
 
@@ -1382,13 +1436,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
                 else if (documentIndex == 1)
                 {
-                    Assert.AreEqual("1203.39", sampleField.Content);
+                    Assert.AreEqual("$ 1203.39", sampleField.Content);
                 }
             }
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentCanParseMultipageReceiptWithBlankPage()
+        public async Task AnalyzeDocumentCanParseMultipageReceiptWithBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1396,10 +1450,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceipMultipageWithBlankPage);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -1444,12 +1498,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
             using (Recording.DisableRequestBodyRecording())
             {
-                Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream));
+                Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, "prebuilt-layout", stream));
             }
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeDocumentCanAuthenticateWithTokenCredential()
+        public async Task AnalyzeDocumentCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential: true);
             AnalyzeDocumentOperation operation;
@@ -1457,12 +1511,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
             }
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -1481,7 +1535,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public async Task StartAnalyzeDocumentWithPrebuiltCanParseBlankPage(string modelId)
+        public async Task AnalyzeDocumentWithPrebuiltCanParseBlankPage(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
             AnalyzeDocumentOperation operation;
@@ -1489,10 +1543,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(modelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -1513,7 +1567,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentPage blankPage = result.Pages.Single();
 
-            Assert.AreEqual(DocumentPageKind.Document, blankPage.Kind);
             Assert.IsEmpty(blankPage.Lines);
             Assert.IsEmpty(blankPage.Words);
             Assert.IsEmpty(blankPage.SelectionMarks);
@@ -1526,7 +1579,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public void StartAnalyzeDocumentWithPrebuiltThrowsForDamagedFile(string modelId)
+        public void AnalyzeDocumentWithPrebuiltThrowsForDamagedFile(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
 
@@ -1535,7 +1588,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -1546,12 +1599,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public void StartAnalyzeDocumentFromUriWithPrebuiltThrowsForNonExistingContent(string modelId)
+        public void AnalyzeDocumentFromUriWithPrebuiltThrowsForNonExistingContent(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentFromUriAsync(modelId, invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, modelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -1562,7 +1615,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [TestCase("prebuilt-invoice")]
         [TestCase("prebuilt-layout")]
         [TestCase("prebuilt-receipt")]
-        public void StartAnalyzeDocumentWithPrebuiltThrowsWithWrongLocale(string modelId)
+        public void AnalyzeDocumentWithPrebuiltThrowsWithWrongLocale(string modelId)
         {
             var client = CreateDocumentAnalysisClient();
             var options = new AnalyzeDocumentOptions() { Locale = "not-locale" };
@@ -1572,7 +1625,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using (Recording.DisableRequestBodyRecording())
             {
-                ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream, options));
+                ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream, options));
             }
 
             Assert.AreEqual("InvalidArgument", ex.ErrorCode);
@@ -1662,7 +1715,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateAnalyzedDocument(AnalyzedDocument document, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
-            Assert.NotNull(document.DocType);
+            Assert.NotNull(document.DocumentType);
             Assert.That(document.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.005));
 
             foreach (BoundingRegion region in document.BoundingRegions)
@@ -1709,8 +1762,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         private void ValidatePage(DocumentPage page, int expectedPageNumber)
         {
             Assert.AreEqual(expectedPageNumber, page.PageNumber);
-
-            Assert.AreNotEqual(default(DocumentPageKind), page.Kind);
 
             Assert.Greater(page.Width, 0.0);
             Assert.Greater(page.Height, 0.0);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -29,7 +30,11 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("publicCertData");
-            writer.WriteStringValue(PublicCertData);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PublicCertData);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(PublicCertData.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            string publicCertData = default;
+            BinaryData publicCertData = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("publicCertData"))
                         {
-                            publicCertData = property0.Value.GetString();
+                            publicCertData = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

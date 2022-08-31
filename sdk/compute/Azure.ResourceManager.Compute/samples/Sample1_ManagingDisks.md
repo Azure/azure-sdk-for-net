@@ -46,11 +46,11 @@ ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().Get
 ManagedDiskCollection diskCollection = resourceGroup.GetManagedDisks();
 // Use the same location as the resource group
 string diskName = "myDisk";
-var input = new ManagedDiskData(resourceGroup.Data.Location)
+ManagedDiskData input = new ManagedDiskData(resourceGroup.Data.Location)
 {
     Sku = new DiskSku()
     {
-        Name = DiskStorageAccountType.StandardLRS
+        Name = DiskStorageAccountType.StandardLrs
     },
     CreationData = new DiskCreationData(DiskCreateOption.Empty),
     DiskSizeGB = 1,
@@ -69,9 +69,8 @@ string rgName = "myRgName";
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
 // Now we get the disk collection from the resource group
 ManagedDiskCollection diskCollection = resourceGroup.GetManagedDisks();
-// With ListAsync(), we can get a list of the disks
-AsyncPageable<ManagedDiskResource> response = diskCollection.GetAllAsync();
-await foreach (ManagedDiskResource disk in response)
+// With GetAllAsync(), we can get a list of the disks
+await foreach (ManagedDiskResource disk in diskCollection.GetAllAsync())
 {
     Console.WriteLine(disk.Data.Name);
 }

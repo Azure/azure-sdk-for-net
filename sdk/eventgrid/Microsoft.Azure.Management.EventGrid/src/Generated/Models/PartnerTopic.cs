@@ -53,7 +53,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// deleted.</param>
         /// <param name="provisioningState">Provisioning state of the partner
         /// topic. Possible values include: 'Creating', 'Updating', 'Deleting',
-        /// 'Succeeded', 'Canceled', 'Failed'</param>
+        /// 'Succeeded', 'Canceled', 'Failed',
+        /// 'IdleDueToMirroredChannelResourceDeletion'</param>
         /// <param name="activationState">Activation state of the partner
         /// topic. Possible values include: 'NeverActivated', 'Activated',
         /// 'Deactivated'</param>
@@ -121,7 +122,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Gets provisioning state of the partner topic. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded',
-        /// 'Canceled', 'Failed'
+        /// 'Canceled', 'Failed', 'IdleDueToMirroredChannelResourceDeletion'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

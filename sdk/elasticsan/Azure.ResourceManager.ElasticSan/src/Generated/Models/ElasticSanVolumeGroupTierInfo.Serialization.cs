@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanVolumeGroupTierInfo DeserializeElasticSanVolumeGroupTierInfo(JsonElement element)
         {
-            Optional<long> maxVolumeCount = default;
+            Optional<long> maxElasticSanVolumeCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxVolumeCount"))
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxVolumeCount = property.Value.GetInt64();
+                    maxElasticSanVolumeCount = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new ElasticSanVolumeGroupTierInfo(Optional.ToNullable(maxVolumeCount));
+            return new ElasticSanVolumeGroupTierInfo(Optional.ToNullable(maxElasticSanVolumeCount));
         }
     }
 }

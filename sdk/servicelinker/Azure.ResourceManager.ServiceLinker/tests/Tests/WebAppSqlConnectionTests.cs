@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             LinkerResourceCollection linkers = webapp.GetLinkerResources();
             var linkerData = new LinkerResourceData
             {
-                TargetService = new Models.AzureResource
+                TargetService = new Models.AzureResourceInfo
                 {
                     Id = sqlDatabase.Id,
                 },
                 AuthInfo = new SecretAuthInfo
                 {
                     Name = sqlUserName,
-                    SecretInfo = new ValueSecretInfo
+                    SecretInfo = new RawValueSecretInfo
                     {
                         Value = sqlPassword,
                     },
                 },
-                ClientType = ClientType.Dotnet,
+                ClientType = LinkerClientType.Dotnet,
             };
             await linkers.CreateOrUpdateAsync(WaitUntil.Completed, linkerName, linkerData);
 
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             // get service linker
             LinkerResource linker = await linkers.GetAsync(linkerName);
             Assert.IsTrue(linker.Id.ToString().StartsWith(webapp.Id.ToString(), StringComparison.InvariantCultureIgnoreCase));
-            Assert.AreEqual(sqlDatabase.Id.ToString(), (linker.Data.TargetService as AzureResource).Id);
-            Assert.AreEqual(AuthType.Secret, linker.Data.AuthInfo.AuthType);
+            Assert.AreEqual(sqlDatabase.Id, (linker.Data.TargetService as AzureResourceInfo).Id);
+            Assert.AreEqual(LinkerAuthType.Secret, linker.Data.AuthInfo.AuthType);
 
             // get service linker configurations
             SourceConfigurationResult configurations = await linker.GetConfigurationsAsync();

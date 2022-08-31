@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("schema");
                 writer.WriteObjectValue(Schema);
             }
-            if (Optional.IsDefined(EnableConflictLogging))
+            if (Optional.IsDefined(IsConflictLoggingEnabled))
             {
                 writer.WritePropertyName("enableConflictLogging");
-                writer.WriteBooleanValue(EnableConflictLogging.Value);
+                writer.WriteBooleanValue(IsConflictLoggingEnabled.Value);
             }
             if (Optional.IsDefined(ConflictLoggingRetentionInDays))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
             Optional<int> interval = default;
             Optional<DateTimeOffset> lastSyncTime = default;
             Optional<SyncConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<string> syncDatabaseId = default;
+            Optional<ResourceIdentifier> syncDatabaseId = default;
             Optional<string> hubDatabaseUserName = default;
             Optional<string> hubDatabasePassword = default;
             Optional<SyncGroupState> syncState = default;
@@ -171,7 +171,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("syncDatabaseId"))
                         {
-                            syncDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            syncDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hubDatabaseUserName"))

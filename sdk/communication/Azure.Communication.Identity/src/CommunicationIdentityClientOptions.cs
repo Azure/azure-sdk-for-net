@@ -41,7 +41,6 @@ namespace Azure.Communication.Identity
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             V2021_03_07 = 1,
-#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// The V2022_06_01 of the identity service.

@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
-tag: package-2021-11
 output-folder: $(this-folder)/Generated
 require: https://github.com/Azure/azure-rest-api-specs/blob/8fb0263a6adbb529a9a7bf3e56110f3abdd55c72/specification/eventhub/resource-manager/readme.md
+tag: package-2021-11
 clear-output-folder: true
 skip-csproj: true
 
@@ -27,7 +27,7 @@ override-operation-name:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -37,7 +37,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -48,11 +48,18 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
+
+rename-mapping:
+  SchemaType: EventHubsSchemaType
+  SchemaCompatibility: EventHubsSchemaCompatibility
+  KeySource: EventHubsKeySource
+  UnavailableReason: EventHubsNameUnavailableReason
 
 directive:
     - from: AuthorizationRules.json
@@ -120,7 +127,7 @@ directive:
       where: $.definitions
       transform: >
         $.SchemaGroup['x-ms-client-name'] = 'EventHubsSchemaGroup';
-#       delete $.SchemaGroup.properties.properties.properties.eTag['format'];
+        delete $.SchemaGroup.properties.properties.properties.eTag['format'];
 #        $.SchemaGroup.properties.properties.properties.eTag['x-ms-format'] = 'etag';
     - from: AvailableClusterRegions-preview.json
       where: $.definitions

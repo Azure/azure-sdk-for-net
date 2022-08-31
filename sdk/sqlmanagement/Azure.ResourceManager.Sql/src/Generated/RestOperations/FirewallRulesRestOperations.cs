@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirewallRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlFirewallRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        FirewallRuleData value = default;
+                        SqlFirewallRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirewallRuleData.DeserializeFirewallRuleData(document.RootElement);
+                        value = SqlFirewallRuleData.DeserializeSqlFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FirewallRuleData)null, message.Response);
+                    return Response.FromValue((SqlFirewallRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirewallRuleData> Get(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        public Response<SqlFirewallRuleData> Get(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        FirewallRuleData value = default;
+                        SqlFirewallRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirewallRuleData.DeserializeFirewallRuleData(document.RootElement);
+                        value = SqlFirewallRuleData.DeserializeSqlFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FirewallRuleData)null, message.Response);
+                    return Response.FromValue((SqlFirewallRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, FirewallRuleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, SqlFirewallRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirewallRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, FirewallRuleData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlFirewallRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, SqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                 case 201:
                     {
-                        FirewallRuleData value = default;
+                        SqlFirewallRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirewallRuleData.DeserializeFirewallRuleData(document.RootElement);
+                        value = SqlFirewallRuleData.DeserializeSqlFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirewallRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, FirewallRuleData data, CancellationToken cancellationToken = default)
+        public Response<SqlFirewallRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, SqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                 case 201:
                     {
-                        FirewallRuleData value = default;
+                        SqlFirewallRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirewallRuleData.DeserializeFirewallRuleData(document.RootElement);
+                        value = SqlFirewallRuleData.DeserializeSqlFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -368,97 +368,6 @@ namespace Azure.ResourceManager.Sql
                         value = FirewallRuleListResult.DeserializeFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateReplaceRequest(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList firewallRuleList)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/firewallRules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(firewallRuleList);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Replaces all firewall rules on the server. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirewallRuleData>> ReplaceAsync(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
-
-            using var message = CreateReplaceRequest(subscriptionId, resourceGroupName, serverName, firewallRuleList);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FirewallRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirewallRuleData.DeserializeFirewallRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 202:
-                    return Response.FromValue((FirewallRuleData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Replaces all firewall rules on the server. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirewallRuleData> Replace(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
-
-            using var message = CreateReplaceRequest(subscriptionId, resourceGroupName, serverName, firewallRuleList);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FirewallRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirewallRuleData.DeserializeFirewallRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 202:
-                    return Response.FromValue((FirewallRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

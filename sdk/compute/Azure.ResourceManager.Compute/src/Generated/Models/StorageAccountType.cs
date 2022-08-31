@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardSsdLRSValue = "StandardSSD_LRS";
-        private const string UltraSsdLRSValue = "UltraSSD_LRS";
-        private const string PremiumZRSValue = "Premium_ZRS";
-        private const string StandardSsdZRSValue = "StandardSSD_ZRS";
-        private const string PremiumV2LRSValue = "PremiumV2_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        private const string UltraSsdLrsValue = "UltraSSD_LRS";
+        private const string PremiumZrsValue = "Premium_ZRS";
+        private const string StandardSsdZrsValue = "StandardSSD_ZRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
 
         /// <summary> Standard_LRS. </summary>
-        public static StorageAccountType StandardLRS { get; } = new StorageAccountType(StandardLRSValue);
+        public static StorageAccountType StandardLrs { get; } = new StorageAccountType(StandardLrsValue);
         /// <summary> Premium_LRS. </summary>
-        public static StorageAccountType PremiumLRS { get; } = new StorageAccountType(PremiumLRSValue);
+        public static StorageAccountType PremiumLrs { get; } = new StorageAccountType(PremiumLrsValue);
         /// <summary> StandardSSD_LRS. </summary>
-        public static StorageAccountType StandardSsdLRS { get; } = new StorageAccountType(StandardSsdLRSValue);
+        public static StorageAccountType StandardSsdLrs { get; } = new StorageAccountType(StandardSsdLrsValue);
         /// <summary> UltraSSD_LRS. </summary>
-        public static StorageAccountType UltraSsdLRS { get; } = new StorageAccountType(UltraSsdLRSValue);
+        public static StorageAccountType UltraSsdLrs { get; } = new StorageAccountType(UltraSsdLrsValue);
         /// <summary> Premium_ZRS. </summary>
-        public static StorageAccountType PremiumZRS { get; } = new StorageAccountType(PremiumZRSValue);
+        public static StorageAccountType PremiumZrs { get; } = new StorageAccountType(PremiumZrsValue);
         /// <summary> StandardSSD_ZRS. </summary>
-        public static StorageAccountType StandardSsdZRS { get; } = new StorageAccountType(StandardSsdZRSValue);
+        public static StorageAccountType StandardSsdZrs { get; } = new StorageAccountType(StandardSsdZrsValue);
         /// <summary> PremiumV2_LRS. </summary>
-        public static StorageAccountType PremiumV2LRS { get; } = new StorageAccountType(PremiumV2LRSValue);
+        public static StorageAccountType PremiumV2Lrs { get; } = new StorageAccountType(PremiumV2LrsValue);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are not the same. </summary>

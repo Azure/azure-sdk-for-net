@@ -5,27 +5,24 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication
 {
-    /// <summary> A phone number. </summary>
+    /// <summary> The PhoneNumberIdentifierModel. </summary>
     internal partial class PhoneNumberIdentifierModel
     {
         /// <summary> Initializes a new instance of PhoneNumberIdentifierModel. </summary>
-        /// <param name="value"> The phone number in E.164 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PhoneNumberIdentifierModel(string value)
+        public PhoneNumberIdentifierModel()
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+        }
 
+        /// <summary> Initializes a new instance of PhoneNumberIdentifierModel. </summary>
+        /// <param name="value"></param>
+        internal PhoneNumberIdentifierModel(string value)
+        {
             Value = value;
         }
 
-        /// <summary> The phone number in E.164 format. </summary>
+        /// <summary> Gets or sets the value. </summary>
         public string Value { get; set; }
     }
 }

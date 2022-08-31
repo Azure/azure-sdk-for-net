@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<int> rampDownMinimumHostsPct = default;
             Optional<int> rampDownCapacityThresholdPct = default;
             Optional<bool> rampDownForceLogoffUsers = default;
-            Optional<StopHostsWhen> rampDownStopHostsWhen = default;
+            Optional<DesktopVirtualizationStopHostsWhen> rampDownStopHostsWhen = default;
             Optional<int> rampDownWaitTimeMinutes = default;
             Optional<string> rampDownNotificationMessage = default;
             Optional<DateTimeOffset> offPeakStartTime = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rampDownStopHostsWhen = new StopHostsWhen(property.Value.GetString());
+                    rampDownStopHostsWhen = new DesktopVirtualizationStopHostsWhen(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rampDownWaitTimeMinutes"))

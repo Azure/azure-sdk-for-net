@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DnsResolver
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of InboundEndpointResources in the DnsResolver. </summary>
-        /// <returns> An object representing collection of InboundEndpointResources and their operations over a InboundEndpointResource. </returns>
-        public virtual InboundEndpointCollection GetInboundEndpoints()
+        /// <summary> Gets a collection of DnsResolverInboundEndpointResources in the DnsResolver. </summary>
+        /// <returns> An object representing collection of DnsResolverInboundEndpointResources and their operations over a DnsResolverInboundEndpointResource. </returns>
+        public virtual DnsResolverInboundEndpointCollection GetDnsResolverInboundEndpoints()
         {
-            return GetCachedClient(Client => new InboundEndpointCollection(Client, Id));
+            return GetCachedClient(Client => new DnsResolverInboundEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InboundEndpointResource>> GetInboundEndpointAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsResolverInboundEndpointResource>> GetDnsResolverInboundEndpointAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            return await GetInboundEndpoints().GetAsync(inboundEndpointName, cancellationToken).ConfigureAwait(false);
+            return await GetDnsResolverInboundEndpoints().GetAsync(inboundEndpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,31 +121,16 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InboundEndpointResource> GetInboundEndpoint(string inboundEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response<DnsResolverInboundEndpointResource> GetDnsResolverInboundEndpoint(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            return GetInboundEndpoints().Get(inboundEndpointName, cancellationToken);
+            return GetDnsResolverInboundEndpoints().Get(inboundEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OutboundEndpointResources in the DnsResolver. </summary>
-        /// <returns> An object representing collection of OutboundEndpointResources and their operations over a OutboundEndpointResource. </returns>
-        public virtual OutboundEndpointCollection GetOutboundEndpoints()
+        /// <summary> Gets a collection of DnsResolverOutboundEndpointResources in the DnsResolver. </summary>
+        /// <returns> An object representing collection of DnsResolverOutboundEndpointResources and their operations over a DnsResolverOutboundEndpointResource. </returns>
+        public virtual DnsResolverOutboundEndpointCollection GetDnsResolverOutboundEndpoints()
         {
-            return GetCachedClient(Client => new OutboundEndpointCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets properties of an outbound endpoint for a DNS resolver.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// Operation Id: OutboundEndpoints_Get
-        /// </summary>
-        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OutboundEndpointResource>> GetOutboundEndpointAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
-        {
-            return await GetOutboundEndpoints().GetAsync(outboundEndpointName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new DnsResolverOutboundEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,9 +143,24 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OutboundEndpointResource> GetOutboundEndpoint(string outboundEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsResolverOutboundEndpointResource>> GetDnsResolverOutboundEndpointAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
-            return GetOutboundEndpoints().Get(outboundEndpointName, cancellationToken);
+            return await GetDnsResolverOutboundEndpoints().GetAsync(outboundEndpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of an outbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DnsResolverOutboundEndpointResource> GetDnsResolverOutboundEndpoint(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            return GetDnsResolverOutboundEndpoints().Get(outboundEndpointName, cancellationToken);
         }
 
         /// <summary>

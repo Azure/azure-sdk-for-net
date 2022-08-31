@@ -33,3 +33,5 @@ extends:
       safeName: MicrosoftAzureBatchFileStaging
     - name: Microsoft.Azure.Batch.Conventions.Files
       safeName: MicrosoftAzureBatchConventionsFiles
+    - name: Azure.ResourceManager.Batch
+      safeName: AzureResourceManagerBatch

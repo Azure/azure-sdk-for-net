@@ -8,7 +8,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/search/
+    - sdk/search/ci.yml
+    - sdk/search/Azure.Search.Documents/
 
 pr:
   branches:
@@ -19,12 +20,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/search/
+    - sdk/search/ci.yml
+    - sdk/search/Azure.Search.Documents/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: search
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Search.Documents

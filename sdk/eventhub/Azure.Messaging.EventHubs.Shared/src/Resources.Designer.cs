@@ -166,6 +166,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to An error was encountered while executing developer-provided to process events.  This will normally fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.  It is very strongly advised that all developer-provided code include a try/catch wrapper and no exceptions are allowed to bubble..
+        /// </summary>
+        internal static string DeveloperCodeEventProcessingError
+        {
+            get
+            {
+                return ResourceManager.GetString("DeveloperCodeEventProcessingError", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to An error was encountered while executing custom code, such as in an event handler..
         /// </summary>
         internal static string DeveloperCodeError
@@ -580,6 +591,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("HandlerHasNotBeenAssigned", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Executing developer-provided code to process events..
+        /// </summary>
+        internal static string OperationEventProcessingDeveloperCode
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationEventProcessingDeveloperCode", resourceCulture);
             }
         }
 

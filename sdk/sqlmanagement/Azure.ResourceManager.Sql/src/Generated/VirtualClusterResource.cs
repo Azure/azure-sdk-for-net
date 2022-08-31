@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: VirtualClusters_UpdateDnsServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UpdateManagedInstanceDnsServersOperation>> UpdateDnsServersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceUpdateDnsServersOperationData>> UpdateDnsServersAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterResource.UpdateDnsServers");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: VirtualClusters_UpdateDnsServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpdateManagedInstanceDnsServersOperation> UpdateDnsServers(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceUpdateDnsServersOperationData> UpdateDnsServers(CancellationToken cancellationToken = default)
         {
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterResource.UpdateDnsServers");
             scope.Start();

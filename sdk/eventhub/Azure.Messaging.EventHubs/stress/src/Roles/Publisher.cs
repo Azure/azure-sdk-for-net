@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The role responsible for running a <see cref="EventHubProducerClient" \>, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
 ///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
-///   thrown or heard, and how many events are processed and read. It stops sending events and cleans up resources
+///   thrown or heard, and how many events and batches are published. It stops sending events and cleans up resources
 ///   at the end of the test run.
 /// </summary>
 ///
@@ -27,33 +27,27 @@ internal class Publisher
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Publisher" /> instance.</summary>
     private readonly Metrics _metrics;
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters" /> used to run the test scenario running this role.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>The <see cref="PublisherConfiguration" /> used to configure the instance of this role.</summary>
     private readonly PublisherConfiguration _publisherconfiguration;
-
-    /// <summary>The name of the test being run for metrics collection.</summary>
-    private readonly string _testName;
 
     /// <summary>
     ///   Initializes a new <see cref="Publisher" \> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
     /// <param name="publisherConfiguration">The <see cref="PublisherConfiguration" /> instance used to configure this instance of <see cref="Publisher" />.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the test scenario running this publishing role.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
-    /// <param name="testName">The name of the test being run in order to organize metrics being collected.</param>
     ///
     public Publisher(PublisherConfiguration publisherConfiguration,
-                     TestConfiguration testConfiguration,
-                     Metrics metrics,
-                     string testName)
+                     TestParameters testParameters,
+                     Metrics metrics)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _publisherconfiguration = publisherConfiguration;
         _metrics = metrics;
-        _testName = testName;
     }
 
     /// <summary>
@@ -63,7 +57,7 @@ internal class Publisher
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task Start(CancellationToken cancellationToken)
+    public async Task RunAsync(CancellationToken cancellationToken)
     {
         var sendTasks = new List<Task>();
 
@@ -77,7 +71,7 @@ internal class Publisher
                     TryTimeout = _publisherconfiguration.SendTimeout
                 }
             };
-            var producer = new EventHubProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
+            var producer = new EventHubProducerClient(_testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
 
             try
             {
@@ -94,7 +88,7 @@ internal class Publisher
                         {
                             while (!backgroundCancellationSource.Token.IsCancellationRequested)
                             {
-                                await PerformSend(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
+                                await PerformSendAsync(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
 
                                 if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                                 {
@@ -111,7 +105,7 @@ internal class Publisher
                 {
                     try
                     {
-                        await PerformSend(producer, cancellationToken).ConfigureAwait(false);
+                        await PerformSendAsync(producer, cancellationToken).ConfigureAwait(false);
 
                         if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                         {
@@ -144,14 +138,12 @@ internal class Publisher
                 backgroundCancellationSource.Cancel();
                 await Task.WhenAll(sendTasks).ConfigureAwait(false);
 
-                _metrics.Client.GetMetric(Metrics.ProducerRestarted, Metrics.TestName).TrackValue(1, _testName);
-
-                var exceptionProperties = new Dictionary<string, string>();
-                exceptionProperties.Add(Metrics.TestName, _testName);
-                _metrics.Client.TrackException(ex, exceptionProperties);
+                _metrics.Client.GetMetric(Metrics.ProducerRestarted).TrackValue(1);
+                _metrics.Client.TrackException(ex);
             }
             finally
             {
+                _metrics.Client.TrackEvent("Stopping publishing events.");
                 await producer.CloseAsync();
             }
         }
@@ -165,8 +157,8 @@ internal class Publisher
     /// <param name="producer">The <see cref="EventHubProducerClient" /> to send events to.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task PerformSend(EventHubProducerClient producer,
-                                    CancellationToken cancellationToken)
+    private async Task PerformSendAsync(EventHubProducerClient producer,
+                                        CancellationToken cancellationToken)
     {
         // Create the batch and generate a set of random events, keeping only those that were able to fit into the batch.
         // Because there is a side-effect of TryAdd in the statement, ensure that ToList is called to materialize the set
@@ -194,23 +186,22 @@ internal class Publisher
         {
             if (batch.Count > 0)
             {
-                _metrics.Client.GetMetric(Metrics.PublishAttempts, Metrics.TestName).TrackValue(1, _testName);
+                _metrics.Client.GetMetric(Metrics.PublishAttempts).TrackValue(1);
                 await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
             }
 
-            _metrics.Client.GetMetric(Metrics.EventsPublished, Metrics.TestName).TrackValue(batch.Count, _testName);
-            _metrics.Client.GetMetric(Metrics.BatchesPublished, Metrics.TestName).TrackValue(1, _testName);
-            _metrics.Client.GetMetric(Metrics.TotalPublishedSizeBytes, Metrics.TestName).TrackValue(batch.SizeInBytes, _testName);
+            _metrics.Client.GetMetric(Metrics.EventsPublished).TrackValue(batch.Count);
+            _metrics.Client.GetMetric(Metrics.BatchesPublished).TrackValue(1);
+            _metrics.Client.GetMetric(Metrics.TotalPublishedSizeBytes).TrackValue(batch.SizeInBytes);
         }
         catch (TaskCanceledException)
         {
-            _metrics.Client.GetMetric(Metrics.PublishAttempts, Metrics.TestName).TrackValue(-1, _testName);
+            _metrics.Client.GetMetric(Metrics.PublishAttempts).TrackValue(-1);
         }
         catch (Exception ex)
         {
             var exceptionProperties = new Dictionary<String, String>();
             exceptionProperties.Add("Process", "Send");
-            exceptionProperties.Add(Metrics.TestName, _testName);
 
             _metrics.Client.TrackException(ex, exceptionProperties);
         }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ApiProperties DeserializeApiProperties(JsonElement element)
         {
-            Optional<ServerVersion> serverVersion = default;
+            Optional<CosmosDBServerVersion> serverVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverVersion"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serverVersion = new ServerVersion(property.Value.GetString());
+                    serverVersion = new CosmosDBServerVersion(property.Value.GetString());
                     continue;
                 }
             }

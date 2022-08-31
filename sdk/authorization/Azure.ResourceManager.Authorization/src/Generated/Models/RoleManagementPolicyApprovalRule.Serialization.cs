@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Setting))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting");
-                writer.WriteObjectValue(Setting);
+                writer.WriteObjectValue(Settings);
             }
             if (Optional.IsDefined(Id))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyApprovalRule DeserializeRoleManagementPolicyApprovalRule(JsonElement element)
         {
-            Optional<ApprovalSettings> setting = default;
+            Optional<RoleManagementApprovalSettings> setting = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    setting = ApprovalSettings.DeserializeApprovalSettings(property.Value);
+                    setting = RoleManagementApprovalSettings.DeserializeRoleManagementApprovalSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

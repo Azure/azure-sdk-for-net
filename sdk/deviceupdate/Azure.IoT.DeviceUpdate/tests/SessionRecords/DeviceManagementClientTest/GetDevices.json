@@ -1,68 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceupdate/sdkinstance/management/devices?api-version=2021-06-01-preview",
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/management/devices?api-version=2022-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2c0b3427bebc8f478272c53e012bc3ed-b7e97502b27e3945-00",
-        "User-Agent": [
-          "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20211130.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )"
-        ],
-        "x-ms-client-request-id": "6d35731b2de22cca2873af92d67fc5a5",
+        "traceparent": "00-c667986211b1e945849d310f0f4feb6e-c44c6af81f8f394a-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d2bc905817f2c20bef292c2edb7a16a3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1374",
+        "Content-Length": "1161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Nov 2021 02:20:42 GMT",
-        "traceparent": "00-2c0b3427bebc8f478272c53e012bc3ed-b7e97502b27e3945-00"
+        "Date": "Fri, 01 Jul 2022 21:47:59 GMT",
+        "mise-correlation-id": "c9c12d2a-4a60-4393-b83c-f499e6c4eaf0",
+        "traceparent": "00-c667986211b1e945849d310f0f4feb6e-c44c6af81f8f394a-00"
       },
       "ResponseBody": {
         "value": [
           {
             "deviceId": "adu-sdk-test-device-1",
             "deviceClassId": "0919e3ae422a2bfa8c84ff905813e60351e456d1",
-            "manufacturer": "fabrikam",
-            "model": "vacuum",
-            "lastAttemptedUpdateId": null,
-            "installedUpdateId": null,
-            "onLatestUpdate": false,
-            "deploymentStatus": "Succeeded",
             "groupId": "testgroup",
-            "lastDeploymentId": null,
-            "lastInstallResult": {
-              "updateInstallResult": {
-                "resultCode": 700,
-                "extendedResultCode": 0,
-                "resultDetails": ""
-              },
-              "resultCode": 700,
-              "extendedResultCode": 0,
-              "resultDetails": ""
-            }
-          },
-          {
-            "deviceId": "dpokluda-edgevm",
-            "deviceClassId": "0919e3ae422a2bfa8c84ff905813e60351e456d1",
-            "manufacturer": "fabrikam",
-            "model": "vacuum",
-            "lastAttemptedUpdateId": null,
-            "installedUpdateId": null,
             "onLatestUpdate": false,
             "deploymentStatus": "Succeeded",
-            "groupId": "dpokluda-edgevm",
-            "lastDeploymentId": null,
             "lastInstallResult": {
-              "updateInstallResult": {
-                "resultCode": 700,
-                "extendedResultCode": 0,
-                "resultDetails": ""
-              },
               "resultCode": 700,
               "extendedResultCode": 0,
               "resultDetails": ""
@@ -71,22 +37,47 @@
           {
             "deviceId": "joseph-edgevm2",
             "deviceClassId": "0919e3ae422a2bfa8c84ff905813e60351e456d1",
-            "manufacturer": "fabrikam",
-            "model": "vacuum",
-            "lastAttemptedUpdateId": null,
-            "installedUpdateId": null,
-            "onLatestUpdate": false,
-            "deploymentStatus": "Succeeded",
             "groupId": "joegroup",
-            "lastDeploymentId": null,
+            "installedUpdate": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.128.1751.30"
+              }
+            },
+            "onLatestUpdate": false,
+            "lastAttemptedUpdate": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.128.1751.30"
+              }
+            },
+            "deploymentStatus": "Succeeded",
+            "lastDeploymentId": "joegroup-2022-128-1751-30-0129015341",
             "lastInstallResult": {
-              "updateInstallResult": {
-                "resultCode": 700,
-                "extendedResultCode": 0,
-                "resultDetails": ""
-              },
               "resultCode": 700,
               "extendedResultCode": 0,
+              "resultDetails": ""
+            }
+          },
+          {
+            "deviceId": "dpokluda-test",
+            "deviceClassId": "0919e3ae422a2bfa8c84ff905813e60351e456d1",
+            "groupId": "dpokluda-test",
+            "onLatestUpdate": false,
+            "lastAttemptedUpdate": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.608.554.1"
+              }
+            },
+            "deploymentStatus": "Failed",
+            "lastDeploymentId": "test0609070108",
+            "lastInstallResult": {
+              "resultCode": 0,
+              "extendedResultCode": 805306371,
               "resultDetails": ""
             }
           }
@@ -97,6 +88,6 @@
   "Variables": {
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "749073161"
+    "RandomSeed": "1654190939"
   }
 }

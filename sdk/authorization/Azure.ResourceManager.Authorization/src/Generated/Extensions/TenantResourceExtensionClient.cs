@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Authorization
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ProviderOperationsResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of ProviderOperationsResources and their operations over a ProviderOperationsResource. </returns>
-        public virtual ProviderOperationsCollection GetProviderOperations()
+        /// <summary> Gets a collection of AuthorizationProviderOperationsMetadataResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of AuthorizationProviderOperationsMetadataResources and their operations over a AuthorizationProviderOperationsMetadataResource. </returns>
+        public virtual AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata()
         {
-            return GetCachedClient(Client => new ProviderOperationsCollection(Client, Id));
+            return GetCachedClient(Client => new AuthorizationProviderOperationsMetadataCollection(Client, Id));
         }
 
         /// <summary>

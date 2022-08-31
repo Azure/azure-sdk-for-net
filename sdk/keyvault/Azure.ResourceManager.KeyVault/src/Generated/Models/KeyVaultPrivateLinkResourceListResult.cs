@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultPrivateLinkResourceListResult. </summary>
         internal KeyVaultPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<VaultPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<KeyVaultPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal KeyVaultPrivateLinkResourceListResult(IReadOnlyList<VaultPrivateLinkResourceData> value)
+        internal KeyVaultPrivateLinkResourceListResult(IReadOnlyList<KeyVaultPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<VaultPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<KeyVaultPrivateLinkResourceData> Value { get; }
     }
 }

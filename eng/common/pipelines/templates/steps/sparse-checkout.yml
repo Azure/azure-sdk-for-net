@@ -38,14 +38,21 @@ steps:
             } else {
               Write-Host "Repository $($repository.Name) is being initialized."
 
-              Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-              git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+              if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
+                Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)' https://github.com/$($repository.Name) ."
+                git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
+              } else {
+                Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
+                git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+              }
 
               Write-Host "git sparse-checkout init"
               git sparse-checkout init
 
-              Write-Host "git sparse-checkout set '/*' '!/*/' '/eng'"
-              git sparse-checkout set '/*' '!/*/' '/eng'
+              # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
+              # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
+              Write-Host "git sparse-checkout set --no-cone '/*' '!/*/' '/eng'"
+              git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
             }
 
             # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set. </summary>
-    public partial class VirtualMachineScaleSetPatch : ComputeUpdateResourceData
+    public partial class VirtualMachineScaleSetPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPatch. </summary>
         public VirtualMachineScaleSetPatch()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The upgrade policy. </summary>
-        public UpgradePolicy UpgradePolicy { get; set; }
+        public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
         /// <summary> The virtual machine profile. </summary>

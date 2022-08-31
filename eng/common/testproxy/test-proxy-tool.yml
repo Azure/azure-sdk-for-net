@@ -2,14 +2,15 @@ parameters:
   rootFolder: '$(Build.SourcesDirectory)'
   runProxy: true
   targetVersion: ''
+  templateRoot: '$(Build.SourcesDirectory)'
 
 steps:
   - pwsh: |
-        $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
+        ${{ parameters.templateRoot }}/eng/common/scripts/trust-proxy-certificate.ps1
     displayName: 'Language Specific Certificate Trust'
 
   - pwsh: |
-      $version = $(Get-Content "$(Build.SourcesDirectory)/eng/common/testproxy/target_version.txt" -Raw).Trim()
+      $version = $(Get-Content "${{ parameters.templateRoot }}/eng/common/testproxy/target_version.txt" -Raw).Trim()
       $overrideVersion = "${{ parameters.targetVersion }}"
 
       if($overrideVersion) {
@@ -29,7 +30,7 @@ steps:
 
   - ${{ if eq(parameters.runProxy, 'true') }}:
     - pwsh: |
-        Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
+        Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx"
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
         Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
       displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
@@ -37,13 +38,13 @@ steps:
     - pwsh: |
         Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
           -ArgumentList "--storage-location ${{ parameters.rootFolder }}" `
-          -NoNewWindow -PassThru -RedirectStandardOutput $(Build.SourcesDirectory)/test-proxy.log
+          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.templateRoot }}/test-proxy.log
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'))
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
-        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > $(Build.SourcesDirectory)/test-proxy.log &
+        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy > ${{ parameters.templateRoot }}/test-proxy.log &
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
       workingDirectory: "${{ parameters.rootFolder }}"

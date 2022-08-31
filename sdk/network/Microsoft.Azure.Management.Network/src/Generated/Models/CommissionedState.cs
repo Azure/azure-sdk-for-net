@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string Commissioned = "Commissioned";
         public const string Decommissioning = "Decommissioning";
         public const string Deprovisioning = "Deprovisioning";
+        public const string CommissionedNoInternetAdvertise = "CommissionedNoInternetAdvertise";
     }
 }

@@ -1963,7 +1963,9 @@ namespace Azure.Storage.Queues
                     {
                         IClientSideEncryptor encryptor = ClientConfiguration.ClientSideEncryption.EncryptionVersion switch
                         {
+#pragma warning disable CS0618 // obsolete
                             ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption),
+#pragma warning restore CS0618 // obsolete
                             ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientConfiguration.ClientSideEncryption),
                             _ => throw new InvalidOperationException()
                         };
@@ -3009,7 +3011,9 @@ namespace Azure.Storage.Queues
                     {
                         IClientSideEncryptor encryptor = ClientConfiguration.ClientSideEncryption.EncryptionVersion switch
                         {
+#pragma warning disable CS0618 // obsolete
                             ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption),
+#pragma warning restore CS0618 // obsolete
                             ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientConfiguration.ClientSideEncryption),
                             _ => throw new InvalidOperationException()
                         };

@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is secret. </summary>
-    public partial class SecretAuthInfo : AuthInfoBase
+    public partial class SecretAuthInfo : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of SecretAuthInfo. </summary>
         public SecretAuthInfo()
         {
-            AuthType = AuthType.Secret;
+            AuthType = LinkerAuthType.Secret;
         }
 
         /// <summary> Initializes a new instance of SecretAuthInfo. </summary>
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="name"> Username or account name for secret auth. </param>
         /// <param name="secretInfo">
         /// Password or key vault secret for secret auth.
-        /// Please note <see cref="SecretInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="ValueSecretInfo"/>.
+        /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
         /// </param>
-        internal SecretAuthInfo(AuthType authType, string name, SecretInfoBase secretInfo) : base(authType)
+        internal SecretAuthInfo(LinkerAuthType authType, string name, SecretBaseInfo secretInfo) : base(authType)
         {
             Name = name;
             SecretInfo = secretInfo;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Name { get; set; }
         /// <summary>
         /// Password or key vault secret for secret auth.
-        /// Please note <see cref="SecretInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="ValueSecretInfo"/>.
+        /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
         /// </summary>
-        public SecretInfoBase SecretInfo { get; set; }
+        public SecretBaseInfo SecretInfo { get; set; }
     }
 }

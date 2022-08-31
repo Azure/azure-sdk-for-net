@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
         internal ApplicationProfile ApplicationProfile { get; set; }
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VmGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
         internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2022-03-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
-        public VmSizeProperties HardwareVmSizeProperties
+        public VirtualMachineSizeProperties HardwareVmSizeProperties
         {
             get => HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;
             set

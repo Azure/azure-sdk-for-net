@@ -1,5 +1,25 @@
 # Release History
 
+## 1.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.1 (2022-07-01)
+
+### Features Added
+
+- Added conversation summarization and personally identifiable information (PII) extraction methods to `ConversationAnalysisClient`:
+  - `AnalyzeConversation` and `AnalyzeConversationAsync`
+  - `CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync`
+  - `GetAnalyzeConversationJobStatus` and `GetAnalyzeConversationJobStatusAsync`
+- Added support for service version 2022-05-15-preview.
+
 ## 1.0.0 (2022-06-27)
 
 ### Features Added
@@ -11,6 +31,7 @@
 
 - `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` now take a `RequestContent` and `RequestContext` for more control and flexibility.
 - Removed all models. See README.md for samples to use this client library.
+- Renamed `ConversationAnalysisClientOptions` to `ConversationsClientOptions`.
 
 ## 1.0.0-beta.3 (2022-04-20)
 

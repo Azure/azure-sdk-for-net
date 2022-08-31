@@ -149,6 +149,9 @@ namespace Azure.Storage.Test.Shared
         private string GetGarbageLeaseId()
             => ClientBuilder.Recording.Random.NewGuid().ToString();
 
+        // hook for clientside encryption to adjust some test assertions
+        protected virtual long GetExpectedDataLength(long dataLength) => dataLength;
+
         #region Tests
         [RecordedTest]
         public async Task OpenWriteAsync_NewBlob()
@@ -527,7 +530,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             Assert.IsTrue(progress.List.Count > 0);
-            Assert.AreEqual(dataSize, progress.List[progress.List.Count - 1]);
+            Assert.AreEqual(GetExpectedDataLength(dataSize), progress.List[progress.List.Count - 1]);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }

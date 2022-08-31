@@ -56,6 +56,8 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
+To see how to initiate the connection with a custom endpoint, view this [example](#initiating-the-connection-with-a-custom-endpoint).
+
 ### ASP.NET Core
 
 To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the Azure client library integration for ASP.NET Core package.
@@ -320,8 +322,9 @@ Dead lettering a message is similar to deferring with one main difference being 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-await receiver.DeadLetterMessageAsync(receivedMessage);
+// Dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// We can optionally pass a dead letter reason and dead letter description to further describe the reason for dead-lettering the message.
+await receiver.DeadLetterMessageAsync(receivedMessage, "sample reason", "sample description");
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
 ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
@@ -329,6 +332,10 @@ ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBus
     SubQueue = SubQueue.DeadLetter
 });
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+
+// The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
+string reason = dlqMessage.DeadLetterReason;
+string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
 ### Using the Processor

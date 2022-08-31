@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static KeyVaultPrivateEndpointConnectionListResult DeserializeKeyVaultPrivateEndpointConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VaultPrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VaultPrivateEndpointConnectionData> array = new List<VaultPrivateEndpointConnectionData>();
+                    List<KeyVaultPrivateEndpointConnectionData> array = new List<KeyVaultPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultPrivateEndpointConnectionData.DeserializeVaultPrivateEndpointConnectionData(item));
+                        array.Add(KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

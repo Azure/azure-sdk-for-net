@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageUsage DeserializeStorageUsage(JsonElement element)
         {
-            Optional<UsageUnit> unit = default;
+            Optional<StorageUsageUnit> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
-            Optional<UsageName> name = default;
+            Optional<StorageUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"))
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = property.Value.GetString().ToUsageUnit();
+                    unit = property.Value.GetString().ToStorageUsageUnit();
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = StorageUsageName.DeserializeStorageUsageName(property.Value);
                     continue;
                 }
             }

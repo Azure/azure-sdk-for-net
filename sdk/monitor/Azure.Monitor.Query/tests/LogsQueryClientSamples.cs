@@ -263,11 +263,14 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
-                "AzureActivity | summarize count()",
+                @"AzureActivity
+                    | summarize Count = count() by ResourceGroup
+                    | top 10 by Count
+                    | project ResourceGroup",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
-                options: new LogsQueryOptions
+                new LogsQueryOptions
                 {
                     ServerTimeout = TimeSpan.FromMinutes(10)
                 });
@@ -296,11 +299,14 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
-                "AzureActivity | summarize count()",
+                @"AzureActivity
+                    | summarize Count = count() by ResourceGroup
+                    | top 10 by Count
+                    | project ResourceGroup",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
-                options: new LogsQueryOptions
+                new LogsQueryOptions
                 {
                     AdditionalWorkspaces = { additionalWorkspaceId }
                 });

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> environmentId = default;
             Optional<string> ingestionKey = default;
             Optional<string> logsIngestionEndpoint = default;
-            Optional<Uri> landingURL = default;
+            Optional<Uri> landingUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentId"))
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        landingURL = null;
+                        landingUri = null;
                         continue;
                     }
-                    landingURL = new Uri(property.Value.GetString());
+                    landingUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new EnvironmentInfo(environmentId.Value, ingestionKey.Value, logsIngestionEndpoint.Value, landingURL.Value);
+            return new EnvironmentInfo(environmentId.Value, ingestionKey.Value, logsIngestionEndpoint.Value, landingUri.Value);
         }
     }
 }

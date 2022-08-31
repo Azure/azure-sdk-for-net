@@ -98,6 +98,41 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        [NonParallelizable]
+        public void StartsActivityShortNameSourceActivity()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            // Bug: there is no way to set activity type to W3C
+            // https://github.com/dotnet/runtime/issues/43853
+            var oldDefault = Activity.DefaultIdFormat;
+
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+
+            try
+            {
+                using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients.ClientName", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+                DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+                Assert.IsTrue(scope.IsEnabled);
+
+                scope.Start();
+                scope.Dispose();
+
+                Assert.AreEqual(1, activityListener.Activities.Count);
+                var activity = activityListener.Activities.Dequeue();
+
+                Assert.AreEqual("ActivityName", activity.DisplayName);
+            }
+            finally
+            {
+                Activity.DefaultIdFormat = oldDefault;
+            }
+        }
+
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]

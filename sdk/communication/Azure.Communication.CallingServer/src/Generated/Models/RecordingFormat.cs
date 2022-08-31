@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The media container format type of a call recording. </summary>
-    public enum RecordingFormat
+    /// <summary> The format type of call recording. </summary>
+    public readonly partial struct RecordingFormat : IEquatable<RecordingFormat>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecordingFormat"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecordingFormat(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string WavValue = "wav";
+        private const string Mp3Value = "mp3";
+        private const string Mp4Value = "mp4";
+
         /// <summary> wav. </summary>
-        Wav,
+        public static RecordingFormat Wav { get; } = new RecordingFormat(WavValue);
         /// <summary> mp3. </summary>
-        Mp3,
+        public static RecordingFormat Mp3 { get; } = new RecordingFormat(Mp3Value);
         /// <summary> mp4. </summary>
-        Mp4
+        public static RecordingFormat Mp4 { get; } = new RecordingFormat(Mp4Value);
+        /// <summary> Determines if two <see cref="RecordingFormat"/> values are the same. </summary>
+        public static bool operator ==(RecordingFormat left, RecordingFormat right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RecordingFormat"/> values are not the same. </summary>
+        public static bool operator !=(RecordingFormat left, RecordingFormat right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="RecordingFormat"/>. </summary>
+        public static implicit operator RecordingFormat(string value) => new RecordingFormat(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RecordingFormat other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(RecordingFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

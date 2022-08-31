@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<ResourceIdentifier> vNetResourceId = default;
             Optional<ResourceIdentifier> loadBalancerResourceId = default;
             Optional<ResourceIdentifier> azureFrontDoorResourceId = default;
-            Optional<ResourceIdentifier> frontEndPublicIpResourceId = default;
-            Optional<IReadOnlyList<string>> outboundPublicIpResourceIds = default;
+            Optional<ResourceIdentifier> frontEndPublicIPResourceId = default;
+            Optional<IReadOnlyList<string>> outboundPublicIPResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerType"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    frontEndPublicIpResourceId = new ResourceIdentifier(property.Value.GetString());
+                    frontEndPublicIPResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("outboundPublicIpResourceIds"))
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         array.Add(item.GetString());
                     }
-                    outboundPublicIpResourceIds = array;
+                    outboundPublicIPResourceIds = array;
                     continue;
                 }
             }
-            return new NetworkProfile(loadBalancerType, loadBalancerSku.Value, loadBalancerTier.Value, Optional.ToNullable(capacity), Optional.ToNullable(azureFrontDoorEnabled), vNetResourceId.Value, loadBalancerResourceId.Value, azureFrontDoorResourceId.Value, frontEndPublicIpResourceId.Value, Optional.ToList(outboundPublicIpResourceIds));
+            return new NetworkProfile(loadBalancerType, loadBalancerSku.Value, loadBalancerTier.Value, Optional.ToNullable(capacity), Optional.ToNullable(azureFrontDoorEnabled), vNetResourceId.Value, loadBalancerResourceId.Value, azureFrontDoorResourceId.Value, frontEndPublicIPResourceId.Value, Optional.ToList(outboundPublicIPResourceIds));
         }
     }
 }

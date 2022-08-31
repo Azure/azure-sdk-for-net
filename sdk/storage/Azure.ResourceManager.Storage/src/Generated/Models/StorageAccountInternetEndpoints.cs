@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The URIs that are used to perform a retrieval of a public blob, file, web or dfs object via a internet routing endpoint. </summary>
@@ -16,25 +18,25 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of StorageAccountInternetEndpoints. </summary>
-        /// <param name="blob"> Gets the blob endpoint. </param>
-        /// <param name="file"> Gets the file endpoint. </param>
-        /// <param name="web"> Gets the web endpoint. </param>
-        /// <param name="dfs"> Gets the dfs endpoint. </param>
-        internal StorageAccountInternetEndpoints(string blob, string file, string web, string dfs)
+        /// <param name="blobUri"> Gets the blob endpoint. </param>
+        /// <param name="fileUri"> Gets the file endpoint. </param>
+        /// <param name="webUri"> Gets the web endpoint. </param>
+        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
+        internal StorageAccountInternetEndpoints(Uri blobUri, Uri fileUri, Uri webUri, Uri dfsUri)
         {
-            Blob = blob;
-            File = file;
-            Web = web;
-            Dfs = dfs;
+            BlobUri = blobUri;
+            FileUri = fileUri;
+            WebUri = webUri;
+            DfsUri = dfsUri;
         }
 
         /// <summary> Gets the blob endpoint. </summary>
-        public string Blob { get; }
+        public Uri BlobUri { get; }
         /// <summary> Gets the file endpoint. </summary>
-        public string File { get; }
+        public Uri FileUri { get; }
         /// <summary> Gets the web endpoint. </summary>
-        public string Web { get; }
+        public Uri WebUri { get; }
         /// <summary> Gets the dfs endpoint. </summary>
-        public string Dfs { get; }
+        public Uri DfsUri { get; }
     }
 }

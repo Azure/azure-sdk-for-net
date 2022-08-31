@@ -20,7 +20,10 @@ pr:
   paths:
     include:
     - sdk/servicelinker/
-    - sdk/resourcemanager/
+    - sdk/keyvault/
+    - sdk/webpubsub/
+    - sdk/websites/
+    - sdk/network/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

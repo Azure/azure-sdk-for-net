@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Authorization
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> scope = default;
-            Optional<string> roleDefinitionId = default;
-            Optional<string> policyId = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
             Optional<PolicyAssignmentProperties> policyAssignmentProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -93,12 +93,22 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleDefinitionId"))
                         {
-                            roleDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("policyId"))
                         {
-                            policyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            policyId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("effectiveRules"))

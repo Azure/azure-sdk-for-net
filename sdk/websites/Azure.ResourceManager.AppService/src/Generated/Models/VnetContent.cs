@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetSubnetName"> The subnet name to be validated. </param>
         /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal VnetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, string subnetResourceId, string kind) : base(id, name, resourceType, systemData)
+        internal VnetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceGroup = vnetResourceGroup;
             VnetName = vnetName;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The subnet name to be validated. </summary>
         public string VnetSubnetName { get; set; }
         /// <summary> The ARM Resource ID of the subnet to validate. </summary>
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

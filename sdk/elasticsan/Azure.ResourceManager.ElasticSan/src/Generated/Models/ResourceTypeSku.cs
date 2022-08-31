@@ -16,30 +16,31 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ResourceTypeSku. </summary>
         internal ResourceTypeSku()
         {
+            Sku = new ChangeTrackingList<ElasticSanSku>();
             LocationInfo = new ChangeTrackingList<SkuLocationInfo>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSku. </summary>
         /// <param name="sku"> The Sku tier. </param>
         /// <param name="locationInfo"> Availability of the SKU for the location/zone. </param>
-        /// <param name="san"> Scalability targets for the San account for a given tier. </param>
+        /// <param name="elasticSan"> Scalability targets for the San account for a given tier. </param>
         /// <param name="elasticSanVolumeGroup"> Volume Group targets for the San account for a given tier. </param>
         /// <param name="elasticSanVolume"> Volume targets for the San account for a given tier. </param>
-        internal ResourceTypeSku(ElasticSanSku sku, IReadOnlyList<SkuLocationInfo> locationInfo, SanTierInfo san, ElasticSanVolumeGroupTierInfo elasticSanVolumeGroup, ElasticSanVolumeTierInfo elasticSanVolume)
+        internal ResourceTypeSku(IReadOnlyList<ElasticSanSku> sku, IReadOnlyList<SkuLocationInfo> locationInfo, SanTierInfo elasticSan, ElasticSanVolumeGroupTierInfo elasticSanVolumeGroup, ElasticSanVolumeTierInfo elasticSanVolume)
         {
             Sku = sku;
             LocationInfo = locationInfo;
-            San = san;
+            ElasticSan = elasticSan;
             ElasticSanVolumeGroup = elasticSanVolumeGroup;
             ElasticSanVolume = elasticSanVolume;
         }
 
         /// <summary> The Sku tier. </summary>
-        public ElasticSanSku Sku { get; }
+        public IReadOnlyList<ElasticSanSku> Sku { get; }
         /// <summary> Availability of the SKU for the location/zone. </summary>
         public IReadOnlyList<SkuLocationInfo> LocationInfo { get; }
         /// <summary> Scalability targets for the San account for a given tier. </summary>
-        public SanTierInfo San { get; }
+        public SanTierInfo ElasticSan { get; }
         /// <summary> Volume Group targets for the San account for a given tier. </summary>
         internal ElasticSanVolumeGroupTierInfo ElasticSanVolumeGroup { get; }
         /// <summary> Maximum number of Volumes per Volume Groups per San account. </summary>

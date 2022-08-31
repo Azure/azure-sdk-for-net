@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry");
-            writer.WriteStringValue(SharedAccessExpiryOn, "O");
+            writer.WriteStringValue(SharedAccessExpireOn, "O");
             if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign");

@@ -41,7 +41,9 @@ namespace Azure.Storage.Cryptography
         {
             return options.EncryptionVersion switch
             {
+#pragma warning disable CS0618 // obsolete
                 ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(options),
+#pragma warning disable CS0618 // obsolete
                 ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(options),
                 _ => throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported()
             };

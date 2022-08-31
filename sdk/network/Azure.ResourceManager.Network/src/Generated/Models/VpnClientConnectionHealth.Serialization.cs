@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> totalIngressBytesTransferred = default;
             Optional<long> totalEgressBytesTransferred = default;
             Optional<int> vpnClientConnectionsCount = default;
-            Optional<IReadOnlyList<string>> allocatedIpAddresses = default;
+            Optional<IReadOnlyList<string>> allocatedIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalIngressBytesTransferred"))
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    allocatedIpAddresses = array;
+                    allocatedIPAddresses = array;
                     continue;
                 }
             }
-            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIpAddresses));
+            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIPAddresses));
         }
     }
 }

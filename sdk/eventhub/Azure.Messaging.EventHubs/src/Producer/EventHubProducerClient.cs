@@ -48,10 +48,9 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   </list>
     ///
     ///   <para>
-    ///     The <see cref="EventHubProducerClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
-    ///     publishes events regularly or semi-regularly.  The producer holds responsibility for efficient resource management, working to keep resource usage low during
-    ///     periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
-    ///     method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///     The <see cref="EventHubProducerClient" /> is safe to cache and use for the lifetime of an application, which is the best practice when the application
+    ///     publishes events regularly or semi-regularly.  The producer is responsible for ensuring efficient network, CPU, and memory use.  Calling either
+    ///     <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     ///   </para>
     /// </remarks>
     ///
@@ -511,6 +510,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
         /// </exception>
         ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when one of the events in the <paramref name="eventBatch"/> has a member in the <see cref="EventData.Properties" /> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="EventData.Properties"/> remarks for details.
+        /// </exception>
+        ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         /// <seealso cref="CreateBatchAsync(CancellationToken)" />
@@ -546,6 +550,11 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <exception cref="EventHubsException">
         ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
         ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
+        /// </exception>
+        ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when one of the events in the <paramref name="eventBatch"/> has a member in the <see cref="EventData.Properties" /> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="EventData.Properties"/> remarks for details.
         /// </exception>
         ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />

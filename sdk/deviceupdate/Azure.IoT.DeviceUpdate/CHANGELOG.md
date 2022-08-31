@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2022-07-11)
+
+### Features Added
+- Added RelatedFiles and DownloadHandler to Update
+- Updated various model that reference update to include not only UpdateId but also update Description and FriendlyName
+- Removed device tag concept
+- Allow to filter by deployment status in the GetDevicesAsync method
+- Added ability to update device class friendly name
+- Added ability to delete device class
+- Added device class subgroups to groups
+- Added new method to retrieve devices health information
+
+### Breaking Changes
+- DeviceUpdateClient models updated
+- DeviceManagementClient models updated
 
 ## 1.0.0-beta.3 (2022-01-17)
 

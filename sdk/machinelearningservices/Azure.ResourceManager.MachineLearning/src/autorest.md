@@ -27,7 +27,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -38,11 +38,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   AKS: Aks
   USD: Usd
 
@@ -140,8 +141,8 @@ directive:
       $.DataContainer["x-ms-client-name"] = "DataContainerProperties";
       $.DatastoreResource["x-ms-client-name"] = "Datastore";
       $.Datastore["x-ms-client-name"] = "DatastoreProperties";
-      $.DataVersionBaseResource["x-ms-client-name"] = "DataVersionBase";
-      $.DataVersionBase["x-ms-client-name"] = "DataVersionBaseProperties";
+      $.DataVersionBaseResource["x-ms-client-name"] = "DataVersion";
+      $.DataVersionBase["x-ms-client-name"] = "DataVersionProperties";
       $.EnvironmentContainerResource["x-ms-client-name"] = "EnvironmentContainer";
       $.EnvironmentContainer["x-ms-client-name"] = "EnvironmentContainerProperties";
       $.EnvironmentVersionResource["x-ms-client-name"] = "EnvironmentVersion";

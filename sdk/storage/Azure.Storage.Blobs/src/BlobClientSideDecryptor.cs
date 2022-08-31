@@ -57,7 +57,9 @@ namespace Azure.Storage.Blobs
             int v2StartRegion0Indexed = (int)((contentRange?.Start / encryptionData.EncryptedRegionInfo?.GetTotalRegionLength()) ?? 0);
             int alreadyTrimmedOffset = encryptionData.EncryptionAgent.EncryptionVersion switch
             {
+#pragma warning disable CS0618 // obsolete
                 ClientSideEncryptionVersion.V1_0 => ivInStream ? Constants.ClientSideEncryption.EncryptionBlockSize : 0,
+#pragma warning restore CS0618 // obsolete
                 // first block is special case where we don't want to communicate a trim. Otherwise communicate nonce length * 1-indexed start region + tag length * 0-indexed region
                 ClientSideEncryptionVersion.V2_0 => contentRange?.Start > 0
                     ? (-encryptionData.EncryptedRegionInfo.NonceLength * (v2StartRegion0Indexed)) - (Constants.ClientSideEncryption.V2.TagSize * v2StartRegion0Indexed)
@@ -137,14 +139,18 @@ namespace Azure.Storage.Blobs
 
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
+#pragma warning disable CS0618 // obsolete
                 case ClientSideEncryptionVersion.V1_0:
                     _ = encryptionData.ContentEncryptionIV ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                         nameof(EncryptionData.ContentEncryptionIV));
                     break;
+#pragma warning restore CS0618 // obsolete
                 case ClientSideEncryptionVersion.V2_0:
                     _ = encryptionData.EncryptedRegionInfo ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                         nameof(EncryptionData.EncryptedRegionInfo));
                     break;
+                default:
+                    throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported();
             }
             _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                 nameof(EncryptionData.WrappedContentKey.EncryptedKey));
@@ -203,8 +209,10 @@ namespace Azure.Storage.Blobs
 
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
+#pragma warning disable CS0618 // obsolete
                 case ClientSideEncryptionVersion.V1_0:
                     return GetEncryptedBlobRangeV1_0(originalRange);
+#pragma warning restore CS0618 // obsolete
                 case ClientSideEncryptionVersion.V2_0:
                     return GetEncryptedBlobRangeV2_0(originalRange, encryptionData);
                 default:
