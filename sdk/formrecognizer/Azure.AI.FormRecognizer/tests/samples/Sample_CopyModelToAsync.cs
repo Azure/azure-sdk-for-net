@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #endregion
 
             #region Snippet:FormRecognizerSampleGetCopyAuthorization
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync();
+            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync();
             #endregion
 
             #region Snippet:FormRecognizerSampleCreateCopyModel

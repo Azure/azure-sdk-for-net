@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class CopyAuthorization : IUtf8JsonSerializable
+    public partial class DocumentModelCopyAuthorization : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteEndObject();
         }
 
-        internal static CopyAuthorization DeserializeCopyAuthorization(JsonElement element)
+        internal static DocumentModelCopyAuthorization DeserializeDocumentModelCopyAuthorization(JsonElement element)
         {
             string targetResourceId = default;
             string targetResourceRegion = default;
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new CopyAuthorization(targetResourceId, targetResourceRegion, targetModelId, targetModelLocation, accessToken, expirationDateTime);
+            return new DocumentModelCopyAuthorization(targetResourceId, targetResourceRegion, targetModelId, targetModelLocation, accessToken, expirationDateTime);
         }
     }
 }

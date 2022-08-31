@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
-            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
+            DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
             var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
             Assert.IsNotNull(operation.GetRawResponse());
@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
-            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
+            DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
             var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
             Assert.Throws<InvalidOperationException>(() => _ = operation.PercentCompleted);

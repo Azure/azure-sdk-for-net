@@ -317,7 +317,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
+            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
 
             CopyModelToOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
@@ -343,7 +343,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetClient = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
+            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
 
             Assert.IsNotNull(targetAuth.TargetModelId);
             Assert.AreEqual(modelId, targetAuth.TargetModelId);
@@ -364,7 +364,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var tags = TestingTags.ToDictionary(t => t.Key, t => t.Value);
 
             var targetModelId = Recording.GenerateId();
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
+            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
             CopyModelToOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
             DocumentModelDetails copiedModel = operation.Value;
@@ -381,7 +381,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetClient = CreateDocumentModelAdministrationClient();
 
             var modelId = Recording.GenerateId();
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
+            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.CopyModelToAsync(WaitUntil.Started, modelId, targetAuth));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);

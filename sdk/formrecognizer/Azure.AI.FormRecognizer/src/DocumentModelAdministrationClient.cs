@@ -681,11 +681,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
-        /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
+        /// <param name="target">A <see cref="DocumentModelCopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual CopyModelToOperation CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual CopyModelToOperation CopyModelTo(WaitUntil waitUntil, string modelId, DocumentModelCopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
@@ -721,11 +721,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
-        /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
+        /// <param name="target">A <see cref="DocumentModelCopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual async Task<CopyModelToOperation> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual async Task<CopyModelToOperation> CopyModelToAsync(WaitUntil waitUntil, string modelId, DocumentModelCopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
@@ -759,9 +759,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="DocumentModelCopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        public virtual Response<CopyAuthorization> GetCopyAuthorization(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentModelCopyAuthorization> GetCopyAuthorization(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             modelId ??= Guid.NewGuid().ToString();
 
@@ -800,9 +800,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="DocumentModelCopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentModelCopyAuthorization>> GetCopyAuthorizationAsync(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             modelId ??= Guid.NewGuid().ToString();
 
