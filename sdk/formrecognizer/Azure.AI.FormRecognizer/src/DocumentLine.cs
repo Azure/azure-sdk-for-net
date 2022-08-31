@@ -30,6 +30,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         public IReadOnlyList<PointF> BoundingPolygon { get; private set; }
 
+        internal DocumentPage ContainingPage { get; set; }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyList<float> Polygon
         {
@@ -38,6 +40,37 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 BoundingPolygon = ClientCommon.CovertToListOfPointF(value);
             }
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<DocumentWord> GetWords()
+        {
+            // ContainingPage could be null if this DocumentLine instance was created by the model factory.
+            if (ContainingPage == null)
+            {
+                return Array.Empty<DocumentWord>();
+            }
+
+            var words = new List<DocumentWord>();
+
+            foreach (DocumentWord word in ContainingPage.Words)
+            {
+                DocumentSpan wordSpan = word.Span;
+
+                foreach (DocumentSpan lineSpan in Spans)
+                {
+                    if (wordSpan.Index >= lineSpan.Index
+                        && wordSpan.Index + wordSpan.Length <= lineSpan.Index + lineSpan.Length)
+                    {
+                        words.Add(word);
+                    }
+                }
+            }
+
+            return words;
         }
     }
 }
