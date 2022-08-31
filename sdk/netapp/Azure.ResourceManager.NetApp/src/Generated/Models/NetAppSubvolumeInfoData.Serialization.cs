@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppSubvolumeData : IUtf8JsonSerializable
+    public partial class NetAppSubvolumeInfoData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteEndObject();
         }
 
-        internal static NetAppSubvolumeData DeserializeNetAppSubvolumeData(JsonElement element)
+        internal static NetAppSubvolumeInfoData DeserializeNetAppSubvolumeInfoData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppSubvolumeData(id, name, type, systemData.Value, path.Value, Optional.ToNullable(size), parentPath.Value, provisioningState.Value);
+            return new NetAppSubvolumeInfoData(id, name, type, systemData.Value, path.Value, Optional.ToNullable(size), parentPath.Value, provisioningState.Value);
         }
     }
 }

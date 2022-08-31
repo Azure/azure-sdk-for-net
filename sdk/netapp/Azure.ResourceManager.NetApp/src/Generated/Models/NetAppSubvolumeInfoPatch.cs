@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Subvolume Patch Request properties. </summary>
-    public partial class NetAppSubvolumePatch
+    public partial class NetAppSubvolumeInfoPatch
     {
-        /// <summary> Initializes a new instance of NetAppSubvolumePatch. </summary>
-        public NetAppSubvolumePatch()
+        /// <summary> Initializes a new instance of NetAppSubvolumeInfoPatch. </summary>
+        public NetAppSubvolumeInfoPatch()
         {
         }
 

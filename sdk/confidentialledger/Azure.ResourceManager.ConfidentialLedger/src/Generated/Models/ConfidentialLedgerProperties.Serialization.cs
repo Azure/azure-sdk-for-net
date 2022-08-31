@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class LedgerProperties : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             writer.WriteEndObject();
         }
 
-        internal static LedgerProperties DeserializeLedgerProperties(JsonElement element)
+        internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element)
         {
             Optional<string> ledgerName = default;
             Optional<Uri> ledgerUri = default;
             Optional<Uri> identityServiceUri = default;
             Optional<string> ledgerInternalNamespace = default;
-            Optional<LedgerType> ledgerType = default;
-            Optional<LedgerProvisioningState> provisioningState = default;
+            Optional<ConfidentialLedgerType> ledgerType = default;
+            Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
             Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ledgerType = new LedgerType(property.Value.GetString());
+                    ledgerType = new ConfidentialLedgerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new LedgerProvisioningState(property.Value.GetString());
+                    provisioningState = new ConfidentialLedgerProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("aadBasedSecurityPrincipals"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new LedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
+            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
         }
     }
 }

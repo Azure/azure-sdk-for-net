@@ -12,16 +12,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Additional Confidential Ledger properties. </summary>
-    public partial class LedgerProperties
+    public partial class ConfidentialLedgerProperties
     {
-        /// <summary> Initializes a new instance of LedgerProperties. </summary>
-        public LedgerProperties()
+        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        public ConfidentialLedgerProperties()
         {
             AadBasedSecurityPrincipals = new ChangeTrackingList<AadBasedSecurityPrincipal>();
             CertBasedSecurityPrincipals = new ChangeTrackingList<CertBasedSecurityPrincipal>();
         }
 
-        /// <summary> Initializes a new instance of LedgerProperties. </summary>
+        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
-        internal LedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, LedgerType? ledgerType, LedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
+        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Internal namespace for the Ledger. </summary>
         public string LedgerInternalNamespace { get; }
         /// <summary> Type of Confidential Ledger. </summary>
-        public LedgerType? LedgerType { get; set; }
+        public ConfidentialLedgerType? LedgerType { get; set; }
         /// <summary> Provisioning state of Ledger Resource. </summary>
-        public LedgerProvisioningState? ProvisioningState { get; }
+        public ConfidentialLedgerProvisioningState? ProvisioningState { get; }
         /// <summary> Array of all AAD based Security Principals. </summary>
         public IList<AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get; }
         /// <summary> Array of all cert based Security Principals. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class LedgerNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

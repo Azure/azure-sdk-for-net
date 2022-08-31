@@ -17,7 +17,7 @@ modelerfour:
   flatten-payloads: false
 
 override-operation-name:
-  CheckNameAvailability: CheckLedgerNameAvailability
+  CheckNameAvailability: CheckConfidentialLedgerNameAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -51,11 +51,14 @@ rename-rules:
   AAD: Aad
 
 rename-mapping:
-  ProvisioningState: LedgerProvisioningState
-  CheckNameAvailabilityRequest: LedgerNameAvailabilityContent
+  CheckNameAvailabilityRequest: ConfidentialLedgerNameAvailabilityContent
   CheckNameAvailabilityRequest.type: -|resource-type
-  CheckNameAvailabilityResponse: LedgerNameAvailabilityResult
+  CheckNameAvailabilityResponse: ConfidentialLedgerNameAvailabilityResult
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
-  CheckNameAvailabilityReason: LegerNameUnavailableReason
+  CheckNameAvailabilityReason: ConfidentialLedgerNameUnavailableReason
+  LedgerProperties: ConfidentialLedgerProperties
+  LedgerRoleName: ConfidentialLedgerRoleName
+  LedgerType: ConfidentialLedgerType
+  ProvisioningState: ConfidentialLedgerProvisioningState
 
 ```
