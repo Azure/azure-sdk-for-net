@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public class DocumentFieldValue
     {
-        private SelectionMarkState? _mockValueSelectionMark;
+        private DocumentSelectionMarkState? _mockValueSelectionMark;
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
         /// <param name="fieldType"> Data type of the field value. </param>
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentFieldValue. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentFieldValue(SelectionMarkState? value)
+        internal DocumentFieldValue(DocumentSelectionMarkState? value)
         {
             FieldType = DocumentFieldType.SelectionMark;
             _mockValueSelectionMark = value;
@@ -242,11 +242,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
+        /// Gets the value of the field as a <see cref="DocumentSelectionMarkState"/>.
         /// </summary>
-        /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
+        /// <returns>The value of the field converted to <see cref="DocumentSelectionMarkState"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.SelectionMark"/>.</exception>
-        public SelectionMarkState AsSelectionMarkState()
+        public DocumentSelectionMarkState AsSelectionMarkState()
         {
             if (FieldType != DocumentFieldType.SelectionMark)
             {
@@ -265,15 +265,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (ValueSelectionMark == V3SelectionMarkState.Selected)
             {
-                return SelectionMarkState.Selected;
+                return DocumentSelectionMarkState.Selected;
             }
 
             if (ValueSelectionMark == V3SelectionMarkState.Unselected)
             {
-                return SelectionMarkState.Unselected;
+                return DocumentSelectionMarkState.Unselected;
             }
 
-            throw new ArgumentOutOfRangeException($"Unknown {nameof(SelectionMarkState)} value: {ValueSelectionMark}");
+            throw new ArgumentOutOfRangeException($"Unknown {nameof(DocumentSelectionMarkState)} value: {ValueSelectionMark}");
         }
 
         /// <summary>

@@ -211,7 +211,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
         /// <param name="value"> The value of the field. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
-        public static DocumentFieldValue DocumentFieldValueWithSelectionMarkFieldType(SelectionMarkState? value = null)
+        public static DocumentFieldValue DocumentFieldValueWithSelectionMarkFieldType(DocumentSelectionMarkState? value = null)
         {
             return new DocumentFieldValue(value);
         }
@@ -380,7 +380,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, LengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
+        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, DocumentPageLengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
         {
             spans ??= new List<DocumentSpan>();
             words ??= new List<DocumentWord>();
@@ -410,7 +410,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
         {
             return new DocumentSelectionMark(state, boundingPolygon, span, confidence);
         }

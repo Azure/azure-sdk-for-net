@@ -4,18 +4,19 @@
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
-    /// State of a selection mark. i.e. Selected or Unselected.
+    /// The unit used by the width, height and bounding polygons of a <see cref="DocumentPage"/>. For images, the unit is
+    /// pixel. For PDF, the unit is inch.
     /// </summary>
-    public enum SelectionMarkState
+    public enum DocumentPageLengthUnit
     {
         /// <summary>
-        /// Value is unselected.
+        /// Pixel.
         /// </summary>
-        Unselected,
+        Pixel,
 
         /// <summary>
-        /// Value is selected.
+        /// Inch.
         /// </summary>
-        Selected
+        Inch
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary>
         /// The bounding polygon that outlines this region. Units are in pixels for images and inches for
-        /// PDF. The <see cref="LengthUnit"/> type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
+        /// PDF. The <see cref="DocumentPageLengthUnit"/> type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
         public IReadOnlyList<PointF> BoundingPolygon { get; }
 

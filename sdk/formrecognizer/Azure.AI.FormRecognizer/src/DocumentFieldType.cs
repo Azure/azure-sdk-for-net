@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         Dictionary,
 
         /// <summary>
-        /// Used for <see cref="SelectionMarkState"/> type.
+        /// Used for <see cref="DocumentSelectionMarkState"/> type.
         /// </summary>
         SelectionMark,
 

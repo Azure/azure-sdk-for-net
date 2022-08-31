@@ -261,7 +261,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotEmpty(document.DocumentType);
             Assert.AreEqual(2200, page.Height);
             Assert.AreEqual(1, page.PageNumber);
-            Assert.AreEqual(LengthUnit.Pixel, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
 
             Assert.IsNotNull(document.Fields);
@@ -304,7 +304,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(document.Fields[name]);
             Assert.AreEqual(DocumentFieldType.SelectionMark, document.Fields[name].FieldType);
-            Assert.AreEqual(SelectionMarkState.Selected, document.Fields[name].Value.AsSelectionMarkState());
+            Assert.AreEqual(DocumentSelectionMarkState.Selected, document.Fields[name].Value.AsSelectionMarkState());
         }
 
         [RecordedTest]
@@ -597,7 +597,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Pixel, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
             Assert.AreEqual(2200, page.Height);
             Assert.AreEqual(0, page.Angle);
@@ -1072,7 +1072,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Inch, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
             Assert.AreEqual(0, page.Angle);
@@ -1259,7 +1259,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Inch, page.Unit);
+            Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
             Assert.AreEqual(11, page.Height);
             Assert.AreEqual(0, page.Angle);
