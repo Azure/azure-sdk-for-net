@@ -8,6 +8,10 @@
     <IsWebjobsProject>true</IsWebjobsProject>
     <SupportsNetStandard20>true</SupportsNetStandard20>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <IsStorageTest Condition="'$(IsStorageTest)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsStorageTest>
+  </PropertyGroup>
   
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
   
