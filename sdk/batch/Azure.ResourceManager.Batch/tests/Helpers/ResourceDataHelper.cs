@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         };
             return data;
         }
-        public static void AssertCertificate(BatchAccountCertificateCreateOrUpdateContent certificateData1, BatchAccountCertificateCreateOrUpdateContent certificateData2)
+        public static void AssertCertificate(BatchAccountCertificateData certificateData1, BatchAccountCertificateData certificateData2)
         {
             AssertResourceData(certificateData1, certificateData2);
             Assert.AreEqual(certificateData1.ETag, certificateData2.ETag);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
             var data = new BatchAccountCreateOrUpdateContent(AzureLocation.WestUS);
             return data;
         }
-        public static void AssertAccount(BatchAccountCreateOrUpdateContent account1, BatchAccountCreateOrUpdateContent account2)
+        public static void AssertAccount(BatchAccountData account1, BatchAccountData account2)
         {
             //AssertResourceData(account1, account2);
             Assert.AreEqual(account1.Tags, account2.Tags);
