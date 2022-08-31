@@ -68,9 +68,9 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
-        /// Specifies Powershell process timeout in milliseconds.
+        /// Specifies timeout for Developer credentials. e.g. Visual Studio, VS Code, Azure CLI, Azure Powershell.
         /// </summary>
-        public int PowerShellProcessTimeoutMs { get; set; } = (int)TimeSpan.FromSeconds(10).TotalMilliseconds;
+        public TimeSpan DeveloperCredentialTimeout { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading

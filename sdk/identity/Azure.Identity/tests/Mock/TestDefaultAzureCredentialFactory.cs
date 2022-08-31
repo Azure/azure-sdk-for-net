@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests.Mock
         public override TokenCredential CreateVisualStudioCodeCredential(string tenantId)
             => new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, _fileSystem, _vscAdapter);
 
-        public override TokenCredential CreateAzurePowerShellCredential(int powershellProcessTimeoutMs)
+        public override TokenCredential CreateAzurePowerShellCredential(TimeSpan powershellProcessTimeout)
             => new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), Pipeline, _processService);
     }
 }

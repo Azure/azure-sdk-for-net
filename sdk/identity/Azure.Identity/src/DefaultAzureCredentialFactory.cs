@@ -67,9 +67,9 @@ namespace Azure.Identity
             return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, default, default);
         }
 
-        public virtual TokenCredential CreateAzurePowerShellCredential(int powerShellProcessTimeoutMs)
+        public virtual TokenCredential CreateAzurePowerShellCredential(TimeSpan powerShellProcessTimeout)
         {
-            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { PowerShellProcessTimeoutMs = powerShellProcessTimeoutMs }, Pipeline, default);
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = powerShellProcessTimeout }, Pipeline, default);
         }
     }
 }

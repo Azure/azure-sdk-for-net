@@ -16,8 +16,8 @@ namespace Azure.Identity
         public string TenantId { get; set; }
 
         /// <summary>
-        /// The Powershell process timeout miliseconds.
+        /// The Powershell process timeout.
         /// </summary>
-        public int PowerShellProcessTimeoutMs { get; set; } = (int)TimeSpan.FromSeconds(10).TotalMilliseconds;
+        public TimeSpan PowerShellProcessTimeout { get; set; } = TimeSpan.FromSeconds(10);
     }
 }

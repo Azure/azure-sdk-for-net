@@ -146,11 +146,11 @@ namespace Azure.Identity.Tests
         [Test]
         public void ConfigurePowershellProcessTimeout()
         {
-            int powershellProcessTimeout = 42;
+            TimeSpan powershellProcessTimeout = TimeSpan.FromSeconds(42);
 
             AzurePowerShellCredential credential = new AzurePowerShellCredential(
-                      new AzurePowerShellCredentialOptions() { PowerShellProcessTimeoutMs = powershellProcessTimeout });
-            Assert.AreEqual(powershellProcessTimeout, credential.PowerShellProcessTimeoutMs);
+                      new AzurePowerShellCredentialOptions() { PowerShellProcessTimeout = powershellProcessTimeout });
+            Assert.AreEqual(powershellProcessTimeout, credential.PowerShellProcessTimeout);
         }
 
         [Test]

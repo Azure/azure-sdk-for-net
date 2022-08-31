@@ -83,7 +83,7 @@ namespace Azure.Identity.Tests
             string expVsTenantId = Guid.NewGuid().ToString();
             string expCodeTenantId = Guid.NewGuid().ToString();
             string expResourceId =  $"/subscriptions/{Guid.NewGuid().ToString()}/locations/MyLocation";
-            int expPowershellProcessTimeoutMs = 42;
+            TimeSpan developerCredentialTimeout = TimeSpan.FromSeconds(42);
             string actClientId_ManagedIdentity = null;
             string actResiurceId_ManagedIdentity = null;
             string actClientId_InteractiveBrowser = null;
@@ -92,7 +92,7 @@ namespace Azure.Identity.Tests
             string actBrowserTenantId = null;
             string actVsTenantId = null;
             string actCodeTenantId = null;
-            int actPowershellProcessTimeoutMs = 0;
+            TimeSpan actPowershellProcessTimeout = TimeSpan.FromSeconds(0);
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
@@ -105,7 +105,7 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, clientId,  _) => { actBrowserTenantId = tenantId; actClientId_InteractiveBrowser = clientId; };
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => { actVsTenantId = tenantId; };
             credFactory.OnCreateVisualStudioCodeCredential = (tenantId, _) => { actCodeTenantId = tenantId; };
-            credFactory.OnCreateAzurePowerShellCredential = (powershellProcessTimeoutMs, _) => { actPowershellProcessTimeoutMs = powershellProcessTimeoutMs; };
+            credFactory.OnCreateAzurePowerShellCredential = (powershellProcessTimeoutMs, _) => { actPowershellProcessTimeout = powershellProcessTimeoutMs; };
 
             var options = new DefaultAzureCredentialOptions
             {
@@ -117,7 +117,7 @@ namespace Azure.Identity.Tests
                 VisualStudioCodeTenantId = expCodeTenantId,
                 InteractiveBrowserTenantId = expBrowserTenantId,
                 ExcludeInteractiveBrowserCredential = false,
-                PowerShellProcessTimeoutMs = expPowershellProcessTimeoutMs
+                DeveloperCredentialTimeout = developerCredentialTimeout
             };
 
             switch (managedIdentityIdType)
@@ -138,7 +138,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expBrowserTenantId, actBrowserTenantId);
             Assert.AreEqual(expVsTenantId, actVsTenantId);
             Assert.AreEqual(expCodeTenantId, actCodeTenantId);
-            Assert.AreEqual(expPowershellProcessTimeoutMs, actPowershellProcessTimeoutMs);
+            Assert.AreEqual(developerCredentialTimeout, actPowershellProcessTimeout);
             switch (managedIdentityIdType)
             {
                 case ManagedIdentityIdType.ClientId:

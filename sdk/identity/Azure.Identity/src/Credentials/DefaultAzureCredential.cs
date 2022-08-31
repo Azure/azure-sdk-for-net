@@ -225,7 +225,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeAzurePowerShellCredential)
             {
-                chain[i++] = factory.CreateAzurePowerShellCredential(options.PowerShellProcessTimeoutMs);
+                chain[i++] = factory.CreateAzurePowerShellCredential(options.DeveloperCredentialTimeout);
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)
