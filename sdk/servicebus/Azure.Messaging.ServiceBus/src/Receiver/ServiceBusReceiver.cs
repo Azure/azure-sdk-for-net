@@ -749,25 +749,18 @@ namespace Azure.Messaging.ServiceBus
             // Prevent properties and arguments from setting distinct deadletter reasons or error descriptions
             foreach (KeyValuePair<string, object> pair in propertiesToModify)
             {
-                if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
+                // Attempting to set the dead letter reason or description header through the properties
+                var isReasonHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterReasonHeader);
+                var isDescriptionHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
+
+                if ((isReasonHeaderKey && deadLetterReason != null) && (pair.Value.ToString() != deadLetterReason))
                 {
-                    // Attempting to set the dead letter reason or description header through the properties
-                    var isReasonHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterReasonHeader);
-                    var isDescriptionHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
-
-                    if ((isReasonHeaderKey && deadLetterReason != null) && (pair.Value.ToString() != deadLetterReason))
-                    {
-                        throw new ArgumentException("Differing deadletter reasons cannot be passed through both the properties and the parameter.");
-                    }
-
-                    if ((isDescriptionHeaderKey && deadLetterErrorDescription != null) && (pair.Value.ToString() != deadLetterReason))
-                    {
-                        throw new ArgumentException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter");
-                    }
+                    throw new ArgumentException("Differing deadletter reasons cannot be passed through both the properties and the parameter.");
                 }
-                else
+
+                if ((isDescriptionHeaderKey && deadLetterErrorDescription != null) && (pair.Value.ToString() != deadLetterReason))
                 {
-                    throw new NotSupportedException(Resources.InvalidAmqpMessageProperty.FormatForUser(pair.Key.GetType()));
+                    throw new ArgumentException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter");
                 }
             }
             await DeadLetterInternalAsync(
