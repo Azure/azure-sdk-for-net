@@ -74,7 +74,7 @@
 /sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/            @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                          @AlexanderSher @jsquire
+/sdk/appconfiguration/                          @nisha-bhatia @ShivangiReja @AlexanderSher @jsquire
 
 # ServiceLabel: %App Services %Service Attention
 #/<NotInRepo>/            @antcp @AzureAppServiceCLI
@@ -87,7 +87,7 @@
 /sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
 
 # ServiceLabel: %Automation %Service Attention
-/sdk/automation/Microsoft.Azure.Management.Automation/            @jaspkaur28
+/sdk/automation/Microsoft.Azure.Management.Automation/            @jaspkaur28 @omairabdullah
 
 # ServiceLabel: %AVS %Service Attention
 /sdk/avs/Microsoft.Azure.Management.Avs/           @divka78 @amitchat @aishu
@@ -257,7 +257,7 @@
 /sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance/            @dkkapur
 
 # ServiceLabel: %Container Registry
-/sdk/containerregistry/   @pallavit @annelo-msft
+/sdk/containerregistry/   @ShivangiReja @pallavit @annelo-msft
 
 # ServiceLabel: %Container Registry %Service Attention
 /sdk/containerregistry/Microsoft.*/ @toddysm @yugangw-MSFT
@@ -433,8 +433,8 @@ sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamat
 sdk/monitor/           @SameergMS @dadunl
 
 # PRLabel: %Monitor - Query
-sdk/monitor/Azure.Monitor.Query            @nisha-bhatia
-sdk/monitor/ci.yml                         @nisha-bhatia
+sdk/monitor/Azure.Monitor.Query            @nisha-bhatia @ShivangiReja
+sdk/monitor/ci.yml                         @nisha-bhatia @ShivangiReja
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention

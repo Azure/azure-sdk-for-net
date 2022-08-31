@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new StorageProperties(storageType);
+            return new UnknownStorageProperties(storageType);
         }
     }
 }

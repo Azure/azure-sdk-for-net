@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             Optional<ResourceIdentifier> id = default;
             string name = default;
-            Optional<ResourceIdentifier> type = default;
+            Optional<ResourceType> type = default;
             Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
             Optional<bool> primary = default;
             Optional<IPAddress> privateIPAddress = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ResourceIdentifier(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightIPConfiguration(id.Value, name, type.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet);
+            return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet);
         }
     }
 }

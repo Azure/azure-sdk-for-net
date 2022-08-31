@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The properties for updating trigger properties. </summary>
         public ContainerRegistryTriggerUpdateContent Trigger { get; set; }
         /// <summary> The parameters that describes a set of credentials that will be used when this run is invoked. </summary>
-        public ContainerRegistryRunCredentials Credentials { get; set; }
+        public ContainerRegistryCredentials Credentials { get; set; }
         /// <summary> The template that describes the repository and tag information for run log artifact. </summary>
         public string LogTemplate { get; set; }
     }

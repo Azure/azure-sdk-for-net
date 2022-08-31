@@ -1,16 +1,27 @@
 # Release History
 
-## 1.0.0-beta.12 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Various naming changes according to review comments.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.12 (2022-08-18)
+
+This is the RC release of the Azure Storage management library.
+
+### Breaking Changes
+
+- Various naming changes according to review comments.
+- Changed the return type of the method `RestoreBlobRanges` to `StorageAccountRestoreBlobRangesOperation`.
+
+### Other Changes
+
+- Upgraded API version to 2022-05-01
 
 ## 1.0.0-beta.11 (2022-07-21)
 
