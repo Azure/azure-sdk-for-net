@@ -13,7 +13,7 @@
     <Description>Provides management capabilities for Microsoft Azure Iot Hub.</Description>
     <AssemblyTitle>Microsoft Azure Iot Hub Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.IotHub</AssemblyName>
-    <Version>4.2.0</Version>
+    <Version>4.3.0-preview</Version>
     <PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
     <PackageReleaseNotes>Regenerated from an updated 2022-04-30-preview swagger.</PackageReleaseNotes>
   </PropertyGroup>
