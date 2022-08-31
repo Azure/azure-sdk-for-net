@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -374,7 +375,67 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         }
         #endregion
 
-        // Partition receiver
+        [Test]
+        public void PartitionReceiver()
+        {
+            #region Snippet:EventHubs_Sample11_PartitionReceiver_Test
+            var receiver = new Mock<PartitionReceiver>();
+            var emptyEventBatch = new List<EventData>();
+
+            receiver.Setup(
+                r => r.ReceiveBatchAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(emptyEventBatch);
+
+            #endregion
+        }
+
+        #region Snippet:EventHubs_Sample11_PartitionReceiver
+        private async Task<bool> ReceiveBatches(PartitionReceiver receiver, CancellationTokenSource cancellationSource)
+        {
+            var stopWatch = Stopwatch.StartNew();
+            var ranOutOfEvents = false;
+            try
+            {
+                while (!cancellationSource.IsCancellationRequested)
+                {
+                    int batchSize = 50;
+                    TimeSpan waitTime = TimeSpan.FromSeconds(1);
+
+                    IEnumerable<EventData> eventBatch = await receiver.ReceiveBatchAsync(
+                        batchSize,
+                        waitTime,
+                        cancellationSource.Token);
+
+                    foreach (EventData eventData in eventBatch)
+                    {
+                        ConsumeEvent(eventData);
+                        stopWatch.Restart();
+                    }
+
+                    var timeSinceLastEvent = stopWatch.Elapsed;
+
+                    if (timeSinceLastEvent == TimeSpan.FromSeconds(5))
+                    {
+                        cancellationSource.Cancel();
+                        ranOutOfEvents = true;
+                    }
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // This is expected if the cancellation token is
+                // signaled.
+            }
+            finally
+            {
+                await receiver.CloseAsync();
+            }
+            return ranOutOfEvents;
+        }
+        #endregion
 
         // processor client
 
