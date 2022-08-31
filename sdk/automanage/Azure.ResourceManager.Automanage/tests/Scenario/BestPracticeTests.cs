@@ -10,11 +10,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
     {
         public BestPracticeTests(bool async) : base(async) { }
 
-        [TestCase]
-        public async Task CanGetBestPracticesProductionProfile()
+        private async Task<BestPracticeResource> GetBestPracticesProfile(string profileName)
         {
-            string profileName = "AzureBestPracticesProduction";
-
             // fetch tenant collection
             var tenants = ArmClient.GetTenants();
 
@@ -25,6 +22,30 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 if (tenant.Data.TenantId == Subscription.Data.TenantId)
                     profile = tenant.GetBestPracticeAsync(profileName).Result;
             }
+
+            return profile;
+        }
+
+        [TestCase]
+        public async Task CanGetBestPracticesProductionProfile()
+        {
+            string profileName = "AzureBestPracticesProduction";
+            var profile = await GetBestPracticesProfile(profileName);
+
+            // assert
+            Assert.NotNull(profile);
+            Assert.True(profile.HasData);
+            Assert.AreEqual(profileName, profile.Id.Name);
+            Assert.NotNull(profile.Id);
+            Assert.NotNull(profile.Data);
+            Assert.NotNull(profile.Data.Configuration);
+        }
+
+        [TestCase]
+        public async Task CanGetBestPracticesDevTestProfile()
+        {
+            string profileName = "AzureBestPracticesDevTest";
+            var profile = await GetBestPracticesProfile(profileName);
 
             // assert
             Assert.NotNull(profile);
