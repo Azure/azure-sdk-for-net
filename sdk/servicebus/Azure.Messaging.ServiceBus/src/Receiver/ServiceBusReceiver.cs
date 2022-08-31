@@ -703,6 +703,8 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/> or
         /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
+        /// The dead letter reason and error description can only be specified either through the method parameters or hard coded
+        /// using this properties.
         /// </remarks>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -716,6 +718,20 @@ namespace Azure.Messaging.ServiceBus
         ///       <description>
         ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
         ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The <paramref name="message"/> argument was null.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error exception was specified in both the parameter and the properties dictionary.
         ///       </description>
         ///     </item>
         ///   </list>
