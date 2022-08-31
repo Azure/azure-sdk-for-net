@@ -2074,6 +2074,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         processor.UpdateConcurrency(20, 2);
                         Assert.AreEqual(20, processor.MaxConcurrentSessions);
                         Assert.AreEqual(2, processor.MaxConcurrentCallsPerSession);
+
+                        // add a small delay to allow concurrency to update
+                        await Task.Delay(TimeSpan.FromSeconds(5));
                     }
 
                     if (count == 50)
@@ -2108,7 +2111,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient(5, 1);
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 200;
+                int messageCount = 100;
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
@@ -2138,8 +2141,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         processor.UpdateConcurrency(5, 20);
                         Assert.AreEqual(5, processor.MaxConcurrentSessions);
                         Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
+
+                        // add a small delay to allow concurrency to update
+                        await Task.Delay(TimeSpan.FromSeconds(5));
                     }
-                    if (count == 100)
+                    if (count == 50)
                     {
                         // 20 tasks for the session, plus at least 1 more trying to accept other sessions.
                         Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 20);
@@ -2147,7 +2153,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
                     }
-                    if (count == 195)
+                    if (count == 95)
                     {
                         Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
