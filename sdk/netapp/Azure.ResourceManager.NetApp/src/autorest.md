@@ -47,6 +47,7 @@ rename-rules:
   Etag: ETag|etag
   SAP: Sap
   TLS: Tls
+  ZRS: Zrs
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}: NetAppAccountBackup
@@ -63,13 +64,55 @@ override-operation-name:
   Backups_GetVolumeRestoreStatus: GetRestoreStatus
 
 request-path-is-non-resource:
-- /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
+  - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
+
+prepend-rp-prefix:
+  - Backup
+  - BackupType
+  - BackupPolicy
+  - EndpointType
+  - Volume
+  - VolumeQuotaRule
+  - Vault
+  - RestoreStatus
+  - ApplicationType
+  - AvsDataStore
+  - ChownMode
+  - EncryptionKeySource
+  - MirrorState
+  - RelationshipStatus
+  - ProvisioningState
+  - ReplicationObject
+  - ReplicationSchedule
+  - VolumeStorageToNetworkProximity
 
 rename-mapping:
-  Backup: NetAppBackup
-  BackupType: NetAppBackupType
-  BackupPolicy: NetAppBackupPolicy
-  Volume: NetAppVolume
+  CapacityPool.properties.poolId: -|uuid
+  Backup.properties.backupId: -|uuid
+  Volume.properties.backupId: -|uuid
+  BackupPatch.properties.backupId: -|uuid
+  Volume.properties.snapshotId: -|uuid
+  Volume.properties.fileSystemId: -|uuid
+  Snapshot.properties.snapshotId: -|uuid
+  FilePathAvailabilityRequest.subnetId: -|arm-id
+  MountTargetProperties.mountTargetId: -|uuid
+  MountTargetProperties.fileSystemId: -|uuid
+  MountTargetProperties.ipAddress: -|ip-address
+  ActiveDirectory.kdcIP: -|ip-address
+  ReplicationSchedule._10minutely: TenMinutely
+  EndpointType.src: Source
+  EndpointType.dst: Destination
+  ExportPolicyRule.cifs: AllowCifsProtocol
+  ExportPolicyRule.unixReadOnly: IsUnixReadOnly
+  ExportPolicyRule.unixReadWrite: IsUnixReadWrite
+  ExportPolicyRule.kerberos5ReadOnly: IsKerberos5ReadOnly
+  ExportPolicyRule.kerberos5ReadWrite: IsKerberos5ReadWrite
+  ExportPolicyRule.kerberos5iReadOnly: IsKerberos5iReadOnly
+  ExportPolicyRule.kerberos5iReadWrite: IsKerberos5iReadWrite
+  ExportPolicyRule.kerberos5pReadOnly: IsKerberos5pReadOnly
+  ExportPolicyRule.kerberos5pReadWrite: IsKerberos5pReadWrite
+  ExportPolicyRule.nfsv3: AllowNfsV3Protocol
+  ExportPolicyRule.nfsv41: AllowNfsV41Protocol
   Volume.properties.coolAccess: IsCoolAccessEnabled
   Volume.properties.keyVaultPrivateEndpointResourceId: -|arm-id
   Volume.properties.subnetId: -|arm-id
@@ -80,80 +123,6 @@ rename-mapping:
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
-  VolumeGroupDetails: NetAppVolumeGroup
-  VolumeQuotaRule: NetAppVolumeQuotaRule
-  CapacityPool.properties.coolAccess: IsCoolAccessEnabled
-  CapacityPoolPatch.properties.coolAccess: IsCoolAccessEnabled
-  QosType: CapacityPoolQosType
-  ServiceLevel: NetAppFileServiceLevel
-  ActiveDirectory: NetAppAccountActiveDirectory
-  ActiveDirectoryStatus: NetAppAccountActiveDirectoryStatus
-  Vault: NetAppVault
-  BackupPolicy.properties.backupPolicyId: -|arm-id
-  BackupPolicy.properties.enabled: IsEnabled
-  VolumeBackups: NetAppVolumeBackupDetail
-  VolumeBackups.policyEnabled: IsPolicyEnabled
-  CheckAvailabilityResponse: NetAppCheckAvailabilityResult
-  FilePathAvailabilityRequest: NetAppFilePathAvailabilityContent
-  ResourceNameAvailabilityRequest: NetAppNameAvailabilityContent
-  CheckNameResourceTypes: NetAppNameAvailabilityResourceType
-  CheckQuotaNameResourceTypes: NetAppQuotaAvailabilityResourceType
-  QuotaAvailabilityRequest: NetAppQuotaAvailabilityContent
-  InAvailabilityReasonType: NetAppNameUnavailableReason
-  Snapshot: NetAppVolumeSnapshot
-  SubscriptionQuotaItem: NetAppSubscriptionQuotaItem
-  SubvolumeInfo: NetAppSubvolume
-  Replication: NetAppVolumeReplication
-  BackupStatus: NetAppVolumeBackupStatus
-  BackupStatus.healthy: IsHealthy
-  RestoreStatus: NetAppRestoreStatus
-  RestoreStatus.healthy: IsHealthy
-  ApplicationType: NetAppApplicationType
-  AuthorizeRequest: NetAppVolumeAuthorizeReplicationContent
-  AuthorizeRequest.remoteVolumeResourceId: -|arm-id
-  AvsDataStore: NetAppAvsDataStore
-  BreakReplicationRequest: NetAppVolumeBreakReplicationContent
-  ChownMode: NetAppChownMode
-  DailySchedule: SnapshotPolicyDailySchedule
-  EnableSubvolumes: EnableNetAppSubvolume
-  EncryptionKeySource: NetAppEncryptionKeySource
-  EncryptionType: CapacityPoolEncryptionType
-  ExportPolicyRule: NetAppVolumeExportPolicyRule
-  HourlySchedule: SnapshotPolicyHourlySchedule
-  MonthlySchedule: SnapshotPolicyMonthlySchedule
-  WeeklySchedule: SnapshotPolicyWeeklySchedule
-  LdapSearchScopeOpt: NetAppLdapSearchScopeConfiguration
-  MirrorState: NetAppMirrorState
-  RelationshipStatus: NetAppRelationshipStatus
-  MountTargetProperties: NetAppVolumeMountTarget
-  NetworkFeatures: NetAppNetworkFeature
-  PlacementKeyValuePairs: NetAppVolumePlacementRule
-  PoolChangeRequest: NetAppVolumePoolChangeContent
-  ProvisioningState: NetAppProvisioningState
-  ReestablishReplicationRequest: NetAppVolumeReestablishReplicationContent
-  ReplicationStatus: NetAppVolumeReplicationStatus
-  SecurityStyle: NetAppVolumeSecurityStyle
-  SnapshotRestoreFiles: NetAppVolumeSnapshotRestoreFilesContent
-  SubvolumeModel: NetAppSubvolumeMetadata
-  SubvolumeModel.properties.creationTimeStamp: CreatedOn
-  SubvolumeModel.properties.accessedTimeStamp: AccessedOn
-  SubvolumeModel.properties.modifiedTimeStamp: ModifiedOn
-  SubvolumeModel.properties.changedTimeStamp: ChangedOn
-  Type: NetAppVolumeQuotaType
-  VolumePatchPropertiesDataProtection: NetAppVolumePatchDataProtection
-  VolumePropertiesDataProtection: NetAppVolumeDataProtection
-  VolumeRevert: NetAppVolumeRevertContent
-  VolumeRevert.snapshotId: -|arm-id
-  ReplicationObject: NetAppReplicationObject
-  ReplicationObject.remoteVolumeResourceId: -|arm-id
-  ReplicationSchedule: NetAppReplicationSchedule
-  VolumeBackupProperties: NetAppVolumeBackupConfiguration
-  VolumeBackupProperties.backupPolicyId: -|arm-id
-  VolumeBackupProperties.policyEnforced: IsPolicyEnforced
-  VolumeBackupProperties.vaultId: -|arm-id
-  VolumeBackupProperties.backupEnabled: IsBackupEnabled
-  VolumeGroupMetaData: NetAppVolumeGroupMetadata
-  VolumeStorageToNetworkProximity: NetAppVolumeStorageToNetworkProximity
   SnapshotPolicy.properties.enabled: IsEnabled
   SnapshotPolicyPatch.properties.enabled: IsEnabled
   ActiveDirectory.aesEncryption: IsAesEncryptionEnabled
@@ -166,6 +135,67 @@ rename-mapping:
   PoolChangeRequest.newPoolResourceId: -|arm-id
   ReestablishReplicationRequest.sourceVolumeId: -|arm-id
   Replication.remoteVolumeResourceId: -|arm-id
+  CapacityPool.properties.coolAccess: IsCoolAccessEnabled
+  CapacityPoolPatch.properties.coolAccess: IsCoolAccessEnabled
+  BackupPolicy.properties.backupPolicyId: -|arm-id
+  VolumeBackups.policyEnabled: IsPolicyEnabled
+  AuthorizeRequest.remoteVolumeResourceId: -|arm-id
+  SubvolumeModel.properties.creationTimeStamp: CreatedOn
+  SubvolumeModel.properties.accessedTimeStamp: AccessedOn
+  SubvolumeModel.properties.modifiedTimeStamp: ModifiedOn
+  SubvolumeModel.properties.changedTimeStamp: ChangedOn
+  VolumeRevert.snapshotId: -|arm-id
+  ReplicationObject.remoteVolumeResourceId: -|arm-id
+  VolumeBackupProperties.backupPolicyId: -|arm-id
+  VolumeBackupProperties.policyEnforced: IsPolicyEnforced
+  VolumeBackupProperties.vaultId: -|arm-id
+  VolumeBackupProperties.backupEnabled: IsBackupEnabled
+  VolumeGroupDetails: NetAppVolumeGroup
+  QosType: CapacityPoolQosType
+  ServiceLevel: NetAppFileServiceLevel
+  ActiveDirectory: NetAppAccountActiveDirectory
+  ActiveDirectoryStatus: NetAppAccountActiveDirectoryStatus
+  BackupPolicy.properties.enabled: IsEnabled
+  VolumeBackups: NetAppVolumeBackupDetail
+  CheckAvailabilityResponse: NetAppCheckAvailabilityResult
+  FilePathAvailabilityRequest: NetAppFilePathAvailabilityContent
+  ResourceNameAvailabilityRequest: NetAppNameAvailabilityContent
+  CheckNameResourceTypes: NetAppNameAvailabilityResourceType
+  CheckQuotaNameResourceTypes: NetAppQuotaAvailabilityResourceType
+  QuotaAvailabilityRequest: NetAppQuotaAvailabilityContent
+  InAvailabilityReasonType: NetAppNameUnavailableReason
+  Snapshot: NetAppVolumeSnapshot
+  SubscriptionQuotaItem: NetAppSubscriptionQuotaItem
+  SubvolumeInfo: NetAppSubvolumeInfo
+  Replication: NetAppVolumeReplication
+  BackupStatus: NetAppVolumeBackupStatus
+  BackupStatus.healthy: IsHealthy
+  RestoreStatus.healthy: IsHealthy
+  AuthorizeRequest: NetAppVolumeAuthorizeReplicationContent
+  BreakReplicationRequest: NetAppVolumeBreakReplicationContent
+  DailySchedule: SnapshotPolicyDailySchedule
+  EnableSubvolumes: EnableNetAppSubvolume
+  EncryptionType: CapacityPoolEncryptionType
+  ExportPolicyRule: NetAppVolumeExportPolicyRule
+  HourlySchedule: SnapshotPolicyHourlySchedule
+  MonthlySchedule: SnapshotPolicyMonthlySchedule
+  WeeklySchedule: SnapshotPolicyWeeklySchedule
+  LdapSearchScopeOpt: NetAppLdapSearchScopeConfiguration
+  MountTargetProperties: NetAppVolumeMountTarget
+  NetworkFeatures: NetAppNetworkFeature
+  PlacementKeyValuePairs: NetAppVolumePlacementRule
+  PoolChangeRequest: NetAppVolumePoolChangeContent
+  ReestablishReplicationRequest: NetAppVolumeReestablishReplicationContent
+  ReplicationStatus: NetAppVolumeReplicationStatus
+  SecurityStyle: NetAppVolumeSecurityStyle
+  SnapshotRestoreFiles: NetAppVolumeSnapshotRestoreFilesContent
+  SubvolumeModel: NetAppSubvolumeMetadata
+  Type: NetAppVolumeQuotaType
+  VolumePatchPropertiesDataProtection: NetAppVolumePatchDataProtection
+  VolumePropertiesDataProtection: NetAppVolumeDataProtection
+  VolumeRevert: NetAppVolumeRevertContent
+  VolumeBackupProperties: NetAppVolumeBackupConfiguration
+  VolumeGroupMetaData: NetAppVolumeGroupMetadata
 
 directive:
 # remove this operation because the Snapshots_Update defines an empty object

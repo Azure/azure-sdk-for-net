@@ -10,15 +10,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppSubvolume data model. </summary>
-    public partial class NetAppSubvolumeData : ResourceData
+    /// <summary> A class representing the NetAppSubvolumeInfo data model. </summary>
+    public partial class NetAppSubvolumeInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppSubvolumeData. </summary>
-        public NetAppSubvolumeData()
+        /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>
+        public NetAppSubvolumeInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppSubvolumeData. </summary>
+        /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="size"> Truncate subvolume to the provided size in bytes. </param>
         /// <param name="parentPath"> parent path to the subvolume. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal NetAppSubvolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, long? size, string parentPath, string provisioningState) : base(id, name, resourceType, systemData)
+        internal NetAppSubvolumeInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, long? size, string parentPath, string provisioningState) : base(id, name, resourceType, systemData)
         {
             Path = path;
             Size = size;

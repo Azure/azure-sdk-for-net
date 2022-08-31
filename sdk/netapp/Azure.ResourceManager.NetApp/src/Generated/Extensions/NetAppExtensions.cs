@@ -459,20 +459,20 @@ namespace Azure.ResourceManager.NetApp
         }
         #endregion
 
-        #region NetAppSubvolumeResource
+        #region NetAppSubvolumeInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppSubvolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppSubvolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppSubvolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppSubvolumeInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppSubvolumeInfoResource.CreateResourceIdentifier" /> to create a <see cref="NetAppSubvolumeInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppSubvolumeResource" /> object. </returns>
-        public static NetAppSubvolumeResource GetNetAppSubvolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppSubvolumeInfoResource" /> object. </returns>
+        public static NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetAppSubvolumeResource.ValidateResourceId(id);
-                return new NetAppSubvolumeResource(client, id);
+                NetAppSubvolumeInfoResource.ValidateResourceId(id);
+                return new NetAppSubvolumeInfoResource(client, id);
             }
             );
         }

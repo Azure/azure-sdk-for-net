@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppSubvolumePatch : IUtf8JsonSerializable
+    public partial class NetAppSubvolumeInfoPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
