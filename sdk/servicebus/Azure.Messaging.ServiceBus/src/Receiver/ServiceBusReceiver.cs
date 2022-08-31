@@ -722,13 +722,8 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         ///   </list>
         /// </exception>
-        /// <exception cref="ArgumentException">
+        /// <exception cref="InvalidOperationException">
         ///   <list type="bullet">
-        ///     <item>
-        ///       <description>
-        ///         The <paramref name="message"/> argument was null.
-        ///       </description>
-        ///     </item>
         ///     <item>
         ///       <description>
         ///         The dead letter reason or dead letter error exception was specified in both the parameter and the properties dictionary.
@@ -755,12 +750,12 @@ namespace Azure.Messaging.ServiceBus
 
                 if ((isReasonHeaderKey && deadLetterReason != null) && (pair.Value.ToString() != deadLetterReason))
                 {
-                    throw new ArgumentException("Differing deadletter reasons cannot be passed through both the properties and the parameter.");
+                    throw new InvalidOperationException("Differing deadletter reasons cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
                 }
 
-                if ((isDescriptionHeaderKey && deadLetterErrorDescription != null) && (pair.Value.ToString() != deadLetterReason))
+                if ((isDescriptionHeaderKey && deadLetterErrorDescription != null) && (pair.Value.ToString() != deadLetterErrorDescription))
                 {
-                    throw new ArgumentException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter");
+                    throw new InvalidOperationException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
                 }
             }
             await DeadLetterInternalAsync(

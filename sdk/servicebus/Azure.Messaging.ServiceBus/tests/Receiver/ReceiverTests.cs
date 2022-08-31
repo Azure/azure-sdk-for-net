@@ -374,7 +374,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var message = ServiceBusModelFactory.ServiceBusReceivedMessage(default);
 
-            Assert.ThrowsAsync<ArgumentException>(async () => await receiver.DeadLetterMessageAsync(message, properties, "header-2"));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await receiver.DeadLetterMessageAsync(message, properties, "header-2"));
+            await receiver.CloseAsync();
+        }
+
+        [Test]
+        public async Task DeadLetterMessageAllowsSameHeaders()
+        {
+            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
+
+            mockReceiver.Setup(r =>
+            r.DeadLetterInternalAsync(
+                It.IsAny<ServiceBusReceivedMessage>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            mockReceiver.Setup(r => r.CloseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var receiver = mockReceiver.Object;
+
+            var properties = new Dictionary<string, object>();
+            properties.Add(AmqpMessageConstants.DeadLetterReasonHeader, "header");
+            properties.Add(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, "description");
+
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(default);
+
+            Assert.DoesNotThrowAsync(async () => await receiver.DeadLetterMessageAsync(message, properties, "header", "description"));
             await receiver.CloseAsync();
         }
     }
