@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             ResourceDataHelpers.AssertCluster(account1.Data, account2.Data);
             //3.GetAll
             _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             int count = 0;
             await foreach (var account in container.GetAllAsync())
             {

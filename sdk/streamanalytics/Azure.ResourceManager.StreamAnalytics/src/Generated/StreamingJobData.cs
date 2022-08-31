@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> The cluster which streaming jobs will run on. </summary>
         internal ClusterInfo Cluster { get; set; }
         /// <summary> The resource id of cluster. </summary>
-        public string ClusterId
+        public ResourceIdentifier ClusterId
         {
             get => Cluster is null ? default : Cluster.Id;
             set

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class StreamingJobData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public StreamingJobData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string ClusterId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel? CompatibilityLevel { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy? ContentStoragePolicy { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }

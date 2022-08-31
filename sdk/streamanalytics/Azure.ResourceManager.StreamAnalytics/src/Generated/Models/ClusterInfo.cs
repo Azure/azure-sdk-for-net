@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The properties associated with a Stream Analytics cluster. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of ClusterInfo. </summary>
         /// <param name="id"> The resource id of cluster. </param>
-        internal ClusterInfo(string id)
+        internal ClusterInfo(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> The resource id of cluster. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }
