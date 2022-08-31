@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> Country property. </summary>
     public partial class RegionCopyrightsCountry

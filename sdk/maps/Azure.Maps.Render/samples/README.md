@@ -14,7 +14,6 @@ description: Samples for the Azure.Maps.Render client library.
 
 ```C# Snippet:RenderImportNamespace
 using Azure.Maps.Render;
-using Azure.Maps.Render.Models;
 ```
 
 ## Create Render Client

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     public partial class RenderCopyrights
     {

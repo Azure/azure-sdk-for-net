@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class MapsRenderModelFactory
@@ -16,7 +16,7 @@ namespace Azure.Maps.Render.Models
         /// <summary> Initializes a new instance of CopyrightCaption. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="copyrightsCaption"> Copyrights Caption property. </param>
-        /// <returns> A new <see cref="Models.CopyrightCaption"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Render.CopyrightCaption"/> instance for mocking. </returns>
         public static CopyrightCaption CopyrightCaption(string formatVersion = null, string copyrightsCaption = null)
         {
             return new CopyrightCaption(formatVersion, copyrightsCaption);
@@ -26,7 +26,7 @@ namespace Azure.Maps.Render.Models
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="generalCopyrights"> General Copyrights array. </param>
         /// <param name="regions"> Regions array. </param>
-        /// <returns> A new <see cref="Models.RenderCopyrights"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Render.RenderCopyrights"/> instance for mocking. </returns>
         public static RenderCopyrights RenderCopyrights(string formatVersion = null, IEnumerable<string> generalCopyrights = null, IEnumerable<RegionCopyrights> regions = null)
         {
             generalCopyrights ??= new List<string>();
@@ -38,7 +38,7 @@ namespace Azure.Maps.Render.Models
         /// <summary> Initializes a new instance of RegionCopyrights. </summary>
         /// <param name="copyrights"> Copyrights array. </param>
         /// <param name="country"> Country property. </param>
-        /// <returns> A new <see cref="Models.RegionCopyrights"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Render.RegionCopyrights"/> instance for mocking. </returns>
         public static RegionCopyrights RegionCopyrights(IEnumerable<string> copyrights = null, RegionCopyrightsCountry country = null)
         {
             copyrights ??= new List<string>();
@@ -49,7 +49,7 @@ namespace Azure.Maps.Render.Models
         /// <summary> Initializes a new instance of RegionCopyrightsCountry. </summary>
         /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
-        /// <returns> A new <see cref="Models.RegionCopyrightsCountry"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Render.RegionCopyrightsCountry"/> instance for mocking. </returns>
         public static RegionCopyrightsCountry RegionCopyrightsCountry(string iso3 = null, string label = null)
         {
             return new RegionCopyrightsCountry(iso3, label);

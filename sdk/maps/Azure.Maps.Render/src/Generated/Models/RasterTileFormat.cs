@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The RasterTileFormat. </summary>
-    public readonly partial struct RasterTileFormat : IEquatable<RasterTileFormat>
+    internal readonly partial struct RasterTileFormat : IEquatable<RasterTileFormat>
     {
         private readonly string _value;
 

@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </summary>
     [CodeGenModel("BoundingBox")]

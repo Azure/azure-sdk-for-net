@@ -6,25 +6,25 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fe4e90c20afb6267632a5f4f8817e04d-2d1b5dad31218d9b-00",
-        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220623.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "traceparent": "00-8fe2a687807ccf73a4467c3fcf2aa8f8-4ece07187037dc8b-00",
+        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220822.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "ab35a850d5bf46a05d3a750e4f292ee2",
+        "x-ms-client-request-id": "243a9ef2d1a6c79c343744f144f3be45",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "max-age=86400",
-        "Content-Length": "21864",
+        "Content-Length": "21948",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 11:30:11 GMT",
-        "ETag": "W/\u002238942dad119b92a16c26ae22f8fe1906\u0022",
+        "Date": "Mon, 22 Aug 2022 07:50:37 GMT",
+        "ETag": "W/\u0022302ece6377b0ba2b5a55a6fa1a6440d4\u0022",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 1FAB942F0E8C4159B0A463DDEE012BB9 Ref B: TPE30EDGE0514 Ref C: 2022-06-23T11:30:12Z"
+        "X-MSEdge-Ref": "Ref A: 60EA27677324474182F4C64908DA75AA Ref B: TPE30EDGE0913 Ref C: 2022-08-22T07:50:38Z"
       },
       "ResponseBody": {
         "formatVersion": "0.0.1",
@@ -546,6 +546,11 @@
           },
           {
             "country": {
+              "ISO3": "IND.IND"
+            }
+          },
+          {
+            "country": {
               "ISO3": "IRL"
             }
           },
@@ -567,6 +572,11 @@
           {
             "country": {
               "ISO3": "ISR"
+            }
+          },
+          {
+            "country": {
+              "ISO3": "ISR.ISR"
             }
           },
           {
@@ -1436,11 +1446,6 @@
           },
           {
             "country": {
-              "ISO3": "XXS"
-            }
-          },
-          {
-            "country": {
               "ISO3": "XXW"
             }
           },
@@ -1470,7 +1475,7 @@
   ],
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-    "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "263842180"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "94798969"
   }
 }

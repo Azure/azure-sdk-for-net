@@ -1,35 +1,35 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/map/static/png?api-version=1.0\u0026layer=basic\u0026style=dark\u0026center=0%2C0\u0026height=100\u0026width=100\u0026language=en",
+      "RequestUri": "https://atlas.microsoft.com/map/static/png?api-version=1.0\u0026layer=basic\u0026style=dark\u0026center=10.176%2C25.0524\u0026height=100\u0026width=100\u0026language=en",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, image/jpeg, image/png, image/pbf, application/vnd.mapbox-vector-tile",
         "Authorization": "Sanitized",
-        "traceparent": "00-52c111fcdab0c5caed275851570748a4-e5c9da457d5dfaa1-00",
-        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220623.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "traceparent": "00-8657f0bc830168659e9a5d6fdc8205b8-f0006aeb121eb428-00",
+        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220822.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "cb0d0b3f9dce5f7b6a505dc2e2a77ca9",
+        "x-ms-client-request-id": "4a05d62e0f67102d946749fafacfae29",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1089",
+        "Content-Length": "1151",
         "Content-Type": "image/png",
-        "Date": "Thu, 23 Jun 2022 11:30:12 GMT",
+        "Date": "Mon, 22 Aug 2022 07:50:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: ACC8C35F595A454798B3DBE6A2A8290A Ref B: TPE30EDGE0514 Ref C: 2022-06-23T11:30:13Z"
+        "X-MSEdge-Ref": "Ref A: 0C90A37E3D4D45C4B62844E28AF98B35 Ref B: TPE30EDGE0913 Ref C: 2022-08-22T07:50:39Z"
       },
-      "ResponseBody": "iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAAA/hJREFUeAHtnOtSGzEMhfnXARJSKCUEwq3l8v5PuOjYK3B2gthQdhDT70dmvbYse/35yFaH6d7i6rHjl2cN9oCRB4ZYACRZhAAIQHKFiGwhG4WgEBQSqRKFoBAUgkKSqQAgACEsRSqI2jjUk6kHIAAhnBGykqkAIAAhLEUqiNo41JOpByAAIZwRspKpACAAISxFKojaONSTqQcgACGcEbKSqQAgACEsRSqI2jjUk6kHIAAhnBGykqkAIAAhLEUqiNo41JOpByAAIZwRspKpACAAISxFKojaONSTqQcgACGcEbKSqQAgACEsRSqI2jjUk6kHIACZLpz9vH7sjq\u002BfuuObp2/7v\u002BShEBQynUKiw/K7tKEQFIJCIrWiEBSCQlBIMhUABCCEpUgFURuHejL1AAQghDNCVjIVAAQghKVIBVEbh3oy9QAEIIQzQlYyFQAEIISlSAVRG4d6MvUABCCEM0JWMhUABCCEpUgFURuHejL1TAZkvrrr9Du6vO/mF3fd7OzK/gD6oTu6\u002BFPL64eN\u002BtZGO2h\u002BftMtzEbl2fLG\u002Bt3t/AfUGktzcD91Zz6U8WdLzecfldzP7yNze2vsSYBoEQRgtry2BbktH14X57Y7/H1p73VRNCmvH5ZlVyE\u002Bdj\u002BOTircHqZ8zs9vS9/Ds7VB/1vaZwZR/rxu/2RZ3veP9axAfXwfz23LBjKf8j2TT/PT\u002BvJ21fm83K/aNm3tO/t5vbXwb9VPBqR\u002BuO30skPvDcS6gNl4rl/rF23ZQMlOP328fJX304vi46B/Hp4KrtnauxZAYw3rSns/di3XPrXfa3/36c/is/Hv9QJ7cLqqAJpv2hjX59eMq/HG/CYBoh1bFtImph138Ou8vNfdpUWuO7Ctb8t14bTz763vqthXQFU1DrsCq9AU4mTb1gmSfGkuGruUza7YmHo3bPvFq\u002BOZustGqHP1cpmXfZNsXClFGdZ3my/Vqc8uv0mA7DKBbLYfWcTP/AaADHdwf1B/5iLv4gsgQyBf/A6QLwYwVE9KIOWKqaukHerlimwHsCbuB\u002BlGPmNX6GEOI9u27qXfO7mPchNdGNR3uFDt\u002B1i7ts/YcjoggqFbjecwurG1tyrPYerhuz2f8Y8XCN3yav/ttm7jffxQV73nEp6b6Canecl2rJ37HftMCcQBlBxGH99fX8uC6DqqnEOL05fbHEa7u/Rr8hpfvPJs6tt\u002BvmAvtk0OopxE2b7m5XMba\u002Bd\u002Bxz7TARnmMPqQFyC22FoI/\u002BcYLw9zGPVp65T3jMl9ylh97iDftZ/CmOczlm/0m8PrIrv3Qt82SOmAbJvk/1QHEFNTJuAAAUiuHZlJHZoLCkEhKCRSJQpBISgEhSRTQQTkGQbgWfr/uxRfAAAAAElFTkSuQmCC"
+      "ResponseBody": "iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAABDZJREFUeAHtnd1OGzEQRnmLSpVKgRDyQ9gkEELa0gLv/1Bbf14GnGUzbIRSptK5iOz1eL22z3xjDzccLTdPNb84e3AEjDgwxAIgwSIEQAASK0REC9koBIWgEE\u002BVKASFoBAUEkwFAAEIYclTgWfjUA\u002BmHoAAhHBGyAqmAoAAhLDkqcCzcagHUw9AAEI4I2QFUwFAAEJY8lTg2TjUg6kHIAAhnBGygqkAIAAhLHkq8Gwc6sHUAxCAEM4IWcFUABCAEJY8FXg2DvVg6gEIQAhnhKxgKgAIQAhLngo8G4d6MPUABCCEM0JWMBUABCCEJU8Fno1DPZh6AAIQwhkhK5gKAAIQwpKnAs/GoR5MPQABCOGMkBVMBQABCGHJU4Fn41APph6AAIRwRsgKpgKAAISw5KnAs3GoB1MPQABCOCNkBVMBQABCWPJU4Nk41IOpByAAIZwRsoKpACAAISx5KvBsHOrB1HMwINPFpp4u7urq9nd9ufxRD6eLenH3WM9ufj3XH7bayz7yoHF1Wy/WD/lfi4\u002BuVqnvZu9/Mz67/pnnMF//eXlXcxhOl/XF5fVLm\u002Bexns3G1dy9fvvYDgJEIIZpwdrIyXydJptApM1RfTCuEpiHDKVs364/1YNRlTdOG/jl63He2AbmMo8zqdYZ7vlkUV8lyPrmOH1Pfazt\u002BGyUoX87bUptjH1f9bKv3teYKs\u002BT82i\u002BXXa1a21638aVs5R9J/M0hua1ut8b1IGAbJ4X/pg9u7q9TxOc58kNxk2pZ6nH2su6Fqt2/eTJZ6OrPJ5K2U4vZrm0Z5XaAG1mu83GUqmfgFi97GtjWilbl11qOB1eZmA2d5Vdfc1u3\u002BtTHgSIPENepEnKW74PJtnbsxcl75MHamFle1nXxLUYQTpJi1d/baR\u002BCje2qeojm9oU4k7Opw3I5zZB0liai4UVqUjvjWY3rb6No5wMp9kJFGLL8VXXWFqT5qTxbNzcr5iL9bWyDwjrcxAgNrjCjdW3y13tfW5n7Xfbzxqjq60cu7SX9cYRtt/ftm\u002Bvoxyzz3fb/d8\u002BHxSIP/m3k4nQ3w7qz5oLQFIY\u002BqzN7/ouQADyvkeWOYyuyKPZKntxvnKmA1xtZT0fsOkQLs\u002Bssk2XiSYP8nMf3eh0YbALQJcHq61vv13ve\u002B3hFKKrq24vlsMox7Bbla7MTQ6jm9ZrvZ3DNAveP/fRe3YzepNXJOC6yVlC2beft/ldtoBAtnMYbbZdX7UhuuLquayXOYy8Wwor2/rmPiWQMq9QXX81kGOYcxiQ9/p1bbrXFg5IO4dpNqnJJ7TZ2txq1fw5xurtHEbvlG3KVfrkPs23XhNXy3GazU\u002BOkXOTZi4GROWufu\u002BFvi4w4YDYJMvzwNo\u002BVu6TT9g51/edvv1s3N1lWCAf2/zdC44\u002BLkC49v6/3vsv1IVCUAgK8ZSGQlAICkEhwVTgAfkLz6SvUuVbKH0AAAAASUVORK5CYII="
     }
   ],
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-    "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1784128256"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1806449994"
   }
 }

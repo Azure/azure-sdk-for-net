@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The LocalizedMapView. </summary>
-    public readonly partial struct LocalizedMapView : IEquatable<LocalizedMapView>
+    internal readonly partial struct LocalizedMapView : IEquatable<LocalizedMapView>
     {
         private readonly string _value;
 

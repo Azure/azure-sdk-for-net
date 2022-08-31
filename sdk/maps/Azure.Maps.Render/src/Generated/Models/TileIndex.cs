@@ -5,33 +5,11 @@
 
 #nullable disable
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> Parameter group. </summary>
     public partial class TileIndex
     {
-        /// <summary> Initializes a new instance of TileIndex. </summary>
-        /// <param name="z">
-        /// Zoom level for the desired tile. 
-        /// 
-        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/en-us/azure/location-based-services/zoom-levels-and-tile-grid) for details.
-        /// </param>
-        /// <param name="x">
-        /// X coordinate of the tile on zoom grid. Value must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
-        /// 
-        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details.
-        /// </param>
-        /// <param name="y">
-        /// Y coordinate of the tile on zoom grid. Value must be in the range [0, 2&lt;sup&gt;`zoom`&lt;/sup&gt; -1].
-        /// 
-        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details.
-        /// </param>
-        public TileIndex(int z, int x, int y)
-        {
-            Z = z;
-            X = x;
-            Y = y;
-        }
 
         /// <summary>
         /// Zoom level for the desired tile. 

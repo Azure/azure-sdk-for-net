@@ -8,7 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Maps.Render.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\src\Azure.Maps.Render.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

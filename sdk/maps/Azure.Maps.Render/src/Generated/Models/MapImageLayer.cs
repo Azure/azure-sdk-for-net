@@ -8,16 +8,16 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The StaticMapLayer. </summary>
-    public readonly partial struct StaticMapLayer : IEquatable<StaticMapLayer>
+    public readonly partial struct MapImageLayer : IEquatable<MapImageLayer>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="StaticMapLayer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapImageLayer"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StaticMapLayer(string value)
+        public MapImageLayer(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.Maps.Render.Models
         private const string LabelsValue = "labels";
 
         /// <summary> Returns an image containing all map features including polygons, borders, roads and labels. </summary>
-        public static StaticMapLayer Basic { get; } = new StaticMapLayer(BasicValue);
+        public static MapImageLayer Basic { get; } = new MapImageLayer(BasicValue);
         /// <summary> Returns an image containing borders, roads, and labels, and can be overlaid on other tiles (such as satellite imagery) to produce hybrid tiles. </summary>
-        public static StaticMapLayer Hybrid { get; } = new StaticMapLayer(HybridValue);
+        public static MapImageLayer Hybrid { get; } = new MapImageLayer(HybridValue);
         /// <summary> Returns an image of just the map&apos;s label information. </summary>
-        public static StaticMapLayer Labels { get; } = new StaticMapLayer(LabelsValue);
-        /// <summary> Determines if two <see cref="StaticMapLayer"/> values are the same. </summary>
-        public static bool operator ==(StaticMapLayer left, StaticMapLayer right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="StaticMapLayer"/> values are not the same. </summary>
-        public static bool operator !=(StaticMapLayer left, StaticMapLayer right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StaticMapLayer"/>. </summary>
-        public static implicit operator StaticMapLayer(string value) => new StaticMapLayer(value);
+        public static MapImageLayer Labels { get; } = new MapImageLayer(LabelsValue);
+        /// <summary> Determines if two <see cref="MapImageLayer"/> values are the same. </summary>
+        public static bool operator ==(MapImageLayer left, MapImageLayer right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MapImageLayer"/> values are not the same. </summary>
+        public static bool operator !=(MapImageLayer left, MapImageLayer right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MapImageLayer"/>. </summary>
+        public static implicit operator MapImageLayer(string value) => new MapImageLayer(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StaticMapLayer other && Equals(other);
+        public override bool Equals(object obj) => obj is MapImageLayer other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(StaticMapLayer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MapImageLayer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

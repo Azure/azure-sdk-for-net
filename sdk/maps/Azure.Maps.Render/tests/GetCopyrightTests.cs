@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
-using Azure.Maps.Render.Models;
 using NUnit.Framework;
 
 namespace Azure.Maps.Render.Tests
@@ -35,7 +34,7 @@ namespace Azure.Maps.Render.Tests
         public async Task CanGetCopyrightForTile()
         {
             var client = CreateClient();
-            var copyright = await client.GetCopyrightForTileAsync(new TileIndex(15, 17439, 17439));
+            var copyright = await client.GetCopyrightForTileAsync(new TileIndex(17439, 17439, 15));
 
             Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
             Assert.AreEqual(0, copyright.Value.GeneralCopyrights.Count);
@@ -50,7 +49,7 @@ namespace Azure.Maps.Render.Tests
         public async Task CanGetCopyrightForWorld()
         {
             var client = CreateClient();
-            var copyright = await client.GetCopyrightForWorldAsync(ResponseFormat.Json);
+            var copyright = await client.GetCopyrightForWorldAsync();
 
             Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
             Assert.AreEqual(0, copyright.Value.GeneralCopyrights.Count);
@@ -70,7 +69,9 @@ namespace Azure.Maps.Render.Tests
         public void CanGetCopyrightForTileError()
         {
             var client = CreateClient();
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetCopyrightForTileAsync(new TileIndex(4, 9999, 9999)));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await client.GetCopyrightForTileAsync(new TileIndex(9999, 9999, 4))
+            );
             Assert.AreEqual(400, ex.Status);
         }
     }

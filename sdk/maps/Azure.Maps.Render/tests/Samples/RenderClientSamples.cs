@@ -1,13 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
+#region Snippet:SaveToFile
 using System.IO;
+#endregion
+#region Snippet:ImportTileMath
+using Azure.Maps;
+#endregion
 #region Snippet:RenderImportNamespace
 using Azure.Maps.Render;
-using Azure.Maps.Render.Models;
 #endregion
+using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -42,16 +45,29 @@ namespace Azure.Maps.Render.Tests
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRenderClient(credential, clientId);
 
-            #region Snippet:RenderImagery
-            // Get imagery tile
-            var imageryTile = client.GetMapImageryTile(new TileIndex(10, 12, 12));
-            var imageryStream = new MemoryStream();
-            imageryTile.Value.CopyTo(imageryStream);
-            #endregion
+            #region Snippet:GetTileXY
+            int zoom = 10, tileSize = 300;
+
+            // Get tile X, Y index by coordinate, zoom and tile size information
+            TileMath.PositionToTileXY(
+                new GeoPosition(13.3854, 52.517), zoom, tileSize,
+                out var tileX, out var tileY
+            );
             #endregion
 
+            #region Snippet:RenderImagery
+            // Get imagery tile
+            var imageryTile = client.GetMapImageryTile(new TileIndex(tileX, tileY, zoom));
             Assert.IsNotNull(imageryTile);
-            Assert.IsTrue(imageryStream.Length > 0);
+
+            // Prepare a file stream to save the imagery
+            using (var fileStream = File.Create(".\\BerlinImagery.png"))
+            {
+                imageryTile.Value.CopyTo(fileStream);
+                Assert.IsNotNull(fileStream.Length > 0);
+            }
+            #endregion
+            #endregion
         }
 
         [Test]
@@ -65,20 +81,23 @@ namespace Azure.Maps.Render.Tests
             // Get static image
             var staticImageOptions = new RenderStaticImageOptions()
             {
-                TileLayer = StaticMapLayer.Basic,
+                TileLayer = MapImageLayer.Basic,
                 TileStyle = MapImageStyle.Dark,
-                CenterCoordinate = new List<double>() { 0.0, 0.0 },
+                BoundingBox = new GeoBoundingBox(13.228,52.4559,13.5794,52.629),
+                ZoomLevel = 10,
                 RenderLanguage = "en",
-                Height = 100,
-                Width = 100,
             };
             var image = client.GetMapStaticImage(staticImageOptions);
-            var imageStream = new MemoryStream();
-            image.Value.CopyTo(imageStream);
+
+            // Prepare a file stream to save the imagery
+            using (var fileStream = File.Create(".\\BerlinStaticImage.png"))
+            {
+                image.Value.CopyTo(fileStream);
+                Assert.IsNotNull(fileStream.Length > 0);
+            }
             #endregion
 
             Assert.IsNotNull(image);
-            Assert.IsTrue(imageStream.Length > 0);
         }
 
         [Test]
@@ -89,21 +108,33 @@ namespace Azure.Maps.Render.Tests
             var client = new MapsRenderClient(credential, clientId);
 
             #region Snippet:RenderMapTiles
+            int zoom = 10, tileSize = 300;
+
+            // Get tile X, Y index by coordinate, zoom and tile size information
+            TileMath.PositionToTileXY(
+                new GeoPosition(13.3854, 52.517), zoom, tileSize,
+                out var tileX, out var tileY
+            );
+
             // Fetch map tiles
             var renderTileOptions = new RenderTileOptions()
             {
                 TileFormat = TileFormat.Png,
                 TileLayer = MapTileLayer.Hybrid,
                 TileStyle = MapTileStyle.Main,
-                TileIndex = new TileIndex(10, 88, 88),
+                TileIndex = new TileIndex(tileX, tileY, zoom),
             };
             var mapTile = client.GetMapTile(renderTileOptions);
-            var tileStream = new MemoryStream();
-            mapTile.Value.CopyTo(tileStream);
+
+            // Prepare a file stream to save the imagery
+            using (var fileStream = File.Create(".\\BerlinMapTile.png"))
+            {
+                mapTile.Value.CopyTo(fileStream);
+                Assert.IsNotNull(fileStream.Length > 0);
+            }
             #endregion
 
             Assert.IsNotNull(mapTile);
-            Assert.IsTrue(tileStream.Length > 0);
         }
     }
 }

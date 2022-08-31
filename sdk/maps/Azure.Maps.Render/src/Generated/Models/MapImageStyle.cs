@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The MapImageStyle. </summary>
     public readonly partial struct MapImageStyle : IEquatable<MapImageStyle>

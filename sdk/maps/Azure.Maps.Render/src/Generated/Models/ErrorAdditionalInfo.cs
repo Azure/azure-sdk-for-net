@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The resource management error additional info. </summary>
     internal partial class ErrorAdditionalInfo

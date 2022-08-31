@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> This object is returned from a successful copyright call. </summary>
     public partial class CopyrightCaption

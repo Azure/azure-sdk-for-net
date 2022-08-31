@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> This object is returned from a successful copyright request. </summary>
     [CodeGenModel("Copyright")]

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The TileFormat. </summary>
     public readonly partial struct TileFormat : IEquatable<TileFormat>

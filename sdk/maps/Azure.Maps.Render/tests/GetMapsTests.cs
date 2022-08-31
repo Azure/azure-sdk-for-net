@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
-using Azure.Maps.Render.Models;
 using NUnit.Framework;
 
 namespace Azure.Maps.Render.Tests
@@ -22,7 +20,7 @@ namespace Azure.Maps.Render.Tests
         public async Task CanGetMapImageryTile()
         {
             var client = CreateClient();
-            var tile = await client.GetMapImageryTileAsync(new TileIndex(10, 14, 14));
+            var tile = await client.GetMapImageryTileAsync(new TileIndex(14, 14, 10));
             var imageryStream = new MemoryStream();
 
             Assert.IsNotNull(tile);
@@ -36,12 +34,12 @@ namespace Azure.Maps.Render.Tests
             var client = CreateClient();
             var options = new RenderStaticImageOptions()
             {
-                TileLayer = StaticMapLayer.Basic,
+                TileLayer = MapImageLayer.Basic,
                 TileStyle = MapImageStyle.Dark,
-                CenterCoordinate = new List<double>() { 0.0, 0.0 },
+                CenterCoordinate = new GeoPosition(10.176, 25.0524),
                 RenderLanguage = "en",
-                Height = 100,
-                Width = 100,
+                HeightInPixels = 100,
+                WidthInPixels = 100,
             };
             var imageStream = new MemoryStream();
             var image = await client.GetMapStaticImageAsync(options);
@@ -69,7 +67,7 @@ namespace Azure.Maps.Render.Tests
                 TileFormat = TileFormat.Png,
                 TileLayer = MapTileLayer.Hybrid,
                 TileStyle = MapTileStyle.Main,
-                TileIndex = new TileIndex(10, 88, 88),
+                TileIndex = new TileIndex(88, 88, 10),
             };
             var imageryStream = new MemoryStream();
             var tile = await client.GetMapTileAsync(options);
@@ -94,7 +92,7 @@ namespace Azure.Maps.Render.Tests
             #region Snippet:CatchRenderException
             try
             {
-                Response<Stream> imageryTile = client.GetMapImageryTile(new TileIndex(2, 12, 12));
+                Response<Stream> imageryTile = client.GetMapImageryTile(new TileIndex(12, 12, 2));
                 var imageryStream = new MemoryStream();
                 imageryTile.Value.CopyTo(imageryStream);
             }

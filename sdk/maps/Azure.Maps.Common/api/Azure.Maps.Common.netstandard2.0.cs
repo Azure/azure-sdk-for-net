@@ -34,4 +34,22 @@ namespace Azure.Maps
         public static bool operator !=(Azure.Maps.LocalizedMapView left, Azure.Maps.LocalizedMapView right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class TileMath
+    {
+        public static void BestMapView(Azure.Core.GeoJson.GeoBoundingBox boundingBox, double mapWidth, double mapHeight, int padding, int tileSize, out double centerLat, out double centerLon, out double zoom) { throw null; }
+        public static string[] GetQuadkeysInBoundingBox(Azure.Core.GeoJson.GeoBoundingBox boundingBox, int zoom, int tileSize) { throw null; }
+        public static string[] GetQuadkeysInView(Azure.Core.GeoJson.GeoPosition position, int zoom, int width, int height, int tileSize) { throw null; }
+        public static Azure.Core.GeoJson.GeoPosition GlobalPixelToPosition(Azure.Core.GeoJson.GeoPosition pixel, double zoom, int tileSize) { throw null; }
+        public static void GlobalPixelToTileXY(Azure.Core.GeoJson.GeoPosition pixel, int tileSize, out int tileX, out int tileY) { throw null; }
+        public static double GroundResolution(double latitude, double zoom, int tileSize) { throw null; }
+        public static double MapScale(double latitude, double zoom, int screenDpi, int tileSize) { throw null; }
+        public static double MapSize(double zoom, int tileSize) { throw null; }
+        public static Azure.Core.GeoJson.GeoPosition PositionToGlobalPixel(Azure.Core.GeoJson.GeoPosition position, int zoom, int tileSize) { throw null; }
+        public static void PositionToTileXY(Azure.Core.GeoJson.GeoPosition position, int zoom, int tileSize, out int tileX, out int tileY) { throw null; }
+        public static void QuadKeyToTileXY(string quadKey, out int tileX, out int tileY, out int zoom) { throw null; }
+        public static Azure.Core.GeoJson.GeoPosition ScaleGlobalPixel(Azure.Core.GeoJson.GeoPosition pixel, double oldZoom, double newZoom) { throw null; }
+        public static Azure.Core.GeoJson.GeoBoundingBox TileXYToBoundingBox(int tileX, int tileY, double zoom, int tileSize) { throw null; }
+        public static Azure.Core.GeoJson.GeoPosition TileXYToGlobalPixel(int tileX, int tileY, int tileSize) { throw null; }
+        public static string TileXYToQuadKey(int tileX, int tileY, int zoom) { throw null; }
+    }
 }

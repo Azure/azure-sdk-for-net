@@ -23,14 +23,19 @@ namespace Azure.Maps.Render
 
         internal string Version { get; }
 
+        internal Uri Endpoint { get; }
+
         /// <summary> Initializes new instance of MapsRenderClientOptions. </summary>
-        public MapsRenderClientOptions(ServiceVersion version = LatestVersion)
+        /// <param name="version"> Azure Maps Render API version. </param>
+        /// <param name="endpoint"> The endpoint for Azure Maps. </param>
+        public MapsRenderClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {
             Version = version switch
             {
                 ServiceVersion.V1_0 => "1.0",
                 _ => throw new NotSupportedException()
             };
+            Endpoint = endpoint;
         }
     }
 }

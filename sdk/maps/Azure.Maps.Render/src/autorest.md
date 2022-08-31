@@ -2,12 +2,13 @@
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
-### AutoRest Configuration
+## AutoRest Configuration
+
 > see https://aka.ms/autorest
 
 ``` yaml
 input-file:
-- https://raw.githubusercontent.com/dubiety/azure-rest-api-specs/eebf5aab6746e40f390dfc9f25d66bccb7354a45/specification/maps/data-plane/Render/preview/1.0/render.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/maps/data-plane/Render/preview/1.0/render.json
 title: MapsRenderClient
 openapi-type: data-plane
 tag: 1.0
@@ -19,6 +20,7 @@ use-extension:
   "@autorest/modelerfour": "4.22.3"
 
 generation1-convenience-client: true
+model-namespace: false
 sync-methods: None
 license-header: MICROSOFT_MIT_NO_VERSION
 namespace: Azure.Maps.Render
@@ -26,7 +28,4 @@ public-clients: false
 clear-output-folder: true
 data-plane: true
 skip-csproj: true
-
-# modelerfour:
-#   lenient-model-deduplication: true
 ```

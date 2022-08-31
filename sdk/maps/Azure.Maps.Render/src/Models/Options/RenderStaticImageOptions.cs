@@ -3,21 +3,22 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     // cspell:ignore bbox udid
     /// <summary> Options for rendering static images. </summary>
     public class RenderStaticImageOptions
     {
-        /// <summary> Desired format of the response. Possible value: <c>RasterTileFormat.Png</c>. </summary>
-        public RasterTileFormat? TileFormat { get; set; }
         /// <summary>
         /// Map layer requested. Possible value: <c>StaticMapLayer.Basic</c>, <c>StaticMapLayer.Labels</c> or <c>StaticMapLayer.Hybrid</c>
         /// If layer is set to <c>StaticMapLayer.Labels</c> or <c>StaticMapLayer.Hybrid</c>, the format should be png.
         /// </summary>
-        public StaticMapLayer? TileLayer { get; set; }
+        public MapImageLayer? TileLayer { get; set; }
         /// <summary> Map style to be returned. Possible values are <c>MapImageStyle.Main</c> and <c>MapImageStyle.Dark</c>. </summary>
         public MapImageStyle? TileStyle { get; set; }
         /// <summary> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details. </summary>
@@ -29,28 +30,25 @@ namespace Azure.Maps.Render.Models
         /// Note: Either Center or BoundingBox are required parameters. They are
         /// mutually exclusive.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IList<double> CenterCoordinate { get; set; }
+        public GeoPosition? CenterCoordinate { get; set; }
         /// <summary>
-        /// Bounding box. Projection used - EPSG:3857. Format : &apos;minLon, minLat,
-        /// maxLon, maxLat&apos;.
+        /// Bounding box.
         ///
-        /// Note: Either BoundingBox or Center are required
-        /// parameters. They are mutually exclusive. It shouldn’t be used with
-        /// height or width.
+        /// Note: Either BoundingBox or CenterCoordinate are required
+        /// parameters. They are mutually exclusive. It shouldn't be used with
+        /// HeightInPixels or WidthInPixels.
         ///
         /// The maximum allowed ranges for Lat and Lon are defined for each zoom level
         /// in the table at the top of this page.
         /// </summary>
-        public IList<double> BoundingBox { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        public GeoBoundingBox BoundingBox { get; set; }
         /// <summary>
         /// Height of the resulting image in pixels. Range is 1 to 8192. Default
-        /// is 512. It shouldn’t be used with bbox.
+        /// is 512. It shouldn't be used with BoundingBox.
         /// </summary>
-        public int? Height { get; set; }
-        /// <summary> Width of the resulting image in pixels. Range is 1 to 8192. Default is 512. It shouldn’t be used with bbox. </summary>
-        public int? Width { get; set; }
+        public int? HeightInPixels { get; set; }
+        /// <summary> Width of the resulting image in pixels. Range is 1 to 8192. Default is 512. It shouldn't be used with bbox. </summary>
+        public int? WidthInPixels { get; set; }
         /// <summary>
         /// Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive. When data in specified language is not available for a specific field, default language is used.
         ///
@@ -62,7 +60,7 @@ namespace Azure.Maps.Render.Models
         ///
         /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
         /// </summary>
-        public LocalizedMapView? LocalizedMapView { get; set; }
+        public Azure.Maps.LocalizedMapView? LocalizedMapView { get; set; }
         /// <summary>
         /// Pushpin style and instances. Use this parameter to optionally add pushpins to the image.
         /// The pushpin style describes the appearance of the pushpins, and the instances specify

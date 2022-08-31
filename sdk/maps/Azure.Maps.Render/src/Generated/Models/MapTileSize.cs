@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The MapTileSize. </summary>
     public readonly partial struct MapTileSize : IEquatable<MapTileSize>

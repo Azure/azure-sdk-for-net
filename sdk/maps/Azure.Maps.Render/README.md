@@ -80,7 +80,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Render/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Render/samples). Rendering map tiles requires the knowledge about zoom levels and tile grid system. Please refer to the [document](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid) for zoom levels and tile grid.
 
 ### Render Images
 
@@ -91,10 +91,24 @@ var credential = new DefaultAzureCredential();
 var clientId = TestEnvironment.MapAccountClientId;
 var client = new MapsRenderClient(credential, clientId);
 
+int zoom = 10, tileSize = 300;
+
+// Get tile X, Y index by coordinate, zoom and tile size information
+TileMath.PositionToTileXY(
+    new GeoPosition(13.3854, 52.517), zoom, tileSize,
+    out var tileX, out var tileY
+);
+
 // Get imagery tile
-var imageryTile = client.GetMapImageryTile(new TileIndex(10, 12, 12));
-var imageryStream = new MemoryStream();
-imageryTile.Value.CopyTo(imageryStream);
+var imageryTile = client.GetMapImageryTile(new TileIndex(tileX, tileY, zoom));
+Assert.IsNotNull(imageryTile);
+
+// Prepare a file stream to save the imagery
+using (var fileStream = File.Create(".\\BerlinImagery.png"))
+{
+    imageryTile.Value.CopyTo(fileStream);
+    Assert.IsNotNull(fileStream.Length > 0);
+}
 ```
 
 ## Troubleshooting
@@ -108,7 +122,7 @@ For example, if you try to get an imagery tile with wrong tile index, an error i
 ```C# Snippet:CatchRenderException
 try
 {
-    Response<Stream> imageryTile = client.GetMapImageryTile(new TileIndex(2, 12, 12));
+    Response<Stream> imageryTile = client.GetMapImageryTile(new TileIndex(12, 12, 2));
     var imageryStream = new MemoryStream();
     imageryTile.Value.CopyTo(imageryStream);
 }

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Maps.Render.Models;
 
 namespace Azure.Maps.Render
 {
@@ -44,7 +43,7 @@ namespace Azure.Maps.Render
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateGetMapStaticImageRequest(RasterTileFormat? format, StaticMapLayer? layer, MapImageStyle? style, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBox, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
+        internal HttpMessage CreateGetMapStaticImageRequest(RasterTileFormat? format, MapImageLayer? layer, MapImageStyle? style, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBox, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -426,7 +425,7 @@ namespace Azure.Maps.Render
         /// ra        | Circle radius (meters) | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(RasterTileFormat? format = null, StaticMapLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBox = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(RasterTileFormat? format = null, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBox = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
             format ??= RasterTileFormat.Png;
 
@@ -758,7 +757,7 @@ namespace Azure.Maps.Render
         /// ra        | Circle radius (meters) | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(RasterTileFormat? format = null, StaticMapLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBox = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(RasterTileFormat? format = null, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBox = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
             format ??= RasterTileFormat.Png;
 
@@ -1088,7 +1087,7 @@ namespace Azure.Maps.Render
             }
         }
 
-        internal HttpMessage CreateGetMapImageryTileRequest(TileIndex tileIndex, MapImageryStyle? style, RasterTileFormat? format)
+        internal HttpMessage CreateGetMapImageryTileRequest(TileIndex tileIndex, RasterTileFormat? format, MapImageryStyle? style)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1125,20 +1124,20 @@ namespace Azure.Maps.Render
         /// **Note**: We recommend to start to use the new [Get Map Tile V2 API](https://aka.ms/GetMapTileV2).
         /// </summary>
         /// <param name="tileIndex"> Parameter group. </param>
-        /// <param name="style"> Map style to be returned. __Possible values:__ satellite. </param>
         /// <param name="format"> Desired format of the response. Possible value: png. </param>
+        /// <param name="style"> Map style to be returned. __Possible values:__ satellite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapImageryTileHeaders>> GetMapImageryTileAsync(TileIndex tileIndex, MapImageryStyle? style = null, RasterTileFormat? format = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapImageryTileHeaders>> GetMapImageryTileAsync(TileIndex tileIndex, RasterTileFormat? format = null, MapImageryStyle? style = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
                 throw new ArgumentNullException(nameof(tileIndex));
             }
-            style ??= MapImageryStyle.Satellite;
             format ??= RasterTileFormat.Png;
+            style ??= MapImageryStyle.Satellite;
 
-            using var message = CreateGetMapImageryTileRequest(tileIndex, style, format);
+            using var message = CreateGetMapImageryTileRequest(tileIndex, format, style);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new RenderGetMapImageryTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -1164,20 +1163,20 @@ namespace Azure.Maps.Render
         /// **Note**: We recommend to start to use the new [Get Map Tile V2 API](https://aka.ms/GetMapTileV2).
         /// </summary>
         /// <param name="tileIndex"> Parameter group. </param>
-        /// <param name="style"> Map style to be returned. __Possible values:__ satellite. </param>
         /// <param name="format"> Desired format of the response. Possible value: png. </param>
+        /// <param name="style"> Map style to be returned. __Possible values:__ satellite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public ResponseWithHeaders<Stream, RenderGetMapImageryTileHeaders> GetMapImageryTile(TileIndex tileIndex, MapImageryStyle? style = null, RasterTileFormat? format = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapImageryTileHeaders> GetMapImageryTile(TileIndex tileIndex, RasterTileFormat? format = null, MapImageryStyle? style = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
                 throw new ArgumentNullException(nameof(tileIndex));
             }
-            style ??= MapImageryStyle.Satellite;
             format ??= RasterTileFormat.Png;
+            style ??= MapImageryStyle.Satellite;
 
-            using var message = CreateGetMapImageryTileRequest(tileIndex, style, format);
+            using var message = CreateGetMapImageryTileRequest(tileIndex, format, style);
             _pipeline.Send(message, cancellationToken);
             var headers = new RenderGetMapImageryTileHeaders(message.Response);
             switch (message.Response.Status)

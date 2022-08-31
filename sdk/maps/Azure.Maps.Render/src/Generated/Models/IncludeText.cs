@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Render.Models
+namespace Azure.Maps.Render
 {
     /// <summary> The IncludeText. </summary>
     internal readonly partial struct IncludeText : IEquatable<IncludeText>
