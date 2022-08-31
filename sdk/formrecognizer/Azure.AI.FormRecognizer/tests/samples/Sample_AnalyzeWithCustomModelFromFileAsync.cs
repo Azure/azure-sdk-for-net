@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/labelingtool
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            BuildModelOperation buildOperation = await adminClient.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+            BuildModelOperation buildOperation = await adminClient.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
             DocumentModelDetails customModel = buildOperation.Value;
 
             // Proceed with the custom document recognition.
@@ -92,7 +92,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             }
 
             // Delete the model on completion to clean environment.
-            await adminClient.DeleteModelAsync(customModel.ModelId);
+            await adminClient.DeleteDocumentModelAsync(customModel.ModelId);
         }
     }
 }
