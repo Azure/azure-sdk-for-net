@@ -8,7 +8,10 @@ using Azure.Core;
 
 namespace Azure.Maps.Route.Models
 {
-    /// <summary> The ComputeTravelTime. </summary>
+    /// <summary> What travel time we should consider when calculating route directions.
+    /// Possible value is <see cref="TravelTimeType.All"/> to include all travel time including walking time when transfer between different transportation
+    /// or <see cref="TravelTimeType.None"/> for not to consider additional travel time.
+    /// </summary>
     [CodeGenModel("ComputeTravelTime")]
     public readonly partial struct TravelTimeType : IEquatable<TravelTimeType>
     {

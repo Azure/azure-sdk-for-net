@@ -2,13 +2,43 @@
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route#getting-started) for details.
 
+## Import the namespaces
+
+```C# Snippet:RouteImportNamespace
+using Azure.Core.GeoJson;
+using Azure.Maps.Route;
+using Azure.Maps.Route.Models;
+```
+
+## Create Route Client
+
+Before rendering any images or tiles, create a `MapsRouteClient` first. Either use subscription key or AAD.
+
+Instantiate route client with subscription key:
+
+```C# Snippet:InstantiateRouteClientViaSubscriptionKey
+// Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
+var credential = new AzureKeyCredential("<My Subscription Key>");
+MapsRouteClient client = new MapsRouteClient(credential);
+```
+
+Instantiate route client via AAD authentication:
+
+```C# Snippet:InstantiateRouteClientViaAAD
+// Create a MapsRouteClient that will authenticate through Active Directory
+var credential = new DefaultAzureCredential();
+var clientId = "<My Map Account Client Id>";
+MapsRouteClient client = new MapsRouteClient(credential, clientId);
+```
+
 ## Get Route Direction
 
 Most of the time, we want to get a route direction, we can call `GetRouteDirection` to get the routing for a specific query:
 
 ```C# Snippet:GetDirections
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>() {
+var routePoints = new List<GeoPosition>()
+{
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
     new GeoPosition(123.767, 45.90625)
@@ -34,11 +64,12 @@ foreach (var leg in result.Value.Routes[0].Legs)
 }
 ```
 
-User can also specify the travel mode, route type, language, and other options when route to point of interests:
+You can also specify the travel mode, route type, language, and other options when route to point of interests:
 
 ```C# Snippet:RouteDirectionsWithOptions
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>() {
+var routePoints = new List<GeoPosition>()
+{
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
     new GeoPosition(123.767, 45.90625)
@@ -74,14 +105,15 @@ foreach (var leg in result.Value.Routes[0].Legs)
 
 ## Synchronous Route Direction Batch Request
 
-User can send batch synchronous Route Direction request when route direction queries `<= 100` requests:
+You can send batch synchronous Route Direction request when route direction queries `<= 100` requests:
 
 ```C# Snippet:SyncRequestRouteDirectionsBatch
 // Create a list of route direction queries
 IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
 queries.Add(new RouteDirectionQuery(
-    new List<GeoPosition>() {
+    new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875),
         new GeoPosition(123.767, 45.90625)
@@ -108,7 +140,8 @@ If there are more then `100` route direction queries, one can use asynchronous r
 IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
 queries.Add(new RouteDirectionQuery(
-    new List<GeoPosition>() {
+    new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875),
         new GeoPosition(123.767, 45.90625)
@@ -129,14 +162,15 @@ var operation = await client.RequestRouteDirectionsBatchAsync(WaitUntil.Started,
 var result = operation.WaitForCompletion();
 ```
 
-The asynchronous route direction result will be cached for 14 days. User can fetch the result from server via a `RequestRouteDirectionsOperation` with the same `Id`:
+The asynchronous route direction result will be cached for 14 days. You can fetch the result from server via a `RequestRouteDirectionsOperation` with the same `Id`:
 
 ```C# Snippet:AsyncRequestRouteDirectionsBatchWithOperationId
 // Create a list of route direction queries
 IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
 queries.Add(new RouteDirectionQuery(
-    new List<GeoPosition>() {
+    new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875),
         new GeoPosition(123.767, 45.90625)
@@ -157,7 +191,7 @@ var operation = client.RequestRouteDirectionsBatch(WaitUntil.Started, queries);
 var operationId = operation.Id;
 ```
 
-Within 14 days, user can use the same operation ID to fetch the same result. One precondition is the client endpoint should be the same:
+Within 14 days, you can use the same operation ID to fetch the same result. One precondition is the client endpoint should be the same:
 
 ```C# Snippet:AsyncRequestRouteDirectionsBatchWithOperationId2
 // Within 14 days, users can retrive the cached result with operation ID
@@ -168,7 +202,7 @@ var result = newRouteDirectionOperation.WaitForCompletion();
 
 ## Route Direction Result
 
-Route direction result is stored in `RouteDirectionsBatchResult` type. User can access the `BatchItems` from `RouteDirectionsBatchResult`:
+Route direction result is stored in `RouteDirectionsBatchResult` type. You can access the `BatchItems` from `RouteDirectionsBatchResult`:
 
 ```C# Snippet:RouteDirectionsBatchResult
 for (int i = 0; i < response.Value.Results.Count; i++)

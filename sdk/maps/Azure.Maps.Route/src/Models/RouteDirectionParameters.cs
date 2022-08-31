@@ -27,11 +27,11 @@ namespace Azure.Maps.Route.Models
         /// <summary>
         /// A GeoJSON collection representing sequence of coordinates used as input for route reconstruction and for calculating zero or more alternative routes to this reference route.
         /// <list>
-        /// <item> The provided sequence of supporting points is used as input for route reconstruction. </item>
-        /// <item> The alternative routes are calculated between the origin and destination points specified in the base path parameter locations. </item>
-        /// <item> If both <c>MinDeviationDistance</c> and <c>MinDeviationTime</c> are set to zero, then these origin and destination points are expected to be at (or very near) the beginning and end of the reference route, respectively. </item>
-        /// <item> Intermediate locations (waypoints) are not supported when using <c>SupportingPoints</c>. </item>
-        /// <item> The reference route may contain traffic incidents of type _ROAD_CLOSURE_, which are ignored for the calculation of the reference route's travel time and traffic delay. </item>
+        /// <item><description> The provided sequence of supporting points is used as input for route reconstruction. </description></item>
+        /// <item><description> The alternative routes are calculated between the origin and destination points specified in the base path parameter locations. </description></item>
+        /// <item><description> If both <c>MinDeviationDistance</c> and <c>MinDeviationTime</c> are set to zero, then these origin and destination points are expected to be at (or very near) the beginning and end of the reference route, respectively. </description></item>
+        /// <item><description> Intermediate locations (waypoints) are not supported when using <c>SupportingPoints</c>. </description></item>
+        /// <item><description> The reference route may contain traffic incidents of type _ROAD_CLOSURE_, which are ignored for the calculation of the reference route's travel time and traffic delay. </description></item>
         /// </list>
         ///  Current support type: <c>GeoPoint</c>, <c>GeoPointColletion</c>, <c>GeoPolygon</c>, <c>GeoPolygonCollection</c>, <c>GeoLineString</c>, <c>GeoLineStringCollection</c>
         ///  Please refer to <see ref="https://docs.microsoft.com/azure/azure-maps/how-to-use-best-practices-for-routing#calculate-and-bias-alternative-routes-using-supporting-points">Supporting Points</see> for details.

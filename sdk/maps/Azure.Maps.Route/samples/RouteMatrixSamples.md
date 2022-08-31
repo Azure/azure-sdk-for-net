@@ -2,16 +2,46 @@
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route#getting-started) for details.
 
+## Import the namespaces
+
+```C# Snippet:RouteImportNamespace
+using Azure.Core.GeoJson;
+using Azure.Maps.Route;
+using Azure.Maps.Route.Models;
+```
+
+## Create Route Client
+
+Before rendering any images or tiles, create a `MapsRouteClient` first. Either use subscription key or AAD.
+
+Instantiate route client with subscription key:
+
+```C# Snippet:InstantiateRouteClientViaSubscriptionKey
+// Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
+var credential = new AzureKeyCredential("<My Subscription Key>");
+MapsRouteClient client = new MapsRouteClient(credential);
+```
+
+Instantiate route client via AAD authentication:
+
+```C# Snippet:InstantiateRouteClientViaAAD
+// Create a MapsRouteClient that will authenticate through Active Directory
+var credential = new DefaultAzureCredential();
+var clientId = "<My Map Account Client Id>";
+MapsRouteClient client = new MapsRouteClient(credential, clientId);
+```
+
 ## Synchronous Route Matrix Request
 
-User can send synchronous Route Matrix request when `origins * destination <= 100 request`.
+You can send synchronous Route Matrix request when `origins * destination <= 100 request`.
 
 ```C# Snippet:SimpleSyncRouteMatrix
 // A simple route matrix request
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new List<GeoPosition>() {
+    Origins = new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875)
     },
@@ -28,7 +58,8 @@ To add more options to route matrix request, one can use `RouteMatrixOptions` as
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new List<GeoPosition>() {
+    Origins = new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875)
     },
@@ -57,7 +88,8 @@ If the route matrix request is large (`origins * destination > 100`), one can us
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new List<GeoPosition>() {
+    Origins = new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875)
     },
@@ -75,7 +107,7 @@ var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
 var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 
-The asynchronous route matrix result will be cached for 14 days. User can fetch the result from server via a `RouteMatrixOperation` with the same `Id`:
+The asynchronous route matrix result will be cached for 14 days. You can fetch the result from server via a `RouteMatrixOperation` with the same `Id`:
 
 ```C# Snippet:AsyncRouteMatrixRequestWithOperationId
 // Invoke an async route matrix request and get the result later via assigning `WaitUntil.Started`
@@ -85,7 +117,7 @@ var operation = client.RequestRouteMatrix(WaitUntil.Started, routeMatrixOptions)
 var operationId = operation.Id;
 ```
 
-Within 14 days, user can use the same operation ID to fetch the same result. One precondition is the client endpoint should be the same:
+Within 14 days, You can use the same operation ID to fetch the same result. One precondition is the client endpoint should be the same:
 
 ```C# Snippet:AsyncRouteMatrixRequestWithOperationId2
 // Within 14 days, users can retrive the cached result with operation ID
@@ -96,7 +128,7 @@ var result = newRouteMatrixOperation.WaitForCompletion();
 
 ## Route Matrix Result
 
-The route matrix result is stored in `RouteMatrixResult` type. User can access the `Matrix` from `RouteMatrixResult`:
+The route matrix result is stored in `RouteMatrixResult` type. You can access the `Matrix` from `RouteMatrixResult`:
 
 ```C# Snippet:RouteMatrixResult
 // Route matrix result summary

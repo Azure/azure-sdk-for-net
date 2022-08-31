@@ -1,6 +1,6 @@
 # Azure Maps Route client library for .NET
 
-Azure Maps Route is a library that can find route to a location or point of interests.
+Azure Maps Route is a library that can find route to a location or points of interest.
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/route) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
@@ -28,10 +28,10 @@ az maps account create --kind "Gen2" --disable-local-auth true --account-name "m
 
 There are 2 ways to authenticate the client: Shared key authentication and Azure AD.
 
-#### Shared Key Authentication
+#### Shared Key authentication
 
 * Go to Azure Maps account > Authentication tab
-* Copy `Primary Key` or `Secondary Key` under **Shared Key Authentication** section
+* Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
 ```C# Snippet:InstantiateRouteClientViaSubscriptionKey
 // Create a MapsRouteClient that will authenticate through Subscription Key (Shared key)
@@ -39,13 +39,15 @@ var credential = new AzureKeyCredential("<My Subscription Key>");
 MapsRouteClient client = new MapsRouteClient(credential);
 ```
 
-#### Azure AD Authentication
+#### Azure AD authentication
 
 In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsRouteClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
+To use AAD authentication, set the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsRouteClient`.
 
-We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
+We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
+
+![AzureMapsPortal](./images/azure-maps-portal.png)
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
@@ -56,13 +58,13 @@ MapsRouteClient client = new MapsRouteClient(credential, clientId);
 
 ## Key concepts
 
-`MapsRouteClient` is designed for:
+`MapsRouteClient` is designed to:
 
 * Communicate with Azure Maps endpoint to get route to locations or point of interests
 * Communicate with Azure Maps endpoint to calculate a set of locations that can be reached from the origin point based on fuel, energy, time or distance budget that is specified
 * Communicate with Azure Maps endpoint to calculate a matrix of route summaries for a set of routes defined by origin and destination locations
 
-Learn more about examples in [samples](https://github.com/dubiety/azure-sdk-for-net/tree/feature/maps-route/sdk/maps/Azure.Maps.Route/samples)
+Learn more by viewing our examples in [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route/samples)
 
 ### Thread safety
 
@@ -81,9 +83,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route/samples).
+You can familiarize yourself with different APIs using our [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route/samples).
 
-Before calling route APIs, instantiate a `MapsRouteClient` first. Below example uses AAD to create the client instance:
+Before calling route APIs, instantiate a `MapsRouteClient` first. This example uses AAD to create the client instance:
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
@@ -98,7 +100,8 @@ Here is a simple example of routing to a location:
 
 ```C# Snippet:GetDirections
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>() {
+var routePoints = new List<GeoPosition>()
+{
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
     new GeoPosition(123.767, 45.90625)
@@ -124,11 +127,12 @@ foreach (var leg in result.Value.Routes[0].Legs)
 }
 ```
 
-User can also specify the travel mode, route type, language, and other options when route to point of interests:
+You can also specify the travel mode, route type, language, and other options when route to point of interests:
 
 ```C# Snippet:RouteDirectionsWithOptions
 // Create origin and destination routing points
-var routePoints = new List<GeoPosition>() {
+var routePoints = new List<GeoPosition>()
+{
     new GeoPosition(123.751, 45.9375),
     new GeoPosition(123.791, 45.96875),
     new GeoPosition(123.767, 45.90625)
@@ -162,7 +166,7 @@ foreach (var leg in result.Value.Routes[0].Legs)
 }
 ```
 
-For more detailed examples, please [route direction samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteDirectionsSamples.md) page.
+For more detailed examples, please see the [route direction samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteDirectionsSamples.md) page.
 
 ### Route Matrix
 
@@ -173,7 +177,8 @@ To find the route matrix between multiple origins and destinations, Azure Maps r
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new List<GeoPosition>() {
+    Origins = new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875)
     },
@@ -183,14 +188,15 @@ var routeMatrixQuery = new RouteMatrixQuery
 var result = client.SyncRequestRouteMatrix(routeMatrixQuery);
 ```
 
-An async route matrix request looks like below. This is useful when user have `origin * destination > 100` data points.
+An async route matrix request looks like below. This is useful when you have `origin * destination > 100` data points.
 
 ```C# Snippet:SimpleAsyncRouteMatrixRequest
 // Instantiate route matrix query
 var routeMatrixQuery = new RouteMatrixQuery
 {
     // two origin points
-    Origins = new List<GeoPosition>() {
+    Origins = new List<GeoPosition>()
+    {
         new GeoPosition(123.751, 45.9375),
         new GeoPosition(123.791, 45.96875)
     },
@@ -208,11 +214,11 @@ var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
 var result = client.RequestRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
 ```
 
-For more detailed examples, please [route matrix samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteMatrixSamples.md) page.
+For more detailed examples, please see the [route matrix samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteMatrixSamples.md) page.
 
 ### Route Range
 
-Route range API helps to find a set of locations that can be reached from the origin point based on fuel, energy, time or distance budget that is specified. A polygon boundary (or Isochrone) is returned in a counterclockwise orientation as well as the precise polygon center which was the result of the origin point.
+The route range API helps to find a set of locations that can be reached from the origin point based on fuel, energy, time or distance budget that is specified. A polygon boundary (or Isochrone) is returned in a counterclockwise orientation as well as the precise polygon center which was the result of the origin point.
 
 ```C# Snippet:SimpleRouteRange
 // Search from a point of time budget that can be reached in 2000 seconds
@@ -223,15 +229,15 @@ var options = new RouteRangeOptions(123.75, 46)
 var result = client.GetRouteRange(options);
 ```
 
-For more detailed examples, please [route range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteMatrixSamples.md) page.
+For more detailed examples, please see the [route range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/samples/RouteMatrixSamples.md) page.
 
 ## Troubleshooting
 
 ### General
 
-When you interact with the Azure Maps Services, errors returned by the Language service correspond to the same HTTP status codes returned for REST API requests.
+When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for REST API requests.
 
-For example, if you pass wrong routing points, an error is returned, indicating "Bad Request".400
+For example, if you pass wrong routing points, an error is returned, indicating "Bad Request" (HTTP 400).
 
 ```C# Snippet:CatchRouteException
 try
@@ -251,7 +257,7 @@ catch (RequestFailedException e)
 
 ## Next steps
 
-* [More detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route/samples)
+* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Route/samples)
 
 ## Contributing
 

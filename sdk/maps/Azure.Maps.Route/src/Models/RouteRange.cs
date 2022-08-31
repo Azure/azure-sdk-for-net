@@ -18,7 +18,7 @@ namespace Azure.Maps.Route.Models
         /// <param name="boundary"> Polygon boundary of the reachable range represented as a list of points. </param>
         internal RouteRange(LatLongPair center, IReadOnlyList<LatLongPair> boundary)
         {
-            _Center = center;
+            CenterInternal = center;
             Center = new GeoPosition(center.Longitude, center.Latitude);
 
             boundary ??= new List<LatLongPair>();
@@ -28,16 +28,16 @@ namespace Azure.Maps.Route.Models
                 boundaryList.Add(new GeoPosition(latlongPair.Longitude, latlongPair.Latitude));
             }
 
-            _Boundary = boundary;
+            BoundaryInternal = boundary;
             Boundary = boundaryList.AsReadOnly();
         }
 
         /// <summary> Center point of the reachable range. </summary>
         [CodeGenMember("Center")]
-        internal LatLongPair _Center { get; }
+        internal LatLongPair CenterInternal { get; }
         /// <summary> Polygon boundary of the reachable range represented as a list of points. </summary>
         [CodeGenMember("Boundary")]
-        internal IReadOnlyList<LatLongPair> _Boundary { get; }
+        internal IReadOnlyList<LatLongPair> BoundaryInternal { get; }
 
         /// <summary> Center point of the reachable range. </summary>
         public GeoPosition Center { get; }

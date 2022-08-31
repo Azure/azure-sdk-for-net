@@ -23,7 +23,8 @@ namespace Azure.Maps.Route.Tests
             var client = CreateClient();
             var routeMatrixQuery = new RouteMatrixQuery
             {
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
@@ -44,7 +45,8 @@ namespace Azure.Maps.Route.Tests
             var client = CreateClient();
             var routeMatrixQuery = new RouteMatrixQuery
             {
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
@@ -70,7 +72,8 @@ namespace Azure.Maps.Route.Tests
             var client = CreateClient();
             var routeMatrixQuery = new RouteMatrixQuery
             {
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(45.9375, 123.751),
                     new GeoPosition(45.96875, 123.791)
                 },
@@ -87,7 +90,8 @@ namespace Azure.Maps.Route.Tests
             var client = CreateClient();
             var routeMatrixQuery = new RouteMatrixQuery
             {
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
@@ -115,7 +119,8 @@ namespace Azure.Maps.Route.Tests
             var client = CreateClient();
             var routeMatrixQuery = new RouteMatrixQuery
             {
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },

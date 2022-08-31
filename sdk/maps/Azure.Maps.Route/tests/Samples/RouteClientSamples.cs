@@ -20,7 +20,7 @@ namespace Azure.Maps.Route.Tests
         {
             #region Snippet:InstantiateRouteClientViaAAD
             // Create a MapsRouteClient that will authenticate through Active Directory
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = "<My Map Account Client Id>";
             MapsRouteClient client = new MapsRouteClient(credential, clientId);
             #endregion
@@ -38,13 +38,14 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteDirections()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:GetDirections
             // Create origin and destination routing points
-            var routePoints = new List<GeoPosition>() {
+            var routePoints = new List<GeoPosition>()
+            {
                 new GeoPosition(123.751, 45.9375),
                 new GeoPosition(123.791, 45.96875),
                 new GeoPosition(123.767, 45.90625)
@@ -76,13 +77,14 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteDirectionsWithOptions()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
             #region Snippet:RouteDirectionsWithOptions
             // Create origin and destination routing points
-            var routePoints = new List<GeoPosition>() {
+            var routePoints = new List<GeoPosition>()
+            {
                 new GeoPosition(123.751, 45.9375),
                 new GeoPosition(123.791, 45.96875),
                 new GeoPosition(123.767, 45.90625)
@@ -122,7 +124,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteDirectionsError()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -145,7 +147,7 @@ namespace Azure.Maps.Route.Tests
 
         public void SyncRequestRouteDirectionsBatch()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -154,7 +156,8 @@ namespace Azure.Maps.Route.Tests
             IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
             queries.Add(new RouteDirectionQuery(
-                new List<GeoPosition>() {
+                new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875),
                     new GeoPosition(123.767, 45.90625)
@@ -200,7 +203,7 @@ namespace Azure.Maps.Route.Tests
 
         public async void RequestRouteDirectionsBatch()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -209,7 +212,8 @@ namespace Azure.Maps.Route.Tests
             IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
             queries.Add(new RouteDirectionQuery(
-                new List<GeoPosition>() {
+                new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875),
                     new GeoPosition(123.767, 45.90625)
@@ -234,7 +238,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void RequestRouteDirectionsBatchWithOperationId()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -243,7 +247,8 @@ namespace Azure.Maps.Route.Tests
             IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
             queries.Add(new RouteDirectionQuery(
-                new List<GeoPosition>() {
+                new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875),
                     new GeoPosition(123.767, 45.90625)
@@ -278,7 +283,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void SimpleRequestRouteMatrix()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -287,7 +292,8 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
@@ -306,7 +312,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void RequestRouteMatrixWithOptions()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -315,7 +321,8 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
@@ -339,7 +346,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void RequestRouteMatrix()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -348,7 +355,8 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
@@ -375,7 +383,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void RequestRouteMatrixWithOperationId()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -383,7 +391,8 @@ namespace Azure.Maps.Route.Tests
             var routeMatrixQuery = new RouteMatrixQuery
             {
                 // two origin points
-                Origins = new List<GeoPosition>() {
+                Origins = new List<GeoPosition>()
+                {
                     new GeoPosition(123.751, 45.9375),
                     new GeoPosition(123.791, 45.96875)
                 },
@@ -437,7 +446,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteRange()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 
@@ -457,7 +466,7 @@ namespace Azure.Maps.Route.Tests
         [Test]
         public void GetRouteRangeWithComplexOptions()
         {
-            var credential = new DefaultAzureCredential();
+            var credential = TestEnvironment.Credential;
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsRouteClient(credential, clientId);
 

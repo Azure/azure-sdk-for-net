@@ -65,8 +65,8 @@ namespace Azure.Maps.Route.Models
         /// <summary>
         /// Possible values:
         /// <list>
-        /// <item> <c>true</c> - Do consider all available traffic information during routing </item>
-        /// <item> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </item>
+        /// <item><description> <c>true</c> - Do consider all available traffic information during routing </description></item>
+        /// <item><description> <c>false</c> - Ignore current traffic data during routing. Note that although the current traffic data is ignored </description></item>
         /// </list>
         /// During routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </summary>
@@ -99,8 +99,8 @@ namespace Azure.Maps.Route.Models
         /// <summary>
         /// Maximum speed of the vehicle in km/hour. The max speed in the vehicle profile is used to check whether a vehicle is allowed on motorways.
         /// <list>
-        /// <item> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </item>
-        /// <item> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </item>
+        /// <item><description> A value of 0 means that an appropriate value for the vehicle will be determined and applied during route planning. </description></item>
+        /// <item><description> A non-zero value may be overridden during route planning. For example, the current traffic flow is 60 km/hour. If the vehicle  maximum speed is set to 50 km/hour, the routing engine will consider 60 km/hour as this is the current situation.  If the maximum speed of the vehicle is provided as 80 km/hour but the current traffic flow is 60 km/hour, then routing engine will again use 60 km/hour. </description></item>
         /// </list>
         /// </summary>
         public int? VehicleMaxSpeedInKmPerHour { get; set; }
@@ -108,10 +108,10 @@ namespace Azure.Maps.Route.Models
         /// <summary>
         /// Weight of the vehicle in kilograms.
         /// <list>
-        /// <item> It is mandatory if any of the *Efficiency parameters are set. </item>
-        /// <item> It must be strictly positive when used in the context of the Consumption Model. Weight restrictions are considered. </item>
-        /// <item> If no detailed Consumption Model is specified and the value of <c>vehicleWeight</c> is non-zero, then weight restrictions are considered. </item>
-        /// <item> In all other cases, this parameter is ignored. </item>
+        /// <item><description> It is mandatory if any of the *Efficiency parameters are set. </description></item>
+        /// <item><description> It must be strictly positive when used in the context of the Consumption Model. Weight restrictions are considered. </description></item>
+        /// <item><description> If no detailed Consumption Model is specified and the value of <c>vehicleWeight</c> is non-zero, then weight restrictions are considered. </description></item>
+        /// <item><description> In all other cases, this parameter is ignored. </description></item>
         /// </list>
         /// Sensible Values : for Combustion Model : 1600, for Electric Model : 1900
         /// </summary>
@@ -130,8 +130,8 @@ namespace Azure.Maps.Route.Models
         /// Specifies the speed-dependent component of consumption.
         /// Provided as an unordered list of colon-delimited speed &amp; consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
         /// <list>
-        /// <item> by linear interpolation, if the given speed lies in between two speeds in the list. </item>
-        /// <item> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list. </item>
+        /// <item><description> by linear interpolation, if the given speed lies in between two speeds in the list. </description></item>
+        /// <item><description> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list. </description></item>
         /// </list>
         /// The list must contain between 1 and 25 points (inclusive), and may not contain duplicate points for the same speed. If it only contains a single point, then the consumption rate of that point is used without further processing.
         /// Consumption specified for the largest speed must be greater than or equal to that of the penultimate largest speed. This ensures that extrapolation does not lead to negative consumption rates.
@@ -198,8 +198,8 @@ namespace Azure.Maps.Route.Models
         /// Specifies the speed-dependent component of consumption.
         /// Provided as an unordered list of speed/consumption-rate pairs. The list defines points on a consumption curve. Consumption rates for speeds not in the list are found as follows:
         /// <list>
-        /// <item> by linear interpolation, if the given speed lies in between two speeds in the list </item>
-        /// <item> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list </item>
+        /// <item><description> by linear interpolation, if the given speed lies in between two speeds in the list </description></item>
+        /// <item><description> by linear extrapolation otherwise, assuming a constant (ΔConsumption/ΔSpeed) determined by the nearest two points in the list </description></item>
         /// </list>
         /// The list must contain between 1 and 25 points (inclusive), and may not contain duplicate points for the same speed. If it only contains a single point, then the consumption rate of that point is used without further processing.
         /// Consumption specified for the largest speed must be greater than or equal to that of the penultimate largest speed. This ensures that extrapolation does not lead to negative consumption rates.

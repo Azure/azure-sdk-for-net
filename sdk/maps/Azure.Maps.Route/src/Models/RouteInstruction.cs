@@ -28,15 +28,15 @@ namespace Azure.Maps.Route.Models
         /// <param name="turnAngleInDegrees">
         /// Indicates the direction of an instruction. If junctionType indicates a turn instruction:
         /// <list>
-        /// <item> 180 = U-turn </item>
-        /// <item> [-179, -1] = Left turn </item>
-        /// <item> 0 = Straight on (a "0 degree" turn) </item>
-        /// <item> [1, 179] = Right turn </item>
+        /// <item><description> 180 = U-turn </description></item>
+        /// <item><description> [-179, -1] = Left turn </description></item>
+        /// <item><description> 0 = Straight on (a "0 degree" turn) </description></item>
+        /// <item><description> [1, 179] = Right turn </description></item>
         /// </list>
         /// If junctionType indicates a bifurcation instruction:
         /// <list>
-        /// <item> less than 0 - keep left </item>
-        /// <item> larger than 0 - keep right </item>
+        /// <item><description> less than 0 - keep left </description></item>
+        /// <item><description> larger than 0 - keep right </description></item>
         /// </list>
         /// </param>
         /// <param name="roundaboutExitNumber"> This indicates which exit to take at a roundabout. </param>
