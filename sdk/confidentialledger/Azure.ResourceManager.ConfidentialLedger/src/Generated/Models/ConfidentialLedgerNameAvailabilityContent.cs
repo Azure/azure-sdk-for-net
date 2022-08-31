@@ -10,10 +10,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class LedgerNameAvailabilityContent
+    public partial class ConfidentialLedgerNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of LedgerNameAvailabilityContent. </summary>
-        public LedgerNameAvailabilityContent()
+        /// <summary> Initializes a new instance of ConfidentialLedgerNameAvailabilityContent. </summary>
+        public ConfidentialLedgerNameAvailabilityContent()
         {
         }
 

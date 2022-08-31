@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class LedgerNameAvailabilityResult
+    public partial class ConfidentialLedgerNameAvailabilityResult
     {
-        internal static LedgerNameAvailabilityResult DeserializeLedgerNameAvailabilityResult(JsonElement element)
+        internal static ConfidentialLedgerNameAvailabilityResult DeserializeConfidentialLedgerNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<LegerNameUnavailableReason> reason = default;
+            Optional<ConfidentialLedgerNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = new LegerNameUnavailableReason(property.Value.GetString());
+                    reason = new ConfidentialLedgerNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new LedgerNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new ConfidentialLedgerNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }
