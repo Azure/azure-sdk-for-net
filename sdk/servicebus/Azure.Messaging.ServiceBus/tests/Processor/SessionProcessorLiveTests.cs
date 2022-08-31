@@ -2108,7 +2108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient(5, 1);
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 100;
+                int messageCount = 200;
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
@@ -2139,7 +2139,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(5, processor.MaxConcurrentSessions);
                         Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
                     }
-                    if (count == 50)
+                    if (count == 100)
                     {
                         // 20 tasks for the session, plus at least 1 more trying to accept other sessions.
                         Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 20);
@@ -2147,7 +2147,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
                     }
-                    if (count == 95)
+                    if (count == 195)
                     {
                         Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
@@ -2322,8 +2322,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     ServiceBusSessionProcessorOptions options = new()
                     {
                         AutoCompleteMessages = true,
-                        MaxConcurrentSessions = 1,
-                        MaxConcurrentCallsPerSession = 100,
+                        MaxConcurrentSessions = 100,
+                        MaxConcurrentCallsPerSession = 1,
                         PrefetchCount = 0,
                         SessionIdleTimeout = TimeSpan.FromSeconds(4),
                         MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(5)
