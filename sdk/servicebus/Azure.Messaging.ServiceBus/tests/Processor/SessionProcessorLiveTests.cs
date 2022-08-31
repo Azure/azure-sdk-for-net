@@ -2151,8 +2151,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 // add a small delay to allow concurrency to reach steady state
                 await Task.Delay(TimeSpan.FromSeconds(5));
-                // 20 tasks for the session, plus at least 1 more trying to accept other sessions.
-                Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 20);
+                // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
+                Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
                 await processor.StopProcessingAsync();
             }
         }
