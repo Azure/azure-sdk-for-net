@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/map/copyright/tile/json?api-version=1.0\u0026zoom=4\u0026x=9999\u0026y=9999\u0026text=no",
+      "RequestUri": "https://atlas.microsoft.com/map/copyright/tile/json?api-version=1.0\u0026zoom=4\u0026x=9999\u0026y=9999\u0026text=yes",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c19f4d40c83219085eafd33ffa43905a-f424c417754bbf43-00",
-        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220822.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "traceparent": "00-a4c9df923193f8dd850d39ef73c969fd-4e1791aaede0b9c7-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220901.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "fc19b9953fbd3450b96b777e6307ab0f",
+        "x-ms-client-request-id": "ffc6721c4bbdd0eccf39af4e412c65e4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,12 +17,12 @@
       "ResponseHeaders": {
         "Content-Length": "114",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 22 Aug 2022 07:50:37 GMT",
+        "Date": "Wed, 31 Aug 2022 16:04:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 8495DDF8BFC1436A9D11C84BC76B8AC3 Ref B: TPE30EDGE0913 Ref C: 2022-08-22T07:50:37Z"
+        "X-MSEdge-Ref": "Ref A: 9E6A561FB8A142D9B9B00F19F8568374 Ref B: TPE30EDGE0911 Ref C: 2022-08-31T16:04:28Z"
       },
       "ResponseBody": {
         "error": {
@@ -35,6 +35,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1133000121"
+    "RandomSeed": "1687986466"
   }
 }

@@ -1,43 +1,62 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/map/copyright/tile/json?api-version=1.0\u0026zoom=15\u0026x=17439\u0026y=17439\u0026text=no",
+      "RequestUri": "https://atlas.microsoft.com/map/copyright/tile/json?api-version=1.0\u0026zoom=15\u0026x=17439\u0026y=17439\u0026text=yes",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cda40c9c138c7cb4a0e7a6061ff39ae4-bf9d7b2b15fa6a7b-00",
-        "User-Agent": "azsdk-net-Maps.Render/1.0.0-alpha.20220822.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "traceparent": "00-7f11001938a5929b2de3df472db2641c-fdd8e310345860b7-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220901.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
         "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
-        "x-ms-client-request-id": "88f1638be7809b803b65d27c42b0b55c",
+        "x-ms-client-request-id": "5455ff45e31a45e347542c73dc815929",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "max-age=86400",
-        "Content-Length": "204",
+        "Content-Length": "6045",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 22 Aug 2022 07:50:34 GMT",
-        "ETag": "W/\u002282e98ed274624d79ff9c40ccbfcb3de0\u0022",
+        "Date": "Wed, 31 Aug 2022 16:04:24 GMT",
+        "ETag": "W/\u00220acc476926d123b2b0f5fe93736e8c04\u0022",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 83E837B1B1764E7297080497FC4EC9AD Ref B: TPE30EDGE0913 Ref C: 2022-08-22T07:50:35Z"
+        "X-MSEdge-Ref": "Ref A: 0823B3048AAF449F994B233A2C396A97 Ref B: TPE30EDGE0911 Ref C: 2022-08-31T16:04:24Z"
       },
       "ResponseBody": {
         "formatVersion": "0.0.1",
+        "generalCopyrights": [
+          "\u00A9 1992 - 2022 TomTom. All rights reserved. This material is proprietary and the subject of copyright protection, database right protection and other intellectual property rights owned by TomTom or its suppliers. The use of this material is subject to the terms of a license agreement. Any unauthorized copying or disclosure of this material will lead to criminal and civil liabilities.",
+          "Data Source \u00A9 2022 TomTom",
+          "based on"
+        ],
         "regions": [
           {
             "country": {
-              "ISO3": "AGO"
-            }
+              "ISO3": "AGO",
+              "label": "Angola"
+            },
+            "copyrights": [
+              "You agree to include as soon as practically possible, but no later than the first new release of the Authorized Application following Your receipt of any 3D Landmarks, any copyright notices related to the display of such landmarks on every Authorized Application and in the \u201Cabout box\u201D of the Authorized Application.  Notwithstanding the aforementioned, TomTom has the right to decide, at its sole discretion, to remove specific 3D Landmarks in subsequent releases of the Licensed Products. In such case, You will remove those 3D Landmarks from the Authorized Application as soon as practically possible, but not later than the first new release of the Authorized Application following Your receipt of the Update to the Licensed Product. TomTom shall not be held responsible for any possible damages, costs or expenses incurred by You related to such removal of a 3D Landmark by TomTom from the Licensed Product or failure to remove a 3D Landmark by You from the Authorized Application.",
+              "TomTom hereby grants to You a non-exclusive, non-transferable license to use the Software Licensed Products for the sole and limited purpose of assisting You in viewing, analyzing and sectioning the Licensed Products. In no event shall You use the Software Licensed Products to view, analyze, section or in any way manipulate spatial map data that is not provided by TomTom. You shall not derive or attempt to derive the source code of all or any portion of the Licensed Products by reverse engineering, disassembly, decompilation, translation or any other means. You shall affix the following copyright notice on any copy of the GDF Viewer, or any portion of the Licensed Products: \u201CSoftware \u00A92011-2020 TomTom North America, Inc. All rights reserved.",
+              "Neither the Data nor the Licensed Products such as Speed Profiles or TomTom Traffic or any derivatives thereof shall be used for the purpose of enforcement of traffic laws including but not limited to the selection of potential locations for the installation of speed cameras, speed traps or other speed tracking devices. With regards to Speed Profiles, You acknowledge and agrees that the actual speeds may not reflect the legally imposed speed limits.",
+              "You specifically agree that it shall not: (i) store the data for more than twenty-four (24) hours on Your servers; (ii) broadcast or make Live Services Licensed Products available except to authorized End Users; and (iii) use the feed or information received via the feed for historical data purposes (including but not limited to collection or analysis)."
+            ]
           },
           {
             "country": {
-              "ISO3": "OAT"
-            }
+              "ISO3": "OAT",
+              "label": ""
+            },
+            "copyrights": [
+              "You agree to include as soon as practically possible, but no later than the first new release of the Authorized Application following Your receipt of any 3D Landmarks, any copyright notices related to the display of such landmarks on every Authorized Application and in the \u201Cabout box\u201D of the Authorized Application.  Notwithstanding the aforementioned, TomTom has the right to decide, at its sole discretion, to remove specific 3D Landmarks in subsequent releases of the Licensed Products. In such case, You will remove those 3D Landmarks from the Authorized Application as soon as practically possible, but not later than the first new release of the Authorized Application following Your receipt of the Update to the Licensed Product. TomTom shall not be held responsible for any possible damages, costs or expenses incurred by You related to such removal of a 3D Landmark by TomTom from the Licensed Product or failure to remove a 3D Landmark by You from the Authorized Application.",
+              "TomTom hereby grants to You a non-exclusive, non-transferable license to use the Software Licensed Products for the sole and limited purpose of assisting You in viewing, analyzing and sectioning the Licensed Products. In no event shall You use the Software Licensed Products to view, analyze, section or in any way manipulate spatial map data that is not provided by TomTom. You shall not derive or attempt to derive the source code of all or any portion of the Licensed Products by reverse engineering, disassembly, decompilation, translation or any other means. You shall affix the following copyright notice on any copy of the GDF Viewer, or any portion of the Licensed Products: \u201CSoftware \u00A92011-2020 TomTom North America, Inc. All rights reserved.",
+              "Neither the Data nor the Licensed Products such as Speed Profiles or TomTom Traffic or any derivatives thereof shall be used for the purpose of enforcement of traffic laws including but not limited to the selection of potential locations for the installation of speed cameras, speed traps or other speed tracking devices. With regards to Speed Profiles, You acknowledge and agrees that the actual speeds may not reflect the legally imposed speed limits.",
+              "You specifically agree that it shall not: (i) store the data for more than twenty-four (24) hours on Your servers; (ii) broadcast or make Live Services Licensed Products available except to authorized End Users; and (iii) use the feed or information received via the feed for historical data purposes (including but not limited to collection or analysis)."
+            ]
           }
         ]
       }
@@ -46,6 +65,6 @@
   "Variables": {
     "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1495944212"
+    "RandomSeed": "1468280205"
   }
 }

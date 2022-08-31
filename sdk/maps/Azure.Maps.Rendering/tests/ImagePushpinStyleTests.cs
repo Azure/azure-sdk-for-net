@@ -11,13 +11,13 @@ namespace Azure.Maps.Rendering.Tests
     public class ImagePushpinStyleTests
     {
         [Test]
-        public void TestPinPosition()
+        public void TestPushpinPosition()
         {
-            var pinPosition = new PushpinPosition(12.56, 22.56);
-            var pinPositionWithLabel = new PushpinPosition(12.56, 22.56, "A label");
+            var pushpinPosition = new PushpinPosition(12.56, 22.56);
+            var pushpinPositionWithLabel = new PushpinPosition(12.56, 22.56, "A label");
 
-            Assert.AreEqual("12.56 22.56", pinPosition.ToString());
-            Assert.AreEqual("'A label'12.56 22.56", pinPositionWithLabel.ToString());
+            Assert.AreEqual("12.56 22.56", pushpinPosition.ToQueryString());
+            Assert.AreEqual("'A label'12.56 22.56", pushpinPositionWithLabel.ToQueryString());
         }
 
         [Test]

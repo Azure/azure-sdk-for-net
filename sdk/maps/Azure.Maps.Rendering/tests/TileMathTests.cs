@@ -26,10 +26,10 @@ namespace Azure.Maps.Rendering.Tests
             int tileX = 200, tileY = 137, tileSize = 512, zoom = 11;
 
             var boundingBox = MapsRenderClient.TileXYToBoundingBox(new MapTileIndex(tileX, tileY, zoom), tileSize);
-            Assert.AreEqual(-149.39471879571406, boundingBox.West);
-            Assert.AreEqual(82.850409048238333, boundingBox.South);
-            Assert.AreEqual(-149.24169238969262, boundingBox.East);
-            Assert.AreEqual(82.869429549418456, boundingBox.North);
+            Assert.AreEqual(-144.84375, boundingBox.West);
+            Assert.AreEqual(82.448764055958122, boundingBox.South);
+            Assert.AreEqual(-144.66796875, boundingBox.East);
+            Assert.AreEqual(82.471828856584551, boundingBox.North);
         }
     }
 }
