@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering
             Optional<SystemData> systemData = default;
             Optional<int> asn = default;
             Optional<string> peeringServicePrefixKey = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new PeeringProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

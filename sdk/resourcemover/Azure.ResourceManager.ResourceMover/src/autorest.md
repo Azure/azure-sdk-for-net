@@ -23,13 +23,10 @@ rename-mapping:
   AzureResourceReference.sourceArmResourceId: -|arm-id
   BulkRemoveRequest.moveResourceInputType: MoverResourceInputType
   BulkRemoveRequest.moveResources: MoverResources
-  BulkRemoveRequest.validateOnly: IsValidateOnly
   CommitRequest.moveResourceInputType: MoverResourceInputType
   CommitRequest.moveResources: MoverResources
-  CommitRequest.validateOnly: IsValidateOnly
   DiscardRequest.moveResourceInputType: MoverResourceInputType
   DiscardRequest.moveResources: MoverResources
-  DiscardRequest.validateOnly: IsValidateOnly
   LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
   ManualResolutionProperties.targetId: -|arm-id
   MoveErrorInfo.moveResources: InfoMoverResources
@@ -41,17 +38,15 @@ rename-mapping:
   MoveResourceProperties.existingTargetId: -|arm-id
   MoveResourceInputType.MoveResourceId: MoverResourceId
   MoveResourceInputType.MoveResourceSourceId: MoverResourceSourceId
-  NicIpConfigurationResourceSettings.primary: IsValidateOnly
+  NicIpConfigurationResourceSettings.primary: IsPrimary
   NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
   OperationStatus.endTime: EndOn|datetime
   OperationStatus.id: -|arm-id
   OperationStatus.startTime: startOn|datetime
   PrepareRequest.moveResourceInputType: MoverResourceInputType
   PrepareRequest.moveResources: MoverResources
-  PrepareRequest.validateOnly: IsValidateOnly
   ResourceMoveRequest.moveResourceInputType: MoverResourceInputType
   ResourceMoveRequest.moveResources: MoverResources
-  ResourceMoveRequest.validateOnly: IsValidateOnly
   UnresolvedDependency.id: -|arm-id
   #ResourceSettings.resourceType: -|resource-type, One value is here https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/resourcemovercollection.json#L2418 is not a valid ResourceType, so can't change this property's format to ResourceType
   VirtualMachineResourceSettings.targetAvailabilitySetId: -|arm-id
