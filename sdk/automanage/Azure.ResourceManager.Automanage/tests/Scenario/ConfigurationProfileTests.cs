@@ -11,6 +11,33 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         public ConfigurationProfileTests(bool async) : base(async) { }
 
         [TestCase]
+        public async Task CanGetConfigurationProfile()
+        {
+            string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
+
+            // create resource group
+            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+
+            // fetch configuration profile collection
+            var collection = rg.GetConfigurationProfiles();
+
+            // create configuration profile
+            await CreateConfigurationProfile(collection, profileName);
+
+            // fetch new configuration profile
+            var profile = collection.GetAsync(profileName).Result.Value;
+
+            // assert
+            Assert.NotNull(profile);
+            Assert.True(profile.HasData);
+            Assert.NotNull(profile.Id);
+            Assert.NotNull(profile.Id.Name);
+            Assert.NotNull(profile.Data);
+            Assert.NotNull(profile.Data.Configuration);
+            Assert.NotNull(profile.Data.Location);
+        }
+
+        [TestCase]
         public async Task CanGetAllConfigurationProfilesInResourceGroup()
         {
             // create resource group
@@ -57,33 +84,6 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             //assert
             Assert.AreEqual(1, count);
-        }
-
-        [TestCase]
-        public async Task CanGetConfigurationProfile()
-        {
-            string profileName = Recording.GenerateAssetName("SDKAutomanageProfile-");
-
-            // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
-
-            // fetch configuration profile collection
-            var collection = rg.GetConfigurationProfiles();
-
-            // create configuration profile
-            await CreateConfigurationProfile(collection, profileName);
-
-            // fetch new configuration profile
-            var profile = collection.GetAsync(profileName).Result.Value;
-
-            // assert
-            Assert.NotNull(profile);
-            Assert.True(profile.HasData);
-            Assert.NotNull(profile.Id);
-            Assert.NotNull(profile.Id.Name);
-            Assert.NotNull(profile.Data);
-            Assert.NotNull(profile.Data.Configuration);
-            Assert.NotNull(profile.Data.Location);
         }
 
         [TestCase]
