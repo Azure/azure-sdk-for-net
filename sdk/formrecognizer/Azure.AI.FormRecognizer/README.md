@@ -552,7 +552,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
@@ -615,7 +615,7 @@ Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} cust
 Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
-AsyncPageable<DocumentModelSummary> models = client.GetModelsAsync();
+AsyncPageable<DocumentModelSummary> models = client.GetDocumentModelsAsync();
 
 int count = 0;
 await foreach (DocumentModelSummary modelSummary in models)
@@ -631,11 +631,11 @@ await foreach (DocumentModelSummary modelSummary in models)
 
 // Create a new model to store in the account
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
-DocumentModelDetails newCreatedModel = await client.GetModelAsync(model.ModelId);
+DocumentModelDetails newCreatedModel = await client.GetDocumentModelAsync(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 
@@ -645,7 +645,7 @@ if (string.IsNullOrEmpty(newCreatedModel.Description))
 Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 
 // Delete the model from the account.
-await client.DeleteModelAsync(newCreatedModel.ModelId);
+await client.DeleteDocumentModelAsync(newCreatedModel.ModelId);
 ```
 
 For more information and samples see [here][manage_models].
@@ -662,7 +662,7 @@ Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} cust
 Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
 // List the first ten or fewer models currently stored in the account.
-Pageable<DocumentModelSummary> models = client.GetModels();
+Pageable<DocumentModelSummary> models = client.GetDocumentModels();
 
 foreach (DocumentModelSummary modelSummary in models.Take(10))
 {
@@ -676,11 +676,11 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
 // Create a new model to store in the account
 
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+BuildModelOperation operation = client.BuildDocumentModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
 // Get the model that was just created
-DocumentModelDetails newCreatedModel = client.GetModel(model.ModelId);
+DocumentModelDetails newCreatedModel = client.GetDocumentModel(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 
@@ -690,7 +690,7 @@ if (string.IsNullOrEmpty(newCreatedModel.Description))
 Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 
 // Delete the created model from the account.
-client.DeleteModel(newCreatedModel.ModelId);
+client.DeleteDocumentModel(newCreatedModel.ModelId);
 ```
 
 ## Troubleshooting

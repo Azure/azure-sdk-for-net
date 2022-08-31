@@ -40,7 +40,7 @@ var targetClient = new DocumentModelAdministrationClient(new Uri(targetEndpoint)
 ### Authorize the copy
 Before starting the copy, we need to get a `CopyAuthorization` from the target Form Recognizer resource that will give us permission to execute the copy.
 ```C# Snippet:FormRecognizerSampleGetCopyAuthorization
-CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync();
+DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync();
 ```
 
 ### Execute the copy
@@ -48,7 +48,7 @@ Now that we have authorization from the target Form Recognizer resource, we exec
 
 ```C# Snippet:FormRecognizerSampleCreateCopyModel
 string modelId = "<source_modelId>";
-CopyModelToOperation newModelOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, modelId, targetAuth);
+CopyModelToOperation newModelOperation = await sourceClient.CopyDocumentModelToAsync(WaitUntil.Completed, modelId, targetAuth);
 DocumentModelDetails newModel = newModelOperation.Value;
 
 Console.WriteLine($"Original model ID => {modelId}");
