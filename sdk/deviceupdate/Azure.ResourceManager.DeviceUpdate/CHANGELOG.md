@@ -1,10 +1,11 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.7 (2022-08-31)
 
 ### Other Changes
 
-- Updating api-version to 2022-10-01.
+- Upgraded api-version to 2022-10-01.
+- Upgraded dependent `Azure.ResourceManager` to 1.3.0
 
 ## 1.0.0-beta.6 (2022-07-12)
 
