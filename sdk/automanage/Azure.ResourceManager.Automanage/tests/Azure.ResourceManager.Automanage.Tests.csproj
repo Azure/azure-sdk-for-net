@@ -4,6 +4,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\ConfigurationProfileTests\" />
+    <Folder Include="SessionRecords\BestPracticeTests\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" VersionOverride="1.0.0" />

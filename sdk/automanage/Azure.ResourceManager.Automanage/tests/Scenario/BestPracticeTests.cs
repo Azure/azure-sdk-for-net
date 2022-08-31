@@ -11,10 +11,28 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         public BestPracticeTests(bool async) : base(async) { }
 
         [TestCase]
-        public async Task CanGetBestPracticeProfileInfo()
+        public async Task CanGetBestPracticesProductionProfile()
         {
-            // create resource group
-            var rg = await CreateResourceGroup(Subscription, "SDKAutomanage-", DefaultLocation);
+            string profileName = "AzureBestPracticesProduction";
+
+            // fetch tenant collection
+            var tenants = ArmClient.GetTenants();
+
+            // fetch Azure best practices production profile
+            BestPracticeResource profile = null;
+            await foreach (var tenant in tenants)
+            {
+                if (tenant.Data.TenantId == Subscription.Data.TenantId)
+                    profile = tenant.GetBestPracticeAsync(profileName).Result;
+            }
+
+            // assert
+            Assert.NotNull(profile);
+            Assert.True(profile.HasData);
+            Assert.AreEqual(profileName, profile.Id.Name);
+            Assert.NotNull(profile.Id);
+            Assert.NotNull(profile.Data);
+            Assert.NotNull(profile.Data.Configuration);
         }
     }
 }
