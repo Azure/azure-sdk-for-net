@@ -742,22 +742,19 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(propertiesToModify, nameof(propertiesToModify));
 
             // Prevent properties and arguments from setting distinct deadletter reasons or error descriptions
-            foreach (KeyValuePair<string, object> pair in propertiesToModify)
+            var containsReasonHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterReasonHeader, out var reasonHeaderProperty);
+            var containsDescriptionHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out var descriptionHeaderProperty);
+
+            if ((containsReasonHeader && deadLetterReason != null) && (reasonHeaderProperty.ToString() != deadLetterReason))
             {
-                // Attempting to set the dead letter reason or description header through the properties
-                var isReasonHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterReasonHeader);
-                var isDescriptionHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
-
-                if ((isReasonHeaderKey && deadLetterReason != null) && (pair.Value.ToString() != deadLetterReason))
-                {
-                    throw new InvalidOperationException("Differing deadletter reasons cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
-                }
-
-                if ((isDescriptionHeaderKey && deadLetterErrorDescription != null) && (pair.Value.ToString() != deadLetterErrorDescription))
-                {
-                    throw new InvalidOperationException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
-                }
+                throw new InvalidOperationException("Differing deadletter reasons cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
             }
+
+            if ((containsDescriptionHeader && deadLetterErrorDescription != null) && (descriptionHeaderProperty.ToString() != deadLetterErrorDescription))
+            {
+                throw new InvalidOperationException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
+            }
+
             await DeadLetterInternalAsync(
                 message: message,
                 deadLetterReason: deadLetterReason,
