@@ -735,20 +735,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                         {
-                            // Attempting to set the dead letter reason or description header through the properties
-                            var isReasonHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterReasonHeader);
-                            var isDescriptionHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
-
-                            // General case
-                            var isOtherProperty = !(isReasonHeaderKey || isDescriptionHeaderKey);
-
-                            // Only allow setting of a header property if the header was not passed in through the parameters
-                            var setHeaderInProperties = ((isReasonHeaderKey && deadLetterReason == null) || (isDescriptionHeaderKey && deadLetterErrorDescription == null));
-
-                            if (isOtherProperty || setHeaderInProperties)
-                            {
-                                rejected.Error.Info.Add(pair.Key, amqpObject);
-                            }
+                            rejected.Error.Info.Add(pair.Key, amqpObject);
                         }
                         else
                         {

@@ -12,8 +12,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -725,6 +728,32 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(propertiesToModify, nameof(propertiesToModify));
+
+            // Prevent properties and arguments from setting distinct deadletter reasons or error descriptions
+            foreach (KeyValuePair<string, object> pair in propertiesToModify)
+            {
+                if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
+                {
+                    // Attempting to set the dead letter reason or description header through the properties
+                    var isReasonHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterReasonHeader);
+                    var isDescriptionHeaderKey = (pair.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
+
+                    if ((isReasonHeaderKey && deadLetterReason != null) && (pair.Value.ToString() != deadLetterReason))
+                    {
+                        throw new ArgumentException("Differing deadletter reasons cannot be passed through both the properties and the parameter.");
+                    }
+
+                    if ((isDescriptionHeaderKey && deadLetterErrorDescription != null) && (pair.Value.ToString() != deadLetterReason))
+                    {
+                        throw new ArgumentException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter");
+                    }
+                }
+                else
+                {
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageProperty.FormatForUser(pair.Key.GetType()));
+                }
+            }
             await DeadLetterInternalAsync(
                 message: message,
                 deadLetterReason: deadLetterReason,
@@ -797,7 +826,7 @@ namespace Azure.Messaging.ServiceBus
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        private async Task DeadLetterInternalAsync(
+        internal virtual async Task DeadLetterInternalAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason = default,
             string deadLetterErrorDescription = default,

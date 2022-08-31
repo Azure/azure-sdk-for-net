@@ -12,6 +12,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
@@ -349,6 +350,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var identifier = receiver.Identifier;
             Assert.AreEqual(setIdentifier, identifier);
+        }
+
+        [Test]
+        public async Task DeadLetterMessageChecksArguments()
+        {
+            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
+
+            mockReceiver.Setup(r =>
+            r.DeadLetterInternalAsync(
+                It.IsAny<ServiceBusReceivedMessage>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            mockReceiver.Setup(r => r.CloseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var receiver = mockReceiver.Object;
+
+            var properties = new Dictionary<string, object>();
+            properties.Add(AmqpMessageConstants.DeadLetterReasonHeader, "header-1");
+
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(default);
+
+            Assert.ThrowsAsync<ArgumentException>(async () => await receiver.DeadLetterMessageAsync(message, properties, "header-2"));
+            await receiver.CloseAsync();
         }
     }
 }

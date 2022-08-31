@@ -572,7 +572,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         }
                         else
                         {
-                            await receiver.DeadLetterMessageAsync(item, propertiesToModify, overloadReason, overloadDescription);
+                            await receiver.DeadLetterMessageAsync(item, overloadReason, overloadDescription);
                         }
                     }
                 }
