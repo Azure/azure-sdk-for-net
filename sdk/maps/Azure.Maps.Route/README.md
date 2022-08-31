@@ -47,7 +47,7 @@ To use AAD authentication, set the environment variables as described in the [Az
 
 We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
-![AzureMapsPortal](./images/azure-maps-portal.png)
+![AzureMapsPortal](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Route/images/azure-maps-portal.png?raw=true)
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
