@@ -11,14 +11,14 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// Indicates that all the logs were successfully uploaded to Azure Monitor.
         /// </summary>
-        SUCCESS,
+        Success = 0,
         /// <summary>
         /// Indicates that some logs failed to upload to Azure Monitor.
         /// </summary>
-        PARTIALFAILURE,
+        PartialFailure = 1,
         /// <summary>
         /// Indicates that all the logs failed to upload to Azure Monitor.
         /// </summary>
-        FAILURE
+        Failure = 2
     }
 }

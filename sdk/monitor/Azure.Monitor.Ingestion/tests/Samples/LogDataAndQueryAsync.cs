@@ -24,7 +24,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 #if SNIPPET
 #else
             dataCollectionEndpoint = new Uri(TestEnvironment.DCREndpoint);
-            credential = TestEnvironment.ClientSecretCredential;
+            credential = TestEnvironment.Credential;
 #endif
             LogsIngestionClient client = new(dataCollectionEndpoint, credential);
 
@@ -75,7 +75,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             TokenCredential credential = new DefaultAzureCredential();
 #if SNIPPET
 #else
-            credential = TestEnvironment.ClientSecretCredential;
+            credential = TestEnvironment.Credential;
 #endif
 
             LogsQueryClient logsQueryClient = new(credential);

@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Azure.Monitor.Ingestion.Tests
         private const int Mb = 1024 * 1024;
         public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
+            CompareBodies = false; //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30865
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
@@ -25,7 +27,7 @@ namespace Azure.Monitor.Ingestion.Tests
         private LogsIngestionClient CreateClient()
         {
             var clientOptions = InstrumentClientOptions(new LogsIngestionClientOptions());
-            return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential, clientOptions));
+            return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, clientOptions));
         }
 
         [Test]
@@ -74,18 +76,17 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
+            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
         }
 
-        private static List<Object> GenerateEntries(int numEntries)
+        private static List<Object> GenerateEntries(int numEntries, DateTime recordingNow)
         {
-            DateTime now = DateTime.Now;
             var entries = new List<Object>();
             for (int i = 0; i < numEntries; i++)
             {
                 entries.Add(new Object[] {
                     new {
-                        Time = now,
+                        Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
@@ -100,10 +101,10 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
 
            // Make the request
-           var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10)).ConfigureAwait(false);
+           var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
+            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
         }
 
         [Test]
@@ -116,19 +117,19 @@ namespace Azure.Monitor.Ingestion.Tests
                 new[] {
                     new
                     {
-                        Time = DateTime.Now,
+                        Time = Recording.Now.DateTime,
                         Computer = "Computer1",
                         AdditionalContext = 2,
                     },
                     new
                     {
-                        Time = DateTime.Now,
+                        Time = Recording.Now.DateTime,
                         Computer = "Computer2",
                         AdditionalContext = 3
                     },
                 });
 
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data), "gzip").ConfigureAwait(false); //takes StreamName not tablename
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
             // Check the response
             Assert.AreEqual(204, response.Status);
         }
@@ -140,10 +141,10 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
 
             // Make the request
-            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000)).ConfigureAwait(false);
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.AreEqual(UploadLogsStatus.SUCCESS, response.Value.Status);
+            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
         }
 
         [LiveOnly]
@@ -152,9 +153,9 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             LogsIngestionClient client = CreateClient();
 
-            Response<UploadLogsResult> response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000)).ConfigureAwait(false); //takes StreamName not tablename
+            Response<UploadLogsResult> response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10000, Recording.Now.DateTime)).ConfigureAwait(false); //takes StreamName not tablename
             // Check the response - run without Batching and Gzip for error 413
-            Assert.AreEqual(UploadLogsStatus.FAILURE, response.Value.Status);
+            Assert.AreEqual(UploadLogsStatus.Failure, response.Value.Status);
             Assert.AreEqual(413, response.Value.Errors.FirstOrDefault().Error.Code);
             Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
         }
