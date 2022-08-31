@@ -46,8 +46,6 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceClassSubgroupsForGroupsAsync(string groupId, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceClassSubgroupUpdateCompliance(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceClassSubgroupUpdateComplianceAsync(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDeviceHealths(string filter, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceHealthsAsync(string filter, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceModule(string deviceId, string moduleId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceModuleAsync(string deviceId, string moduleId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetDevices(string filter = null, Azure.RequestContext context = null) { throw null; }
@@ -58,18 +56,20 @@ namespace Azure.IoT.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response> GetGroupAsync(string groupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetGroups(string orderBy = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetGroupsAsync(string orderBy = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetHealthOfDevices(string filter, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetHealthOfDevicesAsync(string filter, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetInstallableUpdatesForDeviceClasses(string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetInstallableUpdatesForDeviceClassesAsync(string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetLogCollection(string logCollectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLogCollectionAsync(string logCollectionId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetLogCollectionDetailedStatus(string operationId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLogCollectionDetailedStatusAsync(string operationId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetLogCollectionDetailedStatus(string logCollectionId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLogCollectionDetailedStatusAsync(string logCollectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetLogCollections(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetLogCollectionsAsync(Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetOperation(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetOperations(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationsAsync(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetOperationStatus(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetOperationStatuses(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationStatusesAsync(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdateCompliance(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateComplianceAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdateComplianceForGroup(string groupId, Azure.RequestContext context = null) { throw null; }
@@ -99,10 +99,10 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetFilesAsync(string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetNames(string provider, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetNamesAsync(string provider, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetOperation(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetOperations(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationsAsync(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetOperationStatus(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetOperationStatuses(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationStatusesAsync(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetProviders(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetProvidersAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdate(string provider, string name, string version, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }

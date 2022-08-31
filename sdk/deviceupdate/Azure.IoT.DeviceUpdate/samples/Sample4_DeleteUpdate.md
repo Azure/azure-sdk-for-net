@@ -10,9 +10,9 @@ For the sample below, use proper `account-id` and `instance-id`. You can find th
 
 ```C# Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-var instanceId = "<instance-id>"
-var credentials = new DefaultAzureCredential();
-var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+string instanceId = "<instance-id>"
+TokenCredential credentials = new DefaultAzureCredential();
+DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 ```
 
 ## Delete device update
@@ -20,7 +20,7 @@ var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-var response = client.DeleteUpdate(WaitUntil.Completed, provider, name, version);
-var doc = JsonDocument.Parse(response.Value.ToMemory());
+Operation<BinaryData> response = client.DeleteUpdate(WaitUntil.Completed, provider, name, version);
+JsonDocument doc = JsonDocument.Parse(response.Value.ToMemory());
 Console.WriteLine(doc.RootElement.GetProperty("status").ToString());
 ```

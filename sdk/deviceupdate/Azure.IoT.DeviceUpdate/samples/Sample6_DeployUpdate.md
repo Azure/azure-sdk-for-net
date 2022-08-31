@@ -10,9 +10,9 @@ For the sample below, you can set `accountEndpoint` and `instance` in an environ
 
 ```C# Snippet:AzDeviceUpdateSample5_CreateDeviceManagementClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-var instanceId = "<instance-id>"
-var credentials = new DefaultAzureCredential();
-var client = new DeviceManagementClient(endpoint, instanceId, credentials);
+string instanceId = "<instance-id>"
+TokenCredential credentials = new DefaultAzureCredential();
+DeviceManagementClient client = new DeviceManagementClient(endpoint, instanceId, credentials);
 ```
 
 ## Deploy update to a device group
@@ -23,8 +23,8 @@ Now that we have import an update and we have identified that there is a set of 
 string provider = "<update-provider>";
 string name = "<update-name>";
 string version = "<update-version>";
-var groupId = "<group-id>";
-var deploymentId = Guid.NewGuid().ToString("N");
+string groupId = "<group-id>";
+string deploymentId = Guid.NewGuid().ToString("N");
 
 var deployment = new
 {
@@ -42,8 +42,7 @@ var deployment = new
     groupId,
 };
 
-var requestBody = JsonSerializer.Serialize(deployment);
-var response = client.CreateOrUpdateDeployment(groupId, deploymentId, RequestContent.Create(requestBody));
+Response response = client.CreateOrUpdateDeployment(groupId, deploymentId, RequestContent.Create(deployment));
 Debug.Assert(response.Status == (int)HttpStatusCode.OK);
 ```
 
@@ -52,8 +51,8 @@ Debug.Assert(response.Status == (int)HttpStatusCode.OK);
 Now that deployment is created, let's check the deployment status:
 
 ```C#
-var response = client.GetDeploymentStatus(groupId, deploymentId);
-var doc = JsonDocument.Parse(response.Content.ToMemory());
+Response response = client.GetDeploymentStatus(groupId, deploymentId);
+JsonDocument doc = JsonDocument.Parse(response.Content.ToMemory());
 Console.WriteLine(doc.RootElement.GetProperty("deploymentState").ToString());
 ```
 
@@ -62,6 +61,6 @@ Console.WriteLine(doc.RootElement.GetProperty("deploymentState").ToString());
 You can always retrieve deployment metadata:
 
 ```C#
-var response = client.GetDeployment(groupId, deploymentId);
+Response response = client.GetDeployment(groupId, deploymentId);
 Console.WriteLine(response.Content.ToString());
 ```

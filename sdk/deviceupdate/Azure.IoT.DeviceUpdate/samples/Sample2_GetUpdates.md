@@ -10,9 +10,9 @@ For the sample below, use proper `account-id` and `instance-id`. You can find th
 
 ```C# Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-var instanceId = "<instance-id>"
-var credentials = new DefaultAzureCredential();
-var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+string instanceId = "<instance-id>"
+TokenCredential credentials = new DefaultAzureCredential();
+DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 ```
 
 ## Get update metadata
@@ -23,8 +23,14 @@ First, let's try to retrieve update metadata.
 string provider = "<update-provider>";
 string name = "<update-name>";
 string version = "<update-version>";
-var response = client.GetUpdate(provider, name, version);
-Console.WriteLine(response.Content.ToString());
+Response response = client.GetUpdate(provider, name, version);
+JsonDocument update = JsonDocument.Parse(response.Content.ToMemory());
+Console.WriteLine("Update:");
+Console.WriteLine($"  Provider: {update.RootElement.GetProperty("updateId").GetProperty("provider").GetString()}");
+Console.WriteLine($"  Name: {update.RootElement.GetProperty("updateId").GetProperty("name").GetString()}");
+Console.WriteLine($"  Version: {update.RootElement.GetProperty("updateId").GetProperty("version").GetString()}");
+Console.WriteLine("Metadata:");
+Console.WriteLine(update.RootElement.ToString());
 ```
 
 ## Enumerate update files identities
@@ -32,11 +38,12 @@ Console.WriteLine(response.Content.ToString());
 Now that we have update metadata, let's try to retrieve payload file identities that correspond to this update.
 
 ```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentities
-var fileIds = client.GetFiles(provider, name, version);
+Pageable<BinaryData> fileIds = client.GetFiles(provider, name, version);
+List<string> files = new List<string>();
 foreach (var fileId in fileIds)
 {
-    var doc = JsonDocument.Parse(fileId.ToMemory());
-    Console.WriteLine(doc.RootElement.GetString());
+    JsonDocument doc = JsonDocument.Parse(fileId.ToMemory());
+    files.Add(doc.RootElement.GetString());
 }
 ```
 
@@ -45,10 +52,13 @@ foreach (var fileId in fileIds)
 In this step, we will retrieve full file metadata for each file associated with the update.
 
 ```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFiles
-var files = client.GetFiles(provider, name, version);
 foreach (var file in files)
 {
-    var doc = JsonDocument.Parse(file.ToMemory());
-    Console.WriteLine(doc.RootElement.GetString());
+    Console.WriteLine("\nFile:");
+    Console.WriteLine($"  FileId: {file}");
+    Response fileResponse = client.GetFile(provider, name, version, file);
+    JsonDocument fileDoc = JsonDocument.Parse(fileResponse.Content.ToMemory());
+    Console.WriteLine("Metadata:");
+    Console.WriteLine(fileDoc.RootElement.ToString());
 }
 ```

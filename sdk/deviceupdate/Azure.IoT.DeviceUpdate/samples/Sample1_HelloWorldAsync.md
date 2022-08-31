@@ -10,9 +10,9 @@ For the sample below, use proper `account-id` and `instance-id`. You can find th
 
 ```C# Snippet:AzDeviceUpdateSample1_CreateDeviceUpdateClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-var instanceId = "<instance-id>"
-var credentials = new DefaultAzureCredential();
-var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+string instanceId = "<instance-id>"
+TokenCredential credentials = new DefaultAzureCredential();
+DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 ```
 
 ## Enumerate all device update providers
@@ -20,10 +20,10 @@ var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 First, let's try to enumerate all available (already imported) device update providers.
 
 ```C# Snippet:AzDeviceUpdateSample1_EnumerateProvidersAsync
-var providers = client.GetProvidersAsync();
+AsyncPageable<BinaryData> providers = client.GetProvidersAsync();
 await foreach (var provider in providers)
 {
-    var doc = JsonDocument.Parse(provider.ToMemory());
+    JsonDocument doc = JsonDocument.Parse(provider.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());
 }
 ```
@@ -34,10 +34,10 @@ First, let's try to enumerate all available (already imported) device update nam
 
 ```C# Snippet:AzDeviceUpdateSample1_EnumerateNamesAsync
 string updateProvider = "<update-provider>";
-var names = client.GetNamesAsync(updateProvider);
+AsyncPageable<BinaryData> names = client.GetNamesAsync(updateProvider);
 await foreach (var name in names)
 {
-    var doc = JsonDocument.Parse(name.ToMemory());
+    JsonDocument doc = JsonDocument.Parse(name.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());
 }
 ```
@@ -48,10 +48,10 @@ First, let's try to enumerate all available (already imported) device update ver
 
 ```C# Snippet:AzDeviceUpdateSample1_EnumerateVersionsAsync
 string updateName = "<update-name>";
-var versions = client.GetVersionsAsync(updateProvider, updateName);
+AsyncPageable<BinaryData> versions = client.GetVersionsAsync(updateProvider, updateName);
 await foreach (var version in versions)
 {
-    var doc = JsonDocument.Parse(version.ToMemory());
+    JsonDocument doc = JsonDocument.Parse(version.ToMemory());
     Console.WriteLine(doc.RootElement.GetString());
 }
 ```

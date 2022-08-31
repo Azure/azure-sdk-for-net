@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
-using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,23 +19,23 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 
 #if SNIPPET
             Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-            var instanceId = "<instance-id>"
-            var credentials = new DefaultAzureCredential();
+            string instanceId = "<instance-id>"
+            TokenCredential credentials = new DefaultAzureCredential();
 #else
             Uri endpoint = TestEnvironment.AccountEndPoint;
             string instanceId = TestEnvironment.InstanceId;
-            var credentials = TestEnvironment.Credential;
+            TokenCredential credentials = TestEnvironment.Credential;
 #endif
-            var client = new DeviceManagementClient(endpoint, instanceId, credentials);
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, instanceId, credentials);
 
             #endregion
 
             #region Snippet:AzDeviceUpdateSample5_EnumerateDevices
 
-            var devices = client.GetDevices();
+            Pageable<BinaryData> devices = client.GetDevices();
             foreach (var device in devices)
             {
-                var doc = JsonDocument.Parse(device.ToMemory());
+                JsonDocument doc = JsonDocument.Parse(device.ToMemory());
                 Console.WriteLine(doc.RootElement.GetProperty("deviceId").GetString());
             }
 
@@ -45,10 +43,10 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 
             #region Snippet:AzDeviceUpdateSample5_EnumerateGroups
 
-            var groups = client.GetGroups();
+            Pageable<BinaryData> groups = client.GetGroups();
             foreach (var group in groups)
             {
-                var doc = JsonDocument.Parse(group.ToMemory());
+                JsonDocument doc = JsonDocument.Parse(group.ToMemory());
                 Console.WriteLine(doc.RootElement.GetProperty("groupId").GetString());
             }
 
@@ -56,10 +54,10 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 
             #region Snippet:AzDeviceUpdateSample5_EnumerateDeviceClasses
 
-            var deviceClasses = client.GetDeviceClasses();
+            Pageable<BinaryData> deviceClasses = client.GetDeviceClasses();
             foreach (var deviceClass in deviceClasses)
             {
-                var doc = JsonDocument.Parse(deviceClass.ToMemory());
+                JsonDocument doc = JsonDocument.Parse(deviceClass.ToMemory());
                 Console.WriteLine(doc.RootElement.GetProperty("deviceClassId").GetString());
             }
 
@@ -72,10 +70,10 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 #else
             string groupId = TestEnvironment.DeviceGroup;
 #endif
-            var updates = client.GetBestUpdatesForGroups(groupId);
+            Pageable<BinaryData> updates = client.GetBestUpdatesForGroups(groupId);
             foreach (var update in updates)
             {
-                var e = JsonDocument.Parse(update.ToMemory()).RootElement;
+                JsonElement e = JsonDocument.Parse(update.ToMemory()).RootElement;
                 Console.WriteLine($"For device class '{e.GetProperty("deviceClassId").GetString()}' in group '{groupId}', the best update is:");
                 e = e.GetProperty("update").GetProperty("updateId");
                 Console.WriteLine(e.GetProperty("provider").GetString());
@@ -91,15 +89,15 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
         {
             Uri endpoint = TestEnvironment.AccountEndPoint;
             string instanceId = TestEnvironment.InstanceId;
-            var credentials = TestEnvironment.Credential;
-            var client = new DeviceManagementClient(endpoint, instanceId, credentials);
+            TokenCredential credentials = TestEnvironment.Credential;
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, instanceId, credentials);
 
             #region Snippet:AzDeviceUpdateSample5_EnumerateDevicesAsync
 
-            var devices = client.GetDevicesAsync();
+            AsyncPageable<BinaryData> devices = client.GetDevicesAsync();
             await foreach (var device in devices)
             {
-                var doc = JsonDocument.Parse(device.ToMemory());
+                JsonDocument doc = JsonDocument.Parse(device.ToMemory());
                 Console.WriteLine(doc.RootElement.GetProperty("deviceId").GetString());
             }
 
@@ -107,10 +105,10 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 
             #region Snippet:AzDeviceUpdateSample5_EnumerateGroupsAsync
 
-            var groups = client.GetGroupsAsync();
+            AsyncPageable<BinaryData> groups = client.GetGroupsAsync();
             await foreach (var group in groups)
             {
-                var doc = JsonDocument.Parse(group.ToMemory());
+                JsonDocument doc = JsonDocument.Parse(group.ToMemory());
                 Console.WriteLine(doc.RootElement.GetProperty("groupId").GetString());
             }
 
@@ -118,10 +116,10 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 
             #region Snippet:AzDeviceUpdateSample5_EnumerateDeviceClassesAsync
 
-            var deviceClasses = client.GetDeviceClassesAsync();
+            AsyncPageable<BinaryData> deviceClasses = client.GetDeviceClassesAsync();
             await foreach (var deviceClass in deviceClasses)
             {
-                var doc = JsonDocument.Parse(deviceClass.ToMemory());
+                JsonDocument doc = JsonDocument.Parse(deviceClass.ToMemory());
                 Console.WriteLine(doc.RootElement.GetProperty("deviceClassId").GetString());
             }
 
@@ -134,10 +132,10 @@ namespace Azure.IoT.DeviceUpdate.Tests.Samples
 #else
             string groupId = TestEnvironment.DeviceGroup;
 #endif
-            var updates = client.GetBestUpdatesForGroupsAsync(groupId);
+            AsyncPageable<BinaryData> updates = client.GetBestUpdatesForGroupsAsync(groupId);
             await foreach (var update in updates)
             {
-                var e = JsonDocument.Parse(update.ToMemory()).RootElement;
+                JsonElement e = JsonDocument.Parse(update.ToMemory()).RootElement;
                 Console.WriteLine($"For device class '{e.GetProperty("deviceClassId").GetString()}' in group '{groupId}', the best update is:");
                 e = e.GetProperty("update").GetProperty("updateId");
                 Console.WriteLine(e.GetProperty("provider").GetString());

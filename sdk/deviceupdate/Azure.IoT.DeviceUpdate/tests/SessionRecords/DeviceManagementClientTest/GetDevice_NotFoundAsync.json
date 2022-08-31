@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f51195521ddb90438b966b121bea4664-b75750983f0e9b41-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220824.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "db7968e6ef72f0acffc42c453a3bda44",
+        "traceparent": "00-80695d340adda04b8a12eac98a9613ad-745495f0e3141445-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220830.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e6e8efaf55a2062bd18e588155075601",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,15 +16,15 @@
       "ResponseHeaders": {
         "Content-Length": "161",
         "Content-Type": "application/problem\u002Bjson; charset=utf-8",
-        "Date": "Wed, 24 Aug 2022 17:57:27 GMT",
-        "mise-correlation-id": "4e56e338-c51d-4db0-ab40-d09a5f34d5bf",
-        "traceparent": "00-f51195521ddb90438b966b121bea4664-b75750983f0e9b41-00"
+        "Date": "Wed, 31 Aug 2022 00:49:12 GMT",
+        "mise-correlation-id": "ca2a2a69-626b-4323-b335-1d13a59ba942",
+        "traceparent": "00-80695d340adda04b8a12eac98a9613ad-745495f0e3141445-00"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-f51195521ddb90438b966b121bea4664-2d21a3b0c56c8f4a-00"
+        "traceId": "00-80695d340adda04b8a12eac98a9613ad-d3503d2f12ea9e43-00"
       }
     }
   ],
@@ -32,6 +32,6 @@
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "185913691"
+    "RandomSeed": "59942957"
   }
 }

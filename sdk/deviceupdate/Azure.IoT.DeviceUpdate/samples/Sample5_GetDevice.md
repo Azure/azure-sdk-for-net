@@ -10,9 +10,9 @@ For the sample below, you can set `accountEndpoint` and `instance` in an environ
 
 ```C# Snippet:AzDeviceUpdateSample5_CreateDeviceManagementClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-var instanceId = "<instance-id>"
-var credentials = new DefaultAzureCredential();
-var client = new DeviceManagementClient(endpoint, instanceId, credentials);
+string instanceId = "<instance-id>"
+TokenCredential credentials = new DefaultAzureCredential();
+DeviceManagementClient client = new DeviceManagementClient(endpoint, instanceId, credentials);
 ```
 
 ## Enumerate all devices
@@ -20,10 +20,10 @@ var client = new DeviceManagementClient(endpoint, instanceId, credentials);
 First, let's try to enumerate all devices currently registered with Device Update for IoT Hub.
 
 ```C# Snippet:AzDeviceUpdateSample5_EnumerateDevices
-var devices = client.GetDevices();
+Pageable<BinaryData> devices = client.GetDevices();
 foreach (var device in devices)
 {
-    var doc = JsonDocument.Parse(device.ToMemory());
+    JsonDocument doc = JsonDocument.Parse(device.ToMemory());
     Console.WriteLine(doc.RootElement.GetProperty("deviceId").GetString());
 }
 ```
@@ -33,10 +33,10 @@ foreach (var device in devices)
 Let's enumerate all available device groups.
 
 ```C# Snippet:AzDeviceUpdateSample5_EnumerateGroups
-var groups = client.GetGroups();
+Pageable<BinaryData> groups = client.GetGroups();
 foreach (var group in groups)
 {
-    var doc = JsonDocument.Parse(group.ToMemory());
+    JsonDocument doc = JsonDocument.Parse(group.ToMemory());
     Console.WriteLine(doc.RootElement.GetProperty("groupId").GetString());
 }
 ```
@@ -46,10 +46,10 @@ foreach (var group in groups)
 Let's enumerate all available device classes (device class represents a unique class of devices).
 
 ```C# Snippet:AzDeviceUpdateSample5_EnumerateDeviceClasses
-var deviceClasses = client.GetDeviceClasses();
+Pageable<BinaryData> deviceClasses = client.GetDeviceClasses();
 foreach (var deviceClass in deviceClasses)
 {
-    var doc = JsonDocument.Parse(deviceClass.ToMemory());
+    JsonDocument doc = JsonDocument.Parse(deviceClass.ToMemory());
     Console.WriteLine(doc.RootElement.GetProperty("deviceClassId").GetString());
 }
 ```
@@ -60,10 +60,10 @@ Now that we know how to enumerate groups, let's try to find whether there are an
 
 ```C# Snippet:AzDeviceUpdateSample5_GetBestUpdates
 string groupId = "<group-id>";
-var updates = client.GetBestUpdatesForGroups(groupId);
+Pageable<BinaryData> updates = client.GetBestUpdatesForGroups(groupId);
 foreach (var update in updates)
 {
-    var e = JsonDocument.Parse(update.ToMemory()).RootElement;
+    JsonElement e = JsonDocument.Parse(update.ToMemory()).RootElement;
     Console.WriteLine($"For device class '{e.GetProperty("deviceClassId").GetString()}' in group '{groupId}', the best update is:");
     e = e.GetProperty("update").GetProperty("updateId");
     Console.WriteLine(e.GetProperty("provider").GetString());

@@ -12,9 +12,9 @@ For the sample below, use proper `account-id` and `instance-id`. You can find th
 
 ```C# Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
 Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
-var instanceId = "<instance-id>"
-var credentials = new DefaultAzureCredential();
-var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
+string instanceId = "<instance-id>"
+TokenCredential credentials = new DefaultAzureCredential();
+DeviceUpdateClient client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 ```
 
 ## Create import request
@@ -22,8 +22,8 @@ var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 Before we can import device update, we need to upload all device update artifacts, in our case payload file and import manifest file, to an Azure Blob container. Let's assume we have local artifact file paths `payloadFilePath`, `manifestFilePath` and Azure Blob container Urls `payloadUrl` and `manifestUrl`.
 
 ```C#
-var payload = new FileInfo(payloadFilePath);
-var manifest = new FileInfo(manifestFilePath);
+FileInfo payload = new FileInfo(payloadFilePath);
+FileInfo manifest = new FileInfo(manifestFilePath);
 SHA256 sha256 = SHA256.Create();
 string manifestHash;
 using (FileStream fileStream = File.OpenRead(filePath))
@@ -54,8 +54,6 @@ var content = new[]
     },
   }
 };
-
-var requestBody = JsonSerializer.Serialize(content);
 ```
 
 ## Import update
@@ -63,7 +61,7 @@ var requestBody = JsonSerializer.Serialize(content);
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
 ```C#
-var response = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(requestBody));
-var doc = JsonDocument.Parse(response.Value.ToMemory());
+Operation<BinaryData> response = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(content));
+JsonDocument doc = JsonDocument.Parse(response.Value.ToMemory());
 Console.WriteLine(doc.RootElement.GetProperty("status").ToString());
 ```

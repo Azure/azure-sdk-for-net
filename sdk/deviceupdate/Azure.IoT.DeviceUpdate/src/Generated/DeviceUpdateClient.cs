@@ -542,13 +542,13 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetOperationAsync with required parameters and parse the result.
+        /// This sample shows how to call GetOperationStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// Response response = await client.GetOperationAsync("<operationId>");
+        /// Response response = await client.GetOperationStatusAsync("<operationId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -556,13 +556,13 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// ]]></code>
-        /// This sample shows how to call GetOperationAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetOperationStatusAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// Response response = await client.GetOperationAsync("<operationId>", null);
+        /// Response response = await client.GetOperationStatusAsync("<operationId>", null);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -626,15 +626,15 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -653,13 +653,13 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetOperation with required parameters and parse the result.
+        /// This sample shows how to call GetOperationStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// Response response = client.GetOperation("<operationId>");
+        /// Response response = client.GetOperationStatus("<operationId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -667,13 +667,13 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// ]]></code>
-        /// This sample shows how to call GetOperation with all parameters, and how to parse the result.
+        /// This sample shows how to call GetOperationStatus with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// Response response = client.GetOperation("<operationId>", null);
+        /// Response response = client.GetOperationStatus("<operationId>", null);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -737,15 +737,15 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1398,13 +1398,13 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetOperationsAsync and parse the result.
+        /// This sample shows how to call GetOperationStatusesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// await foreach (var data in client.GetOperationsAsync())
+        /// await foreach (var data in client.GetOperationStatusesAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1413,13 +1413,13 @@ namespace Azure.IoT.DeviceUpdate
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetOperationsAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetOperationStatusesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// await foreach (var data in client.GetOperationsAsync("<filter>", 1234))
+        /// await foreach (var data in client.GetOperationStatusesAsync("<filter>", 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1484,12 +1484,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationsImplementationAsync("DeviceUpdateClient.GetOperations", filter, top, context);
+            return GetOperationStatusesImplementationAsync("DeviceUpdateClient.GetOperationStatuses", filter, top, context);
         }
 
-        private AsyncPageable<BinaryData> GetOperationsImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        private AsyncPageable<BinaryData> GetOperationStatusesImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1497,8 +1497,8 @@ namespace Azure.IoT.DeviceUpdate
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationsRequest(filter, top, context)
-                        : CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
+                        ? CreateGetOperationStatusesRequest(filter, top, context)
+                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1513,13 +1513,13 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetOperations and parse the result.
+        /// This sample shows how to call GetOperationStatuses and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// foreach (var data in client.GetOperations())
+        /// foreach (var data in client.GetOperationStatuses())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1528,13 +1528,13 @@ namespace Azure.IoT.DeviceUpdate
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// }
         /// ]]></code>
-        /// This sample shows how to call GetOperations with all parameters, and how to parse the result.
+        /// This sample shows how to call GetOperationStatuses with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
-        /// foreach (var data in client.GetOperations("<filter>", 1234))
+        /// foreach (var data in client.GetOperationStatuses("<filter>", 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1599,12 +1599,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationsImplementation("DeviceUpdateClient.GetOperations", filter, top, context);
+            return GetOperationStatusesImplementation("DeviceUpdateClient.GetOperationStatuses", filter, top, context);
         }
 
-        private Pageable<BinaryData> GetOperationsImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
+        private Pageable<BinaryData> GetOperationStatusesImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1612,8 +1612,8 @@ namespace Azure.IoT.DeviceUpdate
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationsRequest(filter, top, context)
-                        : CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
+                        ? CreateGetOperationStatusesRequest(filter, top, context)
+                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1913,7 +1913,7 @@ namespace Azure.IoT.DeviceUpdate
 
         internal HttpMessage CreateGetUpdateRequest(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2045,7 +2045,7 @@ namespace Azure.IoT.DeviceUpdate
 
         internal HttpMessage CreateGetFileRequest(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2071,7 +2071,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsRequest(string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2096,9 +2096,9 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2188,7 +2188,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2206,7 +2206,5 @@ namespace Azure.IoT.DeviceUpdate
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier200304;
-        private static ResponseClassifier ResponseClassifier200304 => _responseClassifier200304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 304 });
     }
 }
