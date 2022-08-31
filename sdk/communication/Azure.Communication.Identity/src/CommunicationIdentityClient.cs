@@ -100,7 +100,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationUserIdentifierAndToken> response = RestClient.Create(Array.Empty<CommunicationTokenScope>(), null, cancellationToken);
+                Response<CommunicationUserIdentifierAndToken> response = RestClient.Create(Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -119,7 +119,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(Array.Empty<CommunicationTokenScope>(), null, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken).ConfigureAwait(false);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -140,7 +140,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int expiresAfter = Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
 
                 return RestClient.Create(scopes, expiresAfter, cancellationToken);
             }
@@ -169,7 +169,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int expiresAfter = Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
 
                 return await RestClient.CreateAsync(scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
             }
@@ -237,7 +237,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int expiresAfter = Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
 
                 Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresAfter, cancellationToken);
 
@@ -271,7 +271,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                int expiresAfter = Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
+                int? expiresAfter = tokenExpiresAfter == default ? null : Convert.ToInt32(tokenExpiresAfter.TotalMinutes);
 
                 Response<CommunicationIdentityAccessToken> response = await RestClient.IssueAccessTokenAsync(communicationUser.Id, scopes, expiresAfter, cancellationToken).ConfigureAwait(false);
 

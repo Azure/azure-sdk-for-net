@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Identity.Tests
@@ -29,6 +29,20 @@ namespace Azure.Communication.Identity.Tests
         /// Initializes a new instance of the <see cref="CommunicationIdentityClient"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
+
+        private const string MIN_VALID_EXPIRATION_TIME = "minValidExpirationTime";
+        private const string MAX_VALID_EXPIRATION_TIME = "maxValidExpirationTime";
+        private const string MAX_INVALID_EXPIRATION_TIME = "maxInvalidExpirationTime";
+        private const string MIN_INVALID_EXPIRATION_TIME = "minInvalidExpirationTime";
+
+        private Dictionary<string, TimeSpan> TokenCustomExpirationTimes = new Dictionary<string, TimeSpan>
+        {
+            { MIN_VALID_EXPIRATION_TIME, TimeSpan.FromMinutes(60) },
+            { MAX_VALID_EXPIRATION_TIME, TimeSpan.FromMinutes(1440) },
+            { MAX_INVALID_EXPIRATION_TIME, TimeSpan.FromMinutes(59) },
+            { MIN_INVALID_EXPIRATION_TIME, TimeSpan.FromMinutes(1441) },
+        };
+
         public CommunicationIdentityClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -107,6 +121,76 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
+        [TestCase(MIN_VALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMinValidCustomExpiration")]
+        [TestCase(MAX_VALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMaxValidCustomExpiration")]
+        public async Task CreateUserAndTokenWithValidCustomExpiration(string expiresAfter)
+        {
+            TimeSpan tokenExpiresAfter = TokenCustomExpirationTimes[expiresAfter];
+
+            CommunicationIdentityClient client = CreateClientWithConnectionString();
+            Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
+
+            Assert.IsNotNull(accessToken.Value.AccessToken);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.AccessToken.Token));
+        }
+
+        [Test]
+        [TestCase(MIN_INVALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMinInvalidCustomExpiration")]
+        [TestCase(MAX_INVALID_EXPIRATION_TIME, TestName = "CreateUserAndTokenWithMaxInvalidCustomExpiration")]
+        public async Task CreateUserAndTokenWithInvalidCustomExpirationShouldThrow(string expiresAfter)
+        {
+            try
+            {
+                TimeSpan tokenExpiresAfter = TokenCustomExpirationTimes[expiresAfter];
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("CreateUserAndTokenWithInvalidCustomExpiration should have thrown an exception.");
+        }
+
+        [Test]
+        [TestCase(MIN_VALID_EXPIRATION_TIME, TestName = "GetTokenWithMinValidCustomExpiration")]
+        [TestCase(MAX_VALID_EXPIRATION_TIME, TestName = "GetTokenWithMaxValidCustomExpiration")]
+        public async Task GetTokenWithValidCustomExpiration(string expiresAfter)
+        {
+            TimeSpan tokenExpiresAfter = TokenCustomExpirationTimes[expiresAfter];
+
+            CommunicationIdentityClient client = CreateClientWithConnectionString();
+            CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
+            Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
+
+            Assert.IsNotNull(accessToken.Value);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.Token));
+        }
+
+        [Test]
+        [TestCase(MIN_INVALID_EXPIRATION_TIME, TestName = "GetTokenWithMinInvalidCustomExpiration")]
+        [TestCase(MAX_INVALID_EXPIRATION_TIME, TestName = "GetTokenWithMaxInvalidCustomExpiration")]
+        public async Task GetTokenWithInvalidCustomExpirationShouldThrow(string expiresAfter)
+        {
+            try
+            {
+                TimeSpan tokenExpiresAfter = TokenCustomExpirationTimes[expiresAfter];
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresAfter: tokenExpiresAfter);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("GetTokenWithInvalidCustomExpiration should have thrown an exception.");
+        }
+
+        [Test]
         public async Task DeleteUserWithNullUserShouldThrow()
         {
             try
@@ -143,7 +227,8 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         public async Task GetTokenForTeamsUserWithValidParameters()
         {
-            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
+            {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
