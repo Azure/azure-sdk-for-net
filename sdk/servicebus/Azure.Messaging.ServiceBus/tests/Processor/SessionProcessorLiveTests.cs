@@ -181,7 +181,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
+                Assert.Less(stop - start, TimeSpan.FromSeconds(15));
 
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed
@@ -283,7 +283,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var start = DateTime.UtcNow;
                 await processor.StopProcessingAsync();
                 var stop = DateTime.UtcNow;
-                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
+                Assert.Less(stop - start, TimeSpan.FromSeconds(15));
 
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed
@@ -2302,6 +2302,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        [NonParallelizable]
         public async Task CanUseMassiveSessionConcurrencyWithoutCausingThreadStarvation()
         {
             var lockDuration = TimeSpan.FromSeconds(30);
@@ -2332,7 +2333,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 var sender = client.CreateSender(scope.QueueName);
                 CancellationTokenSource cts = new();
-                cts.CancelAfter(TimeSpan.FromMinutes(4));
+                cts.CancelAfter(TimeSpan.FromMinutes(3));
                 await SendMessagesAsync(cts.Token);
                 foreach (var processor in processors)
                 {

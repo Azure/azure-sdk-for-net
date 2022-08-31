@@ -382,7 +382,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static List<LogMessage> GetLogMessages(IHost host)
         {
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
-            Assert.False(logMessages.Any(p => p.Level == LogLevel.Error));
 
             // Filter out Azure SDK and custom processor logs for easier validation.
             return logMessages.Where(m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture)).ToList();
