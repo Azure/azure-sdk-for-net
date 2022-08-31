@@ -2079,7 +2079,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         await Task.Delay(TimeSpan.FromSeconds(5));
                     }
 
-                    if (count == 50)
+                    if (count == 60)
                     {
                         Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 20);
                     }
@@ -2141,21 +2141,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         processor.UpdateConcurrency(5, 20);
                         Assert.AreEqual(5, processor.MaxConcurrentSessions);
                         Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
-
-                        // add a small delay to allow concurrency to update
-                        await Task.Delay(TimeSpan.FromSeconds(5));
-                    }
-                    if (count == 50)
-                    {
-                        // 20 tasks for the session, plus at least 1 more trying to accept other sessions.
-                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 20);
-                        processor.UpdateConcurrency(1, 1);
-                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
-                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
-                    }
-                    if (count == 95)
-                    {
-                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                 }
 
@@ -2164,6 +2149,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
+                // add a small delay to allow concurrency to reach steady state
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                // 20 tasks for the session, plus at least 1 more trying to accept other sessions.
+                Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 20);
                 await processor.StopProcessingAsync();
             }
         }
@@ -2366,7 +2355,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         }
 
                         Random rnd = new Random();
-                        int numSessions = rnd.Next(0, 30);
+                        int numSessions = rnd.Next(0, 20);
                         var messages = new List<ServiceBusMessage>();
                         for (int i = 0; i < numSessions; i++)
                         {
@@ -2379,7 +2368,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         }
 
                         sentCount += messages.Count;
-                        await sender.ScheduleMessagesAsync(messages, DateTimeOffset.Now.AddSeconds(10));
+                        try
+                        {
+                            await sender.ScheduleMessagesAsync(messages, DateTimeOffset.Now.AddSeconds(10));
+                        }
+                        catch (ServiceBusException ex)
+                            when (ex.IsTransient)
+                        {
+                            // ignore transient exceptions
+                        }
                     }
                 }
 

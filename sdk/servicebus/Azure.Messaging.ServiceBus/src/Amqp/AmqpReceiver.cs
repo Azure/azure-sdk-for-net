@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly AmqpMessageConverter _messageConverter;
 
         /// <summary>
-        /// A map of locked messages received using the management client.
+        /// A map of locked messages received using the management link.
         /// </summary>
         internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
 
