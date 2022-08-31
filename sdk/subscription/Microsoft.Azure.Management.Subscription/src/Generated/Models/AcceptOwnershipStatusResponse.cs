@@ -36,16 +36,19 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// <param name="subscriptionId">Newly created subscription Id.</param>
         /// <param name="acceptOwnershipState">Possible values include:
         /// 'Pending', 'Completed', 'Expired'</param>
+        /// <param name="provisioningState">Possible values include: 'Pending',
+        /// 'Accepted', 'Succeeded'</param>
         /// <param name="billingOwner">UPN of the billing owner</param>
         /// <param name="subscriptionTenantId">Tenant Id of the
         /// subscription</param>
         /// <param name="displayName">The display name of the
         /// subscription.</param>
         /// <param name="tags">Tags for the subscription</param>
-        public AcceptOwnershipStatusResponse(string subscriptionId = default(string), string acceptOwnershipState = default(string), string billingOwner = default(string), string subscriptionTenantId = default(string), string displayName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public AcceptOwnershipStatusResponse(string subscriptionId = default(string), string acceptOwnershipState = default(string), string provisioningState = default(string), string billingOwner = default(string), string subscriptionTenantId = default(string), string displayName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             SubscriptionId = subscriptionId;
             AcceptOwnershipState = acceptOwnershipState;
+            ProvisioningState = provisioningState;
             BillingOwner = billingOwner;
             SubscriptionTenantId = subscriptionTenantId;
             DisplayName = displayName;
@@ -70,6 +73,13 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         [JsonProperty(PropertyName = "acceptOwnershipState")]
         public string AcceptOwnershipState { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Pending', 'Accepted',
+        /// 'Succeeded'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets UPN of the billing owner
