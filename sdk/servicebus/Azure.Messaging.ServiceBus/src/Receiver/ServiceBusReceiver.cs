@@ -752,7 +752,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (containsDescriptionHeader && deadLetterErrorDescription != null && descriptionHeaderProperty != deadLetterErrorDescription)
             {
-                throw new InvalidOperationException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
+                throw new InvalidOperationException(""Differing deadletter error descriptions cannot be specified for both the 'propertiesToModify' and 'deadLetterErrorDescription' parameters. The values should either be identical or only be specified in one of the parameters."");
             }
 
             await DeadLetterInternalAsync(
