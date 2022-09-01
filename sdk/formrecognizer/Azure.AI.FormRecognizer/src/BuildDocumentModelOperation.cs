@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary>
     /// Tracks the status of a long-running operation for building a custom model.
     /// </summary>
-    public class BuildModelOperation : Operation<DocumentModelDetails>, IOperation<DocumentModelDetails>
+    public class BuildDocumentModelOperation : Operation<DocumentModelDetails>, IOperation<DocumentModelDetails>
     {
         private readonly OperationInternal<DocumentModelDetails> _operationInternal;
 
@@ -74,7 +74,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="BuildModelOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="BuildDocumentModelOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override async ValueTask<Response<DocumentModelDetails>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
-        internal BuildModelOperation(
+        internal BuildDocumentModelOperation(
             string location,
             Response postResponse,
             DocumentAnalysisRestClient allOperations,
@@ -120,26 +120,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BuildModelOperation"/> class which
+        /// Initializes a new instance of the <see cref="BuildDocumentModelOperation"/> class which
         /// tracks the status of a long-running operation for creating a custom model.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public BuildModelOperation(string operationId, DocumentModelAdministrationClient client)
+        public BuildDocumentModelOperation(string operationId, DocumentModelAdministrationClient client)
         {
             Argument.AssertNotNull(client, nameof(client));
 
             Id = operationId;
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
-            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(BuildModelOperation));
+            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(BuildDocumentModelOperation));
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BuildModelOperation"/> class. This constructor
+        /// Initializes a new instance of the <see cref="BuildDocumentModelOperation"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
-        protected BuildModelOperation()
+        protected BuildDocumentModelOperation()
         {
         }
 

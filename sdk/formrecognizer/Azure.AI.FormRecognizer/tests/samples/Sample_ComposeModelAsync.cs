@@ -31,9 +31,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri officeSuppliesUri = new Uri(trainingFileUrl);
 #endif
-            var officeSupplieOptions = new BuildModelOptions() { Description = "Purchase order - Office supplies" };
+            var officeSupplieOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Office supplies" };
 
-            BuildModelOperation suppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
+            BuildDocumentModelOperation suppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
             DocumentModelDetails officeSuppliesModel = suppliesOperation.Value;
 
 #if SNIPPET
@@ -41,9 +41,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri officeEquipmentUri = new Uri(trainingFileUrl);
 #endif
-            var equipmentOptions = new BuildModelOptions() { Description = "Purchase order - Office Equipment" };
+            var equipmentOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Office Equipment" };
 
-            BuildModelOperation equipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+            BuildDocumentModelOperation equipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
             DocumentModelDetails officeEquipmentModel = equipmentOperation.Value;
 
 #if SNIPPET
@@ -51,9 +51,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri furnitureUri = new Uri(trainingFileUrl);
 #endif
-            var furnitureOptions = new BuildModelOptions() { Description = "Purchase order - Furniture" };
+            var furnitureOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Furniture" };
 
-            BuildModelOperation furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+            BuildDocumentModelOperation furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
             DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 #if SNIPPET
@@ -61,9 +61,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
 #endif
-            var cleaningOptions = new BuildModelOptions() { Description = "Purchase order - Cleaning Supplies" };
+            var cleaningOptions = new BuildDocumentModelOptions() { Description = "Purchase order - Cleaning Supplies" };
 
-            BuildModelOperation cleaningOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+            BuildDocumentModelOperation cleaningOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
             DocumentModelDetails cleaningSuppliesModel = cleaningOperation.Value;
 
             #endregion
@@ -78,7 +78,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 cleaningSuppliesModel.ModelId
             };
 
-            ComposeModelOperation operation = await client.ComposeDocumentModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
+            ComposeDocumentModelOperation operation = await client.ComposeDocumentModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
             DocumentModelDetails purchaseOrderModel = operation.Value;
 
             Console.WriteLine($"  Model Id: {purchaseOrderModel.ModelId}");

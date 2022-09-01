@@ -7,19 +7,19 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
-    /// The set of options that can be specified when calling the build model method
-    /// to configure the behavior of the request. For example, set a filter to apply
-    /// to the documents in the source path or set a model description.
+    /// The set of options that can be specified when calling the build document model
+    /// method to configure the behavior of the request. For example, set the model tags
+    /// a model description.
     /// </summary>
-    public class BuildModelOptions
+    public class BuildDocumentModelOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BuildModelOptions"/> class which
+        /// Initializes a new instance of the <see cref="BuildDocumentModelOptions"/> class which
         /// allows to set options that can be specified when calling the training method
-        /// to configure the behavior of the request. For example, set a filter to apply
-        /// to the documents in the source path or set a model description.
+        /// to configure the behavior of the request. For example, set the model tags or
+        /// a model description.
         /// </summary>
-        public BuildModelOptions()
+        public BuildDocumentModelOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
