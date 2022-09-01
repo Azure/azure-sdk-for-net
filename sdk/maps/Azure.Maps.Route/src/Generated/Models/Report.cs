@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Maps.Route.Models
 {
     /// <summary> The Report. </summary>
-    public readonly partial struct Report : IEquatable<Report>
+    internal readonly partial struct Report : IEquatable<Report>
     {
         private readonly string _value;
 

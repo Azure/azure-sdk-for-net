@@ -211,23 +211,6 @@ namespace Azure.Maps.Route.Models
         public static bool operator !=(Azure.Maps.Route.Models.JunctionType left, Azure.Maps.Route.Models.JunctionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Report : System.IEquatable<Azure.Maps.Route.Models.Report>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Report(string value) { throw null; }
-        public static Azure.Maps.Route.Models.Report EffectiveSettings { get { throw null; } }
-        public bool Equals(Azure.Maps.Route.Models.Report other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Route.Models.Report left, Azure.Maps.Route.Models.Report right) { throw null; }
-        public static implicit operator Azure.Maps.Route.Models.Report (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Route.Models.Report left, Azure.Maps.Route.Models.Report right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RequestRouteDirectionsOperation : Azure.Operation<Azure.Maps.Route.Models.RouteDirectionsBatchResult>
     {
         protected RequestRouteDirectionsOperation() { }
@@ -370,11 +353,11 @@ namespace Azure.Maps.Route.Models
         public double? MaxChargeInKwH { get { throw null; } set { } }
         public int? MinDeviationDistance { get { throw null; } set { } }
         public int? MinDeviationTime { get { throw null; } set { } }
-        public Azure.Maps.Route.Models.Report? Report { get { throw null; } set { } }
         public Azure.Maps.Route.Models.RouteDirectionParameters RouteDirectionParameters { get { throw null; } set { } }
         public Azure.Maps.Route.Models.RouteRepresentationForBestOrder? RouteRepresentationForBestOrder { get { throw null; } set { } }
         public Azure.Maps.Route.Models.RouteType? RouteType { get { throw null; } set { } }
         public Azure.Maps.Route.Models.SectionType? SectionFilter { get { throw null; } set { } }
+        public bool? ShouldReportEffectiveSettings { get { throw null; } set { } }
         public Azure.Maps.Route.Models.TravelMode? TravelMode { get { throw null; } set { } }
         public Azure.Maps.Route.Models.TravelTimeType? TravelTimeType { get { throw null; } set { } }
         public double? UphillEfficiency { get { throw null; } set { } }

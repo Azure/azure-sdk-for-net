@@ -64,8 +64,8 @@ namespace Azure.Maps.Route.Models
         /// <summary> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </summary>
         public int? VehicleHeading { get; set; }
 
-        /// <summary> Specifies which data should be reported for diagnosis purposes. The only possible value is <c>EffectiveSettings</c>. Reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </summary>
-        public Report? Report { get; set; }
+        /// <summary> Specifies which data should be reported for diagnosis purposes. If true, it will reports the effective parameters or data used when calling the API. In the case of defaulted parameters the default will be reflected where the parameter was not specified by the caller. </summary>
+        public bool? ShouldReportEffectiveSettings { get; set; }
 
         /// <summary> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </summary>
         public SectionType? SectionFilter { get; set; }

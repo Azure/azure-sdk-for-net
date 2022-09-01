@@ -311,6 +311,11 @@ namespace Azure.Maps.Route
             {
                 var stringRoutePoints = MapsRouteClient.GeoPointsToString(routeDirectionQuery.RoutePoints);
                 var options = routeDirectionQuery.RouteDirectionOptions;
+                Report? report = null;
+                if (options?.ShouldReportEffectiveSettings == true)
+                {
+                    report = Report.EffectiveSettings;
+                }
 
                 if (options?.RouteDirectionParameters == null)
                 {
@@ -329,7 +334,7 @@ namespace Azure.Maps.Route
                         options?.RouteRepresentationForBestOrder,
                         options?.TravelTimeType,
                         options?.VehicleHeading,
-                        options?.Report,
+                        report,
                         options?.SectionFilter,
                         options?.VehicleAxleWeightInKilograms,
                         options?.VehicleWidthInMeters,
@@ -377,7 +382,7 @@ namespace Azure.Maps.Route
                         options?.RouteRepresentationForBestOrder,
                         options?.TravelTimeType,
                         options?.VehicleHeading,
-                        options?.Report,
+                        report,
                         options?.SectionFilter,
                         options?.ArriveAt,
                         options?.DepartAt,
@@ -438,6 +443,11 @@ namespace Azure.Maps.Route
             {
                 var stringRoutePoints = MapsRouteClient.GeoPointsToString(routeDirectionQuery.RoutePoints);
                 var options = routeDirectionQuery.RouteDirectionOptions;
+                Report? report = null;
+                if (options?.ShouldReportEffectiveSettings == true)
+                {
+                    report = Report.EffectiveSettings;
+                }
 
                 if (options?.RouteDirectionParameters == null)
                 {
@@ -456,7 +466,7 @@ namespace Azure.Maps.Route
                         options?.RouteRepresentationForBestOrder,
                         options?.TravelTimeType,
                         options?.VehicleHeading,
-                        options?.Report,
+                        report,
                         options?.SectionFilter,
                         options?.VehicleAxleWeightInKilograms,
                         options?.VehicleWidthInMeters,
@@ -504,7 +514,7 @@ namespace Azure.Maps.Route
                         options?.RouteRepresentationForBestOrder,
                         options?.TravelTimeType,
                         options?.VehicleHeading,
-                        options?.Report,
+                        report,
                         options?.SectionFilter,
                         options?.ArriveAt,
                         options?.DepartAt,
