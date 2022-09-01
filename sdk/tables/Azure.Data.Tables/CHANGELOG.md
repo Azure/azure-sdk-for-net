@@ -14,6 +14,7 @@
 
 ### Bugs Fixed
 - Fixed a formatting issue with string based filter queries for Binary properties created via `CreateQueryFilter(System.FormattableString filter)`. ([#29256](https://github.com/Azure/azure-sdk-for-net/issues/29256))
+- Fixed a OData filter issue with implicit boolean comparisons (for example expressions such as `ent => ent.BooleanProperty`) when calling `TableClient.QueryAsync(Expression<Func<T, bool>> filter, ...)`. ([#30185](https://github.com/Azure/azure-sdk-for-net/issues/30185))
 
 ## 12.6.0 (2022-06-07)
 
