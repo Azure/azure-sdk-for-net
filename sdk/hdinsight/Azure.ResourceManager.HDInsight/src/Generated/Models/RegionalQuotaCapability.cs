@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The regional quota capacity. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="regionName"> The region name. </param>
         /// <param name="coresUsed"> The number of cores used in the region. </param>
         /// <param name="coresAvailable"> The number of cores available in the region. </param>
-        internal RegionalQuotaCapability(string regionName, long? coresUsed, long? coresAvailable)
+        internal RegionalQuotaCapability(AzureLocation? regionName, long? coresUsed, long? coresAvailable)
         {
             RegionName = regionName;
             CoresUsed = coresUsed;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The region name. </summary>
-        public string RegionName { get; }
+        public AzureLocation? RegionName { get; }
         /// <summary> The number of cores used in the region. </summary>
         public long? CoresUsed { get; }
         /// <summary> The number of cores available in the region. </summary>
