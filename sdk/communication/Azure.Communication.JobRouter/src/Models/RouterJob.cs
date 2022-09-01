@@ -78,7 +78,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Notes != null
-                    ? Notes?.ToDictionary(x => x.Key.ToUniversalTime().ToString(CultureInfo.InvariantCulture),
+                    ? Notes?.ToDictionary(x => x.Key.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture),
                         x => x.Value)
                     : new ChangeTrackingDictionary<string, string>();
             }
