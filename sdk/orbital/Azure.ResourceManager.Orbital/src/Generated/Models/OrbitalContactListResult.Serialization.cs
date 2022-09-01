@@ -12,11 +12,11 @@ using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    internal partial class ContactProfileListResult
+    internal partial class OrbitalContactListResult
     {
-        internal static ContactProfileListResult DeserializeContactProfileListResult(JsonElement element)
+        internal static OrbitalContactListResult DeserializeOrbitalContactListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OrbitalContactProfileData>> value = default;
+            Optional<IReadOnlyList<OrbitalContactData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Orbital.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OrbitalContactProfileData> array = new List<OrbitalContactProfileData>();
+                    List<OrbitalContactData> array = new List<OrbitalContactData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileData.DeserializeOrbitalContactProfileData(item));
+                        array.Add(OrbitalContactData.DeserializeOrbitalContactData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new ContactProfileListResult(Optional.ToList(value), nextLink.Value);
+            return new OrbitalContactListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
