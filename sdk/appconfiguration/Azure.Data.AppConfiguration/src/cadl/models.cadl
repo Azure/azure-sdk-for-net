@@ -16,6 +16,7 @@ enum get_6_itemsItemKnownValues {
   "etag",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(get_6_itemsItemKnownValues)
 model get_6_itemsItem is string;
 
@@ -31,6 +32,7 @@ enum head_6_itemsItemKnownValues {
   "etag",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(head_6_itemsItemKnownValues)
 model head_6_itemsItem is string;
 
@@ -46,6 +48,7 @@ enum get_7_itemsItemKnownValues {
   "etag",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(get_7_itemsItemKnownValues)
 model get_7_itemsItem is string;
 
@@ -61,6 +64,7 @@ enum head_7_itemsItemKnownValues {
   "etag",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(head_7_itemsItemKnownValues)
 model head_7_itemsItem is string;
 
@@ -69,6 +73,7 @@ enum get_5_itemsItemKnownValues {
   "name",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(get_5_itemsItemKnownValues)
 model get_5_itemsItem is string;
 
@@ -77,6 +82,7 @@ enum head_5_itemsItemKnownValues {
   "name",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(head_5_itemsItemKnownValues)
 model head_5_itemsItem is string;
 
@@ -92,6 +98,7 @@ enum paths·18s2vl1·revisions·get·parameters·6·schema·itemsKnownValues {
   "etag",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(paths·18s2vl1·revisions·get·parameters·6·schema·itemsKnownValues)
 model paths·18s2vl1·revisions·get·parameters·6·schema·items is string;
 
@@ -107,6 +114,7 @@ enum paths·eaaa80·revisions·head·parameters·6·schema·itemsKnownValues {
   "etag",
 }
 
+@doc("// TODO: (missing-description) Add description")
 @knownValues(paths·eaaa80·revisions·head·parameters·6·schema·itemsKnownValues)
 model paths·eaaa80·revisions·head·parameters·6·schema·items is string;
 
@@ -123,6 +131,7 @@ model KeyListResult {
 }
 
 // TODO: (missing-docs) Add documentation
+@doc("// TODO: (missing-description) Add description")
 model Key {
   // TODO: (missing-docs) Add documentation
   name: string;
@@ -160,16 +169,22 @@ model KeyValueListResult {
 }
 
 // TODO: (missing-docs) Add documentation
+@doc("// TODO: (missing-description) Add description")
 model KeyValue {
   // TODO: (missing-docs) Add documentation
+  @doc("// TODO: (missing-description) Add description")
   key: string;
   // TODO: (missing-docs) Add documentation
+  @doc("// TODO: (missing-description) Add description")
   label: string;
   // TODO: (missing-docs) Add documentation
+  @doc("// TODO: (missing-description) Add description")
   content_type: string;
   // TODO: (missing-docs) Add documentation
+  @doc("// TODO: (missing-description) Add description")
   value: string;
   // TODO: (missing-docs) Add documentation
+  @doc("// TODO: (missing-description) Add description")
   last_modified: zonedDateTime;
 
   @doc("Dictionary of <string>")
@@ -193,7 +208,9 @@ model LabelListResult {
 }
 
 // TODO: (missing-docs) Add documentation
+@doc("// TODO: (missing-description) Add description")
 model Label {
   // TODO: (missing-docs) Add documentation
+  @doc("// TODO: (missing-description) Add description")
   name: string;
 }

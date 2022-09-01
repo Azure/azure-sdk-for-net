@@ -5,6 +5,8 @@ import "./models.cadl";
 using Cadl.Rest;
 
 using Cadl.Http;
+namespace AzureAppConfiguration;
+
 
 // TODO: (missing-docs) Add documentation
 interface Operations {
@@ -21,7 +23,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -33,11 +35,11 @@ interface Operations {
 
     @doc("Requests the server to respond with the state of the resource at the specified time.")
     @header
-    "Accept-Datetime": string,
+    "Accept-Datetime"?: string,
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.keyset+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.keyset+json, application/json, application/problem+json"
   ): Error | KeyListResult;
   @summary("Requests the headers and status of the given resource.")
   @doc("Requests the headers and status of the given resource.")
@@ -50,7 +52,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -62,7 +64,7 @@ interface Operations {
 
     @doc("Requests the server to respond with the state of the resource at the specified time.")
     @header
-    "Accept-Datetime": string
+    "Accept-Datetime"?: string
   ): void;
   @summary("Gets a list of key-values.")
   @doc("Gets a list of key-values.")
@@ -81,7 +83,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -93,7 +95,7 @@ interface Operations {
 
     @doc("Requests the server to respond with the state of the resource at the specified time.")
     @header
-    "Accept-Datetime": string,
+    "Accept-Datetime"?: string,
 
     @doc("Used to select what fields are present in the returned resource(s).")
     @query
@@ -101,7 +103,7 @@ interface Operations {
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json"
   ): Error | KeyValueListResult;
   @summary("Requests the headers and status of the given resource.")
   @doc("Requests the headers and status of the given resource.")
@@ -118,7 +120,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -153,7 +155,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -165,11 +167,11 @@ interface Operations {
 
     @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
     @header
-    "If-Match": string,
+    "If-Match"?: string,
 
     @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
     @header
-    "If-None-Match": string,
+    "If-None-Match"?: string,
 
     @doc("Used to select what fields are present in the returned resource(s).")
     @query
@@ -177,7 +179,7 @@ interface Operations {
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
   ): Error | KeyValue;
   @summary("Creates a key-value.")
   @doc("Creates a key-value.")
@@ -196,7 +198,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -204,11 +206,11 @@ interface Operations {
 
     @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
     @header
-    "If-Match": string,
+    "If-Match"?: string,
 
     @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
     @header
-    "If-None-Match": string,
+    "If-None-Match"?: string,
 
     @doc("The key-value to create.")
     @body
@@ -216,7 +218,7 @@ interface Operations {
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
   ): Error | KeyValue;
   @summary("Deletes a key-value.")
   @doc("Deletes a key-value.")
@@ -235,7 +237,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -243,11 +245,11 @@ interface Operations {
 
     @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
     @header
-    "If-Match": string,
+    "If-Match"?: string,
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
   ): Error | KeyValue | void;
   @summary("Requests the headers and status of the given resource.")
   @doc("Requests the headers and status of the given resource.")
@@ -264,7 +266,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -276,11 +278,11 @@ interface Operations {
 
     @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
     @header
-    "If-Match": string,
+    "If-Match"?: string,
 
     @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
     @header
-    "If-None-Match": string,
+    "If-None-Match"?: string,
 
     @doc("Used to select what fields are present in the returned resource(s).")
     @query
@@ -299,7 +301,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -319,7 +321,7 @@ interface Operations {
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.labelset+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.labelset+json, application/json, application/problem+json"
   ): Error | LabelListResult;
   @summary("Requests the headers and status of the given resource.")
   @doc("Requests the headers and status of the given resource.")
@@ -332,7 +334,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -367,7 +369,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -375,15 +377,15 @@ interface Operations {
 
     @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
     @header
-    "If-Match": string,
+    "If-Match"?: string,
 
     @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
     @header
-    "If-None-Match": string,
+    "If-None-Match"?: string,
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
   ): Error | KeyValue;
   @summary("Unlocks a key-value.")
   @doc("Unlocks a key-value.")
@@ -402,7 +404,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -410,15 +412,15 @@ interface Operations {
 
     @doc("Used to perform an operation only if the targeted resource's etag matches the value provided.")
     @header
-    "If-Match": string,
+    "If-Match"?: string,
 
     @doc("Used to perform an operation only if the targeted resource's etag does not match the value provided.")
     @header
-    "If-None-Match": string,
+    "If-None-Match"?: string,
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.kv+json, application/json, application/problem+json"
   ): Error | KeyValue;
   @summary("Gets a list of key-value revisions.")
   @doc("Gets a list of key-value revisions.")
@@ -437,7 +439,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
@@ -457,7 +459,7 @@ interface Operations {
 
     @doc("Accept header")
     @header
-    Accept: "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json"
+    Accept?: "application/vnd.microsoft.appconfig.kvset+json, application/json, application/problem+json"
   ): Error | KeyValueListResult;
   @summary("Requests the headers and status of the given resource.")
   @doc("Requests the headers and status of the given resource.")
@@ -474,7 +476,7 @@ interface Operations {
 
     @doc("Used to guarantee real-time consistency between requests.")
     @header
-    "Sync-Token": string,
+    "Sync-Token"?: string,
 
     @doc("Api Version")
     @query
