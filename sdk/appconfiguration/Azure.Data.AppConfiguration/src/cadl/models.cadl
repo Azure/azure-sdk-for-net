@@ -3,6 +3,8 @@ import "@azure-tools/cadl-azure-core";
 
 using Cadl.Rest;
 using Azure.Core;
+namespace Azure.Data.AppConfiguration;
+
 
 // TODO: (missing-docs) Add documentation
 enum get_6_itemsItemKnownValues {

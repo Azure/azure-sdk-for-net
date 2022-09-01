@@ -3,6 +3,7 @@ import "@azure-tools/cadl-azure-core";
 import "./models.cadl";
 import "./routes.cadl";
 
+
 @doc("// TODO: (miissing-service-description) Add service description")
 @serviceTitle("Azure App Configuration")
 @serviceVersion("1.0")
@@ -14,7 +15,7 @@ import "./routes.cadl";
     endpoint: string,
   }
 )
-namespace AzureAppConfiguration;
+namespace Azure.Data.AppConfiguration;
 using Cadl.Http;
 using Cadl.Rest;
 using Azure.Core;

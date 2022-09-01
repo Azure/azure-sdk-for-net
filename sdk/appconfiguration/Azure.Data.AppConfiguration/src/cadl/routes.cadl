@@ -5,11 +5,11 @@ import "./models.cadl";
 using Cadl.Rest;
 
 using Cadl.Http;
-namespace AzureAppConfiguration;
+namespace Azure.Data.AppConfiguration;
 
 
 // TODO: (missing-docs) Add documentation
-interface Operations {
+interface Configuration {
   @summary("Gets a list of keys.")
   @doc("Gets a list of keys.")
   @route("/keys")
