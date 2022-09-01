@@ -2,58 +2,63 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Tests.Scenario
 {
     internal class BestPracticeTests : AutomanageTestBase
     {
+        private TenantResource tenant;
         public BestPracticeTests(bool async) : base(async) { }
 
-        private async Task<BestPracticeResource> GetBestPracticesProfile(string profileName)
+        [SetUp]
+        protected async Task GetTenant()
         {
-            // fetch tenant collection
             var tenants = ArmClient.GetTenants();
-
-            // fetch Azure best practices production profile
-            BestPracticeResource profile = null;
-            await foreach (var tenant in tenants)
+            await foreach (var t in tenants)
             {
-                if (tenant.Data.TenantId == Subscription.Data.TenantId)
-                    profile = tenant.GetBestPracticeAsync(profileName).Result;
+                if (t.Data.TenantId == Subscription.Data.TenantId)
+                    tenant = t;
             }
-
-            return profile;
         }
 
         [TestCase]
         public async Task CanGetBestPracticesProductionProfile()
         {
             string profileName = "AzureBestPracticesProduction";
-            var profile = await GetBestPracticesProfile(profileName);
+            var collection = tenant.GetBestPractices();
+            var profile = await collection.GetAsync(profileName);
 
             // assert
             Assert.NotNull(profile);
-            Assert.True(profile.HasData);
-            Assert.AreEqual(profileName, profile.Id.Name);
-            Assert.NotNull(profile.Id);
-            Assert.NotNull(profile.Data);
-            Assert.NotNull(profile.Data.Configuration);
+            Assert.True(profile.Value.HasData);
+            Assert.AreEqual(profileName, profile.Value.Id.Name);
+            Assert.NotNull(profile.Value.Id);
+            Assert.NotNull(profile.Value.Data);
+            Assert.NotNull(profile.Value.Data.Configuration);
         }
 
         [TestCase]
         public async Task CanGetBestPracticesDevTestProfile()
         {
             string profileName = "AzureBestPracticesDevTest";
-            var profile = await GetBestPracticesProfile(profileName);
+            var collection = tenant.GetBestPractices();
+            var profile = await collection.GetAsync(profileName);
 
             // assert
             Assert.NotNull(profile);
-            Assert.True(profile.HasData);
-            Assert.AreEqual(profileName, profile.Id.Name);
-            Assert.NotNull(profile.Id);
-            Assert.NotNull(profile.Data);
-            Assert.NotNull(profile.Data.Configuration);
+            Assert.True(profile.Value.HasData);
+            Assert.AreEqual(profileName, profile.Value.Id.Name);
+            Assert.NotNull(profile.Value.Id);
+            Assert.NotNull(profile.Value.Data);
+            Assert.NotNull(profile.Value.Data.Configuration);
         }
+
+        //[TestCase]
+        //public async Task CanGetAllBestPracticesProfiles()
+        //{
+
+        //}
     }
 }
