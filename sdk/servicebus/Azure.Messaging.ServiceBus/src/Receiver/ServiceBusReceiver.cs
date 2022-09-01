@@ -743,7 +743,7 @@ namespace Azure.Messaging.ServiceBus
 
             // Prevent properties and arguments from setting distinct deadletter reasons or error descriptions
             bool containsReasonHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterReasonHeader, out object reasonHeaderProperty);
-            var containsDescriptionHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out var descriptionHeaderProperty);
+            bool containsDescriptionHeader = propertiesToModify.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out object descriptionHeaderProperty);
 
             if ((containsReasonHeader && deadLetterReason != null) && (reasonHeaderProperty.ToString() != deadLetterReason))
             {
