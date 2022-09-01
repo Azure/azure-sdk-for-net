@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
             EntityScopeFactory scopeFactory,
             bool keepOpenOnReceiveTimeout)
-            : base(sessionProcessor.InnerProcessor, scopeFactory)
+            : base(sessionProcessor.InnerProcessor, scopeFactory, true)
         {
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
@@ -127,13 +127,8 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task CreateReceiver(CancellationToken processorCancellationToken)
         {
-            bool releaseSemaphore = false;
             try
             {
-                await _concurrentAcceptSessionsSemaphore.WaitAsync(processorCancellationToken).ConfigureAwait(false);
-                // only attempt to release semaphore if WaitAsync is successful,
-                // otherwise SemaphoreFullException can occur.
-                releaseSemaphore = true;
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                     entityPath: Processor.EntityPath,
                     connection: Processor.Connection,
@@ -147,13 +142,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 // propagate as TCE so it will be handled by the outer catch block
                 throw new TaskCanceledException();
-            }
-            finally
-            {
-                if (releaseSemaphore)
-                {
-                    _concurrentAcceptSessionsSemaphore.Release();
-                }
             }
         }
 
@@ -248,18 +236,20 @@ namespace Azure.Messaging.ServiceBus
                 {
                     // Nothing to do here.  These exceptions are expected.
                 }
-
-                try
-                {
-                    // Always at least attempt to dispose. If this fails, it won't be retried.
-                    await _receiver.DisposeAsync().ConfigureAwait(false);
-                }
                 finally
                 {
-                    // If we call DisposeAsync, we need to reset to null even if DisposeAsync throws, otherwise we can
-                    // end up in a bad state.
-                    _receiver = null;
-                    _receiveTimeout = false;
+                    try
+                    {
+                        // Always at least attempt to dispose. If this fails, it won't be retried.
+                        await _receiver.DisposeAsync().ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        // If we call DisposeAsync, we need to reset to null even if DisposeAsync throws, otherwise we can
+                        // end up in a bad state.
+                        _receiver = null;
+                        _receiveTimeout = false;
+                    }
                 }
             }
         }
@@ -279,15 +269,20 @@ namespace Azure.Messaging.ServiceBus
                     }
                 }
                 catch (ServiceBusException ex)
-                when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
+                    when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
                 {
                     // these exceptions are expected when no messages are available
                     // so simply return and allow this to be tried again on next thread
                     return;
                 }
+                finally
+                {
+                    // The lock is acquired in ServiceBusProcessor as part of the RunReceiveTaskAsync loop, but we release it here
+                    // once we've either accepted a new session or determined we don't need to accept one.
+                    _concurrentAcceptSessionsSemaphore.Release();
+                }
 
                 using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken, _sessionCancellationSource.Token);
-                // loop within the context of this thread
                 while (!linkedTokenSource.Token.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;

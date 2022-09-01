@@ -661,7 +661,8 @@ namespace Azure.Messaging.ServiceBus
                     _receiverManagers.Add(
                         new ReceiverManager(
                             this,
-                            _scopeFactory));
+                            _scopeFactory,
+                            false));
                 }
             }
             else
@@ -828,21 +829,28 @@ namespace Azure.Messaging.ServiceBus
                             break;
                         }
 
-                        // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
-                        if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
+                        bool messageHandlerLockAcquired = false;
+                        try
                         {
-                            try
+                            await _messageHandlerSemaphore.WaitAsync(linkedHandlerTcs.Token).ConfigureAwait(false);
+                            messageHandlerLockAcquired = true;
+                            if (IsSessionProcessor)
                             {
-                                await _messageHandlerSemaphore.WaitAsync(linkedHandlerTcs.Token).ConfigureAwait(false);
+                                await _maxConcurrentAcceptSessionsSemaphore.WaitAsync(linkedHandlerTcs.Token).ConfigureAwait(false);
                             }
-                            catch (OperationCanceledException)
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            if (messageHandlerLockAcquired)
                             {
-                                linkedHandlerTcs.Dispose();
-                                // reset the linkedHandlerTcs if it was already cancelled due to user updating the concurrency
-                                linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
-                                // allow the loop to wake up when tcs is signaled
-                                break;
+                                // make sure to release semaphore if we are breaking out of the loop
+                                _messageHandlerSemaphore.Release();
                             }
+                            linkedHandlerTcs.Dispose();
+                            // reset the linkedHandlerTcs if it was already cancelled due to user updating the concurrency
+                            linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
+                            // allow the loop to wake up when tcs is signaled
+                            break;
                         }
 
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
