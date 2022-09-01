@@ -188,11 +188,6 @@ namespace Azure.Data.Tables.Queryable
 
             if (ReflectionUtil.s_dictionaryMethodInfosHash.Contains(visited.Method) && visited.Arguments.Count == 1 && visited.Arguments[0] is ConstantExpression)
             {
-                if (visited.Method.ReturnType == typeof(bool?) && IsImplicitBooleanComparison(visited))
-                {
-                    return CreateExplicitBooleanComparison(visited);
-                }
-
                 return visited;
             }
 
