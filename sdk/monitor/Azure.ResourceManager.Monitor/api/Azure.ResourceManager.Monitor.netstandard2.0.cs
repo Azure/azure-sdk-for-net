@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class LogSearchRulePatch
     {
         public LogSearchRulePatch() { }
-        public Azure.ResourceManager.Monitor.Models.MonitorEnabled? Enabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorEnabled? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class LogSettings
@@ -1722,10 +1722,10 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MonitorItsmReceiver
     {
-        public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, string region) { }
+        public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, Azure.Core.AzureLocation region) { }
         public string ConnectionId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string Region { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Region { get { throw null; } set { } }
         public string TicketConfiguration { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
     }
@@ -2051,7 +2051,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Detail { get { throw null; } }
         public string MechanismType { get { throw null; } }
         public string Name { get { throw null; } }
-        public string SendTime { get { throw null; } }
+        public System.DateTimeOffset? SendOn { get { throw null; } }
         public string Status { get { throw null; } }
         public string SubState { get { throw null; } }
     }
