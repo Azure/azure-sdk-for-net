@@ -26,8 +26,8 @@ Instantiate route client via AAD authentication:
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
-TokenCredential credential = TestEnvironment.Credential;
-string clientId = "<My Map Account Client Id>";
+TokenCredential credential = new DefaultAzureCredential();
+string clientId = "<Your Map ClientId>";
 MapsRouteClient client = new MapsRouteClient(credential, clientId);
 ```
 

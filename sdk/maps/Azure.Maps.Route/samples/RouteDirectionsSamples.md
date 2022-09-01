@@ -26,8 +26,8 @@ Instantiate route client via AAD authentication:
 
 ```C# Snippet:InstantiateRouteClientViaAAD
 // Create a MapsRouteClient that will authenticate through Active Directory
-TokenCredential credential = TestEnvironment.Credential;
-string clientId = "<My Map Account Client Id>";
+TokenCredential credential = new DefaultAzureCredential();
+string clientId = "<Your Map ClientId>";
 MapsRouteClient client = new MapsRouteClient(credential, clientId);
 ```
 
@@ -54,10 +54,10 @@ Console.WriteLine(result.Value.Routes[0].Summary.LengthInMeters);
 Console.WriteLine(result.Value.Routes[0].Summary.TravelTimeInSeconds);
 
 // Route points
-foreach (var leg in result.Value.Routes[0].Legs)
+foreach (RouteLeg leg in result.Value.Routes[0].Legs)
 {
     Console.WriteLine("Route path:");
-    foreach (var point in leg.Points)
+    foreach (GeoPosition point in leg.Points)
     {
         Console.WriteLine($"point({point.Latitude}, {point.Longitude})");
     }
@@ -93,10 +93,10 @@ Console.WriteLine(result.Value.Routes[0].Summary.LengthInMeters);
 Console.WriteLine(result.Value.Routes[0].Summary.TravelTimeInSeconds);
 
 // Route points
-foreach (var leg in result.Value.Routes[0].Legs)
+foreach (RouteLeg leg in result.Value.Routes[0].Legs)
 {
     Console.WriteLine("Route path:");
-    foreach (var point in leg.Points)
+    foreach (GeoPosition point in leg.Points)
     {
         Console.WriteLine($"point({point.Latitude}, {point.Longitude})");
     }
