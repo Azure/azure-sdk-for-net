@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Orbital
 {
     /// <summary>
-    /// A Class representing a Spacecraft along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SpacecraftResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSpacecraftResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSpacecraft method.
+    /// A Class representing an OrbitalSpacecraft along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OrbitalSpacecraftResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetOrbitalSpacecraftResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetOrbitalSpacecraft method.
     /// </summary>
-    public partial class SpacecraftResource : ArmResource
+    public partial class OrbitalSpacecraftResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SpacecraftResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="OrbitalSpacecraftResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string spacecraftName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _spacecraftClientDiagnostics;
-        private readonly SpacecraftsRestOperations _spacecraftRestClient;
-        private readonly SpacecraftData _data;
+        private readonly ClientDiagnostics _orbitalSpacecraftSpacecraftsClientDiagnostics;
+        private readonly SpacecraftsRestOperations _orbitalSpacecraftSpacecraftsRestClient;
+        private readonly OrbitalSpacecraftData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SpacecraftResource"/> class for mocking. </summary>
-        protected SpacecraftResource()
+        /// <summary> Initializes a new instance of the <see cref="OrbitalSpacecraftResource"/> class for mocking. </summary>
+        protected OrbitalSpacecraftResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SpacecraftResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "OrbitalSpacecraftResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SpacecraftResource(ArmClient client, SpacecraftData data) : this(client, data.Id)
+        internal OrbitalSpacecraftResource(ArmClient client, OrbitalSpacecraftData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SpacecraftResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OrbitalSpacecraftResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SpacecraftResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal OrbitalSpacecraftResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _spacecraftClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Orbital", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string spacecraftApiVersion);
-            _spacecraftRestClient = new SpacecraftsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, spacecraftApiVersion);
+            _orbitalSpacecraftSpacecraftsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Orbital", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string orbitalSpacecraftSpacecraftsApiVersion);
+            _orbitalSpacecraftSpacecraftsRestClient = new SpacecraftsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, orbitalSpacecraftSpacecraftsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SpacecraftData Data
+        public virtual OrbitalSpacecraftData Data
         {
             get
             {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Orbital
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ContactResources in the Spacecraft. </summary>
-        /// <returns> An object representing collection of ContactResources and their operations over a ContactResource. </returns>
-        public virtual ContactCollection GetContacts()
+        /// <summary> Gets a collection of OrbitalContactResources in the OrbitalSpacecraft. </summary>
+        /// <returns> An object representing collection of OrbitalContactResources and their operations over a OrbitalContactResource. </returns>
+        public virtual OrbitalContactCollection GetOrbitalContacts()
         {
-            return GetCachedClient(Client => new ContactCollection(Client, Id));
+            return GetCachedClient(Client => new OrbitalContactCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContactResource>> GetContactAsync(string contactName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrbitalContactResource>> GetOrbitalContactAsync(string contactName, CancellationToken cancellationToken = default)
         {
-            return await GetContacts().GetAsync(contactName, cancellationToken).ConfigureAwait(false);
+            return await GetOrbitalContacts().GetAsync(contactName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="contactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContactResource> GetContact(string contactName, CancellationToken cancellationToken = default)
+        public virtual Response<OrbitalContactResource> GetOrbitalContact(string contactName, CancellationToken cancellationToken = default)
         {
-            return GetContacts().Get(contactName, cancellationToken);
+            return GetOrbitalContacts().Get(contactName, cancellationToken);
         }
 
         /// <summary>
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.Orbital
         /// Operation Id: Spacecrafts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SpacecraftResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrbitalSpacecraftResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.Get");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.Get");
             scope.Start();
             try
             {
-                var response = await _spacecraftRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _orbitalSpacecraftSpacecraftsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SpacecraftResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrbitalSpacecraftResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,16 +156,16 @@ namespace Azure.ResourceManager.Orbital
         /// Operation Id: Spacecrafts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SpacecraftResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<OrbitalSpacecraftResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.Get");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.Get");
             scope.Start();
             try
             {
-                var response = _spacecraftRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _orbitalSpacecraftSpacecraftsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SpacecraftResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrbitalSpacecraftResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.Delete");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.Delete");
             scope.Start();
             try
             {
-                var response = await _spacecraftRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation(_spacecraftClientDiagnostics, Pipeline, _spacecraftRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _orbitalSpacecraftSpacecraftsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new OrbitalArmOperation(_orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.Delete");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.Delete");
             scope.Start();
             try
             {
-                var response = _spacecraftRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new OrbitalArmOperation(_spacecraftClientDiagnostics, Pipeline, _spacecraftRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _orbitalSpacecraftSpacecraftsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new OrbitalArmOperation(_orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -232,19 +232,19 @@ namespace Azure.ResourceManager.Orbital
         /// Operation Id: Spacecrafts_UpdateTags
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="tagsObject"> Parameters supplied to update spacecraft tags. </param>
+        /// <param name="orbitalSpacecraftTags"> Parameters supplied to update spacecraft tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<ArmOperation<SpacecraftResource>> UpdateAsync(WaitUntil waitUntil, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="orbitalSpacecraftTags"/> is null. </exception>
+        public virtual async Task<ArmOperation<OrbitalSpacecraftResource>> UpdateAsync(WaitUntil waitUntil, OrbitalSpacecraftTags orbitalSpacecraftTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(orbitalSpacecraftTags, nameof(orbitalSpacecraftTags));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.Update");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.Update");
             scope.Start();
             try
             {
-                var response = await _spacecraftRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<SpacecraftResource>(new SpacecraftOperationSource(Client), _spacecraftClientDiagnostics, Pipeline, _spacecraftRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject).Request, response, OperationFinalStateVia.Location);
+                var response = await _orbitalSpacecraftSpacecraftsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags, cancellationToken).ConfigureAwait(false);
+                var operation = new OrbitalArmOperation<OrbitalSpacecraftResource>(new OrbitalSpacecraftOperationSource(Client), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,19 +262,19 @@ namespace Azure.ResourceManager.Orbital
         /// Operation Id: Spacecrafts_UpdateTags
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="tagsObject"> Parameters supplied to update spacecraft tags. </param>
+        /// <param name="orbitalSpacecraftTags"> Parameters supplied to update spacecraft tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual ArmOperation<SpacecraftResource> Update(WaitUntil waitUntil, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="orbitalSpacecraftTags"/> is null. </exception>
+        public virtual ArmOperation<OrbitalSpacecraftResource> Update(WaitUntil waitUntil, OrbitalSpacecraftTags orbitalSpacecraftTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(orbitalSpacecraftTags, nameof(orbitalSpacecraftTags));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.Update");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.Update");
             scope.Start();
             try
             {
-                var response = _spacecraftRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
-                var operation = new OrbitalArmOperation<SpacecraftResource>(new SpacecraftOperationSource(Client), _spacecraftClientDiagnostics, Pipeline, _spacecraftRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject).Request, response, OperationFinalStateVia.Location);
+                var response = _orbitalSpacecraftSpacecraftsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags, cancellationToken);
+                var operation = new OrbitalArmOperation<OrbitalSpacecraftResource>(new OrbitalSpacecraftOperationSource(Client), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -295,12 +295,12 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<SpacecraftResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrbitalSpacecraftResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.AddTag");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.AddTag");
             scope.Start();
             try
             {
@@ -309,13 +309,13 @@ namespace Azure.ResourceManager.Orbital
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _spacecraftRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _orbitalSpacecraftSpacecraftsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new OrbitalSpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new OrbitalSpacecraftTags();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -341,12 +341,12 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<SpacecraftResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<OrbitalSpacecraftResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.AddTag");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.AddTag");
             scope.Start();
             try
             {
@@ -355,13 +355,13 @@ namespace Azure.ResourceManager.Orbital
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _spacecraftRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new SpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _orbitalSpacecraftSpacecraftsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new OrbitalSpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new OrbitalSpacecraftTags();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -386,11 +386,11 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<SpacecraftResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrbitalSpacecraftResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.SetTags");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.SetTags");
             scope.Start();
             try
             {
@@ -400,13 +400,13 @@ namespace Azure.ResourceManager.Orbital
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _spacecraftRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _orbitalSpacecraftSpacecraftsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new OrbitalSpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new OrbitalSpacecraftTags();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -427,11 +427,11 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<SpacecraftResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<OrbitalSpacecraftResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.SetTags");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.SetTags");
             scope.Start();
             try
             {
@@ -441,13 +441,13 @@ namespace Azure.ResourceManager.Orbital
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _spacecraftRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new SpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _orbitalSpacecraftSpacecraftsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new OrbitalSpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new OrbitalSpacecraftTags();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<SpacecraftResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OrbitalSpacecraftResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.RemoveTag");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.RemoveTag");
             scope.Start();
             try
             {
@@ -481,13 +481,13 @@ namespace Azure.ResourceManager.Orbital
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _spacecraftRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _orbitalSpacecraftSpacecraftsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new OrbitalSpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new OrbitalSpacecraftTags();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -512,11 +512,11 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<SpacecraftResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<OrbitalSpacecraftResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _spacecraftClientDiagnostics.CreateScope("SpacecraftResource.RemoveTag");
+            using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftResource.RemoveTag");
             scope.Start();
             try
             {
@@ -525,13 +525,13 @@ namespace Azure.ResourceManager.Orbital
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _spacecraftRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new SpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _orbitalSpacecraftSpacecraftsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new OrbitalSpacecraftResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new OrbitalSpacecraftTags();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
