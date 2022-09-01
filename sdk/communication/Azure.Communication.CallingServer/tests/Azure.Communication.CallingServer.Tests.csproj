@@ -7,6 +7,9 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <PackageReference Include="Azure.Core.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Amqp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
