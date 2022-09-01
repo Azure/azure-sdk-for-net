@@ -2,26 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Tests.Scenario
 {
-    internal class BestPracticeTests : AutomanageTestBase
+    internal class BestPracticeTests : BestPracticeTestBase
     {
-        private TenantResource tenant;
+        //private TenantResource tenant;
         public BestPracticeTests(bool async) : base(async) { }
-
-        [SetUp]
-        protected async Task GetTenant()
-        {
-            var tenants = ArmClient.GetTenants();
-            await foreach (var t in tenants)
-            {
-                if (t.Data.TenantId == Subscription.Data.TenantId)
-                    tenant = t;
-            }
-        }
 
         [TestCase]
         public async Task CanGetBestPracticesProductionProfile()
@@ -29,7 +17,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileName = "AzureBestPracticesProduction";
 
             // fetch tenant collection
-            var collection = tenant.GetBestPractices();
+            var collection = Tenant.GetBestPractices();
             var profile = await collection.GetAsync(profileName);
 
             // assert
@@ -47,7 +35,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             string profileName = "AzureBestPracticesDevTest";
 
             // fetch tenant collection
-            var collection = tenant.GetBestPractices();
+            var collection = Tenant.GetBestPractices();
             var profile = await collection.GetAsync(profileName);
 
             // assert
@@ -63,7 +51,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         public async Task CanGetAllBestPracticesProfiles()
         {
             // fetch tenant collection
-            var collection = tenant.GetBestPractices();
+            var collection = Tenant.GetBestPractices();
             var profiles = collection.GetAllAsync();
 
             int count = 0;
