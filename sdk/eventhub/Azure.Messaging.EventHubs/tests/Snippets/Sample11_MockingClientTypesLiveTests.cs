@@ -36,12 +36,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public void BatchingValidation()
         {
             #region Snippet:EventHubs_Sample11_SimpleBatchingLogic_Test
-
-            // Create a mock of the EventHubProducerClient
             var mockProducer = new Mock<EventHubProducerClient>();
 
-            // The method we are testing uses the following two methods, so we will abstract those
-            // out by setting up simple returns
+            // Setting up a mock CreateBatchAsync
             mockProducer.Setup(p => p.CreateBatchAsync(
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
@@ -49,13 +46,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     46,
                     new List<EventData>(),
                     new CreateBatchOptions() { },
-                    // Define the custom TryAdd callback. This allows for simple reasoning
-                    // when writing the test.
+                    // Constructing a batch using the factory allows the user to define a custom TryAdd
+                    // callback. In this case we want an easily predictable result from TryAdd, so
+                    // just choosing an arbitrary length comparison value
                     eventData =>
                     {
                         return eventData.EventBody.ToString().Length < 10;
                     }));
 
+            // Placeholder for the SendAsync function
             mockProducer.Setup(p => p.SendAsync(
                 It.IsAny<EventDataBatch>(),
                 It.IsAny<CancellationToken>()))
@@ -63,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var producer = mockProducer.Object;
 
-            // Attempt to send a mocked EventData instance with a string body larger than 10
+            // Defining a "large event" that has a length longer than 10
             var largeEvent = EventHubsModelFactory.EventData(new BinaryData("This represents a very large Event"));
 
             // In this case we want to make sure that the method does not throw any exceptions
@@ -118,7 +117,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample11_PropertiesLogic_Test
 
-            // Create a mock of the EventHubProducerClient
             var mockProducer = new Mock<EventHubProducerClient>();
 
             // Create a mock of the partitions and publishing properties
@@ -128,10 +126,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 { "1", EventHubsModelFactory.PartitionPublishingProperties(false, null, 42, null) }
             };
 
-            var eventHubProperties = EventHubsModelFactory.EventHubProperties("fakeEventHub", DateTimeOffset.UtcNow, new string[] { "0", "1" });
+            var eventHubProperties =
+                EventHubsModelFactory.EventHubProperties(
+                    "fakeEventHub",
+                    DateTimeOffset.UtcNow,
+                    new string[] { "0", "1" });
 
-            // The method we are testing uses the following two methods, so we will abstract those
-            // out by setting up simple returns
+            // For this test case, we just need to mock GetEventHubPropertiesAsync and
+            // GetPartitionPublishingPropertiesAsync (for each partition), using the partitions
+            // and properties defined above
             mockProducer.Setup(p => p.GetEventHubPropertiesAsync(
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(eventHubProperties);
@@ -146,17 +149,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             var producer = mockProducer.Object;
 
-            // Attempt to send a mocked EventData instance with a string body larger than 10
             var generatedEvents = GenerateEvents(50);
             var smallBatchCount = 10;
             var largeBatchCount = 20;
 
+            // Call the method we are trying to test
             SendEventsToProspectivePartitions(producer, generatedEvents, smallBatchCount, largeBatchCount);
 
             foreach (var partition in partitions)
             {
                 // Verify that the batch with less events have been sent to the partition with exlusive reader (owner level set)
-
                 mockProducer.Verify(prod => prod.SendAsync(
                     It.Is<List<EventData>>(evts => evts.Count == (partition.Value.OwnerLevel.HasValue ? smallBatchCount : largeBatchCount)),
                     It.Is<SendEventOptions>(opts => opts.PartitionId == partition.Key),
@@ -167,6 +169,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         }
 
         #region EventHubs_Sample11_PropertiesLogic
+        // A method to send a set of events to multiple partitions in batches, which size is dependent on the
+        // ownership level of the partition. If the partition only has one reader, send a small batch, if it has
+        // no ownership restrictions send a large batch.
         private async void SendEventsToProspectivePartitions(EventHubProducerClient producer, List<EventData> eventDataList, int smallBatchCount, int largeBatchCount)
         {
             var properties = await producer.GetEventHubPropertiesAsync();
@@ -177,6 +182,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             foreach (var partitionId in partitionIds)
             {
                 var publishingProperties = await producer.GetPartitionPublishingPropertiesAsync(partitionId);
+
+                // GetNextSetOfEvents is an application-specific method to split events into groups for send
                 (eventsToSend, nextEventIndexToSend) = GetNextSetOfEvents(eventDataList, nextEventIndexToSend, publishingProperties.OwnerLevel, smallBatchCount, largeBatchCount);
 
                 var options = new SendEventOptions
@@ -376,18 +383,26 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         #endregion
 
         [Test]
-        public void PartitionReceiver()
+        public async void PartitionReceiver()
         {
             #region Snippet:EventHubs_Sample11_PartitionReceiver_Test
-            var receiver = new Mock<PartitionReceiver>();
+            var mockReceiver = new Mock<PartitionReceiver>();
             var emptyEventBatch = new List<EventData>();
 
-            receiver.Setup(
+            mockReceiver.Setup(
                 r => r.ReceiveBatchAsync(
                     It.IsAny<int>(),
                     It.IsAny<TimeSpan>(),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(emptyEventBatch);
+
+            var receiver = mockReceiver.Object;
+
+            var cancellationSource = new CancellationTokenSource();
+
+            var ranOutOfEvents = await ReceiveBatches(receiver, cancellationSource);
+
+            Assert.IsTrue(ranOutOfEvents);
 
             #endregion
         }
