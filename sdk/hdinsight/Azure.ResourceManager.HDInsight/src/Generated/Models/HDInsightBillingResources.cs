@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="region"> The region or location. </param>
         /// <param name="billingMeters"> The billing meter information. </param>
         /// <param name="diskBillingMeters"> The managed disk billing information. </param>
-        internal HDInsightBillingResources(string region, IReadOnlyList<HDInsightBillingMeters> billingMeters, IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters)
+        internal HDInsightBillingResources(AzureLocation? region, IReadOnlyList<HDInsightBillingMeters> billingMeters, IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters)
         {
             Region = region;
             BillingMeters = billingMeters;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The region or location. </summary>
-        public string Region { get; }
+        public AzureLocation? Region { get; }
         /// <summary> The billing meter information. </summary>
         public IReadOnlyList<HDInsightBillingMeters> BillingMeters { get; }
         /// <summary> The managed disk billing information. </summary>
