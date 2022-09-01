@@ -113,5 +113,13 @@ namespace Azure.Identity.Tests
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cts.Token));
         }
+
+        [Test]
+        public void ConfigureCliProcessTimeout()
+        {
+            TimeSpan cliProcessTimeout = TimeSpan.FromMilliseconds(42);
+            AzureCliCredential credendial = new AzureCliCredential(new AzureCliCredentialOptions() { CliProcessTimeout = cliProcessTimeout });
+            Assert.AreEqual(cliProcessTimeout, credendial.CliProcessTimeout);
+        }
     }
 }

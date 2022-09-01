@@ -229,5 +229,13 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }), CancellationToken.None));
         }
+
+        [Test]
+        public void ConfigureVisualStudioProcessTimeout()
+        {
+            TimeSpan visualStudioProcessTimeout = TimeSpan.FromMilliseconds(42);
+            VisualStudioCredential credendial = new VisualStudioCredential(new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = visualStudioProcessTimeout });
+            Assert.AreEqual(visualStudioProcessTimeout, credendial.VisualStudioProcessTimeout);
+        }
     }
 }
