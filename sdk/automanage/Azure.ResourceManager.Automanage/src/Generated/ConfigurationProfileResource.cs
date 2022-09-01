@@ -89,43 +89,6 @@ namespace Azure.ResourceManager.Automanage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileVersionResources in the ConfigurationProfile. </summary>
-        /// <returns> An object representing collection of ConfigurationProfileVersionResources and their operations over a ConfigurationProfileVersionResource. </returns>
-        public virtual ConfigurationProfileVersionCollection GetConfigurationProfileVersions()
-        {
-            return GetCachedClient(Client => new ConfigurationProfileVersionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get information about a configuration profile version
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}
-        /// Operation Id: ConfigurationProfilesVersions_Get
-        /// </summary>
-        /// <param name="versionName"> The configuration profile version name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationProfileVersionResource>> GetConfigurationProfileVersionAsync(string versionName, CancellationToken cancellationToken = default)
-        {
-            return await GetConfigurationProfileVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get information about a configuration profile version
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}
-        /// Operation Id: ConfigurationProfilesVersions_Get
-        /// </summary>
-        /// <param name="versionName"> The configuration profile version name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ConfigurationProfileVersionResource> GetConfigurationProfileVersion(string versionName, CancellationToken cancellationToken = default)
-        {
-            return GetConfigurationProfileVersions().Get(versionName, cancellationToken);
-        }
-
         /// <summary>
         /// Get information about a configuration profile
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}

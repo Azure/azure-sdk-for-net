@@ -6,7 +6,8 @@ azure-arm: true
 csharp: true
 library-name: Automanage
 namespace: Azure.ResourceManager.Automanage
-require: https://github.com/Azure/azure-rest-api-specs/blob/d32cece9ca8814ef42085d4bbc426dc35bbcaf87/specification/automanage/resource-manager/readme.md
+require: https://github.com/AndrewCS149/azure-rest-api-specs/blob/360b7c3331b919bfe90148adff6abe025d21c720/specification/automanage/resource-manager/readme.md
+# require: https://github.com/Azure/azure-rest-api-specs/blob/d32cece9ca8814ef42085d4bbc426dc35bbcaf87/specification/automanage/resource-manager/readme.md
 tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -44,6 +45,17 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 directive:
+#remove these operations as they are currently not supported but will be in the future
+  - remove-operation: ConfigurationProfilesVersions_CreateOrUpdate
+  - remove-operation: ConfigurationProfilesVersions_Get
+  - remove-operation: ConfigurationProfilesVersions_Delete
+  - remove-operation: ConfigurationProfilesVersions_ListChildResources
+  - remove-operation: BestPracticesVersions_Get
+  - remove-operation: BestPracticesVersions_ListByTenant
+  - from: automanage.json
+    where: $.definitions.AssignmentReportProperties.duration
+    transform: $['format'] = "
+
 #use scope parameter on the two paths that are defined multiple times
   - from: automanage.json
     where: $.paths

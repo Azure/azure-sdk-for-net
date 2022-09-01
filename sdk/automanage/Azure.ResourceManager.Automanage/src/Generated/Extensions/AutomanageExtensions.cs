@@ -348,25 +348,6 @@ namespace Azure.ResourceManager.Automanage
         }
         #endregion
 
-        #region BestPracticeVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="BestPracticeVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BestPracticeVersionResource.CreateResourceIdentifier" /> to create a <see cref="BestPracticeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BestPracticeVersionResource" /> object. </returns>
-        public static BestPracticeVersionResource GetBestPracticeVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                BestPracticeVersionResource.ValidateResourceId(id);
-                return new BestPracticeVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ConfigurationProfileResource
         /// <summary>
         /// Gets an object representing a <see cref="ConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
@@ -381,25 +362,6 @@ namespace Azure.ResourceManager.Automanage
             {
                 ConfigurationProfileResource.ValidateResourceId(id);
                 return new ConfigurationProfileResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ConfigurationProfileVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileVersionResource" /> object. </returns>
-        public static ConfigurationProfileVersionResource GetConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConfigurationProfileVersionResource.ValidateResourceId(id);
-                return new ConfigurationProfileVersionResource(client, id);
             }
             );
         }

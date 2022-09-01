@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationProfileAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
-            scope0.Start();
+            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
+            scope.Start();
             try
             {
                 var response = await _configurationProfileAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationProfileAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
-            scope0.Start();
+            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
+            scope.Start();
             try
             {
                 var response = _configurationProfileAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
-            scope0.Start();
+            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
+            scope.Start();
             try
             {
                 var response = await _configurationProfileAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
-            scope0.Start();
+            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
+            scope.Start();
             try
             {
                 var response = _configurationProfileAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
-            scope0.Start();
+            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
+            scope.Start();
             try
             {
                 var response = await _configurationProfileAssignmentRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -234,8 +234,8 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
-            scope0.Start();
+            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
+            scope.Start();
             try
             {
                 var response = _configurationProfileAssignmentRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope0 = _reportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
-            scope0.Start();
+            using var scope = _reportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
+            scope.Start();
             try
             {
                 var response = await _reportsRestClient.GetAsync(Id.Parent, Id.Name, reportName, cancellationToken).ConfigureAwait(false);
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope0 = _reportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
-            scope0.Start();
+            using var scope = _reportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
+            scope.Start();
             try
             {
                 var response = _reportsRestClient.Get(Id.Parent, Id.Name, reportName, cancellationToken);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

@@ -1,10 +1,10 @@
 {
   "OutputFolder": ".",
   "Namespace": "Azure.ResourceManager.Automanage",
-  "LibraryName": "automanage",
+  "LibraryName": "Automanage",
   "SharedSourceFolders": [
     "..\\..\\..\\..\\core\\Azure.Core\\src\\Shared\\",
-    "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20220727.7\\content\\Generator.Shared\\"
+    "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20220815.1\\content\\Generator.Shared\\"
   ],
   "azure-arm": true,
   "public-clients": true,

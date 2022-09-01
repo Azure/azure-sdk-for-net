@@ -137,7 +137,7 @@ schemas: !Schemas
           name: String
           description: ''
       protocol: !Protocols {}
-    - !StringSchema &ref_88
+    - !StringSchema &ref_85
       type: string
       apiVersions:
         - !ApiVersion 
@@ -529,7 +529,7 @@ schemas: !Schemas
           name: Accept
           description: 'Accept: application/json'
       protocol: !Protocols {}
-    - !ConstantSchema &ref_89
+    - !ConstantSchema &ref_86
       type: constant
       value: !ConstantValue 
         value: application/json
@@ -1562,7 +1562,7 @@ schemas: !Schemas
           namespace: ''
       protocol: !Protocols {}
     - *ref_53
-    - !ObjectSchema &ref_103
+    - !ObjectSchema &ref_100
       type: object
       apiVersions:
         - !ApiVersion 
@@ -1596,7 +1596,7 @@ schemas: !Schemas
           description: The response of the list configuration profile operation.
           namespace: ''
       protocol: !Protocols {}
-    - !ObjectSchema &ref_119
+    - !ObjectSchema &ref_103
       type: object
       apiVersions:
         - !ApiVersion 
@@ -1633,7 +1633,7 @@ schemas: !Schemas
     - *ref_42
     - *ref_54
     - *ref_22
-    - !ObjectSchema &ref_133
+    - !ObjectSchema &ref_117
       type: object
       apiVersions:
         - !ApiVersion 
@@ -1797,7 +1797,7 @@ schemas: !Schemas
       protocol: !Protocols {}
     - *ref_64
     - *ref_65
-    - !ObjectSchema &ref_137
+    - !ObjectSchema &ref_121
       type: object
       apiVersions:
         - !ApiVersion 
@@ -1833,7 +1833,7 @@ schemas: !Schemas
       protocol: !Protocols {}
     - *ref_43
     - *ref_66
-    - !ObjectSchema &ref_141
+    - !ObjectSchema &ref_125
       type: object
       apiVersions:
         - !ApiVersion 
@@ -1879,7 +1879,7 @@ schemas: !Schemas
     - *ref_74
     - *ref_75
 globalParameters:
-  - !Parameter &ref_87
+  - !Parameter &ref_84
     schema: *ref_76
     implementation: Client
     required: true
@@ -2203,313 +2203,6 @@ operationGroups:
         description: ''
     protocol: !Protocols {}
   - !OperationGroup 
-    $key: BestPracticesVersions
-    operations:
-      - !Operation 
-        operationId: BestPracticesVersions_Get
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - !Parameter &ref_84
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: bestPracticeName
-                description: The Automanage best practice name.
-                serializedName: bestPracticeName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - !Parameter &ref_85
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: versionName
-                description: The Automanage best practice version name.
-                serializedName: versionName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_79
-        requests:
-          - !Request 
-            parameters:
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters: []
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpRequest 
-                path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}/versions/{versionName}
-                method: get
-                uri: '{$host}'
-        signatureParameters:
-          - *ref_84
-          - *ref_85
-        responses:
-          - !SchemaResponse 
-            schema: *ref_19
-            language: !Languages 
-              default:
-                name: ''
-                description: OK. The Automanage best practice version was returned successfully.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '200'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            'Get an Automanage best practice version ':
-              parameters:
-                api-version: '2022-05-04'
-                bestPracticeName: azureBestPracticesProduction
-                versionName: version1
-              responses:
-                '200':
-                  body:
-                    name: azureBestPracticesProduction/version1
-                    type: Microsoft.Automanage/bestPractices/versions
-                    id: /providers/Microsoft.Automanage/bestPractices/azureBestPracticesProduction/versions/version1
-                    properties:
-                      configuration:
-                        Antimalware/Enable: true
-                        Antimalware/EnableRealTimeProtection: true
-                        Antimalware/RunScheduledScan: true
-                        Antimalware/ScanDay: '7'
-                        Antimalware/ScanTimeInMinutes: '120'
-                        Antimalware/ScanType: Quick
-                        AzureSecurityCenter/Enable: true
-                        Backup/Enable: true
-                        Backup/InstantRpRetentionRangeInDays: '2'
-                        Backup/PolicyName: dailyBackupPolicy
-                        Backup/RetentionPolicy/DailySchedule/RetentionDuration/Count: '180'
-                        Backup/RetentionPolicy/DailySchedule/RetentionDuration/DurationType: Days
-                        Backup/RetentionPolicy/DailySchedule/RetentionTimes: '[ 2017-01-26T00:00:00Z ]'
-                        Backup/RetentionPolicy/RetentionPolicyType: LongTermRetentionPolicy
-                        Backup/SchedulePolicy/SchedulePolicyType: SimpleSchedulePolicy
-                        Backup/SchedulePolicy/ScheduleRunFrequency: Daily
-                        Backup/SchedulePolicy/ScheduleRunTimes: '[ 2017-01-26T00:00:00Z ]'
-                        Backup/TimeZone: UTC
-                        BootDiagnostics/Enable: true
-                        ChangeTrackingAndInventory/Enable: true
-                        GuestConfiguration/Enable: true
-                        LogAnalytics/Enable: true
-                        UpdateManagement/Enable: true
-                        VMInsights/Enable: true
-                    systemData:
-                      createdAt: '2020-02-03T01:01:01.1075056Z'
-                      createdBy: user1@outlook.com
-                      createdByType: User
-                      lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                      lastModifiedBy: user2@outlook.com
-                      lastModifiedByType: User
-                  headers: {}
-        language: !Languages 
-          default:
-            name: Get
-            description: Get information about a Automanage best practice version
-        protocol: !Protocols {}
-      - !Operation 
-        operationId: BestPracticesVersions_ListByTenant
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - !Parameter &ref_86
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: bestPracticeName
-                description: The Automanage best practice name.
-                serializedName: bestPracticeName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_79
-        requests:
-          - !Request 
-            parameters:
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters: []
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpRequest 
-                path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}/versions
-                method: get
-                uri: '{$host}'
-        signatureParameters:
-          - *ref_86
-        responses:
-          - !SchemaResponse 
-            schema: *ref_83
-            language: !Languages 
-              default:
-                name: ''
-                description: OK. List of Automanage bestPractices configuration profile versions.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '200'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            'List Automanage best practices versions ':
-              parameters:
-                api-version: '2022-05-04'
-                bestPracticeName: azureBestPracticesProduction
-              responses:
-                '200':
-                  body:
-                    value:
-                      - name: azureBestPracticesProduction/version1
-                        type: Microsoft.Automanage/bestPractices/versions
-                        id: /providers/Microsoft.Automanage/bestPractices/azureBestPracticesProduction/versions/version1
-                        properties:
-                          configuration:
-                            Antimalware/Enable: true
-                            Antimalware/EnableRealTimeProtection: true
-                            Antimalware/RunScheduledScan: true
-                            Antimalware/ScanDay: '7'
-                            Antimalware/ScanTimeInMinutes: '120'
-                            Antimalware/ScanType: Quick
-                            AzureSecurityCenter/Enable: true
-                            Backup/Enable: true
-                            Backup/InstantRpRetentionRangeInDays: '2'
-                            Backup/PolicyName: dailyBackupPolicy
-                            Backup/RetentionPolicy/DailySchedule/RetentionDuration/Count: '180'
-                            Backup/RetentionPolicy/DailySchedule/RetentionDuration/DurationType: Days
-                            Backup/RetentionPolicy/DailySchedule/RetentionTimes: '[ 2017-01-26T00:00:00Z ]'
-                            Backup/RetentionPolicy/RetentionPolicyType: LongTermRetentionPolicy
-                            Backup/SchedulePolicy/SchedulePolicyType: SimpleSchedulePolicy
-                            Backup/SchedulePolicy/ScheduleRunFrequency: Daily
-                            Backup/SchedulePolicy/ScheduleRunTimes: '[ 2017-01-26T00:00:00Z ]'
-                            Backup/TimeZone: UTC
-                            BootDiagnostics/Enable: true
-                            ChangeTrackingAndInventory/Enable: true
-                            GuestConfiguration/Enable: true
-                            LogAnalytics/Enable: true
-                            UpdateManagement/Enable: true
-                            VMInsights/Enable: true
-                        systemData:
-                          createdAt: '2020-02-03T01:01:01.1075056Z'
-                          createdBy: user1@outlook.com
-                          createdByType: User
-                          lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                          lastModifiedBy: user2@outlook.com
-                          lastModifiedByType: User
-                      - name: azureBestPracticesProduction/version2
-                        type: Microsoft.Automanage/bestPractices/versions
-                        id: /providers/Microsoft.Automanage/bestPractices/azureBestPracticesProduction/versions/version2
-                        properties:
-                          configuration:
-                            Antimalware/Enable: true
-                            Antimalware/EnableRealTimeProtection: true
-                            Antimalware/RunScheduledScan: true
-                            Antimalware/ScanDay: '7'
-                            Antimalware/ScanTimeInMinutes: '120'
-                            Antimalware/ScanType: Quick
-                            AzureSecurityCenter/Enable: true
-                            Backup/Enable: false
-                            BootDiagnostics/Enable: true
-                            ChangeTrackingAndInventory/Enable: true
-                            GuestConfiguration/Enable: true
-                            LogAnalytics/Enable: true
-                            UpdateManagement/Enable: true
-                            VMInsights/Enable: false
-                        systemData:
-                          createdAt: '2020-02-03T01:01:01.1075056Z'
-                          createdBy: user1@outlook.com
-                          createdByType: User
-                          lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                          lastModifiedBy: user2@outlook.com
-                          lastModifiedByType: User
-                  headers: {}
-          x-ms-pageable:
-            nextLinkName: null
-        language: !Languages 
-          default:
-            name: ListByTenant
-            description: Retrieve a list of Automanage best practices versions
-            paging:
-              nextLinkName: null
-        protocol: !Protocols {}
-    language: !Languages 
-      default:
-        name: BestPracticesVersions
-        description: ''
-    protocol: !Protocols {}
-  - !OperationGroup 
     $key: ConfigurationProfiles
     operations:
       - !Operation 
@@ -2519,7 +2212,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_92
+          - !Parameter &ref_89
             schema: *ref_2
             implementation: Method
             required: true
@@ -2531,9 +2224,9 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - *ref_87
-          - !Parameter &ref_93
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_90
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -2546,10 +2239,10 @@ operationGroups:
                 in: path
           - *ref_79
         requestMediaTypes:
-          application/json: !Request &ref_91
+          application/json: !Request &ref_88
             parameters:
               - !Parameter 
-                schema: *ref_89
+                schema: *ref_86
                 implementation: Method
                 origin: modelerfour:synthesized/content-type
                 required: true
@@ -2561,7 +2254,7 @@ operationGroups:
                 protocol: !Protocols 
                   http: !HttpParameter 
                     in: header
-              - !Parameter &ref_90
+              - !Parameter &ref_87
                 schema: *ref_20
                 implementation: Method
                 required: true
@@ -2587,7 +2280,7 @@ operationGroups:
                   http: !HttpParameter 
                     in: header
             signatureParameters:
-              - *ref_90
+              - *ref_87
             language: !Languages 
               default:
                 name: ''
@@ -2601,10 +2294,10 @@ operationGroups:
                   - application/json
                 uri: '{$host}'
         requests:
-          - *ref_91
+          - *ref_88
         signatureParameters:
-          - *ref_92
-          - *ref_93
+          - *ref_89
+          - *ref_90
         responses:
           - !SchemaResponse 
             schema: *ref_20
@@ -2737,7 +2430,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_94
+          - !Parameter &ref_91
             schema: *ref_2
             implementation: Method
             required: true
@@ -2749,9 +2442,9 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - *ref_87
-          - !Parameter &ref_95
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_92
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -2790,8 +2483,8 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_94
-          - *ref_95
+          - *ref_91
+          - *ref_92
         responses:
           - !SchemaResponse 
             schema: *ref_20
@@ -2868,8 +2561,8 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_96
-            schema: *ref_88
+          - !Parameter &ref_93
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -2880,7 +2573,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_97
+          - !Parameter &ref_94
             schema: *ref_2
             implementation: Method
             required: true
@@ -2892,7 +2585,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - *ref_87
+          - *ref_84
           - *ref_79
         requests:
           - !Request 
@@ -2921,8 +2614,8 @@ operationGroups:
                 method: delete
                 uri: '{$host}'
         signatureParameters:
-          - *ref_96
-          - *ref_97
+          - *ref_93
+          - *ref_94
         responses:
           - !Response 
             language: !Languages 
@@ -2980,7 +2673,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_100
+          - !Parameter &ref_97
             schema: *ref_2
             implementation: Method
             required: true
@@ -2992,9 +2685,9 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - *ref_87
-          - !Parameter &ref_101
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_98
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -3007,10 +2700,10 @@ operationGroups:
                 in: path
           - *ref_79
         requestMediaTypes:
-          application/json: !Request &ref_99
+          application/json: !Request &ref_96
             parameters:
               - !Parameter 
-                schema: *ref_89
+                schema: *ref_86
                 implementation: Method
                 origin: modelerfour:synthesized/content-type
                 required: true
@@ -3022,7 +2715,7 @@ operationGroups:
                 protocol: !Protocols 
                   http: !HttpParameter 
                     in: header
-              - !Parameter &ref_98
+              - !Parameter &ref_95
                 schema: *ref_51
                 implementation: Method
                 required: true
@@ -3048,7 +2741,7 @@ operationGroups:
                   http: !HttpParameter 
                     in: header
             signatureParameters:
-              - *ref_98
+              - *ref_95
             language: !Languages 
               default:
                 name: ''
@@ -3062,10 +2755,10 @@ operationGroups:
                   - application/json
                 uri: '{$host}'
         requests:
-          - *ref_99
+          - *ref_96
         signatureParameters:
-          - *ref_100
-          - *ref_101
+          - *ref_97
+          - *ref_98
         responses:
           - !SchemaResponse 
             schema: *ref_20
@@ -3157,9 +2850,9 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
-          - !Parameter &ref_102
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_99
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -3198,10 +2891,10 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_102
+          - *ref_99
         responses:
           - !SchemaResponse 
-            schema: *ref_103
+            schema: *ref_100
             language: !Languages 
               default:
                 name: ''
@@ -3303,7 +2996,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
+          - *ref_84
           - *ref_79
         requests:
           - !Request 
@@ -3334,7 +3027,7 @@ operationGroups:
         signatureParameters: []
         responses:
           - !SchemaResponse 
-            schema: *ref_103
+            schema: *ref_100
             language: !Languages 
               default:
                 name: ''
@@ -3434,677 +3127,6 @@ operationGroups:
         description: ''
     protocol: !Protocols {}
   - !OperationGroup 
-    $key: ConfigurationProfilesVersions
-    operations:
-      - !Operation 
-        operationId: ConfigurationProfilesVersions_CreateOrUpdate
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - !Parameter &ref_106
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: configurationProfileName
-                description: Name of the configuration profile.
-                serializedName: configurationProfileName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - !Parameter &ref_107
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: versionName
-                description: The configuration profile version name.
-                serializedName: versionName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_87
-          - !Parameter &ref_108
-            schema: *ref_88
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: resourceGroupName
-                description: The name of the resource group. The name is case insensitive.
-                serializedName: resourceGroupName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_79
-        requestMediaTypes:
-          application/json: !Request &ref_105
-            parameters:
-              - !Parameter 
-                schema: *ref_89
-                implementation: Method
-                origin: modelerfour:synthesized/content-type
-                required: true
-                language: !Languages 
-                  default:
-                    name: contentType
-                    description: Body Parameter content-type
-                    serializedName: Content-Type
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-              - !Parameter &ref_104
-                schema: *ref_20
-                implementation: Method
-                required: true
-                language: !Languages 
-                  default:
-                    name: parameters
-                    description: Parameters supplied to create or update configuration profile.
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: body
-                    style: json
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters:
-              - *ref_104
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpWithBodyRequest 
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}
-                method: put
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                uri: '{$host}'
-        requests:
-          - *ref_105
-        signatureParameters:
-          - *ref_106
-          - *ref_107
-          - *ref_108
-        responses:
-          - !SchemaResponse 
-            schema: *ref_20
-            language: !Languages 
-              default:
-                name: ''
-                description: OK. The configuration profile was updated successfully.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '200'
-          - !SchemaResponse 
-            schema: *ref_20
-            language: !Languages 
-              default:
-                name: ''
-                description: Created. The configuration profile was created successfully.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '201'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            Create or update configuration profile version:
-              parameters:
-                api-version: '2022-05-04'
-                configurationProfileName: customConfigurationProfile
-                parameters:
-                  location: East US
-                  properties:
-                    configuration:
-                      Antimalware/Enable: false
-                      AzureSecurityCenter/Enable: true
-                      Backup/Enable: false
-                      BootDiagnostics/Enable: true
-                      ChangeTrackingAndInventory/Enable: true
-                      GuestConfiguration/Enable: true
-                      LogAnalytics/Enable: true
-                      UpdateManagement/Enable: true
-                      VMInsights/Enable: true
-                  tags:
-                    Organization: Administration
-                resourceGroupName: myResourceGroupName
-                subscriptionId: mySubscriptionId
-                versionName: version1
-              responses:
-                '200':
-                  body:
-                    name: customConfigurationProfile/version1
-                    type: Microsoft.Automanage/configurationProfiles/versions
-                    id: /subscriptions/subscriptionId/resourceGroups/myResourceGroupName/providers/Microsoft.Automanage/configurationProfiles/customConfigurationProfile/versions/version1
-                    location: East US
-                    properties:
-                      configuration:
-                        Antimalware/Enable: false
-                        AzureSecurityCenter/Enable: true
-                        Backup/Enable: false
-                        BootDiagnostics/Enable: true
-                        ChangeTrackingAndInventory/Enable: true
-                        GuestConfiguration/Enable: true
-                        LogAnalytics/Enable: true
-                        UpdateManagement/Enable: true
-                        VMInsights/Enable: true
-                    systemData:
-                      createdAt: '2020-02-03T01:01:01.1075056Z'
-                      createdBy: user1@outlook.com
-                      createdByType: User
-                      lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                      lastModifiedBy: user2@outlook.com
-                      lastModifiedByType: User
-                    tags:
-                      Organization: Administration
-                  headers: {}
-                '201':
-                  body:
-                    name: customConfigurationProfile/version1
-                    type: Microsoft.Automanage/configurationProfiles/versions
-                    id: /subscriptions/subscriptionId/resourceGroups/myResourceGroupName/providers/Microsoft.Automanage/configurationProfiles/customConfigurationProfile/versions/version1
-                    location: East US
-                    properties:
-                      configuration:
-                        Antimalware/Enable: false
-                        AzureSecurityCenter/Enable: true
-                        Backup/Enable: false
-                        BootDiagnostics/Enable: true
-                        ChangeTrackingAndInventory/Enable: true
-                        GuestConfiguration/Enable: true
-                        LogAnalytics/Enable: true
-                        UpdateManagement/Enable: true
-                        VMInsights/Enable: true
-                    systemData:
-                      createdAt: '2020-02-03T01:01:01.1075056Z'
-                      createdBy: user1@outlook.com
-                      createdByType: User
-                      lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                      lastModifiedBy: user2@outlook.com
-                      lastModifiedByType: User
-                    tags:
-                      Organization: Administration
-                  headers: {}
-          x-ms-long-running-operation: false
-        language: !Languages 
-          default:
-            name: CreateOrUpdate
-            description: Creates a configuration profile version
-        protocol: !Protocols {}
-      - !Operation 
-        operationId: ConfigurationProfilesVersions_Get
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - !Parameter &ref_109
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: configurationProfileName
-                description: The configuration profile name.
-                serializedName: configurationProfileName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - !Parameter &ref_110
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: versionName
-                description: The configuration profile version name.
-                serializedName: versionName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_87
-          - !Parameter &ref_111
-            schema: *ref_88
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: resourceGroupName
-                description: The name of the resource group. The name is case insensitive.
-                serializedName: resourceGroupName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_79
-        requests:
-          - !Request 
-            parameters:
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters: []
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpRequest 
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}
-                method: get
-                uri: '{$host}'
-        signatureParameters:
-          - *ref_109
-          - *ref_110
-          - *ref_111
-        responses:
-          - !SchemaResponse 
-            schema: *ref_20
-            language: !Languages 
-              default:
-                name: ''
-                description: OK. The configuration profile was returned successfully.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '200'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            Get a configuration profile version:
-              parameters:
-                api-version: '2022-05-04'
-                configurationProfileName: customConfigurationProfile
-                resourceGroupName: myResourceGroupName
-                subscriptionId: mySubscriptionId
-                versionName: version1
-              responses:
-                '200':
-                  body:
-                    name: customConfigurationProfile/version1
-                    type: Microsoft.Automanage/ConfigurationProfiles/versions
-                    id: /subscriptions/subscriptionId/resourceGroups/myResourceGroupName/providers/Microsoft.Automanage/configurationProfiles/customConfigurationProfile/versions/version1
-                    location: East US
-                    properties:
-                      configuration:
-                        Antimalware/Enable: false
-                        AzureSecurityCenter/Enable: true
-                        Backup/Enable: false
-                        BootDiagnostics/Enable: true
-                        ChangeTrackingAndInventory/Enable: true
-                        GuestConfiguration/Enable: true
-                        LogAnalytics/Enable: true
-                        UpdateManagement/Enable: true
-                        VMInsights/Enable: true
-                    systemData:
-                      createdAt: '2020-02-03T01:01:01.1075056Z'
-                      createdBy: user1@outlook.com
-                      createdByType: User
-                      lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                      lastModifiedBy: user2@outlook.com
-                      lastModifiedByType: User
-                    tags:
-                      Organization: Administration
-                  headers: {}
-        language: !Languages 
-          default:
-            name: Get
-            description: Get information about a configuration profile version
-        protocol: !Protocols {}
-      - !Operation 
-        operationId: ConfigurationProfilesVersions_Delete
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - !Parameter &ref_112
-            schema: *ref_88
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: resourceGroupName
-                description: The name of the resource group. The name is case insensitive.
-                serializedName: resourceGroupName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - !Parameter &ref_113
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: configurationProfileName
-                description: Name of the configuration profile
-                serializedName: configurationProfileName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - !Parameter &ref_114
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: versionName
-                description: The configuration profile version name.
-                serializedName: versionName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_87
-          - *ref_79
-        requests:
-          - !Request 
-            parameters:
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters: []
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpRequest 
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}
-                method: delete
-                uri: '{$host}'
-        signatureParameters:
-          - *ref_112
-          - *ref_113
-          - *ref_114
-        responses:
-          - !Response 
-            language: !Languages 
-              default:
-                name: ''
-                description: OK
-            protocol: !Protocols 
-              http: !HttpResponse 
-                statusCodes:
-                  - '200'
-          - !Response 
-            language: !Languages 
-              default:
-                name: ''
-                description: OK
-            protocol: !Protocols 
-              http: !HttpResponse 
-                statusCodes:
-                  - '204'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            Delete a configuration profile version:
-              parameters:
-                api-version: '2022-05-04'
-                configurationProfileName: customConfigurationProfile
-                resourceGroupName: rg
-                subscriptionId: subid
-                versionName: version1
-              responses:
-                '200': {}
-                '204': {}
-          x-ms-long-running-operation: false
-        language: !Languages 
-          default:
-            name: Delete
-            description: Delete a configuration profile version
-        protocol: !Protocols {}
-      - !Operation 
-        operationId: ConfigurationProfilesVersions_ListChildResources
-        apiVersions:
-          - !ApiVersion 
-            version: '2022-05-04'
-        parameters:
-          - *ref_78
-          - !Parameter &ref_115
-            schema: *ref_2
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: configurationProfileName
-                description: Name of the configuration profile.
-                serializedName: configurationProfileName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_87
-          - !Parameter &ref_116
-            schema: *ref_88
-            implementation: Method
-            required: true
-            language: !Languages 
-              default:
-                name: resourceGroupName
-                description: The name of the resource group. The name is case insensitive.
-                serializedName: resourceGroupName
-            protocol: !Protocols 
-              http: !HttpParameter 
-                in: path
-          - *ref_79
-        requests:
-          - !Request 
-            parameters:
-              - !Parameter 
-                schema: *ref_80
-                implementation: Method
-                origin: modelerfour:synthesized/accept
-                required: true
-                language: !Languages 
-                  default:
-                    name: accept
-                    description: Accept header
-                    serializedName: Accept
-                protocol: !Protocols 
-                  http: !HttpParameter 
-                    in: header
-            signatureParameters: []
-            language: !Languages 
-              default:
-                name: ''
-                description: ''
-            protocol: !Protocols 
-              http: !HttpRequest 
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions
-                method: get
-                uri: '{$host}'
-        signatureParameters:
-          - *ref_115
-          - *ref_116
-        responses:
-          - !SchemaResponse 
-            schema: *ref_103
-            language: !Languages 
-              default:
-                name: ''
-                description: OK. List of configuration profiles.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - '200'
-        exceptions:
-          - !SchemaResponse 
-            schema: *ref_82
-            language: !Languages 
-              default:
-                name: ''
-                description: Error response describing why the operation failed.
-            protocol: !Protocols 
-              http: !HttpResponse 
-                knownMediaType: json
-                mediaTypes:
-                  - application/json
-                statusCodes:
-                  - default
-        extensions:
-          x-ms-examples:
-            List configuration profile versions by configuration profile:
-              parameters:
-                api-version: '2022-05-04'
-                configurationProfileName: customConfigurationProfile
-                resourceGroupName: myResourceGroupName
-                subscriptionId: mySubscriptionId
-              responses:
-                '200':
-                  body:
-                    value:
-                      - name: customConfigurationProfile/version1
-                        type: Microsoft.Automanage/ConfigurationProfiles/versions
-                        id: /subscriptions/subscriptionId/resourceGroups/myResourceGroupName/providers/Microsoft.Automanage/configurationProfiles/customConfigurationProfile/versions/versions1
-                        location: East US
-                        properties:
-                          configuration:
-                            Antimalware/Enable: false
-                            AzureSecurityCenter/Enable: true
-                            Backup/Enable: false
-                            BootDiagnostics/Enable: true
-                            ChangeTrackingAndInventory/Enable: true
-                            GuestConfiguration/Enable: true
-                            LogAnalytics/Enable: true
-                            UpdateManagement/Enable: true
-                            VMInsights/Enable: true
-                        systemData:
-                          createdAt: '2020-02-03T01:01:01.1075056Z'
-                          createdBy: user1@outlook.com
-                          createdByType: User
-                          lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                          lastModifiedBy: user2@outlook.com
-                          lastModifiedByType: User
-                        tags:
-                          Organization: Administration
-                      - name: customConfigurationProfile/version2
-                        type: Microsoft.Automanage/ConfigurationProfiles/versions
-                        id: /subscriptions/subscriptionId/resourceGroups/myResourceGroupName/providers/Microsoft.Automanage/configurationProfiles/customConfigurationProfile/versions/version2
-                        location: East US
-                        properties:
-                          configuration:
-                            Antimalware/Enable: false
-                            AzureSecurityCenter/Enable: true
-                            Backup/Enable: false
-                            BootDiagnostics/Enable: true
-                            ChangeTrackingAndInventory/Enable: true
-                            GuestConfiguration/Enable: true
-                            LogAnalytics/Enable: true
-                            UpdateManagement/Enable: true
-                            VMInsights/Enable: true
-                        systemData:
-                          createdAt: '2020-02-03T01:01:01.1075056Z'
-                          createdBy: user1@outlook.com
-                          createdByType: User
-                          lastModifiedAt: '2020-02-04T02:03:01.1974346Z'
-                          lastModifiedBy: user2@outlook.com
-                          lastModifiedByType: User
-                        tags:
-                          Organization: Administration
-                  headers: {}
-          x-ms-pageable:
-            nextLinkName: null
-        language: !Languages 
-          default:
-            name: ListChildResources
-            description: 'Retrieve a list of configuration profile version for a configuration profile '
-            paging:
-              nextLinkName: null
-        protocol: !Protocols {}
-    language: !Languages 
-      default:
-        name: ConfigurationProfilesVersions
-        description: ''
-    protocol: !Protocols {}
-  - !OperationGroup 
     $key: ConfigurationProfileAssignments
     operations:
       - !Operation 
@@ -4114,9 +3136,9 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
-          - !Parameter &ref_117
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_101
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -4127,7 +3149,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_118
+          - !Parameter &ref_102
             schema: *ref_2
             implementation: Method
             required: true
@@ -4167,11 +3189,11 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_117
-          - *ref_118
+          - *ref_101
+          - *ref_102
         responses:
           - !SchemaResponse 
-            schema: *ref_119
+            schema: *ref_103
             language: !Languages 
               default:
                 name: ''
@@ -4254,8 +3276,8 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_120
-            schema: *ref_88
+          - !Parameter &ref_104
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -4266,7 +3288,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - *ref_87
+          - *ref_84
           - *ref_79
         requests:
           - !Request 
@@ -4295,10 +3317,10 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_120
+          - *ref_104
         responses:
           - !SchemaResponse 
-            schema: *ref_119
+            schema: *ref_103
             language: !Languages 
               default:
                 name: ''
@@ -4380,7 +3402,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
+          - *ref_84
           - *ref_79
         requests:
           - !Request 
@@ -4411,7 +3433,7 @@ operationGroups:
         signatureParameters: []
         responses:
           - !SchemaResponse 
-            schema: *ref_119
+            schema: *ref_103
             language: !Languages 
               default:
                 name: ''
@@ -4492,9 +3514,9 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
-          - !Parameter &ref_121
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_105
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -4505,7 +3527,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_122
+          - !Parameter &ref_106
             schema: *ref_2
             implementation: Method
             required: true
@@ -4545,11 +3567,11 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_121
-          - *ref_122
+          - *ref_105
+          - *ref_106
         responses:
           - !SchemaResponse 
-            schema: *ref_119
+            schema: *ref_103
             language: !Languages 
               default:
                 name: ''
@@ -4632,9 +3654,9 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
-          - !Parameter &ref_123
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_107
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -4645,7 +3667,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_124
+          - !Parameter &ref_108
             schema: *ref_2
             implementation: Method
             required: true
@@ -4685,11 +3707,11 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_123
-          - *ref_124
+          - *ref_107
+          - *ref_108
         responses:
           - !SchemaResponse 
-            schema: *ref_119
+            schema: *ref_103
             language: !Languages 
               default:
                 name: ''
@@ -4772,7 +3794,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_127
+          - !Parameter &ref_111
             schema: *ref_2
             implementation: Method
             required: true
@@ -4789,7 +3811,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_128
+          - !Parameter &ref_112
             schema: *ref_2
             implementation: Method
             required: true
@@ -4803,10 +3825,10 @@ operationGroups:
                 in: path
           - *ref_79
         requestMediaTypes:
-          application/json: !Request &ref_126
+          application/json: !Request &ref_110
             parameters:
               - !Parameter 
-                schema: *ref_89
+                schema: *ref_86
                 implementation: Method
                 origin: modelerfour:synthesized/content-type
                 required: true
@@ -4818,7 +3840,7 @@ operationGroups:
                 protocol: !Protocols 
                   http: !HttpParameter 
                     in: header
-              - !Parameter &ref_125
+              - !Parameter &ref_109
                 schema: *ref_42
                 implementation: Method
                 required: true
@@ -4844,7 +3866,7 @@ operationGroups:
                   http: !HttpParameter 
                     in: header
             signatureParameters:
-              - *ref_125
+              - *ref_109
             language: !Languages 
               default:
                 name: ''
@@ -4858,10 +3880,10 @@ operationGroups:
                   - application/json
                 uri: '{$host}'
         requests:
-          - *ref_126
+          - *ref_110
         signatureParameters:
-          - *ref_127
-          - *ref_128
+          - *ref_111
+          - *ref_112
         responses:
           - !SchemaResponse 
             schema: *ref_42
@@ -4961,7 +3983,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_129
+          - !Parameter &ref_113
             schema: *ref_2
             implementation: Method
             required: true
@@ -4978,7 +4000,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_130
+          - !Parameter &ref_114
             schema: *ref_2
             implementation: Method
             required: true
@@ -5018,8 +4040,8 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_129
-          - *ref_130
+          - *ref_113
+          - *ref_114
         responses:
           - !SchemaResponse 
             schema: *ref_42
@@ -5087,7 +4109,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_131
+          - !Parameter &ref_115
             schema: *ref_2
             implementation: Method
             required: true
@@ -5104,7 +4126,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_132
+          - !Parameter &ref_116
             schema: *ref_2
             implementation: Method
             required: true
@@ -5144,8 +4166,8 @@ operationGroups:
                 method: delete
                 uri: '{$host}'
         signatureParameters:
-          - *ref_131
-          - *ref_132
+          - *ref_115
+          - *ref_116
         responses:
           - !Response 
             language: !Languages 
@@ -5242,7 +4264,7 @@ operationGroups:
         signatureParameters: []
         responses:
           - !SchemaResponse 
-            schema: *ref_133
+            schema: *ref_117
             language: !Languages 
               default:
                 name: ''
@@ -5388,9 +4410,9 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
-          - !Parameter &ref_134
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_118
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -5401,7 +4423,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_135
+          - !Parameter &ref_119
             schema: *ref_2
             implementation: Method
             required: true
@@ -5413,7 +4435,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_136
+          - !Parameter &ref_120
             schema: *ref_2
             implementation: Method
             required: true
@@ -5454,12 +4476,12 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_134
-          - *ref_135
-          - *ref_136
+          - *ref_118
+          - *ref_119
+          - *ref_120
         responses:
           - !SchemaResponse 
-            schema: *ref_137
+            schema: *ref_121
             language: !Languages 
               default:
                 name: ''
@@ -5569,7 +4591,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - !Parameter &ref_138
+          - !Parameter &ref_122
             schema: *ref_2
             implementation: Method
             required: true
@@ -5586,7 +4608,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_139
+          - !Parameter &ref_123
             schema: *ref_2
             implementation: Method
             required: true
@@ -5598,7 +4620,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_140
+          - !Parameter &ref_124
             schema: *ref_2
             implementation: Method
             required: true
@@ -5638,9 +4660,9 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_138
-          - *ref_139
-          - *ref_140
+          - *ref_122
+          - *ref_123
+          - *ref_124
         responses:
           - !SchemaResponse 
             schema: *ref_43
@@ -5730,7 +4752,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
+          - *ref_84
           - *ref_79
         requests:
           - !Request 
@@ -5761,7 +4783,7 @@ operationGroups:
         signatureParameters: []
         responses:
           - !SchemaResponse 
-            schema: *ref_141
+            schema: *ref_125
             language: !Languages 
               default:
                 name: ''
@@ -5827,7 +4849,7 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
+          - *ref_84
           - *ref_79
         requests:
           - !Request 
@@ -5927,9 +4949,9 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
-          - !Parameter &ref_142
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_126
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -5940,7 +4962,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_143
+          - !Parameter &ref_127
             schema: *ref_2
             implementation: Method
             required: true
@@ -5952,7 +4974,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_144
+          - !Parameter &ref_128
             schema: *ref_2
             implementation: Method
             required: true
@@ -5993,12 +5015,12 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_142
-          - *ref_143
-          - *ref_144
+          - *ref_126
+          - *ref_127
+          - *ref_128
         responses:
           - !SchemaResponse 
-            schema: *ref_137
+            schema: *ref_121
             language: !Languages 
               default:
                 name: ''
@@ -6116,9 +5138,9 @@ operationGroups:
             version: '2022-05-04'
         parameters:
           - *ref_78
-          - *ref_87
-          - !Parameter &ref_145
-            schema: *ref_88
+          - *ref_84
+          - !Parameter &ref_129
+            schema: *ref_85
             implementation: Method
             required: true
             language: !Languages 
@@ -6129,7 +5151,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_146
+          - !Parameter &ref_130
             schema: *ref_2
             implementation: Method
             required: true
@@ -6141,7 +5163,7 @@ operationGroups:
             protocol: !Protocols 
               http: !HttpParameter 
                 in: path
-          - !Parameter &ref_147
+          - !Parameter &ref_131
             schema: *ref_2
             implementation: Method
             required: true
@@ -6182,12 +5204,12 @@ operationGroups:
                 method: get
                 uri: '{$host}'
         signatureParameters:
-          - *ref_145
-          - *ref_146
-          - *ref_147
+          - *ref_129
+          - *ref_130
+          - *ref_131
         responses:
           - !SchemaResponse 
-            schema: *ref_137
+            schema: *ref_121
             language: !Languages 
               default:
                 name: ''
