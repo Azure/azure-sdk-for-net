@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             var dnszone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var recordSets = await dnszone.GetAllRecordSetsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(recordSets);
-            Assert.AreEqual(2, recordSets.Count);
+            var records = await dnszone.GetAllRecordsAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(records);
+            Assert.AreEqual(2, records.Count);
         }
 
         [Test]
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             var dnszone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var recordSets = await dnszone.GetRecordSetsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(recordSets);
-            Assert.AreEqual(2, recordSets.Count);
+            var records = await dnszone.GetRecordsAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(records);
+            Assert.AreEqual(2, records.Count);
         }
     }
 }
