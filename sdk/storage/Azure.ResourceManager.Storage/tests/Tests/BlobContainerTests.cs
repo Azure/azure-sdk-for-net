@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private StorageAccountResource _storageAccount;
         private BlobServiceResource _blobService;
         private BlobContainerCollection _blobContainerCollection;
-        public BlobContainerTests(bool async) : base(async)
+        public BlobContainerTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
         }
 
@@ -56,6 +56,8 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container1 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData())).Value;
             Assert.IsNotNull(container1);
             Assert.AreEqual(container1.Id.Name, containerName);
+            Assert.IsEmpty(container1.Data.Metadata);
+            Assert.IsNull(container1.Data.PublicAccess);
 
             //validate if created successfully
             BlobContainerResource container2 = await _blobContainerCollection.GetAsync(containerName);
@@ -178,6 +180,17 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container1 = await container.UpdateAsync(update);
 
             //validate
+            Assert.AreEqual(container.Data.PublicAccess, container1.Data.PublicAccess);
+            Assert.NotNull(container1);
+            Assert.NotNull(container1.Data.Metadata);
+            Assert.AreEqual(container1.Data.Metadata["key1"], "value1");
+            Assert.AreEqual(StoragePublicAccessType.Container, container.Data.PublicAccess);
+            Assert.False(container1.Data.HasLegalHold);
+            Assert.False(container1.Data.HasImmutabilityPolicy);
+
+            container1 = (await _blobContainerCollection.GetAsync(containerName)).Value;
+            //validate
+            Assert.AreEqual(container.Data.PublicAccess, container1.Data.PublicAccess);
             Assert.NotNull(container1);
             Assert.NotNull(container1.Data.Metadata);
             Assert.AreEqual(container1.Data.Metadata["key1"], "value1");
