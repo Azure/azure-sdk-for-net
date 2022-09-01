@@ -253,5 +253,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             });
         }
+
+        [Fact]
+        [DisplayTestMethodName]
+        async Task BatchDeleteAPITest()
+        {
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                try
+                {
+                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 10);
+
+                    int msgsDeleted = await queueClient.InnerReceiver.BatchDeleteMessagesAsync(10);
+
+                    Assert.Equal(10, msgsDeleted);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
+        }
     }
 }

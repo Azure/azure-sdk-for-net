@@ -337,6 +337,38 @@ namespace Microsoft.Azure.ServiceBus
 
         #endregion
 
+        #region BatchDelete
+
+        internal Activity BatchDeleteStart(TimeSpan timeout, int messageCount)
+        {
+            return Start("BatchDelete", () => new
+            {
+                Timeout = timeout,
+                RequestedMessageCount = messageCount,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
+            null);
+        }
+
+        internal void BatchDeleteStop(Activity activity, TimeSpan timeout, int messageCount, TaskStatus? status, int messagesDeleted)
+        {
+            if (activity != null)
+            {
+                DiagnosticListener.StopActivity(activity, new
+                {
+                    Timeout = timeout,
+                    RequestedMessageCount = messageCount,
+                    Entity = this.entityPath,
+                    Endpoint = this.endpoint,
+                    Status = status ?? TaskStatus.Faulted,
+                    Messages = messagesDeleted
+                });
+            }
+        }
+
+        #endregion
+
 
         #region Dispose
 

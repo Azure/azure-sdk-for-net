@@ -1425,6 +1425,24 @@ namespace Microsoft.Azure.ServiceBus
                 this.WriteEvent(122, errorMsg);
             }
         }
+
+        [Event(123, Level = EventLevel.Informational, Message = "{0}: Batch delete start. Timeout = {1}, MessageCount = {2}")]
+        public void MessageBatchDeleteStart(string clientId, TimeSpan timeout, int messageCount)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(123, clientId, timeout, messageCount);
+            }
+        }
+
+        [Event(124, Level = EventLevel.Informational, Message = "{0}: Batch delete stop. Timeout = {1}, MessageCount = {2}")]
+        public void MessageBatchDeleteStop(string clientId, TimeSpan timeout, int messageCount)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(124, clientId, timeout, messageCount);
+            }
+        }
     }
 
     internal static class TraceHelper

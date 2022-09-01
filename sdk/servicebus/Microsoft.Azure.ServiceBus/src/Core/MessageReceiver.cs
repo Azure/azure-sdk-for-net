@@ -879,6 +879,81 @@ namespace Microsoft.Azure.ServiceBus.Core
             return messages;
         }
 
+        public Task<int> BatchDeleteMessagesAsync(int messageCount)
+        {
+            return this.BatchDeleteMessagesAsync(messageCount, this.OperationTimeout);
+        }
+
+        internal async Task<int> BatchDeleteMessagesAsync(int messageCount, TimeSpan timeout)
+        {
+            MessagingEventSource.Log.MessageBatchDeleteStart(this.ClientId, timeout, messageCount);
+            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.BatchDeleteStart(timeout, messageCount) : null;
+            Task deleteTask = null;
+            int messagesDeleted = 0;
+
+            try
+            {
+                deleteTask = this.RetryPolicy.RunOperation(
+                    async () =>
+                    {
+                        messagesDeleted = await this.OnBatchDeleteMessagesAsync(messageCount, timeout).ConfigureAwait(false);
+                    }, this.OperationTimeout);
+
+                await deleteTask.ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                if (isDiagnosticSourceEnabled)
+                {
+                    this.diagnosticSource.ReportException(exception);
+                }
+
+                MessagingEventSource.Log.MessagePeekException(this.ClientId, exception);
+                throw;
+            }
+            finally
+            {
+                this.diagnosticSource.BatchDeleteStop(activity, timeout, messageCount, deleteTask?.Status, messagesDeleted);
+            }
+
+            MessagingEventSource.Log.MessageBatchDeleteStop(this.ClientId, timeout, messageCount);
+            return messagesDeleted;
+        }
+
+        private async Task<int> OnBatchDeleteMessagesAsync(int messageCount, TimeSpan timeout)
+        {
+            int messagesDeleted;
+            var request = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.BatchDeleteMessagesOperation, timeout, null);
+            request.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+            if (!string.IsNullOrWhiteSpace(this.SessionIdInternal))
+            {
+                request.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
+            }
+
+            if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
+            {
+                request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+            }
+
+            var response = await this.ExecuteRequestResponseAsync(request, timeout).ConfigureAwait(false);
+            if (response.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                messagesDeleted = response.GetValue<int>(ManagementConstants.Properties.MessageCount);
+            }
+            else if (response.StatusCode == AmqpResponseStatusCode.NoContent ||
+                (response.StatusCode == AmqpResponseStatusCode.NotFound && AmqpSymbol.Equals(AmqpClientConstants.MessageNotFoundError, response.GetResponseErrorCondition())))
+            {
+                messagesDeleted = 0;
+            }
+            else
+            {
+                throw response.ToMessagingContractException();
+            }
+
+            return messagesDeleted;
+        }
+
         /// <summary>
         /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
         /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
@@ -1018,7 +1093,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 : DateTime.MinValue;
         }
 
-        internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)
+        internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage, TimeSpan? timeout = null)
         {
             var amqpMessage = amqpRequestMessage.AmqpMessage;
             if (this.isSessionReceiver)
@@ -1026,7 +1101,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 this.ThrowIfSessionLockLost();
             }
 
-            var timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
+            var timeoutHelper = new TimeoutHelper(timeout ?? this.OperationTimeout, true);
 
             ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
             var ambientTransaction = Transaction.Current;
