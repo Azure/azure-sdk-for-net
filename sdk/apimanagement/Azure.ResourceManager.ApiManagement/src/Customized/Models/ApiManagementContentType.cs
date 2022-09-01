@@ -24,18 +24,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="contentTypeIdentifier"> Content type identifier. </param>
         /// <param name="contentTypeName"> Content type name. Must be 1 to 250 characters long. </param>
         /// <param name="description"> Content type description. </param>
         /// <param name="schema"> Content type schema. </param>
         /// <param name="version"> Content type version. </param>
-        internal ApiManagementContentType(string id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string contentTypeIdentifier, string contentTypeName, string description, BinaryData schema, string version)
+        internal ApiManagementContentType(string id, string name, ResourceType resourceType, string contentTypeIdentifier, string contentTypeName, string description, BinaryData schema, string version)
         {
             ContentTypeId = id;
             Name = name;
             ResourceType = resourceType;
-            SystemData = systemData;
             ContentTypeIdentifier = contentTypeIdentifier;
             ContentTypeName = contentTypeName;
             Description = description;
@@ -49,8 +47,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Name { get; }
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
         public ResourceType ResourceType { get; }
-        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public ResourceManager.Models.SystemData SystemData { get; }
         /// <summary> Content type identifier. </summary>
         public string ContentTypeIdentifier { get; set; }
         /// <summary> Content type name. Must be 1 to 250 characters long. </summary>

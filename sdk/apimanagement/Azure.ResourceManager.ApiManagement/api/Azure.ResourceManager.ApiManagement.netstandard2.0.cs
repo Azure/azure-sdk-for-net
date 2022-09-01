@@ -2399,7 +2399,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Properties { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
     public partial class ApiManagementContentType
     {
@@ -2411,7 +2410,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public System.BinaryData Schema { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public string Version { get { throw null; } set { } }
     }
     public partial class ApiManagementEmailTemplateCreateOrUpdateContent

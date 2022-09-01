@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> id0 = default;
             Optional<string> name0 = default;
             Optional<string> description = default;
@@ -77,16 +76,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (property.NameEquals("type"))
                 {
                     type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -132,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementContentType(id, name, type, systemData.Value, id0.Value, name0.Value, description.Value, schema.Value, version.Value);
+            return new ApiManagementContentType(id, name, type, id0.Value, name0.Value, description.Value, schema.Value, version.Value);
         }
     }
 }

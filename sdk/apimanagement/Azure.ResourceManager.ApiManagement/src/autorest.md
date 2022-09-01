@@ -382,6 +382,7 @@ directive:
               }
           ]
         }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementUserResource.
   - from: apimgateways.json
     where: $.paths
     transform: >
@@ -434,6 +435,7 @@ directive:
               }
           ]
         }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiResource.
   - from: apimproducts.json
     where: $.paths
     transform: >
@@ -486,6 +488,7 @@ directive:
               }
           ]
         }
+    reason: Modify the original swagger since the id in the real response is slightly different from the ApiResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy' 

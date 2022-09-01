@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ResourceManager.Models.SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -72,18 +71,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
-                    continue;
-                }
             }
-            return new ApiManagementContentItem(id, name, type, systemData.Value, Optional.ToDictionary(properties));
+            return new ApiManagementContentItem(id, name, type, Optional.ToDictionary(properties));
         }
     }
 }

@@ -26,14 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the content item. </param>
-        internal ApiManagementContentItem(string id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, BinaryData> properties)
+        internal ApiManagementContentItem(string id, string name, ResourceType resourceType, IDictionary<string, BinaryData> properties)
         {
             ContentItemId = id;
             Name = name;
             ResourceType = resourceType;
-            SystemData = systemData;
             Properties = properties;
         }
 
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Name { get; }
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
         public ResourceType ResourceType { get; }
-        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public ResourceManager.Models.SystemData SystemData { get; }
         /// <summary> Properties of the content item. </summary>
         public IDictionary<string, BinaryData> Properties { get; }
     }
