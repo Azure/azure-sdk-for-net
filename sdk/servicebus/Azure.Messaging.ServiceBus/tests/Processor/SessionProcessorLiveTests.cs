@@ -2111,7 +2111,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = CreateClient(5, 1);
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 100;
+                int messageCount = 200;
+                int stopCount = 100;
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
@@ -2131,15 +2132,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
 
                     var count = Interlocked.Increment(ref receivedCount);
-                    if (count == messageCount)
+                    if (count == stopCount)
                     {
                         tcs.SetResult(true);
                     }
 
                     if (count == 5)
                     {
-                        processor.UpdateConcurrency(5, 20);
-                        Assert.AreEqual(5, processor.MaxConcurrentSessions);
+                        processor.UpdateConcurrency(10, 20);
+                        Assert.AreEqual(10, processor.MaxConcurrentSessions);
                         Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
                     }
                 }
@@ -2149,8 +2150,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                // add a small delay to allow concurrency to reach steady state
-                await Task.Delay(TimeSpan.FromSeconds(5));
+
                 // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
                 Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
                 await processor.StopProcessingAsync();
