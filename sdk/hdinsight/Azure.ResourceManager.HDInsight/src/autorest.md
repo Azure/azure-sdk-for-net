@@ -154,7 +154,7 @@ rename-mapping:
   ApplicationGetHttpsEndpoint.location: EndpointLocation
   SecurityProfile.aaddsResourceId: -|arm-id
   PrivateLinkConfiguration.type: ResourceType|resource-type
-  RegionalQuotaCapability.regionName: -|azure-location
+  RegionalQuotaCapability.regionName: region|azure-location
   VmSizeProperty.supportedByVirtualMachines: IsSupportedByVirtualMachines
   VmSizeProperty.supportedByWebWorkerRoles: IsSupportedByWebWorkerRoles
   VmSizeCompatibilityFilterV2.computeIsolationSupported: IsComputeIsolationSupported

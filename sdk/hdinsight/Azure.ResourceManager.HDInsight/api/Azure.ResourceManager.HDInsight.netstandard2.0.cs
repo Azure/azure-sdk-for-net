@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal RegionalQuotaCapability() { }
         public long? CoresAvailable { get { throw null; } }
         public long? CoresUsed { get { throw null; } }
-        public Azure.Core.AzureLocation? RegionName { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
     }
     public partial class RegionsCapability
     {

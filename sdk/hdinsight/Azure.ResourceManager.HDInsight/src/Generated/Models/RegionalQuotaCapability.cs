@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
-        /// <param name="regionName"> The region name. </param>
+        /// <param name="region"> The region name. </param>
         /// <param name="coresUsed"> The number of cores used in the region. </param>
         /// <param name="coresAvailable"> The number of cores available in the region. </param>
-        internal RegionalQuotaCapability(AzureLocation? regionName, long? coresUsed, long? coresAvailable)
+        internal RegionalQuotaCapability(AzureLocation? region, long? coresUsed, long? coresAvailable)
         {
-            RegionName = regionName;
+            Region = region;
             CoresUsed = coresUsed;
             CoresAvailable = coresAvailable;
         }
 
         /// <summary> The region name. </summary>
-        public AzureLocation? RegionName { get; }
+        public AzureLocation? Region { get; }
         /// <summary> The number of cores used in the region. </summary>
         public long? CoresUsed { get; }
         /// <summary> The number of cores available in the region. </summary>
