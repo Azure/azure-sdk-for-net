@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> A class representing the FrontendEndpoint data model. </summary>
-    public partial class FrontendEndpointData : Models.SubResource
+    public partial class FrontendEndpointData : FrontDoorResourceData
     {
         /// <summary> Initializes a new instance of FrontendEndpointData. </summary>
         public FrontendEndpointData()
@@ -31,10 +31,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="customHttpsProvisioningState"> Provisioning status of Custom Https of the frontendEndpoint. </param>
         /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
-        internal FrontendEndpointData(string id, string name, string resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id)
+        internal FrontendEndpointData(ResourceIdentifier id, string name, Core.ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType)
         {
-            Name = name;
-            ResourceType = resourceType;
             HostName = hostName;
             SessionAffinityEnabledState = sessionAffinityEnabledState;
             SessionAffinityTtlSeconds = sessionAffinityTtlSeconds;
@@ -45,10 +43,6 @@ namespace Azure.ResourceManager.FrontDoor
             CustomHttpsConfiguration = customHttpsConfiguration;
         }
 
-        /// <summary> Resource name. </summary>
-        public string Name { get; set; }
-        /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
         /// <summary> The host name of the frontendEndpoint. Must be a domain name. </summary>
         public string HostName { get; set; }
         /// <summary> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
@@ -72,9 +66,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> Resource status. </summary>
         public FrontDoorResourceState? ResourceState { get; }
         /// <summary> Provisioning status of Custom Https of the frontendEndpoint. </summary>
-        public CustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
+        public FrontendEndpointCustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
-        public CustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate { get; }
+        public FrontendEndpointCustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate { get; }
         /// <summary> The configuration specifying how to enable HTTPS. </summary>
         public CustomHttpsConfiguration CustomHttpsConfiguration { get; }
     }

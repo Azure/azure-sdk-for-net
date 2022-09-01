@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </summary>
-    public readonly partial struct MinimumTLSVersion : IEquatable<MinimumTLSVersion>
+    public readonly partial struct MinimumTlsVersion : IEquatable<MinimumTlsVersion>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="MinimumTLSVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MinimumTlsVersion"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MinimumTLSVersion(string value)
+        public MinimumTlsVersion(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string One2Value = "1.2";
 
         /// <summary> 1.0. </summary>
-        public static MinimumTLSVersion One0 { get; } = new MinimumTLSVersion(One0Value);
+        public static MinimumTlsVersion One0 { get; } = new MinimumTlsVersion(One0Value);
         /// <summary> 1.2. </summary>
-        public static MinimumTLSVersion One2 { get; } = new MinimumTLSVersion(One2Value);
-        /// <summary> Determines if two <see cref="MinimumTLSVersion"/> values are the same. </summary>
-        public static bool operator ==(MinimumTLSVersion left, MinimumTLSVersion right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="MinimumTLSVersion"/> values are not the same. </summary>
-        public static bool operator !=(MinimumTLSVersion left, MinimumTLSVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MinimumTLSVersion"/>. </summary>
-        public static implicit operator MinimumTLSVersion(string value) => new MinimumTLSVersion(value);
+        public static MinimumTlsVersion One2 { get; } = new MinimumTlsVersion(One2Value);
+        /// <summary> Determines if two <see cref="MinimumTlsVersion"/> values are the same. </summary>
+        public static bool operator ==(MinimumTlsVersion left, MinimumTlsVersion right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MinimumTlsVersion"/> values are not the same. </summary>
+        public static bool operator !=(MinimumTlsVersion left, MinimumTlsVersion right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MinimumTlsVersion"/>. </summary>
+        public static implicit operator MinimumTlsVersion(string value) => new MinimumTlsVersion(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MinimumTLSVersion other && Equals(other);
+        public override bool Equals(object obj) => obj is MinimumTlsVersion other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(MinimumTLSVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MinimumTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

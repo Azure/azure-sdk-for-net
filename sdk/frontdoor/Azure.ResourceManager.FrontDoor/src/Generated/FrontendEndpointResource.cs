@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> Initializes a new instance of the <see cref = "FrontendEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FrontendEndpointResource(ArmClient client, FrontendEndpointData data) : this(client, new ResourceIdentifier(data.Id))
+        internal FrontendEndpointResource(ArmClient client, FrontendEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

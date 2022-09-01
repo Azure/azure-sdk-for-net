@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 csharp: true
 library-name: FrontDoor
@@ -16,8 +15,56 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+override-operation-name:
+  Endpoints_PurgeContent: PurgeContent
+
 rename-mapping:
-  WebApplicationFirewallPolicy.properties.customRules: CustomRuleList;
+  Experiment: FrontDoorExperiment
+  State: FrontDoorExperimentState
+  Endpoint: EndpointProperties
+  Experiment.properties.endpointA: ExperimentEndpointA
+  Experiment.properties.endpointB: ExperimentEndpointB
+  Timeseries: TimeseriesInfo
+  WebApplicationFirewallPolicy.properties.customRules: CustomRuleList
+  HealthProbeSettingsModel: FrontDoorHealthProbeSettingsData
+  LoadBalancingSettingsModel: FrontDoorLoadBalancingSettingsData
+  RoutingRule: RoutingRuleData
+  PurgeParameters: FrontDoorEndpointPurgeContent
+  ValidateCustomDomainInput: FrontDoorValidateCustomDomainContent
+  ValidateCustomDomainOutput: FrontDoorValidateCustomDomainResult
+  CustomHttpsProvisioningState: FrontendEndpointCustomHttpsProvisioningState
+  CustomHttpsProvisioningSubstate: FrontendEndpointCustomHttpsProvisioningSubstate
+  Profile: FrontDoorNetworkExperimentProfile
+  ProfileUpdateModel: FrontDoorNetworkExperimentProfilePatch
+  RulesEngine: FrontDoorRulesEngine
+  WebApplicationFirewallPolicy: FrontDoorWebApplicationFirewallPolicy
+  PolicySettings: FrontDoorWebApplicationFirewallPolicySettings
+  PolicyResourceState: FrontDoorWebApplicationFirewallPolicyResourceState
+  CustomRule: WebApplicationCustomRule
+  CheckNameAvailabilityInput: FrontDoorNameAvailabilityContent
+  CheckNameAvailabilityOutput: FrontDoorNameAvailabilityResult
+  ActionType: RuleMatchActionType
+  Availability: FrontDoorNameAvailabilityState
+  Backend: FrontDoorBackend
+  Backend.privateLinkResourceId: -|arm-id
+  Backend.privateLinkLocation: -|azure-location
+  PrivateEndpointStatus: BackendPrivateEndpointStatus
+  BackendPool: FrontDoorBackendPool
+  BackendPoolsSettings.sendRecvTimeoutSeconds: SendRecvTimeoutInSeconds
+  FrontDoorCertificateType: FrontDoorEndpointConnectionCertificateType
+  CustomHttpsProvisioningSubstate.DomainControlValidationRequestTimedOut: DomainControlValidationRequestTimedout
+  CustomHttpsProvisioningSubstate.PendingDomainControlValidationREquestApproval: PendingDomainControlValidationRequestApproval
+  MatchCondition: WebApplicationRuleMatchCondition
+  MatchCondition.negateCondition: IsNegateCondition
+  MatchVariable: WebApplicationRuleMatchVariable
+  Operator: WebApplicationRuleMatchOperator
+  TransformType: WebApplicationRuleMatchTransformType
+  RuleType: WebApplicationRuleType
+  FrontDoorHealthProbeMethod.GET: Get
+  HeaderAction: RulesEngineHeaderAction
+  HeaderActionType: RulesEngineHeaderActionType
+  LatencyScorecard.properties.id: LatencyScorecardId
+  LatencyScorecard.properties.name: LatencyScorecardName
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -48,5 +95,58 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  UTC: Utc
+  TLS: Tls
+  AFD: Afd
+  ATM: Atm
+  CDN: Cdn
+
+directive:
+  - from: networkexperiment.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard'].get.parameters[5].format = 'date-time';
+  - from: networkexperiment.json
+    where: $.definitions
+    transform: >
+      $.TimeseriesProperties.properties.startDateTimeUTC['format'] = 'date-time';
+      $.TimeseriesProperties.properties.endDateTimeUTC['format'] = 'date-time';
+      $.LatencyMetric.properties.endDateTimeUTC['format'] = 'date-time';
+  - from: network.json
+    where: $.definitions
+    transform: >
+      $.Resource['x-ms-client-name'] = 'FrontDoorResourceModel';
+      $.FrontDoorResource = {
+        'properties': {
+            'id': {
+              'type': 'string',
+              'description': 'Resource ID.',
+              'x-ms-format': 'arm-id'
+            },
+            'name': {
+              'type': 'string',
+              'description': 'Resource name.'
+            },
+            'type': {
+              'readOnly': true,
+              'type': 'string',
+              'description': 'Resource type.',
+              'x-ms-format': 'resource-type'
+            }
+          },
+        'description': 'Common resource representation.',
+        'x-ms-azure-resource': true,
+        'x-ms-client-name': 'FrontDoorResourceData'
+      };
+  - from: frontdoor.json
+    where: $.definitions[?(@.allOf && @.properties.name && !@.properties.name.readOnly && @.properties.type && @.properties.type.readOnly)]
+    transform: >
+      if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
+      {
+        $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'FrontDoorResource');
+        delete $.properties.name;
+        delete $.properties.type;
+      }
+      
 
 ```

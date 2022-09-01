@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateTimeUTC))
+            if (Optional.IsDefined(DateTimeUtc))
             {
                 writer.WritePropertyName("dateTimeUTC");
-                writer.WriteStringValue(DateTimeUTC);
+                writer.WriteStringValue(DateTimeUtc);
             }
             if (Optional.IsDefined(Value))
             {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static TimeseriesDataPoint DeserializeTimeseriesDataPoint(JsonElement element)
         {
-            Optional<string> dateTimeUTC = default;
+            Optional<string> dateTimeUtc = default;
             Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeUTC"))
                 {
-                    dateTimeUTC = property.Value.GetString();
+                    dateTimeUtc = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new TimeseriesDataPoint(dateTimeUTC.Value, Optional.ToNullable(value));
+            return new TimeseriesDataPoint(dateTimeUtc.Value, Optional.ToNullable(value));
         }
     }
 }

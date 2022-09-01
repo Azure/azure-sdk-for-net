@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the properties of a latency metric used in the latency scorecard. </summary>
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of LatencyMetric. </summary>
         /// <param name="name"> The name of the Latency Metric. </param>
-        /// <param name="endDateTimeUTC"> The end time of the Latency Scorecard in UTC. </param>
+        /// <param name="endDateTimeUtc"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="aValue"> The metric value of the A endpoint. </param>
         /// <param name="bValue"> The metric value of the B endpoint. </param>
         /// <param name="delta"> The difference in value between endpoint A and B. </param>
@@ -26,10 +28,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ahUpper95CI"> The upper end of the 95% confidence interval for endpoint A. </param>
         /// <param name="bcLower95CI"> The lower end of the 95% confidence interval for endpoint B. </param>
         /// <param name="bUpper95CI"> The upper end of the 95% confidence interval for endpoint B. </param>
-        internal LatencyMetric(string name, string endDateTimeUTC, float? aValue, float? bValue, float? delta, float? deltaPercent, float? acLower95CI, float? ahUpper95CI, float? bcLower95CI, float? bUpper95CI)
+        internal LatencyMetric(string name, DateTimeOffset? endDateTimeUtc, float? aValue, float? bValue, float? delta, float? deltaPercent, float? acLower95CI, float? ahUpper95CI, float? bcLower95CI, float? bUpper95CI)
         {
             Name = name;
-            EndDateTimeUTC = endDateTimeUTC;
+            EndDateTimeUtc = endDateTimeUtc;
             AValue = aValue;
             BValue = bValue;
             Delta = delta;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The name of the Latency Metric. </summary>
         public string Name { get; }
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
-        public string EndDateTimeUTC { get; }
+        public DateTimeOffset? EndDateTimeUtc { get; }
         /// <summary> The metric value of the A endpoint. </summary>
         public float? AValue { get; }
         /// <summary> The metric value of the B endpoint. </summary>

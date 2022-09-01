@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Initializes a new instance of TimeseriesDataPoint. </summary>
-        /// <param name="dateTimeUTC"> The DateTime of the Timeseries data point in UTC. </param>
+        /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
         /// <param name="value"> The Value of the Timeseries data point. </param>
-        internal TimeseriesDataPoint(string dateTimeUTC, float? value)
+        internal TimeseriesDataPoint(string dateTimeUtc, float? value)
         {
-            DateTimeUTC = dateTimeUTC;
+            DateTimeUtc = dateTimeUtc;
             Value = value;
         }
 
         /// <summary> The DateTime of the Timeseries data point in UTC. </summary>
-        public string DateTimeUTC { get; set; }
+        public string DateTimeUtc { get; set; }
         /// <summary> The Value of the Timeseries data point. </summary>
         public float? Value { get; set; }
     }

@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.FrontDoor
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> friendlyName = default;
-            Optional<IList<RoutingRule>> routingRules = default;
-            Optional<IList<LoadBalancingSettingsModel>> loadBalancingSettings = default;
-            Optional<IList<HealthProbeSettingsModel>> healthProbeSettings = default;
-            Optional<IList<BackendPool>> backendPools = default;
+            Optional<IList<RoutingRuleData>> routingRules = default;
+            Optional<IList<FrontDoorLoadBalancingSettingsData>> loadBalancingSettings = default;
+            Optional<IList<FrontDoorHealthProbeSettingsData>> healthProbeSettings = default;
+            Optional<IList<FrontDoorBackendPool>> backendPools = default;
             Optional<IList<FrontendEndpointData>> frontendEndpoints = default;
             Optional<BackendPoolsSettings> backendPoolsSettings = default;
             Optional<FrontDoorEnabledState> enabledState = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<string> provisioningState = default;
             Optional<string> cname = default;
             Optional<string> frontdoorId = default;
-            Optional<IReadOnlyList<RulesEngineData>> rulesEngines = default;
+            Optional<IReadOnlyList<FrontDoorRulesEngineData>> rulesEngines = default;
             Optional<IReadOnlyDictionary<string, string>> extendedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RoutingRule> array = new List<RoutingRule>();
+                            List<RoutingRuleData> array = new List<RoutingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutingRule.DeserializeRoutingRule(item));
+                                array.Add(RoutingRuleData.DeserializeRoutingRuleData(item));
                             }
                             routingRules = array;
                             continue;
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LoadBalancingSettingsModel> array = new List<LoadBalancingSettingsModel>();
+                            List<FrontDoorLoadBalancingSettingsData> array = new List<FrontDoorLoadBalancingSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancingSettingsModel.DeserializeLoadBalancingSettingsModel(item));
+                                array.Add(FrontDoorLoadBalancingSettingsData.DeserializeFrontDoorLoadBalancingSettingsData(item));
                             }
                             loadBalancingSettings = array;
                             continue;
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<HealthProbeSettingsModel> array = new List<HealthProbeSettingsModel>();
+                            List<FrontDoorHealthProbeSettingsData> array = new List<FrontDoorHealthProbeSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HealthProbeSettingsModel.DeserializeHealthProbeSettingsModel(item));
+                                array.Add(FrontDoorHealthProbeSettingsData.DeserializeFrontDoorHealthProbeSettingsData(item));
                             }
                             healthProbeSettings = array;
                             continue;
@@ -237,10 +237,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<BackendPool> array = new List<BackendPool>();
+                            List<FrontDoorBackendPool> array = new List<FrontDoorBackendPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BackendPool.DeserializeBackendPool(item));
+                                array.Add(FrontDoorBackendPool.DeserializeFrontDoorBackendPool(item));
                             }
                             backendPools = array;
                             continue;
@@ -312,10 +312,10 @@ namespace Azure.ResourceManager.FrontDoor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RulesEngineData> array = new List<RulesEngineData>();
+                            List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RulesEngineData.DeserializeRulesEngineData(item));
+                                array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
                             }
                             rulesEngines = array;
                             continue;
