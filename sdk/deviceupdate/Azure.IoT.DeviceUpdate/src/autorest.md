@@ -15,3 +15,40 @@ namespace: Azure.IoT.DeviceUpdate
 security: AADToken
 security-scopes:  https://api.adu.microsoft.com/.default
 ```
+
+### Fix 304s
+``` yaml
+directive:
+- from: swagger-document
+  where: $["paths"]["/deviceUpdate/{instanceId}/updates/providers/{provider}/names/{name}/versions/{version}"]
+  transform: >
+    $.get.responses["304"] = {
+      "description": "The condition specified using HTTP conditional header(s) is not met.",
+      "x-az-response-name": "ConditionNotMetError",
+      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+- from: swagger-document
+  where: $["paths"]["/deviceUpdate/{instanceId}/updates/providers/{provider}/names/{name}/versions/{version}/files/{fileId}"]
+  transform: >
+    $.get.responses["304"] = {
+      "description": "The condition specified using HTTP conditional header(s) is not met.",
+      "x-az-response-name": "ConditionNotMetError",
+      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+- from: swagger-document
+  where: $["paths"]["/deviceUpdate/{instanceId}/updates/operations/{operationId}"]
+  transform: >
+    $.get.responses["304"] = {
+      "description": "The condition specified using HTTP conditional header(s) is not met.",
+      "x-az-response-name": "ConditionNotMetError",
+      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+- from: swagger-document
+  where: $["paths"]["/deviceUpdate/{instanceId}/management/operations/{operationId}"]
+  transform: >
+    $.get.responses["304"] = {
+      "description": "The condition specified using HTTP conditional header(s) is not met.",
+      "x-az-response-name": "ConditionNotMetError",
+      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+```

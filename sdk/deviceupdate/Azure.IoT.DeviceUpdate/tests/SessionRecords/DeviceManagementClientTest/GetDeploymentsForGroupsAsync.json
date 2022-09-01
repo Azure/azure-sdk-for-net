@@ -6,19 +6,19 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c75b4b85cad3824e9c9272cdfb8b88f9-d4ceb31bc13c4044-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220830.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "b035adf0725f827bede2eeae95759c5c",
+        "traceparent": "00-5ac9c4683502a54f81e6ccd0c1022256-2719c4dbba51ba48-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220901.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "f5d16060fcf296ef0be4521dc6b84bf4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "5677",
+        "Content-Length": "6622",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 31 Aug 2022 00:49:11 GMT",
-        "mise-correlation-id": "24b02cd1-24a7-4b83-8298-1e49c8b3cee6",
-        "traceparent": "00-c75b4b85cad3824e9c9272cdfb8b88f9-d4ceb31bc13c4044-00"
+        "Date": "Thu, 01 Sep 2022 20:26:16 GMT",
+        "mise-correlation-id": "34a78d50-49dc-45ae-9be8-f618d73b5826",
+        "traceparent": "00-5ac9c4683502a54f81e6ccd0c1022256-2719c4dbba51ba48-00"
       },
       "ResponseBody": {
         "value": [
@@ -213,6 +213,38 @@
             "deviceClassSubgroups": [
               "0919e3ae422a2bfa8c84ff905813e60351e456d1"
             ]
+          },
+          {
+            "deploymentId": "e70fdd3f-e304-4ebe-9b2f-1816bdd1957d",
+            "groupId": "dpokluda-test",
+            "startDateTime": "2022-09-01T01:05:45.271\u002B00:00",
+            "update": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.809.131.21"
+              }
+            },
+            "isCloudInitiatedRollback": false,
+            "deviceClassSubgroups": [
+              "0919e3ae422a2bfa8c84ff905813e60351e456d1"
+            ]
+          },
+          {
+            "deploymentId": "a5f6a54b-938d-44b6-8baa-8dc72017ae54",
+            "groupId": "dpokluda-test",
+            "startDateTime": "2022-09-01T01:09:53.54\u002B00:00",
+            "update": {
+              "updateId": {
+                "provider": "fabrikam",
+                "name": "vacuum",
+                "version": "2022.809.131.21"
+              }
+            },
+            "isCloudInitiatedRollback": false,
+            "deviceClassSubgroups": [
+              "0919e3ae422a2bfa8c84ff905813e60351e456d1"
+            ]
           }
         ]
       }
@@ -222,6 +254,6 @@
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "1870236579"
+    "RandomSeed": "1676425853"
   }
 }
