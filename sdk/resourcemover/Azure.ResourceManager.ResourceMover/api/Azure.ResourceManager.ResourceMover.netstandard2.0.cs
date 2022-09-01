@@ -435,11 +435,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
     }
     public partial class MoverResourceSetProperties
     {
-        public MoverResourceSetProperties(string sourceRegion, string targetRegion) { }
+        public MoverResourceSetProperties(Azure.Core.AzureLocation sourceRegion, Azure.Core.AzureLocation targetRegion) { }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
-        public string SourceRegion { get { throw null; } set { } }
-        public string TargetRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation SourceRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation TargetRegion { get { throw null; } set { } }
     }
     public abstract partial class MoverResourceSettings
     {
