@@ -2143,6 +2143,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(10, processor.MaxConcurrentSessions);
                         Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
                     }
+
+                    if (count == 100)
+                    {
+                        // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
+                        Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
+                    }
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;
@@ -2151,8 +2157,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StartProcessingAsync();
                 await tcs.Task;
 
-                // at least 10 tasks for the session, plus at least 1 more trying to accept other sessions.
-                Assert.Greater(processor.InnerProcessor.TaskTuples.Count, 10);
                 await processor.StopProcessingAsync();
             }
         }
