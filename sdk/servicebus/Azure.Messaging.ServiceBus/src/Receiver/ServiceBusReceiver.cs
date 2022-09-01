@@ -750,7 +750,7 @@ namespace Azure.Messaging.ServiceBus
                 throw new InvalidOperationException("Differing deadletter reasons cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
             }
 
-            if ((containsDescriptionHeader && deadLetterErrorDescription != null) && (descriptionHeaderProperty.ToString() != deadLetterErrorDescription))
+            if (containsDescriptionHeader && deadLetterErrorDescription != null && descriptionHeaderProperty != deadLetterErrorDescription)
             {
                 throw new InvalidOperationException("Differing deadletter error descriptions cannot be passed through both the properties and the parameter. Pass this value in one or the other place.");
             }
