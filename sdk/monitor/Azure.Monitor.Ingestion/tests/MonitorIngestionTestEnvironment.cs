@@ -7,7 +7,7 @@ using Azure.Identity;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
-    public class IngestionClientTestEnvironment : TestEnvironment
+    public class MonitorIngestionTestEnvironment : TestEnvironment
     {
         public string DCRImmutableId => GetRecordedVariable("AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID");
 
@@ -18,7 +18,5 @@ namespace Azure.Monitor.Ingestion.Tests
         public string StreamName => GetRecordedVariable("AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME");
 
         public string TableName => GetRecordedVariable("AZURE_MONITOR_INGESTION_LOGS_TABLE_NAME");
-
-        public ClientSecretCredential ClientSecretCredential => new ClientSecretCredential(GetRecordedVariable("AZURE_TENANT_ID"), GetRecordedVariable("AZURE_CLIENT_ID"), GetRecordedVariable("AZURE_CLIENT_SECRET"));
     }
 }
