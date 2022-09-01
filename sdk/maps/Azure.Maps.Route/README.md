@@ -114,7 +114,7 @@ Response<RouteDirections> result = client.GetDirections(query);
 // Route direction result
 Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
 Console.WriteLine(result.Value.Routes[0].Summary.LengthInMeters);
-Console.WriteLine(result.Value.Routes[0].Summary.TravelTimeInSeconds);
+Console.WriteLine(result.Value.Routes[0].Summary.TravelTimeDuration);
 
 // Route points
 foreach (RouteLeg leg in result.Value.Routes[0].Legs)
@@ -153,7 +153,7 @@ Response<RouteDirections> result = client.GetDirections(query);
 // Route direction result
 Console.WriteLine($"Total {0} route results", result.Value.Routes.Count);
 Console.WriteLine(result.Value.Routes[0].Summary.LengthInMeters);
-Console.WriteLine(result.Value.Routes[0].Summary.TravelTimeInSeconds);
+Console.WriteLine(result.Value.Routes[0].Summary.TravelTimeDuration);
 
 // Route points
 foreach (RouteLeg leg in result.Value.Routes[0].Legs)

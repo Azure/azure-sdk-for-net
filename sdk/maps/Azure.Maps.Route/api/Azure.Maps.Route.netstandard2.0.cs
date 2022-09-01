@@ -563,7 +563,6 @@ namespace Azure.Maps.Route.Models
         public static Azure.Maps.Route.Models.RouteSection RouteSection(int? startPointIndex = default(int?), int? endPointIndex = default(int?), Azure.Maps.Route.Models.ResponseSectionType? sectionType = default(Azure.Maps.Route.Models.ResponseSectionType?), Azure.Maps.Route.Models.ResponseTravelMode? travelMode = default(Azure.Maps.Route.Models.ResponseTravelMode?), Azure.Maps.Route.Models.TrafficIncidentCategory? simpleCategory = default(Azure.Maps.Route.Models.TrafficIncidentCategory?), int? effectiveSpeedInKmh = default(int?), int? delayInSeconds = default(int?), Azure.Maps.Route.Models.DelayMagnitude? delayMagnitude = default(Azure.Maps.Route.Models.DelayMagnitude?), Azure.Maps.Route.Models.RouteSectionTec tec = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteSectionTec RouteSectionTec(int? effectCode = default(int?), System.Collections.Generic.IEnumerable<Azure.Maps.Route.Models.RouteSectionTecCause> causes = null) { throw null; }
         public static Azure.Maps.Route.Models.RouteSectionTecCause RouteSectionTecCause(int? mainCauseCode = default(int?), int? subCauseCode = default(int?)) { throw null; }
-        public static Azure.Maps.Route.Models.RouteSummary RouteSummary(int? lengthInMeters = default(int?), int? travelTimeInSeconds = default(int?), int? trafficDelayInSeconds = default(int?), System.DateTimeOffset? departureTime = default(System.DateTimeOffset?), System.DateTimeOffset? arrivalTime = default(System.DateTimeOffset?)) { throw null; }
     }
     public partial class RouteOptimizedWaypoint
     {
@@ -678,7 +677,7 @@ namespace Azure.Maps.Route.Models
         public System.DateTimeOffset? ArrivalTime { get { throw null; } }
         public System.DateTimeOffset? DepartureTime { get { throw null; } }
         public int? LengthInMeters { get { throw null; } }
-        public int? TrafficDelayInSeconds { get { throw null; } }
+        public System.TimeSpan? TravelTimeDuration { get { throw null; } }
         public int? TravelTimeInSeconds { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
